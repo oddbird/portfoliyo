@@ -9,7 +9,7 @@ urlpatterns = patterns(
     "",
     url("^$",
         direct_to_template,
-        {"template": "home.html"},
+        {"template": "landing.html"},
         name="home"),
 
 

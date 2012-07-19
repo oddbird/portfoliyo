@@ -1,0 +1,491 @@
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/*
+ * Web Fonts from fontspring.com
+ *
+ * All OpenType features and all extended glyphs have been removed.
+ * Fully installable fonts can be purchased at http://www.fontspring.com
+ *
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Fontspring. The fonts are protected under domestic and international trademark and 
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+ *
+ * (c) 2010 Fontspring
+ *
+ *
+ *
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * Vendor:      FontSite Inc.
+ * License URL: http://www.fontspring.com/fflicense/fontsite
+ *
+ *
+ */
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round-webfont.eot');
+  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round-webfont.eot');
+  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round-webfont.eot');
+  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SquareSerif";
+  src: url('../fonts/SquareSerif-Book-webfont.eot');
+  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SquareSerif";
+  src: url('../fonts/SquareSerif-Bold-webfont.eot');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+* html {
+  font-size: 131.25%;
+}
+
+html {
+  font-size: 21px;
+  line-height: 1.238em;
+}
+
+body {
+  font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  text-shadow: rgba(253, 246, 227, 0.125) 0 1px 0;
+  background: #657b83 url('../images/noise.png?1342568481') repeat fixed center;
+  color: #002b36;
+}
+
+a:link, a:visited {
+  color: #fdf6e3;
+}
+a:hover, a:active, a:focus {
+  color: #b58900;
+}
+
+body h1, body h2, body h3, body h4, body h5, body h6 {
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+body p, body ul, body ol {
+  font-size: 0.81em;
+  line-height: 1.529em;
+  margin-bottom: 1.529em;
+}
+@media (min-width: 39.375em) {
+  body p, body ul, body ol {
+    font-size: 1em;
+    line-height: 1.238em;
+    margin-bottom: 1.238em;
+  }
+}
+body em {
+  font-style: italic;
+}
+body strong {
+  font-weight: bold;
+}
+
+.container, [role="banner"] h1, [role="contentinfo"] {
+  *zoom: 1;
+  max-width: 35em;
+  _width: 35em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+.container:after, [role="banner"] h1:after, [role="contentinfo"]:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media (min-width: 39.375em) {
+  .container, [role="banner"] h1, [role="contentinfo"] {
+    max-width: 47em;
+    _width: 47em;
+  }
+}
+.container *, [role="banner"] h1 *, [role="contentinfo"] * {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+[role="contentinfo"] {
+  padding-top: 0.31em;
+  padding-bottom: 0.31em;
+  clear: both;
+}
+
+[role="banner"] {
+  padding-top: 0.31em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.048em;
+  padding-bottom: 0.262em;
+  background: rgba(0, 43, 54, 0.5);
+  background: rgba(0, 43, 54, 0.5) -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, rgba(0, 43, 54, 0)));
+  background: rgba(0, 43, 54, 0.5) -webkit-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.5) -moz-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.5) -o-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.5) linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
+  text-shadow: rgba(0, 43, 54, 0.5) 0 1px 0;
+  color: #fdf6e3;
+  border-color: #002b36;
+}
+@media (min-width: 39.375em) {
+  [role="banner"] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+[role="contentinfo"] p {
+  font-size: 0.667em;
+  line-height: 1.857em;
+  text-transform: uppercase;
+  margin: 0;
+}
+[role="contentinfo"] strong {
+  white-space: nowrap;
+}
+
+.signup {
+  padding-top: 0.619em;
+}
+.signup h2 {
+  font-size: 1.238em;
+  line-height: 1.5em;
+  margin-bottom: 0.5em;
+}
+.signup form {
+  -webkit-box-shadow: #002b36 0 0 0.25em;
+  -moz-box-shadow: #002b36 0 0 0.25em;
+  box-shadow: #002b36 0 0 0.25em;
+  padding: 1.238em 1em;
+  margin: 0 -1em;
+  background: rgba(253, 246, 227, 0.5);
+}
+.signup .formfield {
+  text-align: right;
+  margin: 0;
+}
+.signup label {
+  text-indent: -119988px;
+  overflow: hidden;
+  text-align: left;
+  display: inline-block;
+  position: absolute;
+}
+.signup input {
+  -webkit-border-radius: 3em;
+  -moz-border-radius: 3em;
+  -ms-border-radius: 3em;
+  -o-border-radius: 3em;
+  border-radius: 3em;
+  -webkit-box-shadow: #002b36 0 0 0.125em inset;
+  -moz-box-shadow: #002b36 0 0 0.125em inset;
+  box-shadow: #002b36 0 0 0.125em inset;
+  font-size: 0.81em;
+  line-height: 2.294em;
+  border-style: solid;
+  border-width: 0.059em;
+  padding: 0.324em;
+  width: 100%;
+  padding-left: 1em;
+  background: #fdf6e3;
+  color: #073642;
+  border-color: #002b36;
+}
+.signup input::-webkit-input-placeholder {
+  color: rgba(7, 54, 66, 0.5);
+}
+.signup input:-moz-placeholder {
+  color: rgba(7, 54, 66, 0.5);
+}
+.signup input.placeholder {
+  color: rgba(7, 54, 66, 0.5);
+}
+.signup button {
+  font-size: 16px;
+  padding: 0.3em 1.5em;
+  display: inline-block;
+  cursor: pointer;
+  line-height: 1.5;
+  text-decoration: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  background: url('../images/sassy-ie-overlay.png') repeat-x bottom left rgba(7, 54, 66, 0.75);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(7, 54, 66, 0.75)), color-stop(100%, rgba(2, 16, 20, 0.75)));
+  background: -webkit-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
+  background: -moz-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
+  background: -o-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
+  background: linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
+  -webkit-box-shadow: rgba(14, 111, 135, 0.75) 0 1px 0 inset;
+  -moz-box-shadow: rgba(14, 111, 135, 0.75) 0 1px 0 inset;
+  box-shadow: rgba(14, 111, 135, 0.75) 0 1px 0 inset;
+  border: 1px solid rgba(0, 0, 0, 0.75);
+  color: #fdf6e3;
+  text-shadow: rgba(0, 0, 0, 0.75) 0 -1px 0;
+  text-transform: capitalize;
+}
+.signup button:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(5, 35, 43, 0.75)), color-stop(100%, rgba(0, 0, 0, 0.75)));
+  background: -webkit-linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
+  background: -moz-linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
+  background: -o-linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
+  background: linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
+}
+.signup button:active {
+  -webkit-box-shadow: rgba(0, 0, 0, 0.75) 0 1px 2px inset;
+  -moz-box-shadow: rgba(0, 0, 0, 0.75) 0 1px 2px inset;
+  box-shadow: rgba(0, 0, 0, 0.75) 0 1px 2px inset;
+}
+.signup button.disabled, .signup button[disabled] {
+  opacity: 0.6;
+  background: rgba(2, 16, 20, 0.75);
+  cursor: default;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.signup .note {
+  font-size: 0.667em;
+  line-height: 1.393em;
+  margin-bottom: 0.765em;
+  display: block;
+  color: #586e75;
+}
+@media (min-width: 39.375em) {
+  .signup {
+    padding-top: 6.19em;
+    border-bottom-style: solid;
+    border-bottom-width: 0.048em;
+    padding-bottom: 3.667em;
+    background: #3c6348 url('../images/classroom2.jpg?1342568481') no-repeat scroll top center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    border-color: #002b36;
+  }
+  .signup h2, .signup .intro, .signup form {
+    margin-left: 38.298%;
+  }
+  .signup h2 {
+    font-size: 1.952em;
+    line-height: 1.268em;
+    margin-bottom: 0.317em;
+  }
+  .signup form {
+    -webkit-border-radius: 0.31em;
+    -moz-border-radius: 0.31em;
+    -ms-border-radius: 0.31em;
+    -o-border-radius: 0.31em;
+    border-radius: 0.31em;
+    margin-right: 0;
+  }
+}
+
+.team {
+  padding-top: 1.238em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.048em;
+  padding-bottom: 1.19em;
+  background: rgba(0, 43, 54, 0.25);
+  background: rgba(0, 43, 54, 0.25) -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.25)), color-stop(100%, rgba(0, 43, 54, 0)));
+  background: rgba(0, 43, 54, 0.25) -webkit-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.25) -moz-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.25) -o-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.25) linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
+  border-color: #002b36;
+}
+.team h3 {
+  text-shadow: rgba(0, 43, 54, 0.5) 0 1px 0;
+  color: rgba(253, 246, 227, 0.75);
+}
+.team img {
+  max-width: 100%;
+  border: 3px solid #002b36;
+}
+.team p {
+  margin: 0;
+}
+.team .vcard {
+  margin-bottom: 1.238em;
+}
+@media (min-width: 30em) {
+  .team .vcard {
+    overflow: hidden;
+  }
+  .team .vcard h3, .team .vcard p {
+    width: 65.714%;
+    float: right;
+    margin-right: 0;
+    #margin-left: -1em;
+    display: inline;
+  }
+  .team .vcard img {
+    width: 31.429%;
+    float: left;
+    margin-right: 2.857%;
+    display: inline;
+  }
+  .team .vcard:nth-child(even) h3, .team .vcard:nth-child(even) p {
+    float: left;
+    margin-right: 2.857%;
+    #margin-left: 0;
+    text-align: right;
+  }
+  .team .vcard:nth-child(even) img {
+    float: right;
+    margin-right: 0;
+    #margin-left: -1em;
+    display: inline;
+  }
+}
+@media (min-width: 39.375em) {
+  .team {
+    background: rgba(0, 43, 54, 0.5) url('../images/space.png?1342631867') no-repeat fixed center;
+    background: url('../images/space.png?1342631867') no-repeat fixed center, -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(0, 43, 54, 0)));
+    background: url('../images/space.png?1342631867') no-repeat fixed center, -webkit-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/space.png?1342631867') no-repeat fixed center, -moz-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/space.png?1342631867') no-repeat fixed center, -o-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/space.png?1342631867') no-repeat fixed center, linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    -webkit-background-size: cover, auto, auto;
+    -moz-background-size: cover, auto, auto;
+    -o-background-size: cover, auto, auto;
+    background-size: cover, auto, auto;
+  }
+  .team .vcard {
+    -webkit-border-radius: 0.31em;
+    -moz-border-radius: 0.31em;
+    -ms-border-radius: 0.31em;
+    -o-border-radius: 0.31em;
+    border-radius: 0.31em;
+    -webkit-box-shadow: #002b36 0 0 0.25em;
+    -moz-box-shadow: #002b36 0 0 0.25em;
+    box-shadow: #002b36 0 0 0.25em;
+    margin-right: 25.532%;
+    padding: 1.238em;
+    background: rgba(253, 246, 227, 0.75);
+  }
+  .team .vcard h3 {
+    color: #002b36;
+  }
+  .team .vcard h3, .team .vcard p {
+    width: 65.714%;
+    float: right;
+    margin-right: 0;
+    #margin-left: -1em;
+    display: inline;
+  }
+  .team .vcard img {
+    width: 31.429%;
+    float: left;
+    margin-right: 2.857%;
+    display: inline;
+  }
+  .team .vcard:nth-child(even) {
+    margin-left: 25.532%;
+    margin-right: 0%;
+  }
+  .team .vcard:nth-child(even) h3, .team .vcard:nth-child(even) p {
+    width: 65.714%;
+    float: left;
+    margin-right: 2.857%;
+    display: inline;
+    text-align: right;
+  }
+  .team .vcard:nth-child(even) img {
+    width: 31.429%;
+    float: right;
+    margin-right: 0;
+    #margin-left: -1em;
+    display: inline;
+  }
+}
