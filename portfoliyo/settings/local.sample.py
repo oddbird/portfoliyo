@@ -31,6 +31,14 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 # Base URL where files in STATIC_ROOT are deployed. Defaults to "/static/".
 #STATIC_URL = ""
 
+# Causes CSS/JS to be served in a single combined, minified file, with a name
+# based on contents hash (thus can be safely far-futures-expired). With the
+# below two settings uncommented, run "python manage.py collectstatic" followed
+# by "python manage.py compress": the contents of ``STATIC_ROOT`` can then be
+# deployed into production.
+#COMPRESS_ENABLED = True
+#COMPRESS_OFFLINE = True
+
 # A unique (and secret) key for this deployment.
 #SECRET_KEY = ""
 

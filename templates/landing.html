@@ -2,6 +2,7 @@
 <!--[if lte IE 8 ]>             <html class="lt-ie9" lang="en" dir="ltr">   <![endif]-->
 <!--[if IE 9 ]>                 <html class="ie9" lang="en" dir="ltr">  <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->  <html lang="en" dir="ltr">          <!--<![endif]-->
+{% load compress %}
 <head>
   <meta charset="utf-8">
   <title>Portfoliyo</title>
@@ -16,11 +17,15 @@
   <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1, maximum-scale=1">
 
   <!-- Styles -->
+  {% compress css %}
   <link rel="stylesheet" href="{{ STATIC_URL }}landing/css/screen.css">
+  {% endcompress %}
 
   <!-- Modernizr -->
+  {% compress js %}
   <script src="{{ STATIC_URL }}landing/js/modernizr.js"></script>
   <script src="{{ STATIC_URL }}landing/js/modernizr.selectors.js"></script>
+  {% endcompress %}
 
 </head>
 <body>
@@ -113,10 +118,12 @@
 </footer>
 
 <!-- JavaScript -->
+{% compress js %}
 <script src="{{ STATIC_URL }}landing/js/jquery-1.7.2.js"></script>
 <script src="{{ STATIC_URL }}landing/js/defuscator.js"></script>
 <script src="{{ STATIC_URL }}landing/js/viewport.js"></script>
 <script src="{{ STATIC_URL }}landing/js/local.js"></script>
+{% endcompress %}
 
 </body>
 </html>
