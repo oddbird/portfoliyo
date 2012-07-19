@@ -6,12 +6,18 @@ staging or production deployment.
 Copy settings/local.sample.py to settings/local.py and modify as needed.
 
 """
-# Uncomment if your database name/user are different
+# If your database is named something other than "portfoliyo", or it's on a
+# host other than local socket, or the username needed to connect to it is
+# different from your shell user, or a password is required, you'll need to
+# uncomment this DATABASES section and fill it out appropriately.
+
 #DATABASES = {
 #    "default": {
 #        "ENGINE": "django.db.backends.postgresql_psycopg2",
 #        "NAME": "portfoliyo",
 #        "USER": os.environ.get("USER", "portfoliyo"),
+#        "PASSWORD": "",
+#        "HOST": "",
 #        }
 #}
 

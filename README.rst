@@ -9,11 +9,10 @@ other Python projects on your system, create a virtualenv and activate
 it.  Then run ``bin/install-reqs`` to install the dependencies for this
 project into your Python environment.
 
-You'll probably need to create a ``portfoliyo/settings/local.py`` file
-with some details of your local configuration, including, most likely,
-your database details (SQLite will be used by default).  See
-``portfoliyo/settings/local.sample.py`` for a sample that can be copied
-to ``portfoliyo/settings/local.py`` and modified.
+You may need to create a ``portfoliyo/settings/local.py`` file with some
+details of your local configuration.  See
+``portfoliyo/settings/local.sample.py`` for a sample that can be copied to
+``portfoliyo/settings/local.py`` and modified.
 
 Once this configuration is done, you should be able to run ``./manage.py
 syncdb --migrate``, then ``./manage.py runserver`` and access the site
