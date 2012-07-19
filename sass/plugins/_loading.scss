@@ -1,0 +1,14 @@
+// ---------------------------------------------------------------------------
+// Loading styles
+//
+// JS-add .loading and span.overlay
+
+.loading {
+  position: relative;
+
+  .overlay {
+    @include stretch;
+    font-weight: bold;
+    text-align: center;
+  }
+}

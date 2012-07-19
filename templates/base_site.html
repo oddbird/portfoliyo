@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div>
+{% block page %}
+
+  <header role="banner">
+    <h1><a href="/" rel="home">Portfoliyo</a></h1>
+  </header>
+
+  <div role="main">
+    {% block maincontent %}
+
+    {% endblock maincontent %}
+  </div><!-- /~main -->
+
+  <footer role="contentinfo">
+    <p class="author vcard">
+      copyright &copy; 2012
+      <strong class="fn org">Portfoliyo</strong>
+    </p>
+  </footer>
+
+{% endblock page %}
+</div>
+{% endblock body %}

@@ -1,0 +1,11 @@
+TAGS
+collected-assets/
+*.DS_Store
+*~
+*.pyc
+.sass-cache/
+portfoliyo/settings/local.py
+.livereload
+htmlcov/
+djangodb.sqlite
+__pycache__

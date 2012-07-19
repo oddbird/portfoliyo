@@ -1,0 +1,29 @@
+// ---------------------------------------------------------------------------
+// Font Sizes
+
+$base-font-size     : $normpx;
+$base-line-height   : $medpx;
+
+// ---------------------------------------------------------------------------
+// Links
+
+$link   :   "&:link, &:visited";
+$focus  :   "&:focus, &:hover, &:active";
+
+@mixin focus-default {
+  outline: thin dotted $accent;
+}
+
+@mixin no-style-link {
+  &:link, &:visited, &:focus, &:hover, &:active {
+    color: inherit;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Lists
+
+@mixin no-style-list {
+  @include reset-box-model;
+  @include no-bullets;
+}

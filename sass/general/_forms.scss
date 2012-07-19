@@ -1,0 +1,53 @@
+/* -------------------------------------------------------------------------*/
+/* Form Resets */
+
+input[type="button"], input[type="submit"], input[type="image"],
+label, button { cursor: pointer; }
+
+input {
+  &[type="search"] { -webkit-appearance: none; }
+  &[type="radio"], &[type="checkbox"] { vertical-align: baseline; }
+  &::-webkit-search-decoration { display: none; }
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+button, input[type="select"], select, textarea {
+  @include border-radius(0);
+}
+
+optgroup { @include reset-box-model; }
+
+optgroup {
+  color: $base;
+  font-style: normal;
+  font-weight: normal;
+}
+
+legend { .iem7 & { margin-left: -7px; } }
+
+::-moz-focus-inner { border: 0; }
+
+/* -------------------------------------------------------------------------*/
+/* Placeholders */
+
+@mixin placeholder {
+  ::-webkit-input-placeholder { @content; }
+  :-moz-placeholder { @content; }
+  .placeholder { @content; }
+}
+
+@include placeholder {
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Form Helpers */
+
+.errorlist {
+  @include no-style-list;
+  color: red;
+}

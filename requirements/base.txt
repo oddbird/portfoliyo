@@ -1,0 +1,13 @@
+Django==1.4
+
+psycopg2==2.4.5
+
+South==0.7.5
+
+django-compressor==1.1.2
+django-appconf==0.5
+BeautifulSoup==3.2.1
+
+django-floppyforms==1.0
+
+django-secure==0.1.2

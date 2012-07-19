@@ -1,0 +1,160 @@
+/* -------------------------------------------------------------------------*/
+/* Links */
+
+a {
+  &:hover, &:active {
+    outline: none;
+  }
+  #{$link} {
+    color: $alt;
+    text-decoration: none;
+  }
+  #{$focus} {
+    color: $accent;
+  }
+}
+
+/* -------------------------------------------------------------------------*/
+/* Headings */
+
+h1, h2, h3, h4 {
+  font-weight: bold;
+}
+
+h5, h6 {
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Inline */
+
+cite, em, dfn, address, i {
+  font-style: italic;
+}
+
+strong, dfn, b {
+  font-weight: bold;
+}
+
+sup, sub {
+  position: relative;
+  font-size: smaller;
+  line-height: 0;
+}
+
+sup {
+  top: -.5em;
+}
+
+sub {
+  bottom: -.25em;
+}
+
+abbr, acronym {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+
+ins {
+  text-decoration: underline;
+}
+
+del {
+  text-decoration: line-through;
+}
+
+mark {
+  background: #ff9;
+  background-color: rgba(#ff0,.5);
+  text-shadow: none;
+}
+
+q {
+  font-style: italic;
+  em {
+    font-style: normal;
+  }
+}
+
+pre, code, tt {
+  @include mono;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Block */
+
+p {
+  @include trailer
+}
+
+pre {
+  padding: rhythm();
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+
+blockquote {
+  padding: rhythm();
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Replaced */
+
+img, object, embed {
+  vertical-align: top;
+  max-width: 100%;
+}
+
+img {
+  .ie7 & { -ms-interpolation-mode: bicubic; }
+}
+
+/* -------------------------------------------------------------------------*/
+/* Lists */
+
+ol, ul, dd {
+  @include trailer;
+  margin-left: rhythm();
+}
+
+ol { list-style-type: decimal; }
+
+ul {
+  list-style-type: disc;
+  nav & { @include no-style-list; }
+}
+
+dt { @include leader; }
+
+/* -------------------------------------------------------------------------*/
+/* Tables */
+
+table {
+  @include trailer;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+table, td, th {
+  vertical-align: top;
+}
+
+th, thead th {
+  font-weight: bold;
+}
+
+th, td, caption {
+  padding: rhythm(.5);
+  text-align: left;
+  font-weight: normal;
+}
+
+table, th { @include trailing-border(1px, .5); }
+
+tfoot { @include adjust-font-size-to($smallpx); }
+
+caption { text-transform: uppercase; }

@@ -1,0 +1,185 @@
+@charset "UTF-8";
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+}
+
+html {
+  line-height: 1;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle;
+}
+
+q, blockquote {
+  quotes: none;
+}
+q:before, q:after, blockquote:before, blockquote:after {
+  content: "";
+  content: none;
+}
+
+a img {
+  border: none;
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Root */
+* html {
+  font-size: 100%;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.1875em;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(5%, rgba(0, 0, 0, 0.5)), color-stop(5%, rgba(0, 0, 0, 0)));
+  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
+  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
+  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
+  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
+  -webkit-background-size: 100% 19px;
+  -moz-background-size: 100% 19px;
+  -o-background-size: 100% 19px;
+  background-size: 100% 19px;
+  background-position: left top;
+  font-family: Cambria, Georgia, serif;
+  color: #657b83;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Selected Text */
+::-webkit-selection {
+  color: black;
+  background: #268bd2;
+  text-shadow: none;
+}
+
+::-moz-selection {
+  color: black;
+  background: #268bd2;
+  text-shadow: none;
+}
+
+::selection {
+  color: black;
+  background: #268bd2;
+  text-shadow: none;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Form Resets */
+input[type="button"], input[type="submit"], input[type="image"],
+label, button {
+  cursor: pointer;
+}
+
+input[type="search"] {
+  -webkit-appearance: none;
+}
+input[type="radio"], input[type="checkbox"] {
+  vertical-align: baseline;
+}
+input::-webkit-search-decoration {
+  display: none;
+}
+
+textarea {
+  overflow: auto;
+  resize: vertical;
+}
+
+button, input[type="select"], select, textarea {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -ms-border-radius: 0;
+  -o-border-radius: 0;
+  border-radius: 0;
+}
+
+optgroup {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+optgroup {
+  color: #657b83;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.iem7 legend {
+  margin-left: -7px;
+}
+
+::-moz-focus-inner {
+  border: 0;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Placeholders */
+::-webkit-input-placeholder {
+  font-style: italic;
+}
+
+:-moz-placeholder {
+  font-style: italic;
+}
+
+.placeholder {
+  font-style: italic;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Form Helpers */
+.errorlist {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  color: red;
+}
+.errorlist li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
