@@ -9,3 +9,4 @@ portfoliyo/settings/local.py
 htmlcov/
 djangodb.sqlite
 __pycache__
+logfile

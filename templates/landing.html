@@ -18,13 +18,13 @@
 
   <!-- Styles -->
   {% compress css %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}landing/css/screen.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/landing.css">
   {% endcompress %}
 
   <!-- Modernizr -->
   {% compress js %}
-  <script src="{{ STATIC_URL }}landing/js/modernizr.js"></script>
-  <script src="{{ STATIC_URL }}landing/js/modernizr.selectors.js"></script>
+  <script src="{{ STATIC_URL }}js/modernizr.js"></script>
+  <script src="{{ STATIC_URL }}js/modernizr.selectors.js"></script>
   {% endcompress %}
 
 </head>
@@ -64,7 +64,7 @@
 
     <article id="harsh" class="vcard">
       <h3 class="fn">Harsh Patel</h3>
-      <img src="{{ STATIC_URL }}landing/images/harsh.png" alt="" />
+      <img src="{{ STATIC_URL }}images/landing/harsh.png" alt="" />
       <p>
         Harsh is a teacher who loves inspiring kids to be
         creative, confident, and productive.
@@ -75,7 +75,7 @@
 
     <article id="peter" class="vcard">
       <h3 class="fn">Peter Kuperman</h3>
-      <img src="{{ STATIC_URL }}landing/images/peter.png" alt="" />
+      <img src="{{ STATIC_URL }}images/landing/peter.png" alt="" />
       <p>
         Peter has a background in money management
         and loves to inspire the people around him to greater heights.
@@ -86,7 +86,7 @@
 
     <article id="jonny" class="vcard">
       <h3 class="fn">Jonny Gerig Meyer</h3>
-      <img src="{{ STATIC_URL }}landing/images/jonny.png" alt="" />
+      <img src="{{ STATIC_URL }}images/landing/jonny.png" alt="" />
       <p>
         Jonny
         is a web developer
@@ -99,7 +99,7 @@
 
     <article id="eric" class="vcard">
       <h3 class="fn">Eric Meyer</h3>
-      <img src="{{ STATIC_URL }}landing/images/eric.png" alt="" />
+      <img src="{{ STATIC_URL }}images/landing/eric.png" alt="" />
       <p>
         Eric
         is a multimedia artist,
@@ -119,10 +119,11 @@
 
 <!-- JavaScript -->
 {% compress js %}
-<script src="{{ STATIC_URL }}landing/js/jquery-1.7.2.js"></script>
-<script src="{{ STATIC_URL }}landing/js/defuscator.js"></script>
-<script src="{{ STATIC_URL }}landing/js/viewport.js"></script>
-<script src="{{ STATIC_URL }}landing/js/local.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-1.7.2.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.placeholder.js"></script>
+<script src="{{ STATIC_URL }}js/defuscator.js"></script>
+<script src="{{ STATIC_URL }}js/viewport.js"></script>
+<script src="{{ STATIC_URL }}js/local.js"></script>
 {% endcompress %}
 
 </body>

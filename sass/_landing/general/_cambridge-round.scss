@@ -1,0 +1,44 @@
+// ---------------------------------------------------------------------------
+// Settings
+
+$sans-stack : 'CambridgeRound', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+
+// ---------------------------------------------------------------------------
+// Fonts
+
+// Franklin Gothic Book
+@include font-face(
+  'CambridgeRound',
+  font-files(
+    'cambridge_round-webfont.woff',woff,
+    'cambridge_round-webfont.ttf',truetype,
+    'cambridge_round-webfont.svg#webfont',svg
+  ),
+  'cambridge_round-webfont.eot',
+  normal,
+  normal
+);
+
+@include font-face(
+  'CambridgeRound',
+  font-files(
+    'cambridge_round_bold-webfont.woff',woff,
+    'cambridge_round_bold-webfont.ttf',truetype,
+    'cambridge_round_bold-webfont.svg#webfont',svg
+  ),
+  'cambridge_round-webfont.eot',
+  bold,
+  normal
+);
+
+@include font-face(
+  'CambridgeRound',
+  font-files(
+    'cambridge_round_it-webfont.woff',woff,
+    'cambridge_round_it-webfont.ttf',truetype,
+    'cambridge_round_it-webfont.svg#webfont',svg
+  ),
+  'cambridge_round-webfont.eot',
+  normal,
+  italic
+);

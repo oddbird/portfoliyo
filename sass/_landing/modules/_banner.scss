@@ -1,0 +1,27 @@
+// ---------------------------------------------------------------------------
+// Banner
+
+[role="banner"] {
+  @include padding-leader(.25);
+  @include trailing-border(1px,.25);
+  @include background(rgba($base,.5));
+  @include background(rgba($base,.5) linear-gradient(top, rgba($base,.5), rgba($base,0)));
+  @include text-shadow(rgba($base,.5) 0 1px 0);
+  color: $alt;
+  border-color: $base;
+  @include at-breakpoint($break) {
+    @include stretch-x;
+    top: 0;
+  }
+}
+
+[role="contentinfo"] {
+  p {
+    @include adjust-font-size-to($xsmallpx);
+    text-transform: uppercase;
+    margin: 0;
+  }
+  strong {
+    white-space: nowrap;
+  }
+}

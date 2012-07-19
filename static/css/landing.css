@@ -130,7 +130,7 @@ html {
 body {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   text-shadow: rgba(253, 246, 227, 0.125) 0 1px 0;
-  background: #657b83 url('../images/noise.png?1342568481') repeat fixed center;
+  background: #657b83 url('../images/landing/noise.png?1342713767') repeat fixed center;
   color: #002b36;
 }
 
@@ -287,18 +287,18 @@ body strong {
   color: rgba(7, 54, 66, 0.5);
 }
 .signup button {
-  font-size: 16px;
-  padding: 0.3em 1.5em;
+  font-size: 21px;
+  padding: 0.31em 1.238em;
   display: inline-block;
   cursor: pointer;
-  line-height: 1.5;
   text-decoration: none;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-  border-radius: 5px;
-  background: url('../images/sassy-ie-overlay.png') repeat-x bottom left rgba(7, 54, 66, 0.75);
+  line-height: 1.238em;
+  -webkit-border-radius: 0.125em;
+  -moz-border-radius: 0.125em;
+  -ms-border-radius: 0.125em;
+  -o-border-radius: 0.125em;
+  border-radius: 0.125em;
+  background: url('../images/sassy-ie-overlay.png?1342716731') repeat-x bottom left rgba(7, 54, 66, 0.75);
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(7, 54, 66, 0.75)), color-stop(100%, rgba(2, 16, 20, 0.75)));
   background: -webkit-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
   background: -moz-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
@@ -346,7 +346,7 @@ body strong {
     border-bottom-style: solid;
     border-bottom-width: 0.048em;
     padding-bottom: 3.667em;
-    background: #3c6348 url('../images/classroom2.jpg?1342568481') no-repeat scroll top center;
+    background: #3c6348 url('../images/landing/classroom2.jpg?1342713767') no-repeat scroll top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -430,12 +430,12 @@ body strong {
 }
 @media (min-width: 39.375em) {
   .team {
-    background: rgba(0, 43, 54, 0.5) url('../images/space.png?1342631867') no-repeat fixed center;
-    background: url('../images/space.png?1342631867') no-repeat fixed center, -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(0, 43, 54, 0)));
-    background: url('../images/space.png?1342631867') no-repeat fixed center, -webkit-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
-    background: url('../images/space.png?1342631867') no-repeat fixed center, -moz-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
-    background: url('../images/space.png?1342631867') no-repeat fixed center, -o-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
-    background: url('../images/space.png?1342631867') no-repeat fixed center, linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: rgba(0, 43, 54, 0.5) url('../images/landing/space.png?1342713767') no-repeat fixed center;
+    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(0, 43, 54, 0)));
+    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -webkit-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -moz-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -o-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
     -webkit-background-size: cover, auto, auto;
     -moz-background-size: cover, auto, auto;
     -o-background-size: cover, auto, auto;

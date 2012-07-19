@@ -6,3 +6,4 @@ gem "susy", "~> 1.0.rc.3"
 
 gem "chunky_png", "~> 1.2.5"
 gem "modular-scale", "~> 0.0.5"
+gem "sassy-buttons", "~> 0.1.1"

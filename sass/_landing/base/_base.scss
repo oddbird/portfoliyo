@@ -1,0 +1,29 @@
+//-----------------------------------------------------------------------------
+// Imports
+
+@import "compass";
+@import "susy";
+
+// ---------------------------------------------------------------------------
+// Setup
+
+$total-columns  : 6;
+$column-width   : 5em;
+$gutter-width   : 1em;
+$grid-padding   : 1em;
+
+$legacy-support-for-ie6     : true;
+$legacy-support-for-ie7     : true;
+
+$relative-font-sizing       : true;
+$base-font-size             : 16px;
+
+$break          : 30em 8;
+
+//-----------------------------------------------------------------------------
+// Other Settings
+
+@import "colors";
+@import "size";
+@import "type";
+@import "sassybuttons";
