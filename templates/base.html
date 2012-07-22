@@ -64,10 +64,11 @@
   <!-- Page-Specific Head -->
   {% block extrahead %}{% endblock %}
 
+  {% if GOOGLE_ANALYTICS_ID %}
   <script type="text/javascript">
 
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-33526850-1']);
+    _gaq.push(['_setAccount', '{{ GOOGLE_ANALYTICS_ID }}']);
     _gaq.push(['_trackPageview']);
 
     (function() {
@@ -77,6 +78,7 @@
     })();
 
   </script>
+  {% endif %}
 </head>
 
 <body id="portfoliyo" class="{% block bodyclasses %}{% endblock %}">
