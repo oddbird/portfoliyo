@@ -114,10 +114,21 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "floppyforms",
+    "widget_tweaks",
     "south",
+    "portfoliyo.landing",
 ]
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.fallback.FallbackStorage"
+
+INSTALLED_APPS += ["icanhaz", "messages_ui"]
+ICANHAZ_DIRS = [join(BASE_PATH, "jstemplates")]
+MIDDLEWARE_CLASSES.insert(
+    MIDDLEWARE_CLASSES.index(
+        "django.contrib.messages.middleware.MessageMiddleware"
+        ) + 1,
+    "messages_ui.middleware.AjaxMessagesMiddleware",
+    )
 
 CACHES = {
     'default': {

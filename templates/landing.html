@@ -48,14 +48,9 @@
       creating an environment for&nbsp;success.
     </p>
 
-    <form>
-      <p class="formfield">
-        <label for="email">E-Mail</label>
-        <input type="email" id="email" placeholder="Enter your email for updates"></input>
-        <span class="note">We'll keep your email address private and secure.</span>
-        <button>Inspire me</button>
-      </p>
-    </form>
+    {% include "messages_ui/_messages.html" %}
+
+    {% include "landing/_form.html" %}
   </div>
 </article>
 
