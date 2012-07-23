@@ -30,7 +30,7 @@ var PYO = (function (PYO, $) {
             },
             success: function (response) {
                 loadingContainer.loadingOverlay('remove');
-                thisInput.val(null);
+                thisForm.replaceWith(response.html);
             }
         });
     };
