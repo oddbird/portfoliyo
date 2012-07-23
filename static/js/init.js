@@ -11,7 +11,7 @@ var PYO = (function (PYO, $) {
         PYO.ajaxifyForm(
             '.signup .container form',
             '#id_email',
-            '.signup .container'
+            '.signup .container form'
         );
     });
 
