@@ -130,7 +130,7 @@ html {
 body {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   text-shadow: rgba(253, 246, 227, 0.125) 0 1px 0;
-  background: #657b83 url('../images/landing/noise.png?1342713767') repeat fixed center;
+  background: #657b83 url('../images/landing/noise.png?1342738619') repeat fixed center;
   color: #002b36;
 }
 
@@ -162,6 +162,54 @@ body em {
 }
 body strong {
   font-weight: bold;
+}
+
+@font-face {
+  font-family: "IcoMoon";
+  src: url('../fonts/icons.eot');
+  src: url('../fonts/icons.eot?#iefix') format('eot'), url('../fonts/icons.svg#Icons') format('svg'), url('../fonts/icons.woff') format('woff'), url('../fonts/icons.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+.message .close:before, [data-icon]:before, .message:before {
+  font-family: 'IcoMoon';
+  font-style: normal;
+  speak: none;
+}
+
+.message .close {
+  position: relative;
+  min-width: 1em;
+  text-indent: -9999px;
+}
+.message .close:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-indent: 0;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  content: attr(data-icon);
+}
+
+.message.success:before {
+  content: "\2713";
+}
+
+.message.error:before, .message .close:before {
+  content: "\2715";
+}
+
+.message.warning:before {
+  content: "\26a0";
+}
+
+.message.info:before {
+  content: "\25cf";
 }
 
 .container, [role="banner"] h1, [role="contentinfo"] {
@@ -298,7 +346,7 @@ body strong {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/sassy-ie-overlay.png?1342716731') repeat-x bottom left rgba(7, 54, 66, 0.75);
+  background: url('../images/sassy-ie-overlay.png?1342738619') repeat-x bottom left rgba(7, 54, 66, 0.75);
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(7, 54, 66, 0.75)), color-stop(100%, rgba(2, 16, 20, 0.75)));
   background: -webkit-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
   background: -moz-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
@@ -346,7 +394,7 @@ body strong {
     border-bottom-style: solid;
     border-bottom-width: 0.048em;
     padding-bottom: 3.667em;
-    background: #3c6348 url('../images/landing/classroom2.jpg?1342713767') no-repeat scroll top center;
+    background: #3c6348 url('../images/landing/classroom2.jpg?1342738619') no-repeat scroll top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -430,12 +478,12 @@ body strong {
 }
 @media (min-width: 39.375em) {
   .team {
-    background: rgba(0, 43, 54, 0.5) url('../images/landing/space.png?1342713767') no-repeat fixed center;
-    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(0, 43, 54, 0)));
-    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -webkit-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
-    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -moz-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
-    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, -o-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
-    background: url('../images/landing/space.png?1342713767') no-repeat fixed center, linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: rgba(0, 43, 54, 0.5) url('../images/landing/space.png?1342738619') no-repeat fixed center;
+    background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(0, 43, 54, 0)));
+    background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -webkit-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -moz-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -o-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/landing/space.png?1342738619') no-repeat fixed center, linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
     -webkit-background-size: cover, auto, auto;
     -moz-background-size: cover, auto, auto;
     -o-background-size: cover, auto, auto;
@@ -487,5 +535,88 @@ body strong {
     margin-right: 0;
     #margin-left: -1em;
     display: inline;
+  }
+}
+
+.message {
+  border-style: solid;
+  border-width: 0.048em;
+  padding: 0.571em;
+  position: relative;
+  border-color: #002b36;
+}
+.message:first-child {
+  -moz-border-radius-topleft: 0.5em;
+  -webkit-border-top-left-radius: 0.5em;
+  border-top-left-radius: 0.5em;
+  -moz-border-radius-topright: 0.5em;
+  -webkit-border-top-right-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+.message:last-child {
+  -moz-border-radius-bottomleft: 0.5em;
+  -webkit-border-bottom-left-radius: 0.5em;
+  border-bottom-left-radius: 0.5em;
+  -moz-border-radius-bottomright: 0.5em;
+  -webkit-border-bottom-right-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+}
+.message:before {
+  font-size: 1.952em;
+  line-height: 1.268em;
+  float: left;
+  margin-right: .4em;
+  min-width: 1em;
+  text-align: center;
+}
+.message.info {
+  background: #fdf6e3;
+}
+.message.success {
+  background: #859900;
+}
+.message.warning {
+  background: #b58900;
+}
+.message.error {
+  background: #dc322f;
+}
+.message p {
+  margin-top: 0.619em;
+  margin-bottom: 0.619em;
+}
+.message .close {
+  font-size: 0.81em;
+  line-height: 1.529em;
+  position: absolute;
+  top: 0.382em;
+  right: 0.382em;
+  color: rgba(0, 43, 54, 0.25);
+}
+
+#messages {
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
+  -webkit-box-shadow: #002b36 0 0 0.125em;
+  -moz-box-shadow: #002b36 0 0 0.125em;
+  box-shadow: #002b36 0 0 0.125em;
+}
+#messages ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+#messages ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+@media (min-width: 39.375em) {
+  #messages {
+    margin-left: 38.298%;
   }
 }

@@ -1,0 +1,46 @@
+@include font-face (
+  'IcoMoon',
+  font-files(
+    'icons.svg#Icons', svg,
+    'icons.woff', woff,
+    'icons.ttf', truetype
+  ),
+  'icons.eot',
+  normal,
+  normal
+);
+
+/* Use the following CSS code if you want to have a class per icon */
+%icon-content {
+  font-family: 'IcoMoon';
+  font-style: normal;
+  speak: none;
+}
+
+%icon:before {
+  @extend %icon-content;
+}
+
+%icon-replace {
+  @extend %icon;
+  position: relative;
+  min-width: 1em;
+  text-indent: -9999px;
+  &:before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-indent: 0;
+  }
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  @extend %icon-content;
+  content: attr(data-icon);
+}
+
+%icon-checkmark:before  { content: "\2713"; }
+%icon-cancel:before     { content: "\2715"; }
+%icon-warning:before    { content: "\26a0"; }
+%icon-info:before       { content: "\25cf"; }
