@@ -4,11 +4,14 @@
 // JS-add .loading and span.overlay
 
 .loading {
+  @include opacity(.5);
   position: relative;
 
   .overlay {
     @include stretch;
+    background: rgba($base3,.75);
     font-weight: bold;
     text-align: center;
+    text-transform: uppercase;
   }
 }

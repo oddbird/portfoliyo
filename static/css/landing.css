@@ -622,6 +622,8 @@ body strong {
 }
 
 .loading {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=50);
+  opacity: 0.5;
   position: relative;
 }
 .loading .overlay {
@@ -630,6 +632,8 @@ body strong {
   bottom: 0;
   left: 0;
   right: 0;
+  background: rgba(253, 246, 227, 0.75);
   font-weight: bold;
   text-align: center;
+  text-transform: uppercase;
 }
