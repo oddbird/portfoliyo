@@ -19,18 +19,21 @@ var PYO = (function (PYO, $) {
         DOWN: 40
     };
 
-    PYO.ajaxifyForm = function (form, input, loading) {
+    PYO.ajaxifyForm = function (form, loading) {
         var thisForm = $(form);
-        var thisInput = thisForm.find(input);
-        var loadingContainer = $(loading);
+        var loadingContainer = loading ? $(loading) : thisForm;
 
         thisForm.ajaxForm({
             beforeSubmit: function (arr, form, options) {
                 loadingContainer.loadingOverlay();
             },
             success: function (response) {
+                var newForm = $(response.html);
                 loadingContainer.loadingOverlay('remove');
-                thisForm.replaceWith(response.html);
+                if (response.html) {
+                    thisForm.replaceWith(newForm);
+                    PYO.ajaxifyForm(newForm, loading);
+                }
             }
         });
     };

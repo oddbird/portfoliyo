@@ -8,11 +8,7 @@ var PYO = (function (PYO, $) {
         $('#messages').messages({handleAjax: true});
 
         // local.js
-        PYO.ajaxifyForm(
-            '.signup .container form',
-            '#id_email',
-            '.signup .container form'
-        );
+        PYO.ajaxifyForm('.signup .container form');
     });
 
     return PYO;
