@@ -1,9 +1,9 @@
-var PORTFOLIYO = (function (PORTFOLIYO, $) {
+var PYO = (function (PYO, $) {
 
     'use strict';
 
     // Store keycode variables for easier readability
-    PORTFOLIYO.keycodes = {
+    PYO.keycodes = {
         SPACE: 32,
         ENTER: 13,
         TAB: 9,
@@ -19,6 +19,22 @@ var PORTFOLIYO = (function (PORTFOLIYO, $) {
         DOWN: 40
     };
 
-    return PORTFOLIYO;
+    PYO.ajaxifyForm = function (form, input, loading) {
+        var thisForm = $(form);
+        var thisInput = thisForm.find(input);
+        var loadingContainer = $(loading);
 
-}(PORTFOLIYO || {}, jQuery));
+        thisForm.ajaxForm({
+            beforeSubmit: function (arr, form, options) {
+                loadingContainer.loadingOverlay();
+            },
+            success: function (response) {
+                loadingContainer.loadingOverlay('remove');
+                thisInput.val(null);
+            }
+        });
+    };
+
+    return PYO;
+
+}(PYO || {}, jQuery));

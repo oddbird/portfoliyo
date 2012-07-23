@@ -1,4 +1,4 @@
-var PORTFOLIYO = (function (PORTFOLIYO, $) {
+var PYO = (function (PYO, $) {
 
     'use strict';
 
@@ -6,8 +6,15 @@ var PORTFOLIYO = (function (PORTFOLIYO, $) {
         // plugins
         $('input[placeholder], textarea[placeholder]').placeholder();
         $('#messages').messages({handleAjax: true});
+
+        // local.js
+        PYO.ajaxifyForm(
+            '.signup .container form',
+            '#id_email',
+            '.signup .container'
+        );
     });
 
-    return PORTFOLIYO;
+    return PYO;
 
-}(PORTFOLIYO || {}, jQuery));
+}(PYO || {}, jQuery));
