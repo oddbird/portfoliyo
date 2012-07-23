@@ -17,7 +17,8 @@ def landing(request):
             form.save()
             messages.success(
                 request, "Thanks for your interest; we'll be in touch soon!")
-            return redirect("landing")
+            if not request.is_ajax():
+                return redirect("landing")
     else:
         form = LeadForm()
 
