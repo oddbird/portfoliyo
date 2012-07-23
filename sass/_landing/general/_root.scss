@@ -24,6 +24,17 @@ a {
   #{$focus} { color: $accent; }
 }
 
+/* -------------------------------------------------------------------------*/
+/* Form Helpers */
+
+.errorlist {
+  @include adjust-font-size-to($smallpx);
+  @include no-style-list;
+  color: $red;
+  text-align: left;
+  ~ input { color: $red !important; }
+}
+
 // ---------------------------------------------------------------------------
 // More Imports
 

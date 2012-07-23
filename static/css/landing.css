@@ -141,6 +141,27 @@ a:hover, a:active, a:focus {
   color: #b58900;
 }
 
+/* -------------------------------------------------------------------------*/
+/* Form Helpers */
+.errorlist {
+  font-size: 0.81em;
+  line-height: 1.529em;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  color: #dc322f;
+  text-align: left;
+}
+.errorlist li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+.errorlist ~ input {
+  color: #dc322f !important;
+}
+
 body h1, body h2, body h3, body h4, body h5, body h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
