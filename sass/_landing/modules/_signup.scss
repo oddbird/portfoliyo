@@ -68,10 +68,11 @@
   }
 
   @include at-breakpoint($break) {
-    @include padding-leader(5);
+    @include padding-leader(2.5);
     @include trailing-border(1px,3);
-    @include background($background image-url('landing/classroom2.jpg') no-repeat scroll top center);
+    @include background(white image-url('landing/classroom2.jpg') no-repeat scroll top center);
     @include background-size(cover);
+    @include text-shadow($default-text-shadow, white 0 0 .5em);
     border-color: $base;
 
     h2, .intro, form {

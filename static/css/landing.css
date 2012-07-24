@@ -88,16 +88,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round-webfont.eot');
-  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round_bold-webfont.eot');
+  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round-webfont.eot');
-  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_it-webfont.eot');
+  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
@@ -119,12 +127,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 * html {
-  font-size: 131.25%;
+  font-size: 112.5%;
 }
 
 html {
-  font-size: 21px;
-  line-height: 1.238em;
+  font-size: 18px;
+  line-height: 1.278em;
 }
 
 body {
@@ -144,8 +152,8 @@ a:hover, a:active, a:focus {
 /* -------------------------------------------------------------------------*/
 /* Form Helpers */
 .errorlist {
-  font-size: 0.81em;
-  line-height: 1.529em;
+  font-size: 0.778em;
+  line-height: 1.643em;
   margin: 0;
   padding: 0;
   border: 0;
@@ -167,22 +175,29 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
   font-weight: bold;
 }
 body p, body ul, body ol {
-  font-size: 0.81em;
-  line-height: 1.529em;
-  margin-bottom: 1.529em;
+  font-size: 0.778em;
+  line-height: 1.643em;
+  margin-bottom: 1.643em;
 }
-@media (min-width: 39.375em) {
+@media (min-width: 33.75em) {
   body p, body ul, body ol {
     font-size: 1em;
-    line-height: 1.238em;
-    margin-bottom: 1.238em;
+    line-height: 1.278em;
+    margin-bottom: 1.278em;
   }
+}
+body ul {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+body li {
+  margin-bottom: 0.639em;
 }
 body em {
   font-style: italic;
 }
 body strong {
-  font-weight: bold;
+  font-weight: 500;
 }
 
 @font-face {
@@ -247,7 +262,7 @@ body strong {
   display: table;
   clear: both;
 }
-@media (min-width: 39.375em) {
+@media (min-width: 33.75em) {
   .container, [role="banner"] h1, [role="contentinfo"] {
     max-width: 47em;
     _width: 47em;
@@ -260,16 +275,16 @@ body strong {
 }
 
 [role="contentinfo"] {
-  padding-top: 0.31em;
-  padding-bottom: 0.31em;
+  padding-top: 0.319em;
+  padding-bottom: 0.319em;
   clear: both;
 }
 
 [role="banner"] {
-  padding-top: 0.31em;
+  padding-top: 0.319em;
   border-bottom-style: solid;
-  border-bottom-width: 0.048em;
-  padding-bottom: 0.262em;
+  border-bottom-width: 0.056em;
+  padding-bottom: 0.264em;
   background: rgba(0, 43, 54, 0.5);
   background: rgba(0, 43, 54, 0.5) -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, rgba(0, 43, 54, 0)));
   background: rgba(0, 43, 54, 0.5) -webkit-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
@@ -280,7 +295,7 @@ body strong {
   color: #fdf6e3;
   border-color: #002b36;
 }
-@media (min-width: 39.375em) {
+@media (min-width: 33.75em) {
   [role="banner"] {
     position: absolute;
     left: 0;
@@ -291,7 +306,7 @@ body strong {
 
 [role="contentinfo"] p {
   font-size: 0.667em;
-  line-height: 1.857em;
+  line-height: 1.917em;
   text-transform: uppercase;
   margin: 0;
 }
@@ -300,10 +315,10 @@ body strong {
 }
 
 .signup {
-  padding-top: 0.619em;
+  padding-top: 0.639em;
 }
 .signup h2 {
-  font-size: 1.238em;
+  font-size: 1.278em;
   line-height: 1.5em;
   margin-bottom: 0.5em;
 }
@@ -311,7 +326,7 @@ body strong {
   -webkit-box-shadow: #002b36 0 0 0.25em;
   -moz-box-shadow: #002b36 0 0 0.25em;
   box-shadow: #002b36 0 0 0.25em;
-  padding: 1.238em 1em;
+  padding: 1.278em 1em;
   margin: 0 -1em;
   background: rgba(253, 246, 227, 0.5);
 }
@@ -335,11 +350,11 @@ body strong {
   -webkit-box-shadow: #002b36 0 0 0.125em inset;
   -moz-box-shadow: #002b36 0 0 0.125em inset;
   box-shadow: #002b36 0 0 0.125em inset;
-  font-size: 0.81em;
-  line-height: 2.294em;
+  font-size: 0.778em;
+  line-height: 2.464em;
   border-style: solid;
-  border-width: 0.059em;
-  padding: 0.324em;
+  border-width: 0.071em;
+  padding: 0.339em;
   width: 100%;
   padding-left: 1em;
   background: #fdf6e3;
@@ -356,12 +371,12 @@ body strong {
   color: rgba(7, 54, 66, 0.5);
 }
 .signup button {
-  font-size: 21px;
-  padding: 0.31em 1.238em;
+  font-size: 18px;
+  padding: 0.319em 1.278em;
   display: inline-block;
   cursor: pointer;
   text-decoration: none;
-  line-height: 1.238em;
+  line-height: 1.278em;
   -webkit-border-radius: 0.125em;
   -moz-border-radius: 0.125em;
   -ms-border-radius: 0.125em;
@@ -404,47 +419,48 @@ body strong {
 }
 .signup .note {
   font-size: 0.667em;
-  line-height: 1.393em;
-  margin-bottom: 0.765em;
+  line-height: 1.438em;
+  margin-bottom: 0.821em;
   display: block;
   color: #586e75;
 }
-@media (min-width: 39.375em) {
+@media (min-width: 33.75em) {
   .signup {
-    padding-top: 6.19em;
+    padding-top: 3.194em;
     border-bottom-style: solid;
-    border-bottom-width: 0.048em;
-    padding-bottom: 3.667em;
-    background: #3c6348 url('../images/landing/classroom2.jpg?1342738619') no-repeat scroll top center;
+    border-bottom-width: 0.056em;
+    padding-bottom: 3.778em;
+    background: white url('../images/landing/classroom2.jpg?1343102853') no-repeat scroll top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    text-shadow: rgba(253, 246, 227, 0.125) 0 1px 0, white 0 0 0.5em;
     border-color: #002b36;
   }
   .signup h2, .signup .intro, .signup form {
     margin-left: 38.298%;
   }
   .signup h2 {
-    font-size: 1.952em;
-    line-height: 1.268em;
-    margin-bottom: 0.317em;
+    font-size: 1.944em;
+    line-height: 1.314em;
+    margin-bottom: 0.329em;
   }
   .signup form {
-    -webkit-border-radius: 0.31em;
-    -moz-border-radius: 0.31em;
-    -ms-border-radius: 0.31em;
-    -o-border-radius: 0.31em;
-    border-radius: 0.31em;
+    -webkit-border-radius: 0.319em;
+    -moz-border-radius: 0.319em;
+    -ms-border-radius: 0.319em;
+    -o-border-radius: 0.319em;
+    border-radius: 0.319em;
     margin-right: 0;
   }
 }
 
 .team {
-  padding-top: 1.238em;
+  padding-top: 1.278em;
   border-bottom-style: solid;
-  border-bottom-width: 0.048em;
-  padding-bottom: 1.19em;
+  border-bottom-width: 0.056em;
+  padding-bottom: 1.222em;
   background: rgba(0, 43, 54, 0.25);
   background: rgba(0, 43, 54, 0.25) -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.25)), color-stop(100%, rgba(0, 43, 54, 0)));
   background: rgba(0, 43, 54, 0.25) -webkit-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
@@ -465,7 +481,7 @@ body strong {
   margin: 0;
 }
 .team .vcard {
-  margin-bottom: 1.238em;
+  margin-bottom: 1.278em;
 }
 @media (min-width: 30em) {
   .team .vcard {
@@ -497,7 +513,7 @@ body strong {
     display: inline;
   }
 }
-@media (min-width: 39.375em) {
+@media (min-width: 33.75em) {
   .team {
     background: rgba(0, 43, 54, 0.5) url('../images/landing/space.png?1342738619') no-repeat fixed center;
     background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -webkit-gradient(linear, 100% 50%, 0% 50%, color-stop(0%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(0, 43, 54, 0)));
@@ -511,16 +527,16 @@ body strong {
     background-size: cover, auto, auto;
   }
   .team .vcard {
-    -webkit-border-radius: 0.31em;
-    -moz-border-radius: 0.31em;
-    -ms-border-radius: 0.31em;
-    -o-border-radius: 0.31em;
-    border-radius: 0.31em;
+    -webkit-border-radius: 0.319em;
+    -moz-border-radius: 0.319em;
+    -ms-border-radius: 0.319em;
+    -o-border-radius: 0.319em;
+    border-radius: 0.319em;
     -webkit-box-shadow: #002b36 0 0 0.25em;
     -moz-box-shadow: #002b36 0 0 0.25em;
     box-shadow: #002b36 0 0 0.25em;
     margin-right: 25.532%;
-    padding: 1.238em;
+    padding: 1.278em;
     background: rgba(253, 246, 227, 0.75);
   }
   .team .vcard h3 {
@@ -561,8 +577,8 @@ body strong {
 
 .message {
   border-style: solid;
-  border-width: 0.048em;
-  padding: 0.571em;
+  border-width: 0.056em;
+  padding: 0.583em;
   position: relative;
   border-color: #002b36;
 }
@@ -583,8 +599,8 @@ body strong {
   border-bottom-right-radius: 0.5em;
 }
 .message:before {
-  font-size: 1.952em;
-  line-height: 1.268em;
+  font-size: 1.944em;
+  line-height: 1.314em;
   float: left;
   margin-right: .4em;
   min-width: 1em;
@@ -603,15 +619,15 @@ body strong {
   background: #dc322f;
 }
 .message p {
-  margin-top: 0.619em;
-  margin-bottom: 0.619em;
+  margin-top: 0.639em;
+  margin-bottom: 0.639em;
 }
 .message .close {
-  font-size: 0.81em;
-  line-height: 1.529em;
+  font-size: 0.778em;
+  line-height: 1.643em;
   position: absolute;
-  top: 0.382em;
-  right: 0.382em;
+  top: 0.411em;
+  right: 0.411em;
   color: rgba(0, 43, 54, 0.25);
 }
 
@@ -636,7 +652,7 @@ body strong {
   list-style-type: none;
   margin-left: 0;
 }
-@media (min-width: 39.375em) {
+@media (min-width: 33.75em) {
   #messages {
     margin-left: 38.298%;
   }

@@ -16,6 +16,15 @@
     }
   }
 
+  ul {
+    list-style: disc;
+    padding-left: 1.5em;
+  }
+
+  li {
+    @include trailer(.5);
+  }
+
   em { font-style: italic; }
-  strong { font-weight: bold; }
+  strong { font-weight: 500; }
 }
