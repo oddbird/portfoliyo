@@ -640,14 +640,12 @@ body strong {
   -webkit-box-shadow: #002b36 0 0 0.125em;
   -moz-box-shadow: #002b36 0 0 0.125em;
   box-shadow: #002b36 0 0 0.125em;
-}
-#messages ul {
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
 }
-#messages ul li {
+#messages li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;

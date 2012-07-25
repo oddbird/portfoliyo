@@ -54,8 +54,8 @@
 #messages {
   @include border-radius(.5em);
   @include box-shadow($base 0 0 .125em);
+  @include no-style-list;
 
-  ul { @include no-style-list; }
   @include at-breakpoint($break) {
     @include pre(3);
   }
