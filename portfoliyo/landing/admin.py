@@ -13,6 +13,7 @@ class LeadAdmin(admin.ModelAdmin):
     date_hierarchy = "signed_up"
     list_display = ["email", "following_up", "signed_up", "notes"]
     list_editable = ["following_up"]
+    search_fields = ["email"]
 
 
 
