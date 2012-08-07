@@ -1,6 +1,6 @@
 pytz==2012d
 
-Django==1.4
+Django==1.4.1
 
 psycopg2==2.4.5
 
