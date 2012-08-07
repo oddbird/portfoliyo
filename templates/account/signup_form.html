@@ -1,0 +1,12 @@
+{% load widget_tweaks %}
+
+<form method="POST">
+  {% csrf_token %}
+
+  <div class="formfield">
+    {{ form.name.errors }}
+    <label for="name">Name</label>
+    {{ form.name|attr:"placeholder:Enter your name" }}
+    <button type="submit">Sign me up</button>
+  </div>
+</form>

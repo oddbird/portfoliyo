@@ -1,0 +1,54 @@
+{% extends "base_site.html" %}
+
+{% block maincontent %}
+
+<article class="signup" role="main">
+  <div class="container">
+    <h2>Share your learning with the people who care.</h2>
+    <div class="intro">
+      <p>
+        It takes a village to raise a child —
+        parents, relatives, teachers, coaches —
+        but it can be hard for everyone to stay connected.
+        Portfoliyo is a place to bring a community together
+        around each child's learning experiences,
+        to see what they are working on
+        and provide support & inspiration.
+      </p>
+      <ul>
+        <li>
+          <strong>Build a private Portfoliyo network.</strong>
+          Get relatives, teachers, mentors, instructors,
+          and coaches all on board.
+          Portfoliyo is free for everyone.
+        </li>
+        <li>
+          <strong>Parents & kids:
+          Post learning experiences.</strong>
+          Share notes, photos, and videos
+          with your network.
+          Show what you are learning,
+          and ask for help when you need it!
+        </li>
+        <li>
+          <strong>Supporters:
+          Stay informed and in touch.</strong>
+          Participate in the lives and educations
+          of the children you care about.
+          Give them your encouragement and feedback
+          to help them learn and grow!
+        </li>
+      </ul>
+    </div>
+    {% include "account/signup_form.html" %}
+  </div>
+</article>
+
+<article class="login" role="main">
+  <div class="container">
+    <h2>Already have a Portfoliyo account?</h2>
+    {% include "account/login_form.html" %}
+  </div>
+</article>
+
+{% endblock maincontent %}

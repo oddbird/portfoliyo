@@ -6,6 +6,30 @@
 
   <header role="banner">
     <h1><a href="/" rel="home">Portfoliyo</a></h1>
+
+    <nav role="navigation">
+      <h2 class="navhead">Primary Navigation</h2>
+      {% if user.is_authenticated %}
+        {% block navigation %}
+          <a href="/" rel="home" class="home">Home</a>
+          <a href="/username/">Me</a>
+          <a href="/username/network/">My Network</a>
+        {% endblock navigation %}
+      {% endif %}
+    </nav>
+
+    <nav class="meta">
+      <h2 class="navhead">Account Navigation</h2>
+      {% if user.is_authenticated %}
+      <p>
+        Welcome {{ request.user.first_name|default:request.user.username }}
+        [
+        <a href="{% url account_logout %}">Sign Out</a>,
+        <a href="{% url account_password_change %}">Change password</a>
+        ]
+      </p>
+      {% endif %}
+    </nav>
   </header>
 
   <div role="main">
@@ -19,7 +43,7 @@
   <footer role="contentinfo">
     <p class="author vcard">
       copyright &copy; 2012
-      <strong class="fn org">Portfoliyo</strong>
+      <strong class="fn org">The K Network</strong>
     </p>
   </footer>
 
