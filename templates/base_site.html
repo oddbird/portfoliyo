@@ -17,7 +17,7 @@
   </nav>
 
   <nav class="meta">
-    {% if user.is_authenticated %}
+    {# if user.is_authenticated #}
     <p>
       Welcome { fullname }
       [
@@ -25,7 +25,7 @@
       <a href="{# @@@ url account_password_change #}">Change password</a>
       ]
     </p>
-    {% endif %}
+    {# endif #}
   </nav>
 
   <div role="main">
