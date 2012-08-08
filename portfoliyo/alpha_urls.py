@@ -15,4 +15,10 @@ urlpatterns = patterns(
         {"template": "users/user_edit.html"},
         name="user_edit",
         ),
+    url(
+        r"^username/network/",
+        direct_to_template,
+        {"template": "users/network.html"},
+        name="network",
+        ),
 )
