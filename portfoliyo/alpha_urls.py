@@ -16,10 +16,10 @@ urlpatterns = patterns(
         name="login",
         ),
     url(
-        r"^change_password/",
+        r"^password_change/",
         direct_to_template,
         {"template": "users/password_change.html"},
-        name="change_password",
+        name="password_change",
         ),
     url(
         r"^username/edit/",
