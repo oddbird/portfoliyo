@@ -10,6 +10,12 @@ urlpatterns = patterns(
         name="landing",
         ),
     url(
+        r"^login/",
+        direct_to_template,
+        {"template": "users/login.html"},
+        name="login",
+        ),
+    url(
         r"^username/edit/",
         direct_to_template,
         {"template": "users/user_edit.html"},
