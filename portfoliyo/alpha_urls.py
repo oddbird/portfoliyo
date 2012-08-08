@@ -13,12 +13,18 @@ urlpatterns = patterns(
         r"^username/edit/",
         direct_to_template,
         {"template": "users/user_edit.html"},
-        name="user_edit",
+        name="edit_profile",
         ),
     url(
         r"^username/network/",
         direct_to_template,
         {"template": "users/network.html"},
         name="network",
+        ),
+    url(
+        r"^username/",
+        direct_to_template,
+        {"template": "users/user_detail.html"},
+        name="profile",
         ),
 )

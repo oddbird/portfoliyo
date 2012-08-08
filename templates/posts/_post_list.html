@@ -1,0 +1,53 @@
+<div class="post">
+  <a href="{# @@@ #}/username/posts/post_id">permalink</a>
+  <a href="{# @@@ #}/username/">{{ user }}</a>
+  <img src="http://placehold.it/75x75/">
+  <p class="post-timestamp">{{ timestamp }}</p>
+
+  {% if image %}
+  <img src="http://placehold.it/150x150/">
+  {% endif %}
+
+  {% if text %}
+  <p class="post-text">{{ text }}</p>
+  {% endif %}
+
+  {% if highfive %}
+  <p>{{ highfive }} high fives</p>
+  {% endif %}
+
+  {% if comment %}
+  <ul class="post-comments">
+    <li>
+      <img src="http://placehold.it/25x25/">
+      {{ comment_author }}:
+      {{ comment }}
+      {{ comment_timestamp }}
+      {# if user is commenter or post author #}
+      <button class="remove-comment">remove</button>
+      {# endif #}
+    </li>
+  </ul>
+  {% endif %}
+
+  <a href="#">high five!</a>
+
+  <form method="POST" class="comment-add-form">
+    {# csrf_token #}
+
+    {# form.non_field_errors #}
+
+    <div class="formfield comment">
+      {# form.comment.errors #}
+      <textarea id="comment">Add a comment</textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">submit</button>
+    </div>
+  </form>
+
+  {# if user is post author #}
+  <button class="remove-post">remove</button>
+  {# endif #}
+</div>
