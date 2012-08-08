@@ -1,4 +1,3 @@
-@charset "UTF-8";
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -126,13 +125,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-style: normal;
 }
 
-* html {
-  font-size: 112.5%;
-}
-
 html {
-  font-size: 18px;
-  line-height: 1.278em;
+  font-size: 112.5%;
+  line-height: 1.27778em;
 }
 
 body {
@@ -152,8 +147,8 @@ a:hover, a:active, a:focus {
 /* -------------------------------------------------------------------------*/
 /* Form Helpers */
 .errorlist {
-  font-size: 0.778em;
-  line-height: 1.643em;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   margin: 0;
   padding: 0;
   border: 0;
@@ -175,15 +170,15 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
   font-weight: bold;
 }
 body p, body ul, body ol {
-  font-size: 0.778em;
-  line-height: 1.643em;
-  margin-bottom: 1.643em;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  margin-bottom: 1.64286em;
 }
 @media (min-width: 33.75em) {
   body p, body ul, body ol {
     font-size: 1em;
-    line-height: 1.278em;
-    margin-bottom: 1.278em;
+    line-height: 1.27778em;
+    margin-bottom: 1.27778em;
   }
 }
 body ul {
@@ -191,7 +186,7 @@ body ul {
   padding-left: 1.5em;
 }
 body li {
-  margin-bottom: 0.639em;
+  margin-bottom: 0.63889em;
 }
 body em {
   font-style: italic;
@@ -265,7 +260,6 @@ body strong {
 @media (min-width: 33.75em) {
   .container, [role="banner"] h1, [role="contentinfo"] {
     max-width: 47em;
-    _width: 47em;
   }
 }
 .container *, [role="banner"] h1 *, [role="contentinfo"] * {
@@ -275,21 +269,22 @@ body strong {
 }
 
 [role="contentinfo"] {
-  padding-top: 0.319em;
-  padding-bottom: 0.319em;
+  padding-top: 0.31944em;
+  padding-bottom: 0.31944em;
   clear: both;
 }
 
 [role="banner"] {
-  padding-top: 0.319em;
+  padding-top: 0.31944em;
   border-bottom-style: solid;
-  border-bottom-width: 0.056em;
-  padding-bottom: 0.264em;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.26389em;
   background: rgba(0, 43, 54, 0.5);
   background: rgba(0, 43, 54, 0.5) -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, rgba(0, 43, 54, 0)));
   background: rgba(0, 43, 54, 0.5) -webkit-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
   background: rgba(0, 43, 54, 0.5) -moz-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
   background: rgba(0, 43, 54, 0.5) -o-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.5) -ms-linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
   background: rgba(0, 43, 54, 0.5) linear-gradient(top, rgba(0, 43, 54, 0.5), rgba(0, 43, 54, 0));
   text-shadow: rgba(0, 43, 54, 0.5) 0 1px 0;
   color: #fdf6e3;
@@ -305,8 +300,8 @@ body strong {
 }
 
 [role="contentinfo"] p {
-  font-size: 0.667em;
-  line-height: 1.917em;
+  font-size: 0.66667em;
+  line-height: 1.91667em;
   text-transform: uppercase;
   margin: 0;
 }
@@ -315,10 +310,10 @@ body strong {
 }
 
 .signup {
-  padding-top: 0.639em;
+  padding-top: 0.63889em;
 }
 .signup h2 {
-  font-size: 1.278em;
+  font-size: 1.27778em;
   line-height: 1.5em;
   margin-bottom: 0.5em;
 }
@@ -326,7 +321,7 @@ body strong {
   -webkit-box-shadow: #002b36 0 0 0.25em;
   -moz-box-shadow: #002b36 0 0 0.25em;
   box-shadow: #002b36 0 0 0.25em;
-  padding: 1.278em 1em;
+  padding: 1.27778em 1em;
   margin: 0 -1em;
   background: rgba(253, 246, 227, 0.5);
 }
@@ -335,9 +330,9 @@ body strong {
   margin: 0;
 }
 .signup label {
-  text-indent: -119988px;
+  text-indent: 110%;
+  white-space: nowrap;
   overflow: hidden;
-  text-align: left;
   display: inline-block;
   position: absolute;
 }
@@ -350,11 +345,11 @@ body strong {
   -webkit-box-shadow: #002b36 0 0 0.125em inset;
   -moz-box-shadow: #002b36 0 0 0.125em inset;
   box-shadow: #002b36 0 0 0.125em inset;
-  font-size: 0.778em;
-  line-height: 2.464em;
+  font-size: 0.77778em;
+  line-height: 2.46429em;
   border-style: solid;
-  border-width: 0.071em;
-  padding: 0.339em;
+  border-width: 0.07143em;
+  padding: 0.33929em;
   width: 100%;
   padding-left: 1em;
   background: #fdf6e3;
@@ -372,11 +367,11 @@ body strong {
 }
 .signup button {
   font-size: 18px;
-  padding: 0.319em 1.278em;
+  padding: 0.31944em 1.27778em;
   display: inline-block;
   cursor: pointer;
   text-decoration: none;
-  line-height: 1.278em;
+  line-height: 1.27778em;
   -webkit-border-radius: 0.125em;
   -moz-border-radius: 0.125em;
   -ms-border-radius: 0.125em;
@@ -387,6 +382,7 @@ body strong {
   background: -webkit-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
   background: -moz-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
   background: -o-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
+  background: -ms-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
   background: linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
   -webkit-box-shadow: rgba(14, 111, 135, 0.75) 0 1px 0 inset;
   -moz-box-shadow: rgba(14, 111, 135, 0.75) 0 1px 0 inset;
@@ -402,6 +398,7 @@ body strong {
   background: -webkit-linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
   background: -moz-linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
   background: -o-linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
+  background: -ms-linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
   background: linear-gradient(rgba(5, 35, 43, 0.75), rgba(0, 0, 0, 0.75));
 }
 .signup button:active {
@@ -418,18 +415,18 @@ body strong {
   box-shadow: none;
 }
 .signup .note {
-  font-size: 0.667em;
-  line-height: 1.438em;
-  margin-bottom: 0.821em;
+  font-size: 0.66667em;
+  line-height: 1.4375em;
+  margin-bottom: 0.82143em;
   display: block;
   color: #586e75;
 }
 @media (min-width: 33.75em) {
   .signup {
-    padding-top: 3.194em;
+    padding-top: 3.19444em;
     border-bottom-style: solid;
-    border-bottom-width: 0.056em;
-    padding-bottom: 3.778em;
+    border-bottom-width: 0.05556em;
+    padding-bottom: 3.77778em;
     background: white url('../images/landing/classroom2.jpg?1343102853') no-repeat scroll top center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
@@ -439,33 +436,34 @@ body strong {
     border-color: #002b36;
   }
   .signup h2, .signup .intro, .signup form {
-    margin-left: 38.298%;
+    margin-left: 38.29787%;
   }
   .signup h2 {
-    font-size: 1.944em;
-    line-height: 1.314em;
-    margin-bottom: 0.329em;
+    font-size: 1.94444em;
+    line-height: 1.31429em;
+    margin-bottom: 0.32857em;
   }
   .signup form {
-    -webkit-border-radius: 0.319em;
-    -moz-border-radius: 0.319em;
-    -ms-border-radius: 0.319em;
-    -o-border-radius: 0.319em;
-    border-radius: 0.319em;
+    -webkit-border-radius: 0.31944em;
+    -moz-border-radius: 0.31944em;
+    -ms-border-radius: 0.31944em;
+    -o-border-radius: 0.31944em;
+    border-radius: 0.31944em;
     margin-right: 0;
   }
 }
 
 .team {
-  padding-top: 1.278em;
+  padding-top: 1.27778em;
   border-bottom-style: solid;
-  border-bottom-width: 0.056em;
-  padding-bottom: 1.222em;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 1.22222em;
   background: rgba(0, 43, 54, 0.25);
   background: rgba(0, 43, 54, 0.25) -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.25)), color-stop(100%, rgba(0, 43, 54, 0)));
   background: rgba(0, 43, 54, 0.25) -webkit-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
   background: rgba(0, 43, 54, 0.25) -moz-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
   background: rgba(0, 43, 54, 0.25) -o-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
+  background: rgba(0, 43, 54, 0.25) -ms-linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
   background: rgba(0, 43, 54, 0.25) linear-gradient(top, rgba(0, 43, 54, 0.25), rgba(0, 43, 54, 0));
   border-color: #002b36;
 }
@@ -481,28 +479,28 @@ body strong {
   margin: 0;
 }
 .team .vcard {
-  margin-bottom: 1.278em;
+  margin-bottom: 1.27778em;
 }
 @media (min-width: 30em) {
   .team .vcard {
     overflow: hidden;
   }
   .team .vcard h3, .team .vcard p {
-    width: 65.714%;
+    width: 65.71429%;
     float: right;
     margin-right: 0;
     #margin-left: -1em;
     display: inline;
   }
   .team .vcard img {
-    width: 31.429%;
+    width: 31.42857%;
     float: left;
-    margin-right: 2.857%;
+    margin-right: 2.85714%;
     display: inline;
   }
   .team .vcard:nth-child(even) h3, .team .vcard:nth-child(even) p {
     float: left;
-    margin-right: 2.857%;
+    margin-right: 2.85714%;
     #margin-left: 0;
     text-align: right;
   }
@@ -520,6 +518,7 @@ body strong {
     background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -webkit-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
     background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -moz-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
     background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -o-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
+    background: url('../images/landing/space.png?1342738619') no-repeat fixed center, -ms-linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
     background: url('../images/landing/space.png?1342738619') no-repeat fixed center, linear-gradient(right, rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0));
     -webkit-background-size: cover, auto, auto;
     -moz-background-size: cover, auto, auto;
@@ -527,58 +526,52 @@ body strong {
     background-size: cover, auto, auto;
   }
   .team .vcard {
-    -webkit-border-radius: 0.319em;
-    -moz-border-radius: 0.319em;
-    -ms-border-radius: 0.319em;
-    -o-border-radius: 0.319em;
-    border-radius: 0.319em;
+    -webkit-border-radius: 0.31944em;
+    -moz-border-radius: 0.31944em;
+    -ms-border-radius: 0.31944em;
+    -o-border-radius: 0.31944em;
+    border-radius: 0.31944em;
     -webkit-box-shadow: #002b36 0 0 0.25em;
     -moz-box-shadow: #002b36 0 0 0.25em;
     box-shadow: #002b36 0 0 0.25em;
-    margin-right: 25.532%;
-    padding: 1.278em;
+    margin-right: 25.53191%;
+    padding: 1.27778em;
     background: rgba(253, 246, 227, 0.75);
   }
   .team .vcard h3 {
     color: #002b36;
   }
   .team .vcard h3, .team .vcard p {
-    width: 65.714%;
+    width: 65.71429%;
     float: right;
     margin-right: 0;
-    #margin-left: -1em;
-    display: inline;
   }
   .team .vcard img {
-    width: 31.429%;
+    width: 31.42857%;
     float: left;
-    margin-right: 2.857%;
-    display: inline;
+    margin-right: 2.85714%;
   }
   .team .vcard:nth-child(even) {
-    margin-left: 25.532%;
+    margin-left: 25.53191%;
     margin-right: 0%;
   }
   .team .vcard:nth-child(even) h3, .team .vcard:nth-child(even) p {
-    width: 65.714%;
+    width: 65.71429%;
     float: left;
-    margin-right: 2.857%;
-    display: inline;
+    margin-right: 2.85714%;
     text-align: right;
   }
   .team .vcard:nth-child(even) img {
-    width: 31.429%;
+    width: 31.42857%;
     float: right;
     margin-right: 0;
-    #margin-left: -1em;
-    display: inline;
   }
 }
 
 .message {
   border-style: solid;
-  border-width: 0.056em;
-  padding: 0.583em;
+  border-width: 0.05556em;
+  padding: 0.58333em;
   position: relative;
   border-color: #002b36;
 }
@@ -599,8 +592,8 @@ body strong {
   border-bottom-right-radius: 0.5em;
 }
 .message:before {
-  font-size: 1.944em;
-  line-height: 1.314em;
+  font-size: 1.94444em;
+  line-height: 1.31429em;
   float: left;
   margin-right: .4em;
   min-width: 1em;
@@ -619,15 +612,15 @@ body strong {
   background: #dc322f;
 }
 .message p {
-  margin-top: 0.639em;
-  margin-bottom: 0.639em;
+  margin-top: 0.63889em;
+  margin-bottom: 0.63889em;
 }
 .message .close {
-  font-size: 0.778em;
-  line-height: 1.643em;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   position: absolute;
-  top: 0.411em;
-  right: 0.411em;
+  top: 0.41071em;
+  right: 0.41071em;
   color: rgba(0, 43, 54, 0.25);
 }
 
@@ -652,7 +645,7 @@ body strong {
 }
 @media (min-width: 33.75em) {
   #messages {
-    margin-left: 38.298%;
+    margin-left: 38.29787%;
   }
 }
 
