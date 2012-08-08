@@ -19,13 +19,18 @@
   {% if comment %}
   <ul class="post-comments">
     <li>
-      <img src="http://placehold.it/25x25/">
-      {{ comment_author }}:
-      {{ comment }}
-      {{ comment_timestamp }}
-      {# if user is commenter or post author #}
-      <button class="remove-comment">remove</button>
-      {# endif #}
+      <div class="comment">
+        <ul>
+          <li><img src="http://placehold.it/25x25/"></li>
+          <li>{{ comment_author }}</li>
+          <li>{{ comment }}</li>
+          <li>{{ comment_timestamp }}</li>
+        </ul>
+
+        {# if user is commenter or post author #}
+        <button class="remove-comment">remove</button>
+        {# endif #}
+      </div>
     </li>
   </ul>
   {% endif %}
