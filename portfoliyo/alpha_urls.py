@@ -22,9 +22,15 @@ urlpatterns = patterns(
         name="network",
         ),
     url(
+        r"^username/join_network/",
+        direct_to_template,
+        {"template": "users/join_network.html"},
+        name="join_network",
+        ),
+    url(
         r"^username/",
         direct_to_template,
-        {"template": "users/user_detail.html"},
+        {"template": "users/user_feed.html"},
         name="profile",
         ),
 )
