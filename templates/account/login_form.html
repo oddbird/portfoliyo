@@ -1,25 +1,25 @@
-<form method="POST">
-  {% csrf_token %}
+<form method="POST" class="login-form">
+  {# csrf_token #}
 
-  {{ form.non_field_errors }}
+  <h2>Login</h2>
+  {# form.non_field_errors #}
 
-  <ul>
-    <li>
-      {{ form.username.errors }}
-      {{ form.username.label_tag }}
-      {{ form.username }}
-    </li>
-    <li>
-      {{ form.password.errors }}
-      {{ form.password.label_tag }}
-      {{ form.password }}
-    </li>
-  </ul>
+  <div class="formfield username">
+    {# form.username.errors #}
+    <label for="username">username</label>
+    <input type="text" id="username" />
+  </div>
+
+  <div class="formfield password">
+    {# form.password.errors #}
+    <label for="password">password</label>
+    <input type="password" id="password" />
+  </li>
 
   <div class="form-actions">
     <p>
       Forgot your password?
-      <a href="/password_reset/">Reset it</a>.
+      <a href="{# @@@ #}/password_reset/">Reset it</a>.
     </p>
     <button type="submit">login</button>
   </div>

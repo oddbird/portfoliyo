@@ -1,12 +1,16 @@
-{% load widget_tweaks %}
+<form method="POST" class="signup-form">
+  {# csrf_token #}
 
-<form method="POST">
-  {% csrf_token %}
+  <h2>Signup</h2>
+  {# form.non_field_errors #}
 
-  <div class="formfield">
-    {{ form.name.errors }}
+  <div class="formfield name">
+    {# form.name.errors #}
     <label for="name">Name</label>
-    {{ form.name|attr:"placeholder:Enter your name" }}
-    <button type="submit">Sign me up</button>
+    <input type="text" id="name" />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit">Start your portfoliyo!</button>
   </div>
 </form>
