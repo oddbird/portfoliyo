@@ -22,6 +22,18 @@ urlpatterns = patterns(
         name="password_change",
         ),
     url(
+        r"^password_reset/",
+        direct_to_template,
+        {"template": "users/password_reset.html"},
+        name="password_reset",
+        ),
+    url(
+        r"^password_reset_confirm/",
+        direct_to_template,
+        {"template": "users/password_reset_confirm.html"},
+        name="password_reset_confirm",
+        ),
+    url(
         r"^username/edit/",
         direct_to_template,
         {"template": "users/user_edit.html"},
