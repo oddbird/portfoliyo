@@ -5,6 +5,7 @@
 @import "compass/layout";
 @import "susy";
 @import "modular-scale";
+@import "breakpoint";
 
 // ---------------------------------------------------------------------------
 // Modules
@@ -23,10 +24,17 @@ $legacy-support-for-ie8         : false !default;
 // ---------------------------------------------------------------------------
 // Grids
 
-// $grid-background-baseline-height  : $base-line-height;
-// $grid-background-baseline-color   : rgba($lighter,.25);
-// $grid-background-column-color     : rgba($blue-lightest,.25);
+$total-columns  : 12;
+$column-width   : 4em;
+$gutter-width   : 1em;
+$grid-padding   : 1em;
+
+$break          : 40em;
+
+$grid-background-baseline-height  : $base-line-height;
+$grid-background-baseline-color   : rgba($base1,.25);
+$grid-background-column-color     : rgba($base2,.25);
 
 $show-column-grid-backgrounds     : true;
 $show-baseline-grid-backgrounds   : true;
-$show-grid-backgrounds            : true;
+$show-grid-backgrounds            : false;

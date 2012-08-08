@@ -1,0 +1,9 @@
+// ---------------------------------------------------------------------------
+// Contentinfo
+
+[role="contentinfo"] {
+  @extend %bleed;
+  @include rhythm(1.5,.5,.5,0);
+  clear: both;
+  background: $base03;
+}

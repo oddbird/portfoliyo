@@ -4,29 +4,29 @@
 <div>
 {% block page %}
 
-  <h1 role="banner"><a href="{# @@@ #}/alpha/" rel="home">Portfoliyo</a></h1>
+  <div role="banner">
+    <h1 class="brand"><a href="{# @@@ #}/alpha/" rel="home">Portfoliyo</a></h1>
 
-  <nav role="navigation">
-  {% block navigation %}
-    <ul>
-      <li><a href="{# @@@ #}/alpha/" rel="home">Home</a></li>
-      <li><a href="{# @@@ #}/alpha/username/">Me</a></li>
-      <li><a href="{# @@@ #}/alpha/username/network/">My Network</a></li>
-    </ul>
-  {% endblock navigation %}
-  </nav>
+    <nav role="navigation">
+    {% block navigation %}
+      <ul>
+        <li><a href="{# @@@ #}/alpha/username/">Me</a></li>
+        <li><a href="{# @@@ #}/alpha/username/network/">My Network</a></li>
+      </ul>
+    {% endblock navigation %}
+    </nav>
 
-  <nav class="meta">
-    {# if user.is_authenticated #}
-    <p>
-      Welcome { fullname }
-      [
-      <a href="{# @@@ url account_logout #}">Sign Out</a>,
-      <a href="{# @@@ url account_password_change #}">Change password</a>
-      ]
-    </p>
-    {# endif #}
-  </nav>
+    <nav class="meta">
+      {# if user.is_authenticated #}
+      <p>Welcome { name }</p>
+      <ul class="useractions">
+        <li><a href="{# @@@ url user_edit #}/alpha/username/edit/">Edit profile</a></li>
+        <li><a href="{# @@@ url user_password_change #}">Change password</a></li>
+        <li><a href="{# @@@ url user_logout #}/alpha/signup/">Sign Out</a></li>
+      </ul>
+      {# endif #}
+    </nav>
+  </div>
 
   <div role="main">
     {% include "messages_ui/_messages.html" %}

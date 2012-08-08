@@ -13,8 +13,20 @@ html { -webkit-font-smoothing: antialiased; }
 
 body{
   @include baseline-grid-background;
+  @include container;
   @include serif;
   color: $base;
+}
+
+[role="main"] {
+  @extend %type;
+}
+
+%bleed {
+  margin-left: - $grid-padding;
+  margin-right: - $grid-padding;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
 }
 
 /* -------------------------------------------------------------------------*/
@@ -35,5 +47,5 @@ body{
 // ---------------------------------------------------------------------------
 // Imports
 
-// @import type
+@import "type";
 @import "forms";

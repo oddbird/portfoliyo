@@ -1,0 +1,44 @@
+// ---------------------------------------------------------------------------
+// Banner
+
+[role="banner"] {
+  @extend %bleed;
+  @include pie-clearfix;
+  @include rhythm(0,.25,.25,1);
+  background: $base03;
+}
+
+[role="navigation"] {
+  ul { @include inline-block-list; }
+  li {
+    margin-right: rhythm(1);
+    &:last-child { margin-right: 0; }
+  }
+  a { display: block; }
+}
+
+.meta {
+  position: relative;
+}
+
+.useractions {
+  @include stretch-x;
+  display: none;
+  top: 100%;
+  padding: rhythm(.5);
+  background: $base03;
+  .meta:hover & { display: block; }
+}
+
+@include breakpoint($break) {
+  .brand {
+    @include span-columns(2);
+  }
+  [role="navigation"] {
+    @include span-columns(7);
+  }
+  .meta {
+    @include span-columns(3 omega);
+    p { text-align: right; }
+  }
+}

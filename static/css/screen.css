@@ -58,7 +58,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* Root */
 html {
   font-size: 100%;
-  line-height: 1.1875em;
+  line-height: 1.25em;
 }
 
 html {
@@ -66,19 +66,26 @@ html {
 }
 
 body {
-  background-image: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(5%, rgba(0, 0, 0, 0.5)), color-stop(5%, rgba(0, 0, 0, 0)));
-  background-image: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
-  background-image: -moz-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
-  background-image: -o-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
-  background-image: -ms-linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
-  background-image: linear-gradient(bottom, rgba(0, 0, 0, 0.5) 5%, rgba(0, 0, 0, 0) 5%);
-  -webkit-background-size: 100% 1.5em;
-  -moz-background-size: 100% 1.5em;
-  -o-background-size: 100% 1.5em;
-  background-size: 100% 1.5em;
-  background-position: left top;
+  *zoom: 1;
+  max-width: 59em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
   font-family: Cambria, Georgia, serif;
   color: #657b83;
+}
+body:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[role="banner"], [role="contentinfo"] {
+  margin-left: -1em;
+  margin-right: -1em;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 /* -------------------------------------------------------------------------*/
@@ -99,6 +106,155 @@ body {
   color: black;
   background: #268bd2;
   text-shadow: none;
+}
+
+/* -------------------------------------------------------------------------*/
+/* Links */
+a:hover, a:active {
+  outline: none;
+}
+a:link, a:visited {
+  color: #268bd2;
+  text-decoration: none;
+}
+a:focus, a:hover, a:active {
+  color: #d33682;
+}
+
+[role="main"] {
+  /* -------------------------------------------------------------------------*/
+  /* Headings */
+  /* -------------------------------------------------------------------------*/
+  /* Inline */
+  /* -------------------------------------------------------------------------*/
+  /* Block */
+  /* -------------------------------------------------------------------------*/
+  /* Replaced */
+  /* -------------------------------------------------------------------------*/
+  /* Lists */
+  /* -------------------------------------------------------------------------*/
+  /* Tables */
+}
+[role="main"] h1, [role="main"] h2, [role="main"] h3, [role="main"] h4 {
+  font-weight: bold;
+}
+[role="main"] h5, [role="main"] h6 {
+  font-style: italic;
+}
+[role="main"] cite, [role="main"] em, [role="main"] dfn, [role="main"] address, [role="main"] i {
+  font-style: italic;
+}
+[role="main"] strong, [role="main"] dfn, [role="main"] b {
+  font-weight: bold;
+}
+[role="main"] sup, [role="main"] sub {
+  position: relative;
+  font-size: smaller;
+  line-height: 0;
+}
+[role="main"] sup {
+  top: -0.5em;
+}
+[role="main"] sub {
+  bottom: -0.25em;
+}
+[role="main"] abbr, [role="main"] acronym {
+  border-bottom: 1px dotted;
+  cursor: help;
+}
+[role="main"] ins {
+  text-decoration: underline;
+}
+[role="main"] del {
+  text-decoration: line-through;
+}
+[role="main"] mark {
+  background: #ff9;
+  background-color: rgba(255, 255, 0, 0.5);
+  text-shadow: none;
+}
+[role="main"] q {
+  font-style: italic;
+}
+[role="main"] q em {
+  font-style: normal;
+}
+[role="main"] pre, [role="main"] code, [role="main"] tt {
+  font-family: "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, Courier, monospace, sans-serif;
+}
+[role="main"] p {
+  margin-bottom: 1.25em;
+}
+[role="main"] pre {
+  padding: 1.25em;
+  white-space: pre;
+  white-space: pre-wrap;
+  white-space: pre-line;
+  word-wrap: break-word;
+}
+[role="main"] blockquote {
+  padding: 1.25em;
+  font-style: italic;
+}
+[role="main"] img, [role="main"] object, [role="main"] embed {
+  vertical-align: top;
+  max-width: 100%;
+}
+.ie7 [role="main"] img {
+  -ms-interpolation-mode: bicubic;
+}
+[role="main"] ol, [role="main"] ul, [role="main"] dd {
+  margin-bottom: 1.25em;
+  margin-left: 1.25em;
+}
+[role="main"] ol {
+  list-style-type: decimal;
+}
+[role="main"] ul {
+  list-style-type: disc;
+}
+nav [role="main"] ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+nav [role="main"] ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+[role="main"] dt {
+  margin-top: 1.25em;
+}
+[role="main"] table {
+  margin-bottom: 1.25em;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+[role="main"] table, [role="main"] td, [role="main"] th {
+  vertical-align: top;
+}
+[role="main"] th, [role="main"] thead th {
+  font-weight: bold;
+}
+[role="main"] th, [role="main"] td, [role="main"] caption {
+  padding: 0.625em;
+  text-align: left;
+  font-weight: normal;
+}
+[role="main"] table, [role="main"] th {
+  border-bottom-style: solid;
+  border-bottom-width: 0.0625em;
+  padding-bottom: 0.5625em;
+}
+[role="main"] tfoot {
+  font-size: 0.8125em;
+  line-height: 1.53846em;
+}
+[role="main"] caption {
+  text-transform: uppercase;
 }
 
 /* -------------------------------------------------------------------------*/
@@ -178,4 +334,98 @@ optgroup {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
+}
+
+[role="banner"] {
+  *zoom: 1;
+  margin-top: 0em;
+  padding-top: 0.3125em;
+  padding-bottom: 0.3125em;
+  margin-bottom: 1.25em;
+  background: #002b36;
+}
+[role="banner"]:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[role="navigation"] ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  *zoom: 1;
+}
+[role="navigation"] ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  white-space: nowrap;
+}
+[role="navigation"] ul li {
+  *display: inline;
+}
+[role="navigation"] li {
+  margin-right: 1.25em;
+}
+[role="navigation"] li:last-child {
+  margin-right: 0;
+}
+[role="navigation"] a {
+  display: block;
+}
+
+.meta {
+  position: relative;
+}
+
+.useractions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  display: none;
+  top: 100%;
+  padding: 0.625em;
+  background: #002b36;
+}
+.meta:hover .useractions {
+  display: block;
+}
+
+@media (min-width: 40em) {
+  .brand {
+    width: 15.25424%;
+    float: left;
+    margin-right: 1.69492%;
+  }
+
+  [role="navigation"] {
+    width: 57.62712%;
+    float: left;
+    margin-right: 1.69492%;
+  }
+
+  .meta {
+    width: 23.72881%;
+    float: right;
+    margin-right: 0;
+    #margin-left: -1em;
+  }
+  .meta p {
+    text-align: right;
+  }
+}
+[role="contentinfo"] {
+  margin-top: 1.875em;
+  padding-top: 0.625em;
+  padding-bottom: 0.625em;
+  margin-bottom: 0em;
+  clear: both;
+  background: #002b36;
 }
