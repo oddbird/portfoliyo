@@ -1,0 +1,118 @@
+{% extends "base_site.html" %}
+
+{% block maincontent %}
+
+<article class="profile-edit">
+  <h2>Edit My Profile</h2>
+
+  <form method="POST" class="profile-edit-form">
+    {# csrf_token #}
+
+    {# form.non_field_errors #}
+
+    {# @@@ if first login}
+    <div class="formfield password">
+      {# form.password.errors #}
+      <label for="password">password</label>
+      <input type="password" id="password" />
+    </div>
+
+    <div class="formfield password-confirm">
+      {# form.password_confirm.errors #}
+      <label for="password-confirm">confirm password</label>
+      <input type="password" id="password-confirm" />
+    </div>
+    {# endif #}
+
+    <div class="formfield name">
+      {# form.name.errors #}
+      <label for="name">name</label>
+      <input type="text" id="name" />
+    </div>
+
+    <div class="formfield username">
+      {# form.username.errors #}
+      <label for="username">username</label>
+      <input type="text" id="username" />
+    </div>
+
+    <div class="profile-url">
+      <h3>URL: </h3>
+      <a href="{# @@@ #}/username/">{# @@@ #}portfoliyo.org/username/</a>
+    </div>
+
+    <div class="formfield email">
+      {# form.email.errors #}
+      <label for="email">email</label>
+      <input type="text" id="email" />
+    </div>
+
+    <div class="profile-picture">
+      <img src="http://placekitten.com/g/250/250">
+    </div>
+
+    <div class="formfield picture">
+      {# form.picture.errors #}
+      <label for="picture">profile picture</label>
+      <input type="file" id="picture" />
+    </div>
+
+    <div class="profile-picture2">
+      <img src="http://placekitten.com/100/100">
+    </div>
+
+    <div class="formfield picture2">
+      {# form.picture2.errors #}
+      <label for="picture2">alternative picture</label>
+      <input type="file" id="picture2" />
+    </div>
+
+    <div class="formfield birthday">
+      {# form.birthday.errors #}
+      <label for="birthday">birthday</label>
+      <input type="date" id="birthday" />
+    </div>
+
+    <div class="formfield subject">
+      {# form.subject.errors #}
+      <label for="subject">favorite subject</label>
+      <input type="text" id="subject" />
+    </div>
+
+    <div class="formfield food">
+      {# form.food.errors #}
+      <label for="food">favorite food</label>
+      <input type="text" id="food" />
+    </div>
+
+    <div class="formfield sport">
+      {# form.sport.errors #}
+      <label for="sport">favorite sport</label>
+      <input type="text" id="sport" />
+    </div>
+
+    <div class="formfield color">
+      {# form.color.errors #}
+      <label for="color">favorite color</label>
+      <input type="text" id="color" />
+    </div>
+
+    <div class="formfield updates">
+      {# form.updates.errors #}
+      <p>Do you want to receive email updates?</p>
+      <input type="radio" name="updates" id="updates-yes" value="1" checked />
+      <label for="updates-yes">yes</label>
+      <input type="radio" name="updates" id="updates-no" value="0" />
+      <label for="updates-no">no</label>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">save changes</button>
+    </div>
+  </form>
+
+  <a href="{# @@@ url deactivate_account #}">deactivate my account</a>
+
+</article>
+
+{% endblock maincontent %}
