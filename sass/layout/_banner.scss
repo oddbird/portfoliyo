@@ -13,7 +13,6 @@ $banner-rhythm: .5;
 
 [role="banner"] {
   @extend %boilerplate;
-  @include trailer(1);
   a {
     @extend %banner-item;
     display: block;
@@ -58,6 +57,7 @@ $banner-rhythm: .5;
     @extend %icon;
     @extend %icon-settings;
     text-align: right;
+    margin: 0;
   }
 }
 
@@ -66,7 +66,7 @@ $banner-rhythm: .5;
   display: none;
   top: 100%;
   padding: rhythm(.5);
-  background: $base03;
+  background: $back;
   z-index: 900;
   .meta:hover & { display: block; }
 }

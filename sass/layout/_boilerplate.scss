@@ -3,13 +3,15 @@
 
 .container { @include container; }
 
+%bleed {
+  margin-left: - $grid-padding;
+  margin-right: - $grid-padding;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+}
+
 %boilerplate {
+  @extend .container;
   @include pie-clearfix;
-  background: rgba($base03,.75);
-  color: $base2;
   clear: both;
-  a {
-    #{$link} { color: $base3; }
-    #{$focus} { color: mix($base3,$accent); }
-  }
 }

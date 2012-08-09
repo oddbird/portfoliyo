@@ -14,20 +14,8 @@
 body{
   @include baseline-grid-background;
   @include sans;
-  color: $base;
-  background: $base3;
-}
-
-[role="main"] {
-  @extend %type;
-  @include container;
-}
-
-%bleed {
-  margin-left: - $grid-padding;
-  margin-right: - $grid-padding;
-  padding-left: $grid-padding;
-  padding-right: $grid-padding;
+  background: $back;
+  color: $base2;
 }
 
 /* -------------------------------------------------------------------------*/
