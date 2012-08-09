@@ -1,7 +1,7 @@
 <div class="post">
   {# <a href="{% url post %}">permalink</a> #}
   <a href="{% url profile %}">{{ user }}</a>
-  {# <img src="http://placehold.it/75x75/"> #}
+  <img src="http://placehold.it/75x75/">
   <p class="post-timestamp">{{ timestamp }}</p>
 
   {% if image %}
@@ -19,7 +19,7 @@
     <li>
       <div class="comment">
         <ul>
-          {# <li><img src="http://placehold.it/25x25/"></li> #}
+          <li><img src="http://placehold.it/25x25/"></li>
           <li>{{ comment_author }}</li>
           <li>{{ comment }}</li>
           <li>{{ comment_timestamp }}</li>
