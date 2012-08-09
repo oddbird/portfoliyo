@@ -20,38 +20,7 @@
 
   {# if user is a student and is viewing his/her own profile #}
   {% if this_user %}
-  <form method="POST" class="post-add-form">
-    {# csrf_token #}
-
-    <h3>Post a new learning experience!</h3>
-    {# <p>Or email your learning experience to <a href="mailto:posts+unique_identifier@portfoliyo.org">posts+unique_identifier@portfoliyo.org</a></p> #}
-    {# form.non_field_errors #}
-
-    <div class="formfield post-text">
-      {# form.post_text.errors #}
-      <textarea id="post-text"></textarea>
-    </div>
-
-    <div class="formfield post-image">
-      {# form.post_image.errors #}
-      <label for="post-image">upload an image or photo</label>
-      <input type="file" id="post-image" />
-    </div>
-
-    {% comment %}
-    <div class="formfield post-video">
-      {# form.post_video.errors #}
-      <label for="post-video">link to a video</label>
-      <input type="text" id="post-video" />
-    </div>
-    {% endcomment %}
-
-    <div class="form-actions">
-      <button type="submit">share</button>
-    </div>
-
-    {# <a href="{ @@@ url to post khan academy progress }">post my recent Khan Academy progress</a> #}
-  </form>
+    {% include "posts/_post_add_form.html" %}
   {% endif %}
 
   {# if user has posts #}
