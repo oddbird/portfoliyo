@@ -373,6 +373,20 @@ optgroup {
   margin-left: 0;
 }
 
+.container {
+  *zoom: 1;
+  max-width: 59em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+.container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 [role="banner"], [role="contentinfo"] {
   *zoom: 1;
   background: rgba(0, 43, 54, 0.75);
@@ -384,19 +398,6 @@ optgroup {
   display: table;
   clear: both;
 }
-[role="banner"] .container, [role="contentinfo"] .container {
-  *zoom: 1;
-  max-width: 59em;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1em;
-  padding-right: 1em;
-}
-[role="banner"] .container:after, [role="contentinfo"] .container:after {
-  content: "";
-  display: table;
-  clear: both;
-}
 [role="banner"] a:link, [role="contentinfo"] a:link, [role="banner"] a:visited, [role="contentinfo"] a:visited {
   color: #fdf6e3;
 }
@@ -404,12 +405,15 @@ optgroup {
   color: #e896b2;
 }
 
+[role="banner"] a, .meta {
+  padding-top: 0.625em;
+  padding-bottom: 0.625em;
+}
+
 [role="banner"] {
   margin-bottom: 1.25em;
 }
 [role="banner"] a {
-  padding-top: 0.625em;
-  padding-bottom: 0.625em;
   display: block;
 }
 
@@ -458,8 +462,6 @@ optgroup {
   float: right;
   margin-right: 0;
   #margin-left: -1em;
-  padding-top: 0.625em;
-  padding-bottom: 0.625em;
   position: relative;
 }
 .meta p {

@@ -1,0 +1,15 @@
+// ---------------------------------------------------------------------------
+// Boilerplate
+
+.container { @include container; }
+
+%boilerplate {
+  @include pie-clearfix;
+  background: rgba($base03,.75);
+  color: $base2;
+  clear: both;
+  a {
+    #{$link} { color: $base3; }
+    #{$focus} { color: mix($base3,$accent); }
+  }
+}

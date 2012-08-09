@@ -1,32 +1,35 @@
 // ---------------------------------------------------------------------------
-// Banner
+// Settings
 
-%boilerplate {
-  @include pie-clearfix;
-  background: rgba($base03,.75);
-  color: $base2;
-  clear: both;
-  .container { @include container; }
-  a {
-    #{$link} { color: $base3; }
-    #{$focus} { color: mix($base3,$accent); }
-  }
+$banner-rhythm: .5;
+
+%banner-item {
+  @include padding-leader($banner-rhythm);
+  @include padding-trailer($banner-rhythm);
 }
+
+// ---------------------------------------------------------------------------
+// Banner
 
 [role="banner"] {
   @extend %boilerplate;
   @include trailer(1);
   a {
-    @include padding-leader(.5);
-    @include padding-trailer(.5);
+    @extend %banner-item;
     display: block;
     &[rel="home"] { @extend %icon; @extend %icon-home; }
   }
 }
 
+// ---------------------------------------------------------------------------
+// Brand
+
 .brand {
   @include span-columns(2);
 }
+
+// ---------------------------------------------------------------------------
+// Navigation
 
 [role="navigation"] {
   @include span-columns(7);
@@ -40,10 +43,12 @@
   .net { @extend %icon; @extend %icon-users; }
 }
 
+// ---------------------------------------------------------------------------
+// Meta
+
 .meta {
+  @extend %banner-item;
   @include span-columns(3 omega);
-  @include padding-leader(.5);
-  @include padding-trailer(.5);
   position: relative;
   p {
     @extend %icon;
