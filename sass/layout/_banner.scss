@@ -1,24 +1,55 @@
 // ---------------------------------------------------------------------------
 // Banner
 
-[role="banner"] {
-  @extend %bleed;
+%boilerplate {
   @include pie-clearfix;
-  @include rhythm(0,.25,.25,1);
-  background: $base03;
+  background: rgba($base03,.75);
+  color: $base2;
+  clear: both;
+  .container { @include container; }
+  a {
+    #{$link} { color: $base3; }
+    #{$focus} { color: mix($base3,$accent); }
+  }
+}
+
+[role="banner"] {
+  @extend %boilerplate;
+  @include trailer(1);
+  a {
+    @include padding-leader(.5);
+    @include padding-trailer(.5);
+    display: block;
+    &[rel="home"] { @extend %icon; @extend %icon-home; }
+  }
+}
+
+.brand {
+  @include span-columns(2);
 }
 
 [role="navigation"] {
+  @include span-columns(7);
   ul { @include inline-block-list; }
   li {
-    margin-right: rhythm(1);
+    margin-right: gutter(7);
+    min-width: columns(1,7);
     &:last-child { margin-right: 0; }
   }
-  a { display: block; }
+  .me { @extend %icon; @extend %icon-comments; }
+  .net { @extend %icon; @extend %icon-users; }
 }
 
 .meta {
+  @include span-columns(3 omega);
+  @include padding-leader(.5);
+  @include padding-trailer(.5);
   position: relative;
+  p {
+    @extend %icon;
+    @extend %icon-settings;
+    text-align: right;
+  }
 }
 
 .useractions {
@@ -27,18 +58,7 @@
   top: 100%;
   padding: rhythm(.5);
   background: $base03;
+  z-index: 900;
   .meta:hover & { display: block; }
 }
 
-@include breakpoint($break) {
-  .brand {
-    @include span-columns(2);
-  }
-  [role="navigation"] {
-    @include span-columns(7);
-  }
-  .meta {
-    @include span-columns(3 omega);
-    p { text-align: right; }
-  }
-}

@@ -1,0 +1,52 @@
+@include font-face (
+  'pyo',
+  font-files(
+    'pyo.svg#pyo', svg,
+    'pyo.woff', woff,
+    'pyo.ttf', truetype
+  ),
+  'pyo.eot',
+  normal,
+  normal
+);
+
+/* Use the following CSS code if you want to have a class per icon */
+%icon-content {
+  font-family: 'pyo';
+  font-style: normal;
+  speak: none;
+}
+
+%icon:before {
+  @extend %icon-content;
+  margin-right: .4em;
+}
+
+%icon-replace {
+  @extend %icon;
+  position: relative;
+  min-width: 1em;
+  text-indent: -9999px;
+  &:before{
+    position: absolute;
+    top: 0;
+    left: 0;
+    text-indent: 0;
+    margin-right: 0;
+  }
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  @extend %icon-content;
+  content: attr(data-icon);
+}
+
+%icon-home:before { content: "\21"; }
+%icon-comments:before { content: "\22"; }
+%icon-users:before { content: "\23"; }
+%icon-arrow-up:before { content: "\24"; }
+%icon-arrow-right:before { content: "\25"; }
+%icon-arrow-down:before { content: "\26"; }
+%icon-arrow-left:before { content: "\27"; }
+%icon-settings:before { content: "\28"; }

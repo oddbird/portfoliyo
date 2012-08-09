@@ -3,6 +3,7 @@
 
 @import "compass/reset";
 @import "fonts";
+@import "icons";
 
 /* -------------------------------------------------------------------------*/
 /* Root */
@@ -13,13 +14,14 @@ html { -webkit-font-smoothing: antialiased; }
 
 body{
   @include baseline-grid-background;
-  @include container;
   @include serif;
   color: $base;
+  background: $base3;
 }
 
 [role="main"] {
   @extend %type;
+  @include container;
 }
 
 %bleed {

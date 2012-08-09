@@ -54,6 +54,46 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
+@font-face {
+  font-family: "pyo";
+  src: url('../fonts/pyo.eot');
+  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Use the following CSS code if you want to have a class per icon */
+[role="banner"] a[rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, [data-icon]:before {
+  font-family: 'pyo';
+  font-style: normal;
+  speak: none;
+}
+
+[role="banner"] a[rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before {
+  margin-right: .4em;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  content: attr(data-icon);
+}
+
+[role="banner"] a[rel="home"]:before {
+  content: "\21";
+}
+
+[role="navigation"] .me:before {
+  content: "\22";
+}
+
+[role="navigation"] .net:before {
+  content: "\23";
+}
+
+.meta p:before {
+  content: "\28";
+}
+
 /* -------------------------------------------------------------------------*/
 /* Root */
 html {
@@ -66,26 +106,23 @@ html {
 }
 
 body {
+  font-family: Cambria, Georgia, serif;
+  color: #657b83;
+  background: #fdf6e3;
+}
+
+[role="main"] {
   *zoom: 1;
   max-width: 59em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
-  font-family: Cambria, Georgia, serif;
-  color: #657b83;
 }
-body:after {
+[role="main"]:after {
   content: "";
   display: table;
   clear: both;
-}
-
-[role="banner"], [role="contentinfo"] {
-  margin-left: -1em;
-  margin-right: -1em;
-  padding-left: 1em;
-  padding-right: 1em;
 }
 
 /* -------------------------------------------------------------------------*/
@@ -336,20 +373,57 @@ optgroup {
   margin-left: 0;
 }
 
-[role="banner"] {
+[role="banner"], [role="contentinfo"] {
   *zoom: 1;
-  margin-top: 0em;
-  padding-top: 0.3125em;
-  padding-bottom: 0.3125em;
-  margin-bottom: 1.25em;
-  background: #002b36;
+  background: rgba(0, 43, 54, 0.75);
+  color: #eee8d5;
+  clear: both;
 }
-[role="banner"]:after {
+[role="banner"]:after, [role="contentinfo"]:after {
   content: "";
   display: table;
   clear: both;
 }
+[role="banner"] .container, [role="contentinfo"] .container {
+  *zoom: 1;
+  max-width: 59em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+[role="banner"] .container:after, [role="contentinfo"] .container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+[role="banner"] a:link, [role="contentinfo"] a:link, [role="banner"] a:visited, [role="contentinfo"] a:visited {
+  color: #fdf6e3;
+}
+[role="banner"] a:focus, [role="contentinfo"] a:focus, [role="banner"] a:hover, [role="contentinfo"] a:hover, [role="banner"] a:active, [role="contentinfo"] a:active {
+  color: #e896b2;
+}
 
+[role="banner"] {
+  margin-bottom: 1.25em;
+}
+[role="banner"] a {
+  padding-top: 0.625em;
+  padding-bottom: 0.625em;
+  display: block;
+}
+
+.brand {
+  width: 15.25424%;
+  float: left;
+  margin-right: 1.69492%;
+}
+
+[role="navigation"] {
+  width: 57.62712%;
+  float: left;
+  margin-right: 1.69492%;
+}
 [role="navigation"] ul {
   margin: 0;
   padding: 0;
@@ -372,17 +446,24 @@ optgroup {
   *display: inline;
 }
 [role="navigation"] li {
-  margin-right: 1.25em;
+  margin-right: 2.94118%;
+  min-width: 11.76471%;
 }
 [role="navigation"] li:last-child {
   margin-right: 0;
 }
-[role="navigation"] a {
-  display: block;
-}
 
 .meta {
+  width: 23.72881%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  padding-top: 0.625em;
+  padding-bottom: 0.625em;
   position: relative;
+}
+.meta p {
+  text-align: right;
 }
 
 .useractions {
@@ -393,39 +474,15 @@ optgroup {
   top: 100%;
   padding: 0.625em;
   background: #002b36;
+  z-index: 900;
 }
 .meta:hover .useractions {
   display: block;
 }
 
-@media (min-width: 40em) {
-  .brand {
-    width: 15.25424%;
-    float: left;
-    margin-right: 1.69492%;
-  }
-
-  [role="navigation"] {
-    width: 57.62712%;
-    float: left;
-    margin-right: 1.69492%;
-  }
-
-  .meta {
-    width: 23.72881%;
-    float: right;
-    margin-right: 0;
-    #margin-left: -1em;
-  }
-  .meta p {
-    text-align: right;
-  }
-}
 [role="contentinfo"] {
   margin-top: 1.875em;
   padding-top: 0.625em;
   padding-bottom: 0.625em;
   margin-bottom: 0em;
-  clear: both;
-  background: #002b36;
 }
