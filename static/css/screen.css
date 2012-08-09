@@ -215,14 +215,6 @@ a:focus, a:hover, a:active {
   color: #e896b2;
 }
 
-.initial-password label {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
-
 [role="main"] a:link, [role="main"] a:visited {
   color: #268bd2;
 }
@@ -484,7 +476,7 @@ img {
 }
 @media (min-width: 45em) {
   .brand {
-    width: 15.25424%;
+    width: 23.72881%;
     float: left;
     margin-right: 1.69492%;
   }
@@ -492,7 +484,7 @@ img {
 
 @media (min-width: 45em) {
   [role="navigation"] {
-    width: 57.62712%;
+    width: 49.15254%;
     float: left;
     margin-right: 1.69492%;
   }
@@ -512,8 +504,8 @@ img {
   [role="navigation"] li {
     float: left;
     width: auto;
-    margin-right: 2.94118%;
-    min-width: 11.76471%;
+    margin-right: 3.44828%;
+    min-width: 13.7931%;
   }
 }
 
@@ -585,6 +577,11 @@ img {
   background: #eee8d5;
 }
 .initial-password label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   width: 31.03448%;
   float: left;
   margin-right: 3.44828%;
@@ -660,6 +657,11 @@ img {
 }
 @media (min-width: 45em) {
   .profile-edit-form .bio-long label {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
     width: 26.47059%;
     float: left;
     margin-right: 2.94118%;

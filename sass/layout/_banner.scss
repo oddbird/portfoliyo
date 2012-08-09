@@ -31,18 +31,18 @@ $banner-rhythm: .5;
 
   // large screen
   @include at-breakpoint($break) {
-    @include span-columns(2);
+    @include span-columns($left);
   }
 }
 
 // ---------------------------------------------------------------------------
 // Navigation
 
-$break-nav-span: 7;
+$break-nav-span: $break-cols - $left*2;
 
 [role="navigation"] {
   @include at-breakpoint($break) {
-    @include span-columns(7);
+    @include span-columns($break-nav-span);
   }
   ul { @include no-style-list; }
   li {
@@ -69,7 +69,7 @@ $break-nav-span: 7;
     margin: 0;
   }
   @include at-breakpoint($break) {
-    @include span-columns(3 omega);
+    @include span-columns($left omega);
     p { text-align: right; }
   }
 }
