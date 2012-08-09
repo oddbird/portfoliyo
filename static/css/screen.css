@@ -215,6 +215,14 @@ a:focus, a:hover, a:active {
   color: #e896b2;
 }
 
+.initial-password label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
 [role="main"] a:link, [role="main"] a:visited {
   color: #268bd2;
 }
@@ -383,8 +391,22 @@ button.disabled, button[disabled] {
 }
 
 .formfield {
+  *zoom: 1;
   margin-bottom: 0.63889em;
   position: relative;
+}
+.formfield:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.form-help {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  clear: both;
+  margin: 0 !important;
+  text-align: right;
 }
 
 .form-actions {
@@ -438,6 +460,14 @@ textarea {
   content: "";
   display: table;
   clear: both;
+}
+
+img {
+  -webkit-box-shadow: #073642 0 0 0.125em;
+  -moz-box-shadow: #073642 0 0 0.125em;
+  box-shadow: #073642 0 0 0.125em;
+  max-width: 100%;
+  border: 1px solid #073642;
 }
 
 [role="banner"] a, .meta {
@@ -545,5 +575,111 @@ textarea {
     width: 32.20339%;
     float: right;
     margin-right: 0;
+  }
+}
+.initial-password {
+  overflow: hidden;
+  *zoom: 1;
+  margin-bottom: 1.27778em;
+  padding: 1.27778em;
+  background: #eee8d5;
+}
+.initial-password label {
+  width: 31.03448%;
+  float: left;
+  margin-right: 3.44828%;
+  padding: 0.31944em 0;
+  text-align: right;
+}
+.initial-password input {
+  width: 65.51724%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+}
+@media (min-width: 45em) {
+  .initial-password {
+    padding-left: 0%;
+    padding-right: 16.94915%;
+  }
+  .initial-password label {
+    width: 28.57143%;
+    float: left;
+    margin-right: 2.04082%;
+  }
+  .initial-password input {
+    width: 69.38776%;
+    float: right;
+    margin-right: 0;
+  }
+}
+
+.profile-edit-form .picture {
+  position: relative;
+}
+.profile-edit-form .picture label {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+.profile-edit-form .picture img {
+  display: block;
+}
+@media (min-width: 45em) {
+  .profile-edit-form .picture {
+    width: 23.72881%;
+    float: left;
+    margin-right: 1.69492%;
+  }
+}
+@media (min-width: 45em) {
+  .profile-edit-form .bio-short, .profile-edit-form .bio-long {
+    width: 74.57627%;
+    float: right;
+    margin-right: 0;
+    padding-right: 16.94915%;
+  }
+}
+.profile-edit-form .bio-short {
+  margin-bottom: 1.27778em;
+}
+.profile-edit-form .bio-short label {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+@media (min-width: 45em) {
+  .profile-edit-form .bio-long label {
+    width: 26.47059%;
+    float: left;
+    margin-right: 2.94118%;
+    padding: 0.31944em 0;
+    text-align: right;
+  }
+  .profile-edit-form .bio-long input {
+    width: 70.58824%;
+    float: right;
+    margin-right: 0;
+  }
+}
+.profile-edit-form [class^="go-"] {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-top: 0.65714em;
+}
+@media (min-width: 45em) {
+  .profile-edit-form [class^="go-"] {
+    margin-left: 25.42373%;
+    margin-right: 16.94915%;
   }
 }

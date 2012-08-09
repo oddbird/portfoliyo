@@ -73,8 +73,26 @@ $input-rhythm: .25;
 }
 
 .formfield {
+  @include pie-clearfix;
   @include trailer(.5);
   position: relative;
+}
+
+@mixin inline-form($label: 2, $input: $center - $label, $context: $center) {
+  label {
+    @extend %ellipsis;
+    @include span-columns($label,$context);
+    padding: rhythm($input-rhythm) 0;
+    text-align: right;
+  }
+  input { @include span-columns($input omega,$context); }
+}
+
+.form-help {
+  @include adjust-font-size-to($smallpx);
+  clear: both;
+  margin: 0 !important;
+  text-align: right;
 }
 
 $form-action-note-size: $smallpx;

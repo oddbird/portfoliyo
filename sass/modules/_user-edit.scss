@@ -1,0 +1,54 @@
+// ---------------------------------------------------------------------------
+// Edit Profile
+
+.initial-password {
+  @include clearfix;
+  @include trailer(1);
+  @include inline-form(2,4,$total-columns);
+  padding: rhythm(1);
+  background: $base2;
+
+  @include at-breakpoint($break) {
+    @include pad(0,$right);
+    label { @include span-columns($left,$total-columns - $right); }
+    input { @include span-columns($center omega,$total-columns - $right); }
+  }
+}
+
+.profile-edit-form {
+  .picture {
+    position: relative;
+    label { @include gone; }
+    img { display: block; }
+    @include at-breakpoint($break) {
+      @include span-columns($left);
+    }
+  }
+
+  .bio-short, .bio-long {
+    @include at-breakpoint($break) {
+      @include span-columns(9 omega);
+      @include suffix($right);
+    }
+  }
+
+  .bio-short {
+    @include trailer;
+    label { @include gone; }
+  }
+
+  .bio-long {
+    @include at-breakpoint($break) {
+      @include inline-form;
+    }
+  }
+
+  [class^="go-"] {
+    @include adjust-font-size-to($largepx);
+    @include leader(1,$largepx);
+    @include at-breakpoint($break) {
+      @include squish($left,$right);
+    }
+  }
+
+}
