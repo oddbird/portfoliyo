@@ -405,8 +405,10 @@ button.disabled, button[disabled] {
   text-align: right;
 }
 .form-actions p {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   display: inline-block;
-  margin-right: .4em;
+  margin: 0 0.4em 0.82143em 0;
 }
 
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"] {
@@ -532,4 +534,17 @@ textarea {
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
   margin-bottom: 0em;
+}
+
+.intro {
+  width: 66.10169%;
+  float: left;
+  margin-right: 1.69492%;
+}
+
+.signup-form, .login-form {
+  width: 32.20339%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
 }

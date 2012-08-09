@@ -77,14 +77,17 @@ $input-rhythm: .25;
   position: relative;
 }
 
+$form-action-note-size: $smallpx;
+
 .form-actions {
   @include rhythm(.5,0,0,.5);
   position: relative;
   clear: both;
   text-align: right;
   p {
+    @include adjust-font-size-to($form-action-note-size);
     display: inline-block;
-    margin-right: .4em;
+    margin: 0 .4em rhythm(.5,$form-action-note-size) 0;
   }
 }
 
