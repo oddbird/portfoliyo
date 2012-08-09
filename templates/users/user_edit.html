@@ -34,8 +34,7 @@
   </div>
 
   <div class="profile-url">
-    <h3>URL: </h3>
-    <a href="{% url profile %}">{# @@@ #}portfoliyo.org/username/</a>
+    <p>URL: <a href="{% url profile %}">{# @@@ #}portfoliyo.org/username/</a></p>
   </div>
 
   <div class="formfield email">
@@ -44,6 +43,7 @@
     <input type="text" id="email" />
   </div>
 
+  {% comment %}
   <div class="profile-picture">
     <img src="http://placekitten.com/g/250/250">
   </div>
@@ -63,6 +63,7 @@
     <label for="picture2">alternative picture</label>
     <input type="file" id="picture2" />
   </div>
+  {% endcomment %}
 
   <div class="formfield birthday">
     {# form.birthday.errors #}
@@ -94,6 +95,7 @@
     <input type="text" id="color" />
   </div>
 
+  {% comment %}
   <div class="formfield updates">
     {# form.updates.errors #}
     <p>Do you want to receive email updates?</p>
@@ -102,6 +104,7 @@
     <input type="radio" name="updates" id="updates-no" value="0" />
     <label for="updates-no">no</label>
   </div>
+  {% endcomment %}
 
   <div class="form-actions">
     {# @@@ if first login and student #}
@@ -114,6 +117,6 @@
   </div>
 </form>
 
-<a href="{# @@@ url deactivate_account #}">deactivate my account</a>
+{# <a href="{ @@@ url deactivate_account }">deactivate my account</a> #}
 
 {% endblock maincontent %}

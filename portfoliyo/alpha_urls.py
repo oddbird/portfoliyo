@@ -63,10 +63,4 @@ urlpatterns = patterns(
         {"template": "users/user_feed.html"},
         name="profile",
         ),
-    url(
-        r"^username/posts/post_id/$",
-        direct_to_template,
-        {"template": "posts/post.html"},
-        name="post",
-        ),
 )
