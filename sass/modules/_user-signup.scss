@@ -1,10 +1,12 @@
 // ---------------------------------------------------------------------------
 // Signup
 
-.intro {
-  @include span-columns(8,12);
-}
+@include at-breakpoint($break) {
+  .intro {
+    @include span-columns(8,12);
+  }
 
-.signup-form, .login-form {
-  @include span-columns(4 omega,12);
+  .signup-form, .login-form {
+    @include span-columns(4 omega,12);
+  }
 }

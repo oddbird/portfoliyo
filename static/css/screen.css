@@ -534,15 +534,16 @@ textarea {
   margin-bottom: 0em;
 }
 
-.intro {
-  width: 66.10169%;
-  float: left;
-  margin-right: 1.69492%;
-}
+@media (min-width: 45em) {
+  .intro {
+    width: 66.10169%;
+    float: left;
+    margin-right: 1.69492%;
+  }
 
-.signup-form, .login-form {
-  width: 32.20339%;
-  float: right;
-  margin-right: 0;
-  #margin-left: -1em;
+  .signup-form, .login-form {
+    width: 32.20339%;
+    float: right;
+    margin-right: 0;
+  }
 }
