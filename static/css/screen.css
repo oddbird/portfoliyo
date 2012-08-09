@@ -54,6 +54,77 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
+/*
+ * Web Fonts from fontspring.com
+ *
+ * All OpenType features and all extended glyphs have been removed.
+ * Fully installable fonts can be purchased at http://www.fontspring.com
+ *
+ * The fonts included in this stylesheet are subject to the End User License you purchased
+ * from Fontspring. The fonts are protected under domestic and international trademark and 
+ * copyright law. You are prohibited from modifying, reverse engineering, duplicating, or
+ * distributing this font software.
+ *
+ * (c) 2010 Fontspring
+ *
+ *
+ *
+ *
+ * The fonts included are copyrighted by the vendor listed below.
+ *
+ * Vendor:      FontSite Inc.
+ * License URL: http://www.fontspring.com/fflicense/fontsite
+ *
+ *
+ */
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round-webfont.eot');
+  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round_semibold-webfont.eot');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round_bold-webfont.eot');
+  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRound";
+  src: url('../fonts/cambridge_round_it-webfont.eot');
+  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "SquareSerif";
+  src: url('../fonts/SquareSerif-Book-webfont.eot');
+  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SquareSerif";
+  src: url('../fonts/SquareSerif-Bold-webfont.eot');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
 @font-face {
   font-family: "pyo";
   src: url('../fonts/pyo.eot');
@@ -63,13 +134,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-[role="banner"] a[rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, [data-icon]:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   speak: none;
 }
 
-[role="banner"] a[rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before {
   margin-right: .4em;
 }
 
@@ -78,7 +149,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-[role="banner"] a[rel="home"]:before {
+.brand [rel="home"]:before {
   content: "\21";
 }
 
@@ -97,8 +168,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 /* -------------------------------------------------------------------------*/
 /* Root */
 html {
-  font-size: 100%;
-  line-height: 1.25em;
+  font-size: 112.5%;
+  line-height: 1.27778em;
 }
 
 html {
@@ -106,7 +177,7 @@ html {
 }
 
 body {
-  font-family: Cambria, Georgia, serif;
+  font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   color: #657b83;
   background: #fdf6e3;
 }
@@ -145,8 +216,6 @@ body {
   text-shadow: none;
 }
 
-/* -------------------------------------------------------------------------*/
-/* Links */
 a:hover, a:active {
   outline: none;
 }
@@ -158,140 +227,25 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-[role="main"] {
-  /* -------------------------------------------------------------------------*/
-  /* Headings */
-  /* -------------------------------------------------------------------------*/
-  /* Inline */
-  /* -------------------------------------------------------------------------*/
-  /* Block */
-  /* -------------------------------------------------------------------------*/
-  /* Replaced */
-  /* -------------------------------------------------------------------------*/
-  /* Lists */
-  /* -------------------------------------------------------------------------*/
-  /* Tables */
-}
-[role="main"] h1, [role="main"] h2, [role="main"] h3, [role="main"] h4 {
+[role="main"] h1, [role="main"] h2, [role="main"] h3, [role="main"] h4, [role="main"] h5, [role="main"] h6 {
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-[role="main"] h5, [role="main"] h6 {
-  font-style: italic;
-}
-[role="main"] cite, [role="main"] em, [role="main"] dfn, [role="main"] address, [role="main"] i {
-  font-style: italic;
-}
-[role="main"] strong, [role="main"] dfn, [role="main"] b {
-  font-weight: bold;
-}
-[role="main"] sup, [role="main"] sub {
-  position: relative;
-  font-size: smaller;
-  line-height: 0;
-}
-[role="main"] sup {
-  top: -0.5em;
-}
-[role="main"] sub {
-  bottom: -0.25em;
-}
-[role="main"] abbr, [role="main"] acronym {
-  border-bottom: 1px dotted;
-  cursor: help;
-}
-[role="main"] ins {
-  text-decoration: underline;
-}
-[role="main"] del {
-  text-decoration: line-through;
-}
-[role="main"] mark {
-  background: #ff9;
-  background-color: rgba(255, 255, 0, 0.5);
-  text-shadow: none;
-}
-[role="main"] q {
-  font-style: italic;
-}
-[role="main"] q em {
-  font-style: normal;
-}
-[role="main"] pre, [role="main"] code, [role="main"] tt {
-  font-family: "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, Courier, monospace, sans-serif;
-}
-[role="main"] p {
-  margin-bottom: 1.25em;
-}
-[role="main"] pre {
-  padding: 1.25em;
-  white-space: pre;
-  white-space: pre-wrap;
-  white-space: pre-line;
-  word-wrap: break-word;
-}
-[role="main"] blockquote {
-  padding: 1.25em;
-  font-style: italic;
-}
-[role="main"] img, [role="main"] object, [role="main"] embed {
-  vertical-align: top;
-  max-width: 100%;
-}
-.ie7 [role="main"] img {
-  -ms-interpolation-mode: bicubic;
-}
-[role="main"] ol, [role="main"] ul, [role="main"] dd {
-  margin-bottom: 1.25em;
-  margin-left: 1.25em;
-}
-[role="main"] ol {
-  list-style-type: decimal;
+[role="main"] p, [role="main"] ul, [role="main"] ol {
+  margin-bottom: 1.27778em;
 }
 [role="main"] ul {
-  list-style-type: disc;
+  list-style: disc;
+  padding-left: 1.5em;
 }
-nav [role="main"] ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
+[role="main"] li {
+  margin-bottom: 0.63889em;
 }
-nav [role="main"] ul li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
+[role="main"] em {
+  font-style: italic;
 }
-[role="main"] dt {
-  margin-top: 1.25em;
-}
-[role="main"] table {
-  margin-bottom: 1.25em;
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-}
-[role="main"] table, [role="main"] td, [role="main"] th {
-  vertical-align: top;
-}
-[role="main"] th, [role="main"] thead th {
-  font-weight: bold;
-}
-[role="main"] th, [role="main"] td, [role="main"] caption {
-  padding: 0.625em;
-  text-align: left;
-  font-weight: normal;
-}
-[role="main"] table, [role="main"] th {
-  border-bottom-style: solid;
-  border-bottom-width: 0.0625em;
-  padding-bottom: 0.5625em;
-}
-[role="main"] tfoot {
-  font-size: 0.8125em;
-  line-height: 1.53846em;
-}
-[role="main"] caption {
-  text-transform: uppercase;
+[role="main"] strong {
+  font-weight: 500;
 }
 
 /* -------------------------------------------------------------------------*/
@@ -406,12 +360,12 @@ optgroup {
 }
 
 [role="banner"] a, .meta {
-  padding-top: 0.625em;
-  padding-bottom: 0.625em;
+  padding-top: 0.63889em;
+  padding-bottom: 0.63889em;
 }
 
 [role="banner"] {
-  margin-bottom: 1.25em;
+  margin-bottom: 1.27778em;
 }
 [role="banner"] a {
   display: block;
@@ -421,6 +375,7 @@ optgroup {
   width: 15.25424%;
   float: left;
   margin-right: 1.69492%;
+  font-weight: bold;
 }
 
 [role="navigation"] {
@@ -474,7 +429,7 @@ optgroup {
   right: 0;
   display: none;
   top: 100%;
-  padding: 0.625em;
+  padding: 0.63889em;
   background: #002b36;
   z-index: 900;
 }
@@ -483,8 +438,8 @@ optgroup {
 }
 
 [role="contentinfo"] {
-  margin-top: 1.875em;
-  padding-top: 0.625em;
-  padding-bottom: 0.625em;
+  margin-top: 1.91667em;
+  padding-top: 0.63889em;
+  padding-bottom: 0.63889em;
   margin-bottom: 0em;
 }

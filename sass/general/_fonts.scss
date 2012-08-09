@@ -1,13 +1,17 @@
 // ---------------------------------------------------------------------------
-// Font Stacks
+// Imports
 
-$sans-stack   : "Helvetica Neue", Helvetica, Arial, sans-serif;
-$serif-stack  : Cambria, Georgia, serif;
-$mono-stack   : "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, Courier, monospace, sans-serif;
+@import "font-license";
+@import "cambridge-round";
+@import "square-serif";
 
-// ---------------------------------------------------------------------------
-// Apply Fonts
+//-----------------------------------------------------------------------------
+// Settings
 
-@mixin sans { font-family: $sans-stack; }
+$mono-stack : Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+
+//-----------------------------------------------------------------------------
+// Mixins
+
 @mixin serif { font-family: $serif-stack; }
-@mixin mono { font-family: $mono-stack; }
+@mixin sans { font-family: $sans-stack; }

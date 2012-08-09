@@ -17,7 +17,6 @@ $banner-rhythm: .5;
   a {
     @extend %banner-item;
     display: block;
-    &[rel="home"] { @extend %icon; @extend %icon-home; }
   }
 }
 
@@ -26,6 +25,11 @@ $banner-rhythm: .5;
 
 .brand {
   @include span-columns(2);
+  font-weight: bold;
+  [rel="home"] {
+    @extend %icon;
+    @extend %icon-home;
+  }
 }
 
 // ---------------------------------------------------------------------------

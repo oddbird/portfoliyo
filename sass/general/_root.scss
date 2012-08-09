@@ -14,7 +14,7 @@ html { -webkit-font-smoothing: antialiased; }
 
 body{
   @include baseline-grid-background;
-  @include serif;
+  @include sans;
   color: $base;
   background: $base3;
 }
