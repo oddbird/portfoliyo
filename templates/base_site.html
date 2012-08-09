@@ -5,13 +5,13 @@
 {% block page %}
 
   <div role="banner">
-    <h1 class="brand"><a href="{# @@@ #}/alpha/" rel="home">Portfoliyo</a></h1>
+    <h1 class="brand"><a href="{% url home %}" rel="home">Portfoliyo</a></h1>
 
     <nav role="navigation">
     {% block navigation %}
       <ul>
-        <li><a href="{# @@@ #}/alpha/username/">Me</a></li>
-        <li><a href="{# @@@ #}/alpha/username/network/">My Network</a></li>
+        <li><a href="{% url profile %}">Me</a></li>
+        <li><a href="{% url network %}">My Network</a></li>
       </ul>
     {% endblock navigation %}
     </nav>
@@ -20,9 +20,9 @@
       {# if user.is_authenticated #}
       <p>Welcome { name }</p>
       <ul class="useractions">
-        <li><a href="{# @@@ url user_edit #}/alpha/username/edit/">Edit profile</a></li>
-        <li><a href="{# @@@ url user_password_change #}/alpha/password_change/">Change password</a></li>
-        <li><a href="{# @@@ url user_logout #}/alpha/signup/">Sign Out</a></li>
+        <li><a href="{% url edit_profile %}">Edit profile</a></li>
+        <li><a href="{% url password_change %}">Change password</a></li>
+        <li><a href="{% url signup %}">Sign Out</a></li>
       </ul>
       {# endif #}
     </nav>

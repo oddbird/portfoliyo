@@ -4,7 +4,7 @@
 
   {# if user is viewing his/her own profile #}
   {% if this_user %}
-  <a href="{# @@@ #}/alpha/username/edit/">edit my profile</a>
+  <a href="{% url edit_profile %}">edit my profile</a>
   {% endif %}
 
   <img src="http://placekitten.com/250/250/">
