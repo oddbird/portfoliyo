@@ -23,24 +23,35 @@ $banner-rhythm: .5;
 // Brand
 
 .brand {
-  @include span-columns(2);
   font-weight: bold;
   [rel="home"] {
     @extend %icon;
     @extend %icon-home;
+  }
+
+  // large screen
+  @include at-breakpoint($break) {
+    @include span-columns(2);
   }
 }
 
 // ---------------------------------------------------------------------------
 // Navigation
 
+$break-nav-span: 7;
+
 [role="navigation"] {
-  @include span-columns(7);
-  ul { @include inline-block-list; }
+  @include at-breakpoint($break) {
+    @include span-columns(7);
+  }
+  ul { @include no-style-list; }
   li {
-    margin-right: gutter(7);
-    min-width: columns(1,7);
-    &:last-child { margin-right: 0; }
+    @include at-breakpoint($break) {
+      float: left;
+      width: auto;
+      margin-right: gutter($break-nav-span);
+      min-width: columns(1,$break-nav-span);
+    }
   }
   .me { @extend %icon; @extend %icon-comments; }
   .net { @extend %icon; @extend %icon-users; }
@@ -51,13 +62,15 @@ $banner-rhythm: .5;
 
 .meta {
   @extend %banner-item;
-  @include span-columns(3 omega);
   position: relative;
   p {
     @extend %icon;
     @extend %icon-settings;
-    text-align: right;
     margin: 0;
+  }
+  @include at-breakpoint($break) {
+    @include span-columns(3 omega);
+    p { text-align: right; }
   }
 }
 

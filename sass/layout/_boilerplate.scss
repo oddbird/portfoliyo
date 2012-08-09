@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Boilerplate
 
-.container { @include container; }
+.container { @include container($total-columns,$break); }
 
 %bleed {
   margin-left: - $grid-padding;
