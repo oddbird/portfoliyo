@@ -9,8 +9,7 @@
 /* Root */
 
 @include establish-baseline;
-
-html { -webkit-font-smoothing: antialiased; }
+@include border-box-sizing;
 
 body{
   @include baseline-grid-background;

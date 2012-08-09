@@ -172,8 +172,10 @@ html {
   line-height: 1.27778em;
 }
 
-html {
-  -webkit-font-smoothing: antialiased;
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 body {
@@ -184,7 +186,7 @@ body {
 
 [role="main"] {
   *zoom: 1;
-  max-width: 59em;
+  max-width: 61em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
@@ -248,8 +250,6 @@ a:focus, a:hover, a:active {
   font-weight: 500;
 }
 
-/* -------------------------------------------------------------------------*/
-/* Form Resets */
 input[type="button"], input[type="submit"], input[type="image"],
 label, button {
   cursor: pointer;
@@ -298,8 +298,6 @@ optgroup {
   border: 0;
 }
 
-/* -------------------------------------------------------------------------*/
-/* Placeholders */
 ::-webkit-input-placeholder {
   font-style: italic;
 }
@@ -312,14 +310,79 @@ optgroup {
   font-style: italic;
 }
 
-/* -------------------------------------------------------------------------*/
-/* Form Helpers */
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"], textarea {
+  font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  border-style: solid;
+  border-width: 0.07143em;
+  padding: 0.33929em;
+  -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
+  -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
+  box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #657b83;
+  border-color: #657b83;
+  vertical-align: top;
+  outline: 0;
+}
+
+button {
+  font-size: 18px;
+  padding: 0.31944em 1.27778em;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.27778em;
+  -webkit-border-radius: 0.125em;
+  -moz-border-radius: 0.125em;
+  -ms-border-radius: 0.125em;
+  -o-border-radius: 0.125em;
+  border-radius: 0.125em;
+  background: url('../images/sassy-ie-overlay.png?1342738619') repeat-x bottom left rgba(133, 153, 0, 0.75);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(133, 153, 0, 0.75)), color-stop(100%, rgba(89, 102, 0, 0.75)));
+  background: -webkit-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
+  background: -moz-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
+  background: -o-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
+  background: -ms-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
+  background: linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
+  -webkit-box-shadow: rgba(200, 230, 0, 0.75) 0 1px 0 inset;
+  -moz-box-shadow: rgba(200, 230, 0, 0.75) 0 1px 0 inset;
+  box-shadow: rgba(200, 230, 0, 0.75) 0 1px 0 inset;
+  border: 1px solid rgba(66, 77, 0, 0.75);
+  color: #fdf6e3;
+  text-shadow: rgba(18, 20, 0, 0.75) 0 -1px 0;
+}
+button:hover {
+  background-color: rgba(66, 77, 0, 0.75);
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(111, 128, 0, 0.75)), color-stop(100%, rgba(66, 77, 0, 0.75)));
+  background: -webkit-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
+  background: -moz-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
+  background: -o-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
+  background: -ms-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
+  background: linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
+}
+button:active {
+  -webkit-box-shadow: rgba(53, 61, 0, 0.75) 0 1px 2px inset;
+  -moz-box-shadow: rgba(53, 61, 0, 0.75) 0 1px 2px inset;
+  box-shadow: rgba(53, 61, 0, 0.75) 0 1px 2px inset;
+}
+button.disabled, button[disabled] {
+  opacity: 0.6;
+  background: rgba(89, 102, 0, 0.75);
+  cursor: default;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
 .errorlist {
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
-  color: red;
+  color: #dc322f;
 }
 .errorlist li {
   list-style-image: none;
@@ -327,9 +390,36 @@ optgroup {
   margin-left: 0;
 }
 
+.formfield {
+  margin-bottom: 0.63889em;
+  position: relative;
+}
+
+.form-actions {
+  margin-top: 0.63889em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0.63889em;
+  position: relative;
+  clear: both;
+  text-align: right;
+}
+.form-actions p {
+  display: inline-block;
+  margin-right: .4em;
+}
+
+input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"] {
+  min-height: 2.46429em;
+}
+
+textarea {
+  min-height: 9.03571em;
+}
+
 .container {
   *zoom: 1;
-  max-width: 59em;
+  max-width: 61em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
