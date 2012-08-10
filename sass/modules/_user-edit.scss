@@ -2,11 +2,8 @@
 // Edit Profile
 
 .initial-password {
-  @include clearfix;
-  @include trailer(1);
+  @extend %note;
   @include inline-form(2,4,$total-columns);
-  padding: rhythm(1);
-  background: $base2;
 
   @include at-breakpoint($break) {
     @include pad(0,$right);

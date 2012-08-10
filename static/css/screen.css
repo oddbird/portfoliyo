@@ -479,6 +479,13 @@ textarea:focus {
   }
 }
 
+.initial-password, .join_network {
+  margin-left: -1em;
+  padding-left: 1em;
+  margin-right: -1em;
+  padding-right: 1em;
+}
+
 [role="banner"], [role="contentinfo"] {
   *zoom: 1;
   clear: both;
@@ -493,6 +500,20 @@ textarea:focus {
 }
 [role="banner"] a:focus, [role="contentinfo"] a:focus, [role="banner"] a:hover, [role="contentinfo"] a:hover, [role="banner"] a:active, [role="contentinfo"] a:active {
   color: #e896b2;
+}
+
+.initial-password, .join_network {
+  *zoom: 1;
+  margin-top: 0em;
+  padding-top: 0.63889em;
+  padding-bottom: 0.63889em;
+  margin-bottom: 1.27778em;
+  background: #eee8d5;
+}
+.initial-password:after, .join_network:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 img {
@@ -601,6 +622,10 @@ img {
   margin-bottom: 0em;
 }
 
+.signup-form {
+  margin-bottom: 1.27778em;
+}
+
 @media (min-width: 45em) {
   .intro {
     width: 66.10169%;
@@ -608,18 +633,11 @@ img {
     margin-right: 1.69492%;
   }
 
-  .signup-form, .login-form {
+  .main-login {
     width: 32.20339%;
     float: right;
     margin-right: 0;
   }
-}
-.initial-password {
-  overflow: hidden;
-  *zoom: 1;
-  margin-bottom: 1.27778em;
-  padding: 1.27778em;
-  background: #eee8d5;
 }
 .initial-password label {
   white-space: nowrap;
@@ -728,6 +746,32 @@ img {
   .profile-edit-form [class^="go-"] {
     margin-left: 25.42373%;
     margin-right: 16.94915%;
+  }
+}
+
+.join_network .login-form {
+  margin-top: 1.27778em;
+}
+@media (min-width: 45em) {
+  .join_network .login-form {
+    padding-right: 16.94915%;
+  }
+  .join_network .login-form label {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 28.57143%;
+    float: left;
+    margin-right: 2.04082%;
+    padding: 0.31944em 0;
+    text-align: right;
+  }
+  .join_network .login-form input {
+    width: 69.38776%;
+    float: right;
+    margin-right: 0;
   }
 }
 
@@ -946,4 +990,36 @@ img {
 
 .commentfield {
   margin: 0;
+}
+
+.loading {
+  position: relative;
+}
+.loading .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-weight: bold;
+  text-align: center;
+  background: rgba(253, 246, 227, 0.5);
+}
+
+.message {
+  padding-left: 1.91667em;
+  padding-right: 0.63889em;
+  background: no-repeat scroll 0.63889em;
+}
+
+#messages {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+#messages li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
 }

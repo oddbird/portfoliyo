@@ -39,7 +39,11 @@
   </ul>
 </article>
 
-{% include "users/_signup_form.html" %}
-{% include "users/_login_form.html" %}
+<div class="main-login">
+  <h2>Get Started!</h2>
+  {% include "users/_signup_form.html" %}
+  <h2>Already registered? Login:</h2>
+  {% include "users/_login_form.html" %}
+</div>
 
 {% endblock maincontent %}

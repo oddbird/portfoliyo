@@ -31,6 +31,13 @@ $boiler-link-color: $base3;
   }
 }
 
+%note {
+  @extend %bleed;
+  @include pie-clearfix;
+  @include rhythm(0,.5,.5,1);
+  background: $base2;
+}
+
 img {
   @include box-shadow($back 0 0 .125em);
   max-width: 100%;

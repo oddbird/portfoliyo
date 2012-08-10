@@ -2,10 +2,10 @@
 
 {% block maincontent %}
 
-<article class="join_network">
-  <h2>Join Jane's Network</h2>
-  <p><a href="{% url login %}">Log In</a> or <a href="{% url register %}">Sign Up</a> to interact with Jane!</p>
-</article>
+<aside class="join_network">
+  <h2>Login or <a href="{% url register %}">Register</a> to Join Jane's Network</h2>
+  {% include "users/_login_form.html" %}
+</aside>
 
 {% include "users/_user_detail.html" %}
 

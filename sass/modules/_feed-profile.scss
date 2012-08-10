@@ -1,6 +1,17 @@
 // ---------------------------------------------------------------------------
 // Profile Layout
 
+.join_network {
+  @extend %note;
+  .login-form {
+    @include leader;
+    @include at-breakpoint($break) {
+      @include suffix($right);
+      @include inline-form($left,$center,$left+$center);
+    }
+  }
+}
+
 .profile {
   @include at-breakpoint($break) {
     .user {
