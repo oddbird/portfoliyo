@@ -125,7 +125,11 @@ input {
 
 textarea {
   @extend %input;
-  min-height: rhythm(5 + $input-rhythm*2, $input-font-size);
+  @include transition(200ms min-height);
+  min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+  &:focus {
+    min-height: rhythm(6 + $input-rhythm*2, $input-font-size);
+  }
 }
 
 button { @extend %button; }

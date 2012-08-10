@@ -1,17 +1,26 @@
 // ---------------------------------------------------------------------------
-// Profile
+// Profile Layout
 
 .feed-profile {
-  > .vcard {
-    @include at-breakpoint($break) {
+  @include at-breakpoint($break) {
+    .user {
       @include span-columns($center omega);
       @include post($right);
     }
-  }
-  .bio {
-    @include at-breakpoint($break) {
+    .bio {
       @include span-columns($left);
     }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// User
+
+.user {
+  @include trailer;
+  .url {
+    #{$link} { color: $base1; }
+    #{$focus} { color: $accent; }
   }
 }
 
@@ -22,10 +31,40 @@
   }
 }
 
+.nickname { font-weight: bold; }
+
+.editlink {
+  @extend %icon-replace;
+  @extend %icon-pencil;
+  @include adjust-font-size-to($largepx,2.5);
+  float: left;
+  margin-right: .4em;
+}
+
+$biosize: $smallpx;
+
+.bio {
+  @include adjust-font-size-to($biosize);
+  dt, dd { padding: 0 rhythm(.25, $biosize); }
+  dt {
+    background: $base2;
+    text-transform: uppercase;
+  }
+  dd {
+    + dt { @include leader; }
+    + dd {
+      @include leader(.125,$biosize);
+      @include leading-border(1px,.125,$biosize);
+      border-color: rgba($base2,.75);
+    }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Add Posts
 
 .post-add-form {
+  @include trailer;
   @include at-breakpoint($break) {
     @include span-columns($center omega);
     @include post($right);

@@ -1,13 +1,13 @@
 <article class="feed-profile">
 
-  <header class="vcard">
+  <header class="user vcard">
     {# if user is viewing his/her own profile #}
     {% if this_user %}
     <a href="{% url edit_profile %}" class="editlink">edit my profile</a>
     {% endif %}
 
     <h2 class="profile-name fn">Jane Doe</h2>
-    <p class="username">portfolio.org/<b class="nickname">janedoe</b>/</p>
+    <a href="{# @@@ #}" class="url">portfolio.org/<b class="nickname">janedoe</b>/</a>
   </header>
 
   <div class="bio">

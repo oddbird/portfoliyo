@@ -134,14 +134,27 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before, [data-icon]:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   speak: none;
 }
 
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before {
   margin-right: .4em;
+}
+
+.editlink {
+  position: relative;
+  min-width: 1em;
+  text-indent: -9999px;
+}
+.editlink:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-indent: 0;
+  margin-right: 0;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -165,7 +178,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e007";
 }
 
-.useractions [href*="/edit/"]:before {
+.useractions [href*="/edit/"]:before, .editlink:before {
   content: "\e00b";
 }
 
@@ -434,7 +447,15 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 
 textarea {
-  min-height: 9.03571em;
+  -webkit-transition: 200ms min-height;
+  -moz-transition: 200ms min-height;
+  -ms-transition: 200ms min-height;
+  -o-transition: 200ms min-height;
+  transition: 200ms min-height;
+  min-height: 2.46429em;
+}
+textarea:focus {
+  min-height: 10.67857em;
 }
 
 .container, [role="banner"], [role="contentinfo"] {
@@ -703,19 +724,27 @@ img {
 }
 
 @media (min-width: 45em) {
-  .feed-profile > .vcard {
+  .feed-profile .user {
     width: 57.62712%;
     float: right;
     margin-right: 0;
     margin-right: 16.94915%;
   }
-}
-@media (min-width: 45em) {
   .feed-profile .bio {
     width: 23.72881%;
     float: left;
     margin-right: 1.69492%;
   }
+}
+
+.user {
+  margin-bottom: 1.27778em;
+}
+.user .url:link, .user .url:visited {
+  color: #93a1a1;
+}
+.user .url:focus, .user .url:hover, .user .url:active {
+  color: #d33682;
 }
 
 .profile-name {
@@ -729,6 +758,42 @@ img {
   }
 }
 
+.nickname {
+  font-weight: bold;
+}
+
+.editlink {
+  font-size: 1.94444em;
+  line-height: 1.64286em;
+  float: left;
+  margin-right: .4em;
+}
+
+.bio {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+}
+.bio dt, .bio dd {
+  padding: 0 0.41071em;
+}
+.bio dt {
+  background: #eee8d5;
+  text-transform: uppercase;
+}
+.bio dd + dt {
+  margin-top: 1.27778em;
+}
+.bio dd + dd {
+  margin-top: 0.20536em;
+  border-top-style: solid;
+  border-top-width: 0.07143em;
+  padding-top: 0.13393em;
+  border-color: rgba(238, 232, 213, 0.75);
+}
+
+.post-add-form {
+  margin-bottom: 1.27778em;
+}
 @media (min-width: 45em) {
   .post-add-form {
     width: 57.62712%;
