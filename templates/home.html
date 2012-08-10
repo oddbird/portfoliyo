@@ -2,13 +2,11 @@
 
 {% block maincontent %}
 
-  {% include "posts/_post_add_form.html" %}
-
-  <ul class="feed-combined">
-    <li>{% include "posts/_post_list.html" with user="Althea Duffin" timestamp="8/6/2012" image="true" text="Today I learned how to post something to my portfoliyo!" highfive="14" comment="You rock!" comment_author="Hugh Ventimiglia" comment_timestamp="8/7/2012" %}</li>
-    <li>{% include "posts/_post_list.html" with user="Kenya Thakkar" timestamp="8/3/2012" text="I just finished reading about rockets for 30 minutes." highfive="5" %}</li>
-    <li>{% include "posts/_post_list.html" with user="Allyson Burell" timestamp="8/1/2012" image="true" text="This is a picture of my science fair potato-shooter project." highfive="23" %}</li>
-    <li>{% include "posts/_post_list.html" with user="Malinda Fader" timestamp="7/28/2012" text="I just got an A on my biology test!" comment="Way to go, Malinda!" comment_author="Tyrone Maciejewski" comment_timestamp="8/8/2012" %}</li>
-  </ul>
+  <section class="feed-combined">
+    {% include "posts/_post_list.html" with user="Althea Duffin" timestamp="8/6/2012" image="true" text="Today I learned how to post something to my portfoliyo!" highfive="14" comment="You rock!" comment_author="Hugh Ventimiglia" comment_timestamp="8/7/2012" %}
+    {% include "posts/_post_list.html" with user="Kenya Thakkar" timestamp="8/3/2012" text="I just finished reading about rockets for 30 minutes." highfive="5" %}
+    {% include "posts/_post_list.html" with user="Allyson Burell" timestamp="8/1/2012" image="true" text="This is a picture of my science fair potato-shooter project." highfive="23" %}
+    {% include "posts/_post_list.html" with user="Malinda Fader" timestamp="7/28/2012" text="I just got an A on my biology test!" comment="Way to go, Malinda!" comment_author="Tyrone Maciejewski" comment_timestamp="8/8/2012" %}
+  </section>
 
 {% endblock maincontent %}
