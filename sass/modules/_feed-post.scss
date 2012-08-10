@@ -3,7 +3,6 @@
 
 .post-add-form {
   @include trailer;
-  .form-actions { @include gone; }
 }
 
 // ---------------------------------------------------------------------------
@@ -67,6 +66,7 @@ $comment-size: $smallpx;
     border-color: $base3;
   }
   .sub-body { @include trailer(.5); }
+  .form-actions { @include gone; }
 }
 
 .sub-byline {

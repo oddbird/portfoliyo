@@ -869,16 +869,6 @@ img {
 .post-add-form {
   margin-bottom: 1.27778em;
 }
-.post-add-form .form-actions {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
-}
 
 .post {
   margin-left: -1.47059%;
@@ -985,6 +975,16 @@ img {
 }
 .comment .sub-body {
   margin-bottom: 0.63889em;
+}
+.comment .form-actions {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
 }
 
 .sub-byline {
