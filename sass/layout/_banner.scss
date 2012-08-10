@@ -82,5 +82,15 @@ $break-nav-span: $break-cols - $left*2;
   background: $back;
   z-index: 900;
   .meta:hover & { display: block; }
+  a {
+    @extend %icon;
+    &:before {
+      float: right;
+      margin-right: 0;
+    }
+  }
+  [href*="/edit/"] { @extend %icon-pencil; }
+  [href*="/password_change/"] { @extend %icon-key; }
+  [href*="/signup/"] { @extend %icon-exit; }
 }
 

@@ -134,13 +134,13 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, [data-icon]:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   speak: none;
 }
 
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before {
   margin-right: .4em;
 }
 
@@ -150,19 +150,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 .brand [rel="home"]:before {
-  content: "\21";
+  content: "\e000";
 }
 
 [role="navigation"] .me:before {
-  content: "\22";
+  content: "\e001";
 }
 
 [role="navigation"] .net:before {
-  content: "\23";
+  content: "\e002";
 }
 
 .meta p:before {
-  content: "\28";
+  content: "\e007";
+}
+
+.useractions [href*="/edit/"]:before {
+  content: "\e00b";
+}
+
+.useractions [href*="/signup/"]:before {
+  content: "\e009";
+}
+
+.useractions [href*="/password_change/"]:before {
+  content: "\e008";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -538,6 +550,10 @@ img {
 }
 .meta:hover .useractions {
   display: block;
+}
+.useractions a:before {
+  float: right;
+  margin-right: 0;
 }
 
 [role="main"] {
