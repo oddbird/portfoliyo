@@ -10,7 +10,31 @@
 
     {# form.non_field_errors #}
 
-    {% include "users/_user_basic_bio.html" %}
+    <div class="formset bio">
+      <div class="formfield name">
+        {# form.name.errors #}
+        <label for="name">name</label>
+        <input type="text" id="name" />
+      </div>
+
+      <div class="formfield title">
+        {# form.username.errors #}
+        <label for="title">relation to student(s)</label>
+        <input type="text" id="title" />
+      </div>
+
+      <div class="formfield email">
+        {# form.email.errors #}
+        <label for="email">email</label>
+        <input type="text" id="email" />
+      </div>
+
+      <div class="formfield phone">
+        {# form.phone.errors #}
+        <label for="phone">phone</label>
+        <input type="tel" id="phone" />
+      </div>
+    </div>
 
     <div class="form-actions">
       <button type="submit">Save changes</button>

@@ -1,0 +1,21 @@
+{% load form_utils %}
+
+<div class="formfield {% if label %}{{ label|slugify }}{% else %}{{ field.label|slugify }}{% endif %}-field{% if field|optional %} optional{% endif %}{% if field.errors %} errors{% endif %}">
+
+  {% if not errorslast %}
+    {{ field.errors }}
+  {% endif %}
+
+  {% if field|is_checkbox %}
+    {% include "forms/field/_input.html" %}
+    {% include "forms/field/_label.html" %}
+  {% else %}
+    {% include "forms/field/_label.html" %}
+    {% include "forms/field/_input.html" %}
+  {% endif %}
+
+  {% if errorslast %}
+    {{ field.errors }}
+  {% endif %}
+
+</div>

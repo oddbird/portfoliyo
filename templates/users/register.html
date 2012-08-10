@@ -1,22 +1,33 @@
 {% extends "base_site.html" %}
 
+{% block title %}Create an account | {{ block.super }}{% endblock title %}
+
 {% block maincontent %}
 <article class="register">
   <h2 class="pagehead">Create your account</h2>
 
   <form method="POST" class="register-form">
-    {# csrf_token #}
+    {% csrf_token %}
 
-    {# form.non_field_errors #}
+    {{ form.non_field_errors }}
 
-    {% include "users/_user_basic_bio.html" with first_login="true" %}
+    <div class="formset bio">
+      {% include "forms/_field.html" with field=form.name %}
+
+      <div class="formset initial-password">
+        {% include "forms/_field.html" with field=form.password %}
+
+        {% include "forms/_field.html" with field=form.password_confirm %}
+      </div>
+
+      {% include "forms/_field.html" with field=form.role label="relation to student(s)" %}
+
+      {% include "forms/_field.html" with field=form.email %}
+
+    </div>
 
     <div class="form-actions">
-      {# @@@ if teacher #}
       <button type="submit" class="go-network">Create your village</button>
-      {# else if parent/guardian #}
-      {# <button type="submit" class="go-student">See what's happening in Jane's village!</button> #}
-      {# endif #}
     </div>
   </form>
 </article>

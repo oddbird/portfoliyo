@@ -1,0 +1,31 @@
+{# field mockup takes 'field', 'type' [, 'label', 'classes', 'required', 'errors'] #}
+
+<div class="formfield {{ field|slugify }}-field{% if required %} optional{% endif %}{% if errors %} errors{% endif %}">
+  {% if type != "checkbox" %}
+    <label for="id_{{ field|slugify }}">{% if label %}{{ label }}{% else %}{{ field }}{% endif %}</label>
+  {% endif %}
+
+  {% if type == "select" %}
+    <select id="id_{{ field|slugify }}" {% if classes %}class="{{ classes }}"{% endif %}>
+      <option>option 1</option>
+      <option>option 2</option>
+      <option>option 3</option>
+    </select>
+  {% else %}
+    {% if type == "textarea" %}
+      <textarea id="id_{{ field|slugify }}" {% if classes %}class="{{ classes }}"{% endif %}></textarea>
+    {% else %}
+      <input type="{{ type }}" id="id_{{ field|slugify }}" {% if classes %}class="{{ classes }}"{% endif %}>
+    {% endif %}
+  {% endif %}
+
+  {% if errors %}
+    <ul class="errorlist">
+      <li>{{ errors }}</li>
+    </ul>
+  {% endif %}
+
+  {% if type == "checkbox" %}
+    <label for="id_{{ field|slugify }}">{% if label %}{{ label }}{% else %}{{ field }}{% endif %}</label>
+  {% endif %}
+</div>

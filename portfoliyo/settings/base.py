@@ -82,6 +82,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.static",
     "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
+    "session_csrf.context_processor",
     "portfoliyo.google_analytics.context_processor",
 ]
 
@@ -91,9 +92,9 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.transaction.TransactionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "session_csrf.CsrfMiddleware",
 ]
 
 ROOT_URLCONF = "portfoliyo.urls"
@@ -117,8 +118,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "floppyforms",
     "widget_tweaks",
+    "form_utils",
     "south",
     "portfoliyo.landing",
+    "portfoliyo.users",
 ]
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.fallback.FallbackStorage"
@@ -179,3 +182,8 @@ COMPRESS_CSS_FILTERS = ["compressor.filters.css_default.CssAbsoluteFilter",
 INSTALLED_APPS += ["djangosecure"]
 MIDDLEWARE_CLASSES.insert(0, "djangosecure.middleware.SecurityMiddleware")
 SESSION_COOKIE_HTTPONLY = True
+
+
+INSTALLED_APPS += ["registration"]
+ACCOUNT_ACTIVATION_DAYS = 7
+
