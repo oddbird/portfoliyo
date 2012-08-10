@@ -1,0 +1,8 @@
+// ---------------------------------------------------------------------------
+// Combined Feed Layout
+
+.feed-combined {
+  @include at-breakpoint($break) {
+    @include squish($left,$right);
+  }
+}
