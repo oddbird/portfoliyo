@@ -234,19 +234,20 @@ a:hover, a:active {
   outline: none;
 }
 a:link, a:visited {
-  color: #fdf6e3;
+  color: #268bd2;
   text-decoration: none;
 }
 a:focus, a:hover, a:active {
-  color: #e896b2;
-}
-
-[role="main"] a:link, [role="main"] a:visited {
-  color: #268bd2;
-}
-[role="main"] a:focus, [role="main"] a:hover, [role="main"] a:active {
   color: #d33682;
 }
+
+.editlink:link, .editlink:visited {
+  color: inherit;
+}
+.editlink:focus, .editlink:hover, .editlink:active {
+  color: #d33682;
+}
+
 [role="main"] h1, [role="main"] h2, [role="main"] h3, [role="main"] h4, [role="main"] h5, [role="main"] h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
@@ -487,6 +488,12 @@ textarea:focus {
   display: table;
   clear: both;
 }
+[role="banner"] a:link, [role="contentinfo"] a:link, [role="banner"] a:visited, [role="contentinfo"] a:visited {
+  color: #fdf6e3;
+}
+[role="banner"] a:focus, [role="contentinfo"] a:focus, [role="banner"] a:hover, [role="contentinfo"] a:hover, [role="banner"] a:active, [role="contentinfo"] a:active {
+  color: #e896b2;
+}
 
 img {
   -webkit-box-shadow: #073642 0 0 0.125em;
@@ -725,13 +732,13 @@ img {
 }
 
 @media (min-width: 45em) {
-  .feed-profile .user {
+  .profile .user {
     width: 57.62712%;
     float: right;
     margin-right: 0;
     margin-right: 16.94915%;
   }
-  .feed-profile .bio {
+  .profile .bio {
     width: 23.72881%;
     float: left;
     margin-right: 1.69492%;
@@ -805,7 +812,7 @@ img {
 }
 
 @media (min-width: 45em) {
-  .post-feed {
+  .feed-profile {
     width: 57.62712%;
     float: right;
     margin-right: 0;

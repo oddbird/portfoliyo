@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Profile Layout
 
-.feed-profile {
+.profile {
   @include at-breakpoint($break) {
     .user {
       @include span-columns($center omega);
@@ -36,6 +36,7 @@
 .editlink {
   @extend %icon-replace;
   @extend %icon-pencil;
+  @extend %camolink;
   @include adjust-font-size-to($largepx,2.5);
   float: left;
   margin-right: .4em;
@@ -74,7 +75,7 @@ $biosize: $smallpx;
 // ---------------------------------------------------------------------------
 // Feed
 
-.post-feed {
+.feed-profile {
   @include at-breakpoint($break) {
     @include span-columns($center omega);
     @include post($right);

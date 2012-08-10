@@ -1,4 +1,4 @@
-<article class="feed-profile">
+<article class="profile">
 
   <header class="user vcard">
     {# if user is viewing his/her own profile #}
@@ -33,7 +33,7 @@
   {% endif %}
 
   {# if user has posts #}
-  <section class="post-feed">
+  <section class="feed-profile">
     {% include "posts/_post_list.html" with user="Jane Doe" timestamp="8/6/2012" image="true" text="I just got an A on my biology test!" highfive="14" comment="You rock!" comment_author="Hugh Ventimiglia" comment_timestamp="8/7/2012" %}
     {% include "posts/_post_list.html" with user="Jane Doe" timestamp="8/3/2012" text="I just finished reading about rockets for 30 minutes." highfive="5" %}
     {% include "posts/_post_list.html" with user="Jane Doe" timestamp="8/1/2012" image="true" text="This is a picture of my science fair potato-shooter project." highfive="23" %}

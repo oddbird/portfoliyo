@@ -1,6 +1,8 @@
 // ---------------------------------------------------------------------------
 // Boilerplate
 
+$boiler-link-color: $base3;
+
 .container { @include container($total-columns,$break); }
 
 %bleed {
@@ -14,6 +16,10 @@
   @extend .container;
   @include pie-clearfix;
   clear: both;
+  a {
+    #{$link} { color: $boiler-link-color; }
+    #{$focus} { color: mix($boiler-link-color,$accent); }
+  }
 }
 
 img {

@@ -1,23 +1,22 @@
 // ---------------------------------------------------------------------------
 // Links
 
-$boiler-link-color: $base3;
-
 a {
   &:hover, &:active {
     outline: none;
   }
   #{$link} {
-    color: $boiler-link-color;
+    color: $alt;
     text-decoration: none;
   }
   #{$focus} {
-    color: mix($boiler-link-color,$accent);
+    color: $accent;
   }
 }
 
-%ellipsis {
-  @include ellipsis;
+@mixin camolink {
+  #{$link} { color: inherit; }
+  #{$focus} { color: $accent; }
 }
 
 @mixin gone {
@@ -40,14 +39,14 @@ a {
   width: auto;
 }
 
+%camolink { @include camolink; }
+%ellipsis { @include ellipsis; }
+%gone { @include gone; }
+
 // ---------------------------------------------------------------------------
 // Typography
 
 %type {
-  a {
-    #{$link} { color: $alt; }
-    #{$focus} { color: $accent; }
-  }
 
   h1, h2, h3, h4, h5, h6 {
     @include serif;
