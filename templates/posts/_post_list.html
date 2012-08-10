@@ -2,14 +2,17 @@
   {# <a href="{% url post %}">permalink</a> #}
 
   <header class="byline vcard">
-    <img src="http://placekitten.com/75/75/" class="photo">
+    <img src="http://placekitten.com/70/70/" class="photo">
     <h3 class="fn"><a href="{% url profile %}" class="url">{{ user }}</a></h3>
     <time pubdate>{{ timestamp }}</time>
   </header>
 
   <div class="body">
     {% if image %}
-    <figure class="post-media">
+    {# we'll need some logic to handle this image properly #}
+    {# - if it's too large, we make a thumbnail. #}
+    {# - if it's small enough, we add a "small" class. #}
+    <figure class="post-media small">
       <img src="http://placekitten.com/150/150/">
     </figure>
     {% endif %}
@@ -22,36 +25,36 @@
   {# <p>{{ highfive }} high fives</p> #}
   {# <a href="#">high five!</a> #}
 
-  {% if comment %}
-  <section class="post-comments">
+  <section class="comments">
+    {% if comment %}
     <article class="comment">
-      <header class="byline vcard">
-        <img src="http://placekitten.com/25/25/" class="photo">
+      <header class="sub-byline vcard">
+        <img src="http://placekitten.com/46/46/" class="photo">
         <h4 class="fn"><a href="{# @@@ #}" class="url">{{ comment_author }}</a></h4>
         <time pubdate>{{ comment_timestamp }}</time>
       </header>
 
-      <div class="body">{{ comment }}</div>
+      <p class="sub-body">{{ comment }}</p>
 
       {# <button class="remove-comment">remove</button> #}
     </article>
+    {% endif %}
+
+    <form method="POST" class="comment-add-form">
+      {# csrf_token #}
+
+      {# form.non_field_errors #}
+
+      <div class="formfield commentfield">
+        {# form.comment.errors #}
+        <textarea id="comment">Add a comment</textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="action-post">comment</button>
+      </div>
+    </form>
   </section>
-  {% endif %}
-
-  <form method="POST" class="comment-add-form">
-    {# csrf_token #}
-
-    {# form.non_field_errors #}
-
-    <div class="formfield comment">
-      {# form.comment.errors #}
-      <textarea id="comment">Add a comment</textarea>
-    </div>
-
-    <div class="form-actions">
-      <button type="submit">submit</button>
-    </div>
-  </form>
 
   {# <button class="remove-post">remove</button> #}
 </article>

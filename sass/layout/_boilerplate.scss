@@ -5,11 +5,20 @@ $boiler-link-color: $base3;
 
 .container { @include container($total-columns,$break); }
 
+@mixin bleed($padding: $grid-padding, $sides: left right) {
+  @if $sides == 'all' {
+    margin: - $padding;
+    padding: $padding;
+  } @else {
+    @each $side in $sides {
+      margin-#{$side}: - $padding;
+      padding-#{$side}: $padding;
+    }
+  }
+}
+
 %bleed {
-  margin-left: - $grid-padding;
-  margin-right: - $grid-padding;
-  padding-left: $grid-padding;
-  padding-right: $grid-padding;
+  @include bleed;
 }
 
 %boilerplate {

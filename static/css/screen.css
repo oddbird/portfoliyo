@@ -814,3 +814,136 @@ img {
 .post-add-form {
   margin-bottom: 1.27778em;
 }
+.post-add-form .form-actions {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+
+.post {
+  margin-left: -1.47059%;
+  padding-left: 1.47059%;
+  margin-right: -1.47059%;
+  padding-right: 1.47059%;
+  *zoom: 1;
+  margin-bottom: 1.27778em;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 1.22222em;
+  position: relative;
+  border-color: #eee8d5;
+}
+.post:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.byline {
+  margin-bottom: 0.63889em;
+  color: #93a1a1;
+}
+.byline .photo {
+  width: 11.76471%;
+  float: left;
+  margin-right: 2.94118%;
+}
+.byline .fn {
+  display: inline;
+}
+.byline [pubdate]::before {
+  content: " on ";
+}
+
+.body {
+  *zoom: 1;
+  margin-left: 14.70588%;
+}
+.body:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.post-media.small {
+  float: left;
+  margin: 0 0.63889em 0.63889em 0;
+}
+
+.comments {
+  position: relative;
+  background: #eee8d5;
+  margin: 0 -1.72414% 0 13.48884%;
+  padding: 0.63889em 1.72414%;
+  background: #eee8d5;
+}
+.comments:after, .comments:before {
+  bottom: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.comments:after {
+  border-bottom-color: #eee8d5;
+  border-width: 0.63889em;
+  left: 50%;
+  margin-left: -0.63889em;
+}
+.comments:before {
+  border-bottom-color: false;
+  border-width: 0.63889em;
+  left: 50%;
+  margin-left: -0.63889em;
+}
+.comments .form-actions {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+
+.comment {
+  *zoom: 1;
+}
+.comment:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.comment + .comment, .comment + .comment-add-form {
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.58333em;
+  border-color: #fdf6e3;
+}
+.comment .sub-body {
+  margin-bottom: 0.63889em;
+}
+
+.sub-byline {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+}
+.sub-byline .photo {
+  float: left;
+  margin: 0 0.82143em 0.82143em 0;
+}
+.sub-byline .fn {
+  display: inline;
+}
+
+.commentfield {
+  margin: 0;
+}

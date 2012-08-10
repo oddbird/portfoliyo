@@ -3,8 +3,80 @@
 
 .post-add-form {
   @include trailer;
+  .form-actions { @include gone; }
 }
 
 // ---------------------------------------------------------------------------
 // Post
+
+$post-width: $center;
+$photo-width: 1;
+$body-width: $post-width - $photo-width;
+
+.post {
+  @include bleed(gutter($post-width)/2);
+  @include pie-clearfix;
+  @include trailer;
+  @include leading-border(1px,1);
+  position: relative;
+  border-color: $base2;
+}
+
+.byline {
+  @include trailer(.5);
+  color: $base1;
+
+  .photo { @include span-columns($photo-width,$post-width) }
+  .fn { display: inline; }
+  [pubdate] { &::before { content: " on "; } }
+}
+
+.body {
+  @include pie-clearfix;
+  @include pre($photo-width,$post-width);
+}
+
+.post-media {
+  &.small {
+    float: left;
+    margin: 0 rhythm(.5) rhythm(.5) 0;
+  }
+}
+
+$comments-pad: gutter($body-width)/2;
+$comments-back: $base2;
+
+// ---------------------------------------------------------------------------
+// Comments
+
+.comments {
+  @include css-arrow(top, rhythm(.5), $comments-back);
+  margin: 0 0-$comments-pad 0 columns($photo-width,$post-width)+$comments-pad;
+  padding: rhythm(.5) $comments-pad;
+  background: $comments-back;
+  .form-actions { @include gone; }
+}
+
+$comment-size: $smallpx;
+
+.comment {
+  @include pie-clearfix;
+  // @include trailer(.5);
+  + .comment, + .comment-add-form {
+    @include leading-border(1px,.5);
+    border-color: $base3;
+  }
+  .sub-body { @include trailer(.5); }
+}
+
+.sub-byline {
+  @include adjust-font-size-to($comment-size);
+  .photo {
+    float: left;
+    margin: 0 rhythm(.5,$comment-size) rhythm(.5,$comment-size) 0;
+  }
+  .fn { display: inline; }
+}
+
+.commentfield { margin: 0; }
 

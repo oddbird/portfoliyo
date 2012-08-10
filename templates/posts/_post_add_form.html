@@ -6,12 +6,12 @@
 
   {# form.non_field_errors #}
 
-  <div class="formfield post-text">
+  <div class="formfield post-textfield">
     {# form.post_text.errors #}
     <textarea id="post-text"></textarea>
   </div>
 
-  <div class="formfield post-image">
+  <div class="formfield post-imagefield">
     {# form.post_image.errors #}
     <label for="post-image">upload an image or photo</label>
     <input type="file" id="post-image" />
@@ -26,7 +26,7 @@
   {% endcomment %}
 
   <div class="form-actions">
-    <button type="submit">share</button>
+    <button type="submit" class="action-post">share</button>
   </div>
 
   {# <a href="{ @@@ url to post khan academy progress }">post my recent Khan Academy progress</a> #}
