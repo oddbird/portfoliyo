@@ -2,6 +2,12 @@
 // Combined Feed Layout
 
 .feed-combined {
+  .post {
+    &:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+  }
   @include at-breakpoint($break) {
     @include squish($left,$right);
   }
