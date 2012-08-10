@@ -1,37 +1,42 @@
-<div class="post">
+<article class="post">
   {# <a href="{% url post %}">permalink</a> #}
-  <a href="{% url profile %}">{{ user }}</a>
-  <img src="http://placekitten.com/75/75/">
-  <p class="post-timestamp">{{ timestamp }}</p>
 
-  {% if image %}
-  <img src="http://placekitten.com/150/150/">
-  {% endif %}
+  <header class="byline vcard">
+    <img src="http://placekitten.com/75/75/" class="photo">
+    <h3 class="fn"><a href="{% url profile %}" class="url">{{ user }}</a></h3>
+    <time pubdate>{{ timestamp }}</time>
+  </header>
 
-  {% if text %}
-  <p class="post-text">{{ text }}</p>
-  {% endif %}
+  <div class="body">
+    {% if image %}
+    <figure class="post-media">
+      <img src="http://placekitten.com/150/150/">
+    </figure>
+    {% endif %}
+
+    {% if text %}
+    <p class="post-text">{{ text }}</p>
+    {% endif %}
+  </div>
 
   {# <p>{{ highfive }} high fives</p> #}
+  {# <a href="#">high five!</a> #}
 
   {% if comment %}
-  <ul class="post-comments">
-    <li>
-      <div class="comment">
-        <ul>
-          <li><img src="http://placekitten.com/25/25/"></li>
-          <li>{{ comment_author }}</li>
-          <li>{{ comment }}</li>
-          <li>{{ comment_timestamp }}</li>
-        </ul>
+  <section class="post-comments">
+    <article class="comment">
+      <header class="byline vcard">
+        <img src="http://placekitten.com/25/25/" class="photo">
+        <h4 class="fn"><a href="{# @@@ #}" class="url">{{ comment_author }}</a></h4>
+        <time pubdate>{{ comment_timestamp }}</time>
+      </header>
 
-        {# <button class="remove-comment">remove</button> #}
-      </div>
-    </li>
-  </ul>
+      <div class="body">{{ comment }}</div>
+
+      {# <button class="remove-comment">remove</button> #}
+    </article>
+  </section>
   {% endif %}
-
-  {# <a href="#">high five!</a> #}
 
   <form method="POST" class="comment-add-form">
     {# csrf_token #}
@@ -49,4 +54,4 @@
   </form>
 
   {# <button class="remove-post">remove</button> #}
-</div>
+</article>

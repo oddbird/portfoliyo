@@ -1,0 +1,43 @@
+// ---------------------------------------------------------------------------
+// Profile
+
+.feed-profile {
+  > .vcard {
+    @include at-breakpoint($break) {
+      @include span-columns($center omega);
+      @include post($right);
+    }
+  }
+  .bio {
+    @include at-breakpoint($break) {
+      @include span-columns($left);
+    }
+  }
+}
+
+.profile-name {
+  @include adjust-font-size-to($largepx);
+  @include at-breakpoint($break) {
+    @include adjust-font-size-to($xlargepx);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Add Posts
+
+.post-add-form {
+  @include at-breakpoint($break) {
+    @include span-columns($center omega);
+    @include post($right);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Feed
+
+.post-feed {
+  @include at-breakpoint($break) {
+    @include span-columns($center omega);
+    @include post($right);
+  }
+}

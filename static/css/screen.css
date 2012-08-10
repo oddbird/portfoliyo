@@ -685,3 +685,48 @@ img {
     margin-right: 16.94915%;
   }
 }
+
+@media (min-width: 45em) {
+  .feed-profile > .vcard {
+    width: 57.62712%;
+    float: right;
+    margin-right: 0;
+    margin-right: 16.94915%;
+  }
+}
+@media (min-width: 45em) {
+  .feed-profile .bio {
+    width: 23.72881%;
+    float: left;
+    margin-right: 1.69492%;
+  }
+}
+
+.profile-name {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+}
+@media (min-width: 45em) {
+  .profile-name {
+    font-size: 2.44444em;
+    line-height: 1.30682em;
+  }
+}
+
+@media (min-width: 45em) {
+  .post-add-form {
+    width: 57.62712%;
+    float: right;
+    margin-right: 0;
+    margin-right: 16.94915%;
+  }
+}
+
+@media (min-width: 45em) {
+  .post-feed {
+    width: 57.62712%;
+    float: right;
+    margin-right: 0;
+    margin-right: 16.94915%;
+  }
+}
