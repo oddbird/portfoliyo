@@ -16,6 +16,12 @@ urlpatterns = patterns(
         name="signup",
         ),
     url(
+        r"^register/$",
+        direct_to_template,
+        {"template": "register.html"},
+        name="register",
+        ),
+    url(
         r"^login/$",
         direct_to_template,
         {"template": "users/login.html"},

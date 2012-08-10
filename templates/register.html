@@ -1,0 +1,35 @@
+{% extends "base_site.html" %}
+
+{% block maincontent %}
+
+<form method="POST" class="register-form">
+  {# csrf_token #}
+
+  {# form.non_field_errors #}
+
+  <div class="formset initial-password">
+    <div class="formfield password">
+      {# form.password.errors #}
+      <label for="password">password</label>
+      <input type="password" id="password" />
+    </div>
+
+    <div class="formfield password-confirm">
+      {# form.password_confirm.errors #}
+      <label for="password-confirm">confirm password</label>
+      <input type="password" id="password-confirm" />
+    </div>
+  </div>
+
+  {% include "users/_user_basic_bio.html" %}
+
+  <div class="form-actions">
+    {# @@@ if student #}
+    <button type="submit" class="go-network">Start building your network!</button>
+    {# else if supporter #}
+    {# <button type="submit" class="go-student">See what Jane is working on!</button> #}
+    {# endif #}
+  </div>
+</form>
+
+{% endblock maincontent %}

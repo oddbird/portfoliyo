@@ -1,0 +1,21 @@
+<!-- Basic Bio -->
+<div class="formset bio-short">
+  <div class="formfield name">
+    {# form.name.errors #}
+    <label for="name">name</label>
+    <input type="text" id="name" placeholder="name" />
+  </div>
+
+  <div class="formfield username">
+    {# form.username.errors #}
+    <label for="username">username</label>
+    <input type="text" id="username" placeholder="username" />
+    <p class="form-help">URL: <a href="{% url profile %}">{# @@@ #}portfoliyo.org/jane_doe/</a></p>
+  </div>
+
+  <div class="formfield email">
+    {# form.email.errors #}
+    <label for="email">email</label>
+    <input type="text" id="email" placeholder="email address" />
+  </div>
+</div>
