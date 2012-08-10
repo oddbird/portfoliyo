@@ -10,6 +10,14 @@
     .bio {
       @include span-columns($left);
     }
+    .post-add-form {
+      @include span-columns($center omega);
+      @include post($right);
+    }
+    .feed-profile {
+      @include span-columns($center omega);
+      @include post($right);
+    }
   }
 }
 
@@ -58,26 +66,5 @@ $biosize: $smallpx;
       @include leading-border(1px,.125,$biosize);
       border-color: rgba($base2,.75);
     }
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Add Posts
-
-.post-add-form {
-  @include trailer;
-  @include at-breakpoint($break) {
-    @include span-columns($center omega);
-    @include post($right);
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Feed
-
-.feed-profile {
-  @include at-breakpoint($break) {
-    @include span-columns($center omega);
-    @include post($right);
   }
 }
