@@ -1,60 +1,15 @@
 <article class="post">
-  {# <a href="{% url post %}">permalink</a> #}
 
   <header class="byline vcard">
     <img src="http://placekitten.com/70/70/" class="photo">
-    <h3 class="fn"><a href="{% url profile %}" class="url">{{ user }}</a></h3>
+    <h3 class="fn">{{ user }}</h3>
+    <h4>{{ title }}</h4>
     <time pubdate>{{ timestamp }}</time>
   </header>
 
   <div class="body">
-    {% if image %}
-    {# we'll need some logic to handle this image properly #}
-    {# - if it's too large, we make a thumbnail. #}
-    {# - if it's small enough, we add a "small" class. #}
-    <figure class="post-media small">
-      <img src="http://placekitten.com/150/150/">
-    </figure>
-    {% endif %}
-
-    {% if text %}
     <p class="post-text">{{ text }}</p>
-    {% endif %}
   </div>
-
-  {# <p>{{ highfive }} high fives</p> #}
-  {# <a href="#">high five!</a> #}
-
-  <section class="comments">
-    {% if comment %}
-    <article class="comment">
-      <header class="sub-byline vcard">
-        <img src="http://placekitten.com/46/46/" class="photo">
-        <h4 class="fn"><a href="{# @@@ #}" class="url">{{ comment_author }}</a></h4>
-        <time pubdate>{{ comment_timestamp }}</time>
-      </header>
-
-      <p class="sub-body">{{ comment }}</p>
-
-      {# <button class="remove-comment">remove</button> #}
-    </article>
-    {% endif %}
-
-    <form method="POST" class="comment-add-form">
-      {# csrf_token #}
-
-      {# form.non_field_errors #}
-
-      <div class="formfield commentfield">
-        {# form.comment.errors #}
-        <textarea id="comment">Add a comment</textarea>
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" class="action-post">comment</button>
-      </div>
-    </form>
-  </section>
 
   {# <button class="remove-post">remove</button> #}
 </article>

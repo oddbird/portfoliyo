@@ -1,0 +1,24 @@
+<form method="POST" class="village-add-form">
+  {# csrf_token #}
+
+  <h3>Add a new Village</h3>
+
+  {# form.non_field_errors #}
+
+  <div class="formfield name">
+    {# form.name.errors #}
+    <label for="name">name</label>
+    <input type="text" id="name" placeholder="student name" />
+  </div>
+
+  <div class="formfield picture">
+    {# form.picture.errors #}
+    <label for="picture">upload picture</label>
+    <input type="file" id="picture" />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">add</button>
+  </div>
+
+</form>
