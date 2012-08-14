@@ -134,14 +134,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before, [data-icon]:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta p:before, .useractions a:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, .meta p:before, .useractions a:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta p:before, .useractions a:before {
   margin-right: .4em;
 }
 
@@ -163,32 +163,36 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-.brand [rel="home"]:before {
-  content: "\e000";
-}
-
-[role="navigation"] .me:before {
-  content: "\e001";
-}
-
 [role="navigation"] .net:before {
-  content: "\e002";
-}
-
-.meta p:before {
   content: "\e007";
 }
 
-.useractions [href*="/edit/"]:before, .editlink:before {
-  content: "\e00b";
+.meta p:before {
+  content: "\e008";
 }
 
-.useractions [href*="/signup/"]:before {
+[role="navigation"] .me:before {
   content: "\e009";
 }
 
+.useractions [href*="/signup/"]:before {
+  content: "\e00b";
+}
+
 .useractions [href*="/password_change/"]:before {
-  content: "\e008";
+  content: "\e000";
+}
+
+.brand [rel="home"]:before {
+  content: "\e001";
+}
+
+.useractions [href*="/edit/"]:before, .editlink:before {
+  content: "\e00a";
+}
+
+[role="navigation"] .village:before {
+  content: "\e00c";
 }
 
 /* -------------------------------------------------------------------------*/

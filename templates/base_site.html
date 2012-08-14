@@ -5,7 +5,13 @@
 {% block page %}
 
   <div role="banner">
-    <h1 class="brand"><a href="{% url home %}" rel="home">My Village(s)</a></h1>
+    <h1 class="brand"><a href="{% url signup %}" rel="home">Portfoliyo</a></h1>
+
+    <nav role="navigation">
+      <ul>
+        <li><a href="{% url home %}" class="village">My Village</a></li>
+      </ul>
+    </nav>
 
     <nav class="meta">
       {# if user.is_authenticated #}

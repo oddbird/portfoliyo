@@ -55,6 +55,7 @@ $break-nav-span: $break-cols - $left*2;
   }
   .me { @extend %icon; @extend %icon-comments; }
   .net { @extend %icon; @extend %icon-users; }
+  .village { @extend %icon; @extend %icon-fire; }
 }
 
 // ---------------------------------------------------------------------------
