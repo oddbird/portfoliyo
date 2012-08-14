@@ -2,6 +2,19 @@
 
 {% block maincontent %}
 
+  <section class="village-list">
+    {% include "villages/_village_list.html" with user="Althea Duffin" active="true" %}
+    {% include "villages/_village_list.html" with user="Kenya Thakkar" %}
+    {% include "villages/_village_list.html" with user="Allyson Burell" %}
+    {% include "villages/_village_list.html" with user="Malinda Fader" %}
+    {% include "villages/_village_list.html" with user="Neil Miguez" %}
+    {% include "villages/_village_list.html" with user="Jami Marciano" %}
+  </section>
+
+  {# include "villages/_village_add_form.html" #}
+
+  {% include "villages/_village_detail.html" %}
+
   <section class="feed-combined">
     {% include "posts/_post_list.html" with user="Althea Duffin" timestamp="8/6/2012" image="true" text="Today I learned how to post something to my portfoliyo!" highfive="14" comment="You rock!" comment_author="Hugh Ventimiglia" comment_timestamp="8/7/2012" %}
     {% include "posts/_post_list.html" with user="Kenya Thakkar" timestamp="8/3/2012" text="I just finished reading about rockets for 30 minutes." highfive="5" %}

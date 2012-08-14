@@ -52,21 +52,9 @@ urlpatterns = patterns(
         name="edit_profile",
         ),
     url(
-        r"^username/network/$",
+        r"^join_village/$",
         direct_to_template,
-        {"template": "users/network.html"},
-        name="network",
-        ),
-    url(
-        r"^username/join_network/$",
-        direct_to_template,
-        {"template": "users/join_network.html"},
-        name="join_network",
-        ),
-    url(
-        r"^username/$",
-        direct_to_template,
-        {"template": "users/user_feed.html"},
-        name="profile",
+        {"template": "join_village.html"},
+        name="join_village",
         ),
 )

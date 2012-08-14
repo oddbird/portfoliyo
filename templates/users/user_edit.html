@@ -7,59 +7,7 @@
 
   {# form.non_field_errors #}
 
-  <!-- Profile Picture -->
-  <div class="formfield picture">
-    <img src="http://placekitten.com/250/250">
-    {# form.picture.errors #}
-    <label for="picture">upload picture</label>
-    <input type="file" id="picture" />
-  </div>
-
   {% include "users/_user_basic_bio.html" %}
-
-  <!-- Extended Bio -->
-  <div class="formset bio-long">
-    <div class="formfield birthday">
-      {# form.birthday.errors #}
-      <label for="birthday">birthday</label>
-      <input type="date" id="birthday" />
-    </div>
-
-    <div class="formfield subject">
-      {# form.subject.errors #}
-      <label for="subject">favorite subject</label>
-      <input type="text" id="subject" />
-    </div>
-
-    <div class="formfield food">
-      {# form.food.errors #}
-      <label for="food">favorite food</label>
-      <input type="text" id="food" />
-    </div>
-
-    <div class="formfield sport">
-      {# form.sport.errors #}
-      <label for="sport">favorite sport</label>
-      <input type="text" id="sport" />
-    </div>
-
-    <div class="formfield color">
-      {# form.color.errors #}
-      <label for="color">favorite color</label>
-      <input type="text" id="color" />
-    </div>
-  </div>
-
-  {% comment %}
-  <div class="formfield updates">
-    {# form.updates.errors #}
-    <p>Do you want to receive email updates?</p>
-    <input type="radio" name="updates" id="updates-yes" value="1" checked />
-    <label for="updates-yes">yes</label>
-    <input type="radio" name="updates" id="updates-no" value="0" />
-    <label for="updates-no">no</label>
-  </div>
-  {% endcomment %}
 
   <div class="form-actions">
     <button type="submit">Save changes</button>
