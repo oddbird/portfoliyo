@@ -590,10 +590,6 @@ img {
   .meta a {
     padding: 0.63889em;
   }
-  .meta a::before {
-    float: right;
-    margin-right: 0;
-  }
 }
 
 @media (min-width: 45em) {

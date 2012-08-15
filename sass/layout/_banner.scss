@@ -76,13 +76,7 @@ $break-nav-span: $break-cols - $left*2;
 
   @include at-breakpoint($break) {
     @include span-columns($left omega);
-    a {
-      padding: rhythm($banner-rhythm);
-      &::before {
-        float: right;
-        margin-right: 0;
-      }
-    }
+    a { padding: rhythm($banner-rhythm); }
   }
 }
 
