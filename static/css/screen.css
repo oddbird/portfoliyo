@@ -702,6 +702,15 @@ img {
   text-transform: capitalize;
 }
 
+@media (min-width: 45em) {
+  #reset-password, #change-password {
+    padding-left: 25.38462%;
+    padding-right: 25.38462%;
+  }
+  #reset-password form, #change-password form {
+    margin-top: 1.27778em;
+  }
+}
 .join_network .login-form {
   margin-top: 1.27778em;
 }
