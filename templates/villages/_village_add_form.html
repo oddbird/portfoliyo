@@ -1,24 +1,34 @@
-<form method="POST" class="village-add-form">
-  {# csrf_token #}
+<aside class="add-student">
+  <a href="#" class="addstudent-link">Add a Student</a>
 
-  <h3>Create a student village</h3>
+  <form method="POST" class="village-add-form">
+    {# csrf_token #}
 
-  {# form.non_field_errors #}
+    {# form.non_field_errors #}
 
-  <div class="formfield name">
-    {# form.name.errors #}
-    <label for="name">name</label>
-    <input type="text" id="name" placeholder="student name" />
-  </div>
+    {% comment %}
+    <div class="formfield picture">
+      {# form.picture.errors #}
+      <label for="picture">upload picture</label>
+      <input type="file" id="picture" />
+    </div>
+    {% endcomment %}
 
-  <div class="formfield picture">
-    {# form.picture.errors #}
-    <label for="picture">upload picture</label>
-    <input type="file" id="picture" />
-  </div>
+    <div class="formfield name">
+      {# form.name.errors #}
+      <label for="name">name</label>
+      <input type="text" id="name" placeholder="student name" />
+    </div>
 
-  <div class="form-actions">
-    <button type="submit" class="action-post">add</button>
-  </div>
+    <div class="formfield contact">
+      {# form.contact.errors #}
+      <label for="contact">contact</label>
+      <input type="text" id="contact" placeholder="guardian phone number" />
+    </div>
 
-</form>
+    <div class="form-actions">
+      <button type="submit" class="action-post">add</button>
+    </div>
+
+  </form>
+</aside>

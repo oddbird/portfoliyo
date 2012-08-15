@@ -134,14 +134,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta a:before, [data-icon]:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta a:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before {
   margin-right: .4em;
 }
 
@@ -191,7 +191,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00a";
 }
 
-[role="navigation"] .village:before {
+[role="navigation"] .myvillage:before {
   content: "\e00c";
 }
 
@@ -460,9 +460,6 @@ textarea {
   transition: 200ms min-height;
   min-height: 2.46429em;
 }
-textarea:focus {
-  min-height: 10.67857em;
-}
 
 .container, [role="banner"], [role="contentinfo"] {
   *zoom: 1;
@@ -483,13 +480,6 @@ textarea:focus {
   }
 }
 
-.initial-password, .join_network, .useractions {
-  margin-left: -1em;
-  padding-left: 1em;
-  margin-right: -1em;
-  padding-right: 1em;
-}
-
 [role="banner"], [role="contentinfo"] {
   *zoom: 1;
   clear: both;
@@ -506,6 +496,19 @@ textarea:focus {
   color: #e896b2;
 }
 
+.pagehead {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
+}
+
+.initial-password, .join_network, .useractions {
+  margin-left: -1em;
+  padding-left: 1em;
+  margin-right: -1em;
+  padding-right: 1em;
+}
+
 .initial-password, .join_network {
   *zoom: 1;
   margin-top: 0em;
@@ -518,6 +521,33 @@ textarea:focus {
   content: "";
   display: table;
   clear: both;
+}
+
+@media (min-width: 45em) {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
+    padding-left: 16.92308%;
+    padding-right: 16.92308%;
+  }
+}
+
+@media (min-width: 45em) {
+  .login label, .profile-edit-form label, .register-form label, .reset-password label, .change-password label, .set-password label {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 23.25581%;
+    float: left;
+    margin-right: 2.32558%;
+    padding: 0.31944em 0;
+    text-align: right;
+  }
+  .login input, .profile-edit-form input, .register-form input, .reset-password input, .change-password input, .set-password input {
+    width: 74.4186%;
+    float: right;
+    margin-right: 0;
+  }
 }
 
 img {
@@ -542,7 +572,7 @@ img {
 }
 @media (min-width: 45em) {
   .brand {
-    width: 23.84615%;
+    width: 15.38462%;
     float: left;
     margin-right: 1.53846%;
   }
@@ -550,7 +580,7 @@ img {
 
 @media (min-width: 45em) {
   [role="navigation"] {
-    width: 49.23077%;
+    width: 57.69231%;
     float: left;
     margin-right: 1.53846%;
   }
@@ -570,8 +600,8 @@ img {
   [role="navigation"] li {
     float: left;
     width: auto;
-    margin-right: 3.125%;
-    min-width: 14.0625%;
+    margin-right: 2.66667%;
+    min-width: 12%;
   }
 }
 
@@ -643,58 +673,33 @@ img {
   }
 }
 @media (min-width: 45em) {
+  .initial-password {
+    margin-left: -25.5814%;
+    padding-left: 25.5814%;
+    margin-right: -25.5814%;
+    padding-right: 25.5814%;
+  }
   .initial-password label {
     white-space: nowrap;
     overflow: hidden;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 31.95876%;
+    width: 23.25581%;
     float: left;
-    margin-right: 2.06186%;
+    margin-right: 2.32558%;
     padding: 0.31944em 0;
     text-align: right;
   }
   .initial-password input {
-    width: 65.97938%;
+    width: 74.4186%;
     float: right;
     margin-right: 0;
-  }
-  .initial-password .formfield {
-    padding-right: 25.38462%;
   }
 }
 
-@media (min-width: 45em) {
-  .profile-edit-form .bio-short, .register-form .bio-short, .profile-edit-form .bio-long, .register-form .bio-long {
-    padding-right: 25.38462%;
-  }
-  .profile-edit-form .bio-short label, .register-form .bio-short label, .profile-edit-form .bio-long label, .register-form .bio-long label {
-    white-space: nowrap;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    width: 31.95876%;
-    float: left;
-    margin-right: 2.06186%;
-    padding: 0.31944em 0;
-    text-align: right;
-  }
-  .profile-edit-form .bio-short input, .register-form .bio-short input, .profile-edit-form .bio-long input, .register-form .bio-long input {
-    width: 65.97938%;
-    float: right;
-    margin-right: 0;
-  }
-}
 .profile-edit-form .bio-short, .register-form .bio-short {
   margin-bottom: 1.27778em;
-}
-@media (min-width: 45em) {
-  .profile-edit-form .form-actions, .register-form .form-actions {
-    margin-left: 25.38462%;
-    margin-right: 25.38462%;
-  }
 }
 .profile-edit-form [class^="go-"], .register-form [class^="go-"] {
   font-size: 1.94444em;
@@ -702,21 +707,81 @@ img {
   text-transform: capitalize;
 }
 
+.village {
+  position: relative;
+  min-height: 24em;
+}
+
+.village-nav ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+.village-nav ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
 @media (min-width: 45em) {
-  #reset-password, #change-password {
-    padding-left: 25.38462%;
-    padding-right: 25.38462%;
-  }
-  #reset-password form, #change-password form {
-    margin-top: 1.27778em;
+  .village-nav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 15.38462%;
+    padding-right: 1.27778em;
+    overflow-y: scroll;
   }
 }
+
+.village-add-form {
+  display: none;
+}
+
+@media (min-width: 45em) {
+  .village-feed {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: 16.92308%;
+    margin-right: 16.92308%;
+    padding-right: 1.27778em;
+    overflow-y: scroll;
+  }
+}
+
+.village-users ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+.village-users ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+@media (min-width: 45em) {
+  .village-users {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 15.38462%;
+    padding-right: 1.27778em;
+    overflow-y: scroll;
+  }
+}
+
 .join_network .login-form {
   margin-top: 1.27778em;
 }
 @media (min-width: 45em) {
   .join_network .login-form {
-    padding-right: 25.38462%;
+    padding-right: 16.92308%;
   }
   .join_network .login-form label {
     white-space: nowrap;
@@ -724,14 +789,14 @@ img {
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 31.95876%;
+    width: 18.51852%;
     float: left;
-    margin-right: 2.06186%;
+    margin-right: 1.85185%;
     padding: 0.31944em 0;
     text-align: right;
   }
   .join_network .login-form input {
-    width: 65.97938%;
+    width: 79.62963%;
     float: right;
     margin-right: 0;
   }
@@ -739,27 +804,27 @@ img {
 
 @media (min-width: 45em) {
   .profile .user {
-    width: 49.23077%;
+    width: 66.15385%;
     float: right;
     margin-right: 0;
-    margin-right: 25.38462%;
+    margin-right: 16.92308%;
   }
   .profile .bio {
-    width: 23.84615%;
+    width: 15.38462%;
     float: left;
     margin-right: 1.53846%;
   }
   .profile .post-add-form {
-    width: 49.23077%;
+    width: 66.15385%;
     float: right;
     margin-right: 0;
-    margin-right: 25.38462%;
+    margin-right: 16.92308%;
   }
   .profile .feed-profile {
-    width: 49.23077%;
+    width: 66.15385%;
     float: right;
     margin-right: 0;
-    margin-right: 25.38462%;
+    margin-right: 16.92308%;
   }
 }
 
@@ -823,8 +888,8 @@ img {
 }
 @media (min-width: 45em) {
   .feed-combined {
-    margin-left: 25.38462%;
-    margin-right: 25.38462%;
+    margin-left: 16.92308%;
+    margin-right: 16.92308%;
   }
 }
 
@@ -833,10 +898,10 @@ img {
 }
 
 .post {
-  margin-left: -1.5625%;
-  padding-left: 1.5625%;
-  margin-right: -1.5625%;
-  padding-right: 1.5625%;
+  margin-left: -1.16279%;
+  padding-left: 1.16279%;
+  margin-right: -1.16279%;
+  padding-right: 1.16279%;
   *zoom: 1;
   margin-bottom: 1.27778em;
   border-top-style: solid;
@@ -856,9 +921,9 @@ img {
   color: #93a1a1;
 }
 .byline .photo {
-  width: 14.0625%;
+  width: 10.46512%;
   float: left;
-  margin-right: 3.125%;
+  margin-right: 2.32558%;
 }
 .byline .fn {
   display: inline;
@@ -869,7 +934,7 @@ img {
 
 .body {
   *zoom: 1;
-  margin-left: 17.1875%;
+  margin-left: 12.7907%;
 }
 .body:after {
   content: "";
@@ -885,8 +950,8 @@ img {
 .comments {
   position: relative;
   background: #eee8d5;
-  margin: 0 -1.88679% 0 15.94929%;
-  padding: 0.63889em 1.88679%;
+  margin: 0 -1.33333% 0 11.79845%;
+  padding: 0.63889em 1.33333%;
   background: #eee8d5;
 }
 .comments:after, .comments:before {

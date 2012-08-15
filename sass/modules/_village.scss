@@ -1,0 +1,50 @@
+// ---------------------------------------------------------------------------
+// Village
+
+.village {
+  position: relative;
+  min-height: 24em;
+}
+
+// ---------------------------------------------------------------------------
+// Village Nav
+
+.village-nav {
+  ul { @include no-style-list; }
+
+  @include at-breakpoint($break) {
+    @include stretch-y;
+    left: 0;
+    width: columns($left);
+    padding-right: rhythm(1);
+    overflow-y: scroll;
+  }
+}
+
+.village-add-form {
+  display: none;
+}
+
+// ---------------------------------------------------------------------------
+// Village Feed
+
+.village-feed {
+  @include at-breakpoint($break) {
+    @include stretch;
+    @include squish($left,$right);
+    padding-right: rhythm(1);
+    overflow-y: scroll;
+  }
+}
+
+.village-users {
+  ul { @include no-style-list; }
+
+  @include at-breakpoint($break) {
+    @include stretch-y;
+    right: 0;
+    width: columns($right);
+    padding-right: rhythm(1);
+    overflow-y: scroll;
+  }
+}
