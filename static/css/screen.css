@@ -753,6 +753,29 @@ img {
   }
 }
 
+.village-users ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+.village-users ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+@media (min-width: 45em) {
+  .village-users {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 15.38462%;
+    padding-right: 1.27778em;
+    overflow-y: scroll;
+  }
+}
+
 .join_network .login-form {
   margin-top: 1.27778em;
 }
