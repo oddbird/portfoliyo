@@ -27,7 +27,7 @@ $legacy-support-for-ie8         : false !default;
 // Grids
 
 $total-columns  : 6;
-$column-width   : 4em;
+$column-width   : 4.5em;
 $gutter-width   : 1em;
 $grid-padding   : 1em;
 
@@ -36,7 +36,7 @@ $break-cols     : 12;
 $break          : $break-width $break-cols;
 
 $left           : 3;
-$right          : 2;
+$right          : 3;
 $center         : $break-cols - $left - $right;
 
 $grid-background-baseline-height  : $base-line-height;

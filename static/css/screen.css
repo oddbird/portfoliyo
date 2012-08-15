@@ -466,7 +466,7 @@ textarea:focus {
 
 .container, [role="banner"], [role="contentinfo"] {
   *zoom: 1;
-  max-width: 31em;
+  max-width: 34em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
@@ -479,11 +479,11 @@ textarea:focus {
 }
 @media (min-width: 45em) {
   .container, [role="banner"], [role="contentinfo"] {
-    max-width: 61em;
+    max-width: 67em;
   }
 }
 
-.initial-password, .join_network {
+.initial-password, .join_network, .useractions {
   margin-left: -1em;
   padding-left: 1em;
   margin-right: -1em;
@@ -542,17 +542,17 @@ img {
 }
 @media (min-width: 45em) {
   .brand {
-    width: 23.72881%;
+    width: 23.84615%;
     float: left;
-    margin-right: 1.69492%;
+    margin-right: 1.53846%;
   }
 }
 
 @media (min-width: 45em) {
   [role="navigation"] {
-    width: 49.15254%;
+    width: 49.23077%;
     float: left;
-    margin-right: 1.69492%;
+    margin-right: 1.53846%;
   }
 }
 [role="navigation"] ul {
@@ -570,43 +570,47 @@ img {
   [role="navigation"] li {
     float: left;
     width: auto;
-    margin-right: 3.44828%;
-    min-width: 13.7931%;
+    margin-right: 3.125%;
+    min-width: 14.0625%;
   }
 }
 
 .meta {
   position: relative;
 }
-.meta a {
-  padding: 0.63889em;
-}
-.meta a:before {
-  float: right;
-  margin-right: 0;
-}
 .meta b {
   font-weight: bold;
 }
 @media (min-width: 45em) {
   .meta {
-    width: 23.72881%;
+    width: 23.84615%;
+    float: right;
+    margin-right: 0;
+  }
+  .meta a {
+    padding: 0.63889em;
+  }
+  .meta a::before {
     float: right;
     margin-right: 0;
   }
 }
 
-.useractions {
-  position: absolute;
-  left: 0;
-  right: 0;
-  display: none;
-  top: 100%;
-  background: #073642;
-  z-index: 900;
-}
-.meta:hover .useractions {
-  display: block;
+@media (min-width: 45em) {
+  .useractions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    margin: 0;
+    padding: 0;
+    background: #073642;
+    z-index: 900;
+    display: none;
+  }
+  .meta:hover .useractions {
+    display: block;
+  }
 }
 
 [role="main"] {
@@ -631,13 +635,13 @@ img {
 
 @media (min-width: 45em) {
   .intro {
-    width: 66.10169%;
+    width: 66.15385%;
     float: left;
-    margin-right: 1.69492%;
+    margin-right: 1.53846%;
   }
 
   .main-login {
-    width: 32.20339%;
+    width: 32.30769%;
     float: right;
     margin-right: 0;
   }
@@ -649,25 +653,25 @@ img {
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 28.57143%;
+    width: 31.95876%;
     float: left;
-    margin-right: 2.04082%;
+    margin-right: 2.06186%;
     padding: 0.31944em 0;
     text-align: right;
   }
   .initial-password input {
-    width: 69.38776%;
+    width: 65.97938%;
     float: right;
     margin-right: 0;
   }
   .initial-password .formfield {
-    padding-right: 16.94915%;
+    padding-right: 25.38462%;
   }
 }
 
 @media (min-width: 45em) {
   .profile-edit-form .bio-short, .register-form .bio-short, .profile-edit-form .bio-long, .register-form .bio-long {
-    padding-right: 16.94915%;
+    padding-right: 25.38462%;
   }
   .profile-edit-form .bio-short label, .register-form .bio-short label, .profile-edit-form .bio-long label, .register-form .bio-long label {
     white-space: nowrap;
@@ -675,14 +679,14 @@ img {
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 28.57143%;
+    width: 31.95876%;
     float: left;
-    margin-right: 2.04082%;
+    margin-right: 2.06186%;
     padding: 0.31944em 0;
     text-align: right;
   }
   .profile-edit-form .bio-short input, .register-form .bio-short input, .profile-edit-form .bio-long input, .register-form .bio-long input {
-    width: 69.38776%;
+    width: 65.97938%;
     float: right;
     margin-right: 0;
   }
@@ -692,8 +696,8 @@ img {
 }
 @media (min-width: 45em) {
   .profile-edit-form .form-actions, .register-form .form-actions {
-    margin-left: 25.42373%;
-    margin-right: 16.94915%;
+    margin-left: 25.38462%;
+    margin-right: 25.38462%;
   }
 }
 .profile-edit-form [class^="go-"], .register-form [class^="go-"] {
@@ -707,7 +711,7 @@ img {
 }
 @media (min-width: 45em) {
   .join_network .login-form {
-    padding-right: 16.94915%;
+    padding-right: 25.38462%;
   }
   .join_network .login-form label {
     white-space: nowrap;
@@ -715,14 +719,14 @@ img {
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 28.57143%;
+    width: 31.95876%;
     float: left;
-    margin-right: 2.04082%;
+    margin-right: 2.06186%;
     padding: 0.31944em 0;
     text-align: right;
   }
   .join_network .login-form input {
-    width: 69.38776%;
+    width: 65.97938%;
     float: right;
     margin-right: 0;
   }
@@ -730,27 +734,27 @@ img {
 
 @media (min-width: 45em) {
   .profile .user {
-    width: 57.62712%;
+    width: 49.23077%;
     float: right;
     margin-right: 0;
-    margin-right: 16.94915%;
+    margin-right: 25.38462%;
   }
   .profile .bio {
-    width: 23.72881%;
+    width: 23.84615%;
     float: left;
-    margin-right: 1.69492%;
+    margin-right: 1.53846%;
   }
   .profile .post-add-form {
-    width: 57.62712%;
+    width: 49.23077%;
     float: right;
     margin-right: 0;
-    margin-right: 16.94915%;
+    margin-right: 25.38462%;
   }
   .profile .feed-profile {
-    width: 57.62712%;
+    width: 49.23077%;
     float: right;
     margin-right: 0;
-    margin-right: 16.94915%;
+    margin-right: 25.38462%;
   }
 }
 
@@ -814,8 +818,8 @@ img {
 }
 @media (min-width: 45em) {
   .feed-combined {
-    margin-left: 25.42373%;
-    margin-right: 16.94915%;
+    margin-left: 25.38462%;
+    margin-right: 25.38462%;
   }
 }
 
@@ -824,10 +828,10 @@ img {
 }
 
 .post {
-  margin-left: -1.47059%;
-  padding-left: 1.47059%;
-  margin-right: -1.47059%;
-  padding-right: 1.47059%;
+  margin-left: -1.5625%;
+  padding-left: 1.5625%;
+  margin-right: -1.5625%;
+  padding-right: 1.5625%;
   *zoom: 1;
   margin-bottom: 1.27778em;
   border-top-style: solid;
@@ -847,9 +851,9 @@ img {
   color: #93a1a1;
 }
 .byline .photo {
-  width: 11.76471%;
+  width: 14.0625%;
   float: left;
-  margin-right: 2.94118%;
+  margin-right: 3.125%;
 }
 .byline .fn {
   display: inline;
@@ -860,7 +864,7 @@ img {
 
 .body {
   *zoom: 1;
-  margin-left: 14.70588%;
+  margin-left: 17.1875%;
 }
 .body:after {
   content: "";
@@ -876,8 +880,8 @@ img {
 .comments {
   position: relative;
   background: #eee8d5;
-  margin: 0 -1.72414% 0 13.48884%;
-  padding: 0.63889em 1.72414%;
+  margin: 0 -1.88679% 0 15.94929%;
+  padding: 0.63889em 1.88679%;
   background: #eee8d5;
 }
 .comments:after, .comments:before {

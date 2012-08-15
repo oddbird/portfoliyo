@@ -67,11 +67,6 @@ $break-nav-span: $break-cols - $left*2;
   a {
     @extend %icon;
     @extend %icon-settings;
-    padding: rhythm($banner-rhythm);
-    &:before {
-      float: right;
-      margin-right: 0;
-    }
   }
   b { font-weight: bold; }
 
@@ -81,15 +76,28 @@ $break-nav-span: $break-cols - $left*2;
 
   @include at-breakpoint($break) {
     @include span-columns($left omega);
+    a {
+      padding: rhythm($banner-rhythm);
+      &::before {
+        float: right;
+        margin-right: 0;
+      }
+    }
   }
 }
 
 .useractions {
-  @include stretch-x;
-  display: none;
-  top: 100%;
-  background: $back;
-  z-index: 900;
-  .meta:hover & { display: block; }
+  @extend %bleed;
+
+  @include at-breakpoint($break) {
+    @include stretch-x;
+    top: 100%;
+    margin: 0;
+    padding: 0;
+    background: $back;
+    z-index: 900;
+    display: none;
+    .meta:hover & { display: block; }
+  }
 }
 
