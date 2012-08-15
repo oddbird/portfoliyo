@@ -134,14 +134,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta p:before, .useractions a:before, [data-icon]:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta a:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta p:before, .useractions a:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta a:before {
   margin-right: .4em;
 }
 
@@ -167,7 +167,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e007";
 }
 
-.meta p:before {
+.meta a:before, .meta [href*="/edit/"]:before {
   content: "\e008";
 }
 
@@ -175,11 +175,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e009";
 }
 
-.useractions [href*="/signup/"]:before {
+.meta [href*="/signup/"]:before {
   content: "\e00b";
 }
 
-.useractions [href*="/password_change/"]:before {
+.meta [href*="/password_change/"]:before {
   content: "\e000";
 }
 
@@ -187,7 +187,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e001";
 }
 
-.useractions [href*="/edit/"]:before, .editlink:before {
+.editlink:before {
   content: "\e00a";
 }
 
@@ -528,7 +528,7 @@ img {
   border: 1px solid #073642;
 }
 
-[role="banner"] a, .meta {
+[role="banner"] a {
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
 }
@@ -578,17 +578,21 @@ img {
 .meta {
   position: relative;
 }
-.meta p {
-  margin: 0;
+.meta a {
+  padding: 0.63889em;
+}
+.meta a:before {
+  float: right;
+  margin-right: 0;
+}
+.meta b {
+  font-weight: bold;
 }
 @media (min-width: 45em) {
   .meta {
     width: 23.72881%;
     float: right;
     margin-right: 0;
-  }
-  .meta p {
-    text-align: right;
   }
 }
 
@@ -598,16 +602,11 @@ img {
   right: 0;
   display: none;
   top: 100%;
-  padding: 0.63889em;
   background: #073642;
   z-index: 900;
 }
 .meta:hover .useractions {
   display: block;
-}
-.useractions a:before {
-  float: right;
-  margin-right: 0;
 }
 
 [role="main"] {

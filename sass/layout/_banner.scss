@@ -62,16 +62,25 @@ $break-nav-span: $break-cols - $left*2;
 // Meta
 
 .meta {
-  @extend %banner-item;
   position: relative;
-  p {
+
+  a {
     @extend %icon;
     @extend %icon-settings;
-    margin: 0;
+    padding: rhythm($banner-rhythm);
+    &:before {
+      float: right;
+      margin-right: 0;
+    }
   }
+  b { font-weight: bold; }
+
+  [href*="/edit/"] { @extend %icon-settings; }
+  [href*="/password_change/"] { @extend %icon-key; }
+  [href*="/signup/"] { @extend %icon-exit; }
+
   @include at-breakpoint($break) {
     @include span-columns($left omega);
-    p { text-align: right; }
   }
 }
 
@@ -79,19 +88,8 @@ $break-nav-span: $break-cols - $left*2;
   @include stretch-x;
   display: none;
   top: 100%;
-  padding: rhythm(.5);
   background: $back;
   z-index: 900;
   .meta:hover & { display: block; }
-  a {
-    @extend %icon;
-    &:before {
-      float: right;
-      margin-right: 0;
-    }
-  }
-  [href*="/edit/"] { @extend %icon-pencil; }
-  [href*="/password_change/"] { @extend %icon-key; }
-  [href*="/signup/"] { @extend %icon-exit; }
 }
 
