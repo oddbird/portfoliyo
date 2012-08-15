@@ -3,49 +3,37 @@
 
 .initial-password {
   @extend %note;
-  @include inline-form(2,4,$total-columns);
 
   @include at-breakpoint($break) {
-    @include pad(0,$right);
-    label { @include span-columns($left,$total-columns - $right); }
-    input { @include span-columns($center omega,$total-columns - $right); }
+    @include inline-form($left, $center, $left + $center);
+    .formfield { @include suffix($right); }
   }
 }
 
-.profile-edit-form {
-  .picture {
-    position: relative;
-    label { @include gone; }
-    img { display: block; }
-    @include at-breakpoint($break) {
-      @include span-columns($left);
-    }
-  }
-
+%profile-form {
   .bio-short, .bio-long {
     @include at-breakpoint($break) {
-      @include span-columns(9 omega);
       @include suffix($right);
+      @include inline-form($left, $center, $left + $center);
     }
   }
 
   .bio-short {
     @include trailer;
-    label { @include gone; }
   }
 
-  .bio-long {
-    @include at-breakpoint($break) {
-      @include inline-form;
-    }
-  }
-
-  [class^="go-"] {
-    @include adjust-font-size-to($largepx);
-    @include leader(1,$largepx);
+  .form-actions {
     @include at-breakpoint($break) {
       @include squish($left,$right);
     }
   }
 
+  [class^="go-"] {
+    @include adjust-font-size-to($largepx);
+    text-transform: capitalize;
+  }
+}
+
+.profile-edit-form, .register-form {
+  @extend %profile-form;
 }

@@ -643,114 +643,64 @@ img {
     margin-right: 0;
   }
 }
-.initial-password label {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  width: 31.03448%;
-  float: left;
-  margin-right: 3.44828%;
-  padding: 0.31944em 0;
-  text-align: right;
-}
-.initial-password input {
-  width: 65.51724%;
-  float: right;
-  margin-right: 0;
-  #margin-left: -1em;
-}
 @media (min-width: 45em) {
-  .initial-password {
-    padding-left: 0%;
-    padding-right: 16.94915%;
-  }
   .initial-password label {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
     width: 28.57143%;
     float: left;
     margin-right: 2.04082%;
+    padding: 0.31944em 0;
+    text-align: right;
   }
   .initial-password input {
     width: 69.38776%;
     float: right;
     margin-right: 0;
   }
-}
-
-.profile-edit-form .picture {
-  position: relative;
-}
-.profile-edit-form .picture label {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
-}
-.profile-edit-form .picture img {
-  display: block;
-}
-@media (min-width: 45em) {
-  .profile-edit-form .picture {
-    width: 23.72881%;
-    float: left;
-    margin-right: 1.69492%;
-  }
-}
-@media (min-width: 45em) {
-  .profile-edit-form .bio-short, .profile-edit-form .bio-long {
-    width: 74.57627%;
-    float: right;
-    margin-right: 0;
+  .initial-password .formfield {
     padding-right: 16.94915%;
   }
 }
-.profile-edit-form .bio-short {
-  margin-bottom: 1.27778em;
-}
-.profile-edit-form .bio-short label {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
-}
+
 @media (min-width: 45em) {
-  .profile-edit-form .bio-long label {
+  .profile-edit-form .bio-short, .register-form .bio-short, .profile-edit-form .bio-long, .register-form .bio-long {
+    padding-right: 16.94915%;
+  }
+  .profile-edit-form .bio-short label, .register-form .bio-short label, .profile-edit-form .bio-long label, .register-form .bio-long label {
     white-space: nowrap;
     overflow: hidden;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 26.47059%;
+    width: 28.57143%;
     float: left;
-    margin-right: 2.94118%;
+    margin-right: 2.04082%;
     padding: 0.31944em 0;
     text-align: right;
   }
-  .profile-edit-form .bio-long input {
-    width: 70.58824%;
+  .profile-edit-form .bio-short input, .register-form .bio-short input, .profile-edit-form .bio-long input, .register-form .bio-long input {
+    width: 69.38776%;
     float: right;
     margin-right: 0;
   }
 }
-.profile-edit-form [class^="go-"] {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  margin-top: 0.65714em;
+.profile-edit-form .bio-short, .register-form .bio-short {
+  margin-bottom: 1.27778em;
 }
 @media (min-width: 45em) {
-  .profile-edit-form [class^="go-"] {
+  .profile-edit-form .form-actions, .register-form .form-actions {
     margin-left: 25.42373%;
     margin-right: 16.94915%;
   }
+}
+.profile-edit-form [class^="go-"], .register-form [class^="go-"] {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  text-transform: capitalize;
 }
 
 .join_network .login-form {
