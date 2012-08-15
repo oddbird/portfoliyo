@@ -134,14 +134,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta a:before, [data-icon]:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .village:before, .meta a:before {
+.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before {
   margin-right: .4em;
 }
 
@@ -191,7 +191,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00a";
 }
 
-[role="navigation"] .village:before {
+[role="navigation"] .myvillage:before {
   content: "\e00c";
 }
 
@@ -460,9 +460,6 @@ textarea {
   transition: 200ms min-height;
   min-height: 2.46429em;
 }
-textarea:focus {
-  min-height: 10.67857em;
-}
 
 .container, [role="banner"], [role="contentinfo"] {
   *zoom: 1;
@@ -708,6 +705,52 @@ img {
   font-size: 1.94444em;
   line-height: 1.31429em;
   text-transform: capitalize;
+}
+
+.village {
+  position: relative;
+  min-height: 24em;
+}
+
+.village-nav ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+.village-nav ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+@media (min-width: 45em) {
+  .village-nav {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 15.38462%;
+    padding-right: 1.27778em;
+    overflow-y: scroll;
+  }
+}
+
+.village-add-form {
+  display: none;
+}
+
+@media (min-width: 45em) {
+  .village-feed {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-left: 16.92308%;
+    margin-right: 16.92308%;
+    padding-right: 1.27778em;
+    overflow-y: scroll;
+  }
 }
 
 .join_network .login-form {

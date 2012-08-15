@@ -42,7 +42,7 @@ $boiler-link-color: $base3;
 // ---------------------------------------------------------------------------
 // Notes
 
-%note {
+%notice {
   @extend %bleed;
   @include pie-clearfix;
   @include rhythm(0,.5,.5,1);

@@ -1,8 +1,9 @@
 {% extends "base_site.html" %}
 
 {% block maincontent %}
+<article class="village">
 
-  <nav class="village-list">
+  <nav class="village-nav">
     <ul>
       {% include "villages/_village_list.html" with user="Althea Duffin" active="true" %}
       {% include "villages/_village_list.html" with user="Kenya Thakkar" %}
@@ -15,5 +16,7 @@
   </nav>
 
   {% include "villages/_village_detail.html" %}
+
+</article>
 
 {% endblock maincontent %}

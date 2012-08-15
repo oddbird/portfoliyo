@@ -2,7 +2,7 @@
 // Edit Profile
 
 .initial-password {
-  @extend %note;
+  @extend %notice;
 
   @include at-breakpoint($break) {
     @include bleed(space($left,$center));

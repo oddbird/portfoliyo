@@ -55,7 +55,7 @@ $nav-span: $center - 1;
   }
   .me { @extend %icon; @extend %icon-comments; }
   .net { @extend %icon; @extend %icon-users; }
-  .village { @extend %icon; @extend %icon-fire; }
+  .myvillage { @extend %icon; @extend %icon-fire; }
 }
 
 // ---------------------------------------------------------------------------

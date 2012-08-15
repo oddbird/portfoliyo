@@ -2,7 +2,7 @@
 // Profile Layout
 
 .join_network {
-  @extend %note;
+  @extend %notice;
   .login-form {
     @include leader;
     @include at-breakpoint($break) {
