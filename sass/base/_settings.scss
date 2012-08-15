@@ -35,8 +35,8 @@ $break-width    : 40em;
 $break-cols     : 12;
 $break          : $break-width $break-cols;
 
-$left           : 3;
-$right          : 3;
+$left           : 2;
+$right          : 2;
 $center         : $break-cols - $left - $right;
 
 $grid-background-baseline-height  : $base-line-height;

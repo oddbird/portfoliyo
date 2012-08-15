@@ -38,19 +38,19 @@ $banner-rhythm: .5;
 // ---------------------------------------------------------------------------
 // Navigation
 
-$break-nav-span: $break-cols - $left*2;
+$nav-span: $center - 1;
 
 [role="navigation"] {
   @include at-breakpoint($break) {
-    @include span-columns($break-nav-span);
+    @include span-columns($nav-span);
   }
   ul { @include no-style-list; }
   li {
     @include at-breakpoint($break) {
       float: left;
       width: auto;
-      margin-right: gutter($break-nav-span);
-      min-width: columns(1,$break-nav-span);
+      margin-right: gutter($nav-span);
+      min-width: columns(1,$nav-span);
     }
   }
   .me { @extend %icon; @extend %icon-comments; }
@@ -75,7 +75,7 @@ $break-nav-span: $break-cols - $left*2;
   [href*="/signup/"] { @extend %icon-exit; }
 
   @include at-breakpoint($break) {
-    @include span-columns($left omega);
+    @include span-columns($right + 1 omega);
     a { padding: rhythm($banner-rhythm); }
   }
 }

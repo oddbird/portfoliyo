@@ -2,18 +2,22 @@
 
 {% block maincontent %}
 
-<form method="POST" class="profile-edit-form">
-  {# csrf_token #}
+<article class="edit-profile">
+  <h2 class="pagehead">Edit your profile</h2>
 
-  {# form.non_field_errors #}
+  <form method="POST" class="profile-edit-form">
+    {# csrf_token #}
 
-  {% include "users/_user_basic_bio.html" %}
+    {# form.non_field_errors #}
 
-  <div class="form-actions">
-    <button type="submit">Save changes</button>
-  </div>
-</form>
+    {% include "users/_user_basic_bio.html" %}
 
-{# <a href="{ @@@ url deactivate_account }">deactivate my account</a> #}
+    <div class="form-actions">
+      <button type="submit">Save changes</button>
+    </div>
+  </form>
+
+  {# <a href="{ @@@ url deactivate_account }">deactivate my account</a> #}
+</article>
 
 {% endblock maincontent %}

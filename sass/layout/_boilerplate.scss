@@ -5,6 +5,24 @@ $boiler-link-color: $base3;
 
 .container { @include container($total-columns,$break); }
 
+%boilerplate {
+  @extend .container;
+  @include pie-clearfix;
+  clear: both;
+  a {
+    #{$link} { color: $boiler-link-color; }
+    #{$focus} { color: mix($boiler-link-color,$accent); }
+  }
+}
+
+.pagehead {
+  @include adjust-font-size-to($largepx);
+  @include trailer(1,$largepx);
+}
+
+// ---------------------------------------------------------------------------
+// Bleed
+
 @mixin bleed($padding: $grid-padding, $sides: left right) {
   @if $sides == 'all' {
     margin: - $padding;
@@ -21,15 +39,8 @@ $boiler-link-color: $base3;
   @include bleed;
 }
 
-%boilerplate {
-  @extend .container;
-  @include pie-clearfix;
-  clear: both;
-  a {
-    #{$link} { color: $boiler-link-color; }
-    #{$focus} { color: mix($boiler-link-color,$accent); }
-  }
-}
+// ---------------------------------------------------------------------------
+// Notes
 
 %note {
   @extend %bleed;
@@ -37,6 +48,24 @@ $boiler-link-color: $base3;
   @include rhythm(0,.5,.5,1);
   background: $base2;
 }
+
+// ---------------------------------------------------------------------------
+// Simple Pages/Forms
+
+%simple-page {
+  @include at-breakpoint($break) {
+    @include pad($left,$right);
+  }
+}
+
+%simple-form {
+  @include at-breakpoint($break) {
+    @include inline-form;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Images
 
 img {
   @include box-shadow($back 0 0 .125em);

@@ -5,33 +5,24 @@
   @extend %note;
 
   @include at-breakpoint($break) {
-    @include inline-form($left, $center, $left + $center);
-    .formfield { @include suffix($right); }
+    @include bleed(space($left,$center));
+    @include inline-form;
   }
 }
 
 %profile-form {
-  .bio-short, .bio-long {
-    @include at-breakpoint($break) {
-      @include suffix($right);
-      @include inline-form($left, $center, $left + $center);
-    }
-  }
+  @extend %simple-form;
 
-  .bio-short {
-    @include trailer;
-  }
-
-  .form-actions {
-    @include at-breakpoint($break) {
-      @include squish($left,$right);
-    }
-  }
+  .bio-short { @include trailer; }
 
   [class^="go-"] {
     @include adjust-font-size-to($largepx);
     text-transform: capitalize;
   }
+}
+
+.register, .edit-profile {
+  @extend %simple-page;
 }
 
 .profile-edit-form, .register-form {
