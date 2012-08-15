@@ -12,13 +12,13 @@ urlpatterns = patterns(
     url(
         r"^signup/$",
         direct_to_template,
-        {"template": "signup.html"},
+        {"template": "users/signup.html"},
         name="signup",
         ),
     url(
         r"^register/$",
         direct_to_template,
-        {"template": "register.html"},
+        {"template": "users/register.html"},
         name="register",
         ),
     url(
@@ -54,7 +54,7 @@ urlpatterns = patterns(
     url(
         r"^join_village/$",
         direct_to_template,
-        {"template": "join_village.html"},
+        {"template": "users/join_village.html"},
         name="join_village",
         ),
 )

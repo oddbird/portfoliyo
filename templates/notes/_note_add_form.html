@@ -1,0 +1,17 @@
+<form method="POST" class="note-add-form">
+  {# csrf_token #}
+
+  <h3>Add a note</h3>
+
+  {# form.non_field_errors #}
+
+  <div class="formfield note-textfield">
+    {# form.note_text.errors #}
+    <textarea id="note-text"></textarea>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">share</button>
+  </div>
+
+</form>

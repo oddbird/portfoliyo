@@ -1,15 +1,15 @@
-<article class="post">
+<article class="note">
 
   <header class="byline vcard">
     <img src="http://placekitten.com/70/70/" class="photo">
     <h3 class="fn">{{ user }}</h3>
     <h4>{{ title }}</h4>
-    <time pubdate>{{ timestamp }}</time>
+    <time pubdate>{{ date }} at {{ time }}</time>
   </header>
 
   <div class="body">
-    <p class="post-text">{{ text }}</p>
+    <p class="note-text">{{ text }}</p>
   </div>
 
-  {# <button class="remove-post">remove</button> #}
+  {# <button class="remove-note">remove</button> #}
 </article>
