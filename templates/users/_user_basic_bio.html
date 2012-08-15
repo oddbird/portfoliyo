@@ -9,7 +9,7 @@
 {% endcomment %}
 
 <!-- Basic Bio -->
-<div class="formset bio-short">
+<div class="formset bio">
   <div class="formfield name">
     {# form.name.errors #}
     <label for="name">name</label>
@@ -20,6 +20,12 @@
     {# form.username.errors #}
     <label for="username">username</label>
     <input type="text" id="username" />
+  </div>
+
+  <div class="formfield title">
+    {# form.username.errors #}
+    <label for="title">relationship</label>
+    <input type="text" id="title" />
   </div>
 
   <div class="formfield email">
