@@ -28,6 +28,13 @@ $village-border-color: $base1;
 // ---------------------------------------------------------------------------
 // Village Nav
 
+%village-addlink {
+  #{$link} {
+    @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.25)));
+    color: $base;
+  }
+}
+
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;
@@ -50,9 +57,7 @@ $village-border-color: $base1;
     }
   }
   .addstudent-link {
-    #{$link} {
-      @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.125)));
-    }
+    @extend %village-addlink;
   }
   .active {
     #{$link} {
@@ -139,4 +144,13 @@ $note-byline-size: $xsmallpx;
     font-weight: bold;
   }
   span { color: $base1; }
+}
+
+.addelder-link {
+  @extend %village-addlink;
+  @include leader(1,$village-list-size);
+  @include rhythm-borders(1px,.25,$village-list-size);
+  display: block;
+  border-color: $village-border-color;
+  padding-left: rhythm(.5,$village-list-size);
 }
