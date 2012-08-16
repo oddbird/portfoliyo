@@ -424,6 +424,10 @@ button.disabled, button[disabled] {
   margin: 0 0.4em 0.82143em 0;
 }
 
+label {
+  text-transform: capitalize;
+}
+
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"] {
   min-height: 2.46429em;
 }
@@ -845,31 +849,29 @@ img {
   color: #93a1a1;
 }
 
-.village-add-form {
-  width: 83.07692%;
-  float: right;
-  margin-right: 0;
-  #margin-left: -1em;
-  padding-right: 16.92308%;
+.village-add-form, .elder-add-form {
   padding-top: 2.55556em;
+  padding-left: 12.7907%;
+  padding-right: 12.7907%;
 }
-.village-add-form label {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  width: 23.25581%;
-  float: left;
-  margin-right: 2.32558%;
-  padding: 0.31944em 0;
-  text-align: right;
+.village-add-form h2, .elder-add-form h2 {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin-bottom: 0.65714em;
+  font-weight: bold;
 }
-.village-add-form input, .village-add-form textarea {
-  width: 74.4186%;
+
+.village-add-form {
+  width: 66.15385%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
+  margin-right: 16.92308%;
+}
+
+.elder-add-form {
+  margin: 0 2.32558%;
 }
 
 .loading {

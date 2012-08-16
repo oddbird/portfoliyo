@@ -1,12 +1,30 @@
 // ---------------------------------------------------------------------------
+// Village Forms
+
+%village-form {
+  @include padding-leader(2);
+  @include pad(1,1,$center);
+  h2 {
+    @include adjust-font-size-to($largepx);
+    @include serif;
+    @include trailer(1,$largepx);
+    font-weight: bold;
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Add Village
 
 .village-add-form {
-  @include span-columns($center + $right omega);
-  @include suffix($right);
-  @include padding-leader(2);
-  @include inline-form;
+  @extend %village-form;
+  @include span-columns($center omega);
+  @include post($right);
 }
 
 // ---------------------------------------------------------------------------
 // Add Elder
+
+.elder-add-form {
+  @extend %village-form;
+  margin: 0 gutter($center);
+}

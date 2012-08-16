@@ -112,6 +112,8 @@ $form-action-note-size: $smallpx;
 // ---------------------------------------------------------------------------
 // Elements
 
+label { text-transform: capitalize; }
+
 input {
   &[type="text"], &[type="password"],
   &[type="email"], &[type="url"], &[type="tel"],
