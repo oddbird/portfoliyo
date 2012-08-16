@@ -2,7 +2,7 @@
 // Village
 
 .village-app {
-  [role="main"] { padding-top: 0; padding-bottom: 0; }
+  [role="main"] { padding: 0; }
 }
 
 .village {
@@ -17,6 +17,7 @@
 }
 
 $village-list-size: $smallpx;
+$village-border-color: $base1;
 
 %village-lists {
   @include adjust-font-size-to($village-list-size);
@@ -27,23 +28,22 @@ $village-list-size: $smallpx;
 // ---------------------------------------------------------------------------
 // Village Nav
 
-$village-border-color: $base1;
-
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;
-  left: 0;
-  width: columns($left);
+  left: - gutter();
+  width: columns($left) + gutter();
   border: 1px solid $village-border-color;
   border-width: 0 1px;
   a {
     #{$link} {
+      @include ellipsis;
       @include trailing-border(1px,.25,$village-list-size);
       @include padding-leader(.25,$village-list-size);
       @include background(linear-gradient(bottom, rgba($base2,.5), rgba($base2,.125)));
       display: block;
-      padding-left: rhythm(.5,$village-list-size);
       border-color: $village-border-color;
+      padding-left: rhythm(.5,$village-list-size);
     }
     #{$focus} {
       @include background(linear-gradient(bottom, rgba($base2,1), rgba($base2,.25)));
@@ -99,7 +99,18 @@ $village-border-color: $base1;
 
 .village-users {
   @extend %village-lists;
-  @include span-columns($right omega);
+  @include padding-leader(1);
+  float: right;
+  width: space($right);
+  padding-left: gutter();
+  height: 100%;
+  border-left: 1px solid $village-border-color;
+  h2 {
+    @include trailer(.5);
+    @include serif;
+    font-weight: bold;
+  }
+  span { color: $base1; }
 }
 
 .elder-add-form {

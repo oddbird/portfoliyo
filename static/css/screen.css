@@ -653,8 +653,7 @@ img {
 }
 
 .village-app [role="main"] {
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 
 .village {
@@ -699,12 +698,17 @@ img {
 }
 
 .village-nav {
-  left: 0;
-  width: 15.38462%;
+  left: -1.53846%;
+  width: 16.92308%;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
 }
 .village-nav a:link, .village-nav a:visited {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   border-bottom-style: solid;
   border-bottom-width: 0.07143em;
   padding-bottom: 0.33929em;
@@ -716,8 +720,8 @@ img {
   background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   display: block;
-  padding-left: 0.82143em;
   border-color: #93a1a1;
+  padding-left: 0.82143em;
 }
 .village-nav a:focus, .village-nav a:hover, .village-nav a:active {
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
@@ -780,10 +784,20 @@ img {
 }
 
 .village-users {
-  width: 15.38462%;
+  padding-top: 1.27778em;
   float: right;
-  margin-right: 0;
-  #margin-left: -1em;
+  width: 16.92308%;
+  padding-left: 1.53846%;
+  height: 100%;
+  border-left: 1px solid #93a1a1;
+}
+.village-users h2 {
+  margin-bottom: 0.63889em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+.village-users span {
+  color: #93a1a1;
 }
 
 .elder-add-form {
