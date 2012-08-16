@@ -1,9 +1,11 @@
 <article class="note">
 
   <header class="byline vcard">
-    <img src="http://placekitten.com/70/70/" class="photo">
-    <h3 class="fn">{{ user }}</h3>
-    <h4>{{ title }}</h4>
+    {# <img src="http://placekitten.com/70/70/" class="photo"> #}
+    <h3>
+      <b class="fn">{{ user }}</b>
+      <span class="title">[{{ title }}]</span>
+    </h3>
     <time pubdate>{{ date }} at {{ time }}</time>
   </header>
 

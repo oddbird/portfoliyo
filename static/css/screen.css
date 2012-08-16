@@ -752,13 +752,50 @@ img {
 }
 
 .village-feed {
-  left: 16.92308%;
+  left: 15.38462%;
   bottom: 5.43056em;
-  width: 66.15385%;
+  width: 67.69231%;
 }
 
 .note {
-  margin-bottom: 1.27778em;
+  *zoom: 1;
+  border-bottom-style: solid;
+  border-bottom-width: 0.08333em;
+  padding-bottom: 0.39583em;
+  padding-top: 0.47917em;
+  border-color: #eee8d5;
+}
+.note:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.note .byline {
+  width: 23.25581%;
+  float: left;
+  margin-right: 2.32558%;
+  font-size: 0.66667em;
+  line-height: 1.91667em;
+  padding: 0 2.32558%;
+  border-right: 1px solid #eee8d5;
+  color: #93a1a1;
+}
+.note .byline b {
+  color: #657b83;
+  font-weight: bold;
+}
+.note .byline h3, .note .byline time {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.note .body {
+  overflow: hidden;
+  *zoom: 1;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
 }
 
 .note-add-form {
@@ -767,7 +804,8 @@ img {
   right: 16.92308%;
   bottom: 0;
   padding: 0.63889em 1.53846%;
-  background: #eee8d5;
+  border-top: 1px solid #657b83;
+  background: #93a1a1;
 }
 .note-add-form .form-actions {
   position: absolute;
@@ -781,6 +819,9 @@ img {
 }
 .note-add-form .formfield {
   margin: 0;
+}
+.note-add-form textarea {
+  background: rgba(255, 255, 255, 0.75);
 }
 
 .village-users {

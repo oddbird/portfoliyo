@@ -72,13 +72,35 @@ $village-border-color: $base1;
 
 .village-feed {
   @extend %overflow-y;
-  left: space($left);
+  left: columns($left);
   bottom: rhythm(4.25);
-  width: columns($center);
+  width: space($center);
 }
 
+$note-byline-cols: 2;
+$note-byline-size: $xsmallpx;
+
 .note {
-  @include trailer;
+  @include pie-clearfix;
+  @include trailing-border(1px,.25,$note-byline-size);
+  @include padding-leader(.25,$note-byline-size);
+  border-color: $base2;
+  .byline {
+    @include span-columns($note-byline-cols,$center);
+    @include adjust-font-size-to($note-byline-size);
+    padding: 0 gutter($center);
+    border-right: 1px solid $base2;
+    color: $base1;
+    b {
+      color: $base;
+      font-weight: bold;
+    }
+    h3, time { @include ellipsis; }
+  }
+  .body {
+    @include clearfix;
+    @include adjust-font-size-to($smallpx);
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -88,10 +110,12 @@ $village-border-color: $base1;
   @include stretch-x(columns($left),space($right));
   bottom: 0;
   padding: rhythm(.5) gutter();
-  background: $base2;
+  border-top: 1px solid $base;
+  background: $base1;
 
   .form-actions { @include gone; }
   .formfield { margin: 0; }
+  textarea { background: rgba(white,.75); }
 }
 
 // ---------------------------------------------------------------------------
