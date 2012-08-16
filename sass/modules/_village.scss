@@ -63,10 +63,6 @@ $village-border-color: $base1;
   }
 }
 
-.village-add-form {
-  display: none;
-}
-
 // ---------------------------------------------------------------------------
 // Village Feed
 
@@ -143,8 +139,4 @@ $note-byline-size: $xsmallpx;
     font-weight: bold;
   }
   span { color: $base1; }
-}
-
-.elder-add-form {
-  display: none;
 }

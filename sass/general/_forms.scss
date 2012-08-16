@@ -85,7 +85,7 @@ $input-rhythm: .25;
     padding: rhythm($input-rhythm) 0;
     text-align: right;
   }
-  input { @include span-columns($input omega,$context); }
+  input, textarea { @include span-columns($input omega,$context); }
 }
 
 .form-help {

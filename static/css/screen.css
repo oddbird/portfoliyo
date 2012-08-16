@@ -512,7 +512,7 @@ textarea {
   padding: 0.31944em 0;
   text-align: right;
 }
-.login input, .register input, .edit-profile input, .reset-password input, .change-password input, .set-password input {
+.login input, .register input, .edit-profile input, .reset-password input, .change-password input, .set-password input, .login textarea, .register textarea, .edit-profile textarea, .reset-password textarea, .change-password textarea, .set-password textarea {
   width: 74.4186%;
   float: right;
   margin-right: 0;
@@ -645,7 +645,7 @@ img {
   padding: 0.31944em 0;
   text-align: right;
 }
-.initial-password input {
+.initial-password input, .initial-password textarea {
   width: 74.4186%;
   float: right;
   margin-right: 0;
@@ -747,10 +747,6 @@ img {
   color: #fdf6e3;
 }
 
-.village-add-form {
-  display: none;
-}
-
 .village-main {
   position: relative;
   float: left;
@@ -849,8 +845,31 @@ img {
   color: #93a1a1;
 }
 
-.elder-add-form {
-  display: none;
+.village-add-form {
+  width: 83.07692%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  padding-right: 16.92308%;
+  padding-top: 2.55556em;
+}
+.village-add-form label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 23.25581%;
+  float: left;
+  margin-right: 2.32558%;
+  padding: 0.31944em 0;
+  text-align: right;
+}
+.village-add-form input, .village-add-form textarea {
+  width: 74.4186%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
 }
 
 .loading {
