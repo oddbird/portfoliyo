@@ -1,0 +1,16 @@
+<form method="POST" class="elder-add-form">
+  {# csrf_token #}
+
+  {# form.non_field_errors #}
+
+  <div class="formfield contact">
+    {# form.contact.errors #}
+    <label for="contact">contact</label>
+    <input type="text" id="contact" placeholder="email address or phone number" />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">invite</button>
+  </div>
+
+</form>

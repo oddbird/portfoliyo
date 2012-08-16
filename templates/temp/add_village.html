@@ -8,18 +8,17 @@
     <ul>
       {% include "villages/_village_list.html" with user="Kenya Thakkar" %}
       {% include "villages/_village_list.html" with user="Allyson Burell" %}
-      {% include "villages/_village_list.html" with user="Althea Duffin" active="true" %}
+      {% include "villages/_village_list.html" with user="Althea Duffin" %}
       {% include "villages/_village_list.html" with user="Malinda Fader" %}
       {% include "villages/_village_list.html" with user="Neil Miguez" %}
       {% include "villages/_village_list.html" with user="Jami Marciano" %}
     </ul>
     <aside class="add-student">
-      <a href="#" class="addstudent-link">Add a Student Village</a>
-      {# ajax-load "villages/_village_add_form.html" #}
+      <a href="#" class="addstudent-link active">Add a Student Village</a>
     </aside>
   </nav>
 
-  {% include "villages/_village_detail.html" %}
+  {% include "villages/_village_add_form.html" %}
 
 </article>
 

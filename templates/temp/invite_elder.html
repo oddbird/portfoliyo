@@ -19,7 +19,11 @@
     </aside>
   </nav>
 
-  {% include "villages/_village_detail.html" %}
+  <div class="village-main">
+    {% include "villages/_village_invite_form.html" %}
+  </div>
+
+{% include "villages/_village_users.html" %}
 
 </article>
 

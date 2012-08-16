@@ -57,4 +57,16 @@ urlpatterns = patterns(
         {"template": "users/join_village.html"},
         name="join_village",
         ),
+    url(
+        r"^add_village/$",
+        direct_to_template,
+        {"template": "temp/add_village.html"},
+        name="add_village",
+        ),
+    url(
+        r"^invite_elder/$",
+        direct_to_template,
+        {"template": "temp/invite_elder.html"},
+        name="invite_elder",
+        ),
 )
