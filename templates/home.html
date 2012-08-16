@@ -14,8 +14,7 @@
       {% include "villages/_village_list.html" with user="Jami Marciano" %}
     </ul>
     <aside class="add-student">
-      <a href="{# @@@ #}{% url add_village %}" class="addstudent-link">Add a Student Village</a>
-      {# ajax-load "villages/_village_add_form.html" #}
+      <a href="{# ajax-load 'villages/_village_add_form.html' #}{% url add_village %}" class="addstudent-link">Add a Student Village</a>
     </aside>
   </nav>
 
