@@ -52,12 +52,6 @@ urlpatterns = patterns(
         name="edit_profile",
         ),
     url(
-        r"^join_village/$",
-        direct_to_template,
-        {"template": "users/join_village.html"},
-        name="join_village",
-        ),
-    url(
         r"^add_village/$",
         direct_to_template,
         {"template": "temp/add_village.html"},
