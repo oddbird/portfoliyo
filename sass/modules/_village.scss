@@ -13,12 +13,13 @@
 
 %overflow-y {
   @include stretch-y;
-  padding-right: rhythm(1);
   overflow-y: scroll;
 }
 
+$village-list-size: $smallpx;
+
 %village-lists {
-  @include adjust-font-size-to($smallpx);
+  @include adjust-font-size-to($village-list-size);
   ul { @include no-style-list; }
   li { @include ellipsis; }
 }
@@ -26,11 +27,40 @@
 // ---------------------------------------------------------------------------
 // Village Nav
 
+$village-border-color: $base1;
+
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;
   left: 0;
   width: columns($left);
+  border: 1px solid $village-border-color;
+  border-width: 0 1px;
+  a {
+    #{$link} {
+      @include trailing-border(1px,.25,$village-list-size);
+      @include padding-leader(.25,$village-list-size);
+      @include background(linear-gradient(bottom, rgba($base2,.5), rgba($base2,.125)));
+      display: block;
+      padding-left: rhythm(.5,$village-list-size);
+      border-color: $village-border-color;
+    }
+    #{$focus} {
+      @include background(linear-gradient(bottom, rgba($base2,1), rgba($base2,.25)));
+    }
+  }
+  .addstudent-link {
+    #{$link} {
+      @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.125)));
+    }
+  }
+  .active {
+    #{$link} {
+      @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
+      background: $village-border-color;
+      color: $base3;
+    }
+  }
 }
 
 .village-add-form {

@@ -672,7 +672,6 @@ img {
   position: absolute;
   top: 0;
   bottom: 0;
-  padding-right: 1.27778em;
   overflow-y: scroll;
 }
 
@@ -702,6 +701,46 @@ img {
 .village-nav {
   left: 0;
   width: 15.38462%;
+  border: 1px solid #93a1a1;
+  border-width: 0 1px;
+}
+.village-nav a:link, .village-nav a:visited {
+  border-bottom-style: solid;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
+  padding-top: 0.41071em;
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
+  background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: -moz-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: -o-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  display: block;
+  padding-left: 0.82143em;
+  border-color: #93a1a1;
+}
+.village-nav a:focus, .village-nav a:hover, .village-nav a:active {
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
+  background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: -moz-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: -o-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+}
+.village-nav .addstudent-link:link, .village-nav .addstudent-link:visited {
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.125)));
+  background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.125));
+  background: -moz-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.125));
+  background: -o-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.125));
+  background: -ms-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.125));
+  background: linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.125));
+}
+.village-nav .active:link, .village-nav .active:visited {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  background: #93a1a1;
+  color: #fdf6e3;
 }
 
 .village-add-form {
