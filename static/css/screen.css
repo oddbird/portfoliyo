@@ -747,6 +747,10 @@ img {
   #margin-left: -1em;
 }
 
+.elder-add-form {
+  display: none;
+}
+
 .loading {
   position: relative;
 }

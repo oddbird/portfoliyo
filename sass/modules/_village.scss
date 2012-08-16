@@ -71,3 +71,7 @@
   @extend %village-lists;
   @include span-columns($right omega);
 }
+
+.elder-add-form {
+  display: none;
+}
