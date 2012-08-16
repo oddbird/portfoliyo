@@ -5,30 +5,26 @@
   @extend %notice;
   .login-form {
     @include leader;
-    @include at-breakpoint($break) {
-      @include suffix($right);
-      @include inline-form($left,$center,$left+$center);
-    }
+    @include suffix($right);
+    @include inline-form($left,$center,$left+$center);
   }
 }
 
 .profile {
-  @include at-breakpoint($break) {
-    .user {
-      @include span-columns($center omega);
-      @include post($right);
-    }
-    .bio {
-      @include span-columns($left);
-    }
-    .post-add-form {
-      @include span-columns($center omega);
-      @include post($right);
-    }
-    .feed-profile {
-      @include span-columns($center omega);
-      @include post($right);
-    }
+  .user {
+    @include span-columns($center omega);
+    @include post($right);
+  }
+  .bio {
+    @include span-columns($left);
+  }
+  .post-add-form {
+    @include span-columns($center omega);
+    @include post($right);
+  }
+  .feed-profile {
+    @include span-columns($center omega);
+    @include post($right);
   }
 }
 
@@ -44,10 +40,7 @@
 }
 
 .profile-name {
-  @include adjust-font-size-to($largepx);
-  @include at-breakpoint($break) {
-    @include adjust-font-size-to($xlargepx);
-  }
+  @include adjust-font-size-to($xlargepx);
 }
 
 .nickname { font-weight: bold; }

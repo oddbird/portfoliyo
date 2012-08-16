@@ -3,7 +3,10 @@
 
 $boiler-link-color: $base3;
 
-.container { @include container($total-columns,$break); }
+.container {
+  @include container;
+  min-width: 50em;
+}
 
 %boilerplate {
   @extend .container;
@@ -53,15 +56,12 @@ $boiler-link-color: $base3;
 // Simple Pages/Forms
 
 %simple-page {
-  @include at-breakpoint($break) {
-    @include pad($left,$right);
-  }
+  @extend %type;
+  @include pad($left,$right);
 }
 
 %simple-form {
-  @include at-breakpoint($break) {
-    @include inline-form;
-  }
+  @include inline-form;
 }
 
 // ---------------------------------------------------------------------------

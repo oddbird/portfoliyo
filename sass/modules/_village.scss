@@ -2,23 +2,29 @@
 // Village
 
 .village {
+  @include pie-clearfix;
   position: relative;
-  min-height: 24em;
+  height: rhythm(20);
+}
+
+%overflow-y {
+  height: 100%;
+  padding-right: rhythm(1);
+  overflow-y: scroll;
+}
+
+%village-lists {
+  ul { @include no-style-list; }
+  // li { @include ellipsis; }
 }
 
 // ---------------------------------------------------------------------------
 // Village Nav
 
 .village-nav {
-  ul { @include no-style-list; }
-
-  @include at-breakpoint($break) {
-    @include stretch-y;
-    left: 0;
-    width: columns($left);
-    padding-right: rhythm(1);
-    overflow-y: scroll;
-  }
+  @extend %village-lists;
+  @extend %overflow-y;
+  @include span-columns($left);
 }
 
 .village-add-form {
@@ -29,22 +35,29 @@
 // Village Feed
 
 .village-feed {
-  @include at-breakpoint($break) {
-    @include stretch;
-    @include squish($left,$right);
-    padding-right: rhythm(1);
-    overflow-y: scroll;
-  }
+  @extend %overflow-y;
+  @include span-columns($center);
+
+  .note { &:last-child { @include trailer(3.5); } }
 }
 
-.village-users {
-  ul { @include no-style-list; }
+// ---------------------------------------------------------------------------
+// Note Add Form
 
-  @include at-breakpoint($break) {
-    @include stretch-y;
-    right: 0;
-    width: columns($right);
-    padding-right: rhythm(1);
-    overflow-y: scroll;
-  }
+.note-add-form {
+  @include stretch-x(columns($left),columns($right));
+  @include background(linear-gradient(top, rgba($base3,0), rgba($base3,1) rhythm(.5)));
+  bottom: 0;
+  margin-right: gutter()*2;
+  padding: rhythm(.5) gutter();
+
+  .form-actions { @include gone; }
+}
+
+// ---------------------------------------------------------------------------
+// Village Users
+
+.village-users {
+  @extend %village-lists;
+  @include span-columns($right omega);
 }

@@ -134,28 +134,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, [data-icon]:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.editlink:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before {
   margin-right: .4em;
-}
-
-.editlink {
-  position: relative;
-  min-width: 1em;
-  text-indent: -9999px;
-}
-.editlink:before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  text-indent: 0;
-  margin-right: 0;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -185,10 +172,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .brand [rel="home"]:before {
   content: "\e001";
-}
-
-.editlink:before {
-  content: "\e00a";
 }
 
 [role="navigation"] .myvillage:before {
@@ -245,31 +228,24 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.editlink:link, .editlink:visited {
-  color: inherit;
-}
-.editlink:focus, .editlink:hover, .editlink:active {
-  color: #d33682;
-}
-
-[role="main"] h1, [role="main"] h2, [role="main"] h3, [role="main"] h4, [role="main"] h5, [role="main"] h6 {
+.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .signup h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .signup h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .signup h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .signup h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .signup h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .signup h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-[role="main"] p, [role="main"] ul, [role="main"] ol {
+.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .signup p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .signup ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .signup ol {
   margin-bottom: 1.27778em;
 }
-[role="main"] ul {
+.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .signup ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-[role="main"] li {
+.login li, .register li, .edit-profile li, .reset-password li, .change-password li, .set-password li, .signup li {
   margin-bottom: 0.63889em;
 }
-[role="main"] em {
+.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .signup em {
   font-style: italic;
 }
-[role="main"] strong {
+.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .signup strong {
   font-weight: 500;
 }
 
@@ -463,21 +439,17 @@ textarea {
 
 .container, [role="banner"], [role="contentinfo"] {
   *zoom: 1;
-  max-width: 34em;
+  max-width: 67em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
+  min-width: 50em;
 }
 .container:after, [role="banner"]:after, [role="contentinfo"]:after {
   content: "";
   display: table;
   clear: both;
-}
-@media (min-width: 45em) {
-  .container, [role="banner"], [role="contentinfo"] {
-    max-width: 67em;
-  }
 }
 
 [role="banner"], [role="contentinfo"] {
@@ -502,14 +474,14 @@ textarea {
   margin-bottom: 0.65714em;
 }
 
-.initial-password, .join_network, .useractions {
+.initial-password {
   margin-left: -1em;
   padding-left: 1em;
   margin-right: -1em;
   padding-right: 1em;
 }
 
-.initial-password, .join_network {
+.initial-password {
   *zoom: 1;
   margin-top: 0em;
   padding-top: 0.63889em;
@@ -517,37 +489,34 @@ textarea {
   margin-bottom: 1.27778em;
   background: #eee8d5;
 }
-.initial-password:after, .join_network:after {
+.initial-password:after {
   content: "";
   display: table;
   clear: both;
 }
 
-@media (min-width: 45em) {
-  .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
-    padding-left: 16.92308%;
-    padding-right: 16.92308%;
-  }
+.login, .register, .edit-profile, .reset-password, .change-password, .set-password {
+  padding-left: 16.92308%;
+  padding-right: 16.92308%;
 }
 
-@media (min-width: 45em) {
-  .login label, .profile-edit-form label, .register-form label, .reset-password label, .change-password label, .set-password label {
-    white-space: nowrap;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    width: 23.25581%;
-    float: left;
-    margin-right: 2.32558%;
-    padding: 0.31944em 0;
-    text-align: right;
-  }
-  .login input, .profile-edit-form input, .register-form input, .reset-password input, .change-password input, .set-password input {
-    width: 74.4186%;
-    float: right;
-    margin-right: 0;
-  }
+.login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 23.25581%;
+  float: left;
+  margin-right: 2.32558%;
+  padding: 0.31944em 0;
+  text-align: right;
+}
+.login input, .register input, .edit-profile input, .reset-password input, .change-password input, .set-password input {
+  width: 74.4186%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
 }
 
 img {
@@ -568,22 +537,16 @@ img {
 }
 
 .brand {
+  width: 15.38462%;
+  float: left;
+  margin-right: 1.53846%;
   font-weight: bold;
 }
-@media (min-width: 45em) {
-  .brand {
-    width: 15.38462%;
-    float: left;
-    margin-right: 1.53846%;
-  }
-}
 
-@media (min-width: 45em) {
-  [role="navigation"] {
-    width: 57.69231%;
-    float: left;
-    margin-right: 1.53846%;
-  }
+[role="navigation"] {
+  width: 66.15385%;
+  float: left;
+  margin-right: 1.53846%;
 }
 [role="navigation"] ul {
   margin: 0;
@@ -596,47 +559,39 @@ img {
   list-style-type: none;
   margin-left: 0;
 }
-@media (min-width: 45em) {
-  [role="navigation"] li {
-    float: left;
-    width: auto;
-    margin-right: 2.66667%;
-    min-width: 12%;
-  }
+[role="navigation"] li {
+  float: left;
+  width: auto;
+  margin-right: 2.32558%;
+  min-width: 10.46512%;
 }
 
 .meta {
+  width: 15.38462%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
   position: relative;
 }
 .meta b {
   font-weight: bold;
 }
-@media (min-width: 45em) {
-  .meta {
-    width: 23.84615%;
-    float: right;
-    margin-right: 0;
-  }
-  .meta a {
-    padding: 0.63889em;
-  }
-}
 
-@media (min-width: 45em) {
-  .useractions {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    margin: 0;
-    padding: 0;
-    background: #073642;
-    z-index: 900;
-    display: none;
-  }
-  .meta:hover .useractions {
-    display: block;
-  }
+.useractions {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  margin: 0 -0.63889em;
+  background: #073642;
+  z-index: 900;
+  display: none;
+}
+.useractions a {
+  padding: 0.63889em;
+}
+.meta:hover .useractions {
+  display: block;
 }
 
 [role="main"] {
@@ -655,327 +610,111 @@ img {
   margin-bottom: 0em;
 }
 
+.intro {
+  width: 66.15385%;
+  float: left;
+  margin-right: 1.53846%;
+}
+
 .signup-form {
   margin-bottom: 1.27778em;
 }
 
-@media (min-width: 45em) {
-  .intro {
-    width: 66.15385%;
-    float: left;
-    margin-right: 1.53846%;
-  }
-
-  .main-login {
-    width: 32.30769%;
-    float: right;
-    margin-right: 0;
-  }
-}
-@media (min-width: 45em) {
-  .initial-password {
-    margin-left: -25.5814%;
-    padding-left: 25.5814%;
-    margin-right: -25.5814%;
-    padding-right: 25.5814%;
-  }
-  .initial-password label {
-    white-space: nowrap;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    width: 23.25581%;
-    float: left;
-    margin-right: 2.32558%;
-    padding: 0.31944em 0;
-    text-align: right;
-  }
-  .initial-password input {
-    width: 74.4186%;
-    float: right;
-    margin-right: 0;
-  }
+.main-login {
+  width: 32.30769%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
 }
 
-.profile-edit-form .bio-short, .register-form .bio-short {
-  margin-bottom: 1.27778em;
+.initial-password {
+  margin-left: -25.5814%;
+  padding-left: 25.5814%;
+  margin-right: -25.5814%;
+  padding-right: 25.5814%;
 }
-.profile-edit-form [class^="go-"], .register-form [class^="go-"] {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  text-transform: capitalize;
+.initial-password label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 23.25581%;
+  float: left;
+  margin-right: 2.32558%;
+  padding: 0.31944em 0;
+  text-align: right;
+}
+.initial-password input {
+  width: 74.4186%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
 }
 
 .village {
+  *zoom: 1;
   position: relative;
-  min-height: 24em;
+  height: 25.55556em;
+}
+.village:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-.village-nav ul {
+.village-nav, .village-feed {
+  height: 100%;
+  padding-right: 1.27778em;
+  overflow-y: scroll;
+}
+
+.village-nav ul, .village-users ul {
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
 }
-.village-nav ul li {
+.village-nav ul li, .village-users ul li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
 }
-@media (min-width: 45em) {
-  .village-nav {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 15.38462%;
-    padding-right: 1.27778em;
-    overflow-y: scroll;
-  }
+
+.village-nav {
+  width: 15.38462%;
+  float: left;
+  margin-right: 1.53846%;
 }
 
 .village-add-form {
   display: none;
 }
 
-@media (min-width: 45em) {
-  .village-feed {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin-left: 16.92308%;
-    margin-right: 16.92308%;
-    padding-right: 1.27778em;
-    overflow-y: scroll;
-  }
-}
-
-.village-users ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-}
-.village-users ul li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-@media (min-width: 45em) {
-  .village-users {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 15.38462%;
-    padding-right: 1.27778em;
-    overflow-y: scroll;
-  }
-}
-
-.join_network .login-form {
-  margin-top: 1.27778em;
-}
-@media (min-width: 45em) {
-  .join_network .login-form {
-    padding-right: 16.92308%;
-  }
-  .join_network .login-form label {
-    white-space: nowrap;
-    overflow: hidden;
-    -ms-text-overflow: ellipsis;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    width: 18.51852%;
-    float: left;
-    margin-right: 1.85185%;
-    padding: 0.31944em 0;
-    text-align: right;
-  }
-  .join_network .login-form input {
-    width: 79.62963%;
-    float: right;
-    margin-right: 0;
-  }
-}
-
-@media (min-width: 45em) {
-  .profile .user {
-    width: 66.15385%;
-    float: right;
-    margin-right: 0;
-    margin-right: 16.92308%;
-  }
-  .profile .bio {
-    width: 15.38462%;
-    float: left;
-    margin-right: 1.53846%;
-  }
-  .profile .post-add-form {
-    width: 66.15385%;
-    float: right;
-    margin-right: 0;
-    margin-right: 16.92308%;
-  }
-  .profile .feed-profile {
-    width: 66.15385%;
-    float: right;
-    margin-right: 0;
-    margin-right: 16.92308%;
-  }
-}
-
-.user {
-  margin-bottom: 1.27778em;
-}
-.user .url:link, .user .url:visited {
-  color: #93a1a1;
-}
-.user .url:focus, .user .url:hover, .user .url:active {
-  color: #d33682;
-}
-
-.profile-name {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-}
-@media (min-width: 45em) {
-  .profile-name {
-    font-size: 2.44444em;
-    line-height: 1.30682em;
-  }
-}
-
-.nickname {
-  font-weight: bold;
-}
-
-.editlink {
-  font-size: 1.94444em;
-  line-height: 1.64286em;
+.village-feed {
+  width: 66.15385%;
   float: left;
-  margin-right: .4em;
+  margin-right: 1.53846%;
+}
+.village-feed .note:last-child {
+  margin-bottom: 4.47222em;
 }
 
-.bio {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
-}
-.bio dt, .bio dd {
-  padding: 0 0.41071em;
-}
-.bio dt {
-  background: #eee8d5;
-  text-transform: uppercase;
-}
-.bio dd + dt {
-  margin-top: 1.27778em;
-}
-.bio dd + dd {
-  margin-top: 0.20536em;
-  border-top-style: solid;
-  border-top-width: 0.07143em;
-  padding-top: 0.13393em;
-  border-color: rgba(238, 232, 213, 0.75);
-}
-
-.feed-combined .post:first-child {
-  padding-top: 0;
-  border-top: 0;
-}
-@media (min-width: 45em) {
-  .feed-combined {
-    margin-left: 16.92308%;
-    margin-right: 16.92308%;
-  }
-}
-
-.post-add-form {
-  margin-bottom: 1.27778em;
-}
-
-.post {
-  margin-left: -1.16279%;
-  padding-left: 1.16279%;
-  margin-right: -1.16279%;
-  padding-right: 1.16279%;
-  *zoom: 1;
-  margin-bottom: 1.27778em;
-  border-top-style: solid;
-  border-top-width: 0.05556em;
-  padding-top: 1.22222em;
-  position: relative;
-  border-color: #eee8d5;
-}
-.post:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.byline {
-  margin-bottom: 0.63889em;
-  color: #93a1a1;
-}
-.byline .photo {
-  width: 10.46512%;
-  float: left;
-  margin-right: 2.32558%;
-}
-.byline .fn {
-  display: inline;
-}
-.byline [pubdate]::before {
-  content: " on ";
-}
-
-.body {
-  *zoom: 1;
-  margin-left: 12.7907%;
-}
-.body:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.post-media.small {
-  float: left;
-  margin: 0 0.63889em 0.63889em 0;
-}
-
-.comments {
-  position: relative;
-  background: #eee8d5;
-  margin: 0 -1.33333% 0 11.79845%;
-  padding: 0.63889em 1.33333%;
-  background: #eee8d5;
-}
-.comments:after, .comments:before {
-  bottom: 100%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
+.note-add-form {
   position: absolute;
-  pointer-events: none;
+  left: 15.38462%;
+  right: 15.38462%;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(253, 246, 227, 0)), color-stop(100%, #fdf6e3));
+  background: -webkit-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
+  background: -moz-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
+  background: -o-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
+  background: -ms-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
+  background: linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
+  bottom: 0;
+  margin-right: 3.07692%;
+  padding: 0.63889em 1.53846%;
 }
-.comments:after {
-  border-bottom-color: #eee8d5;
-  border-width: 0.63889em;
-  left: 50%;
-  margin-left: -0.63889em;
-}
-.comments:before {
-  border-bottom-color: false;
-  border-width: 0.63889em;
-  left: 50%;
-  margin-left: -0.63889em;
-}
-.comments .form-actions {
+.note-add-form .form-actions {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -986,48 +725,11 @@ img {
   border: 0;
 }
 
-.comment {
-  *zoom: 1;
-}
-.comment:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.comment + .comment, .comment + .comment-add-form {
-  border-top-style: solid;
-  border-top-width: 0.05556em;
-  padding-top: 0.58333em;
-  border-color: #fdf6e3;
-}
-.comment .sub-body {
-  margin-bottom: 0.63889em;
-}
-.comment .form-actions {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
-}
-
-.sub-byline {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
-}
-.sub-byline .photo {
-  float: left;
-  margin: 0 0.82143em 0.82143em 0;
-}
-.sub-byline .fn {
-  display: inline;
-}
-
-.commentfield {
-  margin: 0;
+.village-users {
+  width: 15.38462%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
 }
 
 .loading {

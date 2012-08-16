@@ -1,13 +1,11 @@
 <form method="POST" class="note-add-form">
   {# csrf_token #}
 
-  <h3>Add a note</h3>
-
   {# form.non_field_errors #}
 
   <div class="formfield note-textfield">
     {# form.note_text.errors #}
-    <textarea id="note-text"></textarea>
+    <textarea id="note-text" placeholder="Leave a note..."></textarea>
   </div>
 
   <div class="form-actions">

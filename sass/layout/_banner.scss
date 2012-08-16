@@ -23,35 +23,27 @@ $banner-rhythm: .5;
 // Brand
 
 .brand {
+  @include span-columns($left);
   font-weight: bold;
   [rel="home"] {
     @extend %icon;
     @extend %icon-home;
-  }
-
-  // large screen
-  @include at-breakpoint($break) {
-    @include span-columns($left);
   }
 }
 
 // ---------------------------------------------------------------------------
 // Navigation
 
-$nav-span: $center - 1;
+$nav-span: $center;
 
 [role="navigation"] {
-  @include at-breakpoint($break) {
-    @include span-columns($nav-span);
-  }
+  @include span-columns($nav-span);
   ul { @include no-style-list; }
   li {
-    @include at-breakpoint($break) {
-      float: left;
-      width: auto;
-      margin-right: gutter($nav-span);
-      min-width: columns(1,$nav-span);
-    }
+    float: left;
+    width: auto;
+    margin-right: gutter($nav-span);
+    min-width: columns(1,$nav-span);
   }
   .me { @extend %icon; @extend %icon-comments; }
   .net { @extend %icon; @extend %icon-users; }
@@ -62,6 +54,7 @@ $nav-span: $center - 1;
 // Meta
 
 .meta {
+  @include span-columns($right omega);
   position: relative;
 
   a {
@@ -73,25 +66,17 @@ $nav-span: $center - 1;
   [href*="/edit/"] { @extend %icon-settings; }
   [href*="/password_change/"] { @extend %icon-key; }
   [href*="/signup/"] { @extend %icon-exit; }
-
-  @include at-breakpoint($break) {
-    @include span-columns($right + 1 omega);
-    a { padding: rhythm($banner-rhythm); }
-  }
 }
 
 .useractions {
-  @extend %bleed;
+  @include stretch-x;
+  top: 100%;
+  margin: 0 rhythm(- $banner-rhythm);
+  background: $back;
+  z-index: 900;
+  display: none;
 
-  @include at-breakpoint($break) {
-    @include stretch-x;
-    top: 100%;
-    margin: 0;
-    padding: 0;
-    background: $back;
-    z-index: 900;
-    display: none;
-    .meta:hover & { display: block; }
-  }
+  a { padding: rhythm($banner-rhythm); }
+  .meta:hover & { display: block; }
 }
 

@@ -3,28 +3,11 @@
 
 .initial-password {
   @extend %notice;
-
-  @include at-breakpoint($break) {
-    @include bleed(space($left,$center));
-    @include inline-form;
-  }
-}
-
-%profile-form {
-  @extend %simple-form;
-
-  .bio-short { @include trailer; }
-
-  [class^="go-"] {
-    @include adjust-font-size-to($largepx);
-    text-transform: capitalize;
-  }
+  @include bleed(space($left,$center));
+  @include inline-form;
 }
 
 .register, .edit-profile {
   @extend %simple-page;
-}
-
-.profile-edit-form, .register-form {
-  @extend %profile-form;
+  @extend %simple-form;
 }
