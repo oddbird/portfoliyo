@@ -751,10 +751,18 @@ img {
   display: none;
 }
 
-.village-feed {
-  left: 15.38462%;
-  bottom: 5.43056em;
+.village-main {
+  position: relative;
+  float: left;
   width: 67.69231%;
+  margin-left: 15.38462%;
+  height: 100%;
+}
+
+.village-feed {
+  left: 0;
+  right: 0;
+  bottom: 5.43056em;
 }
 
 .note {
@@ -800,8 +808,8 @@ img {
 
 .note-add-form {
   position: absolute;
-  left: 15.38462%;
-  right: 16.92308%;
+  left: 0;
+  right: 0;
   bottom: 0;
   padding: 0.63889em 1.53846%;
   border-top: 1px solid #657b83;

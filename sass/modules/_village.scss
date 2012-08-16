@@ -70,11 +70,19 @@ $village-border-color: $base1;
 // ---------------------------------------------------------------------------
 // Village Feed
 
+.village-main {
+  position: relative;
+  float: left;
+  width: space($center);
+  margin-left: columns($left);
+  height: 100%;
+}
+
 .village-feed {
   @extend %overflow-y;
-  left: columns($left);
+  left: 0;
+  right: 0;
   bottom: rhythm(4.25);
-  width: space($center);
 }
 
 $note-byline-cols: 2;
@@ -107,7 +115,7 @@ $note-byline-size: $xsmallpx;
 // Note Add Form
 
 .note-add-form {
-  @include stretch-x(columns($left),space($right));
+  @include stretch-x;
   bottom: 0;
   padding: rhythm(.5) gutter();
   border-top: 1px solid $base;
