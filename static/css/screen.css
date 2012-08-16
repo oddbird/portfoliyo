@@ -652,10 +652,15 @@ img {
   #margin-left: -1em;
 }
 
+.village-app [role="main"] {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .village {
   *zoom: 1;
   position: relative;
-  height: 25.55556em;
+  height: 30.66667em;
 }
 .village:after {
   content: "";
@@ -664,11 +669,17 @@ img {
 }
 
 .village-nav, .village-feed {
-  height: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
   padding-right: 1.27778em;
   overflow-y: scroll;
 }
 
+.village-nav, .village-users {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+}
 .village-nav ul, .village-users ul {
   margin: 0;
   padding: 0;
@@ -680,11 +691,17 @@ img {
   list-style-type: none;
   margin-left: 0;
 }
+.village-nav li, .village-users li {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
 
 .village-nav {
+  left: 0;
   width: 15.38462%;
-  float: left;
-  margin-right: 1.53846%;
 }
 
 .village-add-form {
@@ -692,27 +709,22 @@ img {
 }
 
 .village-feed {
+  left: 16.92308%;
+  bottom: 5.43056em;
   width: 66.15385%;
-  float: left;
-  margin-right: 1.53846%;
 }
-.village-feed .note:last-child {
-  margin-bottom: 4.47222em;
+
+.note {
+  margin-bottom: 1.27778em;
 }
 
 .note-add-form {
   position: absolute;
   left: 15.38462%;
-  right: 15.38462%;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(253, 246, 227, 0)), color-stop(100%, #fdf6e3));
-  background: -webkit-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
-  background: -moz-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
-  background: -o-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
-  background: -ms-linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
-  background: linear-gradient(top, rgba(253, 246, 227, 0), #fdf6e3 0.63889em);
+  right: 16.92308%;
   bottom: 0;
-  margin-right: 3.07692%;
   padding: 0.63889em 1.53846%;
+  background: #eee8d5;
 }
 .note-add-form .form-actions {
   position: absolute;
@@ -723,6 +735,9 @@ img {
   height: 1px;
   width: 1px;
   border: 0;
+}
+.note-add-form .formfield {
+  margin: 0;
 }
 
 .village-users {
