@@ -47,12 +47,12 @@ var PYO = (function (PYO, $) {
             var updateHeight = function (animate) {
                 pageHeight = $(window).height() - headerHeight - footerHeight;
                 if (animate) {
-                    page.css('height', pageHeight.toString() + 'px');
+                    page.css('min-height', pageHeight.toString() + 'px');
                 } else {
                     transition = page.css('transition');
                     page.css({
                         'transition': 'none',
-                        'height': pageHeight.toString() + 'px'
+                        'min-height': pageHeight.toString() + 'px'
                     });
                     $(window).load(function () {
                         page.css('transition', transition);
