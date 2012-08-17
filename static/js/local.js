@@ -39,9 +39,9 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.updatePageHeight = function (container) {
+        var page = $(container).length ? $(container) : $('div[role="main"]');
         var headerHeight = $('div[role="banner"]').outerHeight();
         var footerHeight = $('footer').outerHeight();
-        var page = $(container).length ? $(container) : $('div[role="main"]');
         var pageHeight;
         var updateHeight = function () {
             pageHeight = $(window).height() - headerHeight - footerHeight;
