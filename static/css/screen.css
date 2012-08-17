@@ -775,9 +775,10 @@ img {
 .note {
   *zoom: 1;
   border-bottom-style: solid;
-  border-bottom-width: 0.08333em;
-  padding-bottom: 0.39583em;
-  padding-top: 0.47917em;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.26389em;
+  padding-left: 2.32558%;
+  padding-right: 2.32558%;
   border-color: #eee8d5;
 }
 .note:after {
@@ -786,25 +787,19 @@ img {
   clear: both;
 }
 .note .byline {
-  width: 23.25581%;
-  float: left;
-  margin-right: 2.32558%;
   font-size: 0.66667em;
   line-height: 1.91667em;
-  padding: 0 2.32558%;
-  border-right: 1px solid #eee8d5;
   color: #93a1a1;
+}
+.note .byline h3 {
+  display: inline;
 }
 .note .byline b {
   color: #657b83;
   font-weight: bold;
 }
-.note .byline h3, .note .byline time {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
+.note .byline time {
+  float: right;
 }
 .note .body {
   overflow: hidden;
