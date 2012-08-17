@@ -2,14 +2,16 @@
 // Village
 
 .village-app {
-  [role="main"] { padding: 0; }
+  [role="main"] {
+    @include transition(height 150ms);
+    padding: 0;
+    min-height: rhythm(12);
+  }
 }
 
 .village {
   @include pie-clearfix;
-  @include transition(height 150ms);
   position: relative;
-  height: rhythm(24);
 }
 
 %overflow-y {
