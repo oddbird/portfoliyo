@@ -42,16 +42,27 @@ var PYO = (function (PYO, $) {
         var page = $(container).length ? $(container) : $('div[role="main"]');
         var headerHeight = $('div[role="banner"]').outerHeight();
         var footerHeight = $('footer').outerHeight();
-        var pageHeight;
-        var updateHeight = function () {
+        var pageHeight, transition;
+        var updateHeight = function (animate) {
             pageHeight = $(window).height() - headerHeight - footerHeight;
-            page.css('height', pageHeight.toString() + 'px');
+            if (animate) {
+                page.css('height', pageHeight.toString() + 'px');
+            } else {
+                transition = page.css('transition');
+                page.css({
+                    'transition': 'none',
+                    'height': pageHeight.toString() + 'px'
+                });
+                $(window).load(function () {
+                    page.css('transition', transition);
+                });
+            }
         };
         updateHeight();
 
         $(window).resize(function () {
             $.doTimeout('resize', 250, function () {
-                updateHeight();
+                updateHeight(true);
             });
         });
     };
