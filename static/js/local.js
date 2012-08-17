@@ -38,6 +38,12 @@ var PYO = (function (PYO, $) {
         });
     };
 
+    PYO.villageScroll = function (container) {
+        var context = $(container);
+        var height = context.height();
+        context.animate({ scrollTop: height }, 'fast');
+    };
+
     return PYO;
 
 }(PYO || {}, jQuery));
