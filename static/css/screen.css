@@ -662,6 +662,11 @@ img {
 
 .village {
   *zoom: 1;
+  -webkit-transition: height 150ms;
+  -moz-transition: height 150ms;
+  -ms-transition: height 150ms;
+  -o-transition: height 150ms;
+  transition: height 150ms;
   position: relative;
   height: 30.66667em;
 }
@@ -764,7 +769,7 @@ img {
 .village-feed {
   left: 0;
   right: 0;
-  bottom: 5.43056em;
+  bottom: 4.47222em;
 }
 
 .note {
@@ -817,21 +822,37 @@ img {
   border-top: 1px solid #657b83;
   background: #93a1a1;
 }
-.note-add-form .form-actions {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
-}
 .note-add-form .formfield {
+  float: left;
+  width: 87.2093%;
   margin: 0;
 }
 .note-add-form textarea {
+  height: 4.10714em;
+  min-height: 4.10714em;
   background: rgba(255, 255, 255, 0.75);
+  padding-left: 0.82143em;
+  resize: none;
+}
+.note-add-form .form-actions {
+  clear: none;
+  float: right;
+  margin: 0;
+  width: 12.7907%;
+}
+.note-add-form button {
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  position: relative;
+  top: 1px;
+  padding: 0;
+  height: 3.19444em;
+  width: 100%;
+  text-transform: uppercase;
 }
 
 .village-users {

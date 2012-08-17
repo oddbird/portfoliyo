@@ -7,6 +7,7 @@
 
 .village {
   @include pie-clearfix;
+  @include transition(height 150ms);
   position: relative;
   height: rhythm(24);
 }
@@ -83,7 +84,7 @@ $village-border-color: $base1;
   @extend %overflow-y;
   left: 0;
   right: 0;
-  bottom: rhythm(4.25);
+  bottom: rhythm(3.5);
 }
 
 $note-byline-cols: 2;
@@ -122,9 +123,33 @@ $note-byline-size: $xsmallpx;
   border-top: 1px solid $base;
   background: $base1;
 
-  .form-actions { @include gone; }
-  .formfield { margin: 0; }
-  textarea { background: rgba(white,.75); }
+  .formfield {
+    float: left;
+    width: columns($center - 1, $center);
+    margin: 0;
+  }
+  textarea {
+    height: rhythm(2.5, $input-font-size);
+    min-height: rhythm(2.5, $input-font-size);
+    background: rgba(white,.75);
+    padding-left: rhythm(.5, $input-font-size);
+    resize: none;
+  }
+  .form-actions {
+    clear: none;
+    float: right;
+    margin: 0;
+    width: space(1,$center);
+  }
+  button {
+    @include border-left-radius(0);
+    position: relative;
+    top: 1px;
+    padding: 0;
+    height: rhythm(2.5);
+    width: 100%;
+    text-transform: uppercase;
+  }
 }
 
 // ---------------------------------------------------------------------------
