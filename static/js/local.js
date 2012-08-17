@@ -38,10 +38,36 @@ var PYO = (function (PYO, $) {
         });
     };
 
-    PYO.villageScroll = function (container) {
+    PYO.villageScroll = function (container, animate) {
         var context = $(container);
-        var height = context.height();
-        context.animate({ scrollTop: height }, 'fast');
+        var height = context.get(0).scrollHeight;
+        if (animate) {
+            context.animate({ scrollTop: height }, 'fast');
+        } else {
+            context.scrollTop(height);
+        }
+    };
+
+    PYO.villageHeight = function (container) {
+        var headerHeight = $('div[role="banner"]').outerHeight();
+        var footerHeight = $('footer').outerHeight();
+        var page = $(container);
+        var pageHeight;
+        var updateHeight = function (animate) {
+                pageHeight = $(window).height() - headerHeight - footerHeight;
+                if (animate) {
+                    page.animate({ height: pageHeight.toString() + 'px' }, 'fast');
+                } else {
+                    page.css('height', pageHeight.toString() + 'px');
+                }
+                PYO.villageScroll('.village-feed', animate);
+            };
+        updateHeight();
+        $(window).resize(function () {
+            $.doTimeout('resize', 250, function () {
+                updateHeight(true);
+            });
+        });
     };
 
     return PYO;
