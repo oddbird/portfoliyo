@@ -39,13 +39,21 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.updatePageHeight = function (container) {
-        if ($(container).length) {
-            var headerHeight = $('div[role="banner"]').outerHeight();
-            var footerHeight = $('footer').outerHeight();
-            var page = $(container);
-            var pageHeight = $(window).height() - headerHeight - footerHeight;
+        var headerHeight = $('div[role="banner"]').outerHeight();
+        var footerHeight = $('footer').outerHeight();
+        var page = $(container).length ? $(container) : $('div[role="main"]');
+        var pageHeight;
+        var updateHeight = function () {
+            pageHeight = $(window).height() - headerHeight - footerHeight;
             page.css('height', pageHeight.toString() + 'px');
-        }
+        };
+        updateHeight();
+
+        $(window).resize(function () {
+            $.doTimeout('resize', 250, function () {
+                updateHeight();
+            });
+        });
     };
 
     PYO.updateVillageScroll = function (container) {
@@ -54,16 +62,6 @@ var PYO = (function (PYO, $) {
             var height = context.get(0).scrollHeight;
             context.scrollTop(height);
         }
-    };
-
-    PYO.onWindowResize = function () {
-        $(window).resize(function () {
-            $.doTimeout('resize', 250, function () {
-                PYO.updatePageHeight('.village');
-                PYO.updatePageHeight('div[role="main"]');
-                PYO.updateVillageScroll('.village-feed');
-            });
-        });
     };
 
     return PYO;

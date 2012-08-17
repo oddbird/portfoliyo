@@ -10,9 +10,7 @@ var PYO = (function (PYO, $) {
         // local.js
         PYO.ajaxifyForm('.signup .container form');
         PYO.updatePageHeight('.village');
-        PYO.updatePageHeight('div[role="main"]');
         PYO.updateVillageScroll('.village-feed');
-        PYO.onWindowResize();
     });
 
     return PYO;
