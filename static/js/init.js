@@ -9,7 +9,10 @@ var PYO = (function (PYO, $) {
 
         // local.js
         PYO.ajaxifyForm('.signup .container form');
-        PYO.villageHeight('.village');
+        PYO.pageHeight('.village');
+        PYO.pageHeight('div[role="main"]');
+        PYO.villageScroll('.village-feed');
+        PYO.windowResize();
     });
 
     return PYO;

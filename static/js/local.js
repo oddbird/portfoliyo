@@ -38,34 +38,40 @@ var PYO = (function (PYO, $) {
         });
     };
 
-    PYO.villageScroll = function (container, animate) {
-        var context = $(container);
-        var height = context.get(0).scrollHeight;
-        if (animate) {
-            context.animate({ scrollTop: height }, 'fast');
-        } else {
-            context.scrollTop(height);
+    PYO.pageHeight = function (container, animate) {
+        if ($(container).length) {
+            var headerHeight = $('div[role="banner"]').outerHeight();
+            var footerHeight = $('footer').outerHeight();
+            var page = $(container);
+            var pageHeight = $(window).height() - headerHeight - footerHeight;
+
+            if (animate) {
+                page.animate({ height: pageHeight.toString() + 'px' }, 'fast');
+            } else {
+                page.css('height', pageHeight.toString() + 'px');
+            }
         }
     };
 
-    PYO.villageHeight = function (container) {
-        var headerHeight = $('div[role="banner"]').outerHeight();
-        var footerHeight = $('footer').outerHeight();
-        var page = $(container);
-        var pageHeight;
-        var updateHeight = function (animate) {
-                pageHeight = $(window).height() - headerHeight - footerHeight;
-                if (animate) {
-                    page.animate({ height: pageHeight.toString() + 'px' }, 'fast');
-                } else {
-                    page.css('height', pageHeight.toString() + 'px');
-                }
-                PYO.villageScroll('.village-feed', animate);
-            };
-        updateHeight();
+    PYO.villageScroll = function (container, animate) {
+        if ($(container).length) {
+            var context = $(container);
+            var height = context.get(0).scrollHeight;
+
+            if (animate) {
+                context.animate({ scrollTop: height }, 'fast');
+            } else {
+                context.scrollTop(height);
+            }
+        }
+    };
+
+    PYO.windowResize = function () {
         $(window).resize(function () {
             $.doTimeout('resize', 250, function () {
-                updateHeight(true);
+                PYO.pageHeight('.village', true);
+                PYO.pageHeight('div[role="main"]', true);
+                PYO.villageScroll('.village-feed', true);
             });
         });
     };
