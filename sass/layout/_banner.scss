@@ -23,11 +23,14 @@ $banner-rhythm: .5;
 // Brand
 
 .brand {
-  @include span-columns($left);
-  font-weight: bold;
+  // @include span-columns($left);
   [rel="home"] {
     @extend %icon;
     @extend %icon-home;
+    &::before { margin: 0; }
+  }
+  b {
+    font-weight: bold;
   }
 }
 

@@ -62,10 +62,6 @@ a {
     padding-left: 1.5em;
   }
 
-  li {
-    @include trailer(.5);
-  }
-
   em { font-style: italic; }
   strong { font-weight: 500; }
 }

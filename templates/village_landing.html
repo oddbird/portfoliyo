@@ -1,39 +1,37 @@
 {% extends "base_site.html" %}
 
+{% block bodyclasses %}village-landing{% endblock bodyclasses %}
+{% block meta %}{% endblock meta %}
+
 {% block maincontent %}
-<section class="landing">
-  <article class="intro">
-    <h2>Keep the entire village connected.</h2>
-    <p>
-      It takes a village to raise a child —
-      parents, relatives, teachers, coaches —
-      but it can be hard for everyone to stay connected.
-      Portfoliyo is a place to bring a community together
-      around each child's learning experiences,
-      to provide the support they need.
-    </p>
+<article class="landing">
+  <h2>
+    It takes a <b>village</b> to raise a child. Keep your village connected.
+  </h2>
+
+  <ul class="summary">
+    <li>Use your computer to <strong>text parents</strong> in seconds.</li>
+    <li><strong>Parents respond</strong> using any phone or computer.</li>
+    <li><strong>Keep a record</strong> of parent communication.</li>
+  </ul>
+
+  <figure class="screenshot">
+    <img src="http://fakeimg.pl/675x460/839496/fdf6e3/?text=screenshot">
+  </figure>
+
+  <section class="membership">
+    <h3>EarlyBird Membership</h3>
+    <p class="offer-note">Ends September 15</p>
+
+    <a href="http://gum.co/nhJP" class="linkaction earlybird">$20</a>
+    <script type="text/javascript" src="https://gumroad.com/js/gumroad.js"></script>
+
     <ul>
-      <li>
-        <strong>Build a private Portfoliyo village.</strong>
-        Get parents, teachers, mentors, instructors,
-        and administrators all on board.
-      </li>
-      <li>
-        <strong>Teachers:
-        Share notes, photos, and documents
-        with each student's village.</strong>
-        Show what they are learning,
-        and ask for help when you (or they) need it!
-      </li>
-      <li>
-        <strong>Parents:
-        Stay informed and in touch.</strong>
-        Participate in the lives and educations
-        of the children you care about.
-        Give them your encouragement and feedback
-        to help them learn and grow!
-      </li>
+      <li>Lifetime subscription. (Save $20/month)</li>
+      <li>Free updates forever.</li>
+      <li>1-month of 24/7 on-call concierge help.</li>
+      <li>The warm-fuzzy feeling of supporting a project for teachers, by teachers.</li>
     </ul>
-  </article>
-</section>
+  </section>
+</article>
 {% endblock maincontent %}
