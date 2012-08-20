@@ -541,6 +541,11 @@ img {
   display: block;
 }
 
+.brand {
+  width: 83.07692%;
+  float: left;
+  margin-right: 1.53846%;
+}
 .brand [rel="home"]::before {
   margin: 0;
 }
