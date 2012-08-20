@@ -6,7 +6,10 @@
   display: none;
   text-transform: uppercase;
 }
-.village-landing { .container { min-width: 0; } }
+.village-landing {
+  .container { min-width: 0; }
+  [role="main"] { padding-bottom: 0; }
+}
 
 
 .landing {
@@ -54,6 +57,8 @@
   .membership {
     @extend %bleed;
     @include leading-border(1px,1);
+    @include padding-trailer;
+    @include background(rgba($alt,.25));
     @include background(linear-gradient(top, rgba($alt,.25), rgba($alt,0)));
     border-color: $base1;
     .offer-note { font-style: italic; }
@@ -64,12 +69,10 @@
       font-weight: bold;
       text-align: center;
     }
-    ul {
-      color: $base1;
-    }
+    ul { color: $base1; }
   }
 
-  @include at-breakpoint(45em 12) {
+  @include at-breakpoint(45em 12 lt-ie9) {
     .summary {
       @include span-columns(5 omega);
     }

@@ -918,6 +918,9 @@ img {
 .village-landing .container, .village-landing [role="banner"], .village-landing [role="contentinfo"] {
   min-width: 0;
 }
+.village-landing [role="main"] {
+  padding-bottom: 0;
+}
 
 .landing h2 {
   font-size: 1.94444em;
@@ -966,6 +969,8 @@ img {
   border-top-style: solid;
   border-top-width: 0.05556em;
   padding-top: 1.22222em;
+  padding-bottom: 1.27778em;
+  background: rgba(38, 139, 210, 0.25);
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0.25)), color-stop(100%, rgba(38, 139, 210, 0)));
   background: -webkit-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
   background: -moz-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
@@ -1008,6 +1013,26 @@ img {
   .landing .membership > * {
     margin-left: 3.77358%;
   }
+}
+.lt-ie9 .landing .summary {
+  width: 40.76923%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+}
+.lt-ie9 .landing .screenshot {
+  width: 57.69231%;
+  float: left;
+  margin-right: 1.53846%;
+  position: relative;
+  z-index: 20;
+}
+.lt-ie9 .landing .membership {
+  padding-left: 59.23077%;
+  clear: right;
+}
+.lt-ie9 .landing .membership > * {
+  margin-left: 3.77358%;
 }
 
 .loading {
