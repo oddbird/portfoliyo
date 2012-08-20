@@ -16,6 +16,22 @@
     <input type="text" id="name" />
   </div>
 
+  {% if first_login %}
+  <div class="formset initial-password">
+    <div class="formfield password">
+      {# form.password.errors #}
+      <label for="password">password</label>
+      <input type="password" id="password" />
+    </div>
+
+    <div class="formfield password-confirm">
+      {# form.password_confirm.errors #}
+      <label for="password-confirm">confirm password</label>
+      <input type="password" id="password-confirm" />
+    </div>
+  </div>
+  {% endif %}
+
   <div class="formfield title">
     {# form.username.errors #}
     <label for="title">relation to student(s)</label>

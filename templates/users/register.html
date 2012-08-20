@@ -9,21 +9,7 @@
 
     {# form.non_field_errors #}
 
-    <div class="formset initial-password">
-      <div class="formfield password">
-        {# form.password.errors #}
-        <label for="password">password</label>
-        <input type="password" id="password" />
-      </div>
-
-      <div class="formfield password-confirm">
-        {# form.password_confirm.errors #}
-        <label for="password-confirm">confirm password</label>
-        <input type="password" id="password-confirm" />
-      </div>
-    </div>
-
-    {% include "users/_user_basic_bio.html" %}
+    {% include "users/_user_basic_bio.html" with first_login="true" %}
 
     <div class="form-actions">
       {# @@@ if teacher #}
