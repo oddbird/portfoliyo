@@ -6,14 +6,13 @@
   display: none;
   text-transform: uppercase;
 }
+
 .village-landing {
   .container { min-width: 0; }
   [role="main"] { padding-bottom: 0; }
-}
+  .brand { @include reset-columns; }
 
-
-.landing {
-  @extend %type;
+  .landing { @extend %type; }
 
   h2 {
     @include adjust-font-size-to($largepx);
@@ -73,6 +72,10 @@
   }
 
   @include at-breakpoint(45em 12 lt-ie9) {
+    .brand {
+      width: columns(4);
+    }
+
     .summary {
       @include span-columns(5 omega);
     }

@@ -134,14 +134,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .landing li:before, [data-icon]:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .village-landing li:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .landing li:before {
+.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .village-landing li:before {
   margin-right: .4em;
 }
 
@@ -178,7 +178,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00c";
 }
 
-.landing li:before {
+.village-landing li:before {
   content: "\e00d";
 }
 
@@ -232,21 +232,29 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .signup h1, .landing h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .signup h2, .landing h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .signup h3, .landing h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .signup h4, .landing h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .signup h5, .landing h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .signup h6, .landing h6 {
+.brand [rel="home"] {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+
+.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .signup h1, .village-landing .landing h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .signup h2, .village-landing .landing h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .signup h3, .village-landing .landing h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .signup h4, .village-landing .landing h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .signup h5, .village-landing .landing h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .signup h6, .village-landing .landing h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .signup p, .landing p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .signup ul, .landing ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .signup ol, .landing ol {
+.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .signup p, .village-landing .landing p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .signup ul, .village-landing .landing ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .signup ol, .village-landing .landing ol {
   margin-bottom: 1.27778em;
 }
-.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .signup ul, .landing ul {
+.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .signup ul, .village-landing .landing ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .signup em, .landing em {
+.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .signup em, .village-landing .landing em {
   font-style: italic;
 }
-.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .signup strong, .landing strong {
+.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .signup strong, .village-landing .landing strong {
   font-weight: 500;
 }
 
@@ -480,7 +488,7 @@ textarea {
   margin-bottom: 0.65714em;
 }
 
-.initial-password, .landing .membership {
+.initial-password, .village-landing .membership {
   margin-left: -1em;
   padding-left: 1em;
   margin-right: -1em;
@@ -543,7 +551,7 @@ img {
 }
 
 .brand {
-  width: 83.07692%;
+  width: 15.38462%;
   float: left;
   margin-right: 1.53846%;
 }
@@ -922,51 +930,56 @@ img {
 .village-landing [role="main"] {
   padding-bottom: 0;
 }
-
-.landing h2 {
+.village-landing .brand {
+  float: none;
+  width: auto;
+  margin-right: auto;
+  #margin-left: auto;
+}
+.village-landing h2 {
   font-size: 1.94444em;
   line-height: 1.31429em;
   margin-bottom: 0.65714em;
 }
-.landing h2 b {
+.village-landing h2 b {
   text-transform: capitalize;
   color: #d33682;
 }
-.landing h3 {
+.village-landing h3 {
   font-size: 1.5em;
   line-height: 1.27778em;
 }
-.landing ul {
+.village-landing ul {
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
   margin-bottom: 1.27778em;
 }
-.landing ul li {
+.village-landing ul li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
 }
-.landing li {
+.village-landing li {
   position: relative;
   padding-left: 1.5em;
 }
-.landing li::before {
+.village-landing li::before {
   position: absolute;
   left: 0;
   top: 0;
 }
-.landing .summary li {
+.village-landing .summary li {
   margin-bottom: 0.63889em;
 }
-.landing .summary li::before {
+.village-landing .summary li::before {
   color: #859900;
 }
-.landing .screenshot {
+.village-landing .screenshot {
   margin-bottom: 1.27778em;
 }
-.landing .membership {
+.village-landing .membership {
   border-top-style: solid;
   border-top-width: 0.05556em;
   padding-top: 1.22222em;
@@ -980,10 +993,10 @@ img {
   background: linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
   border-color: #93a1a1;
 }
-.landing .membership .offer-note {
+.village-landing .membership .offer-note {
   font-style: italic;
 }
-.landing .membership .linkaction {
+.village-landing .membership .linkaction {
   font-size: 2.44444em;
   line-height: 1.30682em;
   margin-bottom: 0.52273em;
@@ -991,48 +1004,54 @@ img {
   font-weight: bold;
   text-align: center;
 }
-.landing .membership ul {
+.village-landing .membership ul {
   color: #93a1a1;
 }
 @media (min-width: 50.625em) {
-  .landing .summary {
+  .village-landing .brand {
+    width: 32.30769%;
+  }
+  .village-landing .summary {
     width: 40.76923%;
     float: right;
     margin-right: 0;
   }
-  .landing .screenshot {
+  .village-landing .screenshot {
     width: 57.69231%;
     float: left;
     margin-right: 1.53846%;
     position: relative;
     z-index: 20;
   }
-  .landing .membership {
+  .village-landing .membership {
     padding-left: 59.23077%;
     clear: right;
   }
-  .landing .membership > * {
+  .village-landing .membership > * {
     margin-left: 3.77358%;
   }
 }
-.lt-ie9 .landing .summary {
+.lt-ie9 .village-landing .brand {
+  width: 32.30769%;
+}
+.lt-ie9 .village-landing .summary {
   width: 40.76923%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
 }
-.lt-ie9 .landing .screenshot {
+.lt-ie9 .village-landing .screenshot {
   width: 57.69231%;
   float: left;
   margin-right: 1.53846%;
   position: relative;
   z-index: 20;
 }
-.lt-ie9 .landing .membership {
+.lt-ie9 .village-landing .membership {
   padding-left: 59.23077%;
   clear: right;
 }
-.lt-ie9 .landing .membership > * {
+.lt-ie9 .village-landing .membership > * {
   margin-left: 3.77358%;
 }
 
