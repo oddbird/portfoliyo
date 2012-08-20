@@ -978,6 +978,7 @@ img {
 }
 .village-landing .screenshot {
   margin-bottom: 1.27778em;
+  font-style: italic;
 }
 .village-landing .membership {
   border-top-style: solid;

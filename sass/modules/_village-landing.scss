@@ -51,6 +51,7 @@
 
   .screenshot {
     @include trailer;
+    font-style: italic;
   }
 
   .membership {
