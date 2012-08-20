@@ -329,6 +329,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 
 .linkaction:link, .linkaction:visited, button {
+  background-color: #859900;
   font-size: 18px;
   padding: 0.31944em 1.27778em;
   display: inline-block;
@@ -970,7 +971,7 @@ img {
   border-top-width: 0.05556em;
   padding-top: 1.22222em;
   padding-bottom: 1.27778em;
-  background: rgba(38, 139, 210, 0.25);
+  background: #c7dbde;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0.25)), color-stop(100%, rgba(38, 139, 210, 0)));
   background: -webkit-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
   background: -moz-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
