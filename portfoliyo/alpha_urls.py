@@ -6,6 +6,12 @@ urlpatterns = patterns(
     url(
         r"^$",
         direct_to_template,
+        {"template": "village_landing.html"},
+        name="village_landing",
+        ),
+    url(
+        r"^home/$",
+        direct_to_template,
         {"template": "home.html"},
         name="home",
         ),
