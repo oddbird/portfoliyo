@@ -50,7 +50,7 @@
   .membership {
     @extend %bleed;
     @include leading-border(1px,1);
-    @include background(linear-gradient(top, rgba($alt,.25), rgba($alt,0) rhythm(12)));
+    @include background(linear-gradient(top, rgba($alt,.25), rgba($alt,0)));
     border-color: $base1;
     .offer-note { font-style: italic; }
     .linkaction {

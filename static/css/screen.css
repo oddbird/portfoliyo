@@ -964,11 +964,11 @@ img {
   border-top-width: 0.05556em;
   padding-top: 1.22222em;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0.25)), color-stop(100%, rgba(38, 139, 210, 0)));
-  background: -webkit-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0) 15.33333em);
-  background: -moz-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0) 15.33333em);
-  background: -o-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0) 15.33333em);
-  background: -ms-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0) 15.33333em);
-  background: linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0) 15.33333em);
+  background: -webkit-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: -moz-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: -o-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: -ms-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
   border-color: #93a1a1;
 }
 .landing .membership .offer-note {
