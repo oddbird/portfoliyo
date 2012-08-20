@@ -909,7 +909,10 @@ img {
 }
 
 #iframe_close_button {
+  font-size: 2.44444em;
+  line-height: 1.30682em;
   display: none;
+  text-transform: uppercase;
 }
 
 .village-landing .container, .village-landing [role="banner"], .village-landing [role="contentinfo"] {

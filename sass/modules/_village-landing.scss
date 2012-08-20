@@ -1,7 +1,11 @@
 // ---------------------------------------------------------------------------
 // Village Landing Page
 
-#iframe_close_button { display: none; }
+#iframe_close_button {
+  @include adjust-font-size-to($xlargepx);
+  display: none;
+  text-transform: uppercase;
+}
 .village-landing { .container { min-width: 0; } }
 
 
