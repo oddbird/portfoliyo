@@ -115,6 +115,8 @@ $note-byline-size: $xsmallpx;
 // ---------------------------------------------------------------------------
 // Note Add Form
 
+$addnote-fontsize: $input-font-size;
+
 .note-add-form {
   @include stretch-x;
   bottom: 0;
@@ -128,10 +130,10 @@ $note-byline-size: $xsmallpx;
     margin: 0;
   }
   textarea {
-    height: rhythm(2.5, $input-font-size);
-    min-height: rhythm(2.5, $input-font-size);
+    height: rhythm(2.5, $addnote-fontsize);
+    min-height: rhythm(2.5, $addnote-fontsize);
     background: rgba(white,.75);
-    padding-left: rhythm(.5, $input-font-size);
+    padding-left: rhythm(.5, $addnote-fontsize);
     resize: none;
   }
   .form-actions {
