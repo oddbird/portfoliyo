@@ -4,7 +4,7 @@
 //   These are the base defaults for the buttons, if you are going to use similar buttons on an entire site,
 //   overriding these can save you some time by calling the sassy button mixin with less arguments.
 
-$sb-base-color: rgba($green,.75);
+$sb-base-color: $green;
 $sb-second-color: false;
 $sb-border-radius: .125em;
 $sb-padding: rhythm(.25) rhythm(1);

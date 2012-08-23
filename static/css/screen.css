@@ -232,12 +232,23 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.brand [rel="home"] {
+.brand [rel="home"], .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+}
+
+.village-landing .formfield label {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
 }
 
 .login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .signup h1, .village-landing .landing h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .signup h2, .village-landing .landing h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .signup h3, .village-landing .landing h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .signup h4, .village-landing .landing h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .signup h5, .village-landing .landing h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .signup h6, .village-landing .landing h6 {
@@ -350,40 +361,40 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
   *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#BF859900', endColorstr='#BF2C3300');
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(133, 153, 0, 0.75)), color-stop(100%, rgba(89, 102, 0, 0.75)));
-  background: -webkit-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
-  background: -moz-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
-  background: -o-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
-  background: -ms-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
-  background: linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
-  -webkit-box-shadow: rgba(200, 230, 0, 0.75) 0 1px 0 inset;
-  -moz-box-shadow: rgba(200, 230, 0, 0.75) 0 1px 0 inset;
-  box-shadow: rgba(200, 230, 0, 0.75) 0 1px 0 inset;
-  border: 1px solid rgba(66, 77, 0, 0.75);
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF859900', endColorstr='#FF2C3300');
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #859900), color-stop(100%, #596600));
+  background: -webkit-linear-gradient(#859900, #596600);
+  background: -moz-linear-gradient(#859900, #596600);
+  background: -o-linear-gradient(#859900, #596600);
+  background: -ms-linear-gradient(#859900, #596600);
+  background: linear-gradient(#859900, #596600);
+  -webkit-box-shadow: #c8e600 0 1px 0 inset;
+  -moz-box-shadow: #c8e600 0 1px 0 inset;
+  box-shadow: #c8e600 0 1px 0 inset;
+  border: 1px solid #424d00;
   color: #fdf6e3;
-  text-shadow: rgba(18, 20, 0, 0.75) 0 -1px 0;
+  text-shadow: #121400 0 -1px 0;
 }
 .linkaction:hover:link, .linkaction:hover:visited, button:hover {
   text-decoration: none;
 }
 .linkaction:hover:link, .linkaction:hover:visited, button:hover {
-  background-color: rgba(66, 77, 0, 0.75);
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(111, 128, 0, 0.75)), color-stop(100%, rgba(66, 77, 0, 0.75)));
-  background: -webkit-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
-  background: -moz-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
-  background: -o-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
-  background: -ms-linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
-  background: linear-gradient(rgba(111, 128, 0, 0.75), rgba(66, 77, 0, 0.75));
+  background-color: #424d00;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
+  background: -webkit-linear-gradient(#6f8000, #424d00);
+  background: -moz-linear-gradient(#6f8000, #424d00);
+  background: -o-linear-gradient(#6f8000, #424d00);
+  background: -ms-linear-gradient(#6f8000, #424d00);
+  background: linear-gradient(#6f8000, #424d00);
 }
 .linkaction:active:link, .linkaction:active:visited, button:active {
-  -webkit-box-shadow: rgba(53, 61, 0, 0.75) 0 1px 2px inset;
-  -moz-box-shadow: rgba(53, 61, 0, 0.75) 0 1px 2px inset;
-  box-shadow: rgba(53, 61, 0, 0.75) 0 1px 2px inset;
+  -webkit-box-shadow: #353d00 0 1px 2px inset;
+  -moz-box-shadow: #353d00 0 1px 2px inset;
+  box-shadow: #353d00 0 1px 2px inset;
 }
 .disabled.linkaction:link, .disabled.linkaction:visited, button.disabled, [disabled].linkaction:link, [disabled].linkaction:visited, button[disabled] {
   opacity: 0.6;
-  background: rgba(89, 102, 0, 0.75);
+  background: #596600;
   cursor: default;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -418,12 +429,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   clear: both;
 }
 
-.form-help {
+.formhelp {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  clear: both;
-  margin: 0 !important;
+  color: #93a1a1;
   text-align: right;
+  font-style: italic;
 }
 
 .form-actions {
@@ -986,7 +997,10 @@ img {
 }
 .village-landing .screenshot {
   margin-bottom: 1.27778em;
-  font-style: italic;
+}
+.village-landing .screenshot figcaption {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
 }
 .village-landing .membership {
   border-top-style: solid;
@@ -1002,19 +1016,25 @@ img {
   background: linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
   border-color: #93a1a1;
 }
-.village-landing .membership .offer-note {
+.village-landing .membership .offernote {
   font-style: italic;
-}
-.village-landing .membership .linkaction {
-  font-size: 2.44444em;
-  line-height: 1.30682em;
-  margin-bottom: 0.52273em;
-  display: block;
-  font-weight: bold;
-  text-align: center;
 }
 .village-landing .membership ul {
   color: #93a1a1;
+}
+.village-landing .formfield {
+  position: relative;
+}
+.village-landing .formfield::after {
+  clear: none;
+}
+.village-landing .formfield input {
+  width: 62.26415%;
+}
+.village-landing .formfield .action-betasignup {
+  position: absolute;
+  right: 0;
+  width: 37.73585%;
 }
 @media (min-width: 50.625em) {
   .village-landing .brand {

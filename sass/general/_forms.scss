@@ -95,11 +95,11 @@ $input-rhythm: .25;
   input, textarea { @include span-columns($input omega,$context); }
 }
 
-.form-help {
+.formhelp {
   @include adjust-font-size-to($smallpx);
-  clear: both;
-  margin: 0 !important;
+  color: $base1;
   text-align: right;
+  font-style: italic;
 }
 
 $form-action-note-size: $smallpx;
