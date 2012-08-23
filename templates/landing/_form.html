@@ -5,8 +5,12 @@
   <div class="formfield">
     {{ form.email.errors }}
     <label for="email">E-Mail</label>
-    {{ form.email|attr:"placeholder:Enter your email for updates" }}
-    <span class="note">We'll keep your email address private and secure.</span>
+
+    {# @@@ Mocked in for now #}
+    {{ form.email|attr:"placeholder:Enter your email to sign up" }}
+    <input type="email" id="email" placeholder="Enter your email to sign up" />
+
+    <span class="formhelper">We'll keep your email address private and secure.</span>
     <button type="submit">Inspire me</button>
   </div>
 </form>
