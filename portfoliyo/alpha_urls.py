@@ -3,12 +3,7 @@ from django.views.generic.simple import direct_to_template
 
 urlpatterns = patterns(
     "",
-    url(
-        r"^$",
-        direct_to_template,
-        {"template": "village_landing.html"},
-        name="village_landing",
-        ),
+    url("^$", "portfoliyo.landing.views.landing", name="landing"),
     url(
         r"^home/$",
         direct_to_template,

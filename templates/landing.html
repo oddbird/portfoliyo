@@ -1,11 +1,22 @@
 <!DOCTYPE html>
-<!--[if lte IE 8 ]>             <html class="lt-ie9" lang="en" dir="ltr">   <![endif]-->
-<!--[if IE 9 ]>                 <html class="ie9" lang="en" dir="ltr">  <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!-->  <html lang="en" dir="ltr">          <!--<![endif]-->
 {% load compress %}
+<!--[if lte IE 8 ]>             <html class="no-js lt-ie9" lang="en" dir="ltr">   <![endif]-->
+<!--[if IE 9 ]>                 <html class="no-js ie9" lang="en" dir="ltr">  <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->  <html class="no-js" lang="en" dir="ltr">      <!--<![endif]-->
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
+
+  <!-- Page Info -->
   <title>Portfoliyo</title>
+
+  <!-- Site Info -->
+  <meta name="robots" content="index, follow" />
+  <meta name="author" content="Portfoliyo" />
+  <meta name="language" content="en-us" />
+
+  <!-- Microformat Profiles -->
+  <!-- hCard, hCalendar, rel-license, rel-tag, XOXO, XFN, VoteLinks -->
+  <link rel="profile" href="http://microformats.org/profile/specs/" />
 
   <!-- Always force latest IE rendering engine (even in intranet) & Chrome Frame -->
   <meta http-equiv="cleartype" content="on">
@@ -14,12 +25,30 @@
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
   <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1">
+
+  <!--iOS. Delete if not required -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-startup-image" href="{{ STATIC_URL }}images/favicons/splash.png">
+
+  <!-- favicon.ico -->
+  <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicons/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{ STATIC_URL }}images/favicons/apple-touch-icon-114x114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{ STATIC_URL }}images/favicons/apple-touch-icon-72x72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="{{ STATIC_URL }}images/favicons/apple-touch-icon-precomposed.png">
 
   <!-- Styles -->
+
+  <!--[if IE 6]>
+  <link href="http://universal-ie6-css.googlecode.com/files/ie6.1.0.css" media="screen, projection" />
+  <![endif]-->
+
+  <!--[if gte IE 7]><!-->
   {% compress css %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/landing.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" />
   {% endcompress %}
+  <!--<![endif]-->
 
   <!-- Modernizr -->
   {% compress js %}
@@ -44,118 +73,66 @@
   </script>
   {% endif %}
 </head>
-<body>
 
-<header role="banner">
-  <h1>Portfoliyo.</h1>
-</header>
+<body id="portfoliyo" class="village-landing">
 
-<article class="signup" role="main">
+<div>
+
+  <div role="main">
   <div class="container">
-    <h2>Share your learning with the people who&nbsp;care.</h2>
-    <div class="intro">
-      <p>
-        It takes a village to raise a child —
-        parents, relatives, teachers, coaches —
-        but it can be hard for everyone to stay connected.
-        Portfoliyo is a place to bring a community together
-        around each child's learning experiences,
-        to see what they are working on
-        and provide support & inspiration.
-      </p>
-      <ul>
-        <li>
-          <strong>Build a private Portfoliyo network.</strong>
-          Get relatives, teachers, mentors, instructors,
-          and coaches all on board.
-          Portfoliyo is free for everyone.
-        </li>
-        <li>
-          <strong>Parents & kids:
-          Post learning experiences.</strong>
-          Share notes, photos, and videos
-          with your network.
-          Show what you are learning,
-          and ask for help when you need it!
-        </li>
-        <li>
-          <strong>Supporters:
-          Stay informed and in touch.</strong>
-          Participate in the lives and educations
-          of the children you care about.
-          Give them your encouragement and feedback
-          to help them learn and grow!
-        </li>
-      </ul>
-    </div>
     {% include "messages_ui/_messages.html" %}
 
-    {% include "landing/_form.html" %}
+    <article class="landing">
+      <h2>
+        It takes a <b>village</b> to raise a child. Keep your village connected.
+      </h2>
+
+      <ul class="summary">
+        <li>Use your computer to <strong>text parents</strong> in seconds.</li>
+        <li><strong>Parents respond</strong> using any phone or computer.</li>
+        <li><strong>Keep a record</strong> of parent communication.</li>
+      </ul>
+
+      <figure class="screenshot">
+        <img src="{{ STATIC_URL }}images/screenshot.png" alt="Portfoliyo Village Screenshot">
+        <figcaption>
+          Contact Harsh Patel at
+          <span class="email">harsh(put the 'at' sign here)theknetwork.org</span>
+          or  314-537-1024
+          for more information.
+        </figcaption>
+      </figure>
+
+      <section class="membership">
+        <h3>Join the <b>Village Beta</b></h3>
+        <p>Offer ends September 15.</p>
+        {% include "messages_ui/_messages.html" %}
+        {% include "landing/_form.html" %}
+        <ul>
+          <li>Immediate updates as we launch.</li>
+          <li>One month free membership with 24/7 on-call help.</li>
+          <li>Discounted lifetime membership.</li>
+          <li>help shape the future of a project for teachers, by teachers.</li>
+        </ul>
+      </section>
+    </article>
   </div>
-</article>
+  </div><!-- /~main -->
 
-<section class="team">
-  <div class="container">
+  <footer role="contentinfo">
+    <p class="author vcard">
+      copyright &copy; 2012
+      <strong class="fn org">Portfoliyo</strong>
+    </p>
+  </footer>
 
-    <article id="harsh" class="vcard">
-      <h3 class="fn">Harsh Patel</h3>
-      <img src="{{ STATIC_URL }}images/landing/harsh.png" alt="" />
-      <p>
-        Harsh is a teacher who loves inspiring kids to be
-        creative, confident, and productive.
-        His fridge is always stocked with hummus
-        and he will drop anything for a good game of frisbee.
-      </p>
-    </article>
-
-    <article id="peter" class="vcard">
-      <h3 class="fn">Peter Kuperman</h3>
-      <img src="{{ STATIC_URL }}images/landing/peter.png" alt="" />
-      <p>
-        Peter has a background in money management
-        and loves to inspire the people around him to greater heights.
-        He goes by the title "Chef by Night",
-        which probably means he can cook.
-      </p>
-    </article>
-
-    <article id="jonny" class="vcard">
-      <h3 class="fn">Jonny Gerig Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/jonny.png" alt="" />
-      <p>
-        Jonny
-        is a web developer
-        and occasional college philosophy professor.
-        He likes his frisbees thrown deep,
-        his students smart-alecky,
-        and his nephew chasing him around the house.
-      </p>
-    </article>
-
-    <article id="eric" class="vcard">
-      <h3 class="fn">Eric Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/eric.png" alt="" />
-      <p>
-        Eric
-        is a multimedia artist,
-        cousin, and uncle,
-        with a special focus in
-        co-creating silly stories
-        and re-enacting video games in the park.
-      </p>
-    </article>
-
-  </div>
-</section>
-
-<footer role="contentinfo">
-  <p>copyright &copy; 2012 <strong>The K Network</strong></p>
-</footer>
+</div>
 
 <!-- JavaScript -->
 {% compress js %}
 <script src="{{ STATIC_URL }}js/jquery-1.8.0.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.placeholder.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.defuscator.js"></script>
 <script src="{{ STATIC_URL }}js/viewport.js"></script>
 <script src="{{ STATIC_URL }}js/ICanHaz.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.ba-dotimeout.js"></script>
