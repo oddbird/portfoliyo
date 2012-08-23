@@ -51,7 +51,7 @@
 
   .screenshot {
     @include trailer;
-    font-style: italic;
+    figcaption { @include adjust-font-size-to($smallpx); }
   }
 
   .membership {
@@ -61,15 +61,23 @@
     @include background(mix($alt,$base3,25%));
     @include background(linear-gradient(top, rgba($alt,.25), rgba($alt,0)));
     border-color: $base1;
-    .offer-note { font-style: italic; }
-    .linkaction {
-      @include adjust-font-size-to($xlargepx);
-      @include trailer(1,$xlargepx);
-      display: block;
-      font-weight: bold;
-      text-align: center;
-    }
+    .offernote { font-style: italic; }
     ul { color: $base1; }
+  }
+
+  .formfield {
+    position: relative;
+    &::after { clear: none; }
+    label { @extend %gone; }
+    input {
+      width: space(3,5);
+    }
+    .action-betasignup {
+      @extend %ellipsis;
+      position: absolute;
+      right: 0;
+      width: columns(2,5);
+    }
   }
 
   @include at-breakpoint(45em 12 lt-ie9) {
