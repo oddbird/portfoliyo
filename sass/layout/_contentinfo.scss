@@ -4,4 +4,10 @@
 [role="contentinfo"] {
   @extend %boilerplate;
   @include rhythm(0,.5,.5,0);
+  .author {
+    @include adjust-font-size-to($xsmallpx);
+    @include trailer(0);
+    text-transform: uppercase;
+  }
+  strong { font-weight: bold; }
 }

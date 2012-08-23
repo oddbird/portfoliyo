@@ -1,0 +1,131 @@
+// ---------------------------------------------------------------------------
+// Imports
+
+@import "base/settings";
+@import "general/root";
+@import "layout/helpers";
+
+// ---------------------------------------------------------------------------
+// Settings
+
+$total-columns: 6;
+$break: 50em 12 lt-ie9;
+
+// ---------------------------------------------------------------------------
+// Footer
+
+$boiler-link-color: $base3;
+
+[role="contentinfo"] {
+  @include container($total-columns, $break);
+  @include pie-clearfix;
+  @include rhythm(0,.5,.5,0);
+  clear: both;
+  a {
+    #{$link} { color: $boiler-link-color; }
+    #{$focus} { color: mix($boiler-link-color,$accent); }
+  }
+  .author {
+    @include adjust-font-size-to($xxsmallpx);
+    @include trailer(0);
+    text-transform: uppercase;
+  }
+  strong { font-weight: bold; }
+}
+
+// ---------------------------------------------------------------------------
+// Village Landing Page
+
+.village-landing {
+  @extend %type;
+  @include padding-leader;
+  color: $base;
+  background: $base3;
+
+  .inner { @include container; }
+
+  h1 {
+    @include adjust-font-size-to($largepx);
+    @include trailer(1,$largepx);
+    b {
+      text-transform: capitalize;
+      color: $accent;
+    }
+  }
+
+  h2 { @include adjust-font-size-to($large-normpx); }
+
+  ul {
+    @include no-style-list;
+    @include trailer;
+  }
+
+  li {
+    @extend %icon;
+    @extend %icon-checkmark;
+    position: relative;
+    padding-left: 1.5em;
+    &::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+
+  .summary {
+    li {
+      @include trailer(.5);
+      &::before { color: $green; }
+    }
+  }
+
+  .screenshot {
+    @include trailer;
+    figcaption { @include adjust-font-size-to($smallpx); }
+  }
+
+  .membership {
+    @extend %bleed;
+    @include leading-border(1px,1);
+    @include padding-trailer;
+    @include background(mix($alt,$base3,25%));
+    @include background(linear-gradient(top, rgba($alt,.25), rgba($alt,0)));
+    border-color: $base1;
+    .offernote { font-style: italic; }
+    ul { color: $base1; }
+  }
+
+  .formfield {
+    position: relative;
+    &::after { clear: none; }
+    label { @extend %gone; }
+    input {
+      width: space(3,5);
+    }
+    .action-betasignup {
+      @extend %ellipsis;
+      position: absolute;
+      right: 0;
+      width: columns(2,5);
+    }
+  }
+
+  @include at-breakpoint($break) {
+    .inner { @include set-container-width; }
+
+    .summary {
+      @include span-columns(5 omega);
+    }
+    .screenshot {
+      @include span-columns(7);
+      position: relative;
+      z-index: 20;
+    }
+
+    .membership {
+      @include prefix(7);
+      clear: right;
+      > * { margin-left: gutter(5); }
+    }
+  }
+}

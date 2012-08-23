@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<div>
-{% block page %}
-
   <div role="banner">
     <h1 class="brand">
       <a href="{% url home %}" rel="home">
@@ -12,17 +9,15 @@
       </a>
     </h1>
 
-    {% block meta %}
-      <nav class="meta">
-        {# if user.is_authenticated #}
-        <a href="{% url edit_profile %}">Tina Weiser</a>
-        <ul class="useractions">
-          <li><a href="{% url password_change %}">Change password</a></li>
-          <li><a href="{% url landing %}">Sign Out</a></li>
-        </ul>
-        {# endif #}
-      </nav>
-    {% endblock meta %}
+    <nav class="meta">
+      {# if user.is_authenticated #}
+      <a href="{% url edit_profile %}">Tina Weiser</a>
+      <ul class="useractions">
+        <li><a href="{% url password_change %}">Change password</a></li>
+        <li><a href="{% url landing %}">Sign Out</a></li>
+      </ul>
+      {# endif #}
+    </nav>
   </div>
 
   <div role="main">
@@ -41,7 +36,4 @@
       <strong class="fn org">Portfoliyo</strong>
     </p>
   </footer>
-
-{% endblock page %}
-</div>
 {% endblock body %}
