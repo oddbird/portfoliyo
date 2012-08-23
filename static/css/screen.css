@@ -349,7 +349,8 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/sassy-ie-overlay.png?1342738619') repeat-x bottom left rgba(133, 153, 0, 0.75);
+  *zoom: 1;
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#BF859900', endColorstr='#BF2C3300');
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(133, 153, 0, 0.75)), color-stop(100%, rgba(89, 102, 0, 0.75)));
   background: -webkit-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
   background: -moz-linear-gradient(rgba(133, 153, 0, 0.75), rgba(89, 102, 0, 0.75));
@@ -362,6 +363,9 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   border: 1px solid rgba(66, 77, 0, 0.75);
   color: #fdf6e3;
   text-shadow: rgba(18, 20, 0, 0.75) 0 -1px 0;
+}
+.linkaction:hover:link, .linkaction:hover:visited, button:hover {
+  text-decoration: none;
 }
 .linkaction:hover:link, .linkaction:hover:visited, button:hover {
   background-color: rgba(66, 77, 0, 0.75);
@@ -384,6 +388,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+}
+.linkaction:link::-moz-focus-inner, .linkaction:visited::-moz-focus-inner, button::-moz-focus-inner {
+  padding: 0 !important;
+  margin: -1px !important;
 }
 
 .errorlist {

@@ -377,7 +377,8 @@ body strong {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/sassy-ie-overlay.png?1342738619') repeat-x bottom left rgba(7, 54, 66, 0.75);
+  *zoom: 1;
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#BF073642', endColorstr='#BF000000');
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(7, 54, 66, 0.75)), color-stop(100%, rgba(2, 16, 20, 0.75)));
   background: -webkit-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
   background: -moz-linear-gradient(rgba(7, 54, 66, 0.75), rgba(2, 16, 20, 0.75));
@@ -391,6 +392,9 @@ body strong {
   color: #fdf6e3;
   text-shadow: rgba(0, 0, 0, 0.75) 0 -1px 0;
   text-transform: capitalize;
+}
+.signup button:hover {
+  text-decoration: none;
 }
 .signup button:hover {
   background-color: rgba(0, 0, 0, 0.75);
@@ -413,6 +417,10 @@ body strong {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
+}
+.signup button::-moz-focus-inner {
+  padding: 0 !important;
+  margin: -1px !important;
 }
 .signup .note {
   font-size: 0.66667em;
