@@ -9,7 +9,7 @@ var PYO = (function (PYO, $) {
         $('.email').defuscate();
 
         // local.js
-        PYO.ajaxifyForm('.signup .container form');
+        PYO.ajaxifyForm('.landing .membership form');
         PYO.updatePageHeight('.village');
         PYO.updateVillageScroll('.village-feed');
     });
