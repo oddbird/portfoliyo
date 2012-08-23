@@ -6,12 +6,25 @@
 
   <nav class="village-nav">
     <ul>
+      {% include "villages/_village_list.html" with user="Alex Gonzalez" %}
+      {% include "villages/_village_list.html" with user="Allyson Burell" active="true" %}
+      {% include "villages/_village_list.html" with user="Althea Duffin" %}
+      {% include "villages/_village_list.html" with user="Easton Williams" %}
+      {% include "villages/_village_list.html" with user="Ingrid Ramos" %}
+      {% include "villages/_village_list.html" with user="Jami Marciano" %}
+      {% include "villages/_village_list.html" with user="Katia Pimentel" %}
       {% include "villages/_village_list.html" with user="Kenya Thakkar" %}
-      {% include "villages/_village_list.html" with user="Allyson Burell" %}
-      {% include "villages/_village_list.html" with user="Althea Duffin" active="true" %}
+      {% include "villages/_village_list.html" with user="Madelyn James" %}
       {% include "villages/_village_list.html" with user="Malinda Fader" %}
       {% include "villages/_village_list.html" with user="Neil Miguez" %}
-      {% include "villages/_village_list.html" with user="Jami Marciano" %}
+      {% include "villages/_village_list.html" with user="Phillip Knight" %}
+      {% include "villages/_village_list.html" with user="Raul Lopez" %}
+      {% include "villages/_village_list.html" with user="Richard Harkness" %}
+      {% include "villages/_village_list.html" with user="Roy Seaton" %}
+      {% include "villages/_village_list.html" with user="Ronald Mallard" %}
+      {% include "villages/_village_list.html" with user="Samuel Quintana" %}
+      {% include "villages/_village_list.html" with user="Terry Macarthur" %}
+      {% include "villages/_village_list.html" with user="William Tolman" %}
     </ul>
     <aside class="add-student">
       <a href="{% url add_village %}" class="addstudent-link">Add a Student</a>
