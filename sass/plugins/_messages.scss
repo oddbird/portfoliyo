@@ -2,13 +2,39 @@
 // User Messages
 
 .message {
-  padding-left: rhythm(1.5);
-  padding-right: rhythm(.5);
-  background: no-repeat scroll rhythm(.5);
-  // &.info { background-image: image-url('ui/info.png'); }
-  // &.success { background-image: image-url('ui/check.png'); }
-  // &.warning { background-image: image-url('ui/warning.png'); }
-  // &.error { background-image: image-url('ui/x.png'); }
+  @extend %icon;
+  position: relative;
+  padding: rhythm(.5) $grid-padding;
+  &::before { @include adjust-font-size-to($medpx,1); }
+  &.info {
+    @extend %icon-info-circle;
+    background: $blue;
+  }
+  &.success {
+    @extend %icon-checkmark;
+    background: $green;
+  }
+  &.warning {
+    @extend %icon-warning;
+    background: $yellow;
+  }
+  &.error {
+    @extend %icon-x;
+    background: $red;
+  }
+  p { display: inline; }
 }
 
-#messages { @include no-style-list; }
+#messages {
+  @include no-style-list;
+  background: $base3;
+  .close {
+    @extend %icon-replace;
+    @extend %icon-x;
+    position: absolute;
+    right: rhythm(.5);
+    top: rhythm(.5);;
+    #{$link} { color: $base01;}
+    #{$focus} { color: $base03; }
+  }
+}
