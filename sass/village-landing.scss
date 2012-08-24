@@ -127,16 +127,12 @@ li {
 }
 
 .formfield {
-  position: relative;
+  @include clearfix;
   &::after { clear: none; }
   label { @extend %gone; }
-  input {
-    width: space(3,5);
-  }
+  input { @include span-columns(3,5); margin-right: 0; }
   .action-betasignup {
     @extend %ellipsis;
-    position: absolute;
-    right: 0;
-    width: columns(2,5);
+    @include span-columns(2 omega,5);
   }
 }

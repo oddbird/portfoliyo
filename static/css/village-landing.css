@@ -353,6 +353,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 
 .linkaction:link, .linkaction:visited, button {
+  margin: 0;
   background-color: #859900;
   font-size: 18px;
   padding: 0.31944em 1.27778em;
@@ -437,6 +438,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 .formhelp {
   font-size: 0.77778em;
   line-height: 1.64286em;
+  clear: both;
   color: #93a1a1;
   text-align: right;
   font-style: italic;
@@ -463,6 +465,7 @@ label {
 }
 
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"] {
+  margin: 0;
   min-height: 2.46429em;
 }
 
@@ -816,16 +819,21 @@ ul li {
 }
 
 .formfield {
-  position: relative;
+  overflow: hidden;
+  *zoom: 1;
 }
 .formfield::after {
   clear: none;
 }
 .formfield input {
-  width: 62.26415%;
+  width: 58.49057%;
+  float: left;
+  margin-right: 3.77358%;
+  margin-right: 0;
 }
 .formfield .action-betasignup {
-  position: absolute;
-  right: 0;
   width: 37.73585%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
 }
