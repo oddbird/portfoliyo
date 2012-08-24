@@ -62,7 +62,12 @@ $boiler-link-color: $base3;
       @include prefix(7);
       clear: right;
       > * { margin-left: gutter(5); }
-    }
+     .overlay {
+        @include background(linear-gradient(top,rgba($base03,.5),transparent));
+        left: columns(7);
+        margin-left: 0;
+      }
+   }
   }
 }
 

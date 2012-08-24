@@ -959,6 +959,56 @@ textarea {
   margin: 0 2.32558%;
 }
 
+@-moz-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .loading {
   position: relative;
 }
@@ -968,9 +1018,17 @@ textarea {
   bottom: 0;
   left: 0;
   right: 0;
+  text-shadow: #002b36 0 0 3px;
+  -webkit-animation: loading 1s linear alternate infinite both;
+  -moz-animation: loading 1s linear alternate infinite both;
+  -ms-animation: loading 1s linear alternate infinite both;
+  -o-animation: loading 1s linear alternate infinite both;
+  animation: loading 1s linear alternate infinite both;
   font-weight: bold;
   text-align: center;
-  background: rgba(253, 246, 227, 0.5);
+  background: rgba(0, 43, 54, 0.25);
+  color: #fdf6e3;
+  z-index: 100;
 }
 
 .message {

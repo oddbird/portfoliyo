@@ -530,6 +530,56 @@ textarea {
   color: #002b36;
 }
 
+@-moz-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .loading {
   position: relative;
 }
@@ -539,9 +589,17 @@ textarea {
   bottom: 0;
   left: 0;
   right: 0;
+  text-shadow: #002b36 0 0 3px;
+  -webkit-animation: loading 1s linear alternate infinite both;
+  -moz-animation: loading 1s linear alternate infinite both;
+  -ms-animation: loading 1s linear alternate infinite both;
+  -o-animation: loading 1s linear alternate infinite both;
+  animation: loading 1s linear alternate infinite both;
   font-weight: bold;
   text-align: center;
-  background: rgba(253, 246, 227, 0.5);
+  background: rgba(0, 43, 54, 0.25);
+  color: #fdf6e3;
+  z-index: 100;
 }
 
 [role="contentinfo"] {
@@ -633,6 +691,16 @@ textarea {
   .village-landing .membership > * {
     margin-left: 3.77358%;
   }
+  .village-landing .membership .overlay {
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, transparent));
+    background: -webkit-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+    background: -moz-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+    background: -o-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+    background: -ms-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+    background: linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+    left: 57.69231%;
+    margin-left: 0;
+  }
 }
 .lt-ie9 .village-landing .inner {
   max-width: 67em;
@@ -656,6 +724,16 @@ textarea {
 }
 .lt-ie9 .village-landing .membership > * {
   margin-left: 3.77358%;
+}
+.lt-ie9 .village-landing .membership .overlay {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, transparent));
+  background: -webkit-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+  background: -moz-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+  background: -o-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+  background: -ms-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+  background: linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
+  left: 57.69231%;
+  margin-left: 0;
 }
 
 [role="banner"] {
