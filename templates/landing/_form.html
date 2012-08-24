@@ -5,8 +5,10 @@
   <div class="formfield">
     {{ form.email.errors }}
     <label for="email">E-Mail</label>
-    {{ form.email|attr:"placeholder:Enter your email for updates" }}
-    <span class="note">We'll keep your email address private and secure.</span>
-    <button type="submit">Inspire me</button>
+
+    {{ form.email|attr:"placeholder:Enter your email, and we'll be in touch." }}
+
+    <button type="submit" class="action-betasignup">signup!</button>
+    <p class="formhelp">We'll keep your email address private and secure.</p>
   </div>
 </form>

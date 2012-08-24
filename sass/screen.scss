@@ -5,6 +5,7 @@
 @import "general/root";
 
 @import "compass/layout";
+@import "layout/helpers";
 @import "layout/boilerplate";
 @import "layout/banner";
 @import "layout/main";
@@ -16,7 +17,6 @@
 
 @import "modules/village";
 @import "modules/village-forms";
-@import "modules/village-landing";
 
 // @import "modules/feed-profile";
 // @import "modules/feed-combined";
