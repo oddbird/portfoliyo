@@ -64,6 +64,7 @@ $input-rhythm: .25;
 }
 
 %button {
+  margin: 0;
   background-color: $green;
   @include sassy-button;
 }
@@ -97,6 +98,7 @@ $input-rhythm: .25;
 
 .formhelp {
   @include adjust-font-size-to($smallpx);
+  clear: both;
   color: $base1;
   text-align: right;
   font-style: italic;
@@ -128,6 +130,7 @@ input {
   &[type="month"], &[type="week"], &[type="time"],
   &[type="number"], &[type="search"], &[type="color"] {
     @extend %input;
+    margin: 0;
     min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
   }
 }
