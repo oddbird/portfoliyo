@@ -3,37 +3,48 @@
 
 .message {
   @extend %icon;
+  @include padding-leader(.5);
+  @include trailing-border(1px,.5);
   position: relative;
-  padding: rhythm(.5) $grid-padding;
+  padding-left: $grid-padding;
+  padding-right: $grid-padding;
+  border-color: $base;
   &::before { @include adjust-font-size-to($medpx,1); }
   &.info {
     @extend %icon-info-circle;
-    background: $blue;
+    background: rgba($blue,.9);
   }
   &.success {
     @extend %icon-checkmark;
-    background: $green;
+    background: rgba($green,.9);
   }
   &.warning {
     @extend %icon-warning;
-    background: $yellow;
+    background: rgba($yellow,.9);
   }
   &.error {
     @extend %icon-x;
-    background: $red;
+    background: rgba($red,.9);
   }
   p { display: inline; }
 }
 
 #messages {
   @include no-style-list;
-  background: $base3;
+  @include box-shadow($base03 0 0 rhythm(.25), $base03 0 0 rhythm(.5));
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: rgba($base03,.5);
+  z-index: 999;
   .close {
     @extend %icon-replace;
     @extend %icon-x;
     position: absolute;
     right: rhythm(.5);
     top: rhythm(.5);;
+    width: 1em;
     #{$link} { color: $base01;}
     #{$focus} { color: $base03; }
   }
