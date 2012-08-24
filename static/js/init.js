@@ -10,8 +10,6 @@ var PYO = (function (PYO, $) {
 
         // local.js
         PYO.ajaxifyForm('.village-landing .membership form', '.village-landing .membership');
-        PYO.updatePageHeight('.village');
-        PYO.updateVillageScroll('.village-feed');
     });
 
     return PYO;
