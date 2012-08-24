@@ -134,15 +134,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.village-landing li:before, [data-icon]:before {
+#messages .close:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.village-landing li:before {
+#messages .close:before, .message:before, .summary li:before, .benefits li:before {
   margin-right: .4em;
+}
+
+#messages .close {
+  position: relative;
+  min-width: 1em;
+  text-indent: -9999px;
+}
+#messages .close:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-indent: 0;
+  margin-right: 0;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -150,8 +163,20 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-.village-landing li:before {
+.message.success:before, .summary li:before, .benefits li:before {
   content: "\e00d";
+}
+
+.message.error:before, #messages .close:before {
+  content: "\e00e";
+}
+
+.message.info:before {
+  content: "\e00f";
+}
+
+.message.warning:before {
+  content: "\e010";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -204,7 +229,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.village-landing .formfield .action-betasignup {
+.formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -212,7 +237,7 @@ a:focus, a:hover, a:active {
   text-overflow: ellipsis;
 }
 
-.village-landing .formfield label {
+.formfield label {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -450,11 +475,73 @@ textarea {
   min-height: 2.46429em;
 }
 
-.village-landing .membership {
+.membership {
   margin-left: -1em;
   padding-left: 1em;
   margin-right: -1em;
   padding-right: 1em;
+}
+
+.message {
+  position: relative;
+  padding: 0.63889em 1em;
+}
+.message::before {
+  font-size: 1.27778em;
+  line-height: 1em;
+}
+.message.info {
+  background: #268bd2;
+}
+.message.success {
+  background: #859900;
+}
+.message.warning {
+  background: #b58900;
+}
+.message.error {
+  background: #dc322f;
+}
+.message p {
+  display: inline;
+}
+
+#messages {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  background: #fdf6e3;
+}
+#messages li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+#messages .close {
+  position: absolute;
+  right: 0.63889em;
+  top: 0.63889em;
+}
+#messages .close:link, #messages .close:visited {
+  color: #586e75;
+}
+#messages .close:focus, #messages .close:hover, #messages .close:active {
+  color: #002b36;
+}
+
+.loading {
+  position: relative;
+}
+.loading .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-weight: bold;
+  text-align: center;
+  background: rgba(253, 246, 227, 0.5);
 }
 
 [role="contentinfo"] {
@@ -523,87 +610,6 @@ textarea {
   display: table;
   clear: both;
 }
-.village-landing h1 {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  margin-bottom: 0.65714em;
-}
-.village-landing h1 b {
-  text-transform: capitalize;
-  color: #d33682;
-}
-.village-landing h2 {
-  font-size: 1.5em;
-  line-height: 1.27778em;
-}
-.village-landing ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-  margin-bottom: 1.27778em;
-}
-.village-landing ul li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-.village-landing li {
-  position: relative;
-  padding-left: 1.5em;
-}
-.village-landing li::before {
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-.village-landing .summary li {
-  margin-bottom: 0.63889em;
-}
-.village-landing .summary li::before {
-  color: #859900;
-}
-.village-landing .screenshot {
-  margin-bottom: 1.27778em;
-}
-.village-landing .screenshot figcaption {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
-}
-.village-landing .membership {
-  border-top-style: solid;
-  border-top-width: 0.05556em;
-  padding-top: 1.22222em;
-  padding-bottom: 1.27778em;
-  background: #c7dbde;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0.25)), color-stop(100%, rgba(38, 139, 210, 0)));
-  background: -webkit-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
-  background: -moz-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
-  background: -o-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
-  background: -ms-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
-  background: linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
-  border-color: #93a1a1;
-}
-.village-landing .membership .offernote {
-  font-style: italic;
-}
-.village-landing .membership ul {
-  color: #93a1a1;
-}
-.village-landing .formfield {
-  position: relative;
-}
-.village-landing .formfield::after {
-  clear: none;
-}
-.village-landing .formfield input {
-  width: 62.26415%;
-}
-.village-landing .formfield .action-betasignup {
-  position: absolute;
-  right: 0;
-  width: 37.73585%;
-}
 @media (min-width: 56.25em) {
   .village-landing .inner {
     max-width: 67em;
@@ -650,4 +656,98 @@ textarea {
 }
 .lt-ie9 .village-landing .membership > * {
   margin-left: 3.77358%;
+}
+
+[role="banner"] {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
+}
+[role="banner"] b {
+  text-transform: capitalize;
+  color: #d33682;
+}
+
+.offer {
+  font-size: 1.5em;
+  line-height: 1.27778em;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  margin-bottom: 1.27778em;
+}
+ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+
+.summary li, .benefits li {
+  position: relative;
+  padding-left: 1.5em;
+}
+.summary li::before, .benefits li::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+.summary li {
+  margin-bottom: 0.63889em;
+}
+.summary li::before {
+  color: #859900;
+}
+
+.screenshot {
+  margin-bottom: 1.27778em;
+}
+.screenshot figcaption {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+}
+
+.membership {
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 1.22222em;
+  padding-bottom: 1.27778em;
+  background: #c7dbde;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0.25)), color-stop(100%, rgba(38, 139, 210, 0)));
+  background: -webkit-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: -moz-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: -o-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: -ms-linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  background: linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
+  border-color: #93a1a1;
+}
+.membership .errorlist {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  margin: 0;
+  padding: 0;
+}
+.membership .offernote {
+  font-style: italic;
+}
+.membership .benefits {
+  color: #93a1a1;
+}
+
+.formfield {
+  position: relative;
+}
+.formfield::after {
+  clear: none;
+}
+.formfield input {
+  width: 62.26415%;
+}
+.formfield .action-betasignup {
+  position: absolute;
+  right: 0;
+  width: 37.73585%;
 }

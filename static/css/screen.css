@@ -134,15 +134,28 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, [data-icon]:before {
+#messages .close:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before {
+#messages .close:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .message:before {
   margin-right: .4em;
+}
+
+#messages .close {
+  position: relative;
+  min-width: 1em;
+  text-indent: -9999px;
+}
+#messages .close:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  text-indent: 0;
+  margin-right: 0;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -176,6 +189,22 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 [role="navigation"] .myvillage:before {
   content: "\e00c";
+}
+
+.message.success:before {
+  content: "\e00d";
+}
+
+.message.error:before, #messages .close:before {
+  content: "\e00e";
+}
+
+.message.info:before {
+  content: "\e00f";
+}
+
+.message.warning:before {
+  content: "\e010";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -945,9 +974,27 @@ textarea {
 }
 
 .message {
-  padding-left: 1.91667em;
-  padding-right: 0.63889em;
-  background: no-repeat scroll 0.63889em;
+  position: relative;
+  padding: 0.63889em 1em;
+}
+.message::before {
+  font-size: 1.27778em;
+  line-height: 1em;
+}
+.message.info {
+  background: #268bd2;
+}
+.message.success {
+  background: #859900;
+}
+.message.warning {
+  background: #b58900;
+}
+.message.error {
+  background: #dc322f;
+}
+.message p {
+  display: inline;
 }
 
 #messages {
@@ -955,9 +1002,21 @@ textarea {
   padding: 0;
   border: 0;
   list-style: none;
+  background: #fdf6e3;
 }
 #messages li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
+}
+#messages .close {
+  position: absolute;
+  right: 0.63889em;
+  top: 0.63889em;
+}
+#messages .close:link, #messages .close:visited {
+  color: #586e75;
+}
+#messages .close:focus, #messages .close:hover, #messages .close:active {
+  color: #002b36;
 }
