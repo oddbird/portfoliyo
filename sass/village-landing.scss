@@ -73,10 +73,7 @@ $boiler-link-color: $base3;
 [role="banner"] {
   @include adjust-font-size-to($largepx);
   @include trailer(1,$largepx);
-  b {
-    color: $accent;
-    text-transform: capitalize;
-  }
+  b { color: $accent; }
 }
 
 .offer { @include adjust-font-size-to($large-normpx); }
@@ -154,7 +151,7 @@ li {
 }
 
 .team {
-  @include rhythm(0,2,2,0);
+  @include padding-leader(2);
   @include background($base03);
   @include background-image(
     linear-gradient(top, $base03, rgba($base03,0), rgba($base03,0), $base03),
@@ -176,6 +173,7 @@ li {
   @include trailer(2);
   @include border-radius(rhythm(1));
   @include box-shadow($base03 0 0 rhythm(.5));
+  clear: both;
   padding: rhythm(1);
   background: rgba($base01,.25);
   p { margin: 0; }
@@ -186,7 +184,7 @@ li {
 
 .dev {
   .fn, .bio { @include span-columns(4); }
-  .bio { @include padding-trailer(1.5); }
+  .bio, .photo { @include trailer(1.5); }
   .photo {
     @include span-columns(2);
     @include box-shadow($base 0 0 rhythm(.5));
@@ -216,7 +214,7 @@ li {
     &:nth-child(even) { @include pad($pre,$post); }
     &:nth-child(odd) { @include pad($post,$pre); }
 
-    .fn, .bio, .photo { margin: 0; }
+    .fn, .bio, .photo { margin-right: 0; }
     .fn, .bio { width: columns($bios, $ctext); }
     .photo { width: columns($pics, $ctext); }
   }

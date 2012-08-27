@@ -764,7 +764,6 @@ textarea {
 }
 [role="banner"] b {
   color: #d33682;
-  text-transform: capitalize;
 }
 
 .offer {
@@ -857,10 +856,7 @@ ul li {
 }
 
 .team {
-  margin-top: 0em;
   padding-top: 2.55556em;
-  padding-bottom: 2.55556em;
-  margin-bottom: 0em;
   background: #002b36;
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #586e75), color-stop(33.33333%, #002b36), color-stop(66.66667%, #002b36), color-stop(100%, #586e75));
   background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, #586e75, #002b36, #002b36, #586e75);
@@ -913,6 +909,7 @@ ul li {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
+  clear: both;
   padding: 1.27778em;
   background: rgba(88, 110, 117, 0.25);
 }
@@ -935,8 +932,8 @@ ul li {
   float: left;
   margin-right: 3.125%;
 }
-.dev .bio {
-  padding-bottom: 1.91667em;
+.dev .bio, .dev .photo {
+  margin-bottom: 1.91667em;
 }
 .dev .photo {
   width: 31.25%;
@@ -996,7 +993,7 @@ ul li {
     padding-right: 8.46154%;
   }
   .dev .fn, .dev .bio, .dev .photo {
-    margin: 0;
+    margin-right: 0;
   }
   .dev .fn, .dev .bio {
     width: 74.4186%;
@@ -1014,7 +1011,7 @@ ul li {
   padding-right: 8.46154%;
 }
 .lt-ie9 .dev .fn, .lt-ie9 .dev .bio, .lt-ie9 .dev .photo {
-  margin: 0;
+  margin-right: 0;
 }
 .lt-ie9 .dev .fn, .lt-ie9 .dev .bio {
   width: 74.4186%;
