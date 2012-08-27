@@ -74,8 +74,8 @@ $boiler-link-color: $base3;
   @include adjust-font-size-to($largepx);
   @include trailer(1,$largepx);
   b {
-    text-transform: capitalize;
     color: $accent;
+    text-transform: capitalize;
   }
 }
 

@@ -763,8 +763,8 @@ textarea {
   margin-bottom: 0.65714em;
 }
 [role="banner"] b {
-  text-transform: capitalize;
   color: #d33682;
+  text-transform: capitalize;
 }
 
 .offer {
