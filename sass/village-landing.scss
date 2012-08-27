@@ -43,21 +43,20 @@ $boiler-link-color: $base3;
   @include padding-leader;
   color: $base;
   background: $base3;
+}
 
-  .inner { @include container; }
+// ---------------------------------------------------------------------------
+// Intro
 
+.intro {
+  @include container($total-columns,$break);
   @include at-breakpoint($break) {
-    .inner { @include set-container-width; }
-
-    .summary {
-      @include span-columns(5 omega);
-    }
+    .summary { @include span-columns(5 omega); }
     .screenshot {
       @include span-columns(7);
       position: relative;
       z-index: 20;
     }
-
     .membership {
       @include prefix(7);
       clear: right;
@@ -134,5 +133,91 @@ li {
   .action-betasignup {
     @extend %ellipsis;
     @include span-columns(2 omega,5);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Team
+
+@mixin photo(
+  $position : left,
+  $from     : $xxxlargeem,
+  $to       : $xxsmallem
+) {
+  @if $position == left {
+    @include border-left-radius($from);
+    @include border-right-radius($to);
+  } @else {
+    @include border-right-radius($from);
+    @include border-left-radius($to);
+  }
+}
+
+.team {
+  @include rhythm(0,2,2,0);
+  @include background($base03);
+  @include background-image(
+    linear-gradient(top, $base03, rgba($base03,0), rgba($base03,0), $base03),
+    linear-gradient(left, $base01, $base03, $base03, $base01)
+  );
+  color: $base1;
+
+  .container { @include container($total-columns,$break); }
+  .fn {
+    @include adjust-font-size-to($medpx);
+    color: $base2;
+    @include at-breakpoint($total-columns) {
+      @include adjust-font-size-to($largepx);
+    }
+  }
+}
+
+.pyo {
+  @include trailer(2);
+  @include border-radius(rhythm(1));
+  @include box-shadow($base03 0 0 rhythm(.5));
+  padding: rhythm(1);
+  background: rgba($base01,.25);
+  p { margin: 0; }
+  @include at-breakpoint($break) {
+    @include pad(3,3);
+  }
+}
+
+.dev {
+  .fn, .bio { @include span-columns(4); }
+  .bio { @include padding-trailer(1.5); }
+  .photo {
+    @include span-columns(2);
+    @include box-shadow($base 0 0 rhythm(.5));
+    overflow: hidden;
+  }
+
+  &:nth-child(even) {
+    .fn, .bio { @include omega; }
+    .photo { @include photo(left); }
+  }
+  &:nth-child(odd) {
+    .fn, .bio { text-align: right; }
+    .photo {
+      @include photo(right);
+      @include omega;
+    }
+  }
+
+  @include at-breakpoint($break) {
+    $pre      : 1;
+    $pics     : 2;
+
+    $post     : $pre + $pics;
+    $ctext    : $total-columns - $pre - $post;
+    $bios     : $ctext - $pics;
+
+    &:nth-child(even) { @include pad($pre,$post); }
+    &:nth-child(odd) { @include pad($post,$pre); }
+
+    .fn, .bio, .photo { margin: 0; }
+    .fn, .bio { width: columns($bios, $ctext); }
+    .photo { width: columns($pics, $ctext); }
   }
 }
