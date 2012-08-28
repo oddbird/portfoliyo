@@ -858,12 +858,17 @@ ul li {
 .team {
   padding-top: 2.55556em;
   background: #002b36;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, #586e75), color-stop(33.33333%, #002b36), color-stop(66.66667%, #002b36), color-stop(100%, #586e75));
-  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, #586e75, #002b36, #002b36, #586e75);
-  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, #586e75, #002b36, #002b36, #586e75);
-  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, #586e75, #002b36, #002b36, #586e75);
-  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, #586e75, #002b36, #002b36, #586e75);
-  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, #586e75, #002b36, #002b36, #586e75);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1342738619');
+  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-attachment: fixed;
   color: #93a1a1;
 }
 .team .container {

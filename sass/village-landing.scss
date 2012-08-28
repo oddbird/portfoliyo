@@ -155,8 +155,11 @@ li {
   @include background($base03);
   @include background-image(
     linear-gradient(top, $base03, rgba($base03,0), rgba($base03,0), $base03),
-    linear-gradient(left, $base01, $base03, $base03, $base01)
+    linear-gradient(left, rgba($base01,.75), rgba($base03,.75), rgba($base03,.75), rgba($base01,.75)),
+    image-url('landing/space.png')
   );
+  @include background-size(cover);
+  background-attachment: fixed;
   color: $base1;
 
   .container { @include container($total-columns,$break); }
