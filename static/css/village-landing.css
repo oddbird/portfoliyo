@@ -763,7 +763,10 @@ textarea {
   margin-bottom: 0.65714em;
 }
 [role="banner"] b {
-  color: #d33682;
+  font-weight: normal;
+}
+[role="banner"] b b {
+  font-weight: bold;
 }
 
 .offer {

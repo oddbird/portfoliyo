@@ -73,7 +73,7 @@ $boiler-link-color: $base3;
 [role="banner"] {
   @include adjust-font-size-to($largepx);
   @include trailer(1,$largepx);
-  b { color: $accent; }
+  b { font-weight: normal; b { font-weight: bold; } }
 }
 
 .offer { @include adjust-font-size-to($large-normpx); }
