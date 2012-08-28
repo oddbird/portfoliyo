@@ -765,9 +765,6 @@ textarea {
 [role="banner"] b {
   font-weight: normal;
 }
-[role="banner"] b b {
-  font-weight: bold;
-}
 
 .offer {
   font-size: 1.5em;
