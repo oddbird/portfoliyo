@@ -134,14 +134,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .message:before, [data-icon]:before {
+#messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .message:before {
+#messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand [rel="home"]:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .message:before {
   margin-right: .4em;
 }
 
@@ -163,48 +163,68 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-[role="navigation"] .net:before {
-  content: "\e007";
-}
-
-.meta a:before, .meta [href*="/edit/"]:before {
-  content: "\e008";
-}
-
-[role="navigation"] .me:before {
-  content: "\e009";
-}
-
-.meta [href*="/signup/"]:before {
-  content: "\e00b";
-}
-
-.meta [href*="/password_change/"]:before {
-  content: "\e000";
-}
-
-.brand [rel="home"]:before {
+[type="checkbox"] + label:before {
   content: "\e001";
 }
 
-[role="navigation"] .myvillage:before {
-  content: "\e00c";
+[type="checkbox"]:checked + label:before {
+  content: "\e002";
 }
 
-.message.success:before {
+[type="radio"]:checked + label:before {
+  content: "\e003";
+}
+
+[type="radio"] + label:before {
+  content: "\e004";
+}
+
+[role="navigation"] .net:before {
+  content: "\e006";
+}
+
+.meta a:before, .meta [href*="/edit/"]:before {
+  content: "\e007";
+}
+
+[role="navigation"] .me:before {
+  content: "\e008";
+}
+
+.meta [href*="/signup/"]:before {
+  content: "\e009";
+}
+
+.meta [href*="/password_change/"]:before {
+  content: "\e00a";
+}
+
+.brand [rel="home"]:before {
+  content: "\e00b";
+}
+
+[role="navigation"] .myvillage:before {
   content: "\e00d";
 }
 
-.message.error:before, #messages .close:before {
+.message.success:before {
   content: "\e00e";
 }
 
-.message.info:before {
+.message.error:before {
   content: "\e00f";
 }
 
-.message.warning:before {
+#messages .close:before {
   content: "\e010";
+}
+
+.message.info:before {
+  content: "\e011";
+}
+
+.message.warning:before {
+  content: "\e012";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -301,6 +321,7 @@ input[type="search"] {
 }
 input[type="radio"], input[type="checkbox"] {
   vertical-align: baseline;
+  width: auto !important;
 }
 input::-webkit-search-decoration {
   display: none;
@@ -477,8 +498,29 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   margin: 0 0.4em 0.82143em 0;
 }
 
+[type="checkbox"], [type="radio"] {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+[type="checkbox"] + label::before, [type="radio"] + label::before {
+  margin-left: .4em;
+  color: #586e75;
+}
+[type="checkbox"]:checked + label::before, [type="radio"]:checked + label::before {
+  color: #268bd2;
+}
+
 label {
-  text-transform: capitalize;
+  display: block;
+}
+label:first-letter {
+  text-transform: uppercase;
 }
 
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"] {
@@ -502,18 +544,21 @@ textarea {
   padding-right: 1em;
 }
 
-.initial-password {
+.initial-password, .formblock.elders {
   *zoom: 1;
+  background: #eee8d5;
+}
+.initial-password:after, .formblock.elders:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.initial-password {
   margin-top: 0em;
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
   margin-bottom: 1.27778em;
-  background: #eee8d5;
-}
-.initial-password:after {
-  content: "";
-  display: table;
-  clear: both;
 }
 
 .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
@@ -533,11 +578,21 @@ textarea {
   padding: 0.31944em 0;
   text-align: right;
 }
-.login input, .register input, .edit-profile input, .reset-password input, .change-password input, .set-password input, .login textarea, .register textarea, .edit-profile textarea, .reset-password textarea, .change-password textarea, .set-password textarea {
+.login label + input, .register label + input, .edit-profile label + input, .reset-password label + input, .change-password label + input, .set-password label + input, .login label + textarea, .register label + textarea, .edit-profile label + textarea, .reset-password label + textarea, .change-password label + textarea, .set-password label + textarea {
   width: 74.4186%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
+}
+.login [type="checkbox"] + label, .register [type="checkbox"] + label, .edit-profile [type="checkbox"] + label, .reset-password [type="checkbox"] + label, .change-password [type="checkbox"] + label, .set-password [type="checkbox"] + label, .login [type="radio"] + label, .register [type="radio"] + label, .edit-profile [type="radio"] + label, .reset-password [type="radio"] + label, .change-password [type="radio"] + label, .set-password [type="radio"] + label {
+  float: none;
+  width: auto;
+  margin-right: auto;
+  #margin-left: auto;
+  margin-left: 25.5814%;
+  display: inline-block;
+  padding: 0;
+  text-align: left;
 }
 
 [role="banner"], [role="contentinfo"] {
@@ -718,11 +773,21 @@ textarea {
   padding: 0.31944em 0;
   text-align: right;
 }
-.initial-password input, .initial-password textarea {
+.initial-password label + input, .initial-password label + textarea {
   width: 74.4186%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
+}
+.initial-password [type="checkbox"] + label, .initial-password [type="radio"] + label {
+  float: none;
+  width: auto;
+  margin-right: auto;
+  #margin-left: auto;
+  margin-left: 25.5814%;
+  display: inline-block;
+  padding: 0;
+  text-align: left;
 }
 
 .village-app [role="main"] {
@@ -972,6 +1037,76 @@ textarea {
   padding-left: 12.7907%;
   padding-right: 12.7907%;
   margin-left: 2.32558%;
+}
+
+.formblock.elders {
+  margin-left: -1em;
+  padding-left: 1em;
+  margin-right: -1em;
+  padding-right: 1em;
+  margin-top: 1.27778em;
+  position: relative;
+}
+.formblock.elders label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 31.25%;
+  float: left;
+  margin-right: 3.125%;
+  padding: 0.31944em 0;
+  text-align: right;
+}
+.formblock.elders label + input, .formblock.elders label + textarea {
+  width: 65.625%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+}
+.formblock.elders [type="checkbox"] + label, .formblock.elders [type="radio"] + label {
+  float: none;
+  width: auto;
+  margin-right: auto;
+  #margin-left: auto;
+  margin-left: 34.375%;
+  display: inline-block;
+  padding: 0;
+  text-align: left;
+}
+.formblock.elders .formblock-head {
+  margin-left: -1em;
+  padding-left: 1em;
+  margin-right: -1em;
+  padding-right: 1em;
+  margin-bottom: 1.27778em;
+  background: rgba(88, 110, 117, 0.5);
+  color: #fdf6e3;
+}
+.formblock.elders .formset {
+  overflow: hidden;
+  *zoom: 1;
+  position: relative;
+}
+.formblock.elders .formset + .formset {
+  margin-top: 0.63889em;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 1.22222em;
+  border-color: #93a1a1;
+}
+.formblock.elders .staff {
+  margin: 0;
+}
+.formblock.elders .pluselder {
+  position: absolute;
+  right: 1em;
+  bottom: 0.63889em;
+  font-style: italic;
+}
+.formblock.elders .pluselder::after {
+  content: "»";
 }
 
 @-moz-keyframes loading {

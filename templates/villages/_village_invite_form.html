@@ -3,11 +3,7 @@
   <h2>Invite Elders for Allyson</h2>
   {# form.non_field_errors #}
 
-  <div class="formfield contact">
-    {# form.contact.errors #}
-    <label for="contact">elders</label>
-    <textarea type="text" id="contact" placeholder="email address or phone number"></textarea>
-  </div>
+  {% include "villages/_village_elders_formblock.html" %}
 
   <div class="form-actions">
     <button type="submit" class="action-post">invite</button>
