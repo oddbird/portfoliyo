@@ -3,7 +3,6 @@
 
 %village-form {
   @include padding-leader(2);
-  @include pad(1,1,$center);
   h2 {
     @include adjust-font-size-to($largepx);
     @include serif;
@@ -12,19 +11,30 @@
   }
 }
 
+%village-solo-form {
+  @extend %village-form;
+  @include span-columns($center omega);
+  @include pad(1,1);
+  @include post($right);
+  margin-left: gutter();
+}
+
+%village-main-form {
+  @extend %village-form;
+  @include pad(1,1,$center);
+  margin-left: gutter($center);
+}
+
 // ---------------------------------------------------------------------------
 // Add Village
 
 .village-add-form {
-  @extend %village-form;
-  @include span-columns($center omega);
-  @include post($right);
+  @extend %village-solo-form;
 }
 
 // ---------------------------------------------------------------------------
 // Add Elder
 
 .elder-add-form {
-  @extend %village-form;
-  margin: 0 gutter($center);
+  @extend %village-main-form;
 }
