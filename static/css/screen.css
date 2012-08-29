@@ -1035,24 +1035,30 @@ textarea {
 }
 
 .message {
+  padding-top: 0.63889em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.58333em;
   position: relative;
-  padding: 0.63889em 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-color: #657b83;
 }
 .message::before {
   font-size: 1.27778em;
   line-height: 1em;
 }
 .message.info {
-  background: #268bd2;
+  background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: #859900;
+  background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: #b58900;
+  background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: #dc322f;
+  background: rgba(220, 50, 47, 0.9);
 }
 .message p {
   display: inline;
@@ -1063,7 +1069,15 @@ textarea {
   padding: 0;
   border: 0;
   list-style: none;
-  background: #fdf6e3;
+  -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
+  -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
+  box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 43, 54, 0.5);
+  z-index: 999;
 }
 #messages li {
   list-style-image: none;
@@ -1074,6 +1088,7 @@ textarea {
   position: absolute;
   right: 0.63889em;
   top: 0.63889em;
+  width: 1em;
 }
 #messages .close:link, #messages .close:visited {
   color: #586e75;

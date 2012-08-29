@@ -9,13 +9,15 @@
 
 {% block body %}
 {% include "messages_ui/_messages.html" %}
-  <article class="village-landing">
-  <div class="inner">
+<article class="village-landing">
+
+  <section class="intro">
     <h1 role="banner">
-      It takes a <b>village</b> to raise a child. Keep your village connected.
+      It takes a village to raise a child. <b>Keep the village connected.</b>
     </h1>
 
     <ul class="summary">
+      <li>Built <strong>for teachers</strong>, <strong>by teachers</strong>.</li>
       <li>Use your computer to <strong>text parents</strong> in seconds.</li>
       <li><strong>Parents respond</strong> using any phone or computer.</li>
       <li><strong>Keep a record</strong> of parent communication.</li>
@@ -25,30 +27,107 @@
       <img src="{{ STATIC_URL }}images/screenshot.png" alt="Portfoliyo Village Screenshot">
       <figcaption>
         Contact Harsh Patel at
-        <span class="email">harsh(put the 'at' sign here)theknetwork.org</span>
+        <span class="email">harsh(put the 'at' sign here)portfoliyo.org</span>
         or  314-537-1024
         for more information.
       </figcaption>
     </figure>
 
     <section class="membership">
-      <h2 class="offer">Join the <b>Village Beta</b></h2>
-      <p class="offernote">Offer ends September 15.</p>
+      <h2 class="offer">Start your Portfoliyo village.</h2>
+      <p class="offernote">Free during beta!</p>
       {% include "landing/_form.html" %}
       <ul class="benefits">
         <li>Immediate updates as we launch.</li>
-        <li>One month free membership with 24/7 on-call help.</li>
+        <li>24/7 on-call help.</li>
         <li>Discounted lifetime membership.</li>
-        <li>Help shape the future of a project for teachers, by teachers.</li>
+        <li>Help shape the future of the project.</li>
       </ul>
     </section>
-  </div>
-  </article>
+  </section>
 
-  <footer role="contentinfo">
-    <p class="author vcard">
-      copyright &copy; 2012
-      <strong class="fn org">Portfoliyo</strong>
-    </p>
-  </footer>
+  <section class="team">
+  <div class="container">
+
+    <article class="vcard pyo">
+      <h3><b class="fn">Portfoliyo</b> is a tax-exempt 501(c)(3) nonprofit.</h3>
+      <p>
+        We're not trying to become millionaires,
+        we just want to make awesome products
+        for teachers, students, and parents.
+        Your donations are tax-deductible as allowed by law
+        (tax&nbsp;ID&nbsp;46-5167493).
+      </p>
+    </article>
+
+    <article id="harsh" class="vcard dev">
+      <h3 class="fn">Harsh Patel</h3>
+      <img src="{{ STATIC_URL }}images/landing/harsh.png" alt="" class="photo" />
+      <p class="bio">
+        Harsh is a teacher who loves inspiring kids to be
+        creative, confident, and productive.
+        His fridge is always stocked with hummus
+        and he will drop anything for a good game of frisbee.
+      </p>
+    </article>
+
+    <article id="carl" class="vcard dev">
+      <h3 class="fn">Carl Meyer</h3>
+      <img src="{{ STATIC_URL }}images/landing/carl.png" alt="" class="photo" />
+      <p class="bio">
+        Carl is a coder, Pythonista, and Django core developer.
+        When he’s not chasing a more elegant algorithm,
+        he chases frisbees, hockey pucks, and a five-year-old son.
+      </p>
+    </article>
+
+    <article id="peter" class="vcard dev">
+      <h3 class="fn">Peter Kuperman</h3>
+      <img src="{{ STATIC_URL }}images/landing/peter.png" alt="" class="photo" />
+      <p class="bio">
+        Peter has a background in money management
+        and loves to inspire the people around him to greater heights.
+        He goes by the title "Chef by Night",
+        which probably means he can cook.
+      </p>
+    </article>
+
+    <article id="jonny" class="vcard dev">
+      <h3 class="fn">Jonny Gerig Meyer</h3>
+      <img src="{{ STATIC_URL }}images/landing/jonny.png" alt="" class="photo" />
+      <p class="bio">
+        Jonny
+        is a web developer
+        and occasional college philosophy professor.
+        He likes his frisbees thrown deep,
+        his students smart-alecky,
+        and his nephew chasing him around the house.
+      </p>
+    </article>
+
+    <article id="eric" class="vcard dev">
+      <h3 class="fn">Eric Meyer</h3>
+      <img src="{{ STATIC_URL }}images/landing/eric.png" alt="" class="photo" />
+      <p class="bio">
+        Eric
+        is a multimedia artist,
+        cousin, and uncle,
+        with a special focus in
+        co-creating silly stories
+        and re-enacting video games in the park.
+      </p>
+    </article>
+
+  </div>
+  </section>
+
+</article>
+
+<footer role="contentinfo">
+  <p class="author vcard">
+    copyright &copy; 2012
+    <strong class="fn org">Portfoliyo</strong>
+  </p>
+</footer>
+
 {% endblock body %}
