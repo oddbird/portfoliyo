@@ -11,28 +11,22 @@ $banner-rhythm: .5;
 // ---------------------------------------------------------------------------
 // Banner
 
-[role="banner"] {
-  @extend %boilerplate;
-  a {
-    @extend %banner-item;
-    display: block;
-  }
-}
+[role="banner"] { @extend %boilerplate; }
 
 // ---------------------------------------------------------------------------
 // Brand
 
 .brand {
   @include span-columns($left);
-  [rel="home"] {
+  .wordmark {
     @extend %icon;
-    @extend %icon-home;
+    @extend %icon-fire;
     @extend %ellipsis;
+    @extend %banner-item;
+    display: block;
     &::before { margin: 0; }
   }
-  b {
-    font-weight: bold;
-  }
+  b { font-weight: bold; }
 }
 
 // ---------------------------------------------------------------------------
@@ -64,6 +58,8 @@ $nav-span: $center;
   a {
     @extend %icon;
     @extend %icon-settings;
+    @extend %banner-item;
+    display: block;
   }
   b { font-weight: bold; }
 

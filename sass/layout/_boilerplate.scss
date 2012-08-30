@@ -11,12 +11,12 @@ $boiler-link-color: $base3;
     #{$link} { color: $boiler-link-color; }
     #{$focus} { color: mix($boiler-link-color,$accent); }
   }
+  @include placeholder { color: rgba($base2,.75); }
 }
 
 .container {
   @include container;
   @include susy-grid-background;
-  min-width: 50em;
 }
 
 .pagehead {

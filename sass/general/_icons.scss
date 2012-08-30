@@ -28,6 +28,7 @@
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
+  text-align: left;
   &:before{
     position: absolute;
     top: 0;
@@ -35,6 +36,15 @@
     text-indent: 0;
     margin-right: 0;
   }
+}
+
+%icon-expand {
+  @include transition(max-width 400ms);
+  display: inline-block;
+  max-width: 1em;
+  height: rhythm(1);
+  overflow: hidden;
+  #{$focus} { max-width: 100%; }
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -62,3 +72,4 @@
 %icon-x-altx-alt:before { content: "\e010"; }
 %icon-info-circle:before { content: "\e011"; }
 %icon-warning:before { content: "\e012"; }
+%icon-help:before { content: "\e013"; }

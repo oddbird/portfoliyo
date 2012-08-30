@@ -5,7 +5,7 @@
   @extend %boilerplate;
   @include rhythm(0,.5,.5,0);
   .author {
-    @include adjust-font-size-to($xsmallpx);
+    @include adjust-font-size-to($xxsmallpx);
     @include trailer(0);
     text-transform: uppercase;
   }

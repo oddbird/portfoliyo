@@ -57,8 +57,8 @@ $input-rhythm: .25;
   @include box-shadow(inset rgba($blue,.5) 0 0 $xxxsmallem);
   width: 100%;
   background: rgba(white,.25);
-  color: $base;
-  border-color: $base;
+  color: inherit;
+  border-color: inherit;
   vertical-align: top;
   outline: 0;
 }
