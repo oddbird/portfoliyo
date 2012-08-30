@@ -20,11 +20,15 @@
 // ---------------------------------------------------------------------------
 // Notes
 
-%notice {
-  @extend %bleed;
+%notice-base {
   @include pie-clearfix;
-  @include rhythm(0,.5,.5,1);
   background: $base2;
+}
+
+%notice {
+  @extend %notice-base;
+  @extend %bleed;
+  @include rhythm(0,.5,.5,1);
 }
 
 // ---------------------------------------------------------------------------

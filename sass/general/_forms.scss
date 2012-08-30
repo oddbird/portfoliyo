@@ -6,7 +6,7 @@ label, button { cursor: pointer; }
 
 input {
   &[type="search"] { -webkit-appearance: none; }
-  &[type="radio"], &[type="checkbox"] { vertical-align: baseline; }
+  &[type="radio"], &[type="checkbox"] { vertical-align: baseline; width: auto !important; }
   &::-webkit-search-decoration { display: none; }
 }
 
@@ -92,8 +92,17 @@ $input-rhythm: .25;
     @include span-columns($label,$context);
     padding: rhythm($input-rhythm) 0;
     text-align: right;
+    + input, + textarea { @include span-columns($input omega,$context); }
   }
-  input, textarea { @include span-columns($input omega,$context); }
+  [type="checkbox"], [type="radio"] {
+    + label {
+      @include reset-columns;
+      @include pre($label,$context);
+      display: inline-block;
+      padding: 0;
+      text-align: left;
+    }
+  }
 }
 
 .formhelp {
@@ -121,7 +130,32 @@ $form-action-note-size: $smallpx;
 // ---------------------------------------------------------------------------
 // Elements
 
-label { text-transform: capitalize; }
+[type="checkbox"], [type="radio"] {
+  @include gone;
+  + label {
+    @extend %icon;
+    &::before {
+      margin-left: .4em;
+      color: $base01;
+    }
+  }
+  &:checked + label { &::before { color: $blue; } }
+}
+
+[type="checkbox"] {
+  + label { @extend %icon-unchecked; }
+  &:checked + label { @extend %icon-checked; }
+}
+
+[type="radio"] {
+  + label { @extend %icon-radio-unchecked; }
+  &:checked + label { @extend %icon-radio-checked; }
+}
+
+label {
+  display: block;
+  &:first-letter { text-transform: uppercase; }
+}
 
 input {
   &[type="text"], &[type="password"],

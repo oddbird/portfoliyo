@@ -44,9 +44,11 @@
     <input type="text" id="email" />
   </div>
 
+  {% if not first_login %}
   <div class="formfield phone">
     {# form.phone.errors #}
     <label for="phone">phone</label>
     <input type="tel" id="phone" />
   </div>
+  {% endif %}
 </div>

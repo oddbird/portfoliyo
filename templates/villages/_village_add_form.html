@@ -9,11 +9,7 @@
     <input type="text" id="name" placeholder="student name" />
   </div>
 
-  <div class="formfield invite">
-    {# form.invite.errors #}
-    <label for="invite">elders</label>
-    <textarea id="invite" placeholder="One or more (comma-separated) email addresses or phone numbers"></textarea>
-  </div>
+  {% include "villages/_village_elders_formblock.html" %}
 
   <div class="form-actions">
     <button type="submit" class="action-post">add</button>

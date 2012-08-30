@@ -3,7 +3,6 @@
 
 %village-form {
   @include padding-leader(2);
-  @include pad(1,1,$center);
   h2 {
     @include adjust-font-size-to($largepx);
     @include serif;
@@ -12,19 +11,65 @@
   }
 }
 
+%village-solo-form {
+  @extend %village-form;
+  @include span-columns($center omega);
+  @include pad(1,1);
+  @include post($right);
+  margin-left: gutter();
+}
+
+%village-main-form {
+  @extend %village-form;
+  @include pad(1,1,$center);
+  margin-left: gutter($center);
+}
+
 // ---------------------------------------------------------------------------
 // Add Village
 
 .village-add-form {
-  @extend %village-form;
-  @include span-columns($center omega);
-  @include post($right);
+  @extend %village-solo-form;
 }
 
 // ---------------------------------------------------------------------------
 // Add Elder
 
 .elder-add-form {
-  @extend %village-form;
-  margin: 0 gutter($center);
+  @extend %village-main-form;
+}
+
+$formspace: $center - 2;
+
+.formblock.elders {
+  @extend %notice-base;
+  @include bleed;
+  @include leader;
+  @include inline-form(2, $formspace - 2, $formspace);
+  position: relative;
+
+  .formblock-head {
+    @include bleed;
+    @include trailer;
+    background: rgba($base01,.5);
+    color: $base3;
+  }
+  .formset {
+    @include clearfix;
+    position: relative;
+    + .formset {
+      @include leader(.5);
+      @include leading-border(1px,1);
+      border-color: $base1;
+    }
+  }
+  .staff {  margin: 0; }
+
+  .pluselder {
+    position: absolute;
+    right: $grid-padding;
+    bottom: rhythm(.5);
+    font-style: italic;
+    &::after { content: "»";}
+  }
 }

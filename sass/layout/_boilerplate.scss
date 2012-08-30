@@ -15,6 +15,7 @@ $boiler-link-color: $base3;
 
 .container {
   @include container;
+  @include susy-grid-background;
   min-width: 50em;
 }
 

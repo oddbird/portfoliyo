@@ -1,0 +1,20 @@
+
+<div class="formset elder">
+  <div class="formfield contact">
+    {# form.contact-{{ id }}.errors #}
+    <label for="contact-{{ id }}">Email or Phone</label>
+    <input type="text" id="contact-{{ id }}">
+  </div>
+
+  <div class="formfield relation">
+    {# form.relation-{{ id }}.errors #}
+    <label for="relation-{{ id }}">Relationship</label>
+    <input type="text" id="relation-{{ id }}">
+  </div>
+
+  <div class="formfield staff">
+    {# form.staff-{{ id }}.errors #}
+    <input type="checkbox" id="staff-{{ id }}">
+    <label for="staff-{{ id }}">School Staff</label>
+  </div>
+</div>
