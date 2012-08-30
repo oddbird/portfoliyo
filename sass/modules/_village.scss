@@ -2,6 +2,7 @@
 // Village
 
 .village-app {
+  .container { @extend %static; }
   [role="main"] { padding: 0; }
 }
 

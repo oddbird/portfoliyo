@@ -1,0 +1,12 @@
+// ---------------------------------------------------------------------------
+// Login
+
+.login {
+  @extend %simple-page;
+  @extend %simple-form;
+}
+
+.reset-link {
+  @extend %icon;
+  @extend %icon-help;
+}

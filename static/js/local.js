@@ -33,6 +33,7 @@ var PYO = (function (PYO, $) {
                 if (response.html) {
                     thisForm.replaceWith(newForm);
                     PYO.ajaxifyForm(newForm, loading);
+                    newForm.find('input[placeholder], textarea[placeholder]').placeholder();
                 }
             }
         });

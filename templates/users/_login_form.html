@@ -4,21 +4,18 @@
 
   <div class="formfield username">
     {# form.username.errors #}
-    <label for="username">email address or phone number</label>
-    <input type="text" id="username" />
+    <label for="username">email or phone</label>
+    <input type="text" id="username" placeholder="email or phone" />
   </div>
 
   <div class="formfield password">
     {# form.password.errors #}
     <label for="password">password</label>
-    <input type="password" id="password" />
+    <input type="password" id="password" placeholder="password" />
   </div>
 
   <div class="form-actions">
-    <p>
-      Forgot your password?
-      <a href="{% url password_reset %}">Reset it</a>.
-    </p>
+    <a href="{% url password_reset %}" class="reset-link" title="forgot your password?">Forgot your password?</a>
     <button type="submit">Login</button>
   </div>
 </form>

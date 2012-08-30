@@ -134,14 +134,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
+#messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .message:before, .summary .intro li:before, .benefits .intro li:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .message:before, .summary li:before, .benefits li:before {
+#messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .message:before, .summary .intro li:before, .benefits .intro li:before {
   margin-right: .4em;
 }
 
@@ -179,7 +179,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e004";
 }
 
-.message.success:before, .summary li:before, .benefits li:before {
+.message.success:before, .summary .intro li:before, .benefits .intro li:before {
   content: "\e00e";
 }
 
@@ -249,7 +249,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.formfield .action-betasignup {
+.intro .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -257,7 +257,7 @@ a:focus, a:hover, a:active {
   text-overflow: ellipsis;
 }
 
-.formfield label {
+.intro .formfield label {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -520,7 +520,7 @@ textarea {
   min-height: 2.46429em;
 }
 
-.membership {
+.intro .membership {
   margin-left: -1em;
   padding-left: 1em;
   margin-right: -1em;
@@ -798,59 +798,53 @@ textarea {
   left: 57.69231%;
   margin-left: 0;
 }
-
-[role="banner"] {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  margin-bottom: 0.65714em;
-}
-[role="banner"] b {
-  font-weight: normal;
-}
-
-.offer {
-  font-size: 1.5em;
-  line-height: 1.27778em;
-}
-
-ul {
+.intro ul {
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
   margin-bottom: 1.27778em;
 }
-ul li {
+.intro ul li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
 }
-
-.summary li, .benefits li {
+.summary .intro li, .benefits .intro li {
   position: relative;
   padding-left: 1.5em;
 }
-.summary li::before, .benefits li::before {
+.summary .intro li::before, .benefits .intro li::before {
   position: absolute;
   left: 0;
   top: 0;
 }
-.summary li {
+.summary .intro li {
   margin-bottom: 0.63889em;
 }
-.summary li::before {
+.summary .intro li::before {
   color: #859900;
 }
-
-.screenshot {
+.intro .tagline {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
+}
+.intro .tagline b {
+  font-weight: normal;
+}
+.intro .offer {
+  font-size: 1.5em;
+  line-height: 1.27778em;
+}
+.intro .screenshot {
   margin-bottom: 1.27778em;
 }
-.screenshot figcaption {
+.intro .screenshot figcaption {
   font-size: 0.77778em;
   line-height: 1.64286em;
 }
-
-.membership {
+.intro .membership {
   border-top-style: solid;
   border-top-width: 0.05556em;
   padding-top: 1.22222em;
@@ -864,33 +858,32 @@ ul li {
   background: linear-gradient(top, rgba(38, 139, 210, 0.25), rgba(38, 139, 210, 0));
   border-color: #93a1a1;
 }
-.membership .errorlist {
+.intro .membership .errorlist {
   font-size: 0.77778em;
   line-height: 1.64286em;
   margin: 0;
   padding: 0;
 }
-.membership .offernote {
+.intro .membership .offernote {
   font-style: italic;
 }
-.membership .benefits {
+.intro .membership .benefits {
   color: #93a1a1;
 }
-
-.formfield {
+.intro .formfield {
   overflow: hidden;
   *zoom: 1;
 }
-.formfield::after {
+.intro .formfield::after {
   clear: none;
 }
-.formfield input {
+.intro .formfield input {
   width: 58.49057%;
   float: left;
   margin-right: 3.77358%;
   margin-right: 0;
 }
-.formfield .action-betasignup {
+.intro .formfield .action-betasignup {
   width: 37.73585%;
   float: right;
   margin-right: 0;
@@ -945,8 +938,7 @@ ul li {
     line-height: 1.31429em;
   }
 }
-
-.pyo {
+.team .pyo {
   margin-bottom: 2.55556em;
   -webkit-border-radius: 1.27778em;
   -moz-border-radius: 1.27778em;
@@ -960,29 +952,28 @@ ul li {
   padding: 1.27778em;
   background: rgba(88, 110, 117, 0.25);
 }
-.pyo p {
+.team .pyo p {
   margin: 0;
 }
 @media (min-width: 56.25em) {
-  .pyo {
+  .team .pyo {
     padding-left: 25.38462%;
     padding-right: 25.38462%;
   }
 }
-.lt-ie9 .pyo {
+.lt-ie9 .team .pyo {
   padding-left: 25.38462%;
   padding-right: 25.38462%;
 }
-
-.dev .fn, .dev .bio {
+.team .dev .fn, .team .dev .bio {
   width: 65.625%;
   float: left;
   margin-right: 3.125%;
 }
-.dev .bio, .dev .photo {
+.team .dev .bio, .team .dev .photo {
   margin-bottom: 1.91667em;
 }
-.dev .photo {
+.team .dev .photo {
   width: 31.25%;
   float: left;
   margin-right: 3.125%;
@@ -991,12 +982,12 @@ ul li {
   box-shadow: #657b83 0 0 0.63889em;
   overflow: hidden;
 }
-.dev:nth-child(even) .fn, .dev:nth-child(even) .bio {
+.team .dev:nth-child(even) .fn, .team .dev:nth-child(even) .bio {
   float: right;
   margin-right: 0;
   #margin-left: -1em;
 }
-.dev:nth-child(even) .photo {
+.team .dev:nth-child(even) .photo {
   -moz-border-radius-topleft: 5.96046em;
   -webkit-border-top-left-radius: 5.96046em;
   border-top-left-radius: 5.96046em;
@@ -1010,10 +1001,10 @@ ul li {
   -webkit-border-bottom-right-radius: 0.64em;
   border-bottom-right-radius: 0.64em;
 }
-.dev:nth-child(odd) .fn, .dev:nth-child(odd) .bio {
+.team .dev:nth-child(odd) .fn, .team .dev:nth-child(odd) .bio {
   text-align: right;
 }
-.dev:nth-child(odd) .photo {
+.team .dev:nth-child(odd) .photo {
   -moz-border-radius-topright: 5.96046em;
   -webkit-border-top-right-radius: 5.96046em;
   border-top-right-radius: 5.96046em;
@@ -1031,38 +1022,38 @@ ul li {
   #margin-left: -1em;
 }
 @media (min-width: 56.25em) {
-  .dev:nth-child(even) {
+  .team .dev:nth-child(even) {
     padding-left: 8.46154%;
     padding-right: 25.38462%;
   }
-  .dev:nth-child(odd) {
+  .team .dev:nth-child(odd) {
     padding-left: 25.38462%;
     padding-right: 8.46154%;
   }
-  .dev .fn, .dev .bio, .dev .photo {
+  .team .dev .fn, .team .dev .bio, .team .dev .photo {
     margin-right: 0;
   }
-  .dev .fn, .dev .bio {
+  .team .dev .fn, .team .dev .bio {
     width: 74.4186%;
   }
-  .dev .photo {
+  .team .dev .photo {
     width: 23.25581%;
   }
 }
-.lt-ie9 .dev:nth-child(even) {
+.lt-ie9 .team .dev:nth-child(even) {
   padding-left: 8.46154%;
   padding-right: 25.38462%;
 }
-.lt-ie9 .dev:nth-child(odd) {
+.lt-ie9 .team .dev:nth-child(odd) {
   padding-left: 25.38462%;
   padding-right: 8.46154%;
 }
-.lt-ie9 .dev .fn, .lt-ie9 .dev .bio, .lt-ie9 .dev .photo {
+.lt-ie9 .team .dev .fn, .lt-ie9 .team .dev .bio, .lt-ie9 .team .dev .photo {
   margin-right: 0;
 }
-.lt-ie9 .dev .fn, .lt-ie9 .dev .bio {
+.lt-ie9 .team .dev .fn, .lt-ie9 .team .dev .bio {
   width: 74.4186%;
 }
-.lt-ie9 .dev .photo {
+.lt-ie9 .team .dev .photo {
   width: 23.25581%;
 }
