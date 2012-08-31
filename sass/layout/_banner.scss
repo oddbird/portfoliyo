@@ -2,6 +2,7 @@
 // Settings
 
 $banner-rhythm: .5;
+$banner-leading: 1 + $banner-rhythm*2;
 
 %banner-item {
   @include padding-leader($banner-rhythm);
@@ -18,13 +19,14 @@ $banner-rhythm: .5;
 
 .brand {
   @include span-columns($half-small);
-  @include at-breakpoint($break) { @include span-columns($left); }
+  @include at-breakpoint($break) { @include span-columns($left + $right); }
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
-    @extend %ellipsis;
-    @extend %banner-item;
+    @include adjust-leading-to($banner-leading);
+    height: rhythm($banner-leading);
     display: block;
+    overflow: hidden;
     &::before { margin: 0; }
   }
   b { font-weight: bold; }

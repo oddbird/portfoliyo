@@ -274,7 +274,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.brand .wordmark, .meta a, .village-landing .formfield .action-betasignup {
+.meta a, .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -570,7 +570,7 @@ textarea {
   margin-bottom: 1.27778em;
 }
 
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
     white-space: nowrap;
     overflow: hidden;
@@ -599,7 +599,7 @@ textarea {
   }
 }
 
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
     padding-right: 25.38462%;
   }
@@ -634,7 +634,7 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   [role="banner"], [role="contentinfo"], [role="main"] .container {
     max-width: 67em;
   }
@@ -659,7 +659,7 @@ textarea {
   color: rgba(238, 232, 213, 0.75);
 }
 
-.brand .wordmark, .meta a {
+.meta a {
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
 }
@@ -669,15 +669,18 @@ textarea {
   float: left;
   margin-right: 3.125%;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .brand {
-    width: 15.38462%;
+    width: 32.30769%;
     float: left;
     margin-right: 1.53846%;
   }
 }
 .brand .wordmark {
+  line-height: 2.55556em;
+  height: 2.55556em;
   display: block;
+  overflow: hidden;
 }
 .brand .wordmark::before {
   margin: 0;
@@ -693,7 +696,7 @@ textarea {
   position: relative;
   text-align: right;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .meta {
     width: 15.38462%;
     float: right;
@@ -749,7 +752,7 @@ textarea {
   font-weight: bold;
 }
 
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .initial-password {
     margin-right: -34.02062%;
     padding-right: 34.02062%;
@@ -1290,7 +1293,7 @@ textarea {
   display: inline-block;
   width: 1em;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .main-login {
     width: 66.15385%;
     float: right;
@@ -1459,12 +1462,12 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .intro {
     max-width: 67em;
   }
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .intro .summary {
     width: 40.76923%;
     float: right;
@@ -1543,7 +1546,7 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .team .container {
     max-width: 67em;
   }
@@ -1577,7 +1580,7 @@ textarea {
 .team .pyo p {
   margin: 0;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .team .pyo {
     padding-left: 25.38462%;
     padding-right: 25.38462%;
@@ -1637,7 +1640,7 @@ textarea {
   float: right;
   margin-right: 0;
 }
-@media (min-width: 48.375em) {
+@media (min-width: 36em) {
   .team .dev:nth-child(even) {
     padding-left: 8.46154%;
     padding-right: 25.38462%;
