@@ -61,7 +61,8 @@ $landing-break: 50em 12;
       right: 102% + gutter(2);
     }
     button {
-      @include sassy-button($first-color: $blue);
+      @include sassy-button-gradient($base-color: $blue);
+      background-color: $blue;
       width: 100%;
     }
   }

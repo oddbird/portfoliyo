@@ -410,7 +410,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   padding: 0 .5em;
 }
 
-.linkaction:link, .linkaction:visited, button {
+.linkaction, button {
   margin: 0;
   background-color: #859900;
   font-size: 18px;
@@ -424,8 +424,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF859900', endColorstr='#FF2C3300');
+  background-color: #859900;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #859900), color-stop(100%, #596600));
   background: -webkit-linear-gradient(#859900, #596600);
   background: -moz-linear-gradient(#859900, #596600);
@@ -439,10 +438,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   color: #fdf6e3;
   text-shadow: #121400 0 -1px 0;
 }
-.linkaction:hover:link, .linkaction:hover:visited, button:hover {
+.linkaction:hover, button:hover {
   text-decoration: none;
 }
-.linkaction:hover:link, .linkaction:hover:visited, button:hover {
+.linkaction:hover, button:hover {
   background-color: #424d00;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
   background: -webkit-linear-gradient(#6f8000, #424d00);
@@ -451,12 +450,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   background: -ms-linear-gradient(#6f8000, #424d00);
   background: linear-gradient(#6f8000, #424d00);
 }
-.linkaction:active:link, .linkaction:active:visited, button:active {
+.linkaction:active, button:active {
   -webkit-box-shadow: #353d00 0 1px 2px inset;
   -moz-box-shadow: #353d00 0 1px 2px inset;
   box-shadow: #353d00 0 1px 2px inset;
 }
-.disabled.linkaction:link, .disabled.linkaction:visited, button.disabled, [disabled].linkaction:link, [disabled].linkaction:visited, button[disabled] {
+.disabled.linkaction, button.disabled, [disabled].linkaction, button[disabled] {
   opacity: 0.6;
   background: #596600;
   cursor: default;
@@ -464,7 +463,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.linkaction:link::-moz-focus-inner, .linkaction:visited::-moz-focus-inner, button::-moz-focus-inner {
+.linkaction::-moz-focus-inner, button::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
@@ -483,7 +482,6 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 
 .formfield {
-  *zoom: 1;
   margin-bottom: 0.63889em;
   position: relative;
 }
@@ -569,7 +567,6 @@ textarea {
 }
 
 .initial-password, .formblock.elders {
-  *zoom: 1;
   background: #eee8d5;
 }
 .initial-password:after, .formblock.elders:after {
@@ -606,13 +603,11 @@ textarea {
   width: 74.4186%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .login [type="checkbox"] + label, .register [type="checkbox"] + label, .edit-profile [type="checkbox"] + label, .reset-password [type="checkbox"] + label, .change-password [type="checkbox"] + label, .set-password [type="checkbox"] + label, .login [type="radio"] + label, .register [type="radio"] + label, .edit-profile [type="radio"] + label, .reset-password [type="radio"] + label, .change-password [type="radio"] + label, .set-password [type="radio"] + label {
   float: none;
   width: auto;
   margin-right: auto;
-  #margin-left: auto;
   margin-left: 25.5814%;
   display: inline-block;
   padding: 0;
@@ -620,7 +615,6 @@ textarea {
 }
 
 [role="banner"], [role="contentinfo"] {
-  *zoom: 1;
   clear: both;
 }
 [role="banner"]:after, [role="contentinfo"]:after {
@@ -645,7 +639,6 @@ textarea {
 }
 
 .container, [role="banner"], [role="contentinfo"] {
-  *zoom: 1;
   max-width: 67em;
   margin-left: auto;
   margin-right: auto;
@@ -719,7 +712,6 @@ textarea {
   width: 15.38462%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
   position: relative;
 }
 .meta a {
@@ -794,13 +786,11 @@ textarea {
   width: 74.4186%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .initial-password [type="checkbox"] + label, .initial-password [type="radio"] + label {
   float: none;
   width: auto;
   margin-right: auto;
-  #margin-left: auto;
   margin-left: 25.5814%;
   display: inline-block;
   padding: 0;
@@ -812,7 +802,6 @@ textarea {
 }
 
 .village {
-  *zoom: 1;
   -webkit-transition: height 150ms;
   -moz-transition: height 150ms;
   -ms-transition: height 150ms;
@@ -924,7 +913,6 @@ textarea {
 }
 
 .note {
-  *zoom: 1;
   border-bottom-style: solid;
   border-bottom-width: 0.05556em;
   padding-bottom: 0.26389em;
@@ -954,7 +942,6 @@ textarea {
 }
 .note .body {
   overflow: hidden;
-  *zoom: 1;
   font-size: 0.77778em;
   line-height: 1.64286em;
 }
@@ -1043,7 +1030,6 @@ textarea {
   width: 66.15385%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
   padding-left: 8.46154%;
   padding-right: 8.46154%;
   margin-right: 16.92308%;
@@ -1080,13 +1066,11 @@ textarea {
   width: 65.625%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .formblock.elders [type="checkbox"] + label, .formblock.elders [type="radio"] + label {
   float: none;
   width: auto;
   margin-right: auto;
-  #margin-left: auto;
   margin-left: 34.375%;
   display: inline-block;
   padding: 0;
@@ -1103,7 +1087,6 @@ textarea {
 }
 .formblock.elders .formset {
   overflow: hidden;
-  *zoom: 1;
   position: relative;
 }
 .formblock.elders .formset + .formset {
@@ -1305,8 +1288,7 @@ textarea {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF268BD2', endColorstr='#FF16527C');
+  background-color: #268bd2;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #268bd2), color-stop(100%, #1e6ea7));
   background: -webkit-linear-gradient(#268bd2, #1e6ea7);
   background: -moz-linear-gradient(#268bd2, #1e6ea7);
@@ -1390,59 +1372,46 @@ textarea {
     right: 112%;
   }
   .main-login button {
-    font-size: 18px;
-    padding: 0.31944em 1.27778em;
-    display: inline-block;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: 1.27778em;
-    -webkit-border-radius: 0.125em;
-    -moz-border-radius: 0.125em;
-    -ms-border-radius: 0.125em;
-    -o-border-radius: 0.125em;
-    border-radius: 0.125em;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #268bd2), color-stop(100%, #1e6ea7));
-    background: -webkit-linear-gradient(#268bd2, #1e6ea7);
-    background: -moz-linear-gradient(#268bd2, #1e6ea7);
-    background: -o-linear-gradient(#268bd2, #1e6ea7);
-    background: -ms-linear-gradient(#268bd2, #1e6ea7);
-    background: linear-gradient(#268bd2, #1e6ea7);
-    -webkit-box-shadow: #62ade3 0 1px 0 inset;
-    -moz-box-shadow: #62ade3 0 1px 0 inset;
-    box-shadow: #62ade3 0 1px 0 inset;
-    border: 1px solid #1a6091;
+    background-color: #268bd2;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #62ade3), color-stop(70%, #268bd2));
+    background: -webkit-linear-gradient(#62ade3, #268bd2 70%);
+    background: -moz-linear-gradient(#62ade3, #268bd2 70%);
+    background: -o-linear-gradient(#62ade3, #268bd2 70%);
+    background: -ms-linear-gradient(#62ade3, #268bd2 70%);
+    background: linear-gradient(#62ade3, #268bd2 70%);
+    -webkit-box-shadow: #a3cfee 0 1px 0 inset;
+    -moz-box-shadow: #a3cfee 0 1px 0 inset;
+    box-shadow: #a3cfee 0 1px 0 inset;
+    border: 1px solid #227dbc;
     color: #fdf6e3;
-    text-shadow: #124162 0 -1px 0;
+    text-shadow: #1d6aa0 0 -1px 0;
+    background-color: #268bd2;
     width: 100%;
   }
   .main-login button:hover {
     text-decoration: none;
   }
   .main-login button:hover {
-    background-color: #1a6091;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #227dbc), color-stop(100%, #1a6091));
-    background: -webkit-linear-gradient(#227dbc, #1a6091);
-    background: -moz-linear-gradient(#227dbc, #1a6091);
-    background: -o-linear-gradient(#227dbc, #1a6091);
-    background: -ms-linear-gradient(#227dbc, #1a6091);
-    background: linear-gradient(#227dbc, #1a6091);
+    background-color: #227dbc;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(3%, #4ca2df), color-stop(75%, #227dbc));
+    background: -webkit-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: -moz-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: -o-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: -ms-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: linear-gradient(#4ca2df 3%, #227dbc 75%);
   }
   .main-login button:active {
-    -webkit-box-shadow: #185884 0 1px 2px inset;
-    -moz-box-shadow: #185884 0 1px 2px inset;
-    box-shadow: #185884 0 1px 2px inset;
+    -webkit-box-shadow: #2074af 0 1px 2px inset;
+    -moz-box-shadow: #2074af 0 1px 2px inset;
+    box-shadow: #2074af 0 1px 2px inset;
   }
   .main-login button.disabled, .main-login button[disabled] {
     opacity: 0.6;
-    background: #1e6ea7;
+    background: #268bd2;
     cursor: default;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-  }
-  .main-login button::-moz-focus-inner {
-    padding: 0 !important;
-    margin: -1px !important;
   }
 }
 
@@ -1510,7 +1479,6 @@ textarea {
 }
 .village-landing .formfield {
   overflow: hidden;
-  *zoom: 1;
 }
 .village-landing .formfield::after {
   clear: none;
@@ -1525,11 +1493,9 @@ textarea {
   width: 37.73585%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 
 .intro {
-  *zoom: 1;
   max-width: 34em;
   margin-left: auto;
   margin-right: auto;
@@ -1614,7 +1580,6 @@ textarea {
   color: #93a1a1;
 }
 .team .container, .team [role="banner"], .team [role="contentinfo"] {
-  *zoom: 1;
   max-width: 34em;
   margin-left: auto;
   margin-right: auto;
@@ -1667,7 +1632,6 @@ textarea {
   }
 }
 .team .dev {
-  *zoom: 1;
   margin-bottom: 1.27778em;
 }
 .team .dev:after {
@@ -1679,7 +1643,6 @@ textarea {
   width: 65.625%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .team .dev .photo {
   width: 31.25%;
@@ -1721,7 +1684,6 @@ textarea {
   border-bottom-left-radius: 0.64em;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 @media (min-width: 56.25em) {
   .team .dev:nth-child(even) {
