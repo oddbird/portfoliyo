@@ -11,7 +11,8 @@
 // Settings
 
 $total-columns: 6;
-$break: 50em 12 lt-ie9;
+$break-cols: 12;
+$break: 50em $break-cols lt-ie9;
 
 // ---------------------------------------------------------------------------
 // Footer
@@ -186,39 +187,50 @@ li {
 }
 
 .dev {
-  .fn, .bio { @include span-columns(4); }
-  .bio, .photo { @include trailer(1.5); }
+  @include pie-clearfix;
+  @include trailer(1.5);
+
+  .fn, .bio { @include span-columns(4 omega); }
   .photo {
     @include span-columns(2);
+    @include photo(left);
     @include box-shadow($base 0 0 rhythm(.5));
     overflow: hidden;
   }
 
-  &:nth-child(even) {
-    .fn, .bio { @include omega; }
-    .photo { @include photo(left); }
-  }
   &:nth-child(odd) {
-    .fn, .bio { text-align: right; }
+    .fn, .bio {
+      @include remove-omega;
+      text-align: right;
+    }
     .photo {
       @include photo(right);
       @include omega;
     }
   }
 
+  $pre      : 1;
+  $pics     : 2;
+
+  $post     : $pre + $pics;
+  $ctext    : $break-cols - $pre - $post;
+  $bios     : $ctext - $pics;
+
+  .no-nth-child & {
+    @include pad($post,$post,$break-cols);
+  }
+
   @include at-breakpoint($break) {
-    $pre      : 1;
-    $pics     : 2;
-
-    $post     : $pre + $pics;
-    $ctext    : $total-columns - $pre - $post;
-    $bios     : $ctext - $pics;
-
     &:nth-child(even) { @include pad($pre,$post); }
-    &:nth-child(odd) { @include pad($post,$pre); }
+    &:nth-child(odd) {
+      @include pad($post,$pre);
+      .fn, .bio { margin-right: 0; }
+    }
 
-    .fn, .bio, .photo { margin-right: 0; }
     .fn, .bio { width: columns($bios, $ctext); }
-    .photo { width: columns($pics, $ctext); }
+    .photo {
+      width: columns($pics, $ctext);
+      margin-right: 0;
+     }
   }
 }
