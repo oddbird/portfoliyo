@@ -4,7 +4,7 @@
 .initial-password {
   @extend %notice;
   @extend %simple-inline-form;
-  @include bleed(space($right,$center + $left), right);
+  @include bleed(space($simple-side,$simple-width), right);
   @include padding-leader(1);
   margin-left: 0;
   padding-left: 0;

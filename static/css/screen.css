@@ -588,14 +588,14 @@ textarea {
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  width: 38.88889%;
+  width: 31.95876%;
   float: left;
-  margin-right: 1.85185%;
+  margin-right: 2.06186%;
   padding: 0.31944em 0;
   text-align: right;
 }
 .login label + input, .register label + input, .edit-profile label + input, .reset-password label + input, .change-password label + input, .set-password label + input, .initial-password label + input, .login label + textarea, .register label + textarea, .edit-profile label + textarea, .reset-password label + textarea, .change-password label + textarea, .set-password label + textarea, .initial-password label + textarea {
-  width: 59.25926%;
+  width: 65.97938%;
   float: right;
   margin-right: 0;
 }
@@ -603,14 +603,17 @@ textarea {
   float: none;
   width: auto;
   margin-right: auto;
-  margin-left: 40.74074%;
+  margin-left: 34.02062%;
   display: inline-block;
   padding: 0;
   text-align: left;
 }
 
 .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
-  padding-right: 16.92308%;
+  padding-right: 25.38462%;
+}
+.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2 {
+  padding-left: 34.02062%;
 }
 
 [role="banner"], [role="contentinfo"] {
@@ -763,8 +766,8 @@ textarea {
 }
 
 .initial-password {
-  margin-right: -20.37037%;
-  padding-right: 20.37037%;
+  margin-right: -34.02062%;
+  padding-right: 34.02062%;
   padding-top: 1.27778em;
   margin-left: 0;
   padding-left: 0;

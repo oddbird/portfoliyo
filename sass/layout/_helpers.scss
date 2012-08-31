@@ -39,20 +39,21 @@
 // ---------------------------------------------------------------------------
 // Simple Pages/Forms
 
+$simple-side: 3;
+$simple-width: $total-columns - $simple-side;
+$simple-center: $simple-width - $simple-side;
+
 %simple-page {
   @extend %type;
-  @include pad($left,$right);
+  @include pad($simple-side,$simple-side);
 }
 
-$simple-left: $left + 2;
-$simple-center: $center - 2;
-$simple-width: $center + $left;
-
 %simple-inline-form {
-  @include inline-form($simple-left, $simple-center, $simple-width);
+  @include inline-form($simple-side, $simple-center, $simple-width);
 }
 
 %simple-form {
   @extend %simple-inline-form;
-  @include suffix($right);
+  @include suffix($simple-side);
+  h2 { @include prefix($simple-side, $simple-width); }
 }
