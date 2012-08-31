@@ -3,12 +3,13 @@
 
 .initial-password {
   @extend %notice;
-  @include bleed(space($left,$center));
+  @extend %simple-inline-form;
+  @include bleed(space($right,$center + $left), right);
   @include padding-leader(1);
-  @include inline-form;
+  margin-left: 0;
+  padding-left: 0;
 }
 
 .register, .edit-profile {
-  @extend %simple-page;
   @extend %simple-form;
 }

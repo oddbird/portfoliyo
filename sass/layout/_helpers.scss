@@ -44,6 +44,15 @@
   @include pad($left,$right);
 }
 
+$simple-left: $left + 2;
+$simple-center: $center - 2;
+$simple-width: $center + $left;
+
+%simple-inline-form {
+  @include inline-form($simple-left, $simple-center, $simple-width);
+}
+
 %simple-form {
-  @include inline-form;
+  @extend %simple-inline-form;
+  @include suffix($right);
 }
