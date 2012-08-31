@@ -16,6 +16,8 @@
 @import "colors";
 @import "type";
 @import "sassybuttons";
+@import "grids";
+@import "utilities";
 
 // ---------------------------------------------------------------------------
 // Browsers
@@ -23,23 +25,3 @@
 $legacy-support-for-ie6         : false;
 $legacy-support-for-ie7         : false;
 $legacy-support-for-ie8         : true;
-
-// ---------------------------------------------------------------------------
-// Grids
-
-$total-columns  : 12;
-$column-width   : 4.5em;
-$gutter-width   : 1em;
-$grid-padding   : 1em;
-
-$left           : 2;
-$right          : 2;
-$center         : $total-columns - $left - $right;
-
-$grid-background-baseline-height  : $base-line-height;
-$grid-background-baseline-color   : rgba($base1,.25);
-$grid-background-column-color     : rgba($base2,.25);
-
-$show-column-grid-backgrounds     : true;
-$show-baseline-grid-backgrounds   : true;
-$show-grid-backgrounds            : false;

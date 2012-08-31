@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
+#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before {
+#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before {
   margin-right: .4em;
 }
 
@@ -184,16 +184,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e004";
 }
 
-[role="navigation"] .net:before {
-  content: "\e006";
-}
-
 .meta a:before, .meta [href*="/edit/"]:before {
   content: "\e007";
-}
-
-[role="navigation"] .me:before {
-  content: "\e008";
 }
 
 .meta [href*="/signup/"]:before {
@@ -204,7 +196,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00a";
 }
 
-.brand .wordmark:before, [role="navigation"] .myvillage:before {
+.brand .wordmark:before {
   content: "\e00d";
 }
 
@@ -282,7 +274,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.brand .wordmark, .village-landing .formfield .action-betasignup {
+.brand .wordmark, .meta a, .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -398,7 +390,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('../images/rgbapng/ffffff40.png?1346441289');
+  background: url('../images/rgbapng/ffffff40.png?1346451158');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -555,10 +547,6 @@ textarea {
   min-height: 2.46429em;
 }
 
-.village-app .container, .village-app [role="banner"], .village-app [role="contentinfo"] {
-  min-width: 50em;
-}
-
 .initial-password, .village-landing .membership {
   margin-left: -1em;
   padding-left: 1em;
@@ -582,46 +570,77 @@ textarea {
   margin-bottom: 1.27778em;
 }
 
-.login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  width: 31.95876%;
-  float: left;
-  margin-right: 2.06186%;
-  padding: 0.31944em 0;
-  text-align: right;
-}
-.login label + input, .register label + input, .edit-profile label + input, .reset-password label + input, .change-password label + input, .set-password label + input, .initial-password label + input, .login label + textarea, .register label + textarea, .edit-profile label + textarea, .reset-password label + textarea, .change-password label + textarea, .set-password label + textarea, .initial-password label + textarea {
-  width: 65.97938%;
-  float: right;
-  margin-right: 0;
-}
-.login [type="checkbox"] + label, .register [type="checkbox"] + label, .edit-profile [type="checkbox"] + label, .reset-password [type="checkbox"] + label, .change-password [type="checkbox"] + label, .set-password [type="checkbox"] + label, .initial-password [type="checkbox"] + label, .login [type="radio"] + label, .register [type="radio"] + label, .edit-profile [type="radio"] + label, .reset-password [type="radio"] + label, .change-password [type="radio"] + label, .set-password [type="radio"] + label, .initial-password [type="radio"] + label {
-  float: none;
-  width: auto;
-  margin-right: auto;
-  margin-left: 34.02062%;
-  display: inline-block;
-  padding: 0;
-  text-align: left;
+@media (min-width: 48.375em) {
+  .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 31.95876%;
+    float: left;
+    margin-right: 2.06186%;
+    padding: 0.31944em 0;
+    text-align: right;
+  }
+  .login label + input, .register label + input, .edit-profile label + input, .reset-password label + input, .change-password label + input, .set-password label + input, .initial-password label + input, .login label + textarea, .register label + textarea, .edit-profile label + textarea, .reset-password label + textarea, .change-password label + textarea, .set-password label + textarea, .initial-password label + textarea {
+    width: 65.97938%;
+    float: right;
+    margin-right: 0;
+  }
+  .login [type="checkbox"] + label, .register [type="checkbox"] + label, .edit-profile [type="checkbox"] + label, .reset-password [type="checkbox"] + label, .change-password [type="checkbox"] + label, .set-password [type="checkbox"] + label, .initial-password [type="checkbox"] + label, .login [type="radio"] + label, .register [type="radio"] + label, .edit-profile [type="radio"] + label, .reset-password [type="radio"] + label, .change-password [type="radio"] + label, .set-password [type="radio"] + label, .initial-password [type="radio"] + label {
+    float: none;
+    width: auto;
+    margin-right: auto;
+    margin-left: 34.02062%;
+    display: inline-block;
+    padding: 0;
+    text-align: left;
+  }
 }
 
-.login, .register, .edit-profile, .reset-password, .change-password, .set-password {
-  padding-right: 25.38462%;
+@media (min-width: 48.375em) {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
+    padding-right: 25.38462%;
+  }
+  .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2 {
+    padding-left: 34.02062%;
+  }
 }
-.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2 {
-  padding-left: 34.02062%;
+
+.pagehead {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
+}
+
+[role="banner"], [role="contentinfo"], [role="main"] .container {
+  max-width: 34em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+  -webkit-background-origin: content;
+  -moz-background-origin: content;
+  -ms-background-origin: content-box;
+  -o-background-origin: content-box;
+  background-origin: content-box;
+  -webkit-background-clip: content-box;
+  -moz-background-clip: content-box;
+  background-clip: content-box;
+}
+[role="banner"]:after, [role="contentinfo"]:after, [role="main"] .container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media (min-width: 48.375em) {
+  [role="banner"], [role="contentinfo"], [role="main"] .container {
+    max-width: 67em;
+  }
 }
 
 [role="banner"], [role="contentinfo"] {
-  clear: both;
-}
-[role="banner"]:after, [role="contentinfo"]:after {
-  content: "";
-  display: table;
   clear: both;
 }
 [role="banner"] a:link, [role="contentinfo"] a:link, [role="banner"] a:visited, [role="contentinfo"] a:visited {
@@ -640,42 +659,22 @@ textarea {
   color: rgba(238, 232, 213, 0.75);
 }
 
-.container, [role="banner"], [role="contentinfo"] {
-  max-width: 67em;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1em;
-  padding-right: 1em;
-  -webkit-background-origin: content;
-  -moz-background-origin: content;
-  -ms-background-origin: content-box;
-  -o-background-origin: content-box;
-  background-origin: content-box;
-  -webkit-background-clip: content-box;
-  -moz-background-clip: content-box;
-  background-clip: content-box;
-}
-.container:after, [role="banner"]:after, [role="contentinfo"]:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.pagehead {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  margin-bottom: 0.65714em;
-}
-
 .brand .wordmark, .meta a {
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
 }
 
 .brand {
-  width: 15.38462%;
+  width: 48.4375%;
   float: left;
-  margin-right: 1.53846%;
+  margin-right: 3.125%;
+}
+@media (min-width: 48.375em) {
+  .brand {
+    width: 15.38462%;
+    float: left;
+    margin-right: 1.53846%;
+  }
 }
 .brand .wordmark {
   display: block;
@@ -687,54 +686,39 @@ textarea {
   font-weight: bold;
 }
 
-[role="navigation"] {
-  width: 66.15385%;
-  float: left;
-  margin-right: 1.53846%;
-}
-[role="navigation"] ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-}
-[role="navigation"] ul li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-[role="navigation"] li {
-  float: left;
-  width: auto;
-  margin-right: 2.32558%;
-  min-width: 10.46512%;
-}
-
 .meta {
-  width: 15.38462%;
+  width: 48.4375%;
   float: right;
   margin-right: 0;
   position: relative;
+  text-align: right;
+}
+@media (min-width: 48.375em) {
+  .meta {
+    width: 15.38462%;
+    float: right;
+    margin-right: 0;
+  }
 }
 .meta a {
   display: block;
 }
-.meta b {
-  font-weight: bold;
-}
 
 .useractions {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  margin: 0 -0.63889em;
+  margin: 0 -0.82143em;
   background: #073642;
+  text-align: left;
   z-index: 900;
   display: none;
 }
 .useractions a {
-  padding: 0.63889em;
+  padding: 0.82143em;
 }
 .meta:hover .useractions {
   display: block;
@@ -765,12 +749,17 @@ textarea {
   font-weight: bold;
 }
 
-.initial-password {
-  margin-right: -34.02062%;
-  padding-right: 34.02062%;
-  padding-top: 1.27778em;
-  margin-left: 0;
-  padding-left: 0;
+@media (min-width: 48.375em) {
+  .initial-password {
+    margin-right: -34.02062%;
+    padding-right: 34.02062%;
+    padding-top: 1.27778em;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .initial-password label {
+    padding-left: 1.27778em;
+  }
 }
 
 .village-app [role="main"] {
@@ -1150,7 +1139,7 @@ textarea {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1346441138');
+  background: url('../images/rgbapng/002b3640.png?1346451158');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
@@ -1173,19 +1162,19 @@ textarea {
   line-height: 1em;
 }
 .message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1346441138');
+  background: url('../images/rgbapng/268bd2e5.png?1346451158');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: url('../images/rgbapng/859900e5.png?1346441138');
+  background: url('../images/rgbapng/859900e5.png?1346451158');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1346441138');
+  background: url('../images/rgbapng/b58900e5.png?1346451158');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1346441138');
+  background: url('../images/rgbapng/dc322fe5.png?1346451158');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -1223,19 +1212,6 @@ textarea {
 }
 #messages .close:focus, #messages .close:hover, #messages .close:active {
   color: #002b36;
-}
-
-.brand {
-  width: 48.4375%;
-  float: left;
-  margin-right: 3.125%;
-}
-@media (min-width: 56.25em) {
-  .brand {
-    width: 15.38462%;
-    float: left;
-    margin-right: 1.53846%;
-  }
 }
 
 .main-login .login-form {
@@ -1314,7 +1290,7 @@ textarea {
   display: inline-block;
   width: 1em;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 48.375em) {
   .main-login {
     width: 66.15385%;
     float: right;
@@ -1483,12 +1459,12 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 48.375em) {
   .intro {
     max-width: 67em;
   }
 }
-@media (min-width: 56.25em) {
+@media (min-width: 48.375em) {
   .intro .summary {
     width: 40.76923%;
     float: right;
@@ -1555,20 +1531,20 @@ textarea {
   background-attachment: fixed;
   color: #93a1a1;
 }
-.team .container, .team [role="banner"], .team [role="contentinfo"] {
+.team .container {
   max-width: 34em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
 }
-.team .container:after, .team [role="banner"]:after, .team [role="contentinfo"]:after {
+.team .container:after {
   content: "";
   display: table;
   clear: both;
 }
-@media (min-width: 56.25em) {
-  .team .container, .team [role="banner"], .team [role="contentinfo"] {
+@media (min-width: 48.375em) {
+  .team .container {
     max-width: 67em;
   }
 }
@@ -1593,7 +1569,7 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1346441872');
+  background: url('../images/rgbapng/586e7540.png?1346451158');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1601,7 +1577,7 @@ textarea {
 .team .pyo p {
   margin: 0;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 48.375em) {
   .team .pyo {
     padding-left: 25.38462%;
     padding-right: 25.38462%;
@@ -1661,7 +1637,7 @@ textarea {
   float: right;
   margin-right: 0;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 48.375em) {
   .team .dev:nth-child(even) {
     padding-left: 8.46154%;
     padding-right: 25.38462%;

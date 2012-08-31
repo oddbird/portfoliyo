@@ -4,10 +4,13 @@
 .initial-password {
   @extend %notice;
   @extend %simple-inline-form;
-  @include bleed(space($simple-side,$simple-width), right);
-  @include padding-leader(1);
-  margin-left: 0;
-  padding-left: 0;
+  @include at-breakpoint($break) {
+    @include bleed(space($simple-side,$simple-width), right);
+    @include padding-leader(1);
+    margin-left: 0;
+    padding-left: 0;
+    label { padding-left: rhythm(1); }
+  }
 }
 
 .register, .edit-profile {

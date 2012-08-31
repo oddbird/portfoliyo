@@ -17,7 +17,8 @@ $banner-rhythm: .5;
 // Brand
 
 .brand {
-  @include span-columns($left);
+  @include span-columns($half-small);
+  @include at-breakpoint($break) { @include span-columns($left); }
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
@@ -32,51 +33,57 @@ $banner-rhythm: .5;
 // ---------------------------------------------------------------------------
 // Navigation
 
-$nav-span: $center;
+// $nav-span: $center;
 
-[role="navigation"] {
-  @include span-columns($nav-span);
-  ul { @include no-style-list; }
-  li {
-    float: left;
-    width: auto;
-    margin-right: gutter($nav-span);
-    min-width: columns(1,$nav-span);
-  }
-  .me { @extend %icon; @extend %icon-comments; }
-  .net { @extend %icon; @extend %icon-users; }
-  .myvillage { @extend %icon; @extend %icon-fire; }
-}
+// [role="navigation"] {
+//   @include span-columns($nav-span);
+//   ul { @include no-style-list; }
+//   li {
+//     float: left;
+//     width: auto;
+//     margin-right: gutter($nav-span);
+//     min-width: columns(1,$nav-span);
+//   }
+//   .me { @extend %icon; @extend %icon-comments; }
+//   .net { @extend %icon; @extend %icon-users; }
+//   .myvillage { @extend %icon; @extend %icon-fire; }
+// }
 
 // ---------------------------------------------------------------------------
 // Meta
 
 .meta {
-  @include span-columns($right omega);
+  @include span-columns($half-small omega);
+  @include at-breakpoint($break) { @include span-columns($right omega); }
   position: relative;
+  text-align: right;
 
   a {
     @extend %icon;
     @extend %icon-settings;
     @extend %banner-item;
+    @extend %ellipsis;
     display: block;
   }
-  b { font-weight: bold; }
 
   [href*="/edit/"] { @extend %icon-settings; }
   [href*="/password_change/"] { @extend %icon-key; }
   [href*="/signup/"] { @extend %icon-exit; }
 }
 
+$useraction-size: $smallpx;
+
 .useractions {
+  @include adjust-font-size-to($smallpx);
   @include stretch-x;
   top: 100%;
-  margin: 0 rhythm(- $banner-rhythm);
+  margin: 0 rhythm(- $banner-rhythm, $useraction-size);
   background: $back;
+  text-align: left;
   z-index: 900;
   display: none;
 
-  a { padding: rhythm($banner-rhythm); }
+  a { padding: rhythm($banner-rhythm, $useraction-size); }
   .meta:hover & { display: block; }
 }
 
