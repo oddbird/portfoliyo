@@ -1,3 +1,7 @@
+/*
+  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
+  rgba-background mixin can now be passed an option $dir variable
+*/
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -500,15 +504,19 @@ textarea {
   line-height: 1em;
 }
 .message.info {
+  background: url('../images/rgbapng/268bd2e5.png?1346437997');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
+  background: url('../images/rgbapng/859900e5.png?1346438074');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
+  background: url('../images/rgbapng/b58900e5.png?1346438074');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
+  background: url('../images/rgbapng/dc322fe5.png?1346438074');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -523,11 +531,12 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
+  background: url('../images/rgbapng/002b367f.png?1346438074');
+  background: rgba(0, 43, 54, 0.5);
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  background: rgba(0, 43, 54, 0.5);
   z-index: 999;
 }
 #messages li {

@@ -12,19 +12,19 @@
   &::before { @include adjust-font-size-to($medpx,1); }
   &.info {
     @extend %icon-info-circle;
-    background: rgba($blue,.9);
+    @include rgba-background(rgba($blue,.9));
   }
   &.success {
     @extend %icon-checkmark;
-    background: rgba($green,.9);
+    @include rgba-background(rgba($green,.9));
   }
   &.warning {
     @extend %icon-warning;
-    background: rgba($yellow,.9);
+    @include rgba-background(rgba($yellow,.9));
   }
   &.error {
     @extend %icon-x;
-    background: rgba($red,.9);
+    @include rgba-background(rgba($red,.9));
   }
   p { display: inline; }
 }
@@ -32,11 +32,11 @@
 #messages {
   @include no-style-list;
   @include box-shadow($base03 0 0 rhythm(.25), $base03 0 0 rhythm(.5));
+  @include rgba-background(rgba($base03,.5));
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
-  background: rgba($base03,.5);
   z-index: 999;
   .close {
     @extend %icon-replace;
