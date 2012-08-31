@@ -372,6 +372,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   vertical-align: top;
   outline: 0;
 }
+.lt-ie9 input[type="text"], .lt-ie9 input[type="password"], .lt-ie9 input[type="email"], .lt-ie9 input[type="url"], .lt-ie9 input[type="tel"], .lt-ie9 input[type="date"], .lt-ie9 input[type="datetime"], .lt-ie9 input[type="datetime-local"], .lt-ie9 input[type="month"], .lt-ie9 input[type="week"], .lt-ie9 input[type="time"], .lt-ie9 input[type="number"], .lt-ie9 input[type="search"], .lt-ie9 input[type="color"], .lt-ie9 textarea {
+  padding-bottom: 0;
+  padding-top: 0;
+}
 
 .linkaction:link, .linkaction:visited, button {
   margin: 0;

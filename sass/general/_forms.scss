@@ -61,6 +61,7 @@ $input-rhythm: .25;
   border-color: $base;
   vertical-align: top;
   outline: 0;
+  .lt-ie9 & { padding-bottom: 0; padding-top: 0; }
 }
 
 %button {

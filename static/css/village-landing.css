@@ -355,6 +355,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   vertical-align: top;
   outline: 0;
 }
+.lt-ie9 input[type="text"], .lt-ie9 input[type="password"], .lt-ie9 input[type="email"], .lt-ie9 input[type="url"], .lt-ie9 input[type="tel"], .lt-ie9 input[type="date"], .lt-ie9 input[type="datetime"], .lt-ie9 input[type="datetime-local"], .lt-ie9 input[type="month"], .lt-ie9 input[type="week"], .lt-ie9 input[type="time"], .lt-ie9 input[type="number"], .lt-ie9 input[type="search"], .lt-ie9 input[type="color"], .lt-ie9 textarea {
+  padding-bottom: 0;
+  padding-top: 0;
+}
 
 .linkaction:link, .linkaction:visited, button {
   margin: 0;
@@ -682,6 +686,18 @@ textarea {
   color: #657b83;
   background: #fdf6e3;
 }
+.village-landing ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  margin-bottom: 1.27778em;
+}
+.village-landing ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
 
 .intro {
   *zoom: 1;
@@ -703,6 +719,9 @@ textarea {
 }
 .lt-ie9 .intro {
   max-width: 67em;
+}
+.lt-ie9 .intro {
+  min-width: 50em;
 }
 @media (min-width: 56.25em) {
   .intro .summary {
@@ -780,22 +799,12 @@ textarea {
   line-height: 1.27778em;
 }
 
-ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-  margin-bottom: 1.27778em;
-}
-ul li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-
 .summary li, .benefits li {
   position: relative;
   padding-left: 1.5em;
+}
+.lt-ie9 .summary li, .lt-ie9 .benefits li {
+  padding-left: 0;
 }
 .summary li::before, .benefits li::before {
   position: absolute;

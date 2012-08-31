@@ -12,7 +12,8 @@
 
 $total-columns: 6;
 $break-cols: 12;
-$break: 50em $break-cols lt-ie9;
+$break-min: 50em;
+$break: $break-min $break-cols lt-ie9;
 
 // ---------------------------------------------------------------------------
 // Footer
@@ -44,6 +45,11 @@ $boiler-link-color: $base3;
   @include padding-leader;
   color: $base;
   background: $base3;
+
+  ul {
+    @include no-style-list;
+    @include trailer;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -51,6 +57,8 @@ $boiler-link-color: $base3;
 
 .intro {
   @include container($total-columns,$break);
+  .lt-ie9 & { min-width: $break-min; }
+
   @include at-breakpoint($break) {
     .summary { @include span-columns(5 omega); }
     .screenshot {
@@ -79,17 +87,13 @@ $boiler-link-color: $base3;
 
 .offer { @include adjust-font-size-to($large-normpx); }
 
-ul {
-  @include no-style-list;
-  @include trailer;
-}
-
 li {
   .summary &, .benefits & {
     @extend %icon;
     @extend %icon-checkmark;
     position: relative;
     padding-left: 1.5em;
+    .lt-ie9 & { padding-left: 0; }
     &::before {
       position: absolute;
       left: 0;
