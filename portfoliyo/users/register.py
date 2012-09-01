@@ -13,7 +13,7 @@ from .forms import RegistrationForm
 
 class RegistrationBackend(DefaultBackend):
     """Custom registration backend that doesn't require username."""
-    def register(self, request, name, email, password, role):
+    def register(self, request, name, email, password, role, **kwargs):
         """
         Create inactive user and profile with given data.
 
@@ -25,7 +25,7 @@ class RegistrationBackend(DefaultBackend):
         activation.
 
         """
-        username = b64encode(sha1(email))
+        username = b64encode(sha1(email).digest())
 
         new_user = User.objects.create_user(username, email, password)
         new_user.is_active = False

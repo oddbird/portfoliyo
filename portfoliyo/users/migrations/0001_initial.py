@@ -13,35 +13,15 @@ class Migration(SchemaMigration):
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
             ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('email', self.gf('django.db.models.fields.EmailField')(max_length=255)),
-            ('receive_emails', self.gf('django.db.models.fields.BooleanField')(default=True)),
-            ('birthdate', self.gf('django.db.models.fields.DateTimeField')(blank=True)),
-            ('pic', self.gf('django.db.models.fields.files.ImageField')(max_length=255, blank=True)),
-            ('altpic', self.gf('django.db.models.fields.files.ImageField')(max_length=255, blank=True)),
-            ('fave_subject', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('fave_food', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('fave_sport', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
-            ('fave_color', self.gf('django.db.models.fields.CharField')(max_length=200, blank=True)),
+            ('phone', self.gf('django.contrib.localflavor.us.models.PhoneNumberField')(max_length=20, blank=True)),
+            ('role', self.gf('django.db.models.fields.CharField')(max_length=200)),
         ))
         db.send_create_signal('users', ['Profile'])
-
-        # Adding model 'Relationship'
-        db.create_table('users_relationship', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('from_user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='relationships_from', to=orm['auth.User'])),
-            ('to_user', self.gf('django.db.models.fields.related.ForeignKey')(related_name='relationships_to', to=orm['auth.User'])),
-            ('relationship', self.gf('django.db.models.fields.CharField')(default='supports', max_length=20)),
-            ('notifications', self.gf('django.db.models.fields.CharField')(default='email', max_length=20)),
-        ))
-        db.send_create_signal('users', ['Relationship'])
 
 
     def backwards(self, orm):
         # Deleting model 'Profile'
         db.delete_table('users_profile')
-
-        # Deleting model 'Relationship'
-        db.delete_table('users_relationship')
 
 
     models = {
@@ -61,7 +41,7 @@ class Migration(SchemaMigration):
         'auth.user': {
             'Meta': {'object_name': 'User'},
             'date_joined': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '75', 'blank': 'True'}),
+            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'first_name': ('django.db.models.fields.CharField', [], {'max_length': '30', 'blank': 'True'}),
             'groups': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['auth.Group']", 'symmetrical': 'False', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
@@ -83,26 +63,11 @@ class Migration(SchemaMigration):
         },
         'users.profile': {
             'Meta': {'object_name': 'Profile'},
-            'altpic': ('django.db.models.fields.files.ImageField', [], {'max_length': '255', 'blank': 'True'}),
-            'birthdate': ('django.db.models.fields.DateTimeField', [], {'blank': 'True'}),
-            'email': ('django.db.models.fields.EmailField', [], {'max_length': '255'}),
-            'fave_color': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'fave_food': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'fave_sport': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'fave_subject': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'pic': ('django.db.models.fields.files.ImageField', [], {'max_length': '255', 'blank': 'True'}),
-            'receive_emails': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
+            'phone': ('django.contrib.localflavor.us.models.PhoneNumberField', [], {'max_length': '20', 'blank': 'True'}),
+            'role': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
-        },
-        'users.relationship': {
-            'Meta': {'object_name': 'Relationship'},
-            'from_user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_from'", 'to': "orm['auth.User']"}),
-            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'notifications': ('django.db.models.fields.CharField', [], {'default': "'email'", 'max_length': '20'}),
-            'relationship': ('django.db.models.fields.CharField', [], {'default': "'supports'", 'max_length': '20'}),
-            'to_user': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_to'", 'to': "orm['auth.User']"})
         }
     }
 

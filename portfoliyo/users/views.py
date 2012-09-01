@@ -59,7 +59,7 @@ def password_change(request):
 def password_reset(request):
     response = auth_views.password_reset(
         request,
-        password_reset_form=auth_forms.PasswordResetForm,
+        password_reset_form=forms.PasswordResetForm,
         template_name="users/password_reset.html",
         email_template_name="registration/password_reset_email.txt",
         subject_template_name="registration/password_reset_subject.txt",

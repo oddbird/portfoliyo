@@ -11,7 +11,7 @@
 {% block metanav %}
 <nav class="main-login">
   <a href="{% url login %}" class="login-link">Login</a>
-  {% include "users/_login_form.html" %}
+  {% include "users/_login_form.html" with form=login_form %}
 </nav>
 {% endblock metanav %}
 
