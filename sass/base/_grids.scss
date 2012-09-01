@@ -1,0 +1,28 @@
+// ---------------------------------------------------------------------------
+// Grid Backgrounds
+
+$grid-background-baseline-height  : $base-line-height;
+$grid-background-baseline-color   : rgba($base1,.25);
+$grid-background-column-color     : rgba($base2,.25);
+
+$show-column-grid-backgrounds     : true;
+$show-baseline-grid-backgrounds   : true;
+$show-grid-backgrounds            : false;
+
+// ---------------------------------------------------------------------------
+// Grids
+
+$total-columns  : 6;
+$column-width   : 4.5em;
+$gutter-width   : 1em;
+$grid-padding   : 1em;
+
+$half-small     : $total-columns/2;
+
+$break-cols     : 12;
+$break-width    : columns-width(6);
+$break          : $break-width $break-cols;
+
+$left           : 2;
+$right          : 2;
+$center         : $break-cols - $left - $right;

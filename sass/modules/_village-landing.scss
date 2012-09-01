@@ -1,20 +1,4 @@
 // ---------------------------------------------------------------------------
-// Settings
-
-$total-columns: 6;
-$landing-break: 50em 12;
-
-// ---------------------------------------------------------------------------
-// Brand
-
-.brand {
-  @include span-columns(3);
-  @include at-breakpoint($landing-break) {
-    @include span-columns($left);
-  }
-}
-
-// ---------------------------------------------------------------------------
 // Main Login
 
 .main-login {
@@ -37,7 +21,7 @@ $landing-break: 50em 12;
     width: 1em;
   }
 
-  @include at-breakpoint($landing-break) {
+  @include at-breakpoint($break) {
     @include span-columns($center omega);
     .login-link { display: none; }
     .login-form {
@@ -61,7 +45,8 @@ $landing-break: 50em 12;
       right: 102% + gutter(2);
     }
     button {
-      @include sassy-button($first-color: $blue);
+      @include sassy-button-gradient($base-color: $blue);
+      background-color: $blue;
       width: 100%;
     }
   }
@@ -126,8 +111,8 @@ $landing-break: 50em 12;
 // Intro
 
 .intro {
-  @include container($total-columns,$landing-break);
-  @include at-breakpoint($landing-break) {
+  @include container($total-columns,$break);
+  @include at-breakpoint($break) {
     .summary { @include span-columns(5 omega); }
     .screenshot {
       @include span-columns(7);
@@ -197,7 +182,7 @@ $space: 'landing/space.png';
   background-attachment: fixed;
   color: $base1;
 
-  .container { @include container($total-columns,$landing-break); }
+  .container { @include container($total-columns,$break); }
   .fn {
     @include adjust-font-size-to($medpx);
     color: $base2;
@@ -214,7 +199,7 @@ $space: 'landing/space.png';
     clear: both;
     padding: rhythm(1);
     p { margin: 0; }
-    @include at-breakpoint($landing-break) {
+    @include at-breakpoint($break) {
       @include pad(3,3);
     }
   }
@@ -242,7 +227,7 @@ $space: 'landing/space.png';
       }
     }
 
-    @include at-breakpoint($landing-break) {
+    @include at-breakpoint($break) {
       $pre      : 1;
       $pics     : 2;
 

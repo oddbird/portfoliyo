@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
+#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, [role="navigation"] .me:before, [role="navigation"] .net:before, [role="navigation"] .myvillage:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before {
+#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before {
   margin-right: .4em;
 }
 
@@ -184,16 +184,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e004";
 }
 
-[role="navigation"] .net:before {
-  content: "\e006";
-}
-
 .meta a:before, .meta [href*="/edit/"]:before {
   content: "\e007";
-}
-
-[role="navigation"] .me:before {
-  content: "\e008";
 }
 
 .meta [href*="/signup/"]:before {
@@ -204,7 +196,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00a";
 }
 
-.brand .wordmark:before, [role="navigation"] .myvillage:before {
+.brand .wordmark:before {
   content: "\e00d";
 }
 
@@ -282,7 +274,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.brand .wordmark, .village-landing .formfield .action-betasignup {
+.meta a, .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -309,21 +301,21 @@ img {
   border: 1px solid #073642;
 }
 
-.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .village-landing h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .village-landing h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .village-landing h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .village-landing h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .village-landing h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .village-landing h6 {
+.village-landing h1, .village-landing h2, .village-landing h3, .village-landing h4, .village-landing h5, .village-landing h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .village-landing p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .village-landing ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .village-landing ol {
+.village-landing p, .village-landing ul, .village-landing ol {
   margin-bottom: 1.27778em;
 }
-.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .village-landing ul {
+.village-landing ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .village-landing em {
+.village-landing em {
   font-style: italic;
 }
-.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .village-landing strong {
+.village-landing strong {
   font-weight: 500;
 }
 
@@ -398,7 +390,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('../images/rgbapng/ffffff40.png?1346441289');
+  background: url('../images/rgbapng/ffffff40.png?1346451158');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -410,7 +402,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   padding: 0 .5em;
 }
 
-.linkaction:link, .linkaction:visited, button {
+.linkaction, button {
   margin: 0;
   background-color: #859900;
   font-size: 18px;
@@ -424,8 +416,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF859900', endColorstr='#FF2C3300');
+  background-color: #859900;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #859900), color-stop(100%, #596600));
   background: -webkit-linear-gradient(#859900, #596600);
   background: -moz-linear-gradient(#859900, #596600);
@@ -439,10 +430,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   color: #fdf6e3;
   text-shadow: #121400 0 -1px 0;
 }
-.linkaction:hover:link, .linkaction:hover:visited, button:hover {
+.linkaction:hover, button:hover {
   text-decoration: none;
 }
-.linkaction:hover:link, .linkaction:hover:visited, button:hover {
+.linkaction:hover, button:hover {
   background-color: #424d00;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
   background: -webkit-linear-gradient(#6f8000, #424d00);
@@ -451,12 +442,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   background: -ms-linear-gradient(#6f8000, #424d00);
   background: linear-gradient(#6f8000, #424d00);
 }
-.linkaction:active:link, .linkaction:active:visited, button:active {
+.linkaction:active, button:active {
   -webkit-box-shadow: #353d00 0 1px 2px inset;
   -moz-box-shadow: #353d00 0 1px 2px inset;
   box-shadow: #353d00 0 1px 2px inset;
 }
-.disabled.linkaction:link, .disabled.linkaction:visited, button.disabled, [disabled].linkaction:link, [disabled].linkaction:visited, button[disabled] {
+.disabled.linkaction, button.disabled, [disabled].linkaction, button[disabled] {
   opacity: 0.6;
   background: #596600;
   cursor: default;
@@ -464,7 +455,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.linkaction:link::-moz-focus-inner, .linkaction:visited::-moz-focus-inner, button::-moz-focus-inner {
+.linkaction::-moz-focus-inner, button::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
@@ -483,7 +474,6 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 
 .formfield {
-  *zoom: 1;
   margin-bottom: 0.63889em;
   position: relative;
 }
@@ -557,10 +547,6 @@ textarea {
   min-height: 2.46429em;
 }
 
-.village-app .container, .village-app [role="banner"], .village-app [role="contentinfo"] {
-  min-width: 50em;
-}
-
 .initial-password, .village-landing .membership {
   margin-left: -1em;
   padding-left: 1em;
@@ -569,7 +555,6 @@ textarea {
 }
 
 .initial-password, .formblock.elders {
-  *zoom: 1;
   background: #eee8d5;
 }
 .initial-password:after, .formblock.elders:after {
@@ -585,47 +570,77 @@ textarea {
   margin-bottom: 1.27778em;
 }
 
-.login, .register, .edit-profile, .reset-password, .change-password, .set-password {
-  padding-left: 16.92308%;
-  padding-right: 16.92308%;
+@media (min-width: 36em) {
+  .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
+    white-space: nowrap;
+    overflow: hidden;
+    -ms-text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    width: 31.95876%;
+    float: left;
+    margin-right: 2.06186%;
+    padding: 0.31944em 0;
+    text-align: right;
+  }
+  .login label + input, .register label + input, .edit-profile label + input, .reset-password label + input, .change-password label + input, .set-password label + input, .initial-password label + input, .login label + textarea, .register label + textarea, .edit-profile label + textarea, .reset-password label + textarea, .change-password label + textarea, .set-password label + textarea, .initial-password label + textarea {
+    width: 65.97938%;
+    float: right;
+    margin-right: 0;
+  }
+  .login [type="checkbox"] + label, .register [type="checkbox"] + label, .edit-profile [type="checkbox"] + label, .reset-password [type="checkbox"] + label, .change-password [type="checkbox"] + label, .set-password [type="checkbox"] + label, .initial-password [type="checkbox"] + label, .login [type="radio"] + label, .register [type="radio"] + label, .edit-profile [type="radio"] + label, .reset-password [type="radio"] + label, .change-password [type="radio"] + label, .set-password [type="radio"] + label, .initial-password [type="radio"] + label {
+    float: none;
+    width: auto;
+    margin-right: auto;
+    margin-left: 34.02062%;
+    display: inline-block;
+    padding: 0;
+    text-align: left;
+  }
 }
 
-.login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  width: 23.25581%;
-  float: left;
-  margin-right: 2.32558%;
-  padding: 0.31944em 0;
-  text-align: right;
+@media (min-width: 36em) {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
+    padding-right: 25.38462%;
+  }
+  .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2 {
+    padding-left: 34.02062%;
+  }
 }
-.login label + input, .register label + input, .edit-profile label + input, .reset-password label + input, .change-password label + input, .set-password label + input, .login label + textarea, .register label + textarea, .edit-profile label + textarea, .reset-password label + textarea, .change-password label + textarea, .set-password label + textarea {
-  width: 74.4186%;
-  float: right;
-  margin-right: 0;
-  #margin-left: -1em;
+
+.pagehead {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
 }
-.login [type="checkbox"] + label, .register [type="checkbox"] + label, .edit-profile [type="checkbox"] + label, .reset-password [type="checkbox"] + label, .change-password [type="checkbox"] + label, .set-password [type="checkbox"] + label, .login [type="radio"] + label, .register [type="radio"] + label, .edit-profile [type="radio"] + label, .reset-password [type="radio"] + label, .change-password [type="radio"] + label, .set-password [type="radio"] + label {
-  float: none;
-  width: auto;
+
+[role="banner"], [role="contentinfo"], [role="main"] .container {
+  max-width: 34em;
+  margin-left: auto;
   margin-right: auto;
-  #margin-left: auto;
-  margin-left: 25.5814%;
-  display: inline-block;
-  padding: 0;
-  text-align: left;
+  padding-left: 1em;
+  padding-right: 1em;
+  -webkit-background-origin: content;
+  -moz-background-origin: content;
+  -ms-background-origin: content-box;
+  -o-background-origin: content-box;
+  background-origin: content-box;
+  -webkit-background-clip: content-box;
+  -moz-background-clip: content-box;
+  background-clip: content-box;
+}
+[role="banner"]:after, [role="contentinfo"]:after, [role="main"] .container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media (min-width: 36em) {
+  [role="banner"], [role="contentinfo"], [role="main"] .container {
+    max-width: 67em;
+  }
 }
 
 [role="banner"], [role="contentinfo"] {
-  *zoom: 1;
-  clear: both;
-}
-[role="banner"]:after, [role="contentinfo"]:after {
-  content: "";
-  display: table;
   clear: both;
 }
 [role="banner"] a:link, [role="contentinfo"] a:link, [role="banner"] a:visited, [role="contentinfo"] a:visited {
@@ -644,46 +659,28 @@ textarea {
   color: rgba(238, 232, 213, 0.75);
 }
 
-.container, [role="banner"], [role="contentinfo"] {
-  *zoom: 1;
-  max-width: 67em;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 1em;
-  padding-right: 1em;
-  -webkit-background-origin: content;
-  -moz-background-origin: content;
-  -ms-background-origin: content-box;
-  -o-background-origin: content-box;
-  background-origin: content-box;
-  -webkit-background-clip: content-box;
-  -moz-background-clip: content-box;
-  background-clip: content-box;
-}
-.container:after, [role="banner"]:after, [role="contentinfo"]:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.pagehead {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  margin-bottom: 0.65714em;
-}
-
-.brand .wordmark, .meta a {
+.meta a {
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
 }
 
 .brand {
-  width: 15.38462%;
+  width: 48.4375%;
   float: left;
-  margin-right: 1.53846%;
+  margin-right: 3.125%;
+}
+@media (min-width: 36em) {
+  .brand {
+    width: 32.30769%;
+    float: left;
+    margin-right: 1.53846%;
+  }
 }
 .brand .wordmark {
+  line-height: 2.55556em;
+  height: 2.55556em;
   display: block;
+  overflow: hidden;
 }
 .brand .wordmark::before {
   margin: 0;
@@ -692,55 +689,39 @@ textarea {
   font-weight: bold;
 }
 
-[role="navigation"] {
-  width: 66.15385%;
-  float: left;
-  margin-right: 1.53846%;
-}
-[role="navigation"] ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-}
-[role="navigation"] ul li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-[role="navigation"] li {
-  float: left;
-  width: auto;
-  margin-right: 2.32558%;
-  min-width: 10.46512%;
-}
-
 .meta {
-  width: 15.38462%;
+  width: 48.4375%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
   position: relative;
+  text-align: right;
+}
+@media (min-width: 36em) {
+  .meta {
+    width: 15.38462%;
+    float: right;
+    margin-right: 0;
+  }
 }
 .meta a {
   display: block;
 }
-.meta b {
-  font-weight: bold;
-}
 
 .useractions {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  margin: 0 -0.63889em;
+  margin: 0 -0.82143em;
   background: #073642;
+  text-align: left;
   z-index: 900;
   display: none;
 }
 .useractions a {
-  padding: 0.63889em;
+  padding: 0.82143em;
 }
 .meta:hover .useractions {
   display: block;
@@ -771,40 +752,17 @@ textarea {
   font-weight: bold;
 }
 
-.initial-password {
-  margin-left: -25.5814%;
-  padding-left: 25.5814%;
-  margin-right: -25.5814%;
-  padding-right: 25.5814%;
-  padding-top: 1.27778em;
-}
-.initial-password label {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  width: 23.25581%;
-  float: left;
-  margin-right: 2.32558%;
-  padding: 0.31944em 0;
-  text-align: right;
-}
-.initial-password label + input, .initial-password label + textarea {
-  width: 74.4186%;
-  float: right;
-  margin-right: 0;
-  #margin-left: -1em;
-}
-.initial-password [type="checkbox"] + label, .initial-password [type="radio"] + label {
-  float: none;
-  width: auto;
-  margin-right: auto;
-  #margin-left: auto;
-  margin-left: 25.5814%;
-  display: inline-block;
-  padding: 0;
-  text-align: left;
+@media (min-width: 36em) {
+  .initial-password {
+    margin-right: -34.02062%;
+    padding-right: 34.02062%;
+    padding-top: 1.27778em;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  .initial-password label {
+    padding-left: 1.27778em;
+  }
 }
 
 .village-app [role="main"] {
@@ -812,7 +770,6 @@ textarea {
 }
 
 .village {
-  *zoom: 1;
   -webkit-transition: height 150ms;
   -moz-transition: height 150ms;
   -ms-transition: height 150ms;
@@ -924,7 +881,6 @@ textarea {
 }
 
 .note {
-  *zoom: 1;
   border-bottom-style: solid;
   border-bottom-width: 0.05556em;
   padding-bottom: 0.26389em;
@@ -954,7 +910,6 @@ textarea {
 }
 .note .body {
   overflow: hidden;
-  *zoom: 1;
   font-size: 0.77778em;
   line-height: 1.64286em;
 }
@@ -1043,7 +998,6 @@ textarea {
   width: 66.15385%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
   padding-left: 8.46154%;
   padding-right: 8.46154%;
   margin-right: 16.92308%;
@@ -1080,13 +1034,11 @@ textarea {
   width: 65.625%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .formblock.elders [type="checkbox"] + label, .formblock.elders [type="radio"] + label {
   float: none;
   width: auto;
   margin-right: auto;
-  #margin-left: auto;
   margin-left: 34.375%;
   display: inline-block;
   padding: 0;
@@ -1103,7 +1055,6 @@ textarea {
 }
 .formblock.elders .formset {
   overflow: hidden;
-  *zoom: 1;
   position: relative;
 }
 .formblock.elders .formset + .formset {
@@ -1191,7 +1142,7 @@ textarea {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1346441138');
+  background: url('../images/rgbapng/002b3640.png?1346451158');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
@@ -1214,19 +1165,19 @@ textarea {
   line-height: 1em;
 }
 .message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1346441138');
+  background: url('../images/rgbapng/268bd2e5.png?1346451158');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: url('../images/rgbapng/859900e5.png?1346441138');
+  background: url('../images/rgbapng/859900e5.png?1346451158');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1346441138');
+  background: url('../images/rgbapng/b58900e5.png?1346451158');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1346441138');
+  background: url('../images/rgbapng/dc322fe5.png?1346451158');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -1266,19 +1217,6 @@ textarea {
   color: #002b36;
 }
 
-.brand {
-  width: 48.4375%;
-  float: left;
-  margin-right: 3.125%;
-}
-@media (min-width: 56.25em) {
-  .brand {
-    width: 15.38462%;
-    float: left;
-    margin-right: 1.53846%;
-  }
-}
-
 .main-login .login-form {
   display: none;
   position: relative;
@@ -1305,8 +1243,7 @@ textarea {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF268BD2', endColorstr='#FF16527C');
+  background-color: #268bd2;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #268bd2), color-stop(100%, #1e6ea7));
   background: -webkit-linear-gradient(#268bd2, #1e6ea7);
   background: -moz-linear-gradient(#268bd2, #1e6ea7);
@@ -1356,7 +1293,7 @@ textarea {
   display: inline-block;
   width: 1em;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 36em) {
   .main-login {
     width: 66.15385%;
     float: right;
@@ -1390,59 +1327,46 @@ textarea {
     right: 112%;
   }
   .main-login button {
-    font-size: 18px;
-    padding: 0.31944em 1.27778em;
-    display: inline-block;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: 1.27778em;
-    -webkit-border-radius: 0.125em;
-    -moz-border-radius: 0.125em;
-    -ms-border-radius: 0.125em;
-    -o-border-radius: 0.125em;
-    border-radius: 0.125em;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #268bd2), color-stop(100%, #1e6ea7));
-    background: -webkit-linear-gradient(#268bd2, #1e6ea7);
-    background: -moz-linear-gradient(#268bd2, #1e6ea7);
-    background: -o-linear-gradient(#268bd2, #1e6ea7);
-    background: -ms-linear-gradient(#268bd2, #1e6ea7);
-    background: linear-gradient(#268bd2, #1e6ea7);
-    -webkit-box-shadow: #62ade3 0 1px 0 inset;
-    -moz-box-shadow: #62ade3 0 1px 0 inset;
-    box-shadow: #62ade3 0 1px 0 inset;
-    border: 1px solid #1a6091;
+    background-color: #268bd2;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #62ade3), color-stop(70%, #268bd2));
+    background: -webkit-linear-gradient(#62ade3, #268bd2 70%);
+    background: -moz-linear-gradient(#62ade3, #268bd2 70%);
+    background: -o-linear-gradient(#62ade3, #268bd2 70%);
+    background: -ms-linear-gradient(#62ade3, #268bd2 70%);
+    background: linear-gradient(#62ade3, #268bd2 70%);
+    -webkit-box-shadow: #a3cfee 0 1px 0 inset;
+    -moz-box-shadow: #a3cfee 0 1px 0 inset;
+    box-shadow: #a3cfee 0 1px 0 inset;
+    border: 1px solid #227dbc;
     color: #fdf6e3;
-    text-shadow: #124162 0 -1px 0;
+    text-shadow: #1d6aa0 0 -1px 0;
+    background-color: #268bd2;
     width: 100%;
   }
   .main-login button:hover {
     text-decoration: none;
   }
   .main-login button:hover {
-    background-color: #1a6091;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #227dbc), color-stop(100%, #1a6091));
-    background: -webkit-linear-gradient(#227dbc, #1a6091);
-    background: -moz-linear-gradient(#227dbc, #1a6091);
-    background: -o-linear-gradient(#227dbc, #1a6091);
-    background: -ms-linear-gradient(#227dbc, #1a6091);
-    background: linear-gradient(#227dbc, #1a6091);
+    background-color: #227dbc;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(3%, #4ca2df), color-stop(75%, #227dbc));
+    background: -webkit-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: -moz-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: -o-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: -ms-linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background: linear-gradient(#4ca2df 3%, #227dbc 75%);
   }
   .main-login button:active {
-    -webkit-box-shadow: #185884 0 1px 2px inset;
-    -moz-box-shadow: #185884 0 1px 2px inset;
-    box-shadow: #185884 0 1px 2px inset;
+    -webkit-box-shadow: #2074af 0 1px 2px inset;
+    -moz-box-shadow: #2074af 0 1px 2px inset;
+    box-shadow: #2074af 0 1px 2px inset;
   }
   .main-login button.disabled, .main-login button[disabled] {
     opacity: 0.6;
-    background: #1e6ea7;
+    background: #268bd2;
     cursor: default;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
-  }
-  .main-login button::-moz-focus-inner {
-    padding: 0 !important;
-    margin: -1px !important;
   }
 }
 
@@ -1510,7 +1434,6 @@ textarea {
 }
 .village-landing .formfield {
   overflow: hidden;
-  *zoom: 1;
 }
 .village-landing .formfield::after {
   clear: none;
@@ -1525,11 +1448,9 @@ textarea {
   width: 37.73585%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 
 .intro {
-  *zoom: 1;
   max-width: 34em;
   margin-left: auto;
   margin-right: auto;
@@ -1541,12 +1462,12 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 36em) {
   .intro {
     max-width: 67em;
   }
 }
-@media (min-width: 56.25em) {
+@media (min-width: 36em) {
   .intro .summary {
     width: 40.76923%;
     float: right;
@@ -1613,21 +1534,20 @@ textarea {
   background-attachment: fixed;
   color: #93a1a1;
 }
-.team .container, .team [role="banner"], .team [role="contentinfo"] {
-  *zoom: 1;
+.team .container {
   max-width: 34em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
 }
-.team .container:after, .team [role="banner"]:after, .team [role="contentinfo"]:after {
+.team .container:after {
   content: "";
   display: table;
   clear: both;
 }
-@media (min-width: 56.25em) {
-  .team .container, .team [role="banner"], .team [role="contentinfo"] {
+@media (min-width: 36em) {
+  .team .container {
     max-width: 67em;
   }
 }
@@ -1652,7 +1572,7 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1346441872');
+  background: url('../images/rgbapng/586e7540.png?1346451158');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1660,14 +1580,13 @@ textarea {
 .team .pyo p {
   margin: 0;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 36em) {
   .team .pyo {
     padding-left: 25.38462%;
     padding-right: 25.38462%;
   }
 }
 .team .dev {
-  *zoom: 1;
   margin-bottom: 1.27778em;
 }
 .team .dev:after {
@@ -1679,7 +1598,6 @@ textarea {
   width: 65.625%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .team .dev .photo {
   width: 31.25%;
@@ -1721,9 +1639,8 @@ textarea {
   border-bottom-left-radius: 0.64em;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
-@media (min-width: 56.25em) {
+@media (min-width: 36em) {
   .team .dev:nth-child(even) {
     padding-left: 8.46154%;
     padding-right: 25.38462%;

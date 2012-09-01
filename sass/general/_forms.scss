@@ -70,11 +70,7 @@ $input-rhythm: .25;
   @include sassy-button;
 }
 
-.linkaction {
-  #{$link} {
-    @extend %button;
-  }
-}
+.linkaction { @extend %button; }
 
 .errorlist {
   @include no-style-list;

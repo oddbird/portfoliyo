@@ -18,9 +18,12 @@ $focus  :   "&:focus, &:hover, &:active";
 }
 
 @mixin no-style-link {
-  &:link, &:visited, &:focus, &:hover, &:active {
-    color: inherit;
-  }
+  #{$link}, #{$focus} { color: inherit; }
+}
+
+@mixin camolink {
+  #{$link} { color: inherit; }
+  #{$focus} { color: $accent; }
 }
 
 // ---------------------------------------------------------------------------

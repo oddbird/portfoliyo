@@ -3,23 +3,17 @@
 
 $boiler-link-color: $base3;
 
+%container {
+  @include container($total-columns, $break);
+  @include susy-grid-background;
+}
+
 %boilerplate {
-  @extend .container;
-  @include pie-clearfix;
+  @extend %container;
   clear: both;
   a {
     #{$link} { color: $boiler-link-color; }
     #{$focus} { color: mix($boiler-link-color,$accent); }
   }
   @include placeholder { color: rgba($base2,.75); }
-}
-
-.container {
-  @include container;
-  @include susy-grid-background;
-}
-
-.pagehead {
-  @include adjust-font-size-to($largepx);
-  @include trailer(1,$largepx);
 }
