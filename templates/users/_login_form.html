@@ -1,10 +1,11 @@
+{% load widget_tweaks %}
+
 <form method="POST" action="{% url login %}" class="login-form">
   {% csrf_token %}
   {{ form.non_field_errors }}
 
-  {% include "forms/_field.html" with field=form.username label="email" %}
-
-  {% include "forms/_field.html" with field=form.password label="password" %}
+  {% include "forms/_field.html" with field=form.username|attr:"placeholder:email or phone" label="email" %}
+  {% include "forms/_field.html" with field=form.password|attr:"placeholder:password" label="password" %}
 
   {% if form.captcha %}
 
