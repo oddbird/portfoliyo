@@ -69,7 +69,7 @@ def password_reset(request):
     if response.status_code == 302:
         messages.success(
             request,
-            u"Password reset email sent; check your email."
+            u"Password reset email sent; check your email. "
             u"If you don't receive an email, verify that you are entering the "
             u"email address you signed up with, and try again."
             )
