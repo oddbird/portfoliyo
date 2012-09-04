@@ -70,6 +70,15 @@ $input-rhythm: .25;
   @include sassy-button;
 }
 
+%reset-button {
+  @include reset-box-model;
+  @include reset-font;
+  @include box-shadow(none);
+  @include text-shadow(none);
+  background: inherit;
+  color: inherit;
+}
+
 .linkaction { @extend %button; }
 
 .errorlist {

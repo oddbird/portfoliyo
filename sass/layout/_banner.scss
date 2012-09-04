@@ -70,7 +70,13 @@ $banner-leading: 1 + $banner-rhythm*2;
 
   [href*="/edit/"] { @extend %icon-settings; }
   [href*="/password_change/"] { @extend %icon-key; }
-  [href*="/signup/"] { @extend %icon-exit; }
+  button {
+    @extend %reset-button;
+    @extend %icon;
+    @extend %icon-exit;
+    @extend %banner-item;
+    @include link(light);
+  }
 }
 
 $useraction-size: $smallpx;
@@ -85,7 +91,7 @@ $useraction-size: $smallpx;
   z-index: 900;
   display: none;
 
-  a { padding: rhythm($banner-rhythm, $useraction-size); }
+  a, button { padding: rhythm($banner-rhythm, $useraction-size); }
   .meta:hover & { display: block; }
 }
 

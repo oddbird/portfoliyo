@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
+#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before {
+#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before {
   margin-right: .4em;
 }
 
@@ -188,7 +188,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e007";
 }
 
-.meta [href*="/signup/"]:before {
+.meta button:before {
   content: "\e009";
 }
 
@@ -460,6 +460,21 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   margin: -1px !important;
 }
 
+.meta button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  text-shadow: none;
+  background: inherit;
+  color: inherit;
+}
+
 .errorlist {
   margin: 0;
   padding: 0;
@@ -648,6 +663,7 @@ textarea {
 }
 [role="banner"] a:link, [role="contentinfo"] a:link, [role="banner"] a:visited, [role="contentinfo"] a:visited {
   color: #fdf6e3;
+  text-decoration: none;
 }
 [role="banner"] a:focus, [role="contentinfo"] a:focus, [role="banner"] a:hover, [role="contentinfo"] a:hover, [role="banner"] a:active, [role="contentinfo"] a:active {
   color: #e896b2;
@@ -662,7 +678,7 @@ textarea {
   color: rgba(238, 232, 213, 0.75);
 }
 
-.meta a {
+.meta a, .meta button {
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
 }
@@ -709,6 +725,13 @@ textarea {
 .meta a {
   display: block;
 }
+.meta button:link, .meta button:visited {
+  color: #fdf6e3;
+  text-decoration: none;
+}
+.meta button:focus, .meta button:hover, .meta button:active {
+  color: #e896b2;
+}
 
 .useractions {
   font-size: 0.77778em;
@@ -723,7 +746,7 @@ textarea {
   z-index: 900;
   display: none;
 }
-.useractions a {
+.useractions a, .useractions button {
   padding: 0.82143em;
 }
 .meta:hover .useractions {
