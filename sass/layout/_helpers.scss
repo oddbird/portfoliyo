@@ -53,9 +53,10 @@ $simple-center: $simple-width - $simple-side;
 
 %simple-form {
   @extend %simple-inline-form;
+  p { @include trailer; }
   @include at-breakpoint($break) {
     @include suffix($simple-side);
-    h2 { @include prefix($simple-side, $simple-width); }
+    h2, p, ul, ol { @include prefix($simple-side, $simple-width); }
   }
 }
 

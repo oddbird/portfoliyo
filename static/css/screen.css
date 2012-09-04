@@ -390,7 +390,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('../images/rgbapng/ffffff40.png?1346451158');
+  background: url('../images/rgbapng/ffffff40.png?1346789020');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -599,11 +599,14 @@ textarea {
   }
 }
 
+.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p {
+  margin-bottom: 1.27778em;
+}
 @media (min-width: 36em) {
   .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
     padding-right: 25.38462%;
   }
-  .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2 {
+  .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol {
     padding-left: 34.02062%;
   }
 }
@@ -1142,7 +1145,7 @@ textarea {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1346451158');
+  background: url('../images/rgbapng/002b3640.png?1346789020');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
@@ -1165,19 +1168,19 @@ textarea {
   line-height: 1em;
 }
 .message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1346451158');
+  background: url('../images/rgbapng/268bd2e5.png?1346789020');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: url('../images/rgbapng/859900e5.png?1346451158');
+  background: url('../images/rgbapng/859900e5.png?1346789020');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1346451158');
+  background: url('../images/rgbapng/b58900e5.png?1346789020');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1346451158');
+  background: url('../images/rgbapng/dc322fe5.png?1346789020');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -1572,7 +1575,7 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1346451158');
+  background: url('../images/rgbapng/586e7540.png?1346789020');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
