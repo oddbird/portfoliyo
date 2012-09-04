@@ -15,8 +15,14 @@
 @import "modules/user-edit";
 @import "modules/user-password";
 
+// App
+$original-cols: $total-columns;
+$total-columns: $break-cols;
+
 @import "modules/village";
 @import "modules/village-forms";
+
+$total-columns: $original-cols;
 
 // @import "modules/feed-profile";
 // @import "modules/feed-combined";

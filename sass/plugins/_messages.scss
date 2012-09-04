@@ -1,6 +1,11 @@
 // ---------------------------------------------------------------------------
 // User Messages
 
+@mixin message($c: $blue, $i: info-circle) {
+  @extend %icon-#{$i};
+  @include rgba-background(rgba($c,.9));
+}
+
 .message {
   @extend %icon;
   @include padding-leader(.5);
@@ -10,22 +15,12 @@
   padding-right: $grid-padding;
   border-color: $base;
   &::before { @include adjust-font-size-to($medpx,1); }
-  &.info {
-    @extend %icon-info-circle;
-    background: rgba($blue,.9);
-  }
-  &.success {
-    @extend %icon-checkmark;
-    background: rgba($green,.9);
-  }
-  &.warning {
-    @extend %icon-warning;
-    background: rgba($yellow,.9);
-  }
-  &.error {
-    @extend %icon-x;
-    background: rgba($red,.9);
-  }
+
+  &.info { @include message($blue, info-circle); }
+  &.success { @include message($green, checkmark); }
+  &.warning { @include message($yellow, warning); }
+  &.error { @include message($red, x); }
+
   p { display: inline; }
 }
 

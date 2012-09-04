@@ -5,6 +5,7 @@ require 'modular-scale'
 require 'sassy-buttons'
 require 'breakpoint'
 require 'compass-css-arrow'
+require 'rgbapng'
 # Require any additional compass plugins here.
 
 project_type = :stand_alone

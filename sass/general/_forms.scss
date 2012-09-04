@@ -55,12 +55,13 @@ $input-rhythm: .25;
   @include adjust-font-size-to($input-font-size);
   @include rhythm-borders(1px,$input-rhythm,$input-font-size);
   @include box-shadow(inset rgba($blue,.5) 0 0 $xxxsmallem);
+  @include rgba-background(rgba(white,.25));
   width: 100%;
-  background: rgba(white,.25);
   color: inherit;
   border-color: inherit;
   vertical-align: top;
   outline: 0;
+  .lt-ie9 & { padding: 0 .5em; }
 }
 
 %button {
@@ -69,11 +70,7 @@ $input-rhythm: .25;
   @include sassy-button;
 }
 
-.linkaction {
-  #{$link} {
-    @extend %button;
-  }
-}
+.linkaction { @extend %button; }
 
 .errorlist {
   @include no-style-list;

@@ -1,9 +1,4 @@
 // ---------------------------------------------------------------------------
-// Static
-
-%static { min-width: 50em; }
-
-// ---------------------------------------------------------------------------
 // Bleed
 
 @mixin bleed($padding: $grid-padding, $sides: left right) {
@@ -39,11 +34,32 @@
 // ---------------------------------------------------------------------------
 // Simple Pages/Forms
 
+$simple-side: 3;
+$simple-width: $break-cols - $simple-side;
+$simple-center: $simple-width - $simple-side;
+
 %simple-page {
   @extend %type;
-  @include pad($left,$right);
+  @include at-breakpoint($break) {
+    @include pad($simple-side,$simple-side);
+  }
+}
+
+%simple-inline-form {
+  @include at-breakpoint($break) {
+    @include inline-form($simple-side, $simple-center, $simple-width);
+  }
 }
 
 %simple-form {
-  @include inline-form;
+  @extend %simple-inline-form;
+  @include at-breakpoint($break) {
+    @include suffix($simple-side);
+    h2 { @include prefix($simple-side, $simple-width); }
+  }
+}
+
+.pagehead {
+  @include adjust-font-size-to($largepx);
+  @include trailer(1,$largepx);
 }

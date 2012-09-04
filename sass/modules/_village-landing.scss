@@ -1,20 +1,4 @@
 // ---------------------------------------------------------------------------
-// Settings
-
-$total-columns: 6;
-$landing-break: 50em 12 lt-ie9;
-
-// ---------------------------------------------------------------------------
-// Brand
-
-.brand {
-  @include span-columns(3);
-  @include at-breakpoint($landing-break) {
-    @include span-columns($left);
-  }
-}
-
-// ---------------------------------------------------------------------------
 // Main Login
 
 .main-login {
@@ -34,9 +18,10 @@ $landing-break: 50em 12 lt-ie9;
   .reset-link {
     @extend %icon-replace;
     display: inline-block;
+    width: 1em;
   }
 
-  @include at-breakpoint($landing-break) {
+  @include at-breakpoint($break) {
     @include span-columns($center omega);
     .login-link { display: none; }
     .login-form {
@@ -60,7 +45,8 @@ $landing-break: 50em 12 lt-ie9;
       right: 102% + gutter(2);
     }
     button {
-      @include sassy-button($first-color: $blue);
+      @include sassy-button-gradient($base-color: $blue);
+      background-color: $blue;
       width: 100%;
     }
   }
@@ -125,8 +111,8 @@ $landing-break: 50em 12 lt-ie9;
 // Intro
 
 .intro {
-  @include container($total-columns,$landing-break);
-  @include at-breakpoint($landing-break) {
+  @include container($total-columns,$break);
+  @include at-breakpoint($break) {
     .summary { @include span-columns(5 omega); }
     .screenshot {
       @include span-columns(7);
@@ -152,6 +138,7 @@ li {
     @extend %icon-checkmark;
     position: relative;
     padding-left: 1.5em;
+    .lt-ie9 & { padding-left: 0; }
     &::before {
       position: absolute;
       left: 0;
@@ -166,6 +153,8 @@ li {
 
 // ---------------------------------------------------------------------------
 // Team
+
+$space: 'landing/space.png';
 
 @mixin photo(
   $position : left,
@@ -183,17 +172,17 @@ li {
 
 .team {
   @include padding-leader(2);
-  @include background($base03);
+  @include background($base03 image-url($space));
   @include background-image(
     linear-gradient(top, $base03, rgba($base03,0), rgba($base03,0), $base03),
     linear-gradient(left, rgba($base01,.75), rgba($base03,.75), rgba($base03,.75), rgba($base01,.75)),
-    image-url('landing/space.png')
+    image-url($space)
   );
   @include background-size(cover);
   background-attachment: fixed;
   color: $base1;
 
-  .container { @include container($total-columns,$landing-break); }
+  .container { @include container($total-columns,$break); }
   .fn {
     @include adjust-font-size-to($medpx);
     color: $base2;
@@ -206,37 +195,39 @@ li {
     @include trailer(2);
     @include border-radius(rhythm(1));
     @include box-shadow($base03 0 0 rhythm(.5));
+    @include rgba-background(rgba($base01,.25));
     clear: both;
     padding: rhythm(1);
-    background: rgba($base01,.25);
     p { margin: 0; }
-    @include at-breakpoint($landing-break) {
+    @include at-breakpoint($break) {
       @include pad(3,3);
     }
   }
 
   .dev {
-    .fn, .bio { @include span-columns(4); }
-    .bio, .photo { @include trailer(1.5); }
+    @include pie-clearfix;
+    @include trailer(1);
+
+    .fn, .bio { @include span-columns(4 omega); }
     .photo {
       @include span-columns(2);
       @include box-shadow($base 0 0 rhythm(.5));
+      @include photo(left);
       overflow: hidden;
     }
 
-    &:nth-child(even) {
-      .fn, .bio { @include omega; }
-      .photo { @include photo(left); }
-    }
     &:nth-child(odd) {
-      .fn, .bio { text-align: right; }
+      .fn, .bio {
+        float: left;
+        text-align: right;
+      }
       .photo {
         @include photo(right);
         @include omega;
       }
     }
 
-    @include at-breakpoint($landing-break) {
+    @include at-breakpoint($break) {
       $pre      : 1;
       $pics     : 2;
 
