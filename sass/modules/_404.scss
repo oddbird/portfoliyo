@@ -1,0 +1,20 @@
+// 404
+
+.fourohfour {
+  @include layout(6) {
+    @include container;
+    @include rhythm(2,1,2,2);
+    @include border-radius(.5em);
+    @include box-shadow(black 0 0 .25em);
+    background: $base3;
+    color: $base;
+  }
+
+  b { font-weight: bold; }
+  h1 { @include trailer(2);}
+  h2 {
+    @include serif;
+    @include adjust-font-size-to($medpx);
+    font-weight: bold;
+  }
+}

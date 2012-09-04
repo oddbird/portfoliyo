@@ -970,6 +970,46 @@ textarea {
   margin: 0 2.32558%;
 }
 
+.fourohfour {
+  *zoom: 1;
+  max-width: 34em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-top: 2.55556em;
+  padding-top: 1.27778em;
+  padding-bottom: 2.55556em;
+  margin-bottom: 2.55556em;
+  -webkit-border-radius: 0.5em;
+  -moz-border-radius: 0.5em;
+  -ms-border-radius: 0.5em;
+  -o-border-radius: 0.5em;
+  border-radius: 0.5em;
+  -webkit-box-shadow: black 0 0 0.25em;
+  -moz-box-shadow: black 0 0 0.25em;
+  box-shadow: black 0 0 0.25em;
+  background: #fdf6e3;
+  color: #657b83;
+}
+.fourohfour:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.fourohfour b {
+  font-weight: bold;
+}
+.fourohfour h1 {
+  margin-bottom: 2.55556em;
+}
+.fourohfour h2 {
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 1.27778em;
+  line-height: 1.5em;
+  font-weight: bold;
+}
+
 @-moz-keyframes loading {
   0% {
     opacity: 0.25;
@@ -1057,19 +1097,19 @@ textarea {
   line-height: 1em;
 }
 .message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1346437997');
+  background: url('../images/rgbapng/268bd2e5.png?1346776998');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: url('../images/rgbapng/859900e5.png?1346438074');
+  background: url('../images/rgbapng/859900e5.png?1346776998');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1346438074');
+  background: url('../images/rgbapng/b58900e5.png?1346776998');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1346438074');
+  background: url('../images/rgbapng/dc322fe5.png?1346776998');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -1084,7 +1124,7 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/002b367f.png?1346438074');
+  background: url('../images/rgbapng/002b367f.png?1346776998');
   background: rgba(0, 43, 54, 0.5);
   position: fixed;
   top: 0;
