@@ -29,13 +29,13 @@ urlpatterns = patterns(
     url(
         r"^add_village/$",
         login_required(direct_to_template),
-        {"template": "temp/add_village.html"},
+        {"template": "villages/add_village.html"},
         name="add_village",
         ),
     url(
         r"^invite_elder/$",
         login_required(direct_to_template),
-        {"template": "temp/invite_elder.html"},
+        {"template": "villages/invite_elder.html"},
         name="invite_elder",
         ),
     url(r"^admin/", include(admin.site.urls)),
