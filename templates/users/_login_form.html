@@ -1,18 +1,23 @@
-<form method="POST" class="login-form">
-  {# csrf_token #}
-  {# form.non_field_errors #}
+<form method="POST" action="{% url login %}" class="login-form">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
 
-  <div class="formfield username">
-    {# form.username.errors #}
-    <label for="username">email or phone</label>
-    <input type="text" id="username" placeholder="email or phone" />
-  </div>
+  {% include "forms/_field.html" with field=form.username label="email" %}
 
-  <div class="formfield password">
-    {# form.password.errors #}
-    <label for="password">password</label>
-    <input type="password" id="password" placeholder="password" />
-  </div>
+  {% include "forms/_field.html" with field=form.password label="password" %}
+
+  {% if form.captcha %}
+
+  <p>
+    Your account or IP address has failed too many login attempts
+    recently. In order to keep your account secure, we need to verify that
+    you're a real human, not an automated account-cracking bot. Please
+    answer the simple math question below:
+  </p>
+
+  {% include "forms/_field.html" with field=form.captcha %}
+
+  {% endif %}
 
   <div class="form-actions">
     <a href="{% url password_reset %}" class="reset-link" title="forgot your password?">Forgot your password?</a>
