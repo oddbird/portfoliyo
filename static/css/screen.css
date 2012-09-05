@@ -501,9 +501,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 .formhelp {
   font-size: 0.77778em;
   line-height: 1.64286em;
+  display: block;
   clear: both;
+  margin: 0;
   color: #93a1a1;
-  text-align: right;
   font-style: italic;
 }
 
@@ -526,7 +527,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 .iqtest {
   margin-bottom: 2.55556em;
 }
-.iqtest p {
+.iqtest > p {
   margin-top: 1.27778em;
   border-top-style: solid;
   border-top-width: 0.11111em;
@@ -597,6 +598,17 @@ textarea {
   margin-bottom: 1.27778em;
 }
 
+.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2 {
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+@media (min-width: 36em) {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
+    padding-left: 25.38462%;
+    padding-right: 25.38462%;
+  }
+}
+
 @media (min-width: 36em) {
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
     white-space: nowrap;
@@ -604,14 +616,14 @@ textarea {
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 31.95876%;
+    width: 48.4375%;
     float: left;
-    margin-right: 2.06186%;
+    margin-right: 3.125%;
     padding: 0.31944em 0;
     text-align: right;
   }
   .login label + input, .register label + input, .edit-profile label + input, .reset-password label + input, .change-password label + input, .set-password label + input, .initial-password label + input, .login label + textarea, .register label + textarea, .edit-profile label + textarea, .reset-password label + textarea, .change-password label + textarea, .set-password label + textarea, .initial-password label + textarea {
-    width: 65.97938%;
+    width: 100%;
     float: right;
     margin-right: 0;
   }
@@ -619,23 +631,18 @@ textarea {
     float: none;
     width: auto;
     margin-right: auto;
-    margin-left: 34.02062%;
+    margin-left: 51.5625%;
     display: inline-block;
     padding: 0;
     text-align: left;
+  }
+  .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
+    margin-left: -51.5625%;
   }
 }
 
 .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p {
   margin-bottom: 1.27778em;
-}
-@media (min-width: 36em) {
-  .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
-    padding-right: 25.38462%;
-  }
-  .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol {
-    margin-left: 34.02062%;
-  }
 }
 
 .pagehead {

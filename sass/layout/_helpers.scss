@@ -39,25 +39,24 @@ $simple-width: $break-cols - $simple-side;
 $simple-center: $simple-width - $simple-side;
 
 %simple-page {
-  @extend %type;
-  @include at-breakpoint($break) {
-    @include pad($simple-side,$simple-side);
+  h2 {
+    @include serif;
+    font-weight: bold;
   }
+  @include at-breakpoint($break) { @include pad($simple-side,$simple-side); }
 }
 
 %simple-inline-form {
   @include at-breakpoint($break) {
-    @include inline-form($simple-side, $simple-center, $simple-width);
+    @include inline-form($simple-side, $simple-center, $simple-center);
+    label { @include pull($simple-side, $simple-center); }
   }
 }
 
 %simple-form {
+  @extend %simple-page;
   @extend %simple-inline-form;
   p { @include trailer; }
-  @include at-breakpoint($break) {
-    @include suffix($simple-side);
-    h2, p, ul, ol { @include pre($simple-side, $simple-width); }
-  }
 }
 
 .pagehead {
