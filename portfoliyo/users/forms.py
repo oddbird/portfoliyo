@@ -76,6 +76,20 @@ OPERATORS = {
 CAPTCHA_SESSION_KEY = "auth_captcha_answer"
 
 
+class NoRequiredValidationIntegerField(forms.IntegerField):
+    """
+    Disables the built-in "required" validation.
+
+    We want the captcha field to be marked as required, but we want to control
+    the validation of that ourselves in the form's clean_captcha method, so
+    that the first time the captcha field appears it doesn't appear with a
+    "This field is required." error.
+
+    """
+    def validate(self, value):
+        pass
+
+
 
 class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
     """
@@ -85,7 +99,9 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
     particular IP address or for a particular username. Simply locking users
     out in this case creates a potential Denial of Service vulnerability; a
     captcha allows a human to still log in but makes life more difficult for
-    the brute-force attacker.
+    the brute-force attacker. Obviously a dedicated attacker could write a bot
+    to circumvent this captcha, so it's really just a roadblock to casual
+    attacks.
 
     Expected answer to captcha is stored in the session; this avoids replay
     attacks and the need to trust client input, at the cost of somewhat higher
@@ -111,7 +127,7 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
             # store the expected answer in the session
             self.request.session[CAPTCHA_SESSION_KEY] = op(a, b)
 
-            self.fields["captcha"] = forms.IntegerField(
+            self.fields["captcha"] = NoRequiredValidationIntegerField(
                 widget=forms.TextInput,
                 label=u"What is {0} {1} {2}?".format(a, opname, b),
                 )
@@ -132,3 +148,17 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
         if answer != self.captcha_answer:
             raise forms.ValidationError(
                 "Sorry, that's not the answer we were looking for.")
+
+
+    def clean(self):
+        """
+        No username/password validation if captcha validation failed.
+
+        Otherwise, the captcha would do nothing to prevent brute-forcing a
+        username/password combo, since a brute-forcing bot could keep trying
+        usernames and passwords and look for the presence or absence of the
+        "Please supply a valid username/password" error.
+
+        """
+        if not self._errors:
+            return super(CaptchaAuthenticationForm, self).clean()
