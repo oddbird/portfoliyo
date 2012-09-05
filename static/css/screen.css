@@ -523,6 +523,17 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   margin: 0 0.4em 0.82143em 0;
 }
 
+.iqtest {
+  margin-bottom: 2.55556em;
+}
+.iqtest p {
+  margin-top: 1.27778em;
+  border-top-style: solid;
+  border-top-width: 0.11111em;
+  padding-top: 1.16667em;
+  font-style: italic;
+}
+
 [type="checkbox"], [type="radio"] {
   position: absolute;
   clip: rect(0 0 0 0);
@@ -543,6 +554,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 
 label {
   display: block;
+  color: #586e75;
 }
 label:first-letter {
   text-transform: uppercase;
@@ -622,7 +634,7 @@ textarea {
     padding-right: 25.38462%;
   }
   .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol {
-    padding-left: 34.02062%;
+    margin-left: 34.02062%;
   }
 }
 

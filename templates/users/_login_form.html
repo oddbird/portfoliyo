@@ -8,16 +8,16 @@
   {% include "forms/_field.html" with field=form.password|attr:"placeholder:password" label="password" %}
 
   {% if form.captcha %}
+  <div class="iqtest">
+    <p>
+      Your account or IP address has failed too many login attempts
+      recently. In order to keep your account secure, we need to verify that
+      you're a real human, not an automated account-cracking bot. Please
+      answer the simple math question below:
+    </p>
 
-  <p>
-    Your account or IP address has failed too many login attempts
-    recently. In order to keep your account secure, we need to verify that
-    you're a real human, not an automated account-cracking bot. Please
-    answer the simple math question below:
-  </p>
-
-  {% include "forms/_field.html" with field=form.captcha %}
-
+    {% include "forms/_field.html" with field=form.captcha %}
+  </div>
   {% endif %}
 
   <div class="form-actions">
