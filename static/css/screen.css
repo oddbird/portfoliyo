@@ -1270,8 +1270,8 @@ textarea {
   border: 0;
 }
 .main-login .login-link {
-  font-size: 18px;
-  padding: 0.31944em 1.27778em;
+  font-size: 14px;
+  padding: 0.575em;
   display: inline-block;
   cursor: pointer;
   text-decoration: none;
@@ -1281,20 +1281,20 @@ textarea {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background-color: #268bd2;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #268bd2), color-stop(100%, #1e6ea7));
-  background: -webkit-linear-gradient(#268bd2, #1e6ea7);
-  background: -moz-linear-gradient(#268bd2, #1e6ea7);
-  background: -o-linear-gradient(#268bd2, #1e6ea7);
-  background: -ms-linear-gradient(#268bd2, #1e6ea7);
-  background: linear-gradient(#268bd2, #1e6ea7);
-  -webkit-box-shadow: #62ade3 0 1px 0 inset;
-  -moz-box-shadow: #62ade3 0 1px 0 inset;
-  box-shadow: #62ade3 0 1px 0 inset;
-  border: 1px solid #1a6091;
-  color: #fdf6e3;
-  text-shadow: #124162 0 -1px 0;
-  margin-top: 0.31944em;
+  background-color: #657b83;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #657b83), color-stop(100%, #4f6066));
+  background: -webkit-linear-gradient(#657b83, #4f6066);
+  background: -moz-linear-gradient(#657b83, #4f6066);
+  background: -o-linear-gradient(#657b83, #4f6066);
+  background: -ms-linear-gradient(#657b83, #4f6066);
+  background: linear-gradient(#657b83, #4f6066);
+  -webkit-box-shadow: #8da0a7 0 1px 0 inset;
+  -moz-box-shadow: #8da0a7 0 1px 0 inset;
+  box-shadow: #8da0a7 0 1px 0 inset;
+  border: 1px solid #445258;
+  color: #eee8d5;
+  text-shadow: #2b3538 0 -1px 0;
+  margin-top: 0.41071em;
   float: right;
   max-width: 48.4375%;
 }
@@ -1302,30 +1302,26 @@ textarea {
   text-decoration: none;
 }
 .main-login .login-link:hover {
-  background-color: #1a6091;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #227dbc), color-stop(100%, #1a6091));
-  background: -webkit-linear-gradient(#227dbc, #1a6091);
-  background: -moz-linear-gradient(#227dbc, #1a6091);
-  background: -o-linear-gradient(#227dbc, #1a6091);
-  background: -ms-linear-gradient(#227dbc, #1a6091);
-  background: linear-gradient(#227dbc, #1a6091);
+  background-color: #445258;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a6d75), color-stop(100%, #445258));
+  background: -webkit-linear-gradient(#5a6d75, #445258);
+  background: -moz-linear-gradient(#5a6d75, #445258);
+  background: -o-linear-gradient(#5a6d75, #445258);
+  background: -ms-linear-gradient(#5a6d75, #445258);
+  background: linear-gradient(#5a6d75, #445258);
 }
 .main-login .login-link:active {
-  -webkit-box-shadow: #185884 0 1px 2px inset;
-  -moz-box-shadow: #185884 0 1px 2px inset;
-  box-shadow: #185884 0 1px 2px inset;
+  -webkit-box-shadow: #3d4a4f 0 1px 2px inset;
+  -moz-box-shadow: #3d4a4f 0 1px 2px inset;
+  box-shadow: #3d4a4f 0 1px 2px inset;
 }
 .main-login .login-link.disabled, .main-login .login-link[disabled] {
   opacity: 0.6;
-  background: #1e6ea7;
+  background: #4f6066;
   cursor: default;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
-}
-.main-login .login-link::-moz-focus-inner {
-  padding: 0 !important;
-  margin: -1px !important;
 }
 .main-login .reset-link {
   display: inline-block;
@@ -1365,19 +1361,30 @@ textarea {
     right: 112%;
   }
   .main-login button {
-    background-color: #268bd2;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #62ade3), color-stop(70%, #268bd2));
-    background: -webkit-linear-gradient(#62ade3, #268bd2 70%);
-    background: -moz-linear-gradient(#62ade3, #268bd2 70%);
-    background: -o-linear-gradient(#62ade3, #268bd2 70%);
-    background: -ms-linear-gradient(#62ade3, #268bd2 70%);
-    background: linear-gradient(#62ade3, #268bd2 70%);
-    -webkit-box-shadow: #a3cfee 0 1px 0 inset;
-    -moz-box-shadow: #a3cfee 0 1px 0 inset;
-    box-shadow: #a3cfee 0 1px 0 inset;
-    border: 1px solid #227dbc;
-    color: #fdf6e3;
-    text-shadow: #1d6aa0 0 -1px 0;
+    font-size: 14px;
+    padding: 0.575em;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none;
+    line-height: 1.27778em;
+    -webkit-border-radius: 0.125em;
+    -moz-border-radius: 0.125em;
+    -ms-border-radius: 0.125em;
+    -o-border-radius: 0.125em;
+    border-radius: 0.125em;
+    background-color: #657b83;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #657b83), color-stop(100%, #4f6066));
+    background: -webkit-linear-gradient(#657b83, #4f6066);
+    background: -moz-linear-gradient(#657b83, #4f6066);
+    background: -o-linear-gradient(#657b83, #4f6066);
+    background: -ms-linear-gradient(#657b83, #4f6066);
+    background: linear-gradient(#657b83, #4f6066);
+    -webkit-box-shadow: #8da0a7 0 1px 0 inset;
+    -moz-box-shadow: #8da0a7 0 1px 0 inset;
+    box-shadow: #8da0a7 0 1px 0 inset;
+    border: 1px solid #445258;
+    color: #eee8d5;
+    text-shadow: #2b3538 0 -1px 0;
     background-color: #268bd2;
     width: 100%;
   }
@@ -1385,22 +1392,22 @@ textarea {
     text-decoration: none;
   }
   .main-login button:hover {
-    background-color: #227dbc;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(3%, #4ca2df), color-stop(75%, #227dbc));
-    background: -webkit-linear-gradient(#4ca2df 3%, #227dbc 75%);
-    background: -moz-linear-gradient(#4ca2df 3%, #227dbc 75%);
-    background: -o-linear-gradient(#4ca2df 3%, #227dbc 75%);
-    background: -ms-linear-gradient(#4ca2df 3%, #227dbc 75%);
-    background: linear-gradient(#4ca2df 3%, #227dbc 75%);
+    background-color: #445258;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a6d75), color-stop(100%, #445258));
+    background: -webkit-linear-gradient(#5a6d75, #445258);
+    background: -moz-linear-gradient(#5a6d75, #445258);
+    background: -o-linear-gradient(#5a6d75, #445258);
+    background: -ms-linear-gradient(#5a6d75, #445258);
+    background: linear-gradient(#5a6d75, #445258);
   }
   .main-login button:active {
-    -webkit-box-shadow: #2074af 0 1px 2px inset;
-    -moz-box-shadow: #2074af 0 1px 2px inset;
-    box-shadow: #2074af 0 1px 2px inset;
+    -webkit-box-shadow: #3d4a4f 0 1px 2px inset;
+    -moz-box-shadow: #3d4a4f 0 1px 2px inset;
+    box-shadow: #3d4a4f 0 1px 2px inset;
   }
   .main-login button.disabled, .main-login button[disabled] {
     opacity: 0.6;
-    background: #268bd2;
+    background: #4f6066;
     cursor: default;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
