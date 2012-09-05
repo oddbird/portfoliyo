@@ -113,7 +113,6 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
 
             self.fields["captcha"] = forms.IntegerField(
                 widget=forms.TextInput,
-                required=False,
                 label=u"What is {0} {1} {2}?".format(a, opname, b),
                 )
 
