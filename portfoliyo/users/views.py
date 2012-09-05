@@ -8,6 +8,7 @@ from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_POST
 
 from django.contrib.auth import views as auth_views, forms as auth_forms
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
 from ratelimit.decorators import ratelimit
@@ -40,6 +41,7 @@ def logout(request):
 
 
 
+@login_required
 def password_change(request):
     response = auth_views.password_change(
         request,
