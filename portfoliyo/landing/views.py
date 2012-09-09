@@ -6,8 +6,8 @@ from django.template.response import TemplateResponse
 from session_csrf import anonymous_csrf
 
 from ..users.forms import CaptchaAuthenticationForm
+from ..view.ajax import ajax
 
-from .decorators import ajax
 from .forms import LeadForm
 
 

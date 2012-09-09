@@ -1,4 +1,4 @@
-"""Landing page decorators."""
+"""Ajax utilities."""
 from functools import wraps
 
 
