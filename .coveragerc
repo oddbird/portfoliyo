@@ -1,2 +1,4 @@
 [run]
 branch = True
+omit =
+  */migrations/*
