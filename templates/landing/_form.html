@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 
-<form method="POST">
+<form method="POST" id="landing-form">
   {% csrf_token %}
   <div class="formfield">
     {{ form.email.errors }}

@@ -1,6 +1,6 @@
 {% load widget_tweaks %}
 
-<form method="POST" action="{% url login %}" class="login-form">
+<form method="POST" action="{% url login %}" class="login-form" id="loginform">
   {% csrf_token %}
   {{ form.non_field_errors }}
 
