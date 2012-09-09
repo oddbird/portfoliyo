@@ -3,3 +3,4 @@ branch = True
 omit =
   */migrations/*
   */settings/*
+  */wsgi.py
