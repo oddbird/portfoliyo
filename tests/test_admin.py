@@ -14,7 +14,7 @@ def test_login_redirect():
         response = admin.site.login(request)
 
     assert response.status_code == 302
-    assert response['Location'] == "/login/?next=/attempted/path/"
+    assert response['Location'] == '/login/?next=/attempted/path/'
 
 
 
@@ -28,3 +28,13 @@ def test_login_redirect_warning():
 
     assert response.status_code == 302
     assert mock_messages.warning.call_count == 1
+
+
+
+def test_logout():
+    """Logout method is a no-op (redirects to home)."""
+    request = mock.Mock()
+    response = admin.site.logout(request)
+
+    assert response.status_code == 302
+    assert response['Location'] == '/'
