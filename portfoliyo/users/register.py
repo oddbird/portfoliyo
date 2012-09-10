@@ -1,3 +1,7 @@
+"""
+Custom Portfoliyo registration code.
+
+"""
 from base64 import b64encode
 from django.contrib.auth.models import User
 from django.contrib.sites.models import RequestSite
