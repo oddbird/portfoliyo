@@ -7,22 +7,8 @@
   {% include "villages/_student_list.html" %}
 
   <div class="dashboard">
-    <div class="recent-activity">
-      <h2>Recent Posts</h2>
-      <ul>
-        <li>
-          <a href="{% url village_detail %}">Allyson Burell</a>
-          {% include "notes/_note.html" with user="Joanna Burell" title="Mother" date="Tuesday" time="9:32am" text="Great, I will be there. Thanks for keeping it in the evening." %}
-        </li>
-        <li>
-          <a href="{% url village_detail %}">Madelyn James</a>
-          {% include "notes/_note.html" with user="Robert James" title="Father" date="Thursday" time="10:02pm" text="Madelyn has been working really hard on her math homework recently. I hope she is showing progress in class!" %}
-        </li>
-      </ul>
-    </div>
-
     <div class="bulk-post">
-      <h2>Share with all of your student villages</h2>
+      <h2>Post to all your villages</h2>
       <form method="POST" class="bulk-post-add-form">
         {# csrf_token #}
 

@@ -138,24 +138,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
+.main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .main-login .reset-link:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .message:before, .summary li:before, .benefits li:before {
+.main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before {
   margin-right: .4em;
 }
 
-#messages .close, .main-login .reset-link {
+.main-login .reset-link, #messages .close {
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-#messages .close:before, .main-login .reset-link:before {
+.main-login .reset-link:before, #messages .close:before {
   position: absolute;
   top: 0;
   left: 0;
@@ -200,7 +200,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00d";
 }
 
-.message.success:before, .summary li:before, .benefits li:before {
+.summary li:before, .benefits li:before, .message.success:before {
   content: "\e00e";
 }
 
@@ -1028,10 +1028,10 @@ textarea {
   padding-left: 0.82143em;
 }
 
-.village-add-form, .elder-add-form {
+.village-add-page, .dashboard, .elder-add-page {
   padding-top: 2.55556em;
 }
-.village-add-form h2, .elder-add-form h2 {
+.village-add-page h2, .dashboard h2, .elder-add-page h2 {
   font-size: 1.94444em;
   line-height: 1.31429em;
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -1039,7 +1039,7 @@ textarea {
   font-weight: bold;
 }
 
-.village-add-form {
+.village-add-page, .dashboard {
   width: 66.15385%;
   float: right;
   margin-right: 0;
@@ -1049,7 +1049,7 @@ textarea {
   margin-left: 1.53846%;
 }
 
-.elder-add-form {
+.elder-add-page {
   padding-left: 12.7907%;
   padding-right: 12.7907%;
   margin-left: 2.32558%;
@@ -1120,146 +1120,6 @@ textarea {
 }
 .formblock.elders .pluselder::after {
   content: "»";
-}
-
-@-moz-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@-o-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@-ms-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.loading {
-  position: relative;
-}
-.loading .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-shadow: #002b36 0 0 3px;
-  -webkit-animation: loading 1s linear alternate infinite both;
-  -moz-animation: loading 1s linear alternate infinite both;
-  -ms-animation: loading 1s linear alternate infinite both;
-  -o-animation: loading 1s linear alternate infinite both;
-  animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1346789020');
-  background: rgba(0, 43, 54, 0.25);
-  font-weight: bold;
-  text-align: center;
-  color: #fdf6e3;
-  z-index: 100;
-}
-
-.message {
-  padding-top: 0.63889em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.05556em;
-  padding-bottom: 0.58333em;
-  position: relative;
-  padding-left: 1em;
-  padding-right: 1em;
-  border-color: #657b83;
-}
-.message::before {
-  font-size: 1.27778em;
-  line-height: 1em;
-}
-.message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1346789020');
-  background: rgba(38, 139, 210, 0.9);
-}
-.message.success {
-  background: url('../images/rgbapng/859900e5.png?1346789020');
-  background: rgba(133, 153, 0, 0.9);
-}
-.message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1346789020');
-  background: rgba(181, 137, 0, 0.9);
-}
-.message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1346789020');
-  background: rgba(220, 50, 47, 0.9);
-}
-.message p {
-  display: inline;
-}
-
-#messages {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-  -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
-  -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
-  box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  background: rgba(0, 43, 54, 0.5);
-  z-index: 999;
-}
-#messages li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-#messages .close {
-  position: absolute;
-  right: 0.63889em;
-  top: 0.63889em;
-  width: 1em;
-}
-#messages .close:link, #messages .close:visited {
-  color: #586e75;
-}
-#messages .close:focus, #messages .close:hover, #messages .close:active {
-  color: #002b36;
 }
 
 .main-login .login-form {
@@ -1710,4 +1570,144 @@ textarea {
   .team .dev .photo {
     width: 23.25581%;
   }
+}
+
+@-moz-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading {
+  position: relative;
+}
+.loading .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-shadow: #002b36 0 0 3px;
+  -webkit-animation: loading 1s linear alternate infinite both;
+  -moz-animation: loading 1s linear alternate infinite both;
+  -ms-animation: loading 1s linear alternate infinite both;
+  -o-animation: loading 1s linear alternate infinite both;
+  animation: loading 1s linear alternate infinite both;
+  background: url('../images/rgbapng/002b3640.png?1346789020');
+  background: rgba(0, 43, 54, 0.25);
+  font-weight: bold;
+  text-align: center;
+  color: #fdf6e3;
+  z-index: 100;
+}
+
+.message {
+  padding-top: 0.63889em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.58333em;
+  position: relative;
+  padding-left: 1em;
+  padding-right: 1em;
+  border-color: #657b83;
+}
+.message::before {
+  font-size: 1.27778em;
+  line-height: 1em;
+}
+.message.info {
+  background: url('../images/rgbapng/268bd2e5.png?1346789020');
+  background: rgba(38, 139, 210, 0.9);
+}
+.message.success {
+  background: url('../images/rgbapng/859900e5.png?1346789020');
+  background: rgba(133, 153, 0, 0.9);
+}
+.message.warning {
+  background: url('../images/rgbapng/b58900e5.png?1346789020');
+  background: rgba(181, 137, 0, 0.9);
+}
+.message.error {
+  background: url('../images/rgbapng/dc322fe5.png?1346789020');
+  background: rgba(220, 50, 47, 0.9);
+}
+.message p {
+  display: inline;
+}
+
+#messages {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
+  -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
+  box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  background: rgba(0, 43, 54, 0.5);
+  z-index: 999;
+}
+#messages li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+#messages .close {
+  position: absolute;
+  right: 0.63889em;
+  top: 0.63889em;
+  width: 1em;
+}
+#messages .close:link, #messages .close:visited {
+  color: #586e75;
+}
+#messages .close:focus, #messages .close:hover, #messages .close:active {
+  color: #002b36;
 }

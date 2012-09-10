@@ -4,6 +4,9 @@
 @import "base/settings";
 @import "general/root";
 
+// ---------------------------------------------------------------------------
+// Layout
+
 @import "compass/layout";
 @import "layout/helpers";
 @import "layout/boilerplate";
@@ -11,24 +14,37 @@
 @import "layout/main";
 @import "layout/contentinfo";
 
+// ---------------------------------------------------------------------------
+// Users
+
 @import "modules/user-login";
 @import "modules/user-edit";
 @import "modules/user-password";
 
-// App
+// ---------------------------------------------------------------------------
+// Village
+
 $original-cols: $total-columns;
 $total-columns: $break-cols;
 
 @import "modules/village";
+@import "modules/village-pages";
 @import "modules/village-forms";
+@import "modules/village-dashboard";
 
 $total-columns: $original-cols;
+
+@import "modules/village-landing";
+
+// ---------------------------------------------------------------------------
+// Pyo
 
 // @import "modules/feed-profile";
 // @import "modules/feed-combined";
 // @import "modules/feed-post";
 
+// ---------------------------------------------------------------------------
+// Plugins
+
 @import "plugins/loading";
 @import "plugins/messages";
-
-@import "modules/village-landing";

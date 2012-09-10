@@ -1,0 +1,26 @@
+// ---------------------------------------------------------------------------
+// Village Pages
+
+%village-page {
+  @include padding-leader(2);
+  h2 {
+    @include adjust-font-size-to($largepx);
+    @include serif;
+    @include trailer(1,$largepx);
+    font-weight: bold;
+  }
+}
+
+%village-solo-page {
+  @extend %village-page;
+  @include span-columns($center omega);
+  @include pad(1,1);
+  @include post($right);
+  margin-left: gutter();
+}
+
+%village-main-page {
+  @extend %village-page;
+  @include pad(1,1,$center);
+  margin-left: gutter($center);
+}
