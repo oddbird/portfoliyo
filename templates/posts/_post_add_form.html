@@ -1,0 +1,15 @@
+<form method="POST" class="post-add-form">
+  {# csrf_token #}
+
+  {# form.non_field_errors #}
+
+  <div class="formfield post-textfield">
+    {# form.post_text.errors #}
+    <textarea id="post-text" placeholder="Leave a note..."></textarea>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">send</button>
+  </div>
+
+</form>
