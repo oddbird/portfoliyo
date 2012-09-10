@@ -2,7 +2,6 @@
 import django_webtest
 
 from tests import client
-from tests.users import factories
 
 
 
@@ -20,4 +19,5 @@ def pytest_funcarg__client(request):
 
 def pytest_funcarg__admin(request):
     """Give a test an admin-enabled superuser."""
+    from tests.users import factories
     return factories.UserFactory.create(is_staff=True, is_superuser=True)

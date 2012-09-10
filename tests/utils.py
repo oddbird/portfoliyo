@@ -12,3 +12,8 @@ def patch_session(session_data):
             session_data,
             create=True):
         yield
+
+
+def location(url_path):
+    """Qualify a URL path with 'http://testserver' prefix."""
+    return 'http://testserver' + url_path

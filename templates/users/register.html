@@ -6,7 +6,7 @@
 <article class="register">
   <h2 class="pagehead">Create your account</h2>
 
-  <form method="POST" class="register-form">
+  <form method="POST" class="register-form" id="register-form">
     {% csrf_token %}
 
     {{ form.non_field_errors }}
