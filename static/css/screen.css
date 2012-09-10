@@ -301,21 +301,21 @@ img {
   border: 1px solid #073642;
 }
 
-.village-landing h1, .village-landing h2, .village-landing h3, .village-landing h4, .village-landing h5, .village-landing h6 {
+.activationfailed h1, .village-landing h1, .activationfailed h2, .village-landing h2, .activationfailed h3, .village-landing h3, .activationfailed h4, .village-landing h4, .activationfailed h5, .village-landing h5, .activationfailed h6, .village-landing h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.village-landing p, .village-landing ul, .village-landing ol {
+.activationfailed p, .village-landing p, .activationfailed ul, .village-landing ul, .activationfailed ol, .village-landing ol {
   margin-bottom: 1.27778em;
 }
-.village-landing ul {
+.activationfailed ul, .village-landing ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.village-landing em {
+.activationfailed em, .village-landing em {
   font-style: italic;
 }
-.village-landing strong {
+.activationfailed strong, .village-landing strong {
   font-weight: 500;
 }
 
@@ -598,12 +598,12 @@ textarea {
   margin-bottom: 1.27778em;
 }
 
-.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2 {
+.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
 @media (min-width: 36em) {
-  .login, .register, .edit-profile, .reset-password, .change-password, .set-password {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed {
     padding-left: 25.38462%;
     padding-right: 25.38462%;
   }
