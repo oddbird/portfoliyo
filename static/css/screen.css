@@ -925,7 +925,7 @@ textarea {
   bottom: 4.47222em;
 }
 
-.note {
+.post {
   border-bottom-style: solid;
   border-bottom-width: 0.05556em;
   padding-bottom: 0.26389em;
@@ -933,33 +933,33 @@ textarea {
   padding-right: 2.32558%;
   border-color: #eee8d5;
 }
-.note:after {
+.post:after {
   content: "";
   display: table;
   clear: both;
 }
-.note .byline {
+.post .byline {
   font-size: 0.66667em;
   line-height: 1.91667em;
   color: #93a1a1;
 }
-.note .byline h3 {
+.post .byline h3 {
   display: inline;
 }
-.note .byline b {
+.post .byline b {
   color: #657b83;
   font-weight: bold;
 }
-.note .byline time {
+.post .byline time {
   float: right;
 }
-.note .body {
+.post .body {
   overflow: hidden;
   font-size: 0.77778em;
   line-height: 1.64286em;
 }
 
-.note-add-form {
+.post-add-form {
   position: absolute;
   left: 0;
   right: 0;
@@ -968,25 +968,25 @@ textarea {
   border-top: 1px solid #657b83;
   background: #93a1a1;
 }
-.note-add-form .formfield {
+.post-add-form .formfield {
   float: left;
   width: 87.2093%;
   margin: 0;
 }
-.note-add-form textarea {
+.post-add-form textarea {
   height: 4.10714em;
   min-height: 4.10714em;
   background: rgba(255, 255, 255, 0.75);
   padding-left: 0.82143em;
   resize: none;
 }
-.note-add-form .form-actions {
+.post-add-form .form-actions {
   clear: none;
   float: right;
   margin: 0;
   width: 12.7907%;
 }
-.note-add-form button {
+.post-add-form button {
   -moz-border-radius-topleft: 0;
   -webkit-border-top-left-radius: 0;
   border-top-left-radius: 0;
