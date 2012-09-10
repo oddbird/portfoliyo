@@ -29,14 +29,20 @@ urlpatterns = patterns(
     url(
         r"^add_village/$",
         login_required(direct_to_template),
-        {"template": "villages/add_village.html"},
-        name="add_village",
+        {"template": "villages/add_student.html"},
+        name="add_student",
         ),
     url(
         r"^invite_elder/$",
         login_required(direct_to_template),
         {"template": "villages/invite_elder.html"},
         name="invite_elder",
+        ),
+    url(
+        "^village_detail/$",
+        login_required(direct_to_template),
+        {"template": "villages/village_detail.html"},
+        name="village_detail",
         ),
     url(r"^admin/", include(admin.site.urls)),
 )
