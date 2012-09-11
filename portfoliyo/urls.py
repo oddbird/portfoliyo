@@ -41,7 +41,7 @@ urlpatterns = patterns(
         "^student/id/$",
         login_required(direct_to_template),
         {"template": "student/chat.html"},
-        name="village_detail",
+        name="chat",
         ),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^", include("portfoliyo.users.urls")),
