@@ -1,0 +1,21 @@
+{% extends "home.html" %}
+
+{% block maincontent %}
+<article class="village">
+
+  {% include "village/_student_list.html" with add_active="true" %}
+
+  {% include "village/_student_add_form.html" with formset=form.elders_formset %}
+
+</article>
+
+{% endblock maincontent %}
+
+
+{% block last %}
+
+<div style="display: none;">
+  {% include "village/_elder_form.html" with form=form.elders_formset.empty_form id="empty-elder-form" %}
+</div>
+
+{% endblock %}

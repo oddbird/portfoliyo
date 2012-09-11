@@ -20,17 +20,17 @@ from . import forms
 
 
 @anonymous_csrf
-@ratelimit(field="username", method="POST", rate="5/m")
+@ratelimit(field='username', method='POST', rate='5/m')
 def login(request):
     kwargs = {
-        "template_name": "users/login.html",
-        "authentication_form": forms.CaptchaAuthenticationForm,
+        'template_name': 'users/login.html',
+        'authentication_form': forms.CaptchaAuthenticationForm,
         }
     # the contrib.auth login view doesn't pass request into the bound form,
     # but CaptchaAuthenticationForm needs it, so we ensure it's passed in
-    if request.method == "POST":
-        kwargs["authentication_form"] = partial(
-            kwargs["authentication_form"], request)
+    if request.method == 'POST':
+        kwargs['authentication_form'] = partial(
+            kwargs['authentication_form'], request)
     return auth_views.login(request, **kwargs)
 
 
@@ -45,9 +45,9 @@ def logout(request):
 def password_change(request):
     response = auth_views.password_change(
         request,
-        template_name="users/password_change.html",
+        template_name='users/password_change.html',
         password_change_form=auth_forms.PasswordChangeForm,
-        post_change_redirect=reverse("home")
+        post_change_redirect=reverse('home')
         )
 
     if response.status_code == 302:
@@ -62,10 +62,10 @@ def password_reset(request):
     response = auth_views.password_reset(
         request,
         password_reset_form=forms.PasswordResetForm,
-        template_name="users/password_reset.html",
-        email_template_name="registration/password_reset_email.txt",
-        subject_template_name="registration/password_reset_subject.txt",
-        post_reset_redirect=reverse("home")
+        template_name='users/password_reset.html',
+        email_template_name='registration/password_reset_email.txt',
+        subject_template_name='registration/password_reset_subject.txt',
+        post_reset_redirect=reverse('home')
         )
 
     if response.status_code == 302:
@@ -86,9 +86,9 @@ def password_reset_confirm(request, uidb36, token):
         request,
         uidb36=uidb36,
         token=token,
-        template_name="users/password_reset_confirm.html",
+        template_name='users/password_reset_confirm.html',
         set_password_form=auth_forms.SetPasswordForm,
-        post_reset_redirect=reverse("home")
+        post_reset_redirect=reverse('home')
         )
 
     if response.status_code == 302:
@@ -102,9 +102,9 @@ def activate(request, activation_key):
     response = registration_views.activate(
         request,
         activation_key=activation_key,
-        backend="portfoliyo.users.register.RegistrationBackend",
-        template_name="users/activate.html",
-        success_url=reverse("home"),
+        backend='portfoliyo.users.register.RegistrationBackend',
+        template_name='users/activate.html',
+        success_url=reverse('home'),
         )
 
     if response.status_code == 302:
@@ -118,9 +118,9 @@ def activate(request, activation_key):
 def register(request):
     response = registration_views.register(
         request,
-        backend="portfoliyo.users.register.RegistrationBackend",
-        template_name="users/register.html",
-        success_url=reverse("home"),
+        backend='portfoliyo.users.register.RegistrationBackend',
+        template_name='users/register.html',
+        success_url=reverse('home'),
         )
 
     if response.status_code == 302:

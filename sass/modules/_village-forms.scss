@@ -10,23 +10,23 @@
 
 $formspace: $center - 2;
 
-.formblock.elders {
+.formset.elders {
   @extend %notice-base;
   @include bleed;
   @include leader;
   @include inline-form(2, $formspace - 2, $formspace);
   position: relative;
 
-  .formblock-head {
+  .formset-head {
     @include bleed;
     @include trailer;
     background: rgba($base01,.5);
     color: $base3;
   }
-  .formset {
+  .fieldset {
     @include clearfix;
     position: relative;
-    + .formset {
+    + .fieldset {
       @include leader(.5);
       @include leading-border(1px,1);
       border-color: $base1;

@@ -11,7 +11,7 @@ session_csrf.monkeypatch()
 
 
 urlpatterns = patterns(
-    "",
+    '',
     url(
         "^$",
         login_required(direct_to_template),
@@ -25,24 +25,7 @@ urlpatterns = patterns(
         {"template": "users/user_edit.html"},
         name="edit_profile",
         ),
-    url(
-        r"^student/add/$",
-        login_required(direct_to_template),
-        {"template": "student/add_student.html"},
-        name="add_student",
-        ),
-    url(
-        r"^student/id/invite/$",
-        login_required(direct_to_template),
-        {"template": "student/invite_elder.html"},
-        name="invite_elder",
-        ),
-    url(
-        "^student/id/$",
-        login_required(direct_to_template),
-        {"template": "student/chat.html"},
-        name="chat",
-        ),
+    url(r"^student/", include("portfoliyo.village.urls")),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^", include("portfoliyo.users.urls")),
-)
+    )

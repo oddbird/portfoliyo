@@ -7,5 +7,5 @@
     <li>Mr. Ruiz <span>[English Teacher]</span></li>
     <li>Mr. Gonzalez <span>[Music Teacher]</span></li>
   </ul>
-  <a href="{# @@@ ajax-load 'student/_village_invite_form.html' #}{% url invite_elder %}" class="addelder-link{% if active %} active{% endif %}">Invite Elders</a>
+  <a href="{# @@@ ajax-load 'village/_village_invite_form.html' #}{% url invite_elder student_id=student.id %}" class="addelder-link{% if active %} active{% endif %}">Invite Elders</a>
 </div>

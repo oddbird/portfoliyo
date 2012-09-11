@@ -13,6 +13,8 @@ BeautifulSoup==3.2.1
 
 django-floppyforms==1.0
 
+django-annoying==0.7.6
+
 django-form-utils==0.2.0.post93
 
 django-widget-tweaks==1.1.2
