@@ -1,0 +1,12 @@
+{% extends "home.html" %}
+
+{% block maincontent %}
+<article class="village">
+
+  {% include "student/_student_list.html" with student="true" %}
+
+  {% include "student/_village_content.html" %}
+
+</article>
+
+{% endblock maincontent %}

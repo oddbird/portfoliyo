@@ -1,0 +1,16 @@
+{% extends "home.html" %}
+
+{% block maincontent %}
+<article class="village">
+
+  {% include "student/_student_list.html" with student="true" %}
+
+  <div class="village-main">
+    {% include "student/_village_invite_form.html" %}
+  </div>
+
+{% include "student/_village_users.html" with active="true" %}
+
+</article>
+
+{% endblock maincontent %}
