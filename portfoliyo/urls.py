@@ -27,7 +27,7 @@ urlpatterns = patterns(
         name="edit_profile",
         ),
     url(
-        r"^add_village/$",
+        r"^add_student/$",
         login_required(direct_to_template),
         {"template": "villages/add_student.html"},
         name="add_student",
