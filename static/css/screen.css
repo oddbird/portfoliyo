@@ -1028,10 +1028,10 @@ textarea {
   padding-left: 0.82143em;
 }
 
-.village-add-page, .dashboard, .elder-add-page {
+.village-add-form, .dashboard, .elder-add-form {
   padding-top: 2.55556em;
 }
-.village-add-page h2, .dashboard h2, .elder-add-page h2 {
+.village-add-form h2, .dashboard h2, .elder-add-form h2 {
   font-size: 1.94444em;
   line-height: 1.31429em;
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -1039,7 +1039,7 @@ textarea {
   font-weight: bold;
 }
 
-.village-add-page, .dashboard {
+.village-add-form, .dashboard {
   width: 66.15385%;
   float: right;
   margin-right: 0;
@@ -1049,7 +1049,7 @@ textarea {
   margin-left: 1.53846%;
 }
 
-.elder-add-page {
+.elder-add-form {
   padding-left: 12.7907%;
   padding-right: 12.7907%;
   margin-left: 2.32558%;

@@ -1,12 +1,12 @@
 // ---------------------------------------------------------------------------
 // Add Village
 
-.village-add-page { @extend %village-solo-page; }
+.village-add-form { @extend %village-solo-page; }
 
 // ---------------------------------------------------------------------------
 // Add Elder
 
-.elder-add-page { @extend %village-main-page; }
+.elder-add-form { @extend %village-main-page; }
 
 $formspace: $center - 2;
 
