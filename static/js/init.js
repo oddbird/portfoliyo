@@ -21,6 +21,7 @@ var PYO = (function (PYO, $) {
             time: '9:07am',
             text: 'Ms. Burell, Allyson has been late to school for the last 4 days. We need to schedule a meeting to plan how she can get to school on time. Can you come at 4pm tomorrow after school?'
         }, '.pusher-test .village-feed');
+        PYO.submitPost('.pusher-test');
     });
 
     return PYO;

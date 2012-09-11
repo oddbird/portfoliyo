@@ -42,8 +42,9 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.renderPost = function (data) {
+        var post;
         if (data) {
-            var post = ich.post(data);
+            post = ich.post(data);
         }
         if (post) { return post; }
     };
@@ -58,6 +59,45 @@ var PYO = (function (PYO, $) {
             if (post) {
                 context.append(post);
             }
+        }
+    };
+
+    PYO.submitPost = function (container) {
+        if ($(container).length) {
+            var context = $(container);
+            var submit = context.find('.form-actions .action-post');
+            var createObj = function () {
+                var text = context.find('#post-text').val();
+                var author = 'Test User';
+                var title = 'Developer';
+                var today = new Date();
+                var dd = today.getDate();
+                var mm = today.getMonth() + 1;
+                var yyyy = today.getFullYear();
+                var date = mm + '/' + dd + '/' + yyyy;
+                var hours = today.getHours();
+                var minute = today.getMinutes();
+                var period = (hours > 12) ? 'PM' : 'AM';
+                hours = (hours > 12) ? hours - 12 : hours;
+                var time = hours + ":" + minute + " " + period;
+                var data = {
+                    author: author,
+                    title: title,
+                    date: date,
+                    time: time,
+                    text: text
+                };
+                return data;
+            };
+
+            submit.click(function(event) {
+                event.preventDefault();
+                var postData = createObj();
+                if (postData) {
+                    PYO.addPost(postData, '.pusher-test .village-feed');
+                    context.find('#post-text').val('');
+                }
+            });
         }
     };
 
