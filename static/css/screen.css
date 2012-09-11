@@ -1122,6 +1122,14 @@ textarea {
   content: "»";
 }
 
+.getstarted {
+  margin-left: -17.1875%;
+  padding-left: 17.1875%;
+  padding-bottom: 5.11111em;
+  background: url('../images/start-arrow.png?1347385779') no-repeat left bottom;
+  font-weight: bold;
+}
+
 .main-login .login-form {
   display: none;
   position: relative;
