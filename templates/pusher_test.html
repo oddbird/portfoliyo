@@ -1,0 +1,21 @@
+{% extends "home.html" %}
+
+{% load icanhaz %}
+
+{% block maincontent %}
+<article class="village pusher-test">
+
+  {% include "student/_student_list.html" with student="true" %}
+
+  <div class="village-main">
+    <section class="village-feed">
+      {% icanhaz "post" %}
+    </section>
+    {% include "posts/_post_add_form.html" %}
+  </div>
+
+{% include "student/_village_users.html" %}
+
+</article>
+
+{% endblock maincontent %}
