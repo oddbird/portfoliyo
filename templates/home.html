@@ -4,34 +4,28 @@
 {% block maincontent %}
 <article class="village">
 
-  <nav class="village-nav">
-    <ul>
-      {% include "villages/_village_list.html" with user="Alex Gonzalez" %}
-      {% include "villages/_village_list.html" with user="Allyson Burell" active="true" %}
-      {% include "villages/_village_list.html" with user="Althea Duffin" %}
-      {% include "villages/_village_list.html" with user="Easton Williams" %}
-      {% include "villages/_village_list.html" with user="Ingrid Ramos" %}
-      {% include "villages/_village_list.html" with user="Jami Marciano" %}
-      {% include "villages/_village_list.html" with user="Katia Pimentel" %}
-      {% include "villages/_village_list.html" with user="Kenya Thakkar" %}
-      {% include "villages/_village_list.html" with user="Madelyn James" %}
-      {% include "villages/_village_list.html" with user="Malinda Fader" %}
-      {% include "villages/_village_list.html" with user="Neil Miguez" %}
-      {% include "villages/_village_list.html" with user="Phillip Knight" %}
-      {% include "villages/_village_list.html" with user="Raul Lopez" %}
-      {% include "villages/_village_list.html" with user="Richard Harkness" %}
-      {% include "villages/_village_list.html" with user="Roy Seaton" %}
-      {% include "villages/_village_list.html" with user="Ronald Mallard" %}
-      {% include "villages/_village_list.html" with user="Samuel Quintana" %}
-      {% include "villages/_village_list.html" with user="Terry Macarthur" %}
-      {% include "villages/_village_list.html" with user="William Tolman" %}
-    </ul>
-    <aside class="add-student">
-      <a href="{# ajax-load 'villages/_village_add_form.html' #}{% url add_village %}" class="addstudent-link">Add a Student</a>
-    </aside>
-  </nav>
+  {% include "villages/_student_list.html" %}
 
-  {% include "villages/_village_detail.html" %}
+  <div class="dashboard">
+    <div class="bulk-post">
+      <h2>Post to all your villages</h2>
+      <form method="POST" class="bulk-post-add-form">
+        {# csrf_token #}
+
+        {# form.non_field_errors #}
+
+        <div class="formfield post-textfield">
+          {# form.note_text.errors #}
+          <textarea id="post-text" placeholder="Leave a note..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="action-post">send</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
 
 </article>
 

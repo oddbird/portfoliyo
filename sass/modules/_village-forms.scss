@@ -1,43 +1,12 @@
 // ---------------------------------------------------------------------------
-// Village Forms
-
-%village-form {
-  @include padding-leader(2);
-  h2 {
-    @include adjust-font-size-to($largepx);
-    @include serif;
-    @include trailer(1,$largepx);
-    font-weight: bold;
-  }
-}
-
-%village-solo-form {
-  @extend %village-form;
-  @include span-columns($center omega);
-  @include pad(1,1);
-  @include post($right);
-  margin-left: gutter();
-}
-
-%village-main-form {
-  @extend %village-form;
-  @include pad(1,1,$center);
-  margin-left: gutter($center);
-}
-
-// ---------------------------------------------------------------------------
 // Add Village
 
-.village-add-form {
-  @extend %village-solo-form;
-}
+.village-add-page { @extend %village-solo-page; }
 
 // ---------------------------------------------------------------------------
 // Add Elder
 
-.elder-add-form {
-  @extend %village-main-form;
-}
+.elder-add-page { @extend %village-main-page; }
 
 $formspace: $center - 2;
 
