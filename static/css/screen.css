@@ -1616,7 +1616,7 @@ textarea {
 }
 
 .village-elders {
-  padding-top: 1.27778em;
+  padding-top: 0.63889em;
   float: right;
   width: 16.92308%;
   padding-left: 1.53846%;
@@ -1624,7 +1624,7 @@ textarea {
   border-left: 1px solid #93a1a1;
 }
 .village-elders h2 {
-  margin-bottom: 0.63889em;
+  margin-bottom: 1.27778em;
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
@@ -1634,6 +1634,9 @@ textarea {
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+}
+.village-elders b {
+  font-weight: bold;
 }
 .village-elders span {
   color: #93a1a1;

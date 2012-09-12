@@ -1,8 +1,11 @@
 <div class="village-elders">
-  <h2>{{ student }}'s Village</h2>
+  <h2>{{ student }}'s Elders</h2>
   <ul>
     {% for rel in student.elder_relationships %}
-    <li>{% firstof rel.elder.name rel.elder.user.email rel.elder.phone %} <span>[{{ rel.description_or_role }}]</span></li>
+    <li>
+      <b>{{ rel.description_or_role }}:</b>
+      <span>{% firstof rel.elder.name rel.elder.user.email rel.elder.phone %}</span>
+    </li>
     {% endfor %}
   </ul>
   {% if request.user.profile.school_staff %}

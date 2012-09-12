@@ -3,18 +3,21 @@
 
 .village-elders {
   @extend %village-lists;
-  @include padding-leader(1);
+  @include padding-leader(.5);
   float: right;
   width: space($right);
   padding-left: gutter();
   height: 100%;
   border-left: 1px solid $village-border-color;
   h2 {
-    @include trailer(.5);
+    @include trailer(1);
     @include serif;
     font-weight: bold;
   }
-  li { @include ellipsis; }
+  li {
+    @include ellipsis;
+  }
+  b { font-weight: bold; }
   span { color: $base1; }
 }
 
