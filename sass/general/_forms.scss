@@ -157,6 +157,7 @@ $form-action-note-size: $smallpx;
     }
   }
   &:checked + label { &::before { color: $blue; } }
+  &:focus + label { color: $base03; }
 }
 
 [type="checkbox"] {

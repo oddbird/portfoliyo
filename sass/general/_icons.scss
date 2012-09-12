@@ -18,7 +18,7 @@
   speak: none;
 }
 
-%icon:before {
+%icon::before {
   @extend %icon-content;
   margin-right: .4em;
 }
@@ -30,7 +30,11 @@
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
-  &:before{
+  &:focus {
+    outline: 0;
+    &::before { outline: 1px dotted; }
+  }
+  &::before{
     position: absolute;
     top: 0;
     left: 0;

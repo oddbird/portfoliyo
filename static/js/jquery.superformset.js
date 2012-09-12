@@ -264,11 +264,11 @@
         formTemplate: null,             // The jQuery selection cloned to generate new form instances
                                         // This empty-form must be outside the parent (element on which
                                         // formset is called)
-        deleteLink: '<a class="remove-row" href="javascript:void(0)">remove</a>',
+        deleteLink: '<a class="remove-row" href="javascript:void(0)" title="remove">remove</a>',
                                         // The HTML "remove" link added to the end of each form-row
         deleteLinkSelector: '.remove-row',
                                         // Selector for HTML "remove" links
-        addLink: '<a class="add-row" href="javascript:void(0)">add</a>',
+        addLink: '<a class="add-row" href="javascript:void(0)" title="add">add</a>',
                                         // The HTML "add" link added to the end of all forms
         autoAdd: false,                 // If true, the "add" link will be removed, and a row will be automatically
                                         // added when text is entered in the final textarea of the last row

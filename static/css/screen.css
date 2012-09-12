@@ -138,25 +138,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.pluselder:before, .delete-row:before, .main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before, [data-icon]:before {
+.add-row::before, .remove-row::before, .main-login .reset-link::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .message::before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.pluselder:before, .delete-row:before, .main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before {
+.add-row::before, .remove-row::before, .main-login .reset-link::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .message::before {
   margin-right: .4em;
 }
 
-.pluselder, .delete-row, .main-login .reset-link, #messages .close {
+.add-row, .remove-row, .main-login .reset-link, #messages .close {
   display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.pluselder:before, .delete-row:before, .main-login .reset-link:before, #messages .close:before {
+.add-row:focus, .remove-row:focus, .main-login .reset-link:focus, #messages .close:focus {
+  outline: 0;
+}
+.add-row:focus::before, .remove-row:focus::before, .main-login .reset-link:focus::before, #messages .close:focus::before {
+  outline: 1px dotted;
+}
+.add-row::before, .remove-row::before, .main-login .reset-link::before, #messages .close::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -209,7 +215,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00f";
 }
 
-.delete-row:before, #messages .close:before {
+.remove-row:before, #messages .close:before {
   content: "\e010";
 }
 
@@ -225,7 +231,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e013";
 }
 
-.pluselder:before {
+.add-row:before {
   content: "\e015";
 }
 
@@ -556,6 +562,9 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 [type="checkbox"]:checked + label::before, [type="radio"]:checked + label::before {
   color: #268bd2;
+}
+[type="checkbox"]:focus + label, [type="radio"]:focus + label {
+  color: #002b36;
 }
 
 label {
@@ -1110,11 +1119,13 @@ textarea {
   padding-left: 1em;
   margin-right: -1em;
   padding-right: 1em;
-  margin-bottom: 1.27778em;
+  padding-top: 0.31944em;
+  padding-bottom: 0.31944em;
   background: rgba(88, 110, 117, 0.5);
   color: #fdf6e3;
 }
 .formset.elders .fieldset {
+  padding-top: 1.27778em;
   position: relative;
 }
 .formset.elders .fieldset:after {
@@ -1136,22 +1147,30 @@ textarea {
   display: none;
 }
 
-.pluselder:link, .pluselder:visited {
-  color: #268bd2;
+.add-row {
+  position: absolute;
+  bottom: 0.31944em;
+  right: 1em;
 }
-.pluselder:focus, .pluselder:hover, .pluselder:active {
-  color: #859900;
+.add-row:link, .add-row:visited {
+  color: #657b83;
+}
+.add-row:focus, .add-row:hover, .add-row:active {
+  color: #002b36;
+}
+.fieldset + .add-row {
+  bottom: 0.63889em;
 }
 
-.delete-row {
+.remove-row {
   position: absolute;
-  top: 0.15972em;
+  top: 0.63889em;
   left: 0;
 }
-.delete-row:link, .delete-row:visited {
+.remove-row:link, .remove-row:visited {
   color: rgba(147, 161, 161, 0.5);
 }
-.delete-row:focus, .delete-row:hover, .delete-row:active {
+.remove-row:focus, .remove-row:hover, .remove-row:active {
   color: #dc322f;
 }
 
