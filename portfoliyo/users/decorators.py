@@ -28,6 +28,6 @@ def insufficient_permissions(func):
 def school_staff_required(func):
     """View decorator to require ``school_staff`` attribute."""
     actual_decorator = auth_decorators.user_passes_test(
-        lambda u: u.profile.school_staff,
+        lambda u: u.is_staff or u.profile.school_staff,
     )
     return insufficient_permissions(actual_decorator(func))
