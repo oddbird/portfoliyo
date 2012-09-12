@@ -25,7 +25,7 @@
             totalForms = $('#id_' + options.prefix + '-TOTAL_FORMS'),
             maxForms = $('#id_' + options.prefix + '-MAX_NUM_FORMS'),
             parent = $(this),
-            $$ = $(this).children('li'),
+            $$ = $(this).children(options.formSelector),
 
             updateElementIndex = function (elem, prefix, ndx) {
                 var idRegex = new RegExp('(' + prefix + '-(\\d+|__prefix__)-)'),
@@ -224,16 +224,15 @@
 
         if (!options.autoAdd) {
             // Insert the add-link immediately after the last form:
-            parent.after(options.addLink);
-            addButton = parent.next();
+            addButton = $(options.addLink).appendTo(parent);
             if (hideAddButton) { addButton.hide(); }
             addButton.click(function (e) {
                 var formCount = parseInt(totalForms.val(), 10),
                     row = options.formTemplate.clone(true).addClass('new-row');
                 if (options.addAnimationSpeed) {
-                    row.hide().appendTo(parent).animate({"height": "toggle", "opacity": "toggle"}, options.addAnimationSpeed);
+                    row.hide().insertBefore(this).animate({"height": "toggle", "opacity": "toggle"}, options.addAnimationSpeed);
                 } else {
-                    row.appendTo($(this).prev()).show();
+                    row.insertBefore(this).show();
                 }
                 row.find('input,select,textarea,label').each(function () {
                     updateElementIndex($(this), options.prefix, formCount);
@@ -265,9 +264,9 @@
         formTemplate: null,             // The jQuery selection cloned to generate new form instances
                                         // This empty-form must be outside the parent (element on which
                                         // formset is called)
-        deleteLink: '<a class="delete-row" href="javascript:void(0)">remove</a>',
+        deleteLink: '<a class="remove-row" href="javascript:void(0)">remove</a>',
                                         // The HTML "remove" link added to the end of each form-row
-        deleteLinkSelector: '.delete-row',
+        deleteLinkSelector: '.remove-row',
                                         // Selector for HTML "remove" links
         addLink: '<a class="add-row" href="javascript:void(0)">add</a>',
                                         // The HTML "add" link added to the end of all forms

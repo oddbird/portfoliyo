@@ -11,7 +11,7 @@ var PYO = (function (PYO, $) {
             prefix: $('.formset.elders').data('prefix'),
             formTemplate: '#empty-elder-form',
             formSelector: '.fieldset.elder',
-            addLink: '<a class="pluselder" href="javascript:void(0)">more elders</a>',
+            addLink: '<a class="add-row" href="javascript:void(0)">more elders</a>',
             addAnimationSpeed: 'normal',
             removeAnimationSpeed: 'fast'
         });
