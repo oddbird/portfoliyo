@@ -180,7 +180,7 @@
         $$.each(function (i) {
             var row = $(this),
                 del = row.find('input:checkbox[id $= "-DELETE"]'),
-                inputs = row.find('input, select, textarea, label');
+                inputs = row.find('input, select, textarea');
             if (del.length) {
                 // If you specify "can_delete = True" when creating an inline formset,
                 // Django adds a checkbox to each form in the formset.
@@ -207,21 +207,32 @@
                     }
                 }
             }
-            if (options.optionalUntilFocus) {
+            if (options.optionalIfEmpty) {
                 inputs.each(function () {
                     if ($(this).attr('required')) {
-                        $(this).addClass('required').removeAttr('required');
+                        $(this).addClass('required');
                     }
-                    $(this).focus(function () {
-                        inputs.filter('.required').attr('required', 'required');
+                    $(this).change(function () {
+                        if (inputs.filter(function () {
+                            if ($(this).attr('type') === 'checkbox') {
+                                return $(this).is(':checked');
+                            } else {
+                                return $(this).val();
+                            }
+                        }).length) {
+                            inputs.filter('.required').attr('required', 'required');
+                        } else {
+                            inputs.removeAttr('required');
+                        }
                     });
+                    $(this).change();
                 });
             }
         });
 
         // Clone the form template to generate new form instances:
         template = $(options.formTemplate);
-        template.removeAttr('id').find('input, select, textarea, label').each(function () {
+        template.removeAttr('id').find('input, select, textarea').each(function () {
             if ($(this).attr('required')) {
                 $(this).addClass('required');
             }
@@ -240,10 +251,20 @@
             addButton.click(function (e) {
                 var formCount = parseInt(totalForms.val(), 10),
                     row = options.formTemplate.clone(true).addClass('new-row'),
-                    inputs = row.find('input, select, textarea, label');
-                if (options.optionalUntilFocus) {
-                    inputs.removeAttr('required').focus(function () {
-                        inputs.filter('.required').attr('required', 'required');
+                    inputs = row.find('input, select, textarea');
+                if (options.optionalIfEmpty) {
+                    inputs.removeAttr('required').change(function () {
+                        if (inputs.filter(function () {
+                            if ($(this).attr('type') === 'checkbox') {
+                                return $(this).is(':checked');
+                            } else {
+                                return $(this).val();
+                            }
+                        }).length) {
+                            inputs.filter('.required').attr('required', 'required');
+                        } else {
+                            inputs.removeAttr('required');
+                        }
                     });
                 }
                 if (options.addAnimationSpeed) {
@@ -302,6 +323,6 @@
         insertAbove: false,             // If true, ``insertAboveLink`` will be added to the end of each form-row
         insertAboveLink: '<a href="javascript:void(0)" class="insert-step">insert step</a>',
                                         // The HTML "insert step" link add to the end of each form-row (if `insertAbove: true`)
-        optionalUntilFocus: false       // If true, all required fields in a fieldset will be optional until one field receives focus
+        optionalIfEmpty: false          // If true, all required fields in a fieldset will be optional until one field has value
     };
 }(jQuery));

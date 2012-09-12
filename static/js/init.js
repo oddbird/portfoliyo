@@ -14,7 +14,7 @@ var PYO = (function (PYO, $) {
             addLink: '<a class="add-row" href="javascript:void(0)" title="more elders">more elders</a>',
             addAnimationSpeed: 'normal',
             removeAnimationSpeed: 'fast',
-            optionalUntilFocus: true
+            optionalIfEmpty: true
         });
 
         // local.js
