@@ -13,10 +13,3 @@ def pytest_funcarg__client(request):
     request.addfinalizer(webtestcase._unpatch_settings)
 
     return client.TestClient()
-
-
-
-def pytest_funcarg__admin(request):
-    """Give a test an admin-enabled superuser."""
-    from tests.users import factories
-    return factories.UserFactory.create(is_staff=True, is_superuser=True)

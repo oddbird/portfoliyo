@@ -1,4 +1,6 @@
 """Tests for user models."""
+from django.contrib.auth import models as auth_models
+
 from . import factories
 
 
@@ -9,6 +11,21 @@ class TestProfile(object):
         profile = factories.ProfileFactory.build(name="Some Name")
 
         assert unicode(profile) == u"Some Name"
+
+
+    def test_profile_autocreated(self):
+        """A User without a profile gets one automatically on first access."""
+        user = factories.UserFactory.create()
+
+        assert user.profile is not None
+
+
+    def test_profile_autocreated_even_after_select_related(self):
+        """select_related('profile') doesn't break profile autocreation."""
+        factories.UserFactory.create()
+        user = auth_models.User.objects.select_related('profile').get()
+
+        assert user.profile is not None
 
 
     def test_elder_relationships(self):
