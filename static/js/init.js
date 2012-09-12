@@ -13,7 +13,8 @@ var PYO = (function (PYO, $) {
             formSelector: '.fieldset.elder',
             addLink: '<a class="add-row" href="javascript:void(0)" title="more elders">more elders</a>',
             addAnimationSpeed: 'normal',
-            removeAnimationSpeed: 'fast'
+            removeAnimationSpeed: 'fast',
+            optionalUntilFocus: true
         });
 
         // local.js

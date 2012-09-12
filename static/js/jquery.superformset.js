@@ -3,7 +3,7 @@
 /*global    jQuery */
 
 /**
- * jQuery SuperFormset 0.2
+ * jQuery SuperFormset 0.3
  *
  * Based on jQuery Formset 1.1r14
  * by Stanislaus Madueke (stan DOT madueke AT gmail DOT com)
@@ -179,7 +179,8 @@
 
         $$.each(function (i) {
             var row = $(this),
-                del = row.find('input:checkbox[id $= "-DELETE"]');
+                del = row.find('input:checkbox[id $= "-DELETE"]'),
+                inputs = row.find('input, select, textarea, label');
             if (del.length) {
                 // If you specify "can_delete = True" when creating an inline formset,
                 // Django adds a checkbox to each form in the formset.
@@ -206,6 +207,16 @@
                     }
                 }
             }
+            if (options.optionalUntilFocus) {
+                inputs.each(function () {
+                    if ($(this).attr('required')) {
+                        $(this).addClass('required').removeAttr('required');
+                    }
+                    $(this).focus(function () {
+                        inputs.filter('.required').attr('required', 'required');
+                    });
+                });
+            }
         });
 
         // Clone the form template to generate new form instances:
@@ -228,7 +239,13 @@
             if (hideAddButton) { addButton.hide(); }
             addButton.click(function (e) {
                 var formCount = parseInt(totalForms.val(), 10),
-                    row = options.formTemplate.clone(true).addClass('new-row');
+                    row = options.formTemplate.clone(true).addClass('new-row'),
+                    inputs = row.find('input, select, textarea, label');
+                if (options.optionalUntilFocus) {
+                    inputs.removeAttr('required').focus(function () {
+                        inputs.filter('.required').attr('required', 'required');
+                    });
+                }
                 if (options.addAnimationSpeed) {
                     row.hide().insertBefore(this).animate({"height": "toggle", "opacity": "toggle"}, options.addAnimationSpeed);
                 } else {
@@ -283,7 +300,8 @@
         alwaysShowExtra: false,         // If true, an extra (empty) row will always be displayed (requires `autoAdd: true`)
         deleteOnlyActive: false,        // If true, extra empty rows cannot be removed until they acquire focus
         insertAbove: false,             // If true, ``insertAboveLink`` will be added to the end of each form-row
-        insertAboveLink: '<a href="javascript:void(0)" class="insert-step">insert step</a>'
+        insertAboveLink: '<a href="javascript:void(0)" class="insert-step">insert step</a>',
                                         // The HTML "insert step" link add to the end of each form-row (if `insertAbove: true`)
+        optionalUntilFocus: false       // If true, all required fields in a fieldset will be optional until one field receives focus
     };
 }(jQuery));
