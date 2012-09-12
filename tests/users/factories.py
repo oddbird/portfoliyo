@@ -31,3 +31,12 @@ class ProfileFactory(factory.Factory):
     name = "Test User"
     phone = factory.Sequence(lambda n: "999-999-{0:>04}".format(n))
     role = "Some Role"
+
+
+
+class RelationshipFactory(factory.Factory):
+    FACTORY_FOR = models.Relationship
+
+    from_profile = factory.SubFactory(ProfileFactory)
+    to_profile = factory.SubFactory(ProfileFactory)
+    description = ""

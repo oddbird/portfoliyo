@@ -70,8 +70,8 @@ class InviteElderForm(forms.Form):
         user_models.Relationship.objects.get_or_create(
             from_profile=profile,
             to_profile=student,
-            description=relationship,
             kind=user_models.Relationship.KIND.elder,
+            defaults={'description': relationship},
             )
 
         return profile
