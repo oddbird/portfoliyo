@@ -35,3 +35,12 @@ def test_add_student_error(client):
     response = form.submit(status=200)
 
     response.mustcontain("field is required")
+
+
+def test_add_student_requires_school_staff(client):
+    """Adding a student requires ``school_staff`` attribute."""
+    someone = factories.ProfileFactory.create(school_staff=False)
+    response = client.get(
+        reverse('add_student'), user=someone.user, status=302).follow()
+
+    

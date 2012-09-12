@@ -2,16 +2,17 @@
 Student/elder (village) views.
 
 """
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 
+from ..users.decorators import school_staff_required
 from ..users import models as user_models
 from . import forms
 
 
-@user_passes_test(lambda u: u.profile.school_staff)
+@school_staff_required
 def add_student(request):
     """Add a student and elders."""
     if request.method == 'POST':
@@ -27,7 +28,7 @@ def add_student(request):
 
 
 
-@user_passes_test(lambda u: u.profile.school_staff)
+@school_staff_required
 def invite_elder(request, student_id):
     """Invite new elder(s) to a student's village."""
     student = get_object_or_404(
