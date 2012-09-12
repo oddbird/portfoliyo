@@ -9,8 +9,8 @@ urlpatterns = patterns(
         r"^add/$", views.add_student, name="add_student"),
     url(
         r"^(?P<student_id>\d+)/invite/$",
-        views.invite_elder,
-        name="invite_elder",
+        views.invite_elders,
+        name="invite_elders",
         ),
     url(
         "^(?P<student_id>\d+)/$", views.chat, name="chat"),

@@ -29,7 +29,7 @@ def add_student(request):
 
 
 @school_staff_required
-def invite_elder(request, student_id):
+def invite_elders(request, student_id):
     """Invite new elder(s) to a student's village."""
     student = get_object_or_404(
         user_models.Profile.objects.select_related('user'), id=student_id)

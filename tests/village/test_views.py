@@ -66,8 +66,8 @@ class TestChat(object):
         return reverse('chat', kwargs=dict(student_id=student.id))
 
 
-    @pytest.mark.parametrize('link_target', ['add_student', 'invite_elder'])
-    def test__button_only_if_staff(self, client, link_target):
+    @pytest.mark.parametrize('link_target', ['add_student', 'invite_elders'])
+    def test_button_only_if_staff(self, client, link_target):
         """Button with given link target is only present for school staff."""
         parent_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=False)
@@ -77,7 +77,7 @@ class TestChat(object):
         parent_response = client.get(url, user=parent_rel.elder.user)
         teacher_response = client.get(url, user=teacher_rel.elder.user)
         reverse_kwargs = {}
-        if link_target == 'invite_elder':
+        if link_target == 'invite_elders':
             reverse_kwargs = {'student_id': parent_rel.student.id}
         target_url = reverse(link_target, kwargs=reverse_kwargs)
         parent_links = parent_response.html.findAll('a', href=target_url)
