@@ -85,6 +85,7 @@ class InviteEldersBaseFormSet(formsets.BaseFormSet):
             i, **kwargs)
         for field in form.fields.values():
             field.required = False
+            field.widget.is_required = False
         return form
 
 
@@ -93,6 +94,7 @@ class InviteEldersBaseFormSet(formsets.BaseFormSet):
         form = super(InviteEldersBaseFormSet, self)._get_empty_form(**kwargs)
         for field in form.fields.values():
             field.required = False
+            field.widget.is_required = False
         return form
     empty_form = property(_get_empty_form)
 

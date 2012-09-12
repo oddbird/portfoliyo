@@ -203,7 +203,10 @@ class TestAddStudentAndInviteEldersForm(object):
         form = forms.AddStudentAndInviteEldersForm()
         elder_form = form.elders_formset[0]
 
-        assert all(not f.required for f in elder_form.fields.values())
+        assert all(
+            not (f.required or f.widget.is_required)
+            for f in elder_form.fields.values()
+            )
 
 
     def test_empty_elder_form_fields_optional(self):
@@ -211,4 +214,7 @@ class TestAddStudentAndInviteEldersForm(object):
         form = forms.AddStudentAndInviteEldersForm()
         elder_form = form.elders_formset.empty_form
 
-        assert all(not f.required for f in elder_form.fields.values())
+        assert all(
+            not (f.required or f.widget.is_required)
+            for f in elder_form.fields.values()
+            )
