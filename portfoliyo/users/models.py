@@ -5,8 +5,8 @@ Portfoliyo network models.
 from django.contrib.auth import models as auth_models
 from django.contrib.localflavor.us.models import PhoneNumberField
 from django.db import models
+from django.db.models.fields.related import SingleRelatedObjectDescriptor
 
-from annoying.fields import AutoOneToOneField
 from model_utils import Choices
 
 
@@ -20,6 +20,30 @@ email_field.get_prep_value = lambda value: value or None
 
 # monkeypatch User's __unicode__ method to be friendlier for no-username
 auth_models.User.__unicode__ = lambda self: self.email or self.profile.name
+
+
+class AutoSingleRelatedObjectDescriptor(SingleRelatedObjectDescriptor):
+    def __get__(self, instance, instance_type=None):
+        value = None
+        try:
+            value = super(AutoSingleRelatedObjectDescriptor, self).__get__(instance, instance_type)
+        except self.related.model.DoesNotExist:
+            pass
+        if value is None:
+            obj = self.related.model(**{self.related.field.name: instance})
+            obj.save()
+            value = obj
+        return value
+
+
+class AutoOneToOneField(models.OneToOneField):
+    """OneToOneField that creates related obj on first access if needed."""
+    def contribute_to_related_class(self, cls, related):
+        setattr(
+            cls,
+            related.get_accessor_name(),
+            AutoSingleRelatedObjectDescriptor(related),
+            )
 
 
 class Profile(models.Model):

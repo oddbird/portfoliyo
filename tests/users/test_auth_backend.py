@@ -15,7 +15,8 @@ def test_authenticate_failure():
 
 def test_authenticate_select_related():
     """authenticate method returns user with profile pre-selected."""
-    factories.UserFactory.create(email='test@example.com', password='testpw')
+    factories.ProfileFactory.create(
+        user__email='test@example.com', user__password='testpw')
     backend = auth_backend.EmailBackend()
     user = backend.authenticate(username='test@example.com', password='testpw')
 
@@ -25,9 +26,9 @@ def test_authenticate_select_related():
 
 def test_get_user_select_related():
     """get_user method returns user with profile pre-selected."""
-    user = factories.UserFactory.create()
+    profile = factories.ProfileFactory.create()
     backend = auth_backend.EmailBackend()
-    user = backend.get_user(user.id)
+    user = backend.get_user(profile.user.id)
 
     with utils.assert_num_queries(0):
         user.profile
