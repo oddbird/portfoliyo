@@ -1,8 +1,7 @@
-<div class="formset elders">
+<div class="formset elders" data-prefix="{{ form.elders_formset.prefix }}">
   <h3 class="formset-head">Elders</h3>
   {{ formset.management_form }}
   {% for form in formset %}
     {% include "village/_elder_form.html" %}
   {% endfor %}
-  <a href="#" class="pluselder">more elders</a>
 </div>
