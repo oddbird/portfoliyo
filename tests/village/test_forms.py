@@ -196,25 +196,3 @@ class TestAddStudentAndInviteEldersForm(object):
         student, elders = form.save()
 
         assert len(elders) == 0
-
-
-    def test_elder_form_fields_optional(self):
-        """Elder forms have their fields marked as optional."""
-        form = forms.AddStudentAndInviteEldersForm()
-        elder_form = form.elders_formset[0]
-
-        assert all(
-            not (f.required or f.widget.is_required)
-            for f in elder_form.fields.values()
-            )
-
-
-    def test_empty_elder_form_fields_optional(self):
-        """Empty elder form has its fields marked as optional."""
-        form = forms.AddStudentAndInviteEldersForm()
-        elder_form = form.elders_formset.empty_form
-
-        assert all(
-            not (f.required or f.widget.is_required)
-            for f in elder_form.fields.values()
-            )
