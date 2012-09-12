@@ -44,8 +44,10 @@ def invite_elder(request, student_id):
         form = forms.InviteElderForm()
 
     return TemplateResponse(
-        request, 'village/invite_elder.html', {'form': form})
-
+        request,
+        'village/invite_elder.html',
+        {'form': form, 'student': student},
+        )
 
 
 

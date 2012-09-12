@@ -1,0 +1,9 @@
+<div class="village-elders">
+  <h2>{{ student }}'s Village</h2>
+  <ul>
+    {% for rel in student.elder_relationships %}
+    <li>{% firstof rel.elder.name rel.elder.user.email rel.elder.phone %} <span>[{{ rel.description_or_role }}]</span></li>
+    {% endfor %}
+  </ul>
+  <a href="{# @@@ ajax-load 'village/_village_invite_form.html' #}{% url invite_elder student_id=student.id %}" class="addelder-link{% if active %} active{% endif %}">Invite Elders</a>
+</div>

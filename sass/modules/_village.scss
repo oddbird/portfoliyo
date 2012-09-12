@@ -156,7 +156,7 @@ $addnote-fontsize: $input-font-size;
 // ---------------------------------------------------------------------------
 // Village Users
 
-.village-users {
+.village-elders {
   @extend %village-lists;
   @include padding-leader(1);
   float: right;
