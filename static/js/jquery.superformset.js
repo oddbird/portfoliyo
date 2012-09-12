@@ -225,8 +225,8 @@
                             inputs.removeAttr('required');
                         }
                     });
-                    $(this).change();
                 });
+                inputs.first().change();
             }
         });
 
