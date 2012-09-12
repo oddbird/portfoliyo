@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url, include
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 
-from . import admin
+from . import admin, views
 
 admin.autodiscover()
 
@@ -12,12 +12,7 @@ session_csrf.monkeypatch()
 
 urlpatterns = patterns(
     '',
-    url(
-        "^$",
-        login_required(direct_to_template),
-        {"template": "home.html"},
-        name="home",
-        ),
+    url("^$", views.home, name="home"),
     url(
         "^no_students/$",
         login_required(direct_to_template),

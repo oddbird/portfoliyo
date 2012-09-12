@@ -113,7 +113,7 @@ class TestLogout(object):
         """Successful logout POST redirects to the page you were on."""
         user = factories.UserFactory.create()
 
-        url = reverse('home')
+        url = reverse('no_students')
 
         form = client.get(url, user=user).forms['logoutform']
         res = form.submit(status=302)
@@ -171,7 +171,7 @@ class TestPasswordReset(object):
         form = client.get(self.url).forms['reset-password-form']
         form['email'] = 'user@example.com'
 
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Password reset email sent")
         assert len(mail.outbox) == 1
@@ -183,7 +183,7 @@ class TestPasswordReset(object):
         form = client.get(self.url).forms['reset-password-form']
         form['email'] = 'doesnotexist@example.com'
 
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Password reset email sent")
         assert len(mail.outbox) == 0
@@ -215,7 +215,7 @@ class TestPasswordResetConfirm(object):
         new_password = 'sekrit123'
         form['new_password1'] = new_password
         form['new_password2'] = new_password
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Password changed")
 
@@ -237,7 +237,7 @@ class TestRegister(object):
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Check your email for an account activation link")
 
@@ -264,7 +264,7 @@ class TestActivate(object):
 
     def test_activate(self, client):
         """Get a confirmation message after activating."""
-        res = client.get(self.url(client), status=302).follow().follow()
+        res = client.get(self.url(client), status=302).follow()
 
         res.mustcontain("Account activated")
 

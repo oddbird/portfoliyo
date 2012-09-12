@@ -3,13 +3,13 @@ Student/elder (village) views.
 
 """
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 
 from ..users.decorators import school_staff_required
 from ..users import models as user_models
 from . import forms
+
 
 
 @school_staff_required
@@ -19,7 +19,7 @@ def add_student(request):
         form = forms.AddStudentAndInviteEldersForm(request.POST)
         if form.is_valid():
             student, _ = form.save(added_by=request.user.profile)
-            return redirect(reverse('chat', kwargs={'student_id': student.id}))
+            return redirect('chat', student_id=student.id)
     else:
         form = forms.AddStudentAndInviteEldersForm()
 
@@ -40,7 +40,7 @@ def invite_elder(request, student_id):
         form = forms.InviteElderForm(request.POST)
         if form.is_valid():
             form.save(student)
-            return redirect(reverse('chat', kwargs={'student_id': student.id}))
+            return redirect('chat', student_id=student.id)
     else:
         form = forms.InviteElderForm()
 

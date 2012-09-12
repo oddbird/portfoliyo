@@ -4,7 +4,6 @@ Account-related views.
 """
 from functools import partial
 
-from django.core.urlresolvers import reverse
 from django.views.decorators.http import require_POST
 
 from django.contrib.auth import views as auth_views, forms as auth_forms
@@ -15,6 +14,7 @@ from ratelimit.decorators import ratelimit
 from registration import views as registration_views
 from session_csrf import anonymous_csrf
 
+from ..views import redirect_home
 from . import forms
 
 
@@ -47,7 +47,7 @@ def password_change(request):
         request,
         template_name='users/password_change.html',
         password_change_form=auth_forms.PasswordChangeForm,
-        post_change_redirect=reverse('home')
+        post_change_redirect=redirect_home(request.user),
         )
 
     if response.status_code == 302:
@@ -65,7 +65,7 @@ def password_reset(request):
         template_name='users/password_reset.html',
         email_template_name='registration/password_reset_email.txt',
         subject_template_name='registration/password_reset_subject.txt',
-        post_reset_redirect=reverse('home')
+        post_reset_redirect=redirect_home(request.user),
         )
 
     if response.status_code == 302:
@@ -88,7 +88,7 @@ def password_reset_confirm(request, uidb36, token):
         token=token,
         template_name='users/password_reset_confirm.html',
         set_password_form=auth_forms.SetPasswordForm,
-        post_reset_redirect=reverse('home')
+        post_reset_redirect=redirect_home(request.user),
         )
 
     if response.status_code == 302:
@@ -104,7 +104,7 @@ def activate(request, activation_key):
         activation_key=activation_key,
         backend='portfoliyo.users.register.RegistrationBackend',
         template_name='users/activate.html',
-        success_url=reverse('home'),
+        success_url=redirect_home(request.user),
         )
 
     if response.status_code == 302:
@@ -120,7 +120,7 @@ def register(request):
         request,
         backend='portfoliyo.users.register.RegistrationBackend',
         template_name='users/register.html',
-        success_url=reverse('home'),
+        success_url=redirect_home(request.user),
         )
 
     if response.status_code == 302:
