@@ -32,6 +32,7 @@ class AutoSingleRelatedObjectDescriptor(SingleRelatedObjectDescriptor):
         if value is None:
             obj = self.related.model(**{self.related.field.name: instance})
             obj.save()
+            setattr(instance, self.cache_name, obj)
             value = obj
         return value
 
@@ -60,6 +61,13 @@ class Profile(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+    def save(self, *a, **kw):
+        """Make site staff always school staff, too."""
+        if self.user.is_staff:
+            self.school_staff = True
+        return super(Profile, self).save(*a, **kw)
 
 
     @property

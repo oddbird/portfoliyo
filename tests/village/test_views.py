@@ -44,3 +44,10 @@ def test_add_student_requires_school_staff(client):
         reverse('add_student'), user=someone.user, status=302).follow()
 
     response.mustcontain("account doesn't have access"), response.html
+
+
+def test_anonymous_user_doesnt_blow_up(client):
+    """Anonymous user on school-staff-required redirects gracefully."""
+    response = client.get(reverse('add_student'), status=302).follow()
+
+    assert not "account doesn't have access" in response.content

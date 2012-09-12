@@ -28,6 +28,23 @@ class TestProfile(object):
         assert user.profile is not None
 
 
+    def test_double_profile_access_after_select_related(self):
+        """select_related('profile') doesn't break two profile accesses."""
+        factories.UserFactory.create()
+        user = auth_models.User.objects.select_related('profile').get()
+
+        assert user.profile is not None
+        assert user.profile is not None
+
+
+    def test_site_staff_are_school_staff(self):
+        """Any user with is_staff is also school_staff."""
+        user = factories.UserFactory.create(is_staff=True)
+        profile = factories.ProfileFactory.create(user=user)
+
+        assert profile.school_staff
+
+
     def test_elder_relationships(self):
         """elder_relationships property is QS of Relationship objects."""
         rel = factories.RelationshipFactory.create()

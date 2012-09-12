@@ -126,7 +126,7 @@ class AddStudentForm(forms.Form):
 
         # name may not be unique, and it's all the info we have on a student,
         # so append the time to seed a hash to generate a unique username
-        username = b64encode(sha1("%s%s" % (name, time.time())).digest())
+        username = b64encode(sha1("%s%f" % (name, time.time())).digest())
         user = auth_models.User.objects.create_user(username=username)
         profile = user_models.Profile.objects.create(name=name, user=user)
 
