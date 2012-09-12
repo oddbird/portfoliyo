@@ -1,0 +1,22 @@
+// ---------------------------------------------------------------------------
+// Village Layout
+
+.village-app {
+  [role="main"] { padding: 0; }
+  .container, [role="banner"], [role="contentinfo"] { @include susy-grid-background; }
+}
+
+.village {
+  @include pie-clearfix;
+  @include transition(height 150ms);
+  position: relative;
+  height: rhythm(24);
+}
+
+.village-main {
+  position: relative;
+  float: left;
+  width: space($center);
+  margin-left: columns($left);
+  height: 100%;
+}

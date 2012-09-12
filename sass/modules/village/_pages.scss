@@ -1,6 +1,11 @@
 // ---------------------------------------------------------------------------
 // Village Pages
 
+%overflow-y {
+  @include stretch-y;
+  overflow-y: scroll;
+}
+
 %village-page {
   @include padding-leader(2);
   height: 100%;
@@ -26,4 +31,22 @@
   @extend %village-page;
   @include pad(1,1,$center);
   margin-left: gutter($center);
+}
+
+// ---------------------------------------------------------------------------
+// Village Lists
+
+$village-list-size: $smallpx;
+$village-border-color: $base1;
+
+%village-lists {
+  @include adjust-font-size-to($village-list-size);
+  ul { @include no-style-list; }
+}
+
+%village-addlink {
+  #{$link} {
+    @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.25)));
+    color: $base;
+  }
 }

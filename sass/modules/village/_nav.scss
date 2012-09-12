@@ -1,0 +1,38 @@
+// ---------------------------------------------------------------------------
+// Village Nav
+
+.village-nav {
+  @extend %village-lists;
+  @extend %overflow-y;
+  @include box-sizing(content-box);
+  left: - $grid-padding;
+  width: columns($left);
+  padding-left: $grid-padding;
+  border: 1px solid $village-border-color;
+  border-width: 0 1px;
+  a {
+    #{$link} {
+      @include ellipsis;
+      @include bleed($grid-padding, left);
+      @include trailing-border(1px,.25,$village-list-size);
+      @include padding-leader(.25,$village-list-size);
+      @include background(linear-gradient(bottom, rgba($base2,.5), rgba($base2,.125)));
+      display: block;
+      border-color: $village-border-color;
+      padding-left: $grid-padding;
+    }
+    #{$focus} {
+      @include background(linear-gradient(bottom, rgba($base2,1), rgba($base2,.25)));
+    }
+  }
+  .addstudent-link {
+    @extend %village-addlink;
+  }
+  .active {
+    #{$link} {
+      @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
+      background: $village-border-color;
+      color: $base3;
+    }
+  }
+}
