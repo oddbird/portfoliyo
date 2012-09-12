@@ -21,3 +21,17 @@ def test_add_student(client):
     assert response.status_code == 302, response.body
     assert response['Location'] == utils.location(
         reverse('chat', kwargs={'student_id': student.id}))
+
+
+
+def test_add_student_error(client):
+    """Name of student must be provided."""
+    teacher = factories.ProfileFactory.create(school_staff=True)
+    form = client.get(
+        reverse('add_student'), user=teacher.user).forms['add-student-form']
+    form['elders-0-contact'] = "(123)456-7890"
+    form['elders-0-relationship'] = "Father"
+    form['elders-0-school_staff'] = False
+    response = form.submit(status=200)
+
+    response.mustcontain("field is required")

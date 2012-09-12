@@ -133,3 +133,54 @@ class TestAddStudentForm(object):
         profile = form.save(elder)
 
         assert profile.elders == [elder]
+
+
+
+class TestAddStudentAndInviteEldersForm(object):
+    """Tests for AddStudentAndInviteEldersForm."""
+    def data(self, elders=1, **kwargs):
+        """
+        Get default form data, with option to specify number of elders.
+
+        Override elder data defaults by specifying kwargs like::
+
+            elder0={'contact':'foo@example.com'}
+
+        """
+        defaults = {
+            'name': "Some student",
+            'elders-TOTAL_FORMS': str(elders),
+            'elders-INITIAL_FORMS': '0',
+            }
+        for i in range(elders):
+            defaults.update(self.elder_data(i, **kwargs.pop('elder%s' % i, {})))
+        defaults.update(kwargs)
+        return defaults
+
+
+    def elder_data(self, index=0, **kwargs):
+        """Get formset form data for an elder with given index."""
+        defaults = {
+            'contact': 'foo@example.com',
+            'relationship': 'mentor',
+            'school_staff': False,
+            }
+        defaults.update(kwargs)
+        return dict(('elders-%s-%s' % (index, k), v) for k, v in defaults.items())
+
+
+
+    def test_add_student_and_invite_elders(self):
+        form = forms.AddStudentAndInviteEldersForm(
+            self.data(
+                2,
+                elder0={'contact': '123-456-7890'},
+                elder1={'contact': '321-654-0987'},
+                )
+            )
+        assert form.is_valid()
+        student, elders = form.save()
+
+        assert set(e.phone for e in elders) == set(
+            ['123-456-7890', '321-654-0987'])
+        assert all(e.students == [student] for e in elders)
