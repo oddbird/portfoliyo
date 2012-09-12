@@ -1,28 +1,8 @@
 <nav class="village-nav">
   <ul>
-    {% include "village/_student_list_item.html" with user="Alex Gonzalez" %}
-    {% if student %}
-    {% include "village/_student_list_item.html" with user="Allyson Burell" active="true" %}
-    {% else %}
-    {% include "village/_student_list_item.html" with user="Allyson Burell" %}
-    {% endif %}
-    {% include "village/_student_list_item.html" with user="Althea Duffin" %}
-    {% include "village/_student_list_item.html" with user="Easton Williams" %}
-    {% include "village/_student_list_item.html" with user="Ingrid Ramos" %}
-    {% include "village/_student_list_item.html" with user="Jami Marciano" %}
-    {% include "village/_student_list_item.html" with user="Katia Pimentel" %}
-    {% include "village/_student_list_item.html" with user="Kenya Thakkar" %}
-    {% include "village/_student_list_item.html" with user="Madelyn James" %}
-    {% include "village/_student_list_item.html" with user="Malinda Fader" %}
-    {% include "village/_student_list_item.html" with user="Neil Miguez" %}
-    {% include "village/_student_list_item.html" with user="Phillip Knight" %}
-    {% include "village/_student_list_item.html" with user="Raul Lopez" %}
-    {% include "village/_student_list_item.html" with user="Richard Harkness" %}
-    {% include "village/_student_list_item.html" with user="Roy Seaton" %}
-    {% include "village/_student_list_item.html" with user="Ronald Mallard" %}
-    {% include "village/_student_list_item.html" with user="Samuel Quintana" %}
-    {% include "village/_student_list_item.html" with user="Terry Macarthur" %}
-    {% include "village/_student_list_item.html" with user="William Tolman" %}
+    {% for nav_student in request.user.profile.students %}
+    {% include "village/_student_list_item.html" %}
+    {% endfor %}
   </ul>
   <aside class="add-student">
     <a href="{# ajax-load 'village/_student_add_form.html' #}{% url add_student %}" class="addstudent-link{% if add_active %} active{% endif %}">Add a Student</a>
