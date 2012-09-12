@@ -43,4 +43,4 @@ def test_add_student_requires_school_staff(client):
     response = client.get(
         reverse('add_student'), user=someone.user, status=302).follow()
 
-    
+    response.mustcontain("account doesn't have access"), response.html
