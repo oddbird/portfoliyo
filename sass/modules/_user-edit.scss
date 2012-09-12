@@ -11,6 +11,4 @@
   }
 }
 
-.register, .edit-profile {
-  @extend %simple-form;
-}
+.register, .edit-profile { @extend %simple-form; }

@@ -24,21 +24,32 @@ $formspace: $center - 2;
     color: $base3;
   }
   .fieldset {
-    @include clearfix;
+    @include pie-clearfix;
     position: relative;
     + .fieldset {
       @include leader(.5);
       @include leading-border(1px,1);
-      border-color: $base1;
+      border-color: rgba($base1,.5);
     }
   }
-  .staff {  margin: 0; }
+  .school-staff-field {  margin: 0; }
+  .formhelp { display: none; }
+}
 
-  .pluselder {
-    position: absolute;
-    right: $grid-padding;
-    bottom: rhythm(.5);
-    font-style: italic;
-    &::after { content: "»";}
-  }
+.pluselder {
+  @extend %icon-replace;
+  @extend %icon-plus-alt;
+  // position: absolute;
+  #{$link} { color: $alt; }
+  #{$focus} { color: $green; }
+}
+
+.delete-row {
+  @extend %icon-replace;
+  @extend %icon-x-altx-alt;
+  position: absolute;
+  top: rhythm(.125);
+  left: 0;
+  #{$link} { color: rgba($base1,.5); }
+  #{$focus} { color: $red; }
 }

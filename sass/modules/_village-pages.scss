@@ -3,6 +3,9 @@
 
 %village-page {
   @include padding-leader(2);
+  height: 100%;
+  overflow-y: scroll;
+  > :last-child { @include trailer(2); }
   h2 {
     @include adjust-font-size-to($largepx);
     @include serif;

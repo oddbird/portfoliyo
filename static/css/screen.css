@@ -138,24 +138,25 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before, [data-icon]:before {
+.pluselder:before, .delete-row:before, .main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before {
+.pluselder:before, .delete-row:before, .main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, #messages .close {
+.pluselder, .delete-row, .main-login .reset-link, #messages .close {
+  display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:before, #messages .close:before {
+.pluselder:before, .delete-row:before, .main-login .reset-link:before, #messages .close:before {
   position: absolute;
   top: 0;
   left: 0;
@@ -208,7 +209,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00f";
 }
 
-#messages .close:before {
+.delete-row:before, #messages .close:before {
   content: "\e010";
 }
 
@@ -222,6 +223,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .reset-link:before {
   content: "\e013";
+}
+
+.pluselder:before {
+  content: "\e015";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -636,6 +641,9 @@ textarea {
     padding: 0;
     text-align: left;
   }
+  .login .formhelp, .register .formhelp, .edit-profile .formhelp, .reset-password .formhelp, .change-password .formhelp, .set-password .formhelp, .initial-password .formhelp {
+    margin-left: 51.5625%;
+  }
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
     margin-left: -51.5625%;
   }
@@ -1030,6 +1038,11 @@ textarea {
 
 .village-add-form, .dashboard, .elder-add-form {
   padding-top: 2.55556em;
+  height: 100%;
+  overflow-y: scroll;
+}
+.village-add-form > :last-child, .dashboard > :last-child, .elder-add-form > :last-child {
+  margin-bottom: 2.55556em;
 }
 .village-add-form h2, .dashboard h2, .elder-add-form h2 {
   font-size: 1.94444em;
@@ -1089,6 +1102,9 @@ textarea {
   padding: 0;
   text-align: left;
 }
+.formset.elders .formhelp {
+  margin-left: 34.375%;
+}
 .formset.elders .formset-head {
   margin-left: -1em;
   padding-left: 1em;
@@ -1099,27 +1115,44 @@ textarea {
   color: #fdf6e3;
 }
 .formset.elders .fieldset {
-  overflow: hidden;
   position: relative;
+}
+.formset.elders .fieldset:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 .formset.elders .fieldset + .fieldset {
   margin-top: 0.63889em;
   border-top-style: solid;
   border-top-width: 0.05556em;
   padding-top: 1.22222em;
-  border-color: #93a1a1;
+  border-color: rgba(147, 161, 161, 0.5);
 }
-.formset.elders .staff {
+.formset.elders .school-staff-field {
   margin: 0;
 }
-.formset.elders .pluselder {
-  position: absolute;
-  right: 1em;
-  bottom: 0.63889em;
-  font-style: italic;
+.formset.elders .formhelp {
+  display: none;
 }
-.formset.elders .pluselder::after {
-  content: "»";
+
+.pluselder:link, .pluselder:visited {
+  color: #268bd2;
+}
+.pluselder:focus, .pluselder:hover, .pluselder:active {
+  color: #859900;
+}
+
+.delete-row {
+  position: absolute;
+  top: 0.15972em;
+  left: 0;
+}
+.delete-row:link, .delete-row:visited {
+  color: rgba(147, 161, 161, 0.5);
+}
+.delete-row:focus, .delete-row:hover, .delete-row:active {
+  color: #dc322f;
 }
 
 .getstarted {
