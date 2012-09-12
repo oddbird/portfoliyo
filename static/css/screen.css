@@ -799,11 +799,11 @@ textarea {
 
 @media (min-width: 36em) {
   .initial-password {
-    margin-right: -34.02062%;
-    padding-right: 34.02062%;
+    margin-left: -51.5625%;
+    padding-left: 51.5625%;
+    margin-right: -51.5625%;
+    padding-right: 51.5625%;
     padding-top: 1.27778em;
-    margin-left: 0;
-    padding-left: 0;
   }
   .initial-password label {
     padding-left: 1.27778em;
