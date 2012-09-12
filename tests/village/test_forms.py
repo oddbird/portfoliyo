@@ -98,3 +98,38 @@ class TestInviteElderForm(object):
 
         assert rel.elder == profile
         assert len(profile.students) == 1
+
+
+
+class TestAddStudentForm(object):
+    """Tests for AddStudentForm."""
+    def test_add_student(self):
+        """Saves a student, given just name."""
+        form = forms.AddStudentForm({'name': "Some Student"})
+        assert form.is_valid()
+        profile = form.save()
+
+        assert profile.name == u"Some Student"
+
+
+    def test_add_two_students_same_name(self):
+        """Adding two students with same name causes no username trouble."""
+        form = forms.AddStudentForm({'name': "Some Student"})
+        assert form.is_valid()
+        profile1 = form.save()
+
+        form = forms.AddStudentForm({'name': "Some Student"})
+        assert form.is_valid()
+        profile2 = form.save()
+
+        assert profile1 != profile2
+
+
+    def test_student_added_by_staff(self):
+        """If profile is passed to save(), relationship is created."""
+        elder = factories.ProfileFactory()
+        form = forms.AddStudentForm({'name': "Some Student"})
+        assert form.is_valid()
+        profile = form.save(elder)
+
+        assert profile.elders == [elder]
