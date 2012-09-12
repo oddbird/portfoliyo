@@ -12,6 +12,7 @@
   border-width: 0 1px;
   a {
     #{$link} {
+      @extend %village-activenav;
       @include ellipsis;
       @include bleed($grid-padding, left);
       @include trailing-border(1px,.25,$village-list-size);
@@ -25,14 +26,5 @@
       @include background(linear-gradient(bottom, rgba($base2,1), rgba($base2,.25)));
     }
   }
-  .addstudent-link {
-    @extend %village-addlink;
-  }
-  .active {
-    #{$link} {
-      @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
-      background: $village-border-color;
-      color: $base3;
-    }
-  }
+  .addstudent-link { @extend %village-addlink; }
 }

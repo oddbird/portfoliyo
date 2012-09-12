@@ -1369,6 +1369,14 @@ textarea {
   margin-left: 0;
 }
 
+.village-nav .active.addstudent-link:link, .active.addelder-link:link, .village-nav .active.addstudent-link:visited, .active.addelder-link:visited, .village-nav a.active:link, .village-nav a.active:visited {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  background: #93a1a1;
+  color: #fdf6e3;
+}
+
 .village-nav .addstudent-link:link, .addelder-link:link, .village-nav .addstudent-link:visited, .addelder-link:visited {
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1523,13 +1531,6 @@ textarea {
   background: -o-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
   background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
-}
-.village-nav .active:link, .village-nav .active:visited {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  background: #93a1a1;
-  color: #fdf6e3;
 }
 
 .village-feed {
