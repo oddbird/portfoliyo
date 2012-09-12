@@ -5,5 +5,7 @@
     <li>{% firstof rel.elder.name rel.elder.user.email rel.elder.phone %} <span>[{{ rel.description_or_role }}]</span></li>
     {% endfor %}
   </ul>
+  {% if request.user.profile.school_staff %}
   <a href="{# @@@ ajax-load 'village/_village_invite_form.html' #}{% url invite_elder student_id=student.id %}" class="addelder-link{% if active %} active{% endif %}">Invite Elders</a>
+  {% endif %}
 </div>
