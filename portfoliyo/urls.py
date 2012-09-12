@@ -18,6 +18,12 @@ urlpatterns = patterns(
         {"template": "home.html"},
         name="home",
         ),
+    url(
+        "^no_students/$",
+        login_required(direct_to_template),
+        {"template": "no_students.html"},
+        name="no_students",
+        ),
     url(r"^signup/$", "portfoliyo.landing.views.landing", name="landing"),
     url(
         r"^username/edit/$",
