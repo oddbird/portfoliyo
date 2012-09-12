@@ -77,9 +77,30 @@ class InviteElderForm(forms.Form):
         return profile
 
 
+class InviteEldersBaseFormSet(formsets.BaseFormSet):
+    """Base formset class for inviting elders."""
+    def _construct_form(self, i, **kwargs):
+        """Set all fields optional for all forms."""
+        form = super(InviteEldersBaseFormSet, self)._construct_form(
+            i, **kwargs)
+        for field in form.fields.values():
+            field.required = False
+        return form
+
+
+    def _get_empty_form(self, **kwargs):
+        """Set all fields optional for the empty form."""
+        form = super(InviteEldersBaseFormSet, self)._get_empty_form(**kwargs)
+        for field in form.fields.values():
+            field.required = False
+        return form
+    empty_form = property(_get_empty_form)
+
+
+
 InviteEldersFormSet = formsets.formset_factory(
     form=InviteElderForm,
-    formset=formsets.BaseFormSet,
+    formset=InviteEldersBaseFormSet,
     extra=1,
     )
 
@@ -145,6 +166,7 @@ class AddStudentAndInviteEldersForm(AddStudentForm):
 
         elders = []
         for form in self.elders_formset:
-            elders.append(form.save(profile))
+            if form.has_changed():
+                elders.append(form.save(profile))
 
         return (profile, elders)
