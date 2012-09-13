@@ -65,7 +65,7 @@ var PYO = (function (PYO, $) {
     PYO.submitPost = function (container) {
         if ($(container).length) {
             var context = $(container);
-            var submit = context.find('.form-actions .action-post');
+            var form = context.find('form.post-add-form');
             var createObj = function () {
                 var text = context.find('#post-text').val();
                 var author = 'Test User';
@@ -90,7 +90,7 @@ var PYO = (function (PYO, $) {
                 return data;
             };
 
-            submit.click(function(event) {
+            form.submit(function(event) {
                 event.preventDefault();
                 var postData = createObj();
                 if (postData) {

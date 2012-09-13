@@ -5,7 +5,7 @@
 {% block maincontent %}
 <article class="village pusher-test">
 
-  {% include "student/_student_list.html" with student="true" %}
+  {% include "village/_student_list.html" %}
 
   <div class="village-main">
     <section class="village-feed">
@@ -14,7 +14,7 @@
     {% include "posts/_post_add_form.html" %}
   </div>
 
-{% include "student/_village_users.html" %}
+{# {% include "village/_village_elders.html" %} #}
 
 </article>
 
