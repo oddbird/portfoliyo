@@ -120,18 +120,12 @@ def activate(request, activation_key):
 
 @anonymous_csrf
 def register(request):
-    response = registration_views.register(
+    return registration_views.register(
         request,
         backend='portfoliyo.users.register.RegistrationBackend',
         template_name='users/register.html',
-        success_url=redirect_home(request.user),
+        success_url=reverse('awaiting_activation'),
         )
-
-    if response.status_code == 302:
-        messages.success(
-            request, "Check your email for an account activation link.")
-
-    return response
 
 
 

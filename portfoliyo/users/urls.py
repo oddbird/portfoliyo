@@ -44,4 +44,9 @@ urlpatterns = patterns(
         direct_to_template,
         {'template': 'users/registration_closed.html'},
         name='registration_disallowed'),
+    url(r'^activate/$',
+        direct_to_template,
+        {"template": "users/awaiting_activation.html"},
+        name="awaiting_activation",
+        ),
     )

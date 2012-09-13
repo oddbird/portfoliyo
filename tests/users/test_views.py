@@ -239,7 +239,7 @@ class TestRegister(object):
         form['role'] = 'Test User'
         res = form.submit(status=302).follow()
 
-        res.mustcontain("Check your email for an account activation link")
+        res.mustcontain("confirm your email")
 
 
 
