@@ -1,8 +1,9 @@
 // ---------------------------------------------------------------------------
 // Settings
 
-$banner-rhythm: .5;
-$banner-leading: 1 + $banner-rhythm*2;
+$banner-size    : $smallpx;
+$banner-rhythm  : .25;
+$banner-leading : 1 + $banner-rhythm*2;
 
 %banner-item {
   @include padding-leader($banner-rhythm);
@@ -18,13 +19,14 @@ $banner-leading: 1 + $banner-rhythm*2;
 // Brand
 
 .brand {
+  @include adjust-font-size-to($banner-size);
   @include span-columns($half-small);
   @include at-breakpoint($break) { @include span-columns($left + $right); }
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
-    @include adjust-leading-to($banner-leading);
-    height: rhythm($banner-leading);
+    @include adjust-leading-to($banner-leading, $banner-size);
+    height: rhythm($banner-leading, $banner-size);
     display: block;
     overflow: hidden;
     &::before { margin: 0; }
@@ -55,6 +57,7 @@ $banner-leading: 1 + $banner-rhythm*2;
 // Meta
 
 .meta {
+  @include adjust-font-size-to($banner-size);
   @include span-columns($half-small omega);
   @include at-breakpoint($break) { @include span-columns($right omega); }
   position: relative;
@@ -79,13 +82,12 @@ $banner-leading: 1 + $banner-rhythm*2;
   }
 }
 
-$useraction-size          : $smallpx;
+$useraction-size          : $banner-size;
 $useraction-border-size   : 2px;
 $useraction-border-color  : $back;
 $useraction-background    : $base01;
 
 .useractions {
-  @include adjust-font-size-to($smallpx);
   @include css-arrow(top, rhythm(.5), $useraction-background);
   @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
   @include stretch-x;
@@ -97,7 +99,7 @@ $useraction-background    : $base01;
   z-index: 900;
   display: none;
 
-  a, button { padding: rhythm($banner-rhythm, $useraction-size); }
+  a, button { padding: rhythm(.5, $useraction-size); }
   .meta:hover & { display: block; }
 }
 

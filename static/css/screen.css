@@ -715,11 +715,13 @@ textarea {
 }
 
 .meta span, .meta a, .meta button {
-  padding-top: 0.63889em;
-  padding-bottom: 0.63889em;
+  padding-top: 0.31944em;
+  padding-bottom: 0.31944em;
 }
 
 .brand {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   width: 48.4375%;
   float: left;
   margin-right: 3.125%;
@@ -732,8 +734,8 @@ textarea {
   }
 }
 .brand .wordmark {
-  line-height: 2.55556em;
-  height: 2.55556em;
+  line-height: 2.46429em;
+  height: 2.46429em;
   display: block;
   overflow: hidden;
 }
@@ -745,6 +747,8 @@ textarea {
 }
 
 .meta {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   width: 48.4375%;
   float: right;
   margin-right: 0;
@@ -770,8 +774,6 @@ textarea {
 }
 
 .useractions {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
   position: relative;
   background: #586e75;
   -webkit-box-shadow: #073642 0 0 9px;
@@ -781,7 +783,7 @@ textarea {
   left: 0;
   right: 0;
   top: 100%;
-  margin: -2px -0.82143em 0;
+  margin: -2px -0.41071em 0;
   border: 2px solid #073642;
   background: #586e75;
   text-align: left;
@@ -827,8 +829,8 @@ textarea {
 
 [role="contentinfo"] {
   margin-top: 0em;
-  padding-top: 0.63889em;
-  padding-bottom: 0.63889em;
+  padding-top: 0.31944em;
+  padding-bottom: 0.31944em;
   margin-bottom: 0em;
 }
 [role="contentinfo"] .author {
@@ -893,7 +895,7 @@ textarea {
   border: 1px solid #445258;
   color: #eee8d5;
   text-shadow: #2b3538 0 -1px 0;
-  margin-top: 0.41071em;
+  margin-top: 0.20536em;
   float: right;
   max-width: 48.4375%;
 }
@@ -936,7 +938,7 @@ textarea {
     display: none;
   }
   .main-login .login-form {
-    padding-top: 0.31944em;
+    padding-top: 0.15972em;
     display: block;
   }
   .main-login .formfield {
@@ -953,7 +955,7 @@ textarea {
     margin: 0;
   }
   .main-login .reset-link {
-    margin-top: 0.31944em;
+    margin-top: 0.15972em;
     text-shadow: #002b36 0 0 3px;
     position: absolute;
     top: 0;

@@ -3,7 +3,7 @@
 
 [role="contentinfo"] {
   @extend %boilerplate;
-  @include rhythm(0,.5,.5,0);
+  @include rhythm(0,.25,.25,0);
   .author {
     @include adjust-font-size-to($xxsmallpx);
     @include trailer(0);
