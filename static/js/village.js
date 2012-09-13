@@ -49,16 +49,11 @@ var PYO = (function (PYO, $) {
         if (post) { return post; }
     };
 
-    PYO.addPost = function (data, container) {
-        if ($(container).length) {
-            var context = $(container);
-            var post;
-            if (data) {
-                post = PYO.renderPost(data);
-            }
-            if (post) {
-                context.append(post);
-            }
+    PYO.addPost = function (data) {
+        if (data) {
+            var post = PYO.renderPost(data);
+            $('.village-feed').append(post);
+            PYO.updateVillageScroll('.village-feed');
         }
     };
 
@@ -90,15 +85,38 @@ var PYO = (function (PYO, $) {
                 return data;
             };
 
-            form.submit(function(event) {
+            form.submit(function (event) {
                 event.preventDefault();
                 var postData = createObj();
                 if (postData) {
-                    PYO.addPost(postData, '.pusher-test .village-feed');
+                    PYO.addPost(postData);
                     context.find('#post-text').val('');
                 }
             });
         }
+    };
+
+    PYO.listenForPusherEvents = function (container) {
+        var context = $(container);
+        var pusher = new Pusher('f1d9b651de32d21169d5');
+        var active_student_id = context.find('.village-feed').data('id');
+        var students = $('.village-nav .student a');
+
+        students.each(function () {
+            var el = $(this);
+            var id = el.data('id');
+            var unread = el.find('.unread');
+            var channel = pusher.subscribe('student_' + id);
+
+            channel.bind('message_posted', function (data) {
+                if (id === active_student_id) {
+                    PYO.addPost(data);
+                } else {
+                    var count = parseInt(unread.text(), 10);
+                    unread.removeClass('zero').text(++count);
+                }
+            });
+        });
     };
 
     return PYO;

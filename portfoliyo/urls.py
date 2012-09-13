@@ -22,10 +22,4 @@ urlpatterns = patterns(
     url(r"^student/", include("portfoliyo.village.urls")),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^", include("portfoliyo.users.urls")),
-    url(
-        "^pusher_test/",
-        login_required(direct_to_template),
-        {"template": "pusher_test.html"},
-        name="pusher_test",
-        ),
     )
