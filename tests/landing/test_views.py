@@ -6,7 +6,7 @@ from portfoliyo.landing.models import Lead
 
 def test_signup(client):
     """User can sign up with email; gets friendly message, stored as Lead."""
-    form = client.get(reverse("landing")).forms["landing-form"]
+    form = client.get(reverse('home')).forms["landing-form"]
     form["email"] = "foo@example.com"
     response = form.submit().follow()
 
@@ -16,7 +16,7 @@ def test_signup(client):
 
 def test_bad_email(client):
     """If user submits a bad email, they get a friendlyish error."""
-    form = client.get(reverse("landing")).forms["landing-form"]
+    form = client.get(reverse('home')).forms["landing-form"]
     form["email"] = "foo"
     response = form.submit()
 

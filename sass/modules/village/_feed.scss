@@ -57,6 +57,15 @@ $addnote-fontsize: $input-font-size;
     padding-left: rhythm(.5, $addnote-fontsize);
     resize: none;
   }
+  .charcount {
+    @include adjust-font-size-to($xsmallpx);
+    position: absolute;
+    right: .25em;
+    bottom: 0;
+    color: $base1;
+    &.overlimit { color: $red; }
+  }
+
   .form-actions {
     clear: none;
     float: right;

@@ -111,7 +111,7 @@ class TestLogout(object):
 
 
     def test_logout_redirect(self, client):
-        """Successful logout POST redirects to the page you were on."""
+        """Successful logout POST redirects to the home page."""
         user = factories.UserFactory.create()
 
         url = reverse('no_students')
@@ -119,7 +119,7 @@ class TestLogout(object):
         form = client.get(url, user=user).forms['logoutform']
         res = form.submit(status=302)
 
-        assert res['Location'] == utils.location(url)
+        assert res['Location'] == utils.location(reverse('home'))
 
 
 

@@ -1,8 +1,12 @@
 """Core/home views."""
-from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
+
+from session_csrf import anonymous_csrf
+
+from .landing.views import landing
+
 
 
 
@@ -28,12 +32,15 @@ def redirect_home(user):
 
 
 
-@login_required
+@anonymous_csrf
 def home(request):
     """Home view. Redirects or displays a get-started page."""
-    dest = redirect_home(request.user)
+    if request.user.is_authenticated():
+        dest = redirect_home(request.user)
 
-    if dest != request.path:
-        return redirect(dest)
+        if dest != request.path:
+            return redirect(dest)
 
-    return TemplateResponse(request, 'home.html')
+        return TemplateResponse(request, 'home.html')
+    else:
+        return landing(request)
