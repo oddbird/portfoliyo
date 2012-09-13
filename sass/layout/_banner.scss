@@ -60,7 +60,7 @@ $banner-leading: 1 + $banner-rhythm*2;
   position: relative;
   text-align: right;
 
-  a {
+  span, a {
     @extend %icon;
     @extend %icon-settings;
     @extend %banner-item;
@@ -68,8 +68,8 @@ $banner-leading: 1 + $banner-rhythm*2;
     display: block;
   }
 
-  [href*="/edit/"] { @extend %icon-settings; }
-  [href*="/password_change/"] { @extend %icon-key; }
+  [href*="edit"] { @extend %icon-settings; }
+  [href*="password"] { @extend %icon-key; }
   button {
     @extend %reset-button;
     @extend %icon;
@@ -79,14 +79,20 @@ $banner-leading: 1 + $banner-rhythm*2;
   }
 }
 
-$useraction-size: $smallpx;
+$useraction-size          : $smallpx;
+$useraction-border-size   : 2px;
+$useraction-border-color  : $back;
+$useraction-background    : $base01;
 
 .useractions {
   @include adjust-font-size-to($smallpx);
+  @include css-arrow(top, rhythm(.5), $useraction-background);
+  @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
   @include stretch-x;
   top: 100%;
-  margin: 0 rhythm(- $banner-rhythm, $useraction-size);
-  background: $back;
+  margin: - $useraction-border-size rhythm(- $banner-rhythm, $useraction-size) 0;
+  border: $useraction-border-size solid $useraction-border-color;
+  background: $useraction-background;
   text-align: left;
   z-index: 900;
   display: none;

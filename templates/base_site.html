@@ -14,8 +14,9 @@
     {% block metanav %}
     {% if user.is_authenticated %}
     <nav class="meta">
-      <a href="{% url edit_profile %}">{% firstof user.profile.name user.email %}</a>
+      <span>{% firstof user.profile.name user.email %}</span>
       <ul class="useractions">
+        <li><a href="{% url edit_profile %}">Edit profile</a></li>
         <li><a href="{% url password_change %}">Change password</a></li>
         <li><form action="{% url logout %}?next={{ request.path }}" method="POST" class="signout" id="logoutform">{% csrf_token %}<button type="submit">Sign Out</button></form></li>
       </ul>
