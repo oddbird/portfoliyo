@@ -5,7 +5,7 @@
   <h2>Add Student Village</h2>
   {{ form.non_field_errors }}
 
-  {% include "forms/_field.html" with field=form.name|attr:"placeholder:student name" label="Student" %}
+  {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
 
   {% include "village/_elders_formset.html" %}
 
