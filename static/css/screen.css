@@ -1627,6 +1627,17 @@ textarea {
   padding-left: 0.82143em;
   resize: none;
 }
+.post-add-form .charcount {
+  font-size: 0.66667em;
+  line-height: 1.91667em;
+  position: absolute;
+  right: .25em;
+  bottom: 0;
+  color: #93a1a1;
+}
+.post-add-form .charcount.overlimit {
+  color: #dc322f;
+}
 .post-add-form .form-actions {
   clear: none;
   float: right;
