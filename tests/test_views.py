@@ -18,7 +18,7 @@ class TestHome(object):
         res = client.get(self.url, status=302)
 
         assert res['Location'] == location(
-            reverse('landing') + '?next=' + self.url)
+            reverse('login') + '?next=' + self.url)
 
 
     def test_redirect_to_single_student(self, client):

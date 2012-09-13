@@ -140,7 +140,7 @@ class TestPasswordChange(object):
         res = client.get(self.url, status=302)
 
         assert res['Location'] == utils.location(
-            reverse('landing') + '?next=' + self.url)
+            reverse('login') + '?next=' + self.url)
 
 
     def test_change_password(self, client):
@@ -352,4 +352,4 @@ class TestEditProfile(object):
         res = client.get(self.url, status=302)
 
         assert res['Location'] == utils.location(
-            reverse('landing') + '?next=' + self.url)
+            reverse('login') + '?next=' + self.url)

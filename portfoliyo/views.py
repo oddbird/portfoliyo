@@ -16,7 +16,7 @@ def redirect_home(user):
 
     """
     if not user.is_authenticated():
-        return reverse('landing')
+        return reverse('login')
     students = user.profile.students
     if not students:
         if user.profile.school_staff:

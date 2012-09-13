@@ -8,6 +8,7 @@ from django.contrib.auth import (
     views as auth_views, forms as auth_forms, models as auth_models)
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 from django.utils.http import base36_to_int
@@ -107,7 +108,7 @@ def activate(request, activation_key):
         activation_key=activation_key,
         backend='portfoliyo.users.register.RegistrationBackend',
         template_name='users/activate.html',
-        success_url=redirect_home(request.user),
+        success_url=reverse('login'),
         )
 
     if response.status_code == 302:
