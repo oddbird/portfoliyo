@@ -5,7 +5,7 @@ $login-button-color     : $base00;
 $login-text-color       : $base2;
 $login-button-style     : simple;
 $login-button-size      : $smallpx;
-$login-button-padding   : rhythm(.35,$login-button-size);
+$login-button-padding   : rhythm(.25,$login-button-size);
 
 @mixin login-button {
   @include sassy-button-structure($font-size: $login-button-size, $padding: $login-button-padding);
@@ -20,15 +20,16 @@ $login-button-padding   : rhythm(.35,$login-button-size);
   label { @include gone; }
 
   .login-link {
-    @include login-button;
     @include leader($banner-rhythm/2, $login-button-size);
+    @include login-button;
     float: right;
     max-width: columns(3);
+    padding-left: 1em;
+    padding-right: 1em;
   }
 
   .reset-link {
     @extend %icon-replace;
-    display: inline-block;
     width: 1em;
   }
 
@@ -55,6 +56,7 @@ $login-button-padding   : rhythm(.35,$login-button-size);
       top: 0;
       right: 102% + gutter(2);
     }
+    input { min-height: 0; }
     button {
       @include login-button;
       background-color: $blue;
