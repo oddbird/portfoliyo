@@ -9,6 +9,8 @@ from django.contrib.auth import forms as auth_forms, models as auth_models
 
 import floppyforms as forms
 
+from . import models
+
 
 
 class RegistrationForm(forms.Form):
@@ -183,7 +185,11 @@ class EditProfileForm(forms.Form):
     def save(self):
         """Save edits and return updated profile."""
         self.profile.name = self.cleaned_data['name']
-        self.profile.role = self.cleaned_data['role']
+        old_role = self.profile.role
+        new_role = self.cleaned_data['role']
+        self.profile.role = new_role
         self.profile.save()
+        self.profile.relationships_from.filter(description=old_role).update(
+            description=new_role)
 
         return self.profile

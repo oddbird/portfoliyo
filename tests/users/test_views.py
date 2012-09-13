@@ -4,7 +4,7 @@ from django.core import mail
 from django.core.urlresolvers import reverse
 
 from tests.users import factories
-from tests.utils import patch_session, location
+from tests import utils
 
 
 class TestLogin(object):
@@ -25,7 +25,7 @@ class TestLogin(object):
         form['password'] = 'sekrit'
         res = form.submit(status=302)
 
-        assert res['Location'] == location(reverse('home'))
+        assert res['Location'] == utils.location(reverse('home'))
 
 
     def test_login_failed(self, client):
@@ -59,7 +59,7 @@ class TestLogin(object):
 
         session_data = {}
 
-        with patch_session(session_data):
+        with utils.patch_session(session_data):
             res = client.get(self.url)
             for i in range(6):
                 res = res.forms['loginform'].submit()
@@ -81,7 +81,7 @@ class TestLogin(object):
 
         session_data = {}
 
-        with patch_session(session_data):
+        with utils.patch_session(session_data):
             res = client.get(self.url)
             for i in range(6):
                 res = res.forms['loginform'].submit()
@@ -93,7 +93,7 @@ class TestLogin(object):
             form['password'] = 'sekrit'
             res = form.submit(status=302)
 
-        assert res['Location'] == location(reverse('home'))
+        assert res['Location'] == utils.location(reverse('home'))
 
 
 
@@ -119,7 +119,7 @@ class TestLogout(object):
         form = client.get(url, user=user).forms['logoutform']
         res = form.submit(status=302)
 
-        assert res['Location'] == location(url)
+        assert res['Location'] == utils.location(url)
 
 
 
@@ -139,7 +139,7 @@ class TestPasswordChange(object):
         """Redirects to signup if user is unauthenticated."""
         res = client.get(self.url, status=302)
 
-        assert res['Location'] == location(
+        assert res['Location'] == utils.location(
             reverse('landing') + '?next=' + self.url)
 
 
@@ -332,7 +332,7 @@ class TestEditProfile(object):
         response = form.submit().follow()
 
         response.mustcontain('saved')
-        profile = profile.__class__.objects.get(id=profile.id)
+        profile = utils.refresh(profile)
         assert profile.name == u'New Name'
         assert profile.role == u'New Role'
 
@@ -351,5 +351,5 @@ class TestEditProfile(object):
         """Redirects to signup if user is unauthenticated."""
         res = client.get(self.url, status=302)
 
-        assert res['Location'] == location(
+        assert res['Location'] == utils.location(
             reverse('landing') + '?next=' + self.url)
