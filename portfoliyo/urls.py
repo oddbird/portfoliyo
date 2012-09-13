@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 
 from . import admin, views
+from .sms import views as sms_views
 
 admin.autodiscover()
 
@@ -12,14 +13,14 @@ session_csrf.monkeypatch()
 
 urlpatterns = patterns(
     '',
-    url("^$", views.home, name="home"),
-    url(
-        "^no_students/$",
+    url(r'^_twilio_hook/$', sms_views.twilio_receive),
+    url(r'^$', views.home, name='home'),
+    url(r'^no_students/$',
         login_required(direct_to_template),
-        {"template": "no_students.html"},
-        name="no_students",
+        {'template': 'no_students.html'},
+        name='no_students',
         ),
-    url(r"^student/", include("portfoliyo.village.urls")),
-    url(r"^admin/", include(admin.site.urls)),
-    url(r"^", include("portfoliyo.users.urls")),
+    url(r'^student/', include('portfoliyo.village.urls')),
+    url(r'^admin/', include(admin.site.urls)),
+    url(r'^', include('portfoliyo.users.urls')),
     )
