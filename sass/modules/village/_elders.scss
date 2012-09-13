@@ -15,7 +15,22 @@
     font-weight: bold;
   }
   li {
+    @extend %icon;
+    @extend %icon-circle;
     @include ellipsis;
+    &::before {
+      margin: 0;
+      color: $green;
+    }
+    &.offline { &::before { color: $yellow; } }
+    &.inactive {
+      @extend %icon-warning;
+      &::before { color: $base1; }
+    }
+    &.mobile {
+      @extend %icon-mobile;
+      &::before { color: $base; }
+    }
   }
   b { font-weight: bold; }
   span { color: $base1; }

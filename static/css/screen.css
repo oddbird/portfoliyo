@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .message::before, [data-icon]:before {
+.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .village-elders li::before, .message::before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .message::before {
+.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .village-elders li::before, .message::before {
   margin-right: .4em;
 }
 
@@ -223,7 +223,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e011";
 }
 
-.message.warning:before {
+.village-elders li.inactive:before, .message.warning:before {
   content: "\e012";
 }
 
@@ -233,6 +233,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .add-row:before {
   content: "\e015";
+}
+
+.village-elders li.mobile:before {
+  content: "\e016";
+}
+
+.village-elders li:before {
+  content: "\e017";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -1678,6 +1686,19 @@ textarea {
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
+}
+.village-elders li::before {
+  margin: 0;
+  color: #859900;
+}
+.village-elders li.offline::before {
+  color: #b58900;
+}
+.village-elders li.inactive::before {
+  color: #93a1a1;
+}
+.village-elders li.mobile::before {
+  color: #657b83;
 }
 .village-elders b {
   font-weight: bold;

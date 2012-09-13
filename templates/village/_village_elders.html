@@ -2,6 +2,7 @@
   <h2>{{ student }}'s Elders</h2>
   <ul>
     {% for rel in student.elder_relationships %}
+    {# @@@ status classes: offline | inactive | mobile #}
     <li>
       <b>{{ rel.description_or_role }}:</b>
       <span>{% firstof rel.elder.name rel.elder.user.email rel.elder.phone %}</span>
