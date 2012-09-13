@@ -320,21 +320,21 @@ img {
   border: 1px solid #073642;
 }
 
-.activationfailed h1, .village-landing h1, .no-students h1, .activationfailed h2, .village-landing h2, .no-students h2, .activationfailed h3, .village-landing h3, .no-students h3, .activationfailed h4, .village-landing h4, .no-students h4, .activationfailed h5, .village-landing h5, .no-students h5, .activationfailed h6, .village-landing h6, .no-students h6 {
+.activationfailed h1, .awaiting-activation h1, .village-landing h1, .no-students h1, .activationfailed h2, .awaiting-activation h2, .village-landing h2, .no-students h2, .activationfailed h3, .awaiting-activation h3, .village-landing h3, .no-students h3, .activationfailed h4, .awaiting-activation h4, .village-landing h4, .no-students h4, .activationfailed h5, .awaiting-activation h5, .village-landing h5, .no-students h5, .activationfailed h6, .awaiting-activation h6, .village-landing h6, .no-students h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.activationfailed p, .village-landing p, .no-students p, .activationfailed ul, .village-landing ul, .no-students ul, .activationfailed ol, .village-landing ol, .no-students ol {
+.activationfailed p, .awaiting-activation p, .village-landing p, .no-students p, .activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, .activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol {
   margin-bottom: 1.27778em;
 }
-.activationfailed ul, .village-landing ul, .no-students ul {
+.activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.activationfailed em, .village-landing em, .no-students em {
+.activationfailed em, .awaiting-activation em, .village-landing em, .no-students em {
   font-style: italic;
 }
-.activationfailed strong, .village-landing strong, .no-students strong {
+.activationfailed strong, .awaiting-activation strong, .village-landing strong, .no-students strong {
   font-weight: 500;
 }
 
@@ -620,12 +620,12 @@ textarea {
   margin-bottom: 1.27778em;
 }
 
-.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .no-students h2 {
+.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
 @media (min-width: 36em) {
-  .login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed, .no-students {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed, .awaiting-activation, .no-students {
     padding-left: 25.38462%;
     padding-right: 25.38462%;
   }
