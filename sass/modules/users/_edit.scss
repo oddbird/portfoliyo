@@ -1,0 +1,14 @@
+// ---------------------------------------------------------------------------
+// Edit Profile
+
+.initial-password {
+  @extend %notice;
+  @extend %simple-inline-form;
+  @include at-breakpoint($break) {
+    @include bleed(space($simple-side,$simple-center));
+    @include padding-leader(1);
+    label { padding-left: rhythm(1); }
+  }
+}
+
+.register, .edit-profile { @extend %simple-form; }

@@ -17,31 +17,21 @@
 // ---------------------------------------------------------------------------
 // Users
 
-@import "modules/user-login";
-@import "modules/user-edit";
-@import "modules/user-password";
+@import "modules/users/login";
+@import "modules/users/edit";
+@import "modules/users/password";
 
 // ---------------------------------------------------------------------------
 // Village
 
-$original-cols: $total-columns;
-$total-columns: $break-cols;
-
 @import "modules/village";
-@import "modules/village-pages";
-@import "modules/village-forms";
-@import "modules/village-dashboard";
-
-$total-columns: $original-cols;
-
-@import "modules/village-landing";
 
 // ---------------------------------------------------------------------------
 // Pyo
 
-// @import "modules/feed-profile";
-// @import "modules/feed-combined";
-// @import "modules/feed-post";
+// @import "modules/feed/profile";
+// @import "modules/feed/combined";
+// @import "modules/feed/post";
 
 // ---------------------------------------------------------------------------
 // Plugins

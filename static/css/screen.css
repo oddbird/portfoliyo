@@ -138,24 +138,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before, [data-icon]:before {
+.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .message::before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta a:before, .meta button:before, .reset-link:before, .summary li:before, .benefits li:before, .message:before {
+.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .message::before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, #messages .close {
+.main-login .reset-link, .add-row, .remove-row, #messages .close {
+  display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:before, #messages .close:before {
+.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, #messages .close:focus {
+  outline: 0;
+}
+.main-login .reset-link:focus::before, .add-row:focus::before, .remove-row:focus::before, #messages .close:focus::before {
+  outline: 1px dotted;
+}
+.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -184,7 +191,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e004";
 }
 
-.meta a:before, .meta [href*="/edit/"]:before {
+.meta span:before, .meta a:before, .meta [href*="edit"]:before {
   content: "\e007";
 }
 
@@ -192,7 +199,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e009";
 }
 
-.meta [href*="/password_change/"]:before {
+.meta [href*="password"]:before {
   content: "\e00a";
 }
 
@@ -208,7 +215,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00f";
 }
 
-#messages .close:before {
+.remove-row:before, #messages .close:before {
   content: "\e010";
 }
 
@@ -222,6 +229,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .reset-link:before {
   content: "\e013";
+}
+
+.add-row:before {
+  content: "\e015";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -274,7 +285,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.meta a, .village-landing .formfield .action-betasignup {
+.meta span, .meta a, .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -301,21 +312,21 @@ img {
   border: 1px solid #073642;
 }
 
-.activationfailed h1, .village-landing h1, .activationfailed h2, .village-landing h2, .activationfailed h3, .village-landing h3, .activationfailed h4, .village-landing h4, .activationfailed h5, .village-landing h5, .activationfailed h6, .village-landing h6 {
+.activationfailed h1, .village-landing h1, .no-students h1, .activationfailed h2, .village-landing h2, .no-students h2, .activationfailed h3, .village-landing h3, .no-students h3, .activationfailed h4, .village-landing h4, .no-students h4, .activationfailed h5, .village-landing h5, .no-students h5, .activationfailed h6, .village-landing h6, .no-students h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.activationfailed p, .village-landing p, .activationfailed ul, .village-landing ul, .activationfailed ol, .village-landing ol {
+.activationfailed p, .village-landing p, .no-students p, .activationfailed ul, .village-landing ul, .no-students ul, .activationfailed ol, .village-landing ol, .no-students ol {
   margin-bottom: 1.27778em;
 }
-.activationfailed ul, .village-landing ul {
+.activationfailed ul, .village-landing ul, .no-students ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.activationfailed em, .village-landing em {
+.activationfailed em, .village-landing em, .no-students em {
   font-style: italic;
 }
-.activationfailed strong, .village-landing strong {
+.activationfailed strong, .village-landing strong, .no-students strong {
   font-weight: 500;
 }
 
@@ -552,6 +563,9 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 [type="checkbox"]:checked + label::before, [type="radio"]:checked + label::before {
   color: #268bd2;
 }
+[type="checkbox"]:focus + label, [type="radio"]:focus + label {
+  color: #002b36;
+}
 
 label {
   display: block;
@@ -582,10 +596,10 @@ textarea {
   padding-right: 1em;
 }
 
-.initial-password, .formblock.elders {
+.initial-password, .formset.elders {
   background: #eee8d5;
 }
-.initial-password:after, .formblock.elders:after {
+.initial-password:after, .formset.elders:after {
   content: "";
   display: table;
   clear: both;
@@ -598,12 +612,12 @@ textarea {
   margin-bottom: 1.27778em;
 }
 
-.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2 {
+.login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .no-students h2 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
 @media (min-width: 36em) {
-  .login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed, .no-students {
     padding-left: 25.38462%;
     padding-right: 25.38462%;
   }
@@ -635,6 +649,9 @@ textarea {
     display: inline-block;
     padding: 0;
     text-align: left;
+  }
+  .login .formhelp, .register .formhelp, .edit-profile .formhelp, .reset-password .formhelp, .change-password .formhelp, .set-password .formhelp, .initial-password .formhelp {
+    margin-left: 51.5625%;
   }
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
     margin-left: -51.5625%;
@@ -697,7 +714,7 @@ textarea {
   color: rgba(238, 232, 213, 0.75);
 }
 
-.meta a, .meta button {
+.meta span, .meta a, .meta button {
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
 }
@@ -741,7 +758,7 @@ textarea {
     margin-right: 0;
   }
 }
-.meta a {
+.meta span, .meta a {
   display: block;
 }
 .meta button:link, .meta button:visited {
@@ -755,15 +772,42 @@ textarea {
 .useractions {
   font-size: 0.77778em;
   line-height: 1.64286em;
+  position: relative;
+  background: #586e75;
+  -webkit-box-shadow: #073642 0 0 9px;
+  -moz-box-shadow: #073642 0 0 9px;
+  box-shadow: #073642 0 0 9px;
   position: absolute;
   left: 0;
   right: 0;
   top: 100%;
-  margin: 0 -0.82143em;
-  background: #073642;
+  margin: -2px -0.82143em 0;
+  border: 2px solid #073642;
+  background: #586e75;
   text-align: left;
   z-index: 900;
   display: none;
+}
+.useractions:after, .useractions:before {
+  bottom: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.useractions:after {
+  border-bottom-color: #586e75;
+  border-width: 0.63889em;
+  left: 50%;
+  margin-left: -0.63889em;
+}
+.useractions:before {
+  border-bottom-color: false;
+  border-width: 0.63889em;
+  left: 50%;
+  margin-left: -0.63889em;
 }
 .useractions a, .useractions button {
   padding: 0.82143em;
@@ -799,335 +843,15 @@ textarea {
 
 @media (min-width: 36em) {
   .initial-password {
-    margin-right: -34.02062%;
-    padding-right: 34.02062%;
+    margin-left: -51.5625%;
+    padding-left: 51.5625%;
+    margin-right: -51.5625%;
+    padding-right: 51.5625%;
     padding-top: 1.27778em;
-    margin-left: 0;
-    padding-left: 0;
   }
   .initial-password label {
     padding-left: 1.27778em;
   }
-}
-
-.village-app [role="main"] {
-  padding: 0;
-}
-
-.village {
-  -webkit-transition: height 150ms;
-  -moz-transition: height 150ms;
-  -ms-transition: height 150ms;
-  -o-transition: height 150ms;
-  transition: height 150ms;
-  position: relative;
-  height: 30.66667em;
-}
-.village:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-.village-nav, .village-feed {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  overflow-y: scroll;
-}
-
-.village-nav, .village-users {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
-}
-.village-nav ul, .village-users ul {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-}
-.village-nav ul li, .village-users ul li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-.village-nav li, .village-users li {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
-
-.village-nav .addstudent-link:link, .addelder-link:link, .village-nav .addstudent-link:visited, .addelder-link:visited {
-  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
-  background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
-  background: -moz-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
-  background: -o-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
-  background: -ms-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
-  background: linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
-  color: #657b83;
-}
-
-.village-nav {
-  left: -1.53846%;
-  width: 16.92308%;
-  border: 1px solid #93a1a1;
-  border-width: 0 1px;
-}
-.village-nav a:link, .village-nav a:visited {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  border-bottom-style: solid;
-  border-bottom-width: 0.07143em;
-  padding-bottom: 0.33929em;
-  padding-top: 0.41071em;
-  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
-  background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
-  background: -moz-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
-  background: -o-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
-  background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
-  background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
-  display: block;
-  border-color: #93a1a1;
-  padding-left: 0.82143em;
-}
-.village-nav a:focus, .village-nav a:hover, .village-nav a:active {
-  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
-  background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
-  background: -moz-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
-  background: -o-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
-  background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
-  background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
-}
-.village-nav .active:link, .village-nav .active:visited {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  background: #93a1a1;
-  color: #fdf6e3;
-}
-
-.village-main {
-  position: relative;
-  float: left;
-  width: 67.69231%;
-  margin-left: 15.38462%;
-  height: 100%;
-}
-
-.village-feed {
-  left: 0;
-  right: 0;
-  bottom: 4.47222em;
-}
-
-.post {
-  border-bottom-style: solid;
-  border-bottom-width: 0.05556em;
-  padding-bottom: 0.26389em;
-  padding-left: 2.32558%;
-  padding-right: 2.32558%;
-  border-color: #eee8d5;
-}
-.post:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.post .byline {
-  font-size: 0.66667em;
-  line-height: 1.91667em;
-  color: #93a1a1;
-}
-.post .byline h3 {
-  display: inline;
-}
-.post .byline b {
-  color: #657b83;
-  font-weight: bold;
-}
-.post .byline time {
-  float: right;
-}
-.post .body {
-  overflow: hidden;
-  font-size: 0.77778em;
-  line-height: 1.64286em;
-}
-
-.post-add-form {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 0.63889em 1.53846%;
-  border-top: 1px solid #657b83;
-  background: #93a1a1;
-}
-.post-add-form .formfield {
-  float: left;
-  width: 87.2093%;
-  margin: 0;
-}
-.post-add-form textarea {
-  height: 4.10714em;
-  min-height: 4.10714em;
-  background: rgba(255, 255, 255, 0.75);
-  padding-left: 0.82143em;
-  resize: none;
-}
-.post-add-form .form-actions {
-  clear: none;
-  float: right;
-  margin: 0;
-  width: 12.7907%;
-}
-.post-add-form button {
-  -moz-border-radius-topleft: 0;
-  -webkit-border-top-left-radius: 0;
-  border-top-left-radius: 0;
-  -moz-border-radius-bottomleft: 0;
-  -webkit-border-bottom-left-radius: 0;
-  border-bottom-left-radius: 0;
-  position: relative;
-  top: 1px;
-  padding: 0;
-  height: 3.19444em;
-  width: 100%;
-  text-transform: uppercase;
-}
-
-.village-users {
-  padding-top: 1.27778em;
-  float: right;
-  width: 16.92308%;
-  padding-left: 1.53846%;
-  height: 100%;
-  border-left: 1px solid #93a1a1;
-}
-.village-users h2 {
-  margin-bottom: 0.63889em;
-  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-weight: bold;
-}
-.village-users span {
-  color: #93a1a1;
-}
-
-.addelder-link {
-  margin-top: 1.64286em;
-  border-style: solid;
-  border-width: 0.07143em;
-  padding: 0.33929em;
-  display: block;
-  border-color: #93a1a1;
-  padding-left: 0.82143em;
-}
-
-.village-add-form, .dashboard, .elder-add-form {
-  padding-top: 2.55556em;
-}
-.village-add-form h2, .dashboard h2, .elder-add-form h2 {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  margin-bottom: 0.65714em;
-  font-weight: bold;
-}
-
-.village-add-form, .dashboard {
-  width: 66.15385%;
-  float: right;
-  margin-right: 0;
-  padding-left: 8.46154%;
-  padding-right: 8.46154%;
-  margin-right: 16.92308%;
-  margin-left: 1.53846%;
-}
-
-.elder-add-form {
-  padding-left: 12.7907%;
-  padding-right: 12.7907%;
-  margin-left: 2.32558%;
-}
-
-.formblock.elders {
-  margin-left: -1em;
-  padding-left: 1em;
-  margin-right: -1em;
-  padding-right: 1em;
-  margin-top: 1.27778em;
-  position: relative;
-}
-.formblock.elders label {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  width: 31.25%;
-  float: left;
-  margin-right: 3.125%;
-  padding: 0.31944em 0;
-  text-align: right;
-}
-.formblock.elders label + input, .formblock.elders label + textarea {
-  width: 65.625%;
-  float: right;
-  margin-right: 0;
-}
-.formblock.elders [type="checkbox"] + label, .formblock.elders [type="radio"] + label {
-  float: none;
-  width: auto;
-  margin-right: auto;
-  margin-left: 34.375%;
-  display: inline-block;
-  padding: 0;
-  text-align: left;
-}
-.formblock.elders .formblock-head {
-  margin-left: -1em;
-  padding-left: 1em;
-  margin-right: -1em;
-  padding-right: 1em;
-  margin-bottom: 1.27778em;
-  background: rgba(88, 110, 117, 0.5);
-  color: #fdf6e3;
-}
-.formblock.elders .formset {
-  overflow: hidden;
-  position: relative;
-}
-.formblock.elders .formset + .formset {
-  margin-top: 0.63889em;
-  border-top-style: solid;
-  border-top-width: 0.05556em;
-  padding-top: 1.22222em;
-  border-color: #93a1a1;
-}
-.formblock.elders .staff {
-  margin: 0;
-}
-.formblock.elders .pluselder {
-  position: absolute;
-  right: 1em;
-  bottom: 0.63889em;
-  font-style: italic;
-}
-.formblock.elders .pluselder::after {
-  content: "»";
-}
-
-.getstarted {
-  margin-left: -17.1875%;
-  padding-left: 17.1875%;
-  padding-bottom: 5.11111em;
-  background: url('../images/start-arrow.png?1347385779') no-repeat left bottom;
-  font-weight: bold;
 }
 
 .main-login .login-form {
@@ -1580,6 +1304,381 @@ textarea {
   }
 }
 
+.village-app [role="main"] {
+  padding: 0;
+}
+.village-app .container, .village-app [role="banner"], .village-app [role="contentinfo"] {
+  -webkit-background-origin: content;
+  -moz-background-origin: content;
+  -ms-background-origin: content-box;
+  -o-background-origin: content-box;
+  background-origin: content-box;
+  -webkit-background-clip: content-box;
+  -moz-background-clip: content-box;
+  background-clip: content-box;
+}
+
+.village {
+  -webkit-transition: height 150ms;
+  -moz-transition: height 150ms;
+  -ms-transition: height 150ms;
+  -o-transition: height 150ms;
+  transition: height 150ms;
+  position: relative;
+  height: 30.66667em;
+}
+.village:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.village-main {
+  position: relative;
+  float: left;
+  width: 67.69231%;
+  margin-left: 15.38462%;
+  height: 100%;
+}
+
+.village-nav, .village-feed {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  overflow-y: scroll;
+}
+
+.village-add-form, .dashboard, .elder-add-form {
+  padding-top: 2.55556em;
+  height: 100%;
+  overflow-y: scroll;
+}
+.village-add-form > :last-child, .dashboard > :last-child, .elder-add-form > :last-child {
+  margin-bottom: 2.55556em;
+}
+.village-add-form h2, .dashboard h2, .elder-add-form h2 {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin-bottom: 0.65714em;
+  font-weight: bold;
+}
+
+.village-add-form, .dashboard {
+  width: 66.15385%;
+  float: right;
+  margin-right: 0;
+  padding-left: 8.46154%;
+  padding-right: 8.46154%;
+  margin-right: 16.92308%;
+  margin-left: 1.53846%;
+}
+
+.elder-add-form {
+  padding-left: 12.7907%;
+  padding-right: 12.7907%;
+  margin-left: 2.32558%;
+}
+
+.village-nav, .village-elders {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+}
+.village-nav ul, .village-elders ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+}
+.village-nav ul li, .village-elders ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+
+.village-nav .active.addstudent-link:link, .active.addelder-link:link, .village-nav .active.addstudent-link:visited, .active.addelder-link:visited, .village-nav a.active:link, .village-nav a.active:visited {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
+  background: #93a1a1;
+  color: #fdf6e3;
+}
+
+.village-nav .addstudent-link:link, .addelder-link:link, .village-nav .addstudent-link:visited, .addelder-link:visited {
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
+  background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
+  background: -moz-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
+  background: -o-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
+  background: -ms-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
+  background: linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
+  color: #657b83;
+}
+
+.formset.elders {
+  margin-left: -1em;
+  padding-left: 1em;
+  margin-right: -1em;
+  padding-right: 1em;
+  margin-top: 1.27778em;
+  position: relative;
+}
+.formset.elders label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 31.25%;
+  float: left;
+  margin-right: 3.125%;
+  padding: 0.31944em 0;
+  text-align: right;
+}
+.formset.elders label + input, .formset.elders label + textarea {
+  width: 65.625%;
+  float: right;
+  margin-right: 0;
+}
+.formset.elders [type="checkbox"] + label, .formset.elders [type="radio"] + label {
+  float: none;
+  width: auto;
+  margin-right: auto;
+  margin-left: 34.375%;
+  display: inline-block;
+  padding: 0;
+  text-align: left;
+}
+.formset.elders .formhelp {
+  margin-left: 34.375%;
+}
+.formset.elders .formset-head {
+  margin-left: -1em;
+  padding-left: 1em;
+  margin-right: -1em;
+  padding-right: 1em;
+  padding-top: 0.31944em;
+  padding-bottom: 0.31944em;
+  background: rgba(88, 110, 117, 0.5);
+  color: #fdf6e3;
+}
+.formset.elders .fieldset {
+  padding-top: 1.27778em;
+  position: relative;
+}
+.formset.elders .fieldset:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.formset.elders .fieldset + .fieldset {
+  margin-top: 0.63889em;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 1.22222em;
+  border-color: rgba(147, 161, 161, 0.5);
+}
+.formset.elders .school-staff-field {
+  margin: 0;
+}
+.formset.elders .formhelp {
+  display: none;
+}
+
+.add-row {
+  position: absolute;
+  bottom: 0.31944em;
+  right: 1em;
+}
+.add-row:link, .add-row:visited {
+  color: #657b83;
+}
+.add-row:focus, .add-row:hover, .add-row:active {
+  color: #002b36;
+}
+.fieldset + .add-row {
+  bottom: 0.63889em;
+}
+
+.remove-row {
+  position: absolute;
+  top: 0.63889em;
+  left: 0;
+}
+.remove-row:link, .remove-row:visited {
+  color: rgba(147, 161, 161, 0.5);
+}
+.remove-row:focus, .remove-row:hover, .remove-row:active {
+  color: #dc322f;
+}
+
+.getstarted {
+  margin-left: -17.1875%;
+  padding-left: 17.1875%;
+  padding-bottom: 5.11111em;
+  background: url('../images/start-arrow.png?1347385779') no-repeat left bottom;
+  font-weight: bold;
+}
+
+.village-nav {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  left: -1em;
+  width: 15.38462%;
+  padding-left: 1em;
+  border: 1px solid #93a1a1;
+  border-width: 0 1px;
+}
+.village-nav a:link, .village-nav a:visited {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  margin-left: -1em;
+  padding-left: 1em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
+  padding-top: 0.41071em;
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
+  background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: -moz-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: -o-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
+  display: block;
+  border-color: #93a1a1;
+  padding-left: 1em;
+}
+.village-nav a:focus, .village-nav a:hover, .village-nav a:active {
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
+  background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: -moz-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: -o-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+  background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+}
+
+.village-feed {
+  left: 0;
+  right: 0;
+  bottom: 4.47222em;
+}
+
+.post {
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.26389em;
+  padding-left: 2.32558%;
+  padding-right: 2.32558%;
+  border-color: #eee8d5;
+}
+.post:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.post .byline {
+  font-size: 0.66667em;
+  line-height: 1.91667em;
+  color: #93a1a1;
+}
+.post .byline h3 {
+  display: inline;
+}
+.post .byline b {
+  color: #657b83;
+  font-weight: bold;
+}
+.post .byline time {
+  float: right;
+}
+.post .body {
+  overflow: hidden;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+}
+
+.post-add-form {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0.63889em 1.53846%;
+  border-top: 1px solid #657b83;
+  background: #93a1a1;
+}
+.post-add-form .formfield {
+  float: left;
+  width: 87.2093%;
+  margin: 0;
+}
+.post-add-form textarea {
+  height: 4.10714em;
+  min-height: 4.10714em;
+  background: rgba(255, 255, 255, 0.75);
+  padding-left: 0.82143em;
+  resize: none;
+}
+.post-add-form .form-actions {
+  clear: none;
+  float: right;
+  margin: 0;
+  width: 12.7907%;
+}
+.post-add-form button {
+  -moz-border-radius-topleft: 0;
+  -webkit-border-top-left-radius: 0;
+  border-top-left-radius: 0;
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  position: relative;
+  top: 1px;
+  padding: 0;
+  height: 3.19444em;
+  width: 100%;
+  text-transform: uppercase;
+}
+
+.village-elders {
+  padding-top: 0.63889em;
+  float: right;
+  width: 16.92308%;
+  padding-left: 1.53846%;
+  height: 100%;
+  border-left: 1px solid #93a1a1;
+}
+.village-elders h2 {
+  margin-bottom: 1.27778em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-weight: bold;
+}
+.village-elders li {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
+.village-elders b {
+  font-weight: bold;
+}
+.village-elders span {
+  color: #93a1a1;
+}
+
+.addelder-link {
+  margin-top: 1.64286em;
+  border-style: solid;
+  border-width: 0.07143em;
+  padding: 0.33929em;
+  display: block;
+  border-color: #93a1a1;
+  padding-left: 0.82143em;
+}
+
 @-moz-keyframes loading {
   0% {
     opacity: 0.25;
@@ -1700,6 +1799,7 @@ textarea {
   right: 0;
   left: 0;
   background: rgba(0, 43, 54, 0.5);
+  color: #fdf6e3;
   z-index: 999;
 }
 #messages li {
@@ -1714,8 +1814,8 @@ textarea {
   width: 1em;
 }
 #messages .close:link, #messages .close:visited {
-  color: #586e75;
+  color: #073642;
 }
 #messages .close:focus, #messages .close:hover, #messages .close:active {
-  color: #002b36;
+  color: #fdf6e3;
 }

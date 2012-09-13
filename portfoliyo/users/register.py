@@ -35,7 +35,8 @@ class RegistrationBackend(DefaultBackend):
         new_user.is_active = False
         new_user.save()
 
-        Profile.objects.create(user=new_user, name=name, role=role)
+        Profile.objects.create(
+            user=new_user, name=name, role=role, school_staff=True)
 
         reg_profile = RegistrationProfile.objects.create_profile(new_user)
         reg_profile.send_activation_email(RequestSite(request))

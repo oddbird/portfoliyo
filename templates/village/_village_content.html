@@ -1,0 +1,21 @@
+<div class="village-main">
+  {% block village-main %}
+  <section class="village-feed">
+    {% include "posts/_post.html" with user="Ms. Rooney" title="Principal" date="8/16/2012" time="9:07am" text="Ms. Burell, Allyson has been late to school for the last 4 days. We need to schedule a meeting to plan how she can get to school on time. Can you come at 4pm tomorrow after school?" %}
+    {% include "posts/_post.html" with user="Joanna Burell" title="Mother" date="8/16/2012" time="12:03pm" text="Yes, I will come tomorrow at 4pm." %}
+    {% include "posts/_post.html" with user="Ms. Rooney" title="Principal" date="8/17/2012" time="4:50pm" text="Thanks for coming in today, Ms. Burell. I'm confident we'll see improvement in Allyson's attendance!" %}
+    {% include "posts/_post.html" with user="Ms. Weiser" title="Math Teacher" date="8/17/2012" time="5:46pm" text="Ms. Burell, Allyson has been doing very well in Math lately! She has gone up from a C to a B+. At this rate, she will have an A by the end of the semester!" %}
+    {% include "posts/_post.html" with user="Mr. Ruiz" title="English Teacher" date="8/21/2012" time="12:10pm" text="Allyson has also gotten much better in English class! Seems like she is really turning her grades around." %}
+    {% include "posts/_post.html" with user="Ms. Weiser" title="Math Teacher" date="8/23/2012" time="11:17am" text="Allyson started the day off on a bad note, but really improved by the end of class today. She was even working ahead on her homework! If she keeps this up, she'll definitely be ready for the upcoming test." %}
+    {% include "posts/_post.html" with user="Joanna Burell" title="Mother" date="8/23/2012" time="2:41pm" text="Thanks for letting me know!" %}
+    {% include "posts/_post.html" with user="Mr. Ruiz" title="English Teacher" date="8/24/2012" time="12:04pm" text="Just so you know, Allyson has an English paper due on Monday." %}
+    {% include "posts/_post.html" with user="Joanna Burell" title="Mother" date="8/24/2012" time="3:32pm" text="Great, thanks. I'll make sure she gets it done on time." %}
+    {% include "posts/_post.html" with user="Mr. Gonzalez" title="Music Teacher" date="Monday" time="3:45pm" text="Things have really been going well in Music class lately. Allyson really has a knack for the tuba!" %}
+    {% include "posts/_post.html" with user="Ms. Rooney" title="Principal" date="Monday" time="4:57pm" text="Ms. Burell, we have scheduled the parent-teacher conference for Wednesday at 5:00pm." %}
+    {% include "posts/_post.html" with user="Joanna Burell" title="Mother" date="Tuesday" time="9:32am" text="Great, I will be there. Thanks for keeping it in the evening." %}
+  </section>
+  {% include "posts/_post_add_form.html" %}
+  {% endblock village-main %}
+</div>
+
+{% include "village/_village_elders.html" %}

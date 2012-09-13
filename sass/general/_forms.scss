@@ -109,6 +109,7 @@ $input-rhythm: .25;
       text-align: left;
     }
   }
+  .formhelp { @include pre($label, $context); }
 }
 
 .formhelp {
@@ -156,6 +157,7 @@ $form-action-note-size: $smallpx;
     }
   }
   &:checked + label { &::before { color: $blue; } }
+  &:focus + label { color: $base03; }
 }
 
 [type="checkbox"] {

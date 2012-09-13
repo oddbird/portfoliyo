@@ -11,10 +11,10 @@
 
     {{ form.non_field_errors }}
 
-    <div class="formset bio">
+    <div class="fieldset bio">
       {% include "forms/_field.html" with field=form.name %}
 
-      <div class="formset initial-password">
+      <div class="fieldset initial-password">
         {% include "forms/_field.html" with field=form.password %}
 
         {% include "forms/_field.html" with field=form.password_confirm %}
@@ -27,7 +27,7 @@
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="go-network">Create your village</button>
+      <button type="submit" class="go-network">Get started!</button>
     </div>
   </form>
 </article>

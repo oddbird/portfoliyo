@@ -187,6 +187,11 @@ SESSION_COOKIE_HTTPONLY = True
 
 INSTALLED_APPS += ["registration"]
 ACCOUNT_ACTIVATION_DAYS = 7
-LOGIN_URL = "/signup/"
+LOGIN_URL = "/login/"
 AUTHENTICATION_BACKENDS = ["portfoliyo.users.auth_backend.EmailBackend"]
 LOGIN_REDIRECT_URL = "/"
+
+DEFAULT_FROM_EMAIL = 'Portfoliyo <noreply@portfoliyo.org>'
+
+PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.console.ConsoleSMSBackend'
+PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'

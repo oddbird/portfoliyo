@@ -2,7 +2,7 @@ from django.conf.urls.defaults import patterns, url, include
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 
-from . import admin
+from . import admin, views
 
 admin.autodiscover()
 
@@ -11,38 +11,16 @@ session_csrf.monkeypatch()
 
 
 urlpatterns = patterns(
-    "",
+    '',
+    url("^$", views.home, name="home"),
     url(
-        "^$",
+        "^no_students/$",
         login_required(direct_to_template),
-        {"template": "home.html"},
-        name="home",
+        {"template": "no_students.html"},
+        name="no_students",
         ),
     url(r"^signup/$", "portfoliyo.landing.views.landing", name="landing"),
-    url(
-        r"^username/edit/$",
-        login_required(direct_to_template),
-        {"template": "users/user_edit.html"},
-        name="edit_profile",
-        ),
-    url(
-        r"^student/add/$",
-        login_required(direct_to_template),
-        {"template": "student/add_student.html"},
-        name="add_student",
-        ),
-    url(
-        r"^student/id/invite/$",
-        login_required(direct_to_template),
-        {"template": "student/invite_elder.html"},
-        name="invite_elder",
-        ),
-    url(
-        "^student/id/$",
-        login_required(direct_to_template),
-        {"template": "student/chat.html"},
-        name="village_detail",
-        ),
+    url(r"^student/", include("portfoliyo.village.urls")),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^", include("portfoliyo.users.urls")),
     url(
@@ -51,4 +29,4 @@ urlpatterns = patterns(
         {"template": "pusher_test.html"},
         name="pusher_test",
         ),
-)
+    )

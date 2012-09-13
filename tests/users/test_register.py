@@ -64,6 +64,13 @@ def test_register_creates_profile():
     assert user.profile.role == u'Bar'
 
 
+def test_register_creates_school_staff():
+    """A newly-registered user is marked as school staff."""
+    user = _register()
+
+    assert user.profile.school_staff
+
+
 def test_register_creates_registration_profile():
     """register method creates RegistrationProfile."""
     user = _register()

@@ -16,7 +16,21 @@ def pytest_funcarg__client(request):
 
 
 
-def pytest_funcarg__admin(request):
-    """Give a test an admin-enabled superuser."""
-    from tests.users import factories
-    return factories.UserFactory.create(is_staff=True, is_superuser=True)
+class FakeSMSMessage(object):
+    """A fake SMSMessage object for collecting sent SMSes in tests."""
+    def __init__(self, to, from_, body):
+        self.to = to
+        self.from_ = from_
+        self.body = body
+
+
+
+def pytest_funcarg__sms(request):
+    """Monkeypatch SMS backend to collect messages for test inspection."""
+    from portfoliyo.sms import sms
+    monkeypatch = request.getfuncargvalue('monkeypatch')
+    sms.outbox = []
+    def replacement_send(*a, **kw):
+        sms.outbox.append(FakeSMSMessage(*a, **kw))
+    monkeypatch.setattr(sms, 'send', replacement_send)
+    return sms

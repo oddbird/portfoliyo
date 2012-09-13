@@ -1,0 +1,26 @@
+{% extends "base_site.html" %}
+
+{% block maincontent %}
+
+<article class="edit-profile">
+  <h2 class="pagehead">Edit your profile</h2>
+
+  <form method="POST" class="profile-edit-form" id="edit-profile-form">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div class="formset bio">
+      {% include "forms/_field.html" with field=form.name %}
+      {% include "forms/_field.html" with field=form.role label="Relation to student(s)" %}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit">Save changes</button>
+    </div>
+  </form>
+
+  {# <a href="{ @@@ url deactivate_account }">deactivate my account</a> #}
+</article>
+
+{% endblock maincontent %}

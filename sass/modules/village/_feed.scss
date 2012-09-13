@@ -1,0 +1,75 @@
+// ---------------------------------------------------------------------------
+// Village Feed
+
+.village-feed {
+  @extend %overflow-y;
+  left: 0;
+  right: 0;
+  bottom: rhythm(3.5);
+}
+
+$post-byline-cols: 2;
+$post-byline-size: $xsmallpx;
+
+.post {
+  @include pie-clearfix;
+  @include trailing-border(1px,.25);
+  padding-left: gutter($center);
+  padding-right: gutter($center);
+  border-color: $base2;
+  .byline {
+    @include adjust-font-size-to($post-byline-size);
+    color: $base1;
+    h3 { display: inline; }
+    b {
+      color: $base;
+      font-weight: bold;
+    }
+    time { float: right; }
+  }
+  .body {
+    @include clearfix;
+    @include adjust-font-size-to($smallpx);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Note Add Form
+
+$addnote-fontsize: $input-font-size;
+
+.post-add-form {
+  @include stretch-x;
+  bottom: 0;
+  padding: rhythm(.5) gutter();
+  border-top: 1px solid $base;
+  background: $base1;
+
+  .formfield {
+    float: left;
+    width: columns($center - 1, $center);
+    margin: 0;
+  }
+  textarea {
+    height: rhythm(2.5, $addnote-fontsize);
+    min-height: rhythm(2.5, $addnote-fontsize);
+    background: rgba(white,.75);
+    padding-left: rhythm(.5, $addnote-fontsize);
+    resize: none;
+  }
+  .form-actions {
+    clear: none;
+    float: right;
+    margin: 0;
+    width: space(1,$center);
+  }
+  button {
+    @include border-left-radius(0);
+    position: relative;
+    top: 1px;
+    padding: 0;
+    height: rhythm(2.5);
+    width: 100%;
+    text-transform: uppercase;
+  }
+}

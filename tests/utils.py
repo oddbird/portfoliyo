@@ -6,6 +6,7 @@ from django.test.testcases import _AssertNumQueriesContext
 from mock import patch
 
 
+
 @contextmanager
 def patch_session(session_data):
     """Context manager to patch session vars."""
@@ -17,9 +18,16 @@ def patch_session(session_data):
         yield
 
 
+
 def location(url_path):
     """Qualify a URL path with 'http://testserver' prefix."""
     return 'http://testserver' + url_path
+
+
+
+def refresh(obj):
+    """Refresh a model instance from the database."""
+    return obj.__class__._base_manager.get(pk=obj.pk)
 
 
 

@@ -2,6 +2,7 @@
 from portfoliyo.users import forms
 
 from tests.users import factories
+from tests import utils
 
 
 class TestRegistrationForm(object):
@@ -35,3 +36,29 @@ class TestRegistrationForm(object):
             u"This email address is already in use. "
             u"Please supply a different email address."
             ]
+
+
+class TestEditProfileForm(object):
+    def test_update_relationships(self):
+        """
+        Updating role updates matching relationship descriptions.
+
+        If I have my role set in my profile as 'foo' and I change it to 'bar',
+        any relationships where I am the elder and the relationship description
+        is 'foo' will also be updated to 'bar'.
+
+        """
+        rel1 = factories.RelationshipFactory.create(
+            description='foo', from_profile__role='foo')
+        rel2 = factories.RelationshipFactory.create(
+            description='bar', from_profile=rel1.elder)
+
+        form = forms.EditProfileForm({'name': 'New', 'role': 'new'}, profile=rel1.elder)
+        assert form.is_valid()
+        form.save()
+
+        rel1 = utils.refresh(rel1)
+        rel2 = utils.refresh(rel2)
+
+        assert rel1.description == 'new'
+        assert rel2.description == 'bar'

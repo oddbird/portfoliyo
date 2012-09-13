@@ -18,18 +18,23 @@
   speak: none;
 }
 
-%icon:before {
+%icon::before {
   @extend %icon-content;
   margin-right: .4em;
 }
 
 %icon-replace {
   @extend %icon;
+  display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
-  &:before{
+  &:focus {
+    outline: 0;
+    &::before { outline: 1px dotted; }
+  }
+  &::before{
     position: absolute;
     top: 0;
     left: 0;
@@ -64,7 +69,6 @@
 %icon-comments:before { content: "\e008"; }
 %icon-exit:before { content: "\e009"; }
 %icon-key:before { content: "\e00a"; }
-%icon-home:before { content: "\e00b"; }
 %icon-pencil:before { content: "\e00c"; }
 %icon-fire:before { content: "\e00d"; }
 %icon-checkmark:before { content: "\e00e"; }
@@ -72,4 +76,7 @@
 %icon-x-altx-alt:before { content: "\e010"; }
 %icon-info-circle:before { content: "\e011"; }
 %icon-warning:before { content: "\e012"; }
+%icon-home:before { content: "\e00b"; }
 %icon-help:before { content: "\e013"; }
+%icon-plus:before { content: "\e014"; }
+%icon-plus-alt:before { content: "\e015"; }

@@ -32,6 +32,7 @@
   right: 0;
   left: 0;
   background: rgba($base03,.5);
+  color: $base3;
   z-index: 999;
   .close {
     @extend %icon-replace;
@@ -40,7 +41,7 @@
     right: rhythm(.5);
     top: rhythm(.5);;
     width: 1em;
-    #{$link} { color: $base01;}
-    #{$focus} { color: $base03; }
+    #{$link} { color: $back;}
+    #{$focus} { color: $base3; }
   }
 }

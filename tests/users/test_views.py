@@ -1,9 +1,10 @@
 """Tests for user/account views."""
+from django.contrib.auth import models as auth_models
 from django.core import mail
 from django.core.urlresolvers import reverse
 
 from tests.users import factories
-from tests.utils import patch_session, location
+from tests import utils
 
 
 class TestLogin(object):
@@ -24,7 +25,7 @@ class TestLogin(object):
         form['password'] = 'sekrit'
         res = form.submit(status=302)
 
-        assert res['Location'] == location(reverse('home'))
+        assert res['Location'] == utils.location(reverse('home'))
 
 
     def test_login_failed(self, client):
@@ -58,7 +59,7 @@ class TestLogin(object):
 
         session_data = {}
 
-        with patch_session(session_data):
+        with utils.patch_session(session_data):
             res = client.get(self.url)
             for i in range(6):
                 res = res.forms['loginform'].submit()
@@ -80,7 +81,7 @@ class TestLogin(object):
 
         session_data = {}
 
-        with patch_session(session_data):
+        with utils.patch_session(session_data):
             res = client.get(self.url)
             for i in range(6):
                 res = res.forms['loginform'].submit()
@@ -92,7 +93,7 @@ class TestLogin(object):
             form['password'] = 'sekrit'
             res = form.submit(status=302)
 
-        assert res['Location'] == location(reverse('home'))
+        assert res['Location'] == utils.location(reverse('home'))
 
 
 
@@ -113,12 +114,12 @@ class TestLogout(object):
         """Successful logout POST redirects to the page you were on."""
         user = factories.UserFactory.create()
 
-        url = reverse('home')
+        url = reverse('no_students')
 
         form = client.get(url, user=user).forms['logoutform']
         res = form.submit(status=302)
 
-        assert res['Location'] == location(url)
+        assert res['Location'] == utils.location(url)
 
 
 
@@ -138,8 +139,8 @@ class TestPasswordChange(object):
         """Redirects to signup if user is unauthenticated."""
         res = client.get(self.url, status=302)
 
-        assert res['Location'] == location(
-            reverse('landing') + '?next=' + self.url)
+        assert res['Location'] == utils.location(
+            reverse('login') + '?next=' + self.url)
 
 
     def test_change_password(self, client):
@@ -171,7 +172,7 @@ class TestPasswordReset(object):
         form = client.get(self.url).forms['reset-password-form']
         form['email'] = 'user@example.com'
 
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Password reset email sent")
         assert len(mail.outbox) == 1
@@ -183,7 +184,7 @@ class TestPasswordReset(object):
         form = client.get(self.url).forms['reset-password-form']
         form['email'] = 'doesnotexist@example.com'
 
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Password reset email sent")
         assert len(mail.outbox) == 0
@@ -192,7 +193,6 @@ class TestPasswordReset(object):
 
 class TestPasswordResetConfirm(object):
     """Tests for reset-password-confirm view."""
-    form_id = 'set-password-form'
     def url(self, client, user):
         """Shortcut for password-reset-confirm url."""
         form = client.get(
@@ -215,7 +215,7 @@ class TestPasswordResetConfirm(object):
         new_password = 'sekrit123'
         form['new_password1'] = new_password
         form['new_password2'] = new_password
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Password changed")
 
@@ -237,7 +237,7 @@ class TestRegister(object):
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
-        res = form.submit(status=302).follow().follow()
+        res = form.submit(status=302).follow()
 
         res.mustcontain("Check your email for an account activation link")
 
@@ -264,7 +264,7 @@ class TestActivate(object):
 
     def test_activate(self, client):
         """Get a confirmation message after activating."""
-        res = client.get(self.url(client), status=302).follow().follow()
+        res = client.get(self.url(client), status=302).follow()
 
         res.mustcontain("Account activated")
 
@@ -275,3 +275,81 @@ class TestActivate(object):
             reverse('activate', kwargs={'activation_key': 'foo'}))
 
         res.mustcontain("that activation key is not valid")
+
+
+
+class TestAcceptEmailInvite(object):
+    """Tests for accept-email-invite view."""
+    def url(self, client, user):
+        """Shortcut for accept-email-invite url."""
+        rel = factories.RelationshipFactory(from_profile__school_staff=True)
+        response = client.get(
+            reverse('invite_elders', kwargs=dict(student_id=rel.student.id)),
+            user=user,
+            )
+        form = response.forms['invite-elders-form']
+        form['elders-0-contact'] = 'new@example.com'
+        form['elders-0-relationship'] = 'teacher'
+        form.submit(status=302)
+
+        for line in mail.outbox[0].body.splitlines():
+            if '://' in line:
+                return line.strip()
+
+        assert False, "No invite URL found in invite-elder email."
+
+
+    def test_accept_email_invite(self, client):
+        """Accepting email invite sets is_active True."""
+        profile = factories.ProfileFactory.create(school_staff=True)
+        response = client.get(self.url(client, profile.user))
+        form = response.forms['set-password-form']
+        new_password = 'sekrit123'
+        form['new_password1'] = new_password
+        form['new_password2'] = new_password
+        res = form.submit(status=302).follow()
+        invitee = auth_models.User.objects.get(email='new@example.com')
+
+        res.mustcontain("chosen a password")
+        assert invitee.is_active
+
+
+
+class TestEditProfile(object):
+    """Tests for edit-profile view."""
+    @property
+    def url(self):
+        """Shortcut for edit-profile view URL."""
+        return reverse('edit_profile')
+
+
+    def test_edit_profile(self, client):
+        """Can edit profile."""
+        profile = factories.ProfileFactory.create()
+        form = client.get(self.url, user=profile.user).forms['edit-profile-form']
+        form['name'] = 'New Name'
+        form['role'] = 'New Role'
+        response = form.submit().follow()
+
+        response.mustcontain('saved')
+        profile = utils.refresh(profile)
+        assert profile.name == u'New Name'
+        assert profile.role == u'New Role'
+
+
+    def test_validation_error(self, client):
+        profile = factories.ProfileFactory.create()
+        form = client.get(self.url, user=profile.user).forms['edit-profile-form']
+        form['name'] = 'New Name'
+        form['role'] = ''
+        response = form.submit(status=200)
+
+        response.mustcontain('field is required')
+
+
+    def test_login_required(self, client):
+        """Redirects to signup if user is unauthenticated."""
+        res = client.get(self.url, status=302)
+
+        assert res['Location'] == utils.location(
+            reverse('login') + '?next=' + self.url)
