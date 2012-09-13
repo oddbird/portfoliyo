@@ -1554,6 +1554,7 @@ textarea {
   background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   display: block;
+  position: relative;
   border-color: #93a1a1;
   padding-left: 1em;
 }
@@ -1564,6 +1565,23 @@ textarea {
   background: -o-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
   background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
+}
+.village-nav .unread {
+  -webkit-border-radius: 30em;
+  -moz-border-radius: 30em;
+  -ms-border-radius: 30em;
+  -o-border-radius: 30em;
+  border-radius: 30em;
+  -webkit-box-shadow: #073642 0 0 1px;
+  -moz-box-shadow: #073642 0 0 1px;
+  box-shadow: #073642 0 0 1px;
+  position: absolute;
+  right: 0.512em;
+  min-width: 1.64286em;
+  background: #d33682;
+  color: #fdf6e3;
+  font-weight: bold;
+  text-align: center;
 }
 
 .village-feed {
