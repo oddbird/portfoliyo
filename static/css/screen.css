@@ -1624,6 +1624,9 @@ textarea {
   border-radius: 0.512em;
   display: inline-block;
   padding: 0 .25em;
+  background: #eee8d5;
+}
+.post .nametag.me {
   background: #268bd2;
   color: #fdf6e3;
 }

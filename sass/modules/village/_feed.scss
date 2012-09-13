@@ -36,8 +36,11 @@ $post-byline-size: $xsmallpx;
     @include border-radius($xxxsmallem);
     display: inline-block;
     padding: 0 .25em;
-    background: $blue;
-    color: $base3;
+    background: $base2;
+    &.me {
+      background: $blue;
+      color: $base3;
+    }
   }
 }
 
