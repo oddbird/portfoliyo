@@ -37,17 +37,17 @@ def invite_elders(request, student_id):
     # @@@ check that user is part of this student's village
 
     if request.method == 'POST':
-        form = forms.InviteElderForm(request.POST)
-        if form.is_valid():
-            form.save(student)
+        formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
+        if formset.is_valid():
+            formset.save(student)
             return redirect('chat', student_id=student.id)
     else:
-        form = forms.InviteElderForm()
+        formset = forms.InviteEldersFormSet(prefix='elders')
 
     return TemplateResponse(
         request,
-        'village/invite_elder.html',
-        {'form': form, 'student': student},
+        'village/invite_elders.html',
+        {'formset': formset, 'student': student},
         )
 
 

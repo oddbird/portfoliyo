@@ -1,6 +1,7 @@
 """Tests for village views."""
 from django.core.urlresolvers import reverse
 
+import mock
 import pytest
 
 from tests import utils
@@ -55,6 +56,54 @@ class TestAddStudent(object):
         response = client.get(reverse('add_student'), status=302).follow()
 
         assert not "account doesn't have access" in response.content
+
+
+
+class TestInviteElders(object):
+    """Tests for invite_elders view."""
+    def url(self, student=None):
+        if student is None:
+            student = factories.ProfileFactory.create()
+        return reverse('invite_elders', kwargs=dict(student_id=student.id))
+
+
+    def test_invite_elders(self, client):
+        """User can invite some elders."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        response = client.get(self.url(rel.student), user=rel.elder.user)
+        form = response.forms['invite-elders-form']
+        form['elders-0-contact'] = "(123)456-7890"
+        form['elders-0-relationship'] = "Father"
+        form['elders-0-school_staff'] = False
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('chat', kwargs={'student_id': rel.student.id}))
+
+
+    def test_validation_error(self, client):
+        """If one elder field is filled out, other must be too."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        response = client.get(self.url(rel.student), user=rel.elder.user)
+        form = response.forms['invite-elders-form']
+        form['elders-0-contact'] = "(123)456-7890"
+        form['elders-0-relationship'] = ""
+        form['elders-0-school_staff'] = False
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_school_staff(self, client):
+        """Inviting elders requires ``school_staff`` attribute."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=False)
+        response = client.get(
+            self.url(rel.student), user=rel.elder.user, status=302).follow()
+
+        response.mustcontain("account doesn't have access"), response.html
 
 
 

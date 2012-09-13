@@ -14,3 +14,12 @@
 </article>
 
 {% endblock maincontent %}
+
+
+{% block last %}
+
+<div style="display: none;">
+  {% include "village/_elder_form.html" with form=formset.empty_form id="empty-elder-form" %}
+</div>
+
+{% endblock %}

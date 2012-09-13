@@ -79,6 +79,14 @@ class InviteElderForm(forms.Form):
 
 class InviteEldersBaseFormSet(formsets.BaseFormSet):
     """Base formset class for inviting elders."""
+    def save(self, student):
+        """Save all elder forms and return list of elders."""
+        elders = []
+        for form in self:
+            if form.has_changed():
+                elders.append(form.save(student))
+
+        return elders
 
 
 
@@ -146,11 +154,7 @@ class AddStudentAndInviteEldersForm(AddStudentForm):
         Returns a tuple of (student-profile, list-of-elder-profiles).
 
         """
-        profile = super(AddStudentAndInviteEldersForm, self).save(*a, **kw)
+        student = super(AddStudentAndInviteEldersForm, self).save(*a, **kw)
+        elders = self.elders_formset.save(student)
 
-        elders = []
-        for form in self.elders_formset:
-            if form.has_changed():
-                elders.append(form.save(profile))
-
-        return (profile, elders)
+        return (student, elders)
