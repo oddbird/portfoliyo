@@ -30,3 +30,8 @@ django-registration==0.8
 django-ratelimit==0.1
 
 django-session-csrf==0.5
+
+phonenumbers==5.1b1
+twilio==3.3.11
+httplib2==0.7.6
+pyjwt==0.1.2
