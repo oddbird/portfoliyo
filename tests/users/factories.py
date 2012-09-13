@@ -29,7 +29,7 @@ class ProfileFactory(factory.Factory):
 
     user = factory.SubFactory(UserFactory)
     name = "Test User"
-    phone = factory.Sequence(lambda n: "999-999-{0:>04}".format(n))
+    phone = factory.Sequence(lambda n: "+1321999{0:>04}".format(n))
     role = "Some Role"
 
 

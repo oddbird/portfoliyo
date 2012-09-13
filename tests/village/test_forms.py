@@ -23,11 +23,11 @@ class TestInviteElderForm(object):
 
     def test_phone_contact(self):
         """If contact field is phone, it's normalized and saved to profile."""
-        form = forms.InviteElderForm(self.data(contact='(123)456-7890'))
+        form = forms.InviteElderForm(self.data(contact='(321)456-7890'))
         assert form.is_valid()
         profile = form.save(None, factories.ProfileFactory())
 
-        assert profile.phone == u'123-456-7890'
+        assert profile.phone == u'+13214567890'
 
 
     def test_email_contact(self):
@@ -47,7 +47,7 @@ class TestInviteElderForm(object):
 
     def test_user_inactive(self):
         """User created is inactive (so we don't send them emails)."""
-        form = forms.InviteElderForm(self.data(contact='123-456-7890'))
+        form = forms.InviteElderForm(self.data(contact='321-456-7890'))
         assert form.is_valid()
         profile = form.save(None, factories.ProfileFactory())
 
@@ -75,8 +75,8 @@ class TestInviteElderForm(object):
 
     def test_user_with_phone_exists(self):
         """If a user with given phone already exists, no new user is created."""
-        elder = factories.ProfileFactory(phone='123-456-7890')
-        form = forms.InviteElderForm(self.data(contact='123.456.7890'))
+        elder = factories.ProfileFactory(phone='+13214567890')
+        form = forms.InviteElderForm(self.data(contact='321.456.7890'))
         assert form.is_valid()
         profile = form.save(None, factories.ProfileFactory())
 
@@ -193,7 +193,7 @@ class TestAddStudentAndInviteEldersForm(object):
         form = forms.AddStudentAndInviteEldersForm(
             self.data(
                 2,
-                elder0={'contact': '123-456-7890'},
+                elder0={'contact': '321-456-7890'},
                 elder1={'contact': '321-654-0987'},
                 )
             )
@@ -201,7 +201,7 @@ class TestAddStudentAndInviteEldersForm(object):
         student, elders = form.save(None)
 
         assert set(e.phone for e in elders) == set(
-            ['123-456-7890', '321-654-0987'])
+            ['+13214567890', '+13216540987'])
         assert all(e.students == [student] for e in elders)
 
 

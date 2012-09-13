@@ -9,16 +9,22 @@ from portfoliyo.users import formats
 
 @pytest.mark.parametrize(
     'raw',
-    ['(123)456-7890', '1234567890', '123-456-7890', '123.456.7890'],
+    [
+        '(321)456-7890',
+        '3214567890',
+        '321-456-7890',
+        '321.456.7890',
+        '+13214567890',
+        ],
     )
 def test_valid_phone_numbers(raw):
-    """Returns valid phone numbers re-formatted to XXX-XXX-XXXX."""
-    assert formats.normalize_phone(raw) == '123-456-7890'
+    """Returns valid phone numbers re-formatted to E.164 format."""
+    assert formats.normalize_phone(raw) == '+13214567890'
 
 
 @pytest.mark.parametrize(
     'raw',
-    ['123456789'],
+    ['foo', '', 'bar@example.com'],
     )
 def test_invalid_phone_numbers(raw):
     """Returns None for unparseable phone numbers."""

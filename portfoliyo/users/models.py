@@ -3,7 +3,6 @@ Portfoliyo network models.
 
 """
 from django.contrib.auth import models as auth_models
-from django.contrib.localflavor.us.models import PhoneNumberField
 from django.db import models
 from django.db.models.fields.related import SingleRelatedObjectDescriptor
 
@@ -45,12 +44,16 @@ class AutoOneToOneField(models.OneToOneField):
             )
 
 
+from south.modelsinspector import add_introspection_rules
+add_introspection_rules([], ["^portfoliyo\.users\.models\.AutoOneToOneField"])
+
+
 class Profile(models.Model):
     """A Portfoliyo user profile."""
     user = AutoOneToOneField(auth_models.User)
     # fields from User we use: username, password, email
     name = models.CharField(max_length=200)
-    phone = PhoneNumberField(blank=True, null=True, unique=True)
+    phone = models.CharField(max_length=20, blank=True, null=True, unique=True)
     # e.g. "Math Teacher", "Father", "Principal", etc
     # serves as default fall-back for the relationship-description field
     role = models.CharField(max_length=200)
