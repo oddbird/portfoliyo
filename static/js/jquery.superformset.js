@@ -175,6 +175,20 @@
                 }
                 // If a post-add callback was supplied, call it with the added form:
                 if (options.added) { options.added(row); }
+            },
+
+            updateRequiredFields = function (inputs) {
+                if (inputs.filter(function () {
+                    if ($(this).attr('type') === 'checkbox') {
+                        return $(this).is(':checked');
+                    } else {
+                        return $(this).val();
+                    }
+                }).length) {
+                    inputs.filter('.required').attr('required', 'required');
+                } else {
+                    inputs.removeAttr('required');
+                }
             };
 
         $$.each(function (i) {
@@ -212,21 +226,9 @@
                     if ($(this).attr('required')) {
                         $(this).addClass('required');
                     }
-                    $(this).change(function () {
-                        if (inputs.filter(function () {
-                            if ($(this).attr('type') === 'checkbox') {
-                                return $(this).is(':checked');
-                            } else {
-                                return $(this).val();
-                            }
-                        }).length) {
-                            inputs.filter('.required').attr('required', 'required');
-                        } else {
-                            inputs.removeAttr('required');
-                        }
-                    });
                 });
-                inputs.first().change();
+                inputs.change(function () { updateRequiredFields(inputs); });
+                updateRequiredFields(inputs);
             }
         });
 
@@ -253,19 +255,7 @@
                     row = options.formTemplate.clone(true).addClass('new-row'),
                     inputs = row.find('input, select, textarea');
                 if (options.optionalIfEmpty) {
-                    inputs.removeAttr('required').change(function () {
-                        if (inputs.filter(function () {
-                            if ($(this).attr('type') === 'checkbox') {
-                                return $(this).is(':checked');
-                            } else {
-                                return $(this).val();
-                            }
-                        }).length) {
-                            inputs.filter('.required').attr('required', 'required');
-                        } else {
-                            inputs.removeAttr('required');
-                        }
-                    });
+                    inputs.removeAttr('required').change(function () { updateRequiredFields(inputs); });
                 }
                 if (options.addAnimationSpeed) {
                     row.hide().insertBefore(this).animate({"height": "toggle", "opacity": "toggle"}, options.addAnimationSpeed);
