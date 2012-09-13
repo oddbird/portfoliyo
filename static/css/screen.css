@@ -1799,6 +1799,7 @@ textarea {
   right: 0;
   left: 0;
   background: rgba(0, 43, 54, 0.5);
+  color: #fdf6e3;
   z-index: 999;
 }
 #messages li {
@@ -1813,8 +1814,8 @@ textarea {
   width: 1em;
 }
 #messages .close:link, #messages .close:visited {
-  color: #586e75;
+  color: #073642;
 }
 #messages .close:focus, #messages .close:hover, #messages .close:active {
-  color: #002b36;
+  color: #fdf6e3;
 }
