@@ -31,6 +31,14 @@ $post-byline-size: $xsmallpx;
     @include clearfix;
     @include adjust-font-size-to($smallpx);
   }
+  &.mine { background: rgba($blue,.125); }
+  .nametag {
+    @include border-radius($xxxsmallem);
+    display: inline-block;
+    padding: 0 .25em;
+    background: $blue;
+    color: $base3;
+  }
 }
 
 // ---------------------------------------------------------------------------

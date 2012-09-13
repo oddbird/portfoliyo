@@ -1613,6 +1613,20 @@ textarea {
   font-size: 0.77778em;
   line-height: 1.64286em;
 }
+.post.mine {
+  background: rgba(38, 139, 210, 0.125);
+}
+.post .nametag {
+  -webkit-border-radius: 0.512em;
+  -moz-border-radius: 0.512em;
+  -ms-border-radius: 0.512em;
+  -o-border-radius: 0.512em;
+  border-radius: 0.512em;
+  display: inline-block;
+  padding: 0 .25em;
+  background: #268bd2;
+  color: #fdf6e3;
+}
 
 .post-add-form {
   position: absolute;
