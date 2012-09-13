@@ -871,8 +871,9 @@ textarea {
   border: 0;
 }
 .main-login .login-link {
+  margin-top: 0.20536em;
   font-size: 14px;
-  padding: 0.575em;
+  padding: 0.41071em;
   display: inline-block;
   cursor: pointer;
   text-decoration: none;
@@ -895,9 +896,10 @@ textarea {
   border: 1px solid #445258;
   color: #eee8d5;
   text-shadow: #2b3538 0 -1px 0;
-  margin-top: 0.20536em;
   float: right;
   max-width: 48.4375%;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 .main-login .login-link:hover {
   text-decoration: none;
@@ -925,7 +927,6 @@ textarea {
   box-shadow: none;
 }
 .main-login .reset-link {
-  display: inline-block;
   width: 1em;
 }
 @media (min-width: 36em) {
@@ -961,9 +962,12 @@ textarea {
     top: 0;
     right: 112%;
   }
+  .main-login input {
+    min-height: 0;
+  }
   .main-login button {
     font-size: 14px;
-    padding: 0.575em;
+    padding: 0.41071em;
     display: inline-block;
     cursor: pointer;
     text-decoration: none;
