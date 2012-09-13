@@ -165,7 +165,7 @@ def edit_profile(request):
         if form.is_valid():
             form.save()
             messages.success(request, u"Profile changes saved!")
-            return redirect(request.path)
+            return redirect(redirect_home(request.user))
     else:
         form = forms.EditProfileForm(profile=request.user.profile)
 
