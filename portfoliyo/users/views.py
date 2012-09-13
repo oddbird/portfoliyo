@@ -41,7 +41,7 @@ def login(request):
 
 @require_POST
 def logout(request):
-    return auth_views.logout_then_login(request)
+    return auth_views.logout(request, next_page=reverse('home'))
 
 
 

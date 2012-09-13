@@ -19,7 +19,6 @@ urlpatterns = patterns(
         {"template": "no_students.html"},
         name="no_students",
         ),
-    url(r"^signup/$", "portfoliyo.landing.views.landing", name="landing"),
     url(r"^student/", include("portfoliyo.village.urls")),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^", include("portfoliyo.users.urls")),

@@ -14,11 +14,10 @@ class TestHome(object):
 
 
     def test_login_required(self, client):
-        """Redirects to signup if user is unauthenticated."""
-        res = client.get(self.url, status=302)
+        """Shows landing page if user is unauthenticated."""
+        res = client.get(self.url, status=200)
 
-        assert res['Location'] == location(
-            reverse('login') + '?next=' + self.url)
+        res.mustcontain('sign up!')
 
 
     def test_redirect_to_single_student(self, client):

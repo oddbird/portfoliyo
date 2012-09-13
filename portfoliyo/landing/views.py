@@ -3,8 +3,6 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-from session_csrf import anonymous_csrf
-
 from ..users.forms import CaptchaAuthenticationForm
 from ..view.ajax import ajax
 
@@ -12,7 +10,6 @@ from .forms import LeadForm
 
 
 
-@anonymous_csrf
 @ajax("landing/_form.html")
 def landing(request):
     """A landing page with an email address signup."""
@@ -22,7 +19,7 @@ def landing(request):
             form.save()
             messages.success(
                 request, "Thanks for your interest; we'll be in touch soon!")
-            return redirect("landing")
+            return redirect('home')
     else:
         form = LeadForm()
 
