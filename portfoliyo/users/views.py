@@ -8,6 +8,8 @@ from django.contrib.auth import (
     views as auth_views, forms as auth_forms, models as auth_models)
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 from django.utils.http import base36_to_int
 from django.views.decorators.http import require_POST
 
@@ -154,3 +156,17 @@ def accept_email_invite(request, uidb36, token):
             )
 
     return response
+
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = forms.EditProfileForm(request.POST, profile=request.user.profile)
+        if form.is_valid():
+            form.save()
+            messages.success(request, u"Profile changes saved!")
+            return redirect(request.path)
+    else:
+        form = forms.EditProfileForm(profile=request.user.profile)
+
+    return TemplateResponse(request, 'users/edit_profile.html', {'form': form})

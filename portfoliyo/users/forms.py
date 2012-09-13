@@ -162,3 +162,28 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
         """
         if not self._errors:
             return super(CaptchaAuthenticationForm, self).clean()
+
+
+
+class EditProfileForm(forms.Form):
+    """Form for editing a users profile."""
+    name = forms.CharField(max_length=200)
+    role = forms.CharField(max_length=200)
+
+
+    def __init__(self, *a, **kw):
+        """Pull profile kwarg out."""
+        self.profile = kw.pop('profile')
+        initial = kw.setdefault('initial', {})
+        initial['name'] = self.profile.name
+        initial['role'] = self.profile.role
+        super(EditProfileForm, self).__init__(*a, **kw)
+
+
+    def save(self):
+        """Save edits and return updated profile."""
+        self.profile.name = self.cleaned_data['name']
+        self.profile.role = self.cleaned_data['role']
+        self.profile.save()
+
+        return self.profile

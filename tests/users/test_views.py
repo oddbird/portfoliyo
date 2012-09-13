@@ -312,3 +312,44 @@ class TestAcceptEmailInvite(object):
 
         res.mustcontain("chosen a password")
         assert invitee.is_active
+
+
+
+class TestEditProfile(object):
+    """Tests for edit-profile view."""
+    @property
+    def url(self):
+        """Shortcut for edit-profile view URL."""
+        return reverse('edit_profile')
+
+
+    def test_edit_profile(self, client):
+        """Can edit profile."""
+        profile = factories.ProfileFactory.create()
+        form = client.get(self.url, user=profile.user).forms['edit-profile-form']
+        form['name'] = 'New Name'
+        form['role'] = 'New Role'
+        response = form.submit().follow()
+
+        response.mustcontain('saved')
+        profile = profile.__class__.objects.get(id=profile.id)
+        assert profile.name == u'New Name'
+        assert profile.role == u'New Role'
+
+
+    def test_validation_error(self, client):
+        profile = factories.ProfileFactory.create()
+        form = client.get(self.url, user=profile.user).forms['edit-profile-form']
+        form['name'] = 'New Name'
+        form['role'] = ''
+        response = form.submit(status=200)
+
+        response.mustcontain('field is required')
+
+
+    def test_login_required(self, client):
+        """Redirects to signup if user is unauthenticated."""
+        res = client.get(self.url, status=302)
+
+        assert res['Location'] == location(
+            reverse('landing') + '?next=' + self.url)

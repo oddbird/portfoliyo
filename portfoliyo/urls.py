@@ -20,12 +20,6 @@ urlpatterns = patterns(
         name="no_students",
         ),
     url(r"^signup/$", "portfoliyo.landing.views.landing", name="landing"),
-    url(
-        r"^username/edit/$",
-        login_required(direct_to_template),
-        {"template": "users/user_edit.html"},
-        name="edit_profile",
-        ),
     url(r"^student/", include("portfoliyo.village.urls")),
     url(r"^admin/", include(admin.site.urls)),
     url(r"^", include("portfoliyo.users.urls")),

@@ -11,11 +11,14 @@ from portfoliyo.users import views
 
 urlpatterns = patterns(
     '',
+    # profile ----------------------------------------------------------------
+
+    url(r'^profile/$', views.edit_profile, name='edit_profile'),
 
     # auth -------------------------------------------------------------------
 
-    url(r'^login/', views.login, name='login'),
-    url(r'^logout/', views.logout, name='logout'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^logout/$', views.logout, name='logout'),
     url(r'^password/change/$', views.password_change, name='password_change'),
     url(r'^password/reset/$', views.password_reset, name='password_reset'),
     url(r'^reset/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
