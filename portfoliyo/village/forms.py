@@ -6,13 +6,15 @@ from base64 import b64encode
 from hashlib import sha1
 import time
 
+from django.conf import settings
 from django.contrib.auth import models as auth_models
 from django.forms import formsets
 from django.utils import timezone
 
 import floppyforms as forms
 
-from ..users import formats, emails, models as user_models
+from ..sms import sms
+from ..users import formats, invites, models as user_models
 
 
 
@@ -68,11 +70,21 @@ class InviteElderForm(forms.Form):
             profile = user_models.Profile.objects.create(
                 user=user, phone=phone, role=relationship)
             if email:
-                emails.send_invite_email(
+                invites.send_invite_email(
                     user,
                     email_template_name='registration/invite_elder_email.txt',
                     subject_template_name='registration/invite_elder_subject.txt',
                     use_https=request.is_secure(),
+                    extra_context={
+                        'inviter': request.user.profile,
+                        'student': student,
+                        'domain': request.get_host(),
+                        },
+                    )
+            else:
+                invites.send_invite_sms(
+                    user,
+                    template_name='registration/invite_elder_sms.txt',
                     extra_context={
                         'inviter': request.user.profile,
                         'student': student,

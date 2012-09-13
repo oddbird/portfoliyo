@@ -56,3 +56,9 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 #EMAIL_USE_TLS = True
 #EMAIL_HOST_USER = ""
 #EMAIL_HOST_PASSWORD = ""
+
+# Configure Twilio SMS-sending as follows:
+#PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.twilio.TwilioSMSBackend'
+#TWILIO_ACCOUNT_SID = 'your account sid here'
+#TWILIO_AUTH_TOKEN = 'your auth token here'
+#PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'

@@ -16,7 +16,8 @@ email_field.null = True
 email_field.max_length = 255
 
 # monkeypatch User's __unicode__ method to be friendlier for no-username
-auth_models.User.__unicode__ = lambda self: self.email or self.profile.name
+auth_models.User.__unicode__ = lambda self: (
+    self.email or self.profile.name or self.profile.phone)
 
 
 class AutoSingleRelatedObjectDescriptor(SingleRelatedObjectDescriptor):

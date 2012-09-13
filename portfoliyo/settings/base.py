@@ -192,3 +192,6 @@ AUTHENTICATION_BACKENDS = ["portfoliyo.users.auth_backend.EmailBackend"]
 LOGIN_REDIRECT_URL = "/"
 
 DEFAULT_FROM_EMAIL = 'Portfoliyo <noreply@portfoliyo.org>'
+
+PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.console.ConsoleSMSBackend'
+PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'

@@ -1,0 +1,2 @@
+{% firstof inviter.name inviter.user.email %} invites you to join {{ student }}'s Village @portfoliyo.org!
+Reply to begin talking with your child's teachers.

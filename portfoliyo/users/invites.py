@@ -1,8 +1,11 @@
-"""Code to send emails to users."""
+"""Code to send invites to prospective users."""
+from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.template import loader
 from django.utils.http import int_to_base36
+
+from portfoliyo.sms import sms
 
 
 
@@ -28,3 +31,17 @@ def send_invite_email(user,
     subject = ''.join(subject.splitlines())
     email = loader.render_to_string(email_template_name, c)
     send_mail(subject, email, from_email, [user.email])
+
+
+
+def send_invite_sms(user, template_name, extra_context):
+    """Sends an invite SMS to a user."""
+    c = {'user': user}
+    c.update(extra_context or {})
+    body = loader.render_to_string(template_name, c)
+    if len(body) <= 160:
+        messages = [body.replace("\n", " ")]
+    else:
+        messages = body.split("\n")
+    for body in messages:
+        sms.send(user.profile.phone, settings.PORTFOLIYO_SMS_DEFAULT_FROM, body)

@@ -21,13 +21,19 @@ class TestInviteElderForm(object):
         return defaults
 
 
-    def test_phone_contact(self):
+    def test_phone_contact(self, sms):
         """If contact field is phone, it's normalized and saved to profile."""
         form = forms.InviteElderForm(self.data(contact='(321)456-7890'))
         assert form.is_valid()
-        profile = form.save(None, factories.ProfileFactory())
+        request = mock.Mock()
+        request.get_host.return_value = 'portfoliyo.org'
+        request.is_secure.return_value = False
+        request.user = factories.ProfileFactory().user
+        profile = form.save(request, factories.ProfileFactory())
 
         assert profile.phone == u'+13214567890'
+        assert len(sms.outbox) == 1
+        assert sms.outbox[0].to == u'+13214567890'
 
 
     def test_email_contact(self):
@@ -47,9 +53,9 @@ class TestInviteElderForm(object):
 
     def test_user_inactive(self):
         """User created is inactive (so we don't send them emails)."""
-        form = forms.InviteElderForm(self.data(contact='321-456-7890'))
+        form = forms.InviteElderForm(self.data())
         assert form.is_valid()
-        profile = form.save(None, factories.ProfileFactory())
+        profile = form.save(mock.Mock(), factories.ProfileFactory())
 
         assert not profile.user.is_active
 
@@ -198,7 +204,7 @@ class TestAddStudentAndInviteEldersForm(object):
                 )
             )
         assert form.is_valid()
-        student, elders = form.save(None)
+        student, elders = form.save(mock.Mock())
 
         assert set(e.phone for e in elders) == set(
             ['+13214567890', '+13216540987'])

@@ -9,7 +9,7 @@ import sys
 from _pytest.core import main as pytest_main
 
 def main():
-    os.environ["DJANGO_SETTINGS_MODULE"] = "portfoliyo.settings.default"
+    os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
 
     # Override pytest-django and run South migrations in tests
     from pytest_django import plugin
