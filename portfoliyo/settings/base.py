@@ -190,3 +190,5 @@ ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = "/signup/"
 AUTHENTICATION_BACKENDS = ["portfoliyo.users.auth_backend.EmailBackend"]
 LOGIN_REDIRECT_URL = "/"
+
+DEFAULT_FROM_EMAIL = 'noreply@portfoliyo.org'

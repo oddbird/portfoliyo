@@ -1,4 +1,7 @@
 """Tests for village forms."""
+from django.core import mail
+import mock
+
 from portfoliyo.village import forms
 
 from tests.users import factories
@@ -22,18 +25,33 @@ class TestInviteElderForm(object):
         """If contact field is phone, it's normalized and saved to profile."""
         form = forms.InviteElderForm(self.data(contact='(123)456-7890'))
         assert form.is_valid()
-        profile = form.save(factories.ProfileFactory())
+        profile = form.save(None, factories.ProfileFactory())
 
         assert profile.phone == u'123-456-7890'
 
 
     def test_email_contact(self):
-        """If contact field is email, it's normalized and saved to profile."""
+        """If contact field is email, invite email is sent."""
         form = forms.InviteElderForm(self.data(contact='bar@EXAMPLE.com'))
         assert form.is_valid()
-        profile = form.save(factories.ProfileFactory())
+        request = mock.Mock()
+        request.get_host.return_value = 'portfoliyo.org'
+        request.is_secure.return_value = False
+        request.user = factories.ProfileFactory().user
+        profile = form.save(request, factories.ProfileFactory())
 
         assert profile.user.email == u'bar@example.com'
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == [u'bar@example.com']
+
+
+    def test_user_inactive(self):
+        """User created is inactive (so we don't send them emails)."""
+        form = forms.InviteElderForm(self.data(contact='123-456-7890'))
+        assert form.is_valid()
+        profile = form.save(None, factories.ProfileFactory())
+
+        assert not profile.user.is_active
 
 
     def test_bad_contact(self):
@@ -50,7 +68,7 @@ class TestInviteElderForm(object):
         elder = factories.ProfileFactory(user__email='foo@example.com')
         form = forms.InviteElderForm(self.data(contact='foo@example.COM'))
         assert form.is_valid()
-        profile = form.save(factories.ProfileFactory())
+        profile = form.save(None, factories.ProfileFactory())
 
         assert elder == profile
 
@@ -60,7 +78,7 @@ class TestInviteElderForm(object):
         elder = factories.ProfileFactory(phone='123-456-7890')
         form = forms.InviteElderForm(self.data(contact='123.456.7890'))
         assert form.is_valid()
-        profile = form.save(factories.ProfileFactory())
+        profile = form.save(None, factories.ProfileFactory())
 
         assert elder == profile
 
@@ -71,7 +89,7 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(
             self.data(contact=elder.phone, school_staff=True))
         assert form.is_valid()
-        profile = form.save(factories.ProfileFactory())
+        profile = form.save(None, factories.ProfileFactory())
 
         assert elder == profile
         assert profile.school_staff
@@ -83,7 +101,7 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(
             self.data(contact=elder.phone, relationship='foo'))
         assert form.is_valid()
-        profile = form.save(factories.ProfileFactory())
+        profile = form.save(None, factories.ProfileFactory())
 
         assert elder == profile
         assert profile.role == u'foo'
@@ -94,7 +112,7 @@ class TestInviteElderForm(object):
         rel = factories.RelationshipFactory()
         form = forms.InviteElderForm(self.data(contact=rel.elder.phone))
         assert form.is_valid()
-        profile = form.save(rel.student)
+        profile = form.save(None, rel.student)
 
         assert rel.elder == profile
         assert len(profile.students) == 1
@@ -180,7 +198,7 @@ class TestAddStudentAndInviteEldersForm(object):
                 )
             )
         assert form.is_valid()
-        student, elders = form.save()
+        student, elders = form.save(None)
 
         assert set(e.phone for e in elders) == set(
             ['123-456-7890', '321-654-0987'])
@@ -193,6 +211,6 @@ class TestAddStudentAndInviteEldersForm(object):
             self.data(1, elder0={'contact': '', 'relationship': ''}))
 
         assert form.is_valid()
-        student, elders = form.save()
+        student, elders = form.save(None)
 
         assert len(elders) == 0

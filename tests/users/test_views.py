@@ -1,4 +1,5 @@
 """Tests for user/account views."""
+from django.contrib.auth import models as auth_models
 from django.core import mail
 from django.core.urlresolvers import reverse
 
@@ -192,7 +193,6 @@ class TestPasswordReset(object):
 
 class TestPasswordResetConfirm(object):
     """Tests for reset-password-confirm view."""
-    form_id = 'set-password-form'
     def url(self, client, user):
         """Shortcut for password-reset-confirm url."""
         form = client.get(
@@ -275,3 +275,40 @@ class TestActivate(object):
             reverse('activate', kwargs={'activation_key': 'foo'}))
 
         res.mustcontain("that activation key is not valid")
+
+
+
+class TestAcceptEmailInvite(object):
+    """Tests for accept-email-invite view."""
+    def url(self, client, user):
+        """Shortcut for accept-email-invite url."""
+        rel = factories.RelationshipFactory(from_profile__school_staff=True)
+        response = client.get(
+            reverse('invite_elders', kwargs=dict(student_id=rel.student.id)),
+            user=user,
+            )
+        form = response.forms['invite-elders-form']
+        form['elders-0-contact'] = 'new@example.com'
+        form['elders-0-relationship'] = 'teacher'
+        form.submit(status=302)
+
+        for line in mail.outbox[0].body.splitlines():
+            if '://' in line:
+                return line.strip()
+
+        assert False, "No invite URL found in invite-elder email."
+
+
+    def test_accept_email_invite(self, client):
+        """Accepting email invite sets is_active True."""
+        profile = factories.ProfileFactory.create(school_staff=True)
+        response = client.get(self.url(client, profile.user))
+        form = response.forms['set-password-form']
+        new_password = 'sekrit123'
+        form['new_password1'] = new_password
+        form['new_password2'] = new_password
+        res = form.submit(status=302).follow()
+        invitee = auth_models.User.objects.get(email='new@example.com')
+
+        res.mustcontain("chosen a password")
+        assert invitee.is_active

@@ -1,7 +1,7 @@
 """Tests for village views."""
+from django.core import mail
 from django.core.urlresolvers import reverse
 
-import mock
 import pytest
 
 from tests import utils
@@ -73,13 +73,17 @@ class TestInviteElders(object):
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-elders-form']
-        form['elders-0-contact'] = "(123)456-7890"
+        form['elders-0-contact'] = "dad@example.com"
         form['elders-0-relationship'] = "Father"
         form['elders-0-school_staff'] = False
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
             reverse('chat', kwargs={'student_id': rel.student.id}))
+
+        # invite email is sent to new elder
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == [u'dad@example.com']
 
 
     def test_validation_error(self, client):

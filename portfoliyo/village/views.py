@@ -18,7 +18,7 @@ def add_student(request):
     if request.method == 'POST':
         form = forms.AddStudentAndInviteEldersForm(request.POST)
         if form.is_valid():
-            student, _ = form.save(added_by=request.user.profile)
+            student, _ = form.save(request, added_by=request.user.profile)
             return redirect('chat', student_id=student.id)
     else:
         form = forms.AddStudentAndInviteEldersForm()
@@ -39,7 +39,7 @@ def invite_elders(request, student_id):
     if request.method == 'POST':
         formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
         if formset.is_valid():
-            formset.save(student)
+            formset.save(request, student)
             return redirect('chat', student_id=student.id)
     else:
         formset = forms.InviteEldersFormSet(prefix='elders')

@@ -15,8 +15,6 @@ email_field = auth_models.User._meta.get_field("email")
 email_field._unique = True
 email_field.null = True
 email_field.max_length = 255
-# ensure empty strings never make it to the database.
-email_field.get_prep_value = lambda value: value or None
 
 # monkeypatch User's __unicode__ method to be friendlier for no-username
 auth_models.User.__unicode__ = lambda self: self.email or self.profile.name

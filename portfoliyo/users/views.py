@@ -4,11 +4,12 @@ Account-related views.
 """
 from functools import partial
 
-from django.views.decorators.http import require_POST
-
-from django.contrib.auth import views as auth_views, forms as auth_forms
+from django.contrib.auth import (
+    views as auth_views, forms as auth_forms, models as auth_models)
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.utils.http import base36_to_int
+from django.views.decorators.http import require_POST
 
 from ratelimit.decorators import ratelimit
 from registration import views as registration_views
@@ -126,5 +127,30 @@ def register(request):
     if response.status_code == 302:
         messages.success(
             request, "Check your email for an account activation link.")
+
+    return response
+
+
+
+@anonymous_csrf
+def accept_email_invite(request, uidb36, token):
+    response = auth_views.password_reset_confirm(
+        request,
+        uidb36=uidb36,
+        token=token,
+        template_name='users/accept_email_invite.html',
+        set_password_form=auth_forms.SetPasswordForm,
+        post_reset_redirect=redirect_home(request.user),
+        )
+
+    if response.status_code == 302:
+        uid_int = base36_to_int(uidb36)
+        auth_models.User.objects.filter(id=uid_int).update(is_active=True)
+        messages.success(
+            request,
+            u"Great, you've chosen a password! "
+            u"Now log in using your email address and password "
+            u"to see messages about your student.",
+            )
 
     return response

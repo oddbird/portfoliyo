@@ -8,10 +8,11 @@ import time
 
 from django.contrib.auth import models as auth_models
 from django.forms import formsets
+from django.utils import timezone
 
 import floppyforms as forms
 
-from ..users import formats, models as user_models
+from ..users import formats, emails, models as user_models
 
 
 
@@ -37,8 +38,8 @@ class InviteElderForm(forms.Form):
                 "Please supply a valid email address or US mobile number.")
 
 
-    def save(self, student):
-        """Given student profile, save the new elder, return their profile."""
+    def save(self, request, student):
+        """Given request and student profile, save/return elder profile."""
         email = self.cleaned_data.get("email")
         phone = self.cleaned_data.get("phone")
         relationship = self.cleaned_data.get("relationship", u"")
@@ -53,10 +54,31 @@ class InviteElderForm(forms.Form):
             profile = user_models.Profile.objects.get(**dupe_query)
         except user_models.Profile.DoesNotExist:
             username = b64encode(sha1(email or phone).digest())
-            user = auth_models.User.objects.create_user(
-                username=username, email=email)
+            now = timezone.now()
+            user = auth_models.User(
+                username=username,
+                email=email,
+                is_staff=False,
+                is_active=False,
+                is_superuser=False,
+                date_joined=now,
+                )
+            user.set_unusable_password()
+            user.save()
             profile = user_models.Profile.objects.create(
                 user=user, phone=phone, role=relationship)
+            if email:
+                emails.send_invite_email(
+                    user,
+                    email_template_name='registration/invite_elder_email.txt',
+                    subject_template_name='registration/invite_elder_subject.txt',
+                    use_https=request.is_secure(),
+                    extra_context={
+                        'inviter': request.user.profile,
+                        'student': student,
+                        'domain': request.get_host(),
+                        },
+                    )
         else:
             # update school_staff and role fields as needed
             if ((staff and not profile.school_staff) or
@@ -79,12 +101,12 @@ class InviteElderForm(forms.Form):
 
 class InviteEldersBaseFormSet(formsets.BaseFormSet):
     """Base formset class for inviting elders."""
-    def save(self, student):
+    def save(self, request, student):
         """Save all elder forms and return list of elders."""
         elders = []
         for form in self:
             if form.has_changed():
-                elders.append(form.save(student))
+                elders.append(form.save(request, student))
 
         return elders
 
@@ -117,7 +139,16 @@ class AddStudentForm(forms.Form):
         # name may not be unique, and it's all the info we have on a student,
         # so append the time to seed a hash to generate a unique username
         username = b64encode(sha1("%s%f" % (name, time.time())).digest())
-        user = auth_models.User.objects.create_user(username=username)
+        now = timezone.now()
+        user = auth_models.User(
+            username=username,
+            is_staff=False,
+            is_active=False,
+            is_superuser=False,
+            date_joined=now,
+            )
+        user.set_unusable_password()
+        user.save()
         profile = user_models.Profile.objects.create(name=name, user=user)
 
         if added_by:
@@ -147,7 +178,7 @@ class AddStudentAndInviteEldersForm(AddStudentForm):
             AddStudentAndInviteEldersForm, self).is_valid()
 
 
-    def save(self, *a, **kw):
+    def save(self, request, *a, **kw):
         """
         Save the student and any associated elders.
 
@@ -155,6 +186,6 @@ class AddStudentAndInviteEldersForm(AddStudentForm):
 
         """
         student = super(AddStudentAndInviteEldersForm, self).save(*a, **kw)
-        elders = self.elders_formset.save(student)
+        elders = self.elders_formset.save(request, student)
 
         return (student, elders)
