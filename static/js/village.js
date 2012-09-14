@@ -69,9 +69,17 @@ var PYO = (function (PYO, $) {
             var feed = $(container);
             var context = feed.closest('.village');
             var form = context.find('form.post-add-form');
+            var textarea = context.find('#post-text');
 
             form.ajaxForm(function () {
-                context.find('#post-text').val('').change();
+                textarea.val('').change();
+            });
+
+            textarea.keydown(function (event) {
+                if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
+                    event.preventDefault();
+                    form.submit();
+                }
             });
         }
     };
@@ -113,10 +121,10 @@ var PYO = (function (PYO, $) {
 
     PYO.characterCount = function (container) {
         if ($(container).length) {
-            var feed = $(container);
-            var textarea = feed.find('#post-text');
-            var count = feed.find('.charcount');
-            var button = feed.find('.action-post');
+            var context = $(container);
+            var textarea = context.find('#post-text');
+            var count = context.find('.charcount');
+            var button = context.find('.action-post');
             var updateCount = function () {
                 var chars = textarea.val().length;
                 var remain = 160 - chars;
