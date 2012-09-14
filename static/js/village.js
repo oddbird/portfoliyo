@@ -121,6 +121,15 @@ var PYO = (function (PYO, $) {
         });
     };
 
+    PYO.fetchBacklog = function (container) {
+        var context = $(container);
+        var feed = context.find('.village-feed');
+        var url = feed.data('backlog-url');
+        $.get(url, function (data) {
+            PYO.addPost(data);
+        });
+    };
+
     return PYO;
 
 }(PYO || {}, jQuery));
