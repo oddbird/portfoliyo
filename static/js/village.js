@@ -66,7 +66,7 @@ var PYO = (function (PYO, $) {
             var form = context.find('form.post-add-form');
 
             form.ajaxForm(function () {
-                context.find('#post-text').val('');
+                context.find('#post-text').val('').change();
             });
         }
     };
@@ -111,13 +111,16 @@ var PYO = (function (PYO, $) {
             var feed = $(container);
             var textarea = feed.find('#post-text');
             var count = feed.find('.charcount');
+            var button = feed.find('.action-post');
             var updateCount = function () {
                 var chars = textarea.val().length;
                 var remain = 160 - chars;
                 if (remain < 0) {
                     count.addClass('overlimit');
+                    button.attr('disabled', 'disabled');
                 } else {
                     count.removeClass('overlimit');
+                    button.removeAttr('disabled');
                 }
                 count.text(remain + ' characters remaining...');
             };
