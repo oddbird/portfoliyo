@@ -107,6 +107,7 @@ def village(request, student_id):
         'village/village.html',
         {
             'student': rel.student,
+            'relationship': rel,
             'post_char_limit': models.post_char_limit(rel),
             'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
             },
