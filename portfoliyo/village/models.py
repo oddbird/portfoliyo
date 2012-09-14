@@ -80,7 +80,7 @@ class Post(models.Model):
         if relationship is None:
             role = self.author.role
         else:
-            role = relationship.description
+            role = relationship.description or self.author.role
 
         return {
             'author_id': self.author_id,
