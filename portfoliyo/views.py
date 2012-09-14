@@ -1,7 +1,6 @@
 """Core/home views."""
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
-from django.template.response import TemplateResponse
 
 from session_csrf import anonymous_csrf
 
@@ -28,19 +27,13 @@ def redirect_home(user):
         return reverse('no_students')
     elif len(students) == 1:
         return reverse('chat', kwargs=dict(student_id=students[0].id))
-    return reverse('home')
-
+    return reverse('dashboard')
 
 
 @anonymous_csrf
 def home(request):
-    """Home view. Redirects or displays a get-started page."""
+    """Home view. Redirects appropriately or displays landing page."""
     if request.user.is_authenticated():
-        dest = redirect_home(request.user)
-
-        if dest != request.path:
-            return redirect(dest)
-
-        return TemplateResponse(request, 'village/dashboard.html')
+        return redirect(redirect_home(request.user))
     else:
         return landing(request)

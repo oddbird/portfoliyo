@@ -46,12 +46,10 @@ class TestHome(object):
 
 
     def test_multiple_student_dashboard(self, client):
-        """A user with multiple students gets a pick list."""
+        """A user with multiple students gets redirected to dashboard."""
         rel = factories.RelationshipFactory(to_profile__name="Student One")
         factories.RelationshipFactory(
             from_profile=rel.elder, to_profile__name="Student Two")
-        response = client.get(self.url, user=rel.elder.user, status=200)
+        response = client.get(self.url, user=rel.elder.user, status=302)
 
-        response.mustcontain("Please select a student")
-        response.mustcontain("Student One")
-        response.mustcontain("Student Two")
+        assert response['Location'] == location(reverse('dashboard'))

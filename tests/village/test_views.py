@@ -9,6 +9,21 @@ from tests.users import factories
 
 
 
+class TestDashboard(object):
+    def test_dashboard(self, client):
+        """A picklist of students."""
+        rel = factories.RelationshipFactory(to_profile__name="Student One")
+        factories.RelationshipFactory(
+            from_profile=rel.elder, to_profile__name="Student Two")
+        response = client.get(
+            reverse('dashboard'), user=rel.elder.user, status=200)
+
+        response.mustcontain("Please select a student")
+        response.mustcontain("Student One")
+        response.mustcontain("Student Two")
+
+
+
 class TestAddStudent(object):
     """Tests for add_student view."""
     def test_add_student(self, client):

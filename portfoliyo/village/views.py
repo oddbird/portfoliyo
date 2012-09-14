@@ -8,11 +8,21 @@ from django.template.response import TemplateResponse
 
 from ..users.decorators import school_staff_required
 from ..users import models as user_models
+from ..view.ajax import ajax
 from . import forms
 
 
 
+@login_required
+@ajax('village/_dashboard_content.html')
+def dashboard(request):
+    """Dashboard view for users with multiple students."""
+    return TemplateResponse(request, 'village/dashboard.html')
+
+
+
 @school_staff_required
+@ajax('village/_add_student_content.html')
 def add_student(request):
     """Add a student and elders."""
     if request.method == 'POST':
@@ -29,6 +39,7 @@ def add_student(request):
 
 
 @school_staff_required
+@ajax('village/_invite_elders_content.html')
 def invite_elders(request, student_id):
     """Invite new elder(s) to a student's village."""
     student = get_object_or_404(
@@ -55,6 +66,7 @@ def invite_elders(request, student_id):
 
 
 @login_required
+@ajax('village/_village_content.html')
 def chat(request, student_id):
     """The main chat view for a student/village."""
     student = get_object_or_404(
