@@ -106,7 +106,7 @@ class Post(models.Model):
 
 
 
-highlight_re = re.compile(r'(\A|\s+)@(\S+)(\Z|\s+)')
+highlight_re = re.compile(r'(\A|[\s[(])@(\S+?)(\Z|[\s,.;:)\]?])')
 
 
 
