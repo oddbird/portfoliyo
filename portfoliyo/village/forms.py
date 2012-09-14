@@ -6,14 +6,12 @@ from base64 import b64encode
 from hashlib import sha1
 import time
 
-from django.conf import settings
 from django.contrib.auth import models as auth_models
 from django.forms import formsets
 from django.utils import timezone
 
 import floppyforms as forms
 
-from ..sms import sms
 from ..users import formats, invites, models as user_models
 
 

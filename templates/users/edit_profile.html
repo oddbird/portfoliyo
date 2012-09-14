@@ -10,7 +10,7 @@
 
     {{ form.non_field_errors }}
 
-    <div class="formset bio">
+    <div class="fieldset bio">
       {% include "forms/_field.html" with field=form.name %}
       {% include "forms/_field.html" with field=form.role label="Relation to student(s)" %}
     </div>

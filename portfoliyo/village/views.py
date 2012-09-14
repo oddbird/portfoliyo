@@ -17,7 +17,11 @@ from . import forms
 @ajax('village/_dashboard_content.html')
 def dashboard(request):
     """Dashboard view for users with multiple students."""
-    return TemplateResponse(request, 'village/dashboard.html')
+    return TemplateResponse(
+        request,
+        'village/dashboard.html',
+        {'elders_formset': forms.InviteEldersFormSet(prefix='elders')},
+        )
 
 
 
@@ -34,7 +38,13 @@ def add_student(request):
         form = forms.AddStudentAndInviteEldersForm()
 
     return TemplateResponse(
-        request, 'village/add_student.html', {'form': form})
+        request,
+        'village/add_student.html',
+        {
+            'form': form,
+            'elders_formset': form.elders_formset,
+            },
+        )
 
 
 
@@ -60,7 +70,7 @@ def invite_elders(request, student_id):
     return TemplateResponse(
         request,
         'village/invite_elders.html',
-        {'formset': formset, 'student': student},
+        {'elders_formset': formset, 'student': student},
         )
 
 
@@ -77,4 +87,10 @@ def village(request, student_id):
         )
 
     return TemplateResponse(
-        request, 'village/village.html', {'student': student})
+        request,
+        'village/village.html',
+        {
+            'student': student,
+            'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
+            },
+        )

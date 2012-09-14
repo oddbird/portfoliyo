@@ -1,7 +1,7 @@
 <div class="formset elders" data-prefix="{{ formset.prefix }}">
   <h3 class="formset-head">Elders</h3>
-  {{ formset.management_form }}
-  {% for form in formset %}
+  {{ elders_formset.management_form }}
+  {% for form in elders_formset %}
     {% include "village/_elder_form.html" %}
   {% endfor %}
 </div>
