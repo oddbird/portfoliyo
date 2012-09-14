@@ -44,4 +44,10 @@ def send_invite_sms(user, template_name, extra_context):
     else:
         messages = body.split("\n")
     for body in messages:
-        sms.send(user.profile.phone, settings.PORTFOLIYO_SMS_DEFAULT_FROM, body)
+        send_sms(user.profile.phone, body)
+
+
+
+def send_sms(phone, body):
+    """Sends sms to phone with ``body``."""
+    sms.send(phone, settings.PORTFOLIYO_SMS_DEFAULT_FROM, body)

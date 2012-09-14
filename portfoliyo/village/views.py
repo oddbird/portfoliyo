@@ -5,7 +5,7 @@ Student/elder (village) views.
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 
@@ -61,6 +61,18 @@ def get_related_student_or_404(student_id, profile):
         )
 
 
+def get_relationship_or_404(student_id, profile):
+    """Get relationship between student_id and profile, or 404."""
+    try:
+        return user_models.Relationship.objects.select_related().get(
+            from_profile=profile,
+            to_profile_id=student_id,
+            kind=user_models.Relationship.KIND.elder,
+            )
+    except user_models.Relationship.DoesNotExist:
+        raise Http404
+
+
 
 @school_staff_required
 @ajax('village/_invite_elders_content.html')
@@ -88,13 +100,14 @@ def invite_elders(request, student_id):
 @ajax('village/_village_content.html')
 def village(request, student_id):
     """The main chat view for a student/village."""
-    student = get_related_student_or_404(student_id, request.user.profile)
+    rel = get_relationship_or_404(student_id, request.user.profile)
 
     return TemplateResponse(
         request,
         'village/village.html',
         {
-            'student': student,
+            'student': rel.student,
+            'post_char_limit': models.post_char_limit(rel),
             'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
             },
         )
@@ -104,20 +117,21 @@ def village(request, student_id):
 @login_required
 def json_posts(request, student_id):
     """Get backlog of up to 100 latest posts, or POST a post."""
-    student = get_related_student_or_404(student_id, request.user.profile)
+    rel = get_relationship_or_404(student_id, request.user.profile)
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
-        if len(text) > 160:
+        limit = models.post_char_limit(rel)
+        if len(text) > limit:
             return HttpResponseBadRequest(
                 json.dumps(
                     {
-                        'error': 'posts are limited to 160 characters',
+                        'error': 'Posts are limited to %s characters.' % limit,
                         'success': False,
                         }
                     )
                 )
-        post = models.Post.create(request.user.profile, student, text)
+        post = models.Post.create(request.user.profile, rel.student, text)
 
         data = {
             'success': True,
@@ -130,7 +144,7 @@ def json_posts(request, student_id):
         'posts':
             [
             post.json_data() for post in
-            reversed(student.posts_in_village.order_by('-timestamp')[:100])
+            reversed(rel.student.posts_in_village.order_by('-timestamp')[:100])
             ],
         }
 

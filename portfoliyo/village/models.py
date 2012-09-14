@@ -7,7 +7,7 @@ from django.db import models
 from django.utils import timezone, dateformat, html
 
 from .pusher import get_pusher
-from ..users import models as user_models
+from ..users import invites, models as user_models
 
 
 
@@ -37,14 +37,22 @@ class Post(models.Model):
         html_text, highlights = replace_highlights(html.escape(text), student)
         html_text = html_text.replace('\n', '<br>')
 
-        # @@@ notify highlighted users
-
         post = cls.objects.create(
             author=author,
             student=student,
             original_text=text,
             html_text=html_text,
             )
+
+        # notify highlighted text-only users
+        for rel in highlights:
+            if (rel.elder.user.is_active and
+                    rel.elder.phone and
+                    not rel.elder.user.email):
+                sender_rel = post.get_relationship()
+                prefix = text_notification_prefix(sender_rel)
+                sms_body = prefix + post.original_text
+                invites.send_sms(rel.elder.phone, sms_body)
 
         # trigger Pusher event, if Pusher is configured
         pusher = get_pusher()
@@ -59,7 +67,7 @@ class Post(models.Model):
     def get_relationship(self):
         """The Relationship object between the author and the student."""
         try:
-            return user_models.Relationship.objects.get(
+            return user_models.Relationship.objects.select_related().get(
                 kind=user_models.Relationship.KIND.elder,
                 from_profile=self.author,
                 to_profile=self.student,
@@ -100,19 +108,19 @@ def replace_highlights(text, student):
     """
     Detect highlights and wrap with HTML element.
 
-    Returns a tuple of (rendered-text, set-of-highlighted-profiles).
+    Returns a tuple of (rendered-text, set-of-highlighted-relationships).
 
     """
     name_map = get_highlight_names(student)
     highlighted = set()
     for _, highlight_name, _ in highlight_re.findall(text):
-        highlight_user = name_map.get(normalize_name(highlight_name))
-        if highlight_user:
+        highlight_rel = name_map.get(normalize_name(highlight_name))
+        if highlight_rel:
             full_highlight = '@%s' % highlight_name
             replace_with = '<b class="nametag" data-user-id="%s">%s</b>' % (
-                highlight_user.id, full_highlight)
+                highlight_rel.elder.id, full_highlight)
             text = text.replace(full_highlight, replace_with)
-            highlighted.add(highlight_user)
+            highlighted.add(highlight_rel)
     return text, highlighted
 
 
@@ -121,7 +129,7 @@ def get_highlight_names(student):
     """
     Get highlightable names in given student's village.
 
-    Returns dictionary mapping names to profiles.
+    Returns dictionary mapping names to relationships.
 
     """
     name_map = {}
@@ -143,7 +151,7 @@ def get_highlight_names(student):
                 # if there's a collision, nobody gets to use that name
                 # @@@ when we have autocomplete, maybe add disambiguators?
                 collisions.add(name)
-            name_map[name] = elder
+            name_map[name] = elder_rel
     for collision in collisions:
         del name_map[name]
     return name_map
@@ -153,3 +161,14 @@ def get_highlight_names(student):
 def normalize_name(name):
     """Normalize a name for highlight detection (lower-case, strip spaces)."""
     return name.lower().replace(' ', '')
+
+
+def text_notification_prefix(relationship):
+    """The prefix for texts sent out from this elder/student relationship."""
+    return u'(%s) ' % (
+        relationship.elder.name or relationship.description_or_role,)
+
+
+def post_char_limit(relationship):
+    """Max length for posts from this profile/student relationship."""
+    return 160 - len(text_notification_prefix(relationship))
