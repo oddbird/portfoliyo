@@ -669,6 +669,12 @@ textarea {
 .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p {
   margin-bottom: 1.27778em;
 }
+.login b, .register b, .edit-profile b, .reset-password b, .change-password b, .set-password b, .login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong {
+  font-weight: bold;
+}
+.login i, .register i, .edit-profile i, .reset-password i, .change-password i, .set-password i, .login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em {
+  font-style: italic;
+}
 
 .pagehead {
   font-size: 1.94444em;
