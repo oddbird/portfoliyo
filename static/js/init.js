@@ -17,10 +17,14 @@ var PYO = (function (PYO, $) {
             optionalIfEmpty: true
         });
 
-        // local.js
+        // landing.js
         PYO.ajaxifyForm('.village-landing .membership form', '.village-landing .membership');
+
+        // village.js
         PYO.updatePageHeight('.village');
         PYO.updateVillageScroll('.village-feed');
+        // PYO.submitPost('.pusher-test');
+        PYO.listenForPusherEvents('.village');
     });
 
     return PYO;

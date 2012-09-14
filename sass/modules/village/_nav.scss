@@ -19,12 +19,24 @@
       @include padding-leader(.25,$village-list-size);
       @include background(linear-gradient(bottom, rgba($base2,.5), rgba($base2,.125)));
       display: block;
+      position: relative;
       border-color: $village-border-color;
       padding-left: $grid-padding;
     }
     #{$focus} {
       @include background(linear-gradient(bottom, rgba($base2,1), rgba($base2,.25)));
     }
+  }
+  .unread {
+    @include border-radius(30em);
+    @include box-shadow($back 0 0 1px);
+    position: absolute;
+    right: $xxxsmallem;
+    min-width: rhythm(1,$village-list-size);
+    background: $accent;
+    color: $base3;
+    font-weight: bold;
+    text-align: center;
   }
   .addstudent-link { @extend %village-addlink; }
 }
