@@ -122,7 +122,7 @@ def json_posts(request, student_id):
         'posts':
             [
             post.json_data() for post in
-            student.posts_in_village.order_by('-timestamp')[:100]
+            reversed(student.posts_in_village.order_by('-timestamp')[:100])
             ],
         }
 
