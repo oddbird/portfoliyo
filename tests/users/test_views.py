@@ -280,12 +280,12 @@ class TestActivate(object):
 
 class TestAcceptEmailInvite(object):
     """Tests for accept-email-invite view."""
-    def url(self, client, user):
+    def url(self, client, profile):
         """Shortcut for accept-email-invite url."""
-        rel = factories.RelationshipFactory(from_profile__school_staff=True)
+        rel = factories.RelationshipFactory(from_profile=profile)
         response = client.get(
             reverse('invite_elders', kwargs=dict(student_id=rel.student.id)),
-            user=user,
+            user=profile.user,
             )
         form = response.forms['invite-elders-form']
         form['elders-0-contact'] = 'new@example.com'
@@ -302,7 +302,7 @@ class TestAcceptEmailInvite(object):
     def test_accept_email_invite(self, client):
         """Accepting email invite sets is_active True."""
         profile = factories.ProfileFactory.create(school_staff=True)
-        response = client.get(self.url(client, profile.user))
+        response = client.get(self.url(client, profile))
         form = response.forms['set-password-form']
         new_password = 'sekrit123'
         form['new_password1'] = new_password

@@ -110,6 +110,14 @@ class TestInviteElders(object):
         response.mustcontain("account doesn't have access"), response.html
 
 
+    def test_requires_relationship(self, client):
+        """Only an elder of that student can invite more."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        student = factories.ProfileFactory.create()
+
+        client.get(self.url(student), user=elder.user, status=404)
+
+
 
 class TestChat(object):
     """Tests for village chat view."""
@@ -138,3 +146,11 @@ class TestChat(object):
 
         assert len(teacher_links) == 1
         assert len(parent_links) == 0
+
+
+    def test_requires_relationship(self, client):
+        """Only an elder of that student can view chat."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        student = factories.ProfileFactory.create()
+
+        client.get(self.url(student), user=elder.user, status=404)

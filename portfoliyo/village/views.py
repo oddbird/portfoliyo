@@ -32,9 +32,11 @@ def add_student(request):
 def invite_elders(request, student_id):
     """Invite new elder(s) to a student's village."""
     student = get_object_or_404(
-        user_models.Profile.objects.select_related('user'), id=student_id)
-
-    # @@@ check that user is part of this student's village
+        user_models.Profile.objects.filter(
+            relationships_to__from_profile=request.user.profile
+            ).select_related('user'),
+        id=student_id,
+        )
 
     if request.method == 'POST':
         formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
@@ -56,7 +58,11 @@ def invite_elders(request, student_id):
 def chat(request, student_id):
     """The main chat view for a student/village."""
     student = get_object_or_404(
-        user_models.Profile.objects.select_related('user'), id=student_id)
+        user_models.Profile.objects.filter(
+            relationships_to__from_profile=request.user.profile
+            ).select_related('user'),
+        id=student_id,
+        )
 
     # @@@ check that user is part of this student's village
 
