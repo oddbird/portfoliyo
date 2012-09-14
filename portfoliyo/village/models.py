@@ -124,12 +124,29 @@ def get_highlight_names(student):
     Returns dictionary mapping names to profiles.
 
     """
-    map = {}
-    for elder in student.elders:
+    name_map = {}
+    collisions = set()
+    for elder_rel in student.elder_relationships:
+        elder = elder_rel.elder
+        possible_names = []
         if elder.name:
-            map[normalize_name(elder.name)] = elder
-        # @@@ also do emails, phones, roles, if not all users will have names?
-    return map
+            possible_names.append(normalize_name(elder.name))
+        if elder.phone:
+            possible_names.append(normalize_name(elder.phone))
+            possible_names.append(
+                normalize_name(elder.phone.lstrip('+').lstrip('1')))
+        if elder.user.email:
+            possible_names.append(normalize_name(elder.user.email))
+        possible_names.append(normalize_name(elder_rel.description_or_role))
+        for name in possible_names:
+            if name in name_map:
+                # if there's a collision, nobody gets to use that name
+                # @@@ when we have autocomplete, maybe add disambiguators?
+                collisions.add(name)
+            name_map[name] = elder
+    for collision in collisions:
+        del name_map[name]
+    return name_map
 
 
 
