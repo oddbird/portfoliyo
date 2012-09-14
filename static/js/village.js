@@ -62,6 +62,7 @@ var PYO = (function (PYO, $) {
             var post = PYO.renderPost(data);
             $('.village-feed').append(post);
             PYO.scrollToBottom('.village-feed');
+            return post;
         }
     };
 
@@ -74,6 +75,7 @@ var PYO = (function (PYO, $) {
             if (oldPost && oldPost.length) {
                 oldPost.replaceWith(newPost);
                 PYO.scrollToBottom('.village-feed');
+                $.doTimeout('new-post-' + author_sequence_id);
                 return true;
             }
         }
@@ -86,9 +88,9 @@ var PYO = (function (PYO, $) {
             var form = context.find('form.post-add-form');
             var button = form.find('.action-post');
             var textarea = form.find('#post-text');
-            var getAuthSeq = function () {
-                var author_sequence = feed.find('.post.mine').length + 1;
-                return author_sequence;
+            var author_sequence;
+            var setAuthSeq = function () {
+                author_sequence = feed.find('.post.mine').length + 1;
             };
             var createPostObj = function () {
                 var author = feed.data('author');
@@ -100,6 +102,7 @@ var PYO = (function (PYO, $) {
                 var date = month + '/' + day + '/' + year;
                 var hour = today.getHours();
                 var minute = today.getMinutes();
+                minute = (minute < 10) ? '0' + minute : minute;
                 var period = (hour > 12) ? 'p.m.' : 'a.m.';
                 hour = (hour > 12) ? hour - 12 : hour;
                 var time = hour + ':' + minute + ' ' + period;
@@ -112,7 +115,7 @@ var PYO = (function (PYO, $) {
                         date: date,
                         time: time,
                         text: text,
-                        author_sequence_id: getAuthSeq()
+                        author_sequence_id: author_sequence
                     }
                 };
                 return postObj;
@@ -120,12 +123,16 @@ var PYO = (function (PYO, $) {
 
             form.submit(function (event) {
                 event.preventDefault();
+                setAuthSeq();
                 form.ajaxSubmit({
-                    data: { author_sequence_id: getAuthSeq() },
+                    data: { author_sequence_id: author_sequence },
                     beforeSubmit: function (arr, form, opts) {
                         var response = createPostObj();
-                        PYO.addPost(response);
+                        var post = PYO.addPost(response);
                         textarea.val('').change();
+                        $.doTimeout('new-post-' + author_sequence, 5000, function () {
+                            PYO.postTimeout(post);
+                        });
                     },
                     success: function (response) {
                         if (response && response.success && !PYO.pusherKey) {
@@ -144,6 +151,38 @@ var PYO = (function (PYO, $) {
                 }
             });
         }
+    };
+
+    PYO.postTimeout = function (post) {
+        var msg = ich.post_timeout_msg();
+        msg.find('.resend').click(function (e) {
+            e.preventDefault();
+            var thisPost = $(this).closest('.post');
+            PYO.resendPost(thisPost);
+        });
+        post.prepend(msg).loadingOverlay('remove');
+        PYO.scrollToBottom('.village-feed');
+    };
+
+    PYO.resendPost = function (post) {
+        var feed = $('.village-feed');
+        var url = feed.data('post-url');
+        var author_sequence = post.data('author-sequence');
+        var text = post.find('.post-text').text();
+        var postData = {
+            author_sequence_id: author_sequence,
+            text: text
+        };
+        $.post(url, postData, function (response) {
+            if (response && response.success && !PYO.pusherKey) {
+                PYO.replacePost(response);
+            }
+        });
+        post.find('.timeout').remove();
+        post.loadingOverlay();
+        $.doTimeout('new-post-' + author_sequence, 5000, function () {
+            PYO.postTimeout(post);
+        });
     };
 
     PYO.listenForPusherEvents = function (container) {
