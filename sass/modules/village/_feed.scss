@@ -16,7 +16,7 @@ $post-byline-size: $xsmallpx;
   @include trailing-border(1px,.25);
   padding-left: gutter($center);
   padding-right: gutter($center);
-  border-color: $base2;
+  border-color: $base1;
   .byline {
     @include adjust-font-size-to($post-byline-size);
     color: $base1;
@@ -31,7 +31,7 @@ $post-byline-size: $xsmallpx;
     @include clearfix;
     @include adjust-font-size-to($smallpx);
   }
-  &.mine { background: rgba($blue,.125); }
+  &.mine { background: rgba($blue,.1); }
   .nametag {
     @include border-radius($xxxsmallem);
     display: inline-block;

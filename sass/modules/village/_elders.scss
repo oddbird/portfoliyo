@@ -5,8 +5,8 @@
   @extend %village-lists;
   @include padding-leader(.5);
   float: right;
-  width: space($right);
-  padding-left: gutter();
+  width: space($right, $content-width);
+  padding-left: gutter($content-width);
   height: 100%;
   border-left: 1px solid $village-border-color;
   h2 { @extend %gone; }

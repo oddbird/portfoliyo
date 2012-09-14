@@ -14,10 +14,17 @@
   height: rhythm(24);
 }
 
+.village-content {
+  position: relative;
+  height: 100%;
+  margin-left: columns($left);
+}
+
+$content-width: $center + $right;
+
 .village-main {
   position: relative;
   float: left;
-  width: space($center);
-  margin-left: columns($left);
+  width: columns($center, $content-width);
   height: 100%;
 }

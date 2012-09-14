@@ -13,17 +13,17 @@
   > :last-child { @include trailer(2); }
   h2 {
     @include adjust-font-size-to($largepx);
-    @include serif;
     @include trailer(1,$largepx);
+    @include serif;
     font-weight: bold;
   }
 }
 
 %village-solo-page {
   @extend %village-page;
-  @include span-columns($center omega);
-  @include post($right);
-  margin-left: gutter();
+  @include span-columns($center omega, $content-width);
+  @include post($right, $content-width);
+  margin-left: gutter($content-width);
 }
 
 %village-main-page {

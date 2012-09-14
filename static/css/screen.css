@@ -1350,11 +1350,16 @@ textarea {
   clear: both;
 }
 
+.village-content {
+  position: relative;
+  height: 100%;
+  margin-left: 18.84058%;
+}
+
 .village-main {
   position: relative;
   float: left;
-  width: 60.86957%;
-  margin-left: 18.84058%;
+  width: 74.54545%;
   height: 100%;
 }
 
@@ -1376,17 +1381,17 @@ textarea {
 .village-add-form h2, .dashboard h2, .elder-add-form h2 {
   font-size: 1.94444em;
   line-height: 1.31429em;
-  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   margin-bottom: 0.65714em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
 
 .village-add-form, .dashboard {
-  width: 59.42029%;
+  width: 74.54545%;
   float: right;
   margin-right: 0;
-  margin-right: 20.28986%;
-  margin-left: 1.44928%;
+  margin-right: 25.45455%;
+  margin-left: 1.81818%;
 }
 
 .elder-add-form {
@@ -1605,7 +1610,7 @@ textarea {
   padding-bottom: 0.26389em;
   padding-left: 2.43902%;
   padding-right: 2.43902%;
-  border-color: #eee8d5;
+  border-color: #93a1a1;
 }
 .post:after {
   content: "";
@@ -1633,7 +1638,7 @@ textarea {
   line-height: 1.64286em;
 }
 .post.mine {
-  background: rgba(38, 139, 210, 0.125);
+  background: rgba(38, 139, 210, 0.1);
 }
 .post .nametag {
   -webkit-border-radius: 0.512em;
@@ -1706,8 +1711,8 @@ textarea {
 .village-elders {
   padding-top: 0.63889em;
   float: right;
-  width: 20.28986%;
-  padding-left: 1.44928%;
+  width: 25.45455%;
+  padding-left: 1.81818%;
   height: 100%;
   border-left: 1px solid #93a1a1;
 }

@@ -1,3 +1,6 @@
+{% extends "village/_village_content_main.html" %}
+
+{% block village-content %}
 <div class="village-main">
   <form method="POST" class="elder-add-form" id="invite-elders-form">
     {% csrf_token %}
@@ -14,3 +17,4 @@
 </div>
 
 {% include "village/_village_elders.html" with active="true" %}
+{% endblock village-content %}
