@@ -1,4 +1,4 @@
-<form method="POST" class="post-add-form" action="{% url create_post student_id=student.id %}">
+<form method="POST" class="post-add-form" action="{% url json_posts student_id=student.id %}">
   {% csrf_token %}
 
   <div class="formfield post-textfield">

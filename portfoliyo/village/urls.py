@@ -7,7 +7,6 @@ per_student_patterns = patterns(
     url(r'^invite/$', views.invite_elders, name='invite_elders'),
     url(r'^$', views.village, name='village'),
     url(r'^_posts/$', views.json_posts, name='json_posts'),
-    url(r'^_posts/create/$', views.create_post, name='create_post'),
     )
 
 
