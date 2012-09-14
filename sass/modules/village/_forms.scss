@@ -8,13 +8,13 @@
 
 .elder-add-form { @extend %village-main-page; }
 
-$formspace: $center - 2;
+$formspace: $center;
 
 .formset.elders {
   @extend %notice-base;
   @include bleed;
   @include leader;
-  @include inline-form(2, $formspace - 2, $formspace);
+  @include inline-form($left, $formspace - $left, $formspace);
   position: relative;
 
   .formset-head {

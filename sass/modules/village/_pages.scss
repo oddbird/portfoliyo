@@ -7,8 +7,8 @@
 }
 
 %village-page {
-  @include padding-leader(2);
   height: 100%;
+  padding: rhythm(2);
   overflow-y: scroll;
   > :last-child { @include trailer(2); }
   h2 {
@@ -22,14 +22,12 @@
 %village-solo-page {
   @extend %village-page;
   @include span-columns($center omega);
-  @include pad(1,1);
   @include post($right);
   margin-left: gutter();
 }
 
 %village-main-page {
   @extend %village-page;
-  @include pad(1,1,$center);
   margin-left: gutter($center);
 }
 

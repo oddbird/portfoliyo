@@ -624,23 +624,23 @@ textarea {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed, .awaiting-activation, .no-students {
-    padding-left: 25.38462%;
-    padding-right: 25.38462%;
+    padding-left: 25.36232%;
+    padding-right: 25.36232%;
   }
 }
 
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
     white-space: nowrap;
     overflow: hidden;
     -ms-text-overflow: ellipsis;
     -o-text-overflow: ellipsis;
     text-overflow: ellipsis;
-    width: 48.4375%;
+    width: 48.52941%;
     float: left;
-    margin-right: 3.125%;
+    margin-right: 2.94118%;
     padding: 0.31944em 0;
     text-align: right;
   }
@@ -653,16 +653,16 @@ textarea {
     float: none;
     width: auto;
     margin-right: auto;
-    margin-left: 51.5625%;
+    margin-left: 51.47059%;
     display: inline-block;
     padding: 0;
     text-align: left;
   }
   .login .formhelp, .register .formhelp, .edit-profile .formhelp, .reset-password .formhelp, .change-password .formhelp, .set-password .formhelp, .initial-password .formhelp {
-    margin-left: 51.5625%;
+    margin-left: 51.47059%;
   }
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
-    margin-left: -51.5625%;
+    margin-left: -51.47059%;
   }
 }
 
@@ -677,7 +677,7 @@ textarea {
 }
 
 [role="banner"], [role="contentinfo"], [role="main"] .container {
-  max-width: 34em;
+  max-width: 29em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
@@ -696,9 +696,9 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   [role="banner"], [role="contentinfo"], [role="main"] .container {
-    max-width: 67em;
+    max-width: 71em;
   }
 }
 
@@ -730,15 +730,15 @@ textarea {
 .brand {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  width: 48.4375%;
+  width: 48.14815%;
   float: left;
-  margin-right: 3.125%;
+  margin-right: 3.7037%;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .brand {
-    width: 32.30769%;
+    width: 39.13043%;
     float: left;
-    margin-right: 1.53846%;
+    margin-right: 1.44928%;
   }
 }
 .brand .wordmark {
@@ -757,15 +757,15 @@ textarea {
 .meta {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  width: 48.4375%;
+  width: 48.14815%;
   float: right;
   margin-right: 0;
   position: relative;
   text-align: right;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .meta {
-    width: 15.38462%;
+    width: 18.84058%;
     float: right;
     margin-right: 0;
   }
@@ -851,12 +851,12 @@ textarea {
   font-weight: bold;
 }
 
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .initial-password {
-    margin-left: -51.5625%;
-    padding-left: 51.5625%;
-    margin-right: -51.5625%;
-    padding-right: 51.5625%;
+    margin-left: -51.47059%;
+    padding-left: 51.47059%;
+    margin-right: -51.47059%;
+    padding-right: 51.47059%;
     padding-top: 1.27778em;
   }
   .initial-password label {
@@ -905,7 +905,7 @@ textarea {
   color: #eee8d5;
   text-shadow: #2b3538 0 -1px 0;
   float: right;
-  max-width: 48.4375%;
+  max-width: 35.18519%;
   padding-left: 1em;
   padding-right: 1em;
 }
@@ -937,9 +937,9 @@ textarea {
 .main-login .reset-link {
   width: 1em;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .main-login {
-    width: 66.15385%;
+    width: 59.42029%;
     float: right;
     margin-right: 0;
   }
@@ -951,13 +951,13 @@ textarea {
     display: block;
   }
   .main-login .formfield {
-    width: 36.04651%;
+    width: 40.2439%;
     float: left;
-    margin-right: 2.32558%;
+    margin-right: 2.43902%;
     margin-bottom: 0;
   }
   .main-login .form-actions {
-    width: 23.25581%;
+    width: 14.63415%;
     float: right;
     margin-right: 0;
     clear: none;
@@ -968,7 +968,7 @@ textarea {
     text-shadow: #002b36 0 0 3px;
     position: absolute;
     top: 0;
-    right: 112%;
+    right: 118.66667%;
   }
   .main-login input {
     min-height: 0;
@@ -1097,19 +1097,19 @@ textarea {
   clear: none;
 }
 .village-landing .formfield input {
-  width: 58.49057%;
+  width: 57.57576%;
   float: left;
-  margin-right: 3.77358%;
+  margin-right: 6.06061%;
   margin-right: 0;
 }
 .village-landing .formfield .action-betasignup {
-  width: 37.73585%;
+  width: 36.36364%;
   float: right;
   margin-right: 0;
 }
 
 .intro {
-  max-width: 34em;
+  max-width: 29em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
@@ -1120,30 +1120,30 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .intro {
-    max-width: 67em;
+    max-width: 71em;
   }
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .intro .summary {
-    width: 40.76923%;
+    width: 44.2029%;
     float: right;
     margin-right: 0;
   }
   .intro .screenshot {
-    width: 57.69231%;
+    width: 54.34783%;
     float: left;
-    margin-right: 1.53846%;
+    margin-right: 1.44928%;
     position: relative;
     z-index: 20;
   }
   .intro .membership {
-    padding-left: 59.23077%;
+    padding-left: 55.7971%;
     clear: right;
   }
   .intro .membership > * {
-    margin-left: 3.77358%;
+    margin-left: 6.06061%;
   }
   .intro .membership .overlay {
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, transparent));
@@ -1152,7 +1152,7 @@ textarea {
     background: -o-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
     background: -ms-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
     background: linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
-    left: 57.69231%;
+    left: 54.34783%;
     margin-left: 0;
   }
 }
@@ -1193,7 +1193,7 @@ textarea {
   color: #93a1a1;
 }
 .team .container {
-  max-width: 34em;
+  max-width: 29em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
@@ -1204,9 +1204,9 @@ textarea {
   display: table;
   clear: both;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .team .container {
-    max-width: 67em;
+    max-width: 71em;
   }
 }
 .team .fn {
@@ -1214,7 +1214,7 @@ textarea {
   line-height: 1.5em;
   color: #eee8d5;
 }
-@media (min-width: 38.25em) {
+@media (min-width: 32.625em) {
   .team .fn {
     font-size: 1.94444em;
     line-height: 1.31429em;
@@ -1238,10 +1238,10 @@ textarea {
 .team .pyo p {
   margin: 0;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .team .pyo {
-    padding-left: 25.38462%;
-    padding-right: 25.38462%;
+    padding-left: 25.36232%;
+    padding-right: 25.36232%;
   }
 }
 .team .dev {
@@ -1253,14 +1253,14 @@ textarea {
   clear: both;
 }
 .team .dev .fn, .team .dev .bio {
-  width: 65.625%;
+  width: 61.11111%;
   float: right;
   margin-right: 0;
 }
 .team .dev .photo {
-  width: 31.25%;
+  width: 35.18519%;
   float: left;
-  margin-right: 3.125%;
+  margin-right: 3.7037%;
   -webkit-box-shadow: #657b83 0 0 0.63889em;
   -moz-box-shadow: #657b83 0 0 0.63889em;
   box-shadow: #657b83 0 0 0.63889em;
@@ -1298,26 +1298,29 @@ textarea {
   float: right;
   margin-right: 0;
 }
-@media (min-width: 36em) {
+@media (min-width: 38.25em) {
   .team .dev:nth-child(even) {
-    padding-left: 8.46154%;
-    padding-right: 25.38462%;
+    padding-left: 10.14493%;
+    padding-right: 25.36232%;
   }
   .team .dev:nth-child(odd) {
-    padding-left: 25.38462%;
-    padding-right: 8.46154%;
+    padding-left: 25.36232%;
+    padding-right: 10.14493%;
   }
   .team .dev .fn, .team .dev .bio, .team .dev .photo {
     margin-right: 0;
   }
   .team .dev .fn, .team .dev .bio {
-    width: 74.4186%;
+    width: 76.40449%;
   }
   .team .dev .photo {
-    width: 23.25581%;
+    width: 21.34831%;
   }
 }
 
+.village-app {
+  min-width: 34em;
+}
 .village-app [role="main"] {
   padding: 0;
 }
@@ -1350,8 +1353,8 @@ textarea {
 .village-main {
   position: relative;
   float: left;
-  width: 67.69231%;
-  margin-left: 15.38462%;
+  width: 60.86957%;
+  margin-left: 18.84058%;
   height: 100%;
 }
 
@@ -1363,8 +1366,8 @@ textarea {
 }
 
 .village-add-form, .dashboard, .elder-add-form {
-  padding-top: 2.55556em;
   height: 100%;
+  padding: 2.55556em;
   overflow-y: scroll;
 }
 .village-add-form > :last-child, .dashboard > :last-child, .elder-add-form > :last-child {
@@ -1379,19 +1382,15 @@ textarea {
 }
 
 .village-add-form, .dashboard {
-  width: 66.15385%;
+  width: 59.42029%;
   float: right;
   margin-right: 0;
-  padding-left: 8.46154%;
-  padding-right: 8.46154%;
-  margin-right: 16.92308%;
-  margin-left: 1.53846%;
+  margin-right: 20.28986%;
+  margin-left: 1.44928%;
 }
 
 .elder-add-form {
-  padding-left: 12.7907%;
-  padding-right: 12.7907%;
-  margin-left: 2.32558%;
+  margin-left: 2.43902%;
 }
 
 .village-nav, .village-elders {
@@ -1442,14 +1441,14 @@ textarea {
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  width: 31.25%;
+  width: 31.70732%;
   float: left;
-  margin-right: 3.125%;
+  margin-right: 2.43902%;
   padding: 0.31944em 0;
   text-align: right;
 }
 .formset.elders label + input, .formset.elders label + textarea {
-  width: 65.625%;
+  width: 65.85366%;
   float: right;
   margin-right: 0;
 }
@@ -1457,13 +1456,13 @@ textarea {
   float: none;
   width: auto;
   margin-right: auto;
-  margin-left: 34.375%;
+  margin-left: 34.14634%;
   display: inline-block;
   padding: 0;
   text-align: left;
 }
 .formset.elders .formhelp {
-  margin-left: 34.375%;
+  margin-left: 34.14634%;
 }
 .formset.elders .formset-head {
   margin-left: -1em;
@@ -1526,8 +1525,8 @@ textarea {
 }
 
 .getstarted {
-  margin-left: -17.1875%;
-  padding-left: 17.1875%;
+  margin-left: -2.55556em;
+  padding-left: 2.55556em;
   padding-bottom: 5.11111em;
   background: url('../images/start-arrow.png?1347385779') no-repeat left bottom;
   font-weight: bold;
@@ -1538,7 +1537,7 @@ textarea {
   -moz-box-sizing: content-box;
   box-sizing: content-box;
   left: -1em;
-  width: 15.38462%;
+  width: 18.84058%;
   padding-left: 1em;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
@@ -1584,8 +1583,8 @@ textarea {
   border-bottom-style: solid;
   border-bottom-width: 0.05556em;
   padding-bottom: 0.26389em;
-  padding-left: 2.32558%;
-  padding-right: 2.32558%;
+  padding-left: 2.43902%;
+  padding-right: 2.43902%;
   border-color: #eee8d5;
 }
 .post:after {
@@ -1636,13 +1635,13 @@ textarea {
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 0.63889em 1.53846%;
+  padding: 0.63889em 1.44928%;
   border-top: 1px solid #657b83;
   background: #93a1a1;
 }
 .post-add-form .formfield {
   float: left;
-  width: 87.2093%;
+  width: 91.46341%;
   margin: 0;
 }
 .post-add-form textarea {
@@ -1667,7 +1666,7 @@ textarea {
   clear: none;
   float: right;
   margin: 0;
-  width: 12.7907%;
+  width: 8.53659%;
 }
 .post-add-form button {
   -moz-border-radius-topleft: 0;
@@ -1687,8 +1686,8 @@ textarea {
 .village-elders {
   padding-top: 0.63889em;
   float: right;
-  width: 16.92308%;
-  padding-left: 1.53846%;
+  width: 20.28986%;
+  padding-left: 1.44928%;
   height: 100%;
   border-left: 1px solid #93a1a1;
 }

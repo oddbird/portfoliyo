@@ -12,17 +12,17 @@ $show-grid-backgrounds            : false;
 // ---------------------------------------------------------------------------
 // Grids
 
-$total-columns  : 6;
-$column-width   : 4.5em;
+$total-columns  : 8;
+$column-width   : 2.5em;
 $gutter-width   : 1em;
 $grid-padding   : 1em;
 
 $half-small     : $total-columns/2;
 
-$break-cols     : 12;
-$break-width    : columns-width(6);
+$break-cols     : 20;
+$break-width    : columns-width(10);
 $break          : $break-width $break-cols;
 
-$left           : 2;
-$right          : 2;
+$left           : 4;
+$right          : 4;
 $center         : $break-cols - $left - $right;

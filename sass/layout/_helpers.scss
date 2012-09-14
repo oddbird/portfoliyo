@@ -34,7 +34,7 @@
 // ---------------------------------------------------------------------------
 // Simple Pages/Forms
 
-$simple-side: 3;
+$simple-side: $left + 1;
 $simple-width: $break-cols - $simple-side;
 $simple-center: $simple-width - $simple-side;
 

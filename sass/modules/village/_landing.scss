@@ -41,7 +41,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
       display: block;
     }
     .formfield {
-      @include span-columns(3, $center);
+      @include span-columns(5, $center);
       margin-bottom: 0;
     }
     .form-actions {
@@ -126,19 +126,19 @@ $login-button-padding   : rhythm(.25,$login-button-size);
 .intro {
   @include container($total-columns,$break);
   @include at-breakpoint($break) {
-    .summary { @include span-columns(5 omega); }
+    .summary { @include span-columns(9 omega); }
     .screenshot {
-      @include span-columns(7);
+      @include span-columns(11);
       position: relative;
       z-index: 20;
     }
     .membership {
-      @include prefix(7);
+      @include prefix(11);
       clear: right;
       > * { margin-left: gutter(5); }
      .overlay {
         @include background(linear-gradient(top,rgba($base03,.5),transparent));
-        left: columns(7);
+        left: columns(11);
         margin-left: 0;
       }
    }
@@ -212,18 +212,16 @@ $space: 'landing/space.png';
     clear: both;
     padding: rhythm(1);
     p { margin: 0; }
-    @include at-breakpoint($break) {
-      @include pad(3,3);
-    }
+    @include at-breakpoint($break) { @include pad(5,5); }
   }
 
   .dev {
     @include pie-clearfix;
     @include trailer(1);
 
-    .fn, .bio { @include span-columns(4 omega); }
+    .fn, .bio { @include span-columns(5 omega); }
     .photo {
-      @include span-columns(2);
+      @include span-columns(3);
       @include box-shadow($base 0 0 rhythm(.5));
       @include photo(left);
       overflow: hidden;
@@ -241,8 +239,8 @@ $space: 'landing/space.png';
     }
 
     @include at-breakpoint($break) {
-      $pre      : 1;
-      $pics     : 2;
+      $pre      : 2;
+      $pics     : 3;
 
       $post     : $pre + $pics;
       $ctext    : $total-columns - $pre - $post;

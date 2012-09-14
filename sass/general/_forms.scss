@@ -92,7 +92,7 @@ $input-rhythm: .25;
   position: relative;
 }
 
-@mixin inline-form($label: 2, $input: $center - $label, $context: $center) {
+@mixin inline-form($label: $left, $input: $center - $label, $context: $center) {
   label {
     @include ellipsis;
     @include span-columns($label,$context);
