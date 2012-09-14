@@ -28,6 +28,7 @@
     }
   }
   .unread {
+    display: none; // @@@ TEMPORARY DISABLING
     @include border-radius(30em);
     @include box-shadow($back 0 0 1px);
     position: absolute;
@@ -37,6 +38,7 @@
     color: $base3;
     font-weight: bold;
     text-align: center;
+    &.zero { display: none; }
   }
   .addstudent-link { @extend %village-addlink; }
 }
