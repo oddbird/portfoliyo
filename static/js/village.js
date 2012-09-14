@@ -127,12 +127,14 @@ var PYO = (function (PYO, $) {
     PYO.characterCount = function (container) {
         if ($(container).length) {
             var context = $(container);
-            var textarea = context.find('#post-text');
-            var count = context.find('.charcount');
-            var button = context.find('.action-post');
+            var form = context.find('form.post-add-form');
+            var textarea = form.find('#post-text');
+            var limit = form.data('char-limit');
+            var count = form.find('.charcount');
+            var button = form.find('.action-post');
             var updateCount = function () {
                 var chars = textarea.val().length;
-                var remain = 160 - chars;
+                var remain = limit - chars;
                 if (remain < 0) {
                     count.addClass('overlimit');
                     button.attr('disabled', 'true');
