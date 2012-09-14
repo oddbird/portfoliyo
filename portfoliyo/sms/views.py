@@ -30,6 +30,11 @@ def twilio_receive(request):
     source = request.POST['From']
     body = request.POST['Body']
 
-    receive_sms(source, body)
+    reply = receive_sms(source, body)
 
-    return HttpResponse(str(twiml.Response()), content_type='application/xml')
+    response = twiml.Response()
+
+    if reply:
+        response.sms(reply)
+
+    return HttpResponse(str(response), content_type='application/xml')
