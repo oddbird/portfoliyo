@@ -13,7 +13,7 @@ from django.views.decorators.http import require_POST
 from ..users.decorators import school_staff_required
 from ..users import models as user_models
 from ..view.ajax import ajax
-from . import forms
+from . import forms, models
 
 
 
@@ -122,3 +122,6 @@ def json_posts(request, student_id):
 @require_POST
 def create_post(request, student_id):
     """Create a post in given student's village."""
+    student = get_related_student_or_404(student_id, request.user.profile)
+    text = request.POST['text']
+    models.Post.create(request.user.profile, student, text)
