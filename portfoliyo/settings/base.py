@@ -123,6 +123,7 @@ INSTALLED_APPS = [
     "south",
     "portfoliyo.landing",
     "portfoliyo.users",
+    "portfoliyo.village",
 ]
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.fallback.FallbackStorage"
