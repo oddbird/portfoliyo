@@ -5,10 +5,9 @@ Student/elder (village) views.
 import json
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
-from django.views.decorators.http import require_POST
 
 from ..users.decorators import school_staff_required
 from ..users import models as user_models
@@ -109,6 +108,15 @@ def json_posts(request, student_id):
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
+        if len(text) > 160:
+            return HttpResponseBadRequest(
+                json.dumps(
+                    {
+                        'error': 'posts are limited to 160 characters',
+                        'success': False,
+                        }
+                    )
+                )
         post = models.Post.create(request.user.profile, student, text)
 
         data = {
