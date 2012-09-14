@@ -7,7 +7,7 @@
             ich.message({ message: $.parseJSON(request.responseText).error, tags: "error" }).appendTo('#messages');
             $('#messages').messages();
         } else {
-            ich.message({ message: "An error has occurred. Try reloading your page.", tags: "error" }).appendTo('#messages');
+            ich.message({ message: "Bummer! Something bad happened, but we're not sure what. Try reloading the page?", tags: "error" }).appendTo('#messages');
             $('#messages').messages();
         }
     });
