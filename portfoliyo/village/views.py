@@ -121,6 +121,7 @@ def json_posts(request, student_id):
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
+        sequence_id = request.POST.get('author_sequence_id')
         limit = models.post_char_limit(rel)
         if len(text) > limit:
             return HttpResponseBadRequest(
@@ -131,11 +132,12 @@ def json_posts(request, student_id):
                         }
                     )
                 )
-        post = models.Post.create(request.user.profile, rel.student, text)
+        post = models.Post.create(
+            request.user.profile, rel.student, text, sequence_id)
 
         data = {
             'success': True,
-            'posts': [post.json_data()],
+            'posts': [post.json_data(author_sequence_id=sequence_id)],
             }
 
         return HttpResponse(json.dumps(data), content_type='application/json')

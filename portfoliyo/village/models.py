@@ -32,7 +32,7 @@ class Post(models.Model):
 
 
     @classmethod
-    def create(cls, author, student, text):
+    def create(cls, author, student, text, sequence_id=None):
         """Create and return a Post."""
         html_text, highlights = replace_highlights(html.escape(text), student)
         html_text = html_text.replace('\n', '<br>')
@@ -59,7 +59,9 @@ class Post(models.Model):
         if pusher is not None:
             channel = 'student_%s' % student.id
             pusher[channel].trigger(
-                'message_posted', {'posts': [post.json_data()]})
+                'message_posted',
+                {'posts': [post.json_data(author_sequence_id=sequence_id)]},
+                )
 
         return post
 
@@ -76,7 +78,7 @@ class Post(models.Model):
             return None
 
 
-    def json_data(self):
+    def json_data(self, **extra):
         """Return this post rendered as dictionary, ready for JSONification."""
         author_name = (
             self.author.name or self.author.user.email or self.author.phone)
@@ -88,7 +90,7 @@ class Post(models.Model):
         else:
             role = relationship.description or self.author.role
 
-        return {
+        data = {
             'author_id': self.author_id,
             'student_id': self.student_id,
             'author': author_name,
@@ -97,6 +99,10 @@ class Post(models.Model):
             'time': dateformat.time_format(self.timestamp, 'P'),
             'text': self.html_text,
             }
+
+        data.update(extra)
+
+        return data
 
 
 
