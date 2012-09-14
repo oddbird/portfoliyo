@@ -53,7 +53,7 @@ class Post(models.Model):
 
         # trigger Pusher event
         channel = 'student_%s' % student.id
-        pusher[channel].trigger('message_posted', post.json_data())
+        pusher[channel].trigger('message_posted', {'posts': [post.json_data()]})
 
         return post
 

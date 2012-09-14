@@ -108,10 +108,13 @@ def json_posts(request, student_id):
     student = get_related_student_or_404(student_id, request.user.profile)
 
     data = json.dumps(
-        [
-            post.json_data() for post in
-            student.posts_in_village.order_by('-timestamp')[:100]
-            ]
+        {
+            'posts':
+                [
+                post.json_data() for post in
+                student.posts_in_village.order_by('-timestamp')[:100]
+                ],
+            }
         )
 
     return HttpResponse(data, content_type='application/json')
@@ -125,3 +128,6 @@ def create_post(request, student_id):
     student = get_related_student_or_404(student_id, request.user.profile)
     text = request.POST['text']
     models.Post.create(request.user.profile, student, text)
+
+    return HttpResponse(
+        json.dumps({'success': True}), content_type='application/json')
