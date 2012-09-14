@@ -4,6 +4,7 @@ var PYO = (function (PYO, $) {
 
     PYO.activeStudentId = $('.village-feed').data('student-id');
     PYO.activeUserId = $('.village-feed').data('user-id');
+    PYO.pusherKey = $('.village-feed').data('pusher-key');
 
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
@@ -71,8 +72,11 @@ var PYO = (function (PYO, $) {
             var form = context.find('form.post-add-form');
             var textarea = context.find('#post-text');
 
-            form.ajaxForm(function () {
+            form.ajaxForm(function (response) {
                 textarea.val('').change();
+                if (response && response.success && !PYO.pusherKey) {
+                    PYO.addPost(response);
+                }
             });
 
             textarea.keydown(function (event) {
@@ -85,10 +89,8 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.listenForPusherEvents = function (container) {
-        if ($(container).length) {
-            var feed = $(container);
-            var pusherKey = feed.data('pusher-key');
-            var pusher = new Pusher(pusherKey, {encrypted: true});
+        if ($(container).length && PYO.pusherKey) {
+            var pusher = new Pusher(PYO.pusherKey, {encrypted: true});
             var students = $('.village-nav .student a');
 
             students.each(function () {
