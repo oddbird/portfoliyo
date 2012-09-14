@@ -195,3 +195,5 @@ DEFAULT_FROM_EMAIL = 'Portfoliyo <noreply@portfoliyo.org>'
 
 PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.console.ConsoleSMSBackend'
 PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'
+
+PUSHER_KEY = '17a834d9c19afd869bdb'

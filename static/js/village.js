@@ -98,8 +98,10 @@ var PYO = (function (PYO, $) {
 
     PYO.listenForPusherEvents = function (container) {
         var context = $(container);
-        var pusher = new Pusher('f1d9b651de32d21169d5');
-        var active_student_id = context.find('.village-feed').data('id');
+        var feed = context.find('.village-feed');
+        var pusherKey = feed.data('pusher-key');
+        var pusher = new Pusher(pusherKey);
+        var activeStudentId = feed.data('student-id');
         var students = $('.village-nav .student a');
 
         students.each(function () {
@@ -109,7 +111,7 @@ var PYO = (function (PYO, $) {
             var channel = pusher.subscribe('student_' + id);
 
             channel.bind('message_posted', function (data) {
-                if (id === active_student_id) {
+                if (id === activeStudentId) {
                     PYO.addPost(data);
                 } else {
                     var count = parseInt(unread.text(), 10);
