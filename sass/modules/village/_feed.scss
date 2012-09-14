@@ -9,7 +9,8 @@
 }
 
 $post-byline-cols: 2;
-$post-byline-size: $xsmallpx;
+$post-byline-size: $smallpx;
+$post-time-size  : $xsmallpx;
 
 .post {
   @include pie-clearfix;
@@ -19,13 +20,24 @@ $post-byline-size: $xsmallpx;
   border-color: $base1;
   .byline {
     @include adjust-font-size-to($post-byline-size);
+    @include clearfix;
     color: $base1;
-    h3 { display: inline; }
+
+    h3, time { @include ellipsis; }
+    h3 {
+      float: left;
+      width: 74%;
+    }
     b {
       color: $base;
       font-weight: bold;
     }
-    time { float: right; }
+    time {
+     @include adjust-font-size-to($post-time-size, 1, $post-byline-size);
+      float: right;
+      width: 25%;
+      text-align: right;
+    }
   }
   .body {
     @include clearfix;
@@ -35,7 +47,7 @@ $post-byline-size: $xsmallpx;
   .nametag {
     @include border-radius($xxxsmallem);
     display: inline-block;
-    padding: 0 .25em;
+    padding: 0 .4em;
     background: $base2;
     &.me {
       background: $blue;

@@ -1618,19 +1618,32 @@ textarea {
   clear: both;
 }
 .post .byline {
-  font-size: 0.66667em;
-  line-height: 1.91667em;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  overflow: hidden;
   color: #93a1a1;
 }
+.post .byline h3, .post .byline time {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+}
 .post .byline h3 {
-  display: inline;
+  float: left;
+  width: 74%;
 }
 .post .byline b {
   color: #657b83;
   font-weight: bold;
 }
 .post .byline time {
+  font-size: 0.85714em;
+  line-height: 1.91667em;
   float: right;
+  width: 25%;
+  text-align: right;
 }
 .post .body {
   overflow: hidden;
@@ -1647,7 +1660,7 @@ textarea {
   -o-border-radius: 0.512em;
   border-radius: 0.512em;
   display: inline-block;
-  padding: 0 .25em;
+  padding: 0 .4em;
   background: #eee8d5;
 }
 .post .nametag.me {
