@@ -2,9 +2,13 @@
 Student/elder (village) views.
 
 """
+import json
+
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
+from django.views.decorators.http import require_POST
 
 from ..users.decorators import school_staff_required
 from ..users import models as user_models
@@ -48,16 +52,22 @@ def add_student(request):
 
 
 
+def get_related_student_or_404(student_id, profile):
+    """Get student with ID student_id who is student of profile, or 404."""
+    return get_object_or_404(
+        user_models.Profile.objects.filter(
+            relationships_to__from_profile=profile
+            ).select_related('user'),
+        id=student_id,
+        )
+
+
+
 @school_staff_required
 @ajax('village/_invite_elders_content.html')
 def invite_elders(request, student_id):
     """Invite new elder(s) to a student's village."""
-    student = get_object_or_404(
-        user_models.Profile.objects.filter(
-            relationships_to__from_profile=request.user.profile
-            ).select_related('user'),
-        id=student_id,
-        )
+    student = get_related_student_or_404(student_id, request.user.profile)
 
     if request.method == 'POST':
         formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
@@ -79,12 +89,7 @@ def invite_elders(request, student_id):
 @ajax('village/_village_content.html')
 def village(request, student_id):
     """The main chat view for a student/village."""
-    student = get_object_or_404(
-        user_models.Profile.objects.filter(
-            relationships_to__from_profile=request.user.profile
-            ).select_related('user'),
-        id=student_id,
-        )
+    student = get_related_student_or_404(student_id, request.user.profile)
 
     return TemplateResponse(
         request,
@@ -94,3 +99,26 @@ def village(request, student_id):
             'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
             },
         )
+
+
+
+@login_required
+def json_posts(request, student_id):
+    """Get backlog of up to 100 latest posts from this village."""
+    student = get_related_student_or_404(student_id, request.user.profile)
+
+    data = json.dumps(
+        [
+            post.json_data() for post in
+            student.posts_in_village.order_by('-timestamp')[:100]
+            ]
+        )
+
+    return HttpResponse(data, content_type='application/json')
+
+
+
+@login_required
+@require_POST
+def create_post(request, student_id):
+    """Create a post in given student's village."""
