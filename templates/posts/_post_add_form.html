@@ -1,13 +1,10 @@
-<form method="POST" class="post-add-form">
-  {# csrf_token #}
-
-  {# form.non_field_errors #}
+<form method="POST" class="post-add-form" action="{% url create_post student_id=student.id %}">
+  {% csrf_token %}
 
   <div class="formfield post-textfield">
-    {# form.post_text.errors #}
-    <textarea id="post-text" placeholder="Leave a note..."></textarea>
+    <textarea id="post-text" name="text" placeholder="Leave a note..."></textarea>
     {# @@@ add class "overlimit" when count goes below 0 #}
-    <span class="charcount"><span class="num">160</span> characters remaining...</span>
+    <span class="charcount">160 characters remaining...</span>
   </div>
 
   <div class="form-actions">

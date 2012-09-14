@@ -2,7 +2,7 @@
 
 <div class="village-main">
   {% block village-main %}
-  <section class="village-feed" data-student-id="{{ student.id }}" data-user-id="{{ request.user.profile.id }}" data-pusher-key="{{ PUSHER_KEY }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url create_post student_id=student.id %}">
+  <section class="village-feed" data-student-id="{{ student.id }}" data-user-id="{{ request.user.profile.id }}" data-pusher-key="{{ PUSHER_KEY }}" data-backlog-url="{% url json_posts student_id=student.id %}">
     {% icanhaz "post" %}
   </section>
   {% include "posts/_post_add_form.html" %}

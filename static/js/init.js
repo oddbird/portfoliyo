@@ -22,10 +22,8 @@ var PYO = (function (PYO, $) {
 
         // village.js
         PYO.updatePageHeight('.village');
-        PYO.updateVillageScroll('.village-feed');
-        PYO.submitPost('.village-feed');
-        PYO.listenForPusherEvents('.village-feed');
-        PYO.characterCount('.village');
+        PYO.initializeFeed();
+
     });
 
     return PYO;

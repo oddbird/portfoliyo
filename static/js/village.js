@@ -2,6 +2,8 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
+    PYO.activeStudentId = $('.village-feed').data('student-id');
+
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
             var page = $(container);
@@ -33,7 +35,7 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.updateVillageScroll = function (container) {
+    PYO.scrollToBottom = function (container) {
         if ($(container).length) {
             var context = $(container);
             var height = context.get(0).scrollHeight;
@@ -53,24 +55,18 @@ var PYO = (function (PYO, $) {
         if (data) {
             var post = PYO.renderPost(data);
             $('.village-feed').append(post);
-            PYO.updateVillageScroll('.village-feed');
+            PYO.scrollToBottom('.village-feed');
         }
     };
 
     PYO.submitPost = function (container) {
         if ($(container).length) {
             var feed = $(container);
-            var url = feed.data('post-url');
             var context = feed.closest('.village');
             var form = context.find('form.post-add-form');
 
-            form.submit(function (event) {
-                event.preventDefault();
-                var postText = form.find('#post-text').val();
-                var postData = { text: postText };
-                $.post(url, postData, function (data) {
-                    context.find('#post-text').val('');
-                });
+            form.ajaxForm(function () {
+                context.find('#post-text').val('');
             });
         }
     };
@@ -80,7 +76,6 @@ var PYO = (function (PYO, $) {
             var feed = $(container);
             var pusherKey = feed.data('pusher-key');
             var pusher = new Pusher(pusherKey, {encrypted: true});
-            var activeStudentId = feed.data('student-id');
             var students = $('.village-nav .student a');
 
             students.each(function () {
@@ -90,7 +85,7 @@ var PYO = (function (PYO, $) {
                 var channel = pusher.subscribe('student_' + id);
 
                 channel.bind('message_posted', function (data) {
-                    if (id === activeStudentId) {
+                    if (id === PYO.activeStudentId) {
                         PYO.addPost(data);
                     } else {
                         var count = parseInt(unread.text(), 10);
@@ -115,21 +110,29 @@ var PYO = (function (PYO, $) {
         if ($(container).length) {
             var feed = $(container);
             var textarea = feed.find('#post-text');
-            var count_container = feed.find('.charcount');
-            var count = count_container.find('.num');
+            var count = feed.find('.charcount');
             var updateCount = function () {
                 var chars = textarea.val().length;
                 var remain = 160 - chars;
                 if (remain < 0) {
-                    count_container.addClass('overlimit');
+                    count.addClass('overlimit');
                 } else {
-                    count_container.removeClass('overlimit');
+                    count.removeClass('overlimit');
                 }
-                count.text(remain);
+                count.text(remain + ' characters remaining...');
             };
 
             textarea.keyup(updateCount).change(updateCount);
         }
+    };
+
+    PYO.initializeFeed = function () {
+        PYO.fetchBacklog('.village-feed');
+        PYO.activeStudentId = $('.village-feed').data('student-id');
+        PYO.submitPost('.village-feed');
+        PYO.characterCount('.village');
+        PYO.scrollToBottom('.village-feed');
+        PYO.listenForPusherEvents('.village-feed');
     };
 
     return PYO;
