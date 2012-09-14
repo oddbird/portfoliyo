@@ -10,7 +10,7 @@
   </header>
 
   <div class="body">
-    <p class="post-text">{{{ text }}}</p>
+    <p class="post-text">{{# escape }}{{ text }}{{/ escape }}{{^ escape }}{{{ text }}}{{/ escape }}</p>
   </div>
 
 </article>

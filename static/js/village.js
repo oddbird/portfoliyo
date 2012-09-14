@@ -115,7 +115,8 @@ var PYO = (function (PYO, $) {
                         date: date,
                         time: time,
                         text: text,
-                        author_sequence_id: author_sequence
+                        author_sequence_id: author_sequence,
+                        escape: true
                     }
                 };
                 return postObj;
