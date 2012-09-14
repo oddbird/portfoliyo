@@ -3,20 +3,14 @@ from __future__ import absolute_import
 
 import re
 
-from django.conf import settings
 from django.db import models
 from django.utils import timezone, dateformat, html
-import pusher as pusherlib
 
+from .pusher import get_pusher
 from ..users import models as user_models
 
 
 
-pusher = pusherlib.Pusher(
-    app_id=settings.PUSHER_APPID,
-    key=settings.PUSHER_KEY,
-    secret=settings.PUSHER_SECRET,
-    )
 
 
 
@@ -51,9 +45,12 @@ class Post(models.Model):
             html_text=html_text,
             )
 
-        # trigger Pusher event
-        channel = 'student_%s' % student.id
-        pusher[channel].trigger('message_posted', {'posts': [post.json_data()]})
+        # trigger Pusher event, if Pusher is configured
+        pusher = get_pusher()
+        if pusher is not None:
+            channel = 'student_%s' % student.id
+            pusher[channel].trigger(
+                'message_posted', {'posts': [post.json_data()]})
 
         return post
 
