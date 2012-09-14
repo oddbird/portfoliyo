@@ -5,7 +5,7 @@ import re
 
 from django.conf import settings
 from django.db import models
-from django.utils import timezone, dateformat
+from django.utils import timezone, dateformat, html
 import pusher as pusherlib
 
 from ..users import models as user_models
@@ -40,7 +40,7 @@ class Post(models.Model):
     @classmethod
     def create(cls, author, student, text):
         """Create and return a Post."""
-        html, highlights = replace_highlights(text, student)
+        html_text, highlights = replace_highlights(html.escape(text), student)
 
         # @@@ notify highlighted users
 
@@ -48,7 +48,7 @@ class Post(models.Model):
             author=author,
             student=student,
             original_text=text,
-            html_text=html,
+            html_text=html_text,
             )
 
         # trigger Pusher event
