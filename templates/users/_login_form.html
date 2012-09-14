@@ -3,6 +3,7 @@
 <form method="POST" action="{% url login %}" class="login-form" id="loginform">
   {% csrf_token %}
   {{ form.non_field_errors }}
+  <input type="hidden" name="next" value="{{ next }}" />
 
   {% include "forms/_field.html" with field=form.username|attr:"placeholder:email or phone" label="email" %}
   {% include "forms/_field.html" with field=form.password|attr:"placeholder:password" label="password" %}
