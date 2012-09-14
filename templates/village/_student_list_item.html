@@ -1,7 +1,7 @@
 <li class="student">
   <a href="{# @@@ ajax-load 'village/_village_content.html' #}{% url chat student_id=nav_student.id %}"{% if student == nav_student %} class="active"{% endif %} data-id="{{ nav_student.id }}">
     {{ nav_student }}
-    <span class="unread{# @@@ if zero #} zero{# endif #}">0</span>
+    <span class="unread{# if zero #} zero{# endif #}">0</span>
   </a>
   {# <a href="{% url edit_village %}">edit</a> #}
   {# <button>remove</button> #}

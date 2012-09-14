@@ -41,6 +41,6 @@ def home(request):
         if dest != request.path:
             return redirect(dest)
 
-        return TemplateResponse(request, 'home.html')
+        return TemplateResponse(request, 'village/dashboard.html')
     else:
         return landing(request)

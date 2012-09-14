@@ -7,10 +7,15 @@
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
 
-  {% include "village/_elders_formset.html" %}
+  {% include "village/_elders_formset.html" with formset=form.elders_formset %}
 
   <div class="form-actions">
     <button type="submit" class="action-post">add</button>
   </div>
 
 </form>
+
+
+<div style="display: none;">
+  {% include "village/_elder_form.html" with form=form.elders_formset.empty_form id="empty-elder-form" %}
+</div>
