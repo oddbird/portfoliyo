@@ -6,7 +6,7 @@
   </ul>
   {% if request.user.profile.school_staff %}
   <aside class="add-student">
-    <a href="{# ajax-load 'village/_student_add_form.html' #}{% url add_student %}" class="addstudent-link{% if add_active %} active{% endif %}">Add a Student</a>
+    <a href="{# @@@ ajax-load #}{% url add_student %}" class="addstudent-link{% if add_active %} active{% endif %}">Add a Student</a>
   </aside>
   {% endif %}
 </nav>
