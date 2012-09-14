@@ -35,6 +35,7 @@ class Post(models.Model):
     def create(cls, author, student, text):
         """Create and return a Post."""
         html_text, highlights = replace_highlights(html.escape(text), student)
+        html_text = html_text.replace('\n', '<br>')
 
         # @@@ notify highlighted users
 
