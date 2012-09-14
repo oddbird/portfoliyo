@@ -51,6 +51,7 @@ var PYO = (function (PYO, $) {
         }
         if (post) {
             post.find('.nametag[data-user-id="' + PYO.activeUserId + '"]').addClass('me');
+            post.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
             return post;
         }
     };
