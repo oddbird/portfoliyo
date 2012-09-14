@@ -35,3 +35,5 @@ phonenumbers==5.1b1
 twilio==3.3.11
 httplib2==0.7.6
 pyjwt==0.1.2
+
+pusher==0.6

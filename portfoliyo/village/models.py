@@ -1,10 +1,22 @@
 """Village models."""
+from __future__ import absolute_import
+
 import re
 
+from django.conf import settings
 from django.db import models
 from django.utils import timezone, dateformat
+import pusher as pusherlib
 
 from ..users import models as user_models
+
+
+
+pusher = pusherlib.Pusher(
+    app_id=settings.PUSHER_APPID,
+    key=settings.PUSHER_KEY,
+    secret=settings.PUSHER_SECRET,
+    )
 
 
 
@@ -29,14 +41,21 @@ class Post(models.Model):
     def create(cls, author, student, text):
         """Create and return a Post."""
         html, highlights = replace_highlights(text, student)
-        # @@@ send Pusher event
+
         # @@@ notify highlighted users
-        return cls.objects.create(
+
+        post = cls.objects.create(
             author=author,
             student=student,
             original_text=text,
             html_text=html,
             )
+
+        # trigger Pusher event
+        channel = 'student_%s' % student.id
+        pusher[channel].trigger('message_posted', post.json_data())
+
+        return post
 
 
     def get_relationship(self):

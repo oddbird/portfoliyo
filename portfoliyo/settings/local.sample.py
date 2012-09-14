@@ -62,3 +62,8 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 #TWILIO_ACCOUNT_SID = 'your account sid here'
 #TWILIO_AUTH_TOKEN = 'your auth token here'
 #PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'
+
+# Configure Pusher as follows:
+#PUSHER_APPID = 'your appid'
+#PUSHER_KEY = 'your key'
+#PUSHER_SECRET = 'your secret'

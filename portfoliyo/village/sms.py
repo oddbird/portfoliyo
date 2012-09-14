@@ -14,8 +14,10 @@ def receive_sms(source, body):
         profile = user_models.Profile.objects.select_related(
             'user').get(phone=source)
     except user_models.Profile.DoesNotExist:
-        # @@@ log this?
-        return None
+        return (
+            "Bummer, we don't recognize your number! "
+            "Are you signed up as a user at portfoliyo.org?"
+            )
 
     profile.user.is_active = True
     profile.user.save()
@@ -25,12 +27,12 @@ def receive_sms(source, body):
     if len(students) > 1:
         return (
             "You're part of more than one student's Portfoliyo.org Village; "
-            "we're not yet able to route your texts. Sorry!"
+            "we're not yet able to route your texts. We'll fix that soon!"
             )
     elif not students:
         return (
-            "Sorry, you're not part of any student's Portfoliyo.org Village; "
-            "we're not able to deliver your message. Sorry!"
+            "You're not part of any student's Portfoliyo.org Village, "
+            "so we're not able to deliver your message. Sorry!"
             )
 
     models.Post.create(profile, students[0], body)

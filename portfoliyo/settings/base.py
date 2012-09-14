@@ -84,6 +84,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.messages.context_processors.messages",
     "session_csrf.context_processor",
     "portfoliyo.google_analytics.context_processor",
+    "portfoliyo.village.pusher.context_processor",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -196,5 +197,3 @@ DEFAULT_FROM_EMAIL = 'Portfoliyo <noreply@portfoliyo.org>'
 
 PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.console.ConsoleSMSBackend'
 PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'
-
-PUSHER_KEY = '17a834d9c19afd869bdb'

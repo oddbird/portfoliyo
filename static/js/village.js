@@ -100,7 +100,7 @@ var PYO = (function (PYO, $) {
         var context = $(container);
         var feed = context.find('.village-feed');
         var pusherKey = feed.data('pusher-key');
-        var pusher = new Pusher(pusherKey);
+        var pusher = new Pusher(pusherKey, {encrypted: true});
         var activeStudentId = feed.data('student-id');
         var students = $('.village-nav .student a');
 
