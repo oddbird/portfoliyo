@@ -26,7 +26,7 @@ def redirect_home(user):
             return reverse('add_student')
         return reverse('no_students')
     elif len(students) == 1:
-        return reverse('chat', kwargs=dict(student_id=students[0].id))
+        return reverse('village', kwargs=dict(student_id=students[0].id))
     return reverse('dashboard')
 
 

@@ -41,7 +41,7 @@ class TestAddStudent(object):
 
         assert response.status_code == 302, response.body
         assert response['Location'] == utils.location(
-            reverse('chat', kwargs={'student_id': student.id}))
+            reverse('village', kwargs={'student_id': student.id}))
 
 
     def test_validation_error(self, client):
@@ -94,7 +94,7 @@ class TestInviteElders(object):
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
-            reverse('chat', kwargs={'student_id': rel.student.id}))
+            reverse('village', kwargs={'student_id': rel.student.id}))
 
         # invite email is sent to new elder
         assert len(mail.outbox) == 1
@@ -134,12 +134,12 @@ class TestInviteElders(object):
 
 
 
-class TestChat(object):
+class TestVillage(object):
     """Tests for village chat view."""
     def url(self, student=None):
         if student is None:
             student = factories.ProfileFactory.create()
-        return reverse('chat', kwargs=dict(student_id=student.id))
+        return reverse('village', kwargs=dict(student_id=student.id))
 
 
     @pytest.mark.parametrize('link_target', ['add_student', 'invite_elders'])
@@ -164,7 +164,7 @@ class TestChat(object):
 
 
     def test_requires_relationship(self, client):
-        """Only an elder of that student can view chat."""
+        """Only an elder of that student can view village."""
         elder = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
 

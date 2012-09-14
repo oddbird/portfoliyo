@@ -11,5 +11,5 @@ urlpatterns = patterns(
         views.invite_elders,
         name='invite_elders',
         ),
-    url('^(?P<student_id>\d+)/$', views.chat, name='chat'),
+    url('^(?P<student_id>\d+)/$', views.village, name='village'),
     )

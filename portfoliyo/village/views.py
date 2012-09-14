@@ -29,7 +29,7 @@ def add_student(request):
         form = forms.AddStudentAndInviteEldersForm(request.POST)
         if form.is_valid():
             student, _ = form.save(request, added_by=request.user.profile)
-            return redirect('chat', student_id=student.id)
+            return redirect('village', student_id=student.id)
     else:
         form = forms.AddStudentAndInviteEldersForm()
 
@@ -53,7 +53,7 @@ def invite_elders(request, student_id):
         formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
         if formset.is_valid():
             formset.save(request, student)
-            return redirect('chat', student_id=student.id)
+            return redirect('village', student_id=student.id)
     else:
         formset = forms.InviteEldersFormSet(prefix='elders')
 
@@ -67,7 +67,7 @@ def invite_elders(request, student_id):
 
 @login_required
 @ajax('village/_village_content.html')
-def chat(request, student_id):
+def village(request, student_id):
     """The main chat view for a student/village."""
     student = get_object_or_404(
         user_models.Profile.objects.filter(
@@ -76,6 +76,5 @@ def chat(request, student_id):
         id=student_id,
         )
 
-    # @@@ check that user is part of this student's village
-
-    return TemplateResponse(request, 'village/chat.html', {'student': student})
+    return TemplateResponse(
+        request, 'village/village.html', {'student': student})

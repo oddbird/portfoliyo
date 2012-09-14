@@ -21,12 +21,12 @@ class TestHome(object):
 
 
     def test_redirect_to_single_student(self, client):
-        """Redirects to chat page if user has a single student."""
+        """Redirects to village page if user has a single student."""
         rel = factories.RelationshipFactory.create()
         res = client.get(self.url, user=rel.elder.user, status=302)
 
         assert res['Location'] == location(
-            reverse('chat', kwargs={'student_id': rel.student.id}))
+            reverse('village', kwargs={'student_id': rel.student.id}))
 
 
     def test_redirect_to_add_student(self, client):
