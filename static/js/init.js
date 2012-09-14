@@ -25,6 +25,7 @@ var PYO = (function (PYO, $) {
         PYO.updateVillageScroll('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.listenForPusherEvents('.village-feed');
+        PYO.characterCount('.village');
     });
 
     return PYO;

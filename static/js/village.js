@@ -111,6 +111,27 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.characterCount = function (container) {
+        if ($(container).length) {
+            var feed = $(container);
+            var textarea = feed.find('#post-text');
+            var count_container = feed.find('.charcount');
+            var count = count_container.find('.num');
+            var updateCount = function () {
+                var chars = textarea.val().length;
+                var remain = 160 - chars;
+                if (remain < 0) {
+                    count_container.addClass('overlimit');
+                } else {
+                    count_container.removeClass('overlimit');
+                }
+                count.text(remain);
+            };
+
+            textarea.keyup(updateCount).change(updateCount);
+        }
+    };
+
     return PYO;
 
 }(PYO || {}, jQuery));
