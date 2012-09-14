@@ -301,7 +301,7 @@ a:focus, a:hover, a:active {
   text-overflow: ellipsis;
 }
 
-.village-landing .formfield label {
+.village-landing .formfield label, .village-elders h2 {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -1513,8 +1513,10 @@ textarea {
 }
 
 .remove-row {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   position: absolute;
-  top: 0.63889em;
+  top: 0.41071em;
   left: 0;
 }
 .remove-row:link, .remove-row:visited {
@@ -1641,7 +1643,7 @@ textarea {
 }
 .post-add-form .formfield {
   float: left;
-  width: 91.46341%;
+  width: 82.92683%;
   margin: 0;
 }
 .post-add-form textarea {
@@ -1666,7 +1668,7 @@ textarea {
   clear: none;
   float: right;
   margin: 0;
-  width: 8.53659%;
+  width: 17.07317%;
 }
 .post-add-form button {
   -moz-border-radius-topleft: 0;
@@ -1691,19 +1693,8 @@ textarea {
   height: 100%;
   border-left: 1px solid #93a1a1;
 }
-.village-elders h2 {
-  margin-bottom: 1.27778em;
-  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-weight: bold;
-}
-.village-elders li {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
 .village-elders li::before {
+  float: left;
   margin: 0;
   color: #859900;
 }
@@ -1716,6 +1707,15 @@ textarea {
 .village-elders li.mobile::before {
   color: #657b83;
 }
+.village-elders b, .village-elders span {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: block;
+  margin-left: 1.125em;
+}
 .village-elders b {
   font-weight: bold;
 }
@@ -1724,7 +1724,7 @@ textarea {
 }
 
 .addelder-link {
-  margin-top: 1.64286em;
+  margin-top: 0.82143em;
   border-style: solid;
   border-width: 0.07143em;
   padding: 0.33929em;

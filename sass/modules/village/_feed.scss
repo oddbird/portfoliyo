@@ -58,7 +58,7 @@ $addnote-fontsize: $input-font-size;
 
   .formfield {
     float: left;
-    width: columns($center - 1, $center);
+    width: columns($center - 2, $center);
     margin: 0;
   }
   textarea {
@@ -81,7 +81,7 @@ $addnote-fontsize: $input-font-size;
     clear: none;
     float: right;
     margin: 0;
-    width: space(1,$center);
+    width: space(2,$center);
   }
   button {
     @include border-left-radius(0);

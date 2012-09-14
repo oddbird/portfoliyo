@@ -52,8 +52,9 @@ $formspace: $center;
 .remove-row {
   @extend %icon-replace;
   @extend %icon-x-altx-alt;
+  @include adjust-font-size-to($smallpx);
   position: absolute;
-  top: rhythm(.5);
+  top: rhythm(.25, $smallpx);
   left: 0;
   #{$link} { color: rgba($base1,.5); }
   #{$focus} { color: $red; }
