@@ -3,10 +3,12 @@
   <ul>
     {% for rel in student.elder_relationships %}
     {# @@@ status classes: offline | inactive | mobile #}
-    <li>
+    {% with rel.elder as elder %}
+    <li class="{% if not elder.user.is_active %}inactive{% elif not elder.user.email %}mobile{% elif elder.user != request.user %}offline{% endif %}">
       <b>{{ rel.description_or_role }}:</b>
-      <span>{% firstof rel.elder.name rel.elder.user.email rel.elder.phone %}</span>
+      <span>{% firstof elder.name elder.user.email elder.phone %}</span>
     </li>
+    {% endwith %}
     {% endfor %}
   </ul>
   {% if request.user.profile.school_staff %}

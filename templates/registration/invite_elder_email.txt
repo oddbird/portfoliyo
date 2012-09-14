@@ -1,6 +1,6 @@
 Hello,
 
-{% if inviter.name %}{{ inviter.name }} ({{ inviter.user.email }}){% else %}{{ inviter.user.email }}{% endif %} has invited you to be part of {{ student }}'s Portfoliyo Village!
+{% if inviter.name %}{{ inviter.name }} ({{ inviter.user.email }}){% else %}{{ inviter.user.email }}{% endif %} has invited you to join {{ student }}'s Portfoliyo Village!
 
 To accept this invitation, visit
 
