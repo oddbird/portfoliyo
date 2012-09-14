@@ -3,6 +3,7 @@ var PYO = (function (PYO, $) {
     'use strict';
 
     PYO.activeStudentId = $('.village-feed').data('student-id');
+    PYO.activeUserId = $('.village-feed').data('user-id');
 
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
@@ -48,7 +49,10 @@ var PYO = (function (PYO, $) {
         if (data) {
             post = ich.post(data);
         }
-        if (post) { return post; }
+        if (post) {
+            post.find('.nametag[data-user-id="' + PYO.activeUserId + '"]').addClass('me');
+            return post;
+        }
     };
 
     PYO.addPost = function (data) {
