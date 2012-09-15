@@ -171,7 +171,7 @@ def normalize_name(name):
 
 def text_notification_prefix(relationship):
     """The prefix for texts sent out from this elder/student relationship."""
-    return u'(%s) ' % (
+    return u'%s: ' % (
         relationship.elder.name or relationship.description_or_role,)
 
 
