@@ -1,8 +1,8 @@
 from .base import *
 
-from os import environ
+import os
 import urlparse
-env = lambda key, returntype=str: returntype(environ[key])
+env = lambda key, returntype=str: returntype(os.environ[key])
 
 DATABASES = dict(default={})
 def parse_database_url(database, environment_variable='DATABASE_URL'):
@@ -43,7 +43,7 @@ TEMPLATE_DEBUG = False
 
 # This email address will get emailed on 500 server errors.
 ADMINS = [
-    ('Admin', environ.get('ADMIN_ERROR_EMAILS')),
+    ('Admin', env('ADMIN_ERROR_EMAILS')),
 ]
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
