@@ -25,6 +25,7 @@ del parse_database_url
 # pylibmc can't be imported at build time, so we need a fallback
 try:
     import pylibmc
+    print env('LD_LIBRARY_PATH')
 except ImportError:
     CACHES = {
         'default': {
