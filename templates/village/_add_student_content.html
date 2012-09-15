@@ -4,7 +4,7 @@
 {% block village-content %}
 <form method="POST" class="village-add-form" id="add-student-form">
   {% csrf_token %}
-  <h2>Add Student Village</h2>
+  <h2>Add Student</h2>
   {{ form.non_field_errors }}
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
