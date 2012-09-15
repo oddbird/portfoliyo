@@ -185,6 +185,16 @@ COMPRESS_CSS_FILTERS = ["compressor.filters.css_default.CssAbsoluteFilter",
 INSTALLED_APPS += ["djangosecure"]
 MIDDLEWARE_CLASSES.insert(0, "djangosecure.middleware.SecurityMiddleware")
 SESSION_COOKIE_HTTPONLY = True
+SECURE_CHECKS = [
+    "djangosecure.check.sessions.check_session_cookie_secure",
+    "djangosecure.check.sessions.check_session_cookie_httponly",
+    "djangosecure.check.djangosecure.check_security_middleware",
+    "djangosecure.check.djangosecure.check_sts",
+    "djangosecure.check.djangosecure.check_frame_deny",
+    "djangosecure.check.djangosecure.check_content_type_nosniff",
+    "djangosecure.check.djangosecure.check_xss_filter",
+    "djangosecure.check.djangosecure.check_ssl_redirect",
+]
 
 
 INSTALLED_APPS += ["registration"]
