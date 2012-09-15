@@ -132,3 +132,5 @@ LOGGING = {
         },
     },
 }
+
+GOOGLE_ANALYTICS_ID=env('GOOGLE_ANALYTICS_ID')
