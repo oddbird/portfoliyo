@@ -7,6 +7,8 @@ class CachedS3BotoStorage(S3BotoStorage):
     """
     S3 storage backend that saves the files locally, too.
 
+    Needed to integrate staticfiles, compressor, and S3.
+
     """
     def __init__(self, *args, **kwargs):
         super(CachedS3BotoStorage, self).__init__(*args, **kwargs)
