@@ -1,5 +1,6 @@
 from django.conf.urls.defaults import patterns, url, include
 from django.contrib.auth.decorators import login_required
+from django.views.defaults import page_not_found, server_error
 from django.views.generic.simple import direct_to_template
 
 from . import admin, views
@@ -24,3 +25,12 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('portfoliyo.users.urls')),
     )
+
+
+def handler500(request):
+    """500 error handler which includes ``request`` in the context."""
+    from django.template import Context, loader
+    from django.http import HttpResponseServerError
+
+    t = loader.get_template('500.html')
+    return HttpResponseServerError(t.render(Context({'request': request})))

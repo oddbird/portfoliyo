@@ -130,6 +130,12 @@
         and are looking into it.  Sorry for the hassle.  Maybe you could try
         the <a href="/">home page</a>, or try back again later?
       </p>
+      {% if request.sentry %}
+      <p>
+        If you need assistance, you may reference this error as
+        <strong>{{ request.sentry.id }}</strong>.
+      </p>
+      {% endif %}
     </div>
   </article>
   
