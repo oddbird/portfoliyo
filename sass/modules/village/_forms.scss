@@ -1,0 +1,61 @@
+// ---------------------------------------------------------------------------
+// Add Village
+
+.village-add-form { @extend %village-solo-page; }
+
+// ---------------------------------------------------------------------------
+// Add Elder
+
+.elder-add-form { @extend %village-main-page; }
+
+$formspace: $center;
+
+.formset.elders {
+  @extend %notice-base;
+  @include bleed;
+  @include leader;
+  @include inline-form($left, $formspace - $left, $formspace);
+  position: relative;
+
+  .formset-head {
+    @include bleed;
+    @include padding-leader(.25);
+    @include padding-trailer(.25);
+    background: rgba($base01,.5);
+    color: $base3;
+  }
+  .fieldset {
+    @include pie-clearfix;
+    @include padding-leader(1);
+    position: relative;
+    + .fieldset {
+      @include leader(.5);
+      @include leading-border(1px,1);
+      border-color: rgba($base1,.5);
+    }
+  }
+  .school-staff-field {  margin: 0; }
+  .formhelp { display: none; }
+}
+
+.add-row {
+  @extend %icon-replace;
+  @extend %icon-plus-alt;
+  position: absolute;
+  bottom: rhythm(.25);
+  right: $grid-padding;
+  #{$link} { color: $base; }
+  #{$focus} { color: $base03; }
+  .fieldset + & { bottom: rhythm(.5); }
+}
+
+.remove-row {
+  @extend %icon-replace;
+  @extend %icon-x-altx-alt;
+  @include adjust-font-size-to($smallpx);
+  position: absolute;
+  top: rhythm(.25, $smallpx);
+  left: 0;
+  #{$link} { color: rgba($base1,.5); }
+  #{$focus} { color: $red; }
+}

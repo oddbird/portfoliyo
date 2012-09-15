@@ -26,3 +26,11 @@ application = get_wsgi_application()
 # Apply WSGI middleware here.
 # from helloworld.wsgi import HelloWorldApplication
 # application = HelloWorldApplication(application)
+import os
+if 'SENTRY_DSN' in os.environ:
+    try:
+        from raven.contrib.django.middleware.wsgi import Sentry
+    except ImportError:
+        pass
+    else:
+        application = Sentry(application)

@@ -82,7 +82,9 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.core.context_processors.static",
     "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
+    "session_csrf.context_processor",
     "portfoliyo.google_analytics.context_processor",
+    "portfoliyo.village.pusher.context_processor",
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -91,9 +93,9 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.transaction.TransactionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "session_csrf.CsrfMiddleware",
 ]
 
 ROOT_URLCONF = "portfoliyo.urls"
@@ -115,10 +117,14 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.sessions",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
     "floppyforms",
     "widget_tweaks",
+    "form_utils",
     "south",
     "portfoliyo.landing",
+    "portfoliyo.users",
+    "portfoliyo.village",
 ]
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.fallback.FallbackStorage"
@@ -179,3 +185,25 @@ COMPRESS_CSS_FILTERS = ["compressor.filters.css_default.CssAbsoluteFilter",
 INSTALLED_APPS += ["djangosecure"]
 MIDDLEWARE_CLASSES.insert(0, "djangosecure.middleware.SecurityMiddleware")
 SESSION_COOKIE_HTTPONLY = True
+SECURE_CHECKS = [
+    "djangosecure.check.sessions.check_session_cookie_secure",
+    "djangosecure.check.sessions.check_session_cookie_httponly",
+    "djangosecure.check.djangosecure.check_security_middleware",
+    "djangosecure.check.djangosecure.check_sts",
+    "djangosecure.check.djangosecure.check_frame_deny",
+    "djangosecure.check.djangosecure.check_content_type_nosniff",
+    "djangosecure.check.djangosecure.check_xss_filter",
+    "djangosecure.check.djangosecure.check_ssl_redirect",
+]
+
+
+INSTALLED_APPS += ["registration"]
+ACCOUNT_ACTIVATION_DAYS = 7
+LOGIN_URL = "/login/"
+AUTHENTICATION_BACKENDS = ["portfoliyo.users.auth_backend.EmailBackend"]
+LOGIN_REDIRECT_URL = "/"
+
+DEFAULT_FROM_EMAIL = 'Portfoliyo <noreply@portfoliyo.org>'
+
+PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.console.ConsoleSMSBackend'
+PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'

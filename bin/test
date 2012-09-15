@@ -1,3 +1,0 @@
-#!/bin/bash
-
-py.test tests/ --cov-report html --cov portfoliyo

@@ -1,0 +1,28 @@
+{% load widget_tweaks %}
+
+<form method="POST" action="{% url login %}" class="login-form" id="loginform">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+  <input type="hidden" name="next" value="{{ next }}" />
+
+  {% include "forms/_field.html" with field=form.username|attr:"placeholder:email" label="email" %}
+  {% include "forms/_field.html" with field=form.password|attr:"placeholder:password" label="password" %}
+
+  {% if form.captcha %}
+  <div class="iqtest">
+    <p>
+      Your account or IP address has failed too many login attempts
+      recently. In order to keep your account secure, we need to verify that
+      you're a real human, not an automated account-cracking bot. Please
+      answer the simple math question below:
+    </p>
+
+    {% include "forms/_field.html" with field=form.captcha %}
+  </div>
+  {% endif %}
+
+  <div class="form-actions">
+    <a href="{% url password_reset %}" class="reset-link" title="forgot your password?">Forgot your password?</a>
+    <button type="submit">Login</button>
+  </div>
+</form>

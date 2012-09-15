@@ -6,7 +6,7 @@ label, button { cursor: pointer; }
 
 input {
   &[type="search"] { -webkit-appearance: none; }
-  &[type="radio"], &[type="checkbox"] { vertical-align: baseline; }
+  &[type="radio"], &[type="checkbox"] { vertical-align: baseline; width: auto !important; }
   &::-webkit-search-decoration { display: none; }
 }
 
@@ -55,13 +55,13 @@ $input-rhythm: .25;
   @include adjust-font-size-to($input-font-size);
   @include rhythm-borders(1px,$input-rhythm,$input-font-size);
   @include box-shadow(inset rgba($blue,.5) 0 0 $xxxsmallem);
+  @include rgba-background(rgba(white,.25));
   width: 100%;
-  background: rgba(white,.25);
-  color: $base;
-  border-color: $base;
+  color: inherit;
+  border-color: inherit;
   vertical-align: top;
   outline: 0;
-  .lt-ie9 & { padding-bottom: 0; padding-top: 0; }
+  .lt-ie9 & { padding: 0 .5em; }
 }
 
 %button {
@@ -70,11 +70,16 @@ $input-rhythm: .25;
   @include sassy-button;
 }
 
-.linkaction {
-  #{$link} {
-    @extend %button;
-  }
+%reset-button {
+  @include reset-box-model;
+  @include reset-font;
+  @include box-shadow(none);
+  @include text-shadow(none);
+  background: inherit;
+  color: inherit;
 }
+
+.linkaction { @extend %button; }
 
 .errorlist {
   @include no-style-list;
@@ -87,21 +92,32 @@ $input-rhythm: .25;
   position: relative;
 }
 
-@mixin inline-form($label: 2, $input: $center - $label, $context: $center) {
+@mixin inline-form($label: $left, $input: $center - $label, $context: $center) {
   label {
     @include ellipsis;
     @include span-columns($label,$context);
     padding: rhythm($input-rhythm) 0;
     text-align: right;
+    + input, + textarea { @include span-columns($input omega,$context); }
   }
-  input, textarea { @include span-columns($input omega,$context); }
+  [type="checkbox"], [type="radio"] {
+    + label {
+      @include reset-columns;
+      @include pre($label,$context);
+      display: inline-block;
+      padding: 0;
+      text-align: left;
+    }
+  }
+  .formhelp { @include pre($label, $context); }
 }
 
 .formhelp {
   @include adjust-font-size-to($smallpx);
+  display: block;
   clear: both;
+  margin: 0;
   color: $base1;
-  text-align: right;
   font-style: italic;
 }
 
@@ -119,10 +135,46 @@ $form-action-note-size: $smallpx;
   }
 }
 
+.iqtest {
+  @include trailer(2);
+  > p {
+    @include leader;
+    @include leading-border(2px,1);
+    font-style: italic;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Elements
 
-label { text-transform: capitalize; }
+[type="checkbox"], [type="radio"] {
+  @include gone;
+  + label {
+    @extend %icon;
+    &::before {
+      margin-left: .4em;
+      color: $base01;
+    }
+  }
+  &:checked + label { &::before { color: $blue; } }
+  &:focus + label { color: $base03; }
+}
+
+[type="checkbox"] {
+  + label { @extend %icon-unchecked; }
+  &:checked + label { @extend %icon-checked; }
+}
+
+[type="radio"] {
+  + label { @extend %icon-radio-unchecked; }
+  &:checked + label { @extend %icon-radio-checked; }
+}
+
+label {
+  display: block;
+  color: $base01;
+  &:first-letter { text-transform: uppercase; }
+}
 
 input {
   &[type="text"], &[type="password"],

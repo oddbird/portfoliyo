@@ -1,0 +1,12 @@
+<nav class="village-nav">
+  <ul>
+    {% for nav_student in request.user.profile.students %}
+    {% include "village/_student_list_item.html" %}
+    {% endfor %}
+  </ul>
+  {% if request.user.profile.school_staff %}
+  <aside class="add-student">
+    <a href="{# @@@ ajax-load #}{% url add_student %}" class="addstudent-link{% if add_active %} active{% endif %}">Add a Student</a>
+  </aside>
+  {% endif %}
+</nav>

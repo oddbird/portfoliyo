@@ -1,182 +1,26 @@
 // ---------------------------------------------------------------------------
-// Village
+// Village Landing
 
-.village-app {
-  [role="main"] { padding: 0; }
-}
-
-.village {
-  @include pie-clearfix;
-  @include transition(height 150ms);
-  position: relative;
-  height: rhythm(24);
-}
-
-%overflow-y {
-  @include stretch-y;
-  overflow-y: scroll;
-}
-
-$village-list-size: $smallpx;
-$village-border-color: $base1;
-
-%village-lists {
-  @include adjust-font-size-to($village-list-size);
-  ul { @include no-style-list; }
-  li { @include ellipsis; }
-}
+@import "village/landing";
 
 // ---------------------------------------------------------------------------
-// Village Nav
+// Settings
 
-%village-addlink {
-  #{$link} {
-    @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.25)));
-    color: $base;
-  }
-}
-
-.village-nav {
-  @extend %village-lists;
-  @extend %overflow-y;
-  left: - gutter();
-  width: columns($left) + gutter();
-  border: 1px solid $village-border-color;
-  border-width: 0 1px;
-  a {
-    #{$link} {
-      @include ellipsis;
-      @include trailing-border(1px,.25,$village-list-size);
-      @include padding-leader(.25,$village-list-size);
-      @include background(linear-gradient(bottom, rgba($base2,.5), rgba($base2,.125)));
-      display: block;
-      border-color: $village-border-color;
-      padding-left: rhythm(.5,$village-list-size);
-    }
-    #{$focus} {
-      @include background(linear-gradient(bottom, rgba($base2,1), rgba($base2,.25)));
-    }
-  }
-  .addstudent-link {
-    @extend %village-addlink;
-  }
-  .active {
-    #{$link} {
-      @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
-      background: $village-border-color;
-      color: $base3;
-    }
-  }
-}
+$initial-cols : $total-columns;
+$total-columns: $break-cols;
 
 // ---------------------------------------------------------------------------
-// Village Feed
+// Imports
 
-.village-main {
-  position: relative;
-  float: left;
-  width: space($center);
-  margin-left: columns($left);
-  height: 100%;
-}
-
-.village-feed {
-  @extend %overflow-y;
-  left: 0;
-  right: 0;
-  bottom: rhythm(3.5);
-}
-
-$note-byline-cols: 2;
-$note-byline-size: $xsmallpx;
-
-.note {
-  @include pie-clearfix;
-  @include trailing-border(1px,.25);
-  padding-left: gutter($center);
-  padding-right: gutter($center);
-  border-color: $base2;
-  .byline {
-    @include adjust-font-size-to($note-byline-size);
-    color: $base1;
-    h3 { display: inline; }
-    b {
-      color: $base;
-      font-weight: bold;
-    }
-    time { float: right; }
-  }
-  .body {
-    @include clearfix;
-    @include adjust-font-size-to($smallpx);
-  }
-}
+@import "village/layout";
+@import "village/pages";
+@import "village/forms";
+@import "village/dashboard";
+@import "village/nav";
+@import "village/feed";
+@import "village/elders";
 
 // ---------------------------------------------------------------------------
-// Note Add Form
+// Settings
 
-$addnote-fontsize: $input-font-size;
-
-.note-add-form {
-  @include stretch-x;
-  bottom: 0;
-  padding: rhythm(.5) gutter();
-  border-top: 1px solid $base;
-  background: $base1;
-
-  .formfield {
-    float: left;
-    width: columns($center - 1, $center);
-    margin: 0;
-  }
-  textarea {
-    height: rhythm(2.5, $addnote-fontsize);
-    min-height: rhythm(2.5, $addnote-fontsize);
-    background: rgba(white,.75);
-    padding-left: rhythm(.5, $addnote-fontsize);
-    resize: none;
-  }
-  .form-actions {
-    clear: none;
-    float: right;
-    margin: 0;
-    width: space(1,$center);
-  }
-  button {
-    @include border-left-radius(0);
-    position: relative;
-    top: 1px;
-    padding: 0;
-    height: rhythm(2.5);
-    width: 100%;
-    text-transform: uppercase;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Village Users
-
-.village-users {
-  @extend %village-lists;
-  @include padding-leader(1);
-  float: right;
-  width: space($right);
-  padding-left: gutter();
-  height: 100%;
-  border-left: 1px solid $village-border-color;
-  h2 {
-    @include trailer(.5);
-    @include serif;
-    font-weight: bold;
-  }
-  span { color: $base1; }
-}
-
-.addelder-link {
-  @extend %village-addlink;
-  @include leader(1,$village-list-size);
-  @include rhythm-borders(1px,.25,$village-list-size);
-  display: block;
-  border-color: $village-border-color;
-  padding-left: rhythm(.5,$village-list-size);
-}
+$total-columns: $initial-cols;

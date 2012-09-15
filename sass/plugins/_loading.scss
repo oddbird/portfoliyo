@@ -15,9 +15,9 @@
     @include stretch;
     @include text-shadow($base03 0 0 3px);
     @include animation(loading 1s linear alternate infinite both);
+    @include rgba-background(rgba($base03,.25));
     font-weight: bold;
     text-align: center;
-    background: rgba($base03,.25);
     color: $base3;
     z-index: 100;
   }

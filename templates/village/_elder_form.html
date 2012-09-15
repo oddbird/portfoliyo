@@ -1,0 +1,7 @@
+{% load widget_tweaks %}
+
+<div class="fieldset elder"{% if id %} id="{{ id }}"{% endif %}>
+  {% include "forms/_field.html" with field=form.contact|attr:"placeholder: e.g. 'harsh@portfoliyo.org' or '314-537-1024'" label="Email or Phone" %}
+  {% include "forms/_field.html" with field=form.relationship|attr:"placeholder: e.g. 'Mom', 'Dad', 'Math Teacher', 'Science Teacher', etc." %}
+  {% include "forms/_field.html" with field=form.school_staff label="School Staff" %}
+</div>

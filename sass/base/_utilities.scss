@@ -1,0 +1,22 @@
+// ---------------------------------------------------------------------------
+// Utilities
+
+@mixin gone {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+
+@mixin here {
+  position: static;
+  clip: auto;
+  overflow: visible;
+  height: auto;
+  margin: 0;
+  width: auto;
+}

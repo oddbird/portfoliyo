@@ -1,6 +1,11 @@
 // ---------------------------------------------------------------------------
 // User Messages
 
+@mixin message($c: $blue, $i: info-circle) {
+  @extend %icon-#{$i};
+  @include rgba-background(rgba($c,.9));
+}
+
 .message {
   @extend %icon;
   @include padding-leader(.5);
@@ -9,23 +14,13 @@
   padding-left: $grid-padding;
   padding-right: $grid-padding;
   border-color: $base;
+
   &::before { @include adjust-font-size-to($medpx,1); }
-  &.info {
-    @extend %icon-info-circle;
-    @include rgba-background(rgba($blue,.9));
-  }
-  &.success {
-    @extend %icon-checkmark;
-    @include rgba-background(rgba($green,.9));
-  }
-  &.warning {
-    @extend %icon-warning;
-    @include rgba-background(rgba($yellow,.9));
-  }
-  &.error {
-    @extend %icon-x;
-    @include rgba-background(rgba($red,.9));
-  }
+  &.info { @include message($blue, info-circle); }
+  &.success { @include message($green, checkmark); }
+  &.warning { @include message($yellow, warning); }
+  &.error { @include message($red, x); }
+
   p { display: inline; }
 }
 
@@ -37,15 +32,17 @@
   top: 0;
   right: 0;
   left: 0;
+  background: rgba($base03,.5);
+  color: $base3;
   z-index: 999;
   .close {
     @extend %icon-replace;
-    @extend %icon-x;
+    @extend %icon-x-altx-alt;
     position: absolute;
     right: rhythm(.5);
     top: rhythm(.5);;
     width: 1em;
-    #{$link} { color: $base01;}
-    #{$focus} { color: $base03; }
+    #{$link} { color: $back;}
+    #{$focus} { color: $base3; }
   }
 }

@@ -1,0 +1,14 @@
+<form method="POST" class="signup-form">
+  {# csrf_token #}
+  {# form.non_field_errors #}
+
+  <div class="formfield name">
+    {# form.name.errors #}
+    <label for="name">Name</label>
+    <input type="text" id="name" />
+  </div>
+
+  <div class="form-actions">
+    <button type="submit">Signup</button>
+  </div>
+</form>

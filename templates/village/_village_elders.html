@@ -1,0 +1,17 @@
+<div class="village-elders">
+  <h2>Village Elders</h2>
+  <ul>
+    {% for rel in student.elder_relationships %}
+    {# @@@ status classes: offline | inactive | mobile #}
+    {% with rel.elder as elder %}
+    <li class="{% if not elder.user.is_active %}inactive{% elif not elder.user.email %}mobile{% elif elder.user != request.user %}offline{% endif %}">
+      <b>{{ rel.description_or_role }}:</b>
+      <span>{% firstof elder.name elder.user.email elder.phone %}</span>
+    </li>
+    {% endwith %}
+    {% endfor %}
+  </ul>
+  {% if request.user.profile.school_staff %}
+  <a href="{# @@@ ajax-load #}{% url invite_elders student_id=student.id %}" class="addelder-link{% if active %} active{% endif %}">Invite Elders</a>
+  {% endif %}
+</div>

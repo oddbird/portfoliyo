@@ -1,0 +1,19 @@
+{% extends "village/_village_content_main.html" %}
+{% load widget_tweaks %}
+
+{% block village-content %}
+<form method="POST" class="village-add-form" id="add-student-form">
+  {% csrf_token %}
+  <h2>Add Student</h2>
+  {{ form.non_field_errors }}
+
+  {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
+
+  {% include "village/_elders_formset.html" %}
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">add</button>
+  </div>
+
+</form>
+{% endblock village-content %}

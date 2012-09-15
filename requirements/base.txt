@@ -3,6 +3,7 @@ pytz==2012d
 Django==1.4.1
 
 psycopg2==2.4.5
+PIL==1.1.7
 
 South==0.7.5
 
@@ -12,10 +13,27 @@ BeautifulSoup==3.2.1
 
 django-floppyforms==1.0
 
+django-form-utils==0.2.0.post93
+
+django-widget-tweaks==1.1.2
+
 django-secure==0.1.2
 
 django-icanhaz==0.2.1
 django-messages-ui==0.1.5
 django-ajax-loading-overlay==0.1.2
 
-django-widget-tweaks==1.1.2
+django-model-utils==1.1.0
+
+django-registration==0.8
+
+django-ratelimit==0.1
+
+django-session-csrf==0.5
+
+phonenumbers==5.1b1
+twilio==3.3.11
+httplib2==0.7.6
+pyjwt==0.1.2
+
+pusher==0.6

@@ -83,78 +83,86 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
  */
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round-webfont.eot');
-  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round-webfont.eot');
+  src: url('/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_semibold-webfont.eot');
-  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_semibold-webfont.eot');
+  src: url('/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_bold-webfont.eot');
-  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_bold-webfont.eot');
+  src: url('/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_it-webfont.eot');
-  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_it-webfont.eot');
+  src: url('/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('../fonts/SquareSerif-Book-webfont.eot');
-  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  src: url('/SquareSerif-Book-webfont.eot');
+  src: url('/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('../fonts/SquareSerif-Bold-webfont.eot');
-  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  src: url('/SquareSerif-Bold-webfont.eot');
+  src: url('/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "pyo";
-  src: url('../fonts/pyo.eot');
-  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('/pyo.eot');
+  src: url('/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .message:before, .summary li:before, .benefits li:before, [data-icon]:before {
+#messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .message::before, .summary li::before, .benefits li::before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .message:before, .summary li:before, .benefits li:before {
+#messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .message::before, .summary li::before, .benefits li::before {
   margin-right: .4em;
 }
 
 #messages .close {
+  display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
+  text-align: left;
 }
-#messages .close:before {
+#messages .close:focus {
+  outline: 0;
+}
+#messages .close:focus::before {
+  outline: 1px dotted;
+}
+#messages .close::before {
   position: absolute;
   top: 0;
   left: 0;
@@ -167,20 +175,40 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-.message.success:before, .summary li:before, .benefits li:before {
-  content: "\e00d";
+[type="checkbox"] + label:before {
+  content: "\e001";
 }
 
-.message.error:before, #messages .close:before {
+[type="checkbox"]:checked + label:before {
+  content: "\e002";
+}
+
+[type="radio"]:checked + label:before {
+  content: "\e003";
+}
+
+[type="radio"] + label:before {
+  content: "\e004";
+}
+
+.message.success:before, .summary li:before, .benefits li:before {
   content: "\e00e";
 }
 
-.message.info:before {
+.message.error:before {
   content: "\e00f";
 }
 
-.message.warning:before {
+#messages .close:before {
   content: "\e010";
+}
+
+.message.info:before {
+  content: "\e011";
+}
+
+.message.warning:before {
+  content: "\e012";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -288,6 +316,7 @@ input[type="search"] {
 }
 input[type="radio"], input[type="checkbox"] {
   vertical-align: baseline;
+  width: auto !important;
 }
 input::-webkit-search-decoration {
   display: none;
@@ -348,19 +377,19 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  width: 100%;
+  background: url('rgbapng/ffffff40.png?1347746559');
   background: rgba(255, 255, 255, 0.25);
-  color: #657b83;
-  border-color: #657b83;
+  width: 100%;
+  color: inherit;
+  border-color: inherit;
   vertical-align: top;
   outline: 0;
 }
 .lt-ie9 input[type="text"], .lt-ie9 input[type="password"], .lt-ie9 input[type="email"], .lt-ie9 input[type="url"], .lt-ie9 input[type="tel"], .lt-ie9 input[type="date"], .lt-ie9 input[type="datetime"], .lt-ie9 input[type="datetime-local"], .lt-ie9 input[type="month"], .lt-ie9 input[type="week"], .lt-ie9 input[type="time"], .lt-ie9 input[type="number"], .lt-ie9 input[type="search"], .lt-ie9 input[type="color"], .lt-ie9 textarea {
-  padding-bottom: 0;
-  padding-top: 0;
+  padding: 0 .5em;
 }
 
-.linkaction:link, .linkaction:visited, button {
+.linkaction, button {
   margin: 0;
   background-color: #859900;
   font-size: 18px;
@@ -374,8 +403,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  *zoom: 1;
-  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0, startColorstr='#FF859900', endColorstr='#FF2C3300');
+  background-color: #859900;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #859900), color-stop(100%, #596600));
   background: -webkit-linear-gradient(#859900, #596600);
   background: -moz-linear-gradient(#859900, #596600);
@@ -389,10 +417,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   color: #fdf6e3;
   text-shadow: #121400 0 -1px 0;
 }
-.linkaction:hover:link, .linkaction:hover:visited, button:hover {
+.linkaction:hover, button:hover {
   text-decoration: none;
 }
-.linkaction:hover:link, .linkaction:hover:visited, button:hover {
+.linkaction:hover, button:hover {
   background-color: #424d00;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
   background: -webkit-linear-gradient(#6f8000, #424d00);
@@ -401,12 +429,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   background: -ms-linear-gradient(#6f8000, #424d00);
   background: linear-gradient(#6f8000, #424d00);
 }
-.linkaction:active:link, .linkaction:active:visited, button:active {
+.linkaction:active, button:active {
   -webkit-box-shadow: #353d00 0 1px 2px inset;
   -moz-box-shadow: #353d00 0 1px 2px inset;
   box-shadow: #353d00 0 1px 2px inset;
 }
-.disabled.linkaction:link, .disabled.linkaction:visited, button.disabled, [disabled].linkaction:link, [disabled].linkaction:visited, button[disabled] {
+.disabled.linkaction, button.disabled, [disabled].linkaction, button[disabled] {
   opacity: 0.6;
   background: #596600;
   cursor: default;
@@ -414,7 +442,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.linkaction:link::-moz-focus-inner, .linkaction:visited::-moz-focus-inner, button::-moz-focus-inner {
+.linkaction::-moz-focus-inner, button::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
@@ -433,7 +461,6 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 
 .formfield {
-  *zoom: 1;
   margin-bottom: 0.63889em;
   position: relative;
 }
@@ -446,9 +473,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 .formhelp {
   font-size: 0.77778em;
   line-height: 1.64286em;
+  display: block;
   clear: both;
+  margin: 0;
   color: #93a1a1;
-  text-align: right;
   font-style: italic;
 }
 
@@ -468,8 +496,44 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   margin: 0 0.4em 0.82143em 0;
 }
 
+.iqtest {
+  margin-bottom: 2.55556em;
+}
+.iqtest > p {
+  margin-top: 1.27778em;
+  border-top-style: solid;
+  border-top-width: 0.11111em;
+  padding-top: 1.16667em;
+  font-style: italic;
+}
+
+[type="checkbox"], [type="radio"] {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+[type="checkbox"] + label::before, [type="radio"] + label::before {
+  margin-left: .4em;
+  color: #586e75;
+}
+[type="checkbox"]:checked + label::before, [type="radio"]:checked + label::before {
+  color: #268bd2;
+}
+[type="checkbox"]:focus + label, [type="radio"]:focus + label {
+  color: #002b36;
+}
+
 label {
-  text-transform: capitalize;
+  display: block;
+  color: #586e75;
+}
+label:first-letter {
+  text-transform: uppercase;
 }
 
 input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"] {
@@ -493,6 +557,12 @@ textarea {
   padding-right: 1em;
 }
 
+.pagehead {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
+}
+
 .message {
   padding-top: 0.63889em;
   border-bottom-style: solid;
@@ -508,19 +578,19 @@ textarea {
   line-height: 1em;
 }
 .message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1346437997');
+  background: url('rgbapng/268bd2e5.png?1346789020');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: url('../images/rgbapng/859900e5.png?1346438074');
+  background: url('rgbapng/859900e5.png?1346789020');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1346438074');
+  background: url('rgbapng/b58900e5.png?1346789020');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1346438074');
+  background: url('rgbapng/dc322fe5.png?1346789020');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -535,12 +605,14 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/002b367f.png?1346438074');
+  background: url('rgbapng/002b367f.png?1347746456');
   background: rgba(0, 43, 54, 0.5);
   position: fixed;
   top: 0;
   right: 0;
   left: 0;
+  background: rgba(0, 43, 54, 0.5);
+  color: #fdf6e3;
   z-index: 999;
 }
 #messages li {
@@ -555,10 +627,10 @@ textarea {
   width: 1em;
 }
 #messages .close:link, #messages .close:visited {
-  color: #586e75;
+  color: #073642;
 }
 #messages .close:focus, #messages .close:hover, #messages .close:active {
-  color: #002b36;
+  color: #fdf6e3;
 }
 
 @-moz-keyframes loading {
@@ -626,21 +698,20 @@ textarea {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
+  background: url('rgbapng/002b3640.png?1347746559');
+  background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
-  background: rgba(0, 43, 54, 0.25);
   color: #fdf6e3;
   z-index: 100;
 }
 
 [role="contentinfo"] {
-  *zoom: 1;
-  max-width: 34em;
+  max-width: 22em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
-  *zoom: 1;
   margin-top: 0em;
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
@@ -654,11 +725,11 @@ textarea {
 }
 @media (min-width: 56.25em) {
   [role="contentinfo"] {
-    max-width: 67em;
+    max-width: 43em;
   }
 }
 .lt-ie9 [role="contentinfo"] {
-  max-width: 67em;
+  max-width: 43em;
 }
 [role="contentinfo"]:after {
   content: "";
@@ -700,8 +771,7 @@ textarea {
 }
 
 .intro {
-  *zoom: 1;
-  max-width: 34em;
+  max-width: 22em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
@@ -714,34 +784,34 @@ textarea {
 }
 @media (min-width: 56.25em) {
   .intro {
-    max-width: 67em;
+    max-width: 43em;
   }
 }
 .lt-ie9 .intro {
-  max-width: 67em;
+  max-width: 43em;
 }
 .lt-ie9 .intro {
   min-width: 50em;
 }
 @media (min-width: 56.25em) {
   .intro .summary {
-    width: 40.76923%;
+    width: 40.2439%;
     float: right;
     margin-right: 0;
   }
   .intro .screenshot {
-    width: 57.69231%;
+    width: 57.31707%;
     float: left;
-    margin-right: 1.53846%;
+    margin-right: 2.43902%;
     position: relative;
     z-index: 20;
   }
   .intro .membership {
-    padding-left: 59.23077%;
+    padding-left: 59.7561%;
     clear: right;
   }
   .intro .membership > * {
-    margin-left: 3.77358%;
+    margin-left: 6.06061%;
   }
   .intro .membership .overlay {
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, transparent));
@@ -750,29 +820,28 @@ textarea {
     background: -o-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
     background: -ms-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
     background: linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
-    left: 57.69231%;
+    left: 57.31707%;
     margin-left: 0;
   }
 }
 .lt-ie9 .intro .summary {
-  width: 40.76923%;
+  width: 40.2439%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .lt-ie9 .intro .screenshot {
-  width: 57.69231%;
+  width: 57.31707%;
   float: left;
-  margin-right: 1.53846%;
+  margin-right: 2.43902%;
   position: relative;
   z-index: 20;
 }
 .lt-ie9 .intro .membership {
-  padding-left: 59.23077%;
+  padding-left: 59.7561%;
   clear: right;
 }
 .lt-ie9 .intro .membership > * {
-  margin-left: 3.77358%;
+  margin-left: 6.06061%;
 }
 .lt-ie9 .intro .membership .overlay {
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(0, 43, 54, 0.5)), color-stop(100%, transparent));
@@ -781,7 +850,7 @@ textarea {
   background: -o-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
   background: -ms-linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
   background: linear-gradient(top, rgba(0, 43, 54, 0.5), transparent);
-  left: 57.69231%;
+  left: 57.31707%;
   margin-left: 0;
 }
 
@@ -855,22 +924,20 @@ textarea {
 
 .formfield {
   overflow: hidden;
-  *zoom: 1;
 }
 .formfield::after {
   clear: none;
 }
 .formfield input {
-  width: 58.49057%;
+  width: 57.57576%;
   float: left;
-  margin-right: 3.77358%;
+  margin-right: 6.06061%;
   margin-right: 0;
 }
 .formfield .action-betasignup {
-  width: 37.73585%;
+  width: 36.36364%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 
 .team {
@@ -890,8 +957,7 @@ textarea {
   color: #93a1a1;
 }
 .team .container {
-  *zoom: 1;
-  max-width: 34em;
+  max-width: 22em;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
@@ -904,18 +970,18 @@ textarea {
 }
 @media (min-width: 56.25em) {
   .team .container {
-    max-width: 67em;
+    max-width: 43em;
   }
 }
 .lt-ie9 .team .container {
-  max-width: 67em;
+  max-width: 43em;
 }
 .team .fn {
   font-size: 1.27778em;
   line-height: 1.5em;
   color: #eee8d5;
 }
-@media (min-width: 38.25em) {
+@media (min-width: 24.75em) {
   .team .fn {
     font-size: 1.94444em;
     line-height: 1.31429em;
@@ -941,17 +1007,16 @@ textarea {
 }
 @media (min-width: 56.25em) {
   .pyo {
-    padding-left: 25.38462%;
-    padding-right: 25.38462%;
+    padding-left: 25.60976%;
+    padding-right: 25.60976%;
   }
 }
 .lt-ie9 .pyo {
-  padding-left: 25.38462%;
-  padding-right: 25.38462%;
+  padding-left: 25.60976%;
+  padding-right: 25.60976%;
 }
 
 .dev {
-  *zoom: 1;
   margin-bottom: 1.91667em;
 }
 .dev:after {
@@ -960,15 +1025,14 @@ textarea {
   clear: both;
 }
 .dev .fn, .dev .bio {
-  width: 65.625%;
+  width: 65%;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .dev .photo {
-  width: 31.25%;
+  width: 30%;
   float: left;
-  margin-right: 3.125%;
+  margin-right: 5%;
   -moz-border-radius-topleft: 5.96046em;
   -webkit-border-top-left-radius: 5.96046em;
   border-top-left-radius: 5.96046em;
@@ -988,8 +1052,7 @@ textarea {
 }
 .dev:nth-child(odd) .fn, .dev:nth-child(odd) .bio {
   float: left;
-  margin-right: 3.125%;
-  #margin-left: 0;
+  margin-right: 5%;
   text-align: right;
 }
 .dev:nth-child(odd) .photo {
@@ -1007,47 +1070,46 @@ textarea {
   border-bottom-left-radius: 0.64em;
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
 }
 .no-nth-child .dev {
-  padding-left: 25.38462%;
-  padding-right: 25.38462%;
+  padding-left: 25.60976%;
+  padding-right: 25.60976%;
 }
 @media (min-width: 56.25em) {
   .dev:nth-child(even) {
-    padding-left: 8.46154%;
-    padding-right: 25.38462%;
+    padding-left: 8.53659%;
+    padding-right: 25.60976%;
   }
   .dev:nth-child(odd) {
-    padding-left: 25.38462%;
-    padding-right: 8.46154%;
+    padding-left: 25.60976%;
+    padding-right: 8.53659%;
   }
   .dev:nth-child(odd) .fn, .dev:nth-child(odd) .bio {
     margin-right: 0;
   }
   .dev .fn, .dev .bio {
-    width: 74.4186%;
+    width: 74.07407%;
   }
   .dev .photo {
-    width: 23.25581%;
+    width: 22.22222%;
     margin-right: 0;
   }
 }
 .lt-ie9 .dev:nth-child(even) {
-  padding-left: 8.46154%;
-  padding-right: 25.38462%;
+  padding-left: 8.53659%;
+  padding-right: 25.60976%;
 }
 .lt-ie9 .dev:nth-child(odd) {
-  padding-left: 25.38462%;
-  padding-right: 8.46154%;
+  padding-left: 25.60976%;
+  padding-right: 8.53659%;
 }
 .lt-ie9 .dev:nth-child(odd) .fn, .lt-ie9 .dev:nth-child(odd) .bio {
   margin-right: 0;
 }
 .lt-ie9 .dev .fn, .lt-ie9 .dev .bio {
-  width: 74.4186%;
+  width: 74.07407%;
 }
 .lt-ie9 .dev .photo {
-  width: 23.25581%;
+  width: 22.22222%;
   margin-right: 0;
 }

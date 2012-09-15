@@ -1,0 +1,55 @@
+{% extends "base_site.html" %}
+
+{% block title %}Choose a Password | {{ block.super }}{% endblock %}
+
+{% block maincontent %}
+
+<article class="set-password">
+  <h2 class="pagehead">Choose a Password</h2>
+
+  {% if validlink %}
+
+  <p>
+    Hi there, and welcome to Portfoliyo Village. We're glad you're here!
+  </p>
+
+  <p>
+    First things first: we need you to <b>pick a password</b> for the site.
+    In the future, you can <b>come back anytime</b>
+    and log in using your email address and this password.
+  </p>
+
+  <p>
+    Once you've chosen a password,
+    you'll be able to <b>log in</b>,
+    <b>edit your profile</b>,
+    and <b>see the messages</b> posted regarding your student.
+  </p>
+
+  <form method="POST" id="set-password-form">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    {% include "forms/_field.html" with field=form.new_password1 %}
+
+    {% include "forms/_field.html" with field=form.new_password2 label="Confirm new password" %}
+
+    <div class="form-actions">
+      <button type="submit">set your password</button>
+    </div>
+
+  </form>
+  {% else %}
+  <p>
+    Well, this is a bummer.
+    Seems like we can't find you based on the invitation link you used.
+    Can you double-check the link in the email and try again?
+    If that doesn't work, contact Harsh Patel
+    at <span class="email">harsh(put the 'at' sign here)portfoliyo.org</span>
+    and we'll get this sorted out.</p>
+  </p>
+  {% endif %}
+</article>
+
+{% endblock maincontent %}

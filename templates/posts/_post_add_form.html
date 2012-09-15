@@ -1,0 +1,13 @@
+<form method="POST" class="post-add-form" action="{% url json_posts student_id=student.id %}" data-char-limit="{{ post_char_limit }}">
+  {% csrf_token %}
+
+  <div class="formfield post-textfield">
+    <textarea id="post-text" name="text" placeholder="Leave a note..."></textarea>
+    <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">send</button>
+  </div>
+
+</form>

@@ -1,0 +1,21 @@
+// ---------------------------------------------------------------------------
+// Dashboard
+
+.dashboard {
+  @extend %village-solo-page;
+}
+
+.getstarted {
+  @include bleed(rhythm(2),left);
+  @include padding-trailer(ceil(image-height('start-arrow.png') / $base-line-height * 2) / 2);
+  background: image-url('start-arrow.png') no-repeat left bottom;
+  font-weight: bold;
+}
+
+// ---------------------------------------------------------------------------
+// Dashboard Fail
+
+.no-students {
+  @extend %simple-page;
+  @extend %type;
+}

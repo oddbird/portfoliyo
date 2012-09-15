@@ -13,7 +13,7 @@ $sb-text-color: $base3;
 $sb-text-style: "inset";
 $sb-gradient-style: "simple";
 $sb-pseudo-states: true;
-$sb-ie-support: true;
+$sb-ie-support: false;
 
 //  Mixin that gets included when calling the sassy-button-structure if you need any
 //  styles applied to all your sassy buttons, add it here.

@@ -1,0 +1,257 @@
+// ---------------------------------------------------------------------------
+// Main Login
+
+$login-button-color     : $base00;
+$login-text-color       : $base2;
+$login-button-style     : simple;
+$login-button-size      : $smallpx;
+$login-button-padding   : rhythm(.25,$login-button-size);
+
+@mixin login-button {
+  @include sassy-button-structure($font-size: $login-button-size, $padding: $login-button-padding);
+  @include sassy-button-gradient($login-button-style, $login-button-color, $text-color: $login-text-color);
+}
+
+.main-login {
+  .login-form {
+    display: none;
+    position: relative;
+  }
+  label { @include gone; }
+
+  .login-link {
+    @include leader($banner-rhythm/2, $login-button-size);
+    @include login-button;
+    float: right;
+    max-width: columns(3);
+    padding-left: 1em;
+    padding-right: 1em;
+  }
+
+  .reset-link {
+    @extend %icon-replace;
+    width: 1em;
+  }
+
+  @include at-breakpoint($break) {
+    @include span-columns($center omega);
+    .login-link { display: none; }
+    .login-form {
+      @include padding-leader($banner-rhythm/2);
+      display: block;
+    }
+    .formfield {
+      @include span-columns(5, $center);
+      margin-bottom: 0;
+    }
+    .form-actions {
+      @include span-columns(2 omega, $center);
+      clear: none;
+      margin: 0;
+    }
+    .reset-link {
+      @include leader($banner-rhythm/2);
+      @include text-shadow($base03 0 0 3px);
+      position: absolute;
+      top: 0;
+      right: 102% + gutter(2);
+    }
+    input { min-height: 0; }
+    button {
+      @include login-button;
+      background-color: $blue;
+      width: 100%;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Village Landing Page
+
+.village-landing {
+  @extend %type;
+  @include padding-leader;
+  color: $base;
+  background: $base3;
+
+  ul {
+    @include no-style-list;
+    @include trailer;
+  }
+
+  .tagline {
+    @include adjust-font-size-to($largepx);
+    @include trailer(1,$largepx);
+    b { font-weight: normal; }
+  }
+
+  .offer { @include adjust-font-size-to($large-normpx); }
+
+  .screenshot {
+    @include trailer;
+    figcaption { @include adjust-font-size-to($smallpx); }
+  }
+
+  .membership {
+    @extend %bleed;
+    @include leading-border(1px,1);
+    @include padding-trailer;
+    @include background(mix($alt,$base3,25%));
+    @include background(linear-gradient(top, rgba($alt,.25), rgba($alt,0)));
+    border-color: $base1;
+    .errorlist {
+      @include adjust-font-size-to($smallpx);
+      margin: 0;
+      padding: 0;
+    }
+    .offernote { font-style: italic; }
+    .benefits { color: $base1; }
+  }
+
+  .formfield {
+    @include clearfix;
+    &::after { clear: none; }
+    label { @extend %gone; }
+    input { @include span-columns(3,5); margin-right: 0; }
+    .action-betasignup {
+      @extend %ellipsis;
+      @include span-columns(2 omega,5);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Intro
+
+.intro {
+  @include container($total-columns,$break);
+  @include at-breakpoint($break) {
+    .summary { @include span-columns(9 omega); }
+    .screenshot {
+      @include span-columns(11);
+      position: relative;
+      z-index: 20;
+    }
+    .membership {
+      @include prefix(11);
+      clear: right;
+      > * { margin-left: gutter(5); }
+     .overlay {
+        @include background(linear-gradient(top,rgba($base03,.5),transparent));
+        left: columns(11);
+        margin-left: 0;
+      }
+   }
+  }
+}
+
+li {
+  .summary &, .benefits & {
+    @extend %icon;
+    @extend %icon-checkmark;
+    position: relative;
+    padding-left: 1.5em;
+    .lt-ie9 & { padding-left: 0; }
+    &::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+  .summary & {
+    @include trailer(.5);
+    &::before { color: $green; }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Team
+
+$space: 'landing/space.png';
+
+@mixin photo(
+  $position : left,
+  $from     : $xxxlargeem,
+  $to       : $xxsmallem
+) {
+  @if $position == left {
+    @include border-left-radius($from);
+    @include border-right-radius($to);
+  } @else {
+    @include border-right-radius($from);
+    @include border-left-radius($to);
+  }
+}
+
+.team {
+  @include padding-leader(2);
+  @include background($base03 image-url($space));
+  @include background-image(
+    linear-gradient(top, $base03, rgba($base03,0), rgba($base03,0), $base03),
+    linear-gradient(left, rgba($base01,.75), rgba($base03,.75), rgba($base03,.75), rgba($base01,.75)),
+    image-url($space)
+  );
+  @include background-size(cover);
+  background-attachment: fixed;
+  color: $base1;
+
+  .container { @include container($total-columns,$break); }
+  .fn {
+    @include adjust-font-size-to($medpx);
+    color: $base2;
+    @include at-breakpoint($total-columns) {
+      @include adjust-font-size-to($largepx);
+    }
+  }
+
+  .pyo {
+    @include trailer(2);
+    @include border-radius(rhythm(1));
+    @include box-shadow($base03 0 0 rhythm(.5));
+    @include rgba-background(rgba($base01,.25));
+    clear: both;
+    padding: rhythm(1);
+    p { margin: 0; }
+    @include at-breakpoint($break) { @include pad(5,5); }
+  }
+
+  .dev {
+    @include pie-clearfix;
+    @include trailer(1);
+
+    .fn, .bio { @include span-columns(5 omega); }
+    .photo {
+      @include span-columns(3);
+      @include box-shadow($base 0 0 rhythm(.5));
+      @include photo(left);
+      overflow: hidden;
+    }
+
+    &:nth-child(odd) {
+      .fn, .bio {
+        float: left;
+        text-align: right;
+      }
+      .photo {
+        @include photo(right);
+        @include omega;
+      }
+    }
+
+    @include at-breakpoint($break) {
+      $pre      : 2;
+      $pics     : 3;
+
+      $post     : $pre + $pics;
+      $ctext    : $total-columns - $pre - $post;
+      $bios     : $ctext - $pics;
+
+      &:nth-child(even) { @include pad($pre,$post); }
+      &:nth-child(odd) { @include pad($post,$pre); }
+
+      .fn, .bio, .photo { margin-right: 0; }
+      .fn, .bio { width: columns($bios, $ctext); }
+      .photo { width: columns($pics, $ctext); }
+    }
+  }
+}

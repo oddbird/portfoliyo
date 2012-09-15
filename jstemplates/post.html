@@ -1,0 +1,17 @@
+{{# posts }}
+<article class="post" data-author-id="{{ author_id }}"{{# author_sequence_id }} data-author-sequence="{{ author_sequence_id }}"{{/ author_sequence_id }}>
+
+  <header class="byline vcard">
+    <h3>
+      <b class="title">{{ role }}:</b>
+      <span class="fn">{{ author }}</span>
+    </h3>
+    <time pubdate>{{ date }} at {{ time }}</time>
+  </header>
+
+  <div class="body">
+    <p class="post-text">{{# escape }}{{ text }}{{/ escape }}{{^ escape }}{{{ text }}}{{/ escape }}</p>
+  </div>
+
+</article>
+{{/ posts }}

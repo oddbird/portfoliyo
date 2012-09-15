@@ -1,0 +1,43 @@
+{% extends "base_site.html" %}
+
+{% block title %}Create an account | {{ block.super }}{% endblock title %}
+
+{% block maincontent %}
+<article class="register">
+  <h2 class="pagehead">Create your Portfoliyo account</h2>
+
+  <p>
+    Welcome to Portfoliyo!
+  </p>
+  <p>
+    Ready to get started?
+    Fill out some basic info here,
+    then we'll confirm your email address and you can start adding students!
+  </p>
+
+  <form method="POST" class="register-form" id="register-form">
+    {% csrf_token %}
+
+    {{ form.non_field_errors }}
+
+    <div class="fieldset bio">
+      {% include "forms/_field.html" with field=form.name %}
+
+      <div class="fieldset initial-password">
+        {% include "forms/_field.html" with field=form.password %}
+
+        {% include "forms/_field.html" with field=form.password_confirm %}
+      </div>
+
+      {% include "forms/_field.html" with field=form.role label="relation to student(s)" %}
+
+      {% include "forms/_field.html" with field=form.email %}
+
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="go-network">Get started!</button>
+    </div>
+  </form>
+</article>
+{% endblock maincontent %}

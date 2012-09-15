@@ -1,0 +1,8 @@
+{% extends "base_site.html" %}
+{% block bodyclasses %}village-app{% endblock bodyclasses %}
+
+{% block last %}
+<div style="display: none;">
+  {% include "village/_elder_form.html" with form=elders_formset.empty_form id="empty-elder-form" %}
+</div>
+{% endblock %}

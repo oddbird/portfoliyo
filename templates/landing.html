@@ -1,20 +1,28 @@
-{% extends "base.html" %}
+{% extends "base_site.html" %}
 {% load compress %}
 
-{% block styles %}
-  {% compress css %}
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/village-landing.css" />
-  {% endcompress %}
-{% endblock styles %}
+{% block brand %}
+<span class="wordmark">
+  <b>Portfoliyo</b>
+  Village
+</span>
+{% endblock brand %}
 
-{% block body %}
+{% block metanav %}
+<nav class="main-login">
+  <a href="{% url login %}" class="login-link">Login</a>
+  {% include "users/_login_form.html" with form=login_form %}
+</nav>
+{% endblock metanav %}
+
+{% block content %}
 {% include "messages_ui/_messages.html" %}
 <article class="village-landing">
 
   <section class="intro">
-    <h1 role="banner">
+    <h2 class="tagline">
       It takes a village to raise a child. <b>Keep the village connected.</b>
-    </h1>
+    </h2>
 
     <ul class="summary">
       <li>Built <strong>for teachers</strong>, <strong>by teachers</strong>.</li>
@@ -34,7 +42,7 @@
     </figure>
 
     <section class="membership">
-      <h2 class="offer">Start your Portfoliyo village.</h2>
+      <h3 class="offer">Start your Portfoliyo village.</h3>
       <p class="offernote">Free during beta!</p>
       {% include "landing/_form.html" %}
       <ul class="benefits">
@@ -122,12 +130,4 @@
   </section>
 
 </article>
-
-<footer role="contentinfo">
-  <p class="author">
-    copyright &copy; 2012
-    <strong>Portfoliyo</strong>
-  </p>
-</footer>
-
-{% endblock body %}
+{% endblock content %}

@@ -3,7 +3,9 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-from .decorators import ajax
+from ..users.forms import CaptchaAuthenticationForm
+from ..view.ajax import ajax
+
 from .forms import LeadForm
 
 
@@ -17,8 +19,17 @@ def landing(request):
             form.save()
             messages.success(
                 request, "Thanks for your interest; we'll be in touch soon!")
-            return redirect("landing")
+            return redirect('home')
     else:
         form = LeadForm()
 
-    return TemplateResponse(request, "landing.html", {"form": form})
+    request.session.set_test_cookie()
+
+    return TemplateResponse(
+        request,
+        "landing.html",
+        {
+            "form": form,
+            "login_form": CaptchaAuthenticationForm(request),
+            },
+        )

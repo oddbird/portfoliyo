@@ -1,0 +1,1 @@
+{{ inviter }} invites you to join {{ student }}'s Portfoliyo Village

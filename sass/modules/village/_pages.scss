@@ -1,0 +1,59 @@
+// ---------------------------------------------------------------------------
+// Village Pages
+
+%overflow-y {
+  @include stretch-y;
+  overflow-y: scroll;
+}
+
+%village-page {
+  height: 100%;
+  padding: rhythm(2);
+  overflow-y: scroll;
+  > :last-child { @include trailer(2); }
+  h2 {
+    @include adjust-font-size-to($largepx);
+    @include trailer(1,$largepx);
+    @include serif;
+    font-weight: bold;
+  }
+}
+
+%village-solo-page {
+  @extend %village-page;
+  @include span-columns($center omega, $content-width);
+  @include post($right, $content-width);
+  margin-left: gutter($content-width);
+}
+
+%village-main-page {
+  @extend %village-page;
+  margin-left: gutter($center);
+}
+
+// ---------------------------------------------------------------------------
+// Village Lists
+
+$village-list-size: $smallpx;
+$village-border-color: $base1;
+
+%village-lists {
+  @include adjust-font-size-to($village-list-size);
+  ul { @include no-style-list; }
+}
+
+%village-activenav {
+  &.active {
+    @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
+    background: $village-border-color;
+    color: $base3;
+  }
+}
+
+%village-addlink {
+  #{$link} {
+    @extend %village-activenav;
+    @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.25)));
+    color: $base;
+  }
+}

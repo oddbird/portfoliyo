@@ -1,0 +1,117 @@
+// ---------------------------------------------------------------------------
+// Village Feed
+
+.village-feed {
+  @extend %overflow-y;
+  left: 0;
+  right: 0;
+  bottom: rhythm(3.5);
+}
+
+$post-byline-cols : 2;
+$post-size        : $smallpx;
+$post-time-size   : $xsmallpx;
+
+.post {
+  @include pie-clearfix;
+  @include adjust-font-size-to($post-size);
+  @include trailing-border(1px, .25, $post-size);
+  padding-left: gutter($center);
+  padding-right: gutter($center);
+  border-color: $base1;
+  .byline {
+    @include clearfix;
+    color: $base1;
+
+    h3, time { @include ellipsis; }
+    h3 {
+      float: left;
+      width: 50%;
+    }
+    b {
+      color: $base;
+      font-weight: bold;
+    }
+    time {
+     @include adjust-font-size-to($post-time-size, 1, $post-size);
+      float: right;
+      width: 49%;
+      text-align: right;
+    }
+  }
+  .body { @include clearfix; }
+
+  &.mine { background: rgba($blue,.1); }
+  &.not-posted { background: rgba($red,.1); }
+
+  .nametag {
+    @include border-radius($xxxsmallem);
+    display: inline-block;
+    padding: 0 .4em;
+    background: $base;
+    color: $base3;
+    &.me {
+      background: $blue;
+      color: $base3;
+    }
+  }
+  .timeout {
+    @include bleed(gutter($center));
+    background: $red;
+    color: $base3;
+    a {
+      #{$link} { color: mix($base3, $alt, 65%); }
+      #{$focus} { color: mix($base3, $accent, 65%); }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Note Add Form
+
+$addnote-fontsize: $input-font-size;
+
+.post-add-form {
+  @include stretch-x;
+  bottom: 0;
+  padding: rhythm(.5) gutter();
+  border-top: 1px solid $base;
+  background: $base1;
+
+  .formfield {
+    float: left;
+    width: columns($center - 2, $center);
+    margin: 0;
+  }
+  textarea {
+    height: rhythm(2.5, $addnote-fontsize);
+    min-height: rhythm(2.5, $addnote-fontsize);
+    background: rgba(white,.75);
+    padding-left: rhythm(.5, $addnote-fontsize);
+    resize: none;
+  }
+  .charcount {
+    @include adjust-font-size-to($xsmallpx);
+    position: absolute;
+    right: .25em;
+    bottom: 0;
+    color: $base1;
+    &.overlimit { color: $red; }
+  }
+
+  .form-actions {
+    clear: none;
+    float: right;
+    margin: 0;
+    width: space(2,$center);
+  }
+  button {
+    @include border-left-radius(0);
+    position: relative;
+    top: 1px;
+    padding: 0;
+    height: rhythm(2.5);
+    width: 100%;
+    text-transform: uppercase;
+  }
+}

@@ -1,0 +1,5 @@
+{% load widget_tweaks %}
+
+{% with classes|add:" value" as all_classes %}
+  {{ field|add_class:all_classes }}
+{% endwith %}

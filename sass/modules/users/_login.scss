@@ -1,0 +1,17 @@
+// ---------------------------------------------------------------------------
+// Login
+
+.login { @extend %simple-form; }
+
+.reset-link {
+  @extend %icon;
+  @extend %icon-help;
+}
+
+// ---------------------------------------------------------------------------
+// Activation
+
+.activationfailed, .awaiting-activation {
+  @extend %type;
+  @extend %simple-page;
+}

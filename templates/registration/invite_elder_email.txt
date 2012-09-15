@@ -1,0 +1,14 @@
+Hello,
+
+{% if inviter.name %}{{ inviter.name }} ({{ inviter.user.email }}){% else %}{{ inviter.user.email }}{% endif %} has invited you to join {{ student }}'s Portfoliyo Village!
+
+To accept this invitation, visit
+
+{{ protocol }}://{{ domain }}{% url accept_email_invite uidb36=uid token=token %}
+
+If you don't want to participate in {{ student }}'s education via Portfoliyo,
+you can simply ignore this email.
+
+Thanks!
+
+- The Portfoliyo Team

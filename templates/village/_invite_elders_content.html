@@ -1,0 +1,20 @@
+{% extends "village/_village_content_main.html" %}
+
+{% block village-content %}
+<div class="village-main">
+  <form method="POST" class="elder-add-form" id="invite-elders-form">
+    {% csrf_token %}
+    <h2>Invite Elders for {{ student }}</h2>
+    {{ form.non_field_errors }}
+
+    {% include "village/_elders_formset.html" %}
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">invite</button>
+    </div>
+
+  </form>
+</div>
+
+{% include "village/_village_elders.html" with active="true" %}
+{% endblock village-content %}

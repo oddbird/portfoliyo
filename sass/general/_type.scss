@@ -1,42 +1,19 @@
 // ---------------------------------------------------------------------------
 // Links
 
-a {
-  &:hover, &:active {
-    outline: none;
-  }
+@mixin link($light: false) {
+  $color: if($light, $base3, $alt);
+  $hover: if($light, mix($base3,$accent), $accent);
   #{$link} {
-    color: $alt;
+    color: $color;
     text-decoration: none;
   }
-  #{$focus} {
-    color: $accent;
-  }
+  #{$focus} { color: $hover; }
 }
 
-@mixin camolink {
-  #{$link} { color: inherit; }
-  #{$focus} { color: $accent; }
-}
-
-@mixin gone {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
-}
-
-@mixin here {
-  position: static;
-  clip: auto;
-  overflow: visible;
-  height: auto;
-  margin: 0;
-  width: auto;
+a {
+  &:hover, &:active { outline: none; }
+  @include link;
 }
 
 %camolink { @include camolink; }
