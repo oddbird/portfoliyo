@@ -22,11 +22,21 @@ def parse_database_url(database, environment_variable='DATABASE_URL'):
 parse_database_url(DATABASES['default'])
 del parse_database_url
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+# pylibmc can't be imported at build time, so we need a fallback
+try:
+    import pylibmc
+except ImportError:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+        }
     }
-}
+else:
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        }
+    }
 
 DEBUG = False
 TEMPLATE_DEBUG = False
