@@ -1615,9 +1615,11 @@ textarea {
 }
 
 .post {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
   border-bottom-style: solid;
-  border-bottom-width: 0.05556em;
-  padding-bottom: 0.26389em;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
   padding-left: 2.43902%;
   padding-right: 2.43902%;
   border-color: #93a1a1;
@@ -1628,8 +1630,6 @@ textarea {
   clear: both;
 }
 .post .byline {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
   overflow: hidden;
   color: #93a1a1;
 }
@@ -1642,7 +1642,7 @@ textarea {
 }
 .post .byline h3 {
   float: left;
-  width: 74%;
+  width: 50%;
 }
 .post .byline b {
   color: #657b83;
@@ -1652,16 +1652,17 @@ textarea {
   font-size: 0.85714em;
   line-height: 1.91667em;
   float: right;
-  width: 25%;
+  width: 49%;
   text-align: right;
 }
 .post .body {
   overflow: hidden;
-  font-size: 0.77778em;
-  line-height: 1.64286em;
 }
 .post.mine {
   background: rgba(38, 139, 210, 0.1);
+}
+.post.not-posted {
+  background: rgba(220, 50, 47, 0.1);
 }
 .post .nametag {
   -webkit-border-radius: 0.512em;
@@ -1671,11 +1672,26 @@ textarea {
   border-radius: 0.512em;
   display: inline-block;
   padding: 0 .4em;
-  background: #eee8d5;
+  background: #657b83;
+  color: #fdf6e3;
 }
 .post .nametag.me {
   background: #268bd2;
   color: #fdf6e3;
+}
+.post .timeout {
+  margin-left: -2.43902%;
+  padding-left: 2.43902%;
+  margin-right: -2.43902%;
+  padding-right: 2.43902%;
+  background: #dc322f;
+  color: #fdf6e3;
+}
+.post .timeout a:link, .post .timeout a:visited {
+  color: #b1d0dd;
+}
+.post .timeout a:focus, .post .timeout a:hover, .post .timeout a:active {
+  color: #eeb2c1;
 }
 
 .post-add-form {

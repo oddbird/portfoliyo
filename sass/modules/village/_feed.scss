@@ -8,50 +8,60 @@
   bottom: rhythm(3.5);
 }
 
-$post-byline-cols: 2;
-$post-byline-size: $smallpx;
-$post-time-size  : $xsmallpx;
+$post-byline-cols : 2;
+$post-size        : $smallpx;
+$post-time-size   : $xsmallpx;
 
 .post {
   @include pie-clearfix;
-  @include trailing-border(1px,.25);
+  @include adjust-font-size-to($post-size);
+  @include trailing-border(1px, .25, $post-size);
   padding-left: gutter($center);
   padding-right: gutter($center);
   border-color: $base1;
   .byline {
-    @include adjust-font-size-to($post-byline-size);
     @include clearfix;
     color: $base1;
 
     h3, time { @include ellipsis; }
     h3 {
       float: left;
-      width: 74%;
+      width: 50%;
     }
     b {
       color: $base;
       font-weight: bold;
     }
     time {
-     @include adjust-font-size-to($post-time-size, 1, $post-byline-size);
+     @include adjust-font-size-to($post-time-size, 1, $post-size);
       float: right;
-      width: 25%;
+      width: 49%;
       text-align: right;
     }
   }
-  .body {
-    @include clearfix;
-    @include adjust-font-size-to($smallpx);
-  }
+  .body { @include clearfix; }
+
   &.mine { background: rgba($blue,.1); }
+  &.not-posted { background: rgba($red,.1); }
+
   .nametag {
     @include border-radius($xxxsmallem);
     display: inline-block;
     padding: 0 .4em;
-    background: $base2;
+    background: $base;
+    color: $base3;
     &.me {
       background: $blue;
       color: $base3;
+    }
+  }
+  .timeout {
+    @include bleed(gutter($center));
+    background: $red;
+    color: $base3;
+    a {
+      #{$link} { color: mix($base3, $alt, 65%); }
+      #{$focus} { color: mix($base3, $accent, 65%); }
     }
   }
 }
