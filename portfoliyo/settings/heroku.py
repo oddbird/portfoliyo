@@ -1,6 +1,7 @@
 from .base import *
 
 from os import environ
+import urlparse
 env = lambda key, returntype=str: returntype(environ[key])
 
 DATABASES = dict(default={})
