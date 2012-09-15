@@ -5,7 +5,7 @@
   {{ form.non_field_errors }}
   <input type="hidden" name="next" value="{{ next }}" />
 
-  {% include "forms/_field.html" with field=form.username|attr:"placeholder:email or phone" label="email" %}
+  {% include "forms/_field.html" with field=form.username|attr:"placeholder:email" label="email" %}
   {% include "forms/_field.html" with field=form.password|attr:"placeholder:password" label="password" %}
 
   {% if form.captcha %}
