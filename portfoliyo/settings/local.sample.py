@@ -67,3 +67,17 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 #PUSHER_APPID = 'your appid'
 #PUSHER_KEY = 'your key'
 #PUSHER_SECRET = 'your secret'
+
+# Uncomment this (and modify LOCATION appropriately) to use memcached rather
+# than local-memory cache. This (or some other out-of-process cache backend) is
+# required if running under a multi-process webserver such as
+# Apache/mod_wsgi. See http://docs.djangoproject.com/en/dev/topics/cache/ for
+# more configuration options. For faster caching, install pylibmc in place of
+# python-memcached and replace MemcachedCache with PyLibMCCache.
+#CACHES = {
+#    "default": {
+#        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+#        "LOCATION": "127.0.0.1:11211",
+#        "KEY_PREFIX": "", # add a global key prefix here if necessary
+#    }
+#}
