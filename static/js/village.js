@@ -141,11 +141,6 @@ var PYO = (function (PYO, $) {
                         },
                         success: function (response) {
                             PYO.serverSuccess(response);
-                        },
-                        error: function (request, status, error) {
-                            PYO.removeTimeout(author_sequence);
-                            var oldPost = feed.find('.post[data-author-sequence="' + author_sequence + '"]');
-                            oldPost.remove();
                         }
                     });
                 }
@@ -186,7 +181,7 @@ var PYO = (function (PYO, $) {
             var thisPost = $(this).closest('.post');
             PYO.resendPost(thisPost);
         });
-        post.prepend(msg).loadingOverlay('remove');
+        post.addClass('not-posted').prepend(msg).loadingOverlay('remove');
         PYO.scrollToBottom('.village-feed');
     };
 
