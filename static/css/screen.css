@@ -681,6 +681,10 @@ textarea {
     padding-right: 25.36232%;
   }
 }
+.lt-ie9 .login, .lt-ie9 .register, .lt-ie9 .edit-profile, .lt-ie9 .reset-password, .lt-ie9 .change-password, .lt-ie9 .set-password, .lt-ie9 .activationfailed, .lt-ie9 .awaiting-activation, .lt-ie9 .no-students {
+  padding-left: 25.36232%;
+  padding-right: 25.36232%;
+}
 
 @media (min-width: 38.25em) {
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
@@ -720,6 +724,43 @@ textarea {
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
     margin-left: -51.47059%;
   }
+}
+.lt-ie9 .login label, .lt-ie9 .register label, .lt-ie9 .edit-profile label, .lt-ie9 .reset-password label, .lt-ie9 .change-password label, .lt-ie9 .set-password label, .lt-ie9 .initial-password label {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  width: 48.52941%;
+  float: left;
+  margin-right: 2.94118%;
+  padding: 0.31944em 0;
+  text-align: right;
+}
+.lt-ie9 .login label + input, .lt-ie9 .register label + input, .lt-ie9 .edit-profile label + input, .lt-ie9 .reset-password label + input, .lt-ie9 .change-password label + input, .lt-ie9 .set-password label + input, .lt-ie9 .initial-password label + input, .lt-ie9 .login label + textarea, .lt-ie9 .register label + textarea, .lt-ie9 .edit-profile label + textarea, .lt-ie9 .reset-password label + textarea, .lt-ie9 .change-password label + textarea, .lt-ie9 .set-password label + textarea, .lt-ie9 .initial-password label + textarea {
+  width: 100%;
+  float: right;
+  margin-right: 0;
+}
+.lt-ie9 .lt-ie9 .login [type="checkbox"], .lt-ie9 .lt-ie9 .register [type="checkbox"], .lt-ie9 .lt-ie9 .edit-profile [type="checkbox"], .lt-ie9 .lt-ie9 .reset-password [type="checkbox"], .lt-ie9 .lt-ie9 .change-password [type="checkbox"], .lt-ie9 .lt-ie9 .set-password [type="checkbox"], .lt-ie9 .lt-ie9 .initial-password [type="checkbox"], .lt-ie9 .lt-ie9 .login [type="radio"], .lt-ie9 .lt-ie9 .register [type="radio"], .lt-ie9 .lt-ie9 .edit-profile [type="radio"], .lt-ie9 .lt-ie9 .reset-password [type="radio"], .lt-ie9 .lt-ie9 .change-password [type="radio"], .lt-ie9 .lt-ie9 .set-password [type="radio"], .lt-ie9 .lt-ie9 .initial-password [type="radio"] {
+  position: relative;
+  left: 51.47059%;
+  top: -0.31944em;
+}
+.lt-ie9 .login [type="checkbox"] + label, .lt-ie9 .register [type="checkbox"] + label, .lt-ie9 .edit-profile [type="checkbox"] + label, .lt-ie9 .reset-password [type="checkbox"] + label, .lt-ie9 .change-password [type="checkbox"] + label, .lt-ie9 .set-password [type="checkbox"] + label, .lt-ie9 .initial-password [type="checkbox"] + label, .lt-ie9 .login [type="radio"] + label, .lt-ie9 .register [type="radio"] + label, .lt-ie9 .edit-profile [type="radio"] + label, .lt-ie9 .reset-password [type="radio"] + label, .lt-ie9 .change-password [type="radio"] + label, .lt-ie9 .set-password [type="radio"] + label, .lt-ie9 .initial-password [type="radio"] + label {
+  float: none;
+  width: auto;
+  margin-right: auto;
+  margin-left: 51.47059%;
+  display: inline-block;
+  padding: 0;
+  text-align: left;
+}
+.lt-ie9 .login .formhelp, .lt-ie9 .register .formhelp, .lt-ie9 .edit-profile .formhelp, .lt-ie9 .reset-password .formhelp, .lt-ie9 .change-password .formhelp, .lt-ie9 .set-password .formhelp, .lt-ie9 .initial-password .formhelp {
+  margin-left: 51.47059%;
+}
+.lt-ie9 .login label, .lt-ie9 .register label, .lt-ie9 .edit-profile label, .lt-ie9 .reset-password label, .lt-ie9 .change-password label, .lt-ie9 .set-password label, .lt-ie9 .initial-password label {
+  margin-left: -51.47059%;
 }
 
 .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p {
@@ -763,6 +804,9 @@ textarea {
     max-width: 71em;
   }
 }
+.lt-ie9 [role="banner"], .lt-ie9 [role="contentinfo"], .lt-ie9 [role="main"] .container, [role="main"] .lt-ie9 .container {
+  max-width: 71em;
+}
 
 [role="banner"], [role="contentinfo"] {
   clear: both;
@@ -803,6 +847,11 @@ textarea {
     margin-right: 1.44928%;
   }
 }
+.lt-ie9 .brand {
+  width: 39.13043%;
+  float: left;
+  margin-right: 1.44928%;
+}
 .brand .wordmark {
   line-height: 2.46429em;
   height: 2.46429em;
@@ -831,6 +880,11 @@ textarea {
     float: right;
     margin-right: 0;
   }
+}
+.lt-ie9 .meta {
+  width: 18.84058%;
+  float: right;
+  margin-right: 0;
 }
 .meta span, .meta a {
   display: block;
@@ -924,6 +978,16 @@ textarea {
   .initial-password label {
     padding-left: 1.27778em;
   }
+}
+.lt-ie9 .initial-password {
+  margin-left: -51.47059%;
+  padding-left: 51.47059%;
+  margin-right: -51.47059%;
+  padding-right: 51.47059%;
+  padding-top: 1.27778em;
+}
+.lt-ie9 .initial-password label {
+  padding-left: 1.27778em;
 }
 
 .main-login .login-form {

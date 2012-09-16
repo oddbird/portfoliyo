@@ -21,7 +21,7 @@ $half-small     : $total-columns/2;
 
 $break-cols     : 20;
 $break-width    : columns-width(10);
-$break          : $break-width $break-cols;
+$break          : $break-width $break-cols lt-ie9;
 
 $left           : 4;
 $right          : 4;
