@@ -84,6 +84,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.messages.context_processors.messages",
     "session_csrf.context_processor",
     "portfoliyo.google_analytics.context_processor",
+    "portfoliyo.uservoice.context_processor",
     "portfoliyo.village.pusher.context_processor",
 ]
 
