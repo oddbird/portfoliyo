@@ -240,11 +240,12 @@ var PYO = (function (PYO, $) {
     PYO.fetchBacklog = function (container) {
         if ($(container).length) {
             var feed = $(container);
+            var context = feed.closest('.village-main');
             var url = feed.data('backlog-url');
             var loadFeed = function () {
-                feed.loadingOverlay();
+                context.loadingOverlay();
                 $.get(url, function (data) {
-                    feed.loadingOverlay('remove');
+                    context.loadingOverlay('remove');
                     PYO.addPost(data);
                 }).error(function (request, status, error) {
                     var msg = ich.feed_error_msg();
@@ -253,7 +254,8 @@ var PYO = (function (PYO, $) {
                         msg.remove();
                         loadFeed();
                     });
-                    feed.prepend(msg).loadingOverlay('remove');
+                    context.loadingOverlay('remove');
+                    feed.prepend(msg);
                 });
             };
 
@@ -287,7 +289,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializeFeed = function () {
-        PYO.fetchBacklog('.village-feed');
+        // PYO.fetchBacklog('.village-feed');
         PYO.activeStudentId = $('.village-feed').data('student-id');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village');
