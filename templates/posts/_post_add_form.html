@@ -2,7 +2,7 @@
   {% csrf_token %}
 
   <div class="formfield post-textfield">
-    <textarea id="post-text" name="text" placeholder="Leave a note..."></textarea>
+    <textarea id="post-text" name="text" placeholder="Leave a note! To text-message a mobile user, use @role (e.g. @father or @mathteacher); exclude spaces."></textarea>
     <span class="charcount">{{ post_char_limit }} characters remaining...</span>
   </div>
 
