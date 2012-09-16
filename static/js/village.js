@@ -141,6 +141,11 @@ var PYO = (function (PYO, $) {
                         },
                         success: function (response) {
                             PYO.serverSuccess(response);
+                        },
+                        error: function (request, status, error) {
+                            PYO.removeTimeout(author_sequence);
+                            var oldPost = feed.find('.post[data-author-sequence="' + author_sequence + '"]');
+                            oldPost.remove();
                         }
                     });
                 }
@@ -158,8 +163,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.serverSuccess = function (response) {
-        if (response && response.success) {
-            PYO.removeTimeout(response);
+        if (response) {
             if (response.posts[0] && response.posts[0].author_sequence_id) {
                 var feed = $('.village-feed');
                 var author_sequence_id = response.posts[0].author_sequence_id;
@@ -167,8 +171,9 @@ var PYO = (function (PYO, $) {
                 if (oldPost && oldPost.length) {
                     oldPost.loadingOverlay('remove');
                 }
+                PYO.removeTimeout(author_sequence_id);
             }
-            if (!PYO.pusherKey) {
+            if (response.success && !PYO.pusherKey) {
                 PYO.replacePost(response);
             }
         }
@@ -185,11 +190,8 @@ var PYO = (function (PYO, $) {
         PYO.scrollToBottom('.village-feed');
     };
 
-    PYO.removeTimeout = function (data) {
-        if (data && data.posts[0] && data.posts[0].author_sequence_id) {
-            var author_sequence_id = data.posts[0].author_sequence_id;
-            $.doTimeout('new-post-' + author_sequence_id);
-        }
+    PYO.removeTimeout = function (author_sequence_id) {
+        $.doTimeout('new-post-' + author_sequence_id);
     };
 
     PYO.resendPost = function (post) {
