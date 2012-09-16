@@ -56,13 +56,8 @@ $post-time-size   : $xsmallpx;
     }
   }
   .timeout {
+    @extend %error;
     @include bleed(gutter($center));
-    background: $red;
-    color: $base3;
-    a {
-      #{$link} { color: mix($base3, $alt, 65%); }
-      #{$focus} { color: mix($base3, $accent, 65%); }
-    }
   }
 }
 
@@ -114,4 +109,21 @@ $addnote-fontsize: $input-font-size;
     width: 100%;
     text-transform: uppercase;
   }
+}
+
+// ---------------------------------------------------------------------------
+// Errors
+
+%error {
+  background: $red;
+  color: $base3;
+  a {
+    #{$link} { color: mix($base3, $alt, 65%); }
+    #{$focus} { color: mix($base3, $accent, 65%); }
+  }
+}
+
+.feed-error {
+  @extend %error;
+  padding: rhythm(1);
 }

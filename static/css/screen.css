@@ -1684,14 +1684,6 @@ textarea {
   padding-left: 2.43902%;
   margin-right: -2.43902%;
   padding-right: 2.43902%;
-  background: #dc322f;
-  color: #fdf6e3;
-}
-.post .timeout a:link, .post .timeout a:visited {
-  color: #b1d0dd;
-}
-.post .timeout a:focus, .post .timeout a:hover, .post .timeout a:active {
-  color: #eeb2c1;
 }
 
 .post-add-form {
@@ -1745,6 +1737,21 @@ textarea {
   height: 3.19444em;
   width: 100%;
   text-transform: uppercase;
+}
+
+.post .timeout, .feed-error {
+  background: #dc322f;
+  color: #fdf6e3;
+}
+.post .timeout a:link, .feed-error a:link, .post .timeout a:visited, .feed-error a:visited {
+  color: #b1d0dd;
+}
+.post .timeout a:focus, .feed-error a:focus, .post .timeout a:hover, .feed-error a:hover, .post .timeout a:active, .feed-error a:active {
+  color: #eeb2c1;
+}
+
+.feed-error {
+  padding: 1.27778em;
 }
 
 .village-elders {
