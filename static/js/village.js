@@ -124,23 +124,25 @@ var PYO = (function (PYO, $) {
 
             form.submit(function (event) {
                 event.preventDefault();
-                setAuthSeq();
-                form.ajaxSubmit({
-                    data: { author_sequence_id: author_sequence },
-                    beforeSubmit: function (arr, form, opts) {
-                        var response = createPostObj();
-                        var post = PYO.addPost(response);
-                        textarea.val('').change();
-                        $.doTimeout('new-post-' + author_sequence, 5000, function () {
-                            PYO.postTimeout(post);
-                        });
-                    },
-                    success: function (response) {
-                        if (response && response.success && !PYO.pusherKey) {
-                            PYO.replacePost(response);
+                if (textarea.val().length) {
+                    setAuthSeq();
+                    form.ajaxSubmit({
+                        data: { author_sequence_id: author_sequence },
+                        beforeSubmit: function (arr, form, opts) {
+                            var response = createPostObj();
+                            var post = PYO.addPost(response);
+                            textarea.val('').change();
+                            $.doTimeout('new-post-' + author_sequence, 5000, function () {
+                                PYO.postTimeout(post);
+                            });
+                        },
+                        success: function (response) {
+                            if (response && response.success && !PYO.pusherKey) {
+                                PYO.replacePost(response);
+                            }
                         }
-                    }
-                });
+                    });
+                }
             });
 
             textarea.keydown(function (event) {
