@@ -910,6 +910,7 @@ textarea {
   border: 1px solid #445258;
   color: #eee8d5;
   text-shadow: #2b3538 0 -1px 0;
+  line-height: 1em;
   float: right;
   max-width: 35.18519%;
   padding-left: 1em;
@@ -978,6 +979,7 @@ textarea {
   }
   .main-login input {
     min-height: 0;
+    line-height: 1em;
   }
   .main-login button {
     font-size: 14px;
@@ -1004,6 +1006,7 @@ textarea {
     border: 1px solid #445258;
     color: #eee8d5;
     text-shadow: #2b3538 0 -1px 0;
+    line-height: 1em;
     background-color: #268bd2;
     width: 100%;
   }

@@ -10,6 +10,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
 @mixin login-button {
   @include sassy-button-structure($font-size: $login-button-size, $padding: $login-button-padding);
   @include sassy-button-gradient($login-button-style, $login-button-color, $text-color: $login-text-color);
+  line-height: 1em;
 }
 
 .main-login {
@@ -56,7 +57,10 @@ $login-button-padding   : rhythm(.25,$login-button-size);
       top: 0;
       right: 102% + gutter(2);
     }
-    input { min-height: 0; }
+    input {
+      min-height: 0;
+      line-height: 1em;
+    }
     button {
       @include login-button;
       background-color: $blue;
