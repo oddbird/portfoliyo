@@ -53,6 +53,7 @@ $village-border-color: $base1;
 %village-addlink {
   #{$link} {
     @extend %village-activenav;
+    @include rgba-background(rgba($green,.375));
     @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.25)));
     color: $base;
   }

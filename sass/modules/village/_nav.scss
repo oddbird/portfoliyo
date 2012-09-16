@@ -1,6 +1,8 @@
 // ---------------------------------------------------------------------------
 // Village Nav
 
+$village-nav-bg   : $base2;
+
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;
@@ -17,14 +19,16 @@
       @include bleed($grid-padding, left);
       @include trailing-border(1px,.25,$village-list-size);
       @include padding-leader(.25,$village-list-size);
-      @include background(linear-gradient(bottom, rgba($base2,.5), rgba($base2,.125)));
+      @include rgba-background(rgba($village-nav-bg,.25));
+      @include background(linear-gradient(bottom, rgba($village-nav-bg,.5), rgba($village-nav-bg,.125)));
       display: block;
       position: relative;
       border-color: $village-border-color;
       padding-left: $grid-padding;
     }
     #{$focus} {
-      @include background(linear-gradient(bottom, rgba($base2,1), rgba($base2,.25)));
+      @include rgba-background(rgba($village-nav-bg,.5));
+      @include background(linear-gradient(bottom, rgba($village-nav-bg,1), rgba($village-nav-bg,.25)));
     }
   }
   .unread {

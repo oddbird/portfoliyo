@@ -79,8 +79,6 @@ $banner-leading : 1 + $banner-rhythm*2;
     @extend %icon-exit;
     @extend %banner-item;
     @include link(light);
-    width: 100%;
-    text-align: left;
   }
 }
 

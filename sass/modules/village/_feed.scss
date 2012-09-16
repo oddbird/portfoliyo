@@ -41,8 +41,8 @@ $post-time-size   : $xsmallpx;
   }
   .body { @include clearfix; }
 
-  &.mine { background: rgba($blue,.1); }
-  &.not-posted { background: rgba($red,.1); }
+  &.mine { @include rgba-background(rgba($blue,.1)); }
+  &.not-posted { @include rgba-background(rgba($red,.1)); }
 
   .nametag {
     @include border-radius($xxxsmallem);
