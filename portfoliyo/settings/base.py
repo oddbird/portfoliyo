@@ -91,6 +91,7 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.gzip.GZipMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "djangosecure.middleware.SecurityMiddleware",
     "django.middleware.transaction.TransactionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -183,7 +184,6 @@ COMPRESS_CSS_FILTERS = ["compressor.filters.css_default.CssAbsoluteFilter",
                         "compressor.filters.cssmin.CSSMinFilter"]
 
 INSTALLED_APPS += ["djangosecure"]
-MIDDLEWARE_CLASSES.insert(0, "djangosecure.middleware.SecurityMiddleware")
 SESSION_COOKIE_HTTPONLY = True
 SECURE_CHECKS = [
     "djangosecure.check.sessions.check_session_cookie_secure",
