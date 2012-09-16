@@ -179,119 +179,119 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 [type="checkbox"] + label:before {
-  content: "\e001";
+  content: "\2610";
 }
 .lt-ie9 [type="checkbox"] + label:before {
   content: "";
 }
 
 [type="checkbox"]:checked + label:before {
-  content: "\e002";
+  content: "\2611";
 }
 .lt-ie9 [type="checkbox"]:checked + label:before {
   content: "";
 }
 
 [type="radio"]:checked + label:before {
-  content: "\e003";
+  content: "\25c9";
 }
 .lt-ie9 [type="radio"]:checked + label:before {
   content: "";
 }
 
 [type="radio"] + label:before {
-  content: "\e004";
+  content: "\25ef";
 }
 .lt-ie9 [type="radio"] + label:before {
   content: "";
 }
 
 .meta span:before, .meta a:before, .meta [href*="edit"]:before {
-  content: "\e007";
+  content: "\2731";
 }
 .lt-ie9 .meta span:before, .meta .lt-ie9 span:before, .lt-ie9 .meta a:before, .meta .lt-ie9 a:before, .lt-ie9 .meta [href*="edit"]:before, .meta .lt-ie9 [href*="edit"]:before {
   content: "";
 }
 
 .meta button:before {
-  content: "\e009";
+  content: "\261b";
 }
 .lt-ie9 .meta button:before, .meta .lt-ie9 button:before {
   content: "";
 }
 
 .meta [href*="password"]:before {
-  content: "\e00a";
+  content: "\2762";
 }
 .lt-ie9 .meta [href*="password"]:before, .meta .lt-ie9 [href*="password"]:before {
   content: "";
 }
 
 .brand .wordmark:before {
-  content: "\e00d";
+  content: "\2668";
 }
 .lt-ie9 .brand .wordmark:before, .brand .lt-ie9 .wordmark:before {
   content: "";
 }
 
 .summary li:before, .benefits li:before, .message.success:before {
-  content: "\e00e";
+  content: "\2713";
 }
 .lt-ie9 .summary li:before, .summary .lt-ie9 li:before, .lt-ie9 .benefits li:before, .benefits .lt-ie9 li:before, .lt-ie9 .message.success:before {
   content: "";
 }
 
 .message.error:before {
-  content: "\e00f";
+  content: "\2717";
 }
 .lt-ie9 .message.error:before {
   content: "";
 }
 
 .remove-row:before, #messages .close:before {
-  content: "\e010";
+  content: "\2718";
 }
 .lt-ie9 .remove-row:before, .lt-ie9 #messages .close:before, #messages .lt-ie9 .close:before {
   content: "";
 }
 
 .message.info:before {
-  content: "\e011";
+  content: "\69";
 }
 .lt-ie9 .message.info:before {
   content: "";
 }
 
 .village-elders li.inactive:before, .message.warning:before {
-  content: "\e012";
+  content: "\26a0";
 }
 .lt-ie9 .village-elders li.inactive:before, .village-elders .lt-ie9 li.inactive:before, .lt-ie9 .message.warning:before {
   content: "";
 }
 
 .reset-link:before {
-  content: "\e013";
+  content: "\3f";
 }
 .lt-ie9 .reset-link:before {
   content: "";
 }
 
 .add-row:before {
-  content: "\e015";
+  content: "\271a";
 }
 .lt-ie9 .add-row:before {
   content: "";
 }
 
 .village-elders li.mobile:before {
-  content: "\e016";
+  content: "\275f";
 }
 .lt-ie9 .village-elders li.mobile:before, .village-elders .lt-ie9 li.mobile:before {
   content: "";
 }
 
 .village-elders li:before {
-  content: "\e017";
+  content: "\25cf";
 }
 .lt-ie9 .village-elders li:before, .village-elders .lt-ie9 li:before {
   content: "";

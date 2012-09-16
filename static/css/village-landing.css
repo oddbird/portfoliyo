@@ -179,63 +179,63 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 [type="checkbox"] + label:before {
-  content: "\e001";
+  content: "\2610";
 }
 .lt-ie9 [type="checkbox"] + label:before {
   content: "";
 }
 
 [type="checkbox"]:checked + label:before {
-  content: "\e002";
+  content: "\2611";
 }
 .lt-ie9 [type="checkbox"]:checked + label:before {
   content: "";
 }
 
 [type="radio"]:checked + label:before {
-  content: "\e003";
+  content: "\25c9";
 }
 .lt-ie9 [type="radio"]:checked + label:before {
   content: "";
 }
 
 [type="radio"] + label:before {
-  content: "\e004";
+  content: "\25ef";
 }
 .lt-ie9 [type="radio"] + label:before {
   content: "";
 }
 
 .message.success:before, .summary li:before, .benefits li:before {
-  content: "\e00e";
+  content: "\2713";
 }
 .lt-ie9 .message.success:before, .lt-ie9 .summary li:before, .summary .lt-ie9 li:before, .lt-ie9 .benefits li:before, .benefits .lt-ie9 li:before {
   content: "";
 }
 
 .message.error:before {
-  content: "\e00f";
+  content: "\2717";
 }
 .lt-ie9 .message.error:before {
   content: "";
 }
 
 #messages .close:before {
-  content: "\e010";
+  content: "\2718";
 }
 .lt-ie9 #messages .close:before, #messages .lt-ie9 .close:before {
   content: "";
 }
 
 .message.info:before {
-  content: "\e011";
+  content: "\69";
 }
 .lt-ie9 .message.info:before {
   content: "";
 }
 
 .message.warning:before {
-  content: "\e012";
+  content: "\26a0";
 }
 .lt-ie9 .message.warning:before {
   content: "";
