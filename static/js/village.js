@@ -181,6 +181,10 @@ var PYO = (function (PYO, $) {
             var thisPost = $(this).closest('.post');
             PYO.resendPost(thisPost);
         });
+        msg.find('.cancel').click(function (e) {
+            e.preventDefault();
+            post.remove();
+        });
         post.addClass('not-posted').prepend(msg).loadingOverlay('remove');
         PYO.scrollToBottom('.village-feed');
     };
