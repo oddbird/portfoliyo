@@ -81,6 +81,38 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.createPostObj = function (author_sequence) {
+        var feed = $('.village-feed');
+        var textarea = $('#post-text');
+        var author = feed.data('author');
+        var role = feed.data('author-role');
+        var today = new Date();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+        var date = month + '/' + day + '/' + year;
+        var hour = today.getHours();
+        var minute = today.getMinutes();
+        minute = (minute < 10) ? '0' + minute : minute;
+        var period = (hour > 12) ? 'p.m.' : 'a.m.';
+        hour = (hour > 12) ? hour - 12 : hour;
+        var time = hour + ':' + minute + ' ' + period;
+        var text = textarea.val();
+        var postObj = {
+            posts: {
+                author: author,
+                author_id: PYO.activeUserId,
+                role: role,
+                date: date,
+                time: time,
+                text: text,
+                author_sequence_id: author_sequence,
+                escape: true
+            }
+        };
+        return postObj;
+    };
+
     PYO.submitPost = function (container) {
         if ($(container).length) {
             var feed = $(container);
@@ -92,35 +124,6 @@ var PYO = (function (PYO, $) {
             var setAuthSeq = function () {
                 author_sequence = feed.find('.post.mine').length + 1;
             };
-            var createPostObj = function () {
-                var author = feed.data('author');
-                var role = feed.data('author-role');
-                var today = new Date();
-                var day = today.getDate();
-                var month = today.getMonth() + 1;
-                var year = today.getFullYear();
-                var date = month + '/' + day + '/' + year;
-                var hour = today.getHours();
-                var minute = today.getMinutes();
-                minute = (minute < 10) ? '0' + minute : minute;
-                var period = (hour > 12) ? 'p.m.' : 'a.m.';
-                hour = (hour > 12) ? hour - 12 : hour;
-                var time = hour + ':' + minute + ' ' + period;
-                var text = textarea.val();
-                var postObj = {
-                    posts: {
-                        author: author,
-                        author_id: PYO.activeUserId,
-                        role: role,
-                        date: date,
-                        time: time,
-                        text: text,
-                        author_sequence_id: author_sequence,
-                        escape: true
-                    }
-                };
-                return postObj;
-            };
 
             form.submit(function (event) {
                 event.preventDefault();
@@ -129,7 +132,7 @@ var PYO = (function (PYO, $) {
                     form.ajaxSubmit({
                         data: { author_sequence_id: author_sequence },
                         beforeSubmit: function (arr, form, opts) {
-                            var response = createPostObj();
+                            var response = PYO.createPostObj(author_sequence);
                             var post = PYO.addPost(response);
                             textarea.val('').change();
                             $.doTimeout('new-post-' + author_sequence, 5000, function () {
@@ -137,9 +140,7 @@ var PYO = (function (PYO, $) {
                             });
                         },
                         success: function (response) {
-                            if (response && response.success && !PYO.pusherKey) {
-                                PYO.replacePost(response);
-                            }
+                            PYO.serverSuccess(response);
                         }
                     });
                 }
@@ -156,6 +157,23 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.serverSuccess = function (response) {
+        if (response && response.success) {
+            PYO.removeTimeout(response);
+            if (response.posts[0] && response.posts[0].author_sequence_id) {
+                var feed = $('.village-feed');
+                var author_sequence_id = response.posts[0].author_sequence_id;
+                var oldPost = feed.find('.post[data-author-sequence="' + author_sequence_id + '"]');
+                if (oldPost && oldPost.length) {
+                    oldPost.loadingOverlay('remove');
+                }
+            }
+            if (!PYO.pusherKey) {
+                PYO.replacePost(response);
+            }
+        }
+    };
+
     PYO.postTimeout = function (post) {
         var msg = ich.post_timeout_msg();
         msg.find('.resend').click(function (e) {
@@ -165,6 +183,13 @@ var PYO = (function (PYO, $) {
         });
         post.prepend(msg).loadingOverlay('remove');
         PYO.scrollToBottom('.village-feed');
+    };
+
+    PYO.removeTimeout = function (data) {
+        if (data && data.posts[0] && data.posts[0].author_sequence_id) {
+            var author_sequence_id = data.posts[0].author_sequence_id;
+            $.doTimeout('new-post-' + author_sequence_id);
+        }
     };
 
     PYO.resendPost = function (post) {
@@ -177,9 +202,7 @@ var PYO = (function (PYO, $) {
             text: text
         };
         $.post(url, postData, function (response) {
-            if (response && response.success && !PYO.pusherKey) {
-                PYO.replacePost(response);
-            }
+            PYO.serverSuccess(response);
         });
         post.find('.timeout').remove();
         post.loadingOverlay();
