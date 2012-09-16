@@ -102,6 +102,11 @@ $input-rhythm: .25;
     + input, + textarea { @include span-columns($input omega,$context); }
   }
   [type="checkbox"], [type="radio"] {
+    .lt-ie9 & {
+      position: relative;
+      left: space($label, $context);
+      top: rhythm(-.25);
+    }
     + label {
       @include reset-columns;
       @include pre($label,$context);
@@ -149,7 +154,8 @@ $form-action-note-size: $smallpx;
 // Elements
 
 [type="checkbox"], [type="radio"] {
-  @include gone;
+  display: none;
+  .lt-ie9 & { display: inline; }
   + label {
     @extend %icon;
     &::before {

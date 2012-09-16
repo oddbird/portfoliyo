@@ -156,6 +156,9 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   text-indent: -9999px;
   text-align: left;
 }
+.lt-ie9 #messages .close, #messages .lt-ie9 .close {
+  text-indent: 0;
+}
 #messages .close:focus {
   outline: 0;
 }
@@ -178,37 +181,64 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 [type="checkbox"] + label:before {
   content: "\e001";
 }
+.lt-ie9 [type="checkbox"] + label:before {
+  content: "";
+}
 
 [type="checkbox"]:checked + label:before {
   content: "\e002";
+}
+.lt-ie9 [type="checkbox"]:checked + label:before {
+  content: "";
 }
 
 [type="radio"]:checked + label:before {
   content: "\e003";
 }
+.lt-ie9 [type="radio"]:checked + label:before {
+  content: "";
+}
 
 [type="radio"] + label:before {
   content: "\e004";
+}
+.lt-ie9 [type="radio"] + label:before {
+  content: "";
 }
 
 .message.success:before, .summary li:before, .benefits li:before {
   content: "\e00e";
 }
+.lt-ie9 .message.success:before, .lt-ie9 .summary li:before, .summary .lt-ie9 li:before, .lt-ie9 .benefits li:before, .benefits .lt-ie9 li:before {
+  content: "";
+}
 
 .message.error:before {
   content: "\e00f";
+}
+.lt-ie9 .message.error:before {
+  content: "";
 }
 
 #messages .close:before {
   content: "\e010";
 }
+.lt-ie9 #messages .close:before, #messages .lt-ie9 .close:before {
+  content: "";
+}
 
 .message.info:before {
   content: "\e011";
 }
+.lt-ie9 .message.info:before {
+  content: "";
+}
 
 .message.warning:before {
   content: "\e012";
+}
+.lt-ie9 .message.warning:before {
+  content: "";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -508,14 +538,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 }
 
 [type="checkbox"], [type="radio"] {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
+  display: none;
+}
+.lt-ie9 [type="checkbox"], .lt-ie9 [type="radio"] {
+  display: inline;
 }
 [type="checkbox"] + label::before, [type="radio"] + label::before {
   margin-left: .4em;

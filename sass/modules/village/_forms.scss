@@ -21,7 +21,7 @@ $formspace: $center;
     @include bleed;
     @include padding-leader(.25);
     @include padding-trailer(.25);
-    background: rgba($base01,.5);
+    @include rgba-background(rgba($base01,.5));
     color: $base3;
   }
   .fieldset {
