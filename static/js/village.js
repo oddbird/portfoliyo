@@ -289,7 +289,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializeFeed = function () {
-        // PYO.fetchBacklog('.village-feed');
+        PYO.fetchBacklog('.village-feed');
         PYO.activeStudentId = $('.village-feed').data('student-id');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village');
