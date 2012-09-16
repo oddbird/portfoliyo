@@ -2,9 +2,12 @@
 // Village Layout
 
 .village-app {
-  min-width: $break-width;
   [role="main"] { padding: 0; }
-  .container, [role="banner"], [role="contentinfo"] { @include susy-grid-background; }
+  .container, [role="banner"], [role="contentinfo"] {
+    @include container($total-columns);
+    @include susy-grid-background;
+    min-width: $break-width;
+  }
 }
 
 .village {
