@@ -241,9 +241,23 @@ var PYO = (function (PYO, $) {
         if ($(container).length) {
             var feed = $(container);
             var url = feed.data('backlog-url');
-            $.get(url, function (data) {
-                PYO.addPost(data);
-            });
+            var loadFeed = function () {
+                feed.loadingOverlay();
+                $.get(url, function (data) {
+                    feed.loadingOverlay('remove');
+                    PYO.addPost(data);
+                }).error(function (request, status, error) {
+                    var msg = ich.feed_error_msg();
+                    msg.find('.reload-feed').click(function (e) {
+                        e.preventDefault();
+                        msg.remove();
+                        loadFeed();
+                    });
+                    feed.prepend(msg).loadingOverlay('remove');
+                });
+            };
+
+            loadFeed();
         }
     };
 

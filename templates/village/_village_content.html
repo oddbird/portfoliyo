@@ -7,6 +7,7 @@
   <section class="village-feed" data-student-id="{{ student.id }}" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ relationship.description_or_role }}" data-user-id="{{ request.user.profile.id }}" data-pusher-key="{{ PUSHER_KEY }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url json_posts student_id=student.id %}">
     {% icanhaz "post" %}
     {% icanhaz "post_timeout_msg" %}
+    {% icanhaz "feed_error_msg" %}
   </section>
   {% include "posts/_post_add_form.html" %}
   {% endblock village-main %}
