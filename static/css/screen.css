@@ -780,11 +780,6 @@ textarea {
 .meta span, .meta a {
   display: block;
 }
-.meta button {
-  width: 100%;
-  text-align: left;
-  background: none;
-}
 .meta button:link, .meta button:visited {
   color: #fdf6e3;
   text-decoration: none;
@@ -1446,7 +1441,7 @@ textarea {
 }
 
 .village-nav .addstudent-link:link, .addelder-link:link, .village-nav .addstudent-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/85990060.png?1347821714');
+  background: url('../images/rgbapng/85990060.png?1347821926');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1586,7 +1581,7 @@ textarea {
   border-bottom-width: 0.07143em;
   padding-bottom: 0.33929em;
   padding-top: 0.41071em;
-  background: url('../images/rgbapng/eee8d540.png?1347821636');
+  background: url('../images/rgbapng/eee8d540.png?1347821926');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -1600,7 +1595,7 @@ textarea {
   padding-left: 1em;
 }
 .village-nav a:focus, .village-nav a:hover, .village-nav a:active {
-  background: url('../images/rgbapng/eee8d57f.png?1347821636');
+  background: url('../images/rgbapng/eee8d57f.png?1347821926');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -1682,11 +1677,11 @@ textarea {
   overflow: hidden;
 }
 .post.mine {
-  background: url('../images/rgbapng/268bd21a.png?1347821465');
+  background: url('../images/rgbapng/268bd21a.png?1347821926');
   background: rgba(38, 139, 210, 0.1);
 }
 .post.not-posted {
-  background: url('../images/rgbapng/dc322f1a.png?1347821465');
+  background: url('../images/rgbapng/dc322f1a.png?1347821926');
   background: rgba(220, 50, 47, 0.1);
 }
 .post .nametag {
