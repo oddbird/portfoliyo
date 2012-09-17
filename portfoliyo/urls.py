@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls.defaults import patterns, url, include
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
@@ -24,6 +25,15 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('portfoliyo.users.urls')),
     )
+
+
+if settings.DEBUG:
+    urlpatterns += patterns(
+        '',
+        url(r'^_debug/403/$', direct_to_template, {'template': '403.html'}),
+        url(r'^_debug/404/$', direct_to_template, {'template': '404.html'}),
+        url(r'^_debug/500/$', direct_to_template, {'template': '500.html'}),
+        )
 
 
 def handler500(request):
