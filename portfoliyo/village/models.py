@@ -92,6 +92,7 @@ class Post(models.Model):
             'student_id': self.student_id,
             'author': author_name,
             'role': role,
+            'timestamp': self.timestamp.isoformat(),
             'date': dateformat.format(self.timestamp, 'n/j/Y'),
             'time': dateformat.time_format(self.timestamp, 'P'),
             'text': self.html_text,
