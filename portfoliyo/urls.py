@@ -1,6 +1,5 @@
 from django.conf.urls.defaults import patterns, url, include
 from django.contrib.auth.decorators import login_required
-from django.views.defaults import page_not_found, server_error
 from django.views.generic.simple import direct_to_template
 
 from . import admin, views

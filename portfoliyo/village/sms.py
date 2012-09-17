@@ -19,8 +19,9 @@ def receive_sms(source, body):
             "Are you signed up as a user at portfoliyo.org?"
             )
 
-    profile.user.is_active = True
-    profile.user.save()
+    if not profile.user.is_active:
+        profile.user.is_active = True
+        profile.user.save()
 
     students = profile.students
 
