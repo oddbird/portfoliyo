@@ -111,6 +111,9 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
     forms in two tabs and then tries to use the first one.
 
     """
+    username = forms.CharField(label="Username", max_length=255)
+
+
     def __init__(self, *args, **kwargs):
         """Initialize form, including captcha question and expected answer."""
         super(CaptchaAuthenticationForm, self).__init__(*args, **kwargs)
