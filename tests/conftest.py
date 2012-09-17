@@ -16,6 +16,20 @@ def pytest_funcarg__client(request):
 
 
 
+def pytest_funcarg__no_csrf_client(request):
+    """Give a test access to a CSRF-exempt WebTest client."""
+    # We don't use TestCase classes, but we instantiate the django_webtest
+    # TestCase subclass to use its methods for patching/unpatching settings.
+    from tests import client
+    webtestcase = django_webtest.WebTest("__init__")
+    webtestcase.csrf_checks = False
+    webtestcase._patch_settings()
+    request.addfinalizer(webtestcase._unpatch_settings)
+
+    return client.TestClient()
+
+
+
 class FakeSMSMessage(object):
     """A fake SMSMessage object for collecting sent SMSes in tests."""
     def __init__(self, to, from_, body):

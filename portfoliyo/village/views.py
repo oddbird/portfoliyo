@@ -15,6 +15,9 @@ from ..view.ajax import ajax
 from . import forms, models
 
 
+# number of posts to show in backlog
+BACKLOG_POSTS = 100
+
 
 @login_required
 @ajax('village/_dashboard_content.html')
@@ -131,7 +134,8 @@ def json_posts(request, student_id):
                         'error': 'Posts are limited to %s characters.' % limit,
                         'success': False,
                         }
-                    )
+                    ),
+                content_type='application/json',
                 )
         post = models.Post.create(
             request.user.profile, rel.student, text, sequence_id)
@@ -147,7 +151,10 @@ def json_posts(request, student_id):
         'posts':
             [
             post.json_data() for post in
-            reversed(rel.student.posts_in_village.order_by('-timestamp')[:100])
+            reversed(
+                rel.student.posts_in_village.order_by(
+                    '-timestamp')[:BACKLOG_POSTS]
+                )
             ],
         }
 
