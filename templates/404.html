@@ -2,10 +2,15 @@
 
 {% block title %}Page not found | {{ block.super }}{% endblock %}
 
-{% block body %}
-<article class="fourohfour">
-  <h1><b>Portfoliyo</b> Village</h1>
-  <h2>404 Error: Page not found.</h2>
-  <p>Sorry, couldn't find what you're looking for!  Maybe try the <a href="/">home page</a>?</p>
+{% block maincontent %}
+<article class="errorpage-404">
+  <h2 class="pagehead">Oops, we lost something.</h2>
+  <p>
+    Sorry, we can't find the page you requested!
+    We know where the <a href="/">home page</a> is,
+    if you want to go there.
+    We highly recommend it.
+    That's one of our favorite pages.
+  </p>
 </article>
-{% endblock body %}
+{% endblock maincontent %}

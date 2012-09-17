@@ -1,14 +1,14 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
   <meta charset="utf-8" />
   <title>Technical troubles</title>
-  
+
   <!--[if IE]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  
+
   <style type="text/css" media="screen">
     /* @group reset */
     html, body, div, span, applet, object, iframe,
@@ -72,7 +72,7 @@
       display: block;
     }
     /* @end */
-    
+
     body {
       text-align: center;
       font-family: Helvetica, Arial, sans-serif;
@@ -83,8 +83,8 @@
     html>body {
       font-size: 24px;
     }
-    
-    
+
+
     .error {
       width: 32em;
       margin: 3em auto;
@@ -94,7 +94,7 @@
       border-width: .02778em 0px;
       padding: .97222em 0;
     }
-    
+
     h1 {
       font-size: 1.5em;
       line-height: 2em;
@@ -102,7 +102,7 @@
       letter-spacing: .01em;
       font-weight: bold;
     }
-    
+
     h1 strong {
       font-size: .333em;
       line-height: 1em;
@@ -110,17 +110,31 @@
       display: block;
       color: #999;
     }
-    
-    div[role="main"] {
+
+    div[role="main"], p {
       margin-bottom: 1.5em;
     }
-    
+
+    strong {
+      font-weight: bold;
+    }
+
+    .sentry {
+      font-size: .5em;
+      line-height: 1.5em;
+      margin: 0;
+    }
+
+    .sentry strong {
+      display: block;
+    }
+
   </style>
-  
+
 </head>
 
 <body>
-  
+
   <article class="error e500">
     <h1><strong>500</strong> Server error</h1>
 
@@ -131,13 +145,13 @@
         the <a href="/">home page</a>, or try back again later?
       </p>
       {% if request.sentry %}
-      <p>
-        If you need assistance, you may reference this error as
-        <strong>{{ request.sentry.id }}</strong>.
+      <p class="sentry">
+        If you need assistance, you may reference this error as:
+        <strong>{{ request.sentry.id }}</strong>
       </p>
       {% endif %}
     </div>
   </article>
-  
+
  </body>
 </html>

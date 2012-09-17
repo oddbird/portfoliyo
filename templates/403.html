@@ -1,0 +1,29 @@
+{% extends "base_site.html" %}
+
+{% block title %}Page not found | {{ block.super }}{% endblock %}
+
+{% block maincontent %}
+<article class="errorpage-403">
+  <h2 class="pagehead">Something smells fishy.</h2>
+  <p>
+    Our highly-trained form-sniffing dogs think that submission looks like spam,
+    or an attempt to compromise your account.
+    That can happen if you leave a tab sitting open for too long
+    before submitting a form.
+    You can try again:
+  </p>
+  <ol>
+    <li>Hit the back button in your browser</li>
+    <li>Copy any important data from the form</li>
+    <li>Reload the page</li>
+    <li>Paste and submit again.</li>
+  </ol>
+  <p>
+    If you get this error repeatedly,
+    please contact
+    <span class="email">support(put the 'at' sign here)portfoliyo.org</span>
+    with a description of what you were trying to do on the site.
+    Sorry for the hassle!
+  </p>
+</article>
+{% endblock maincontent %}
