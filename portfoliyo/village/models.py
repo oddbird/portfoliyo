@@ -6,11 +6,8 @@ import re
 from django.db import models
 from django.utils import timezone, dateformat, html
 
-from .pusher import get_pusher
+from portfoliyo.pusher import get_pusher
 from ..users import invites, models as user_models
-
-
-
 
 
 

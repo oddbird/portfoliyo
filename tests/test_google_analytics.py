@@ -1,3 +1,4 @@
+"""Tests for GA support code."""
 from django.test.utils import override_settings
 
 from portfoliyo import google_analytics
