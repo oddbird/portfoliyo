@@ -1456,7 +1456,7 @@ textarea {
   height: 100%;
 }
 
-.village-nav, .village-feed {
+.village-nav, .village-feed, .village-elders {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1859,10 +1859,9 @@ textarea {
 }
 
 .village-elders {
-  padding-top: 0.63889em;
-  float: right;
+  right: 0;
   width: 25.45455%;
-  padding-left: 1.81818%;
+  padding: 0.63889em 1.81818%;
   height: 100%;
   border-left: 1px solid #93a1a1;
 }

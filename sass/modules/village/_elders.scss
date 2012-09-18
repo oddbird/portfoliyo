@@ -3,10 +3,10 @@
 
 .village-elders {
   @extend %village-lists;
-  @include padding-leader(.5);
-  float: right;
+  @extend %overflow-y;
+  right: 0;
   width: space($right, $content-width);
-  padding-left: gutter($content-width);
+  padding: rhythm(.5) gutter($content-width);
   height: 100%;
   border-left: 1px solid $village-border-color;
   h2 { @extend %gone; }
