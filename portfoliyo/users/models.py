@@ -59,6 +59,8 @@ class Profile(models.Model):
     # serves as default fall-back for the relationship-description field
     role = models.CharField(max_length=200)
     school_staff = models.BooleanField(default=False)
+    # code for parent-initiated signups
+    code = models.CharField(max_length=20, blank=True, null=True, unique=True)
 
 
     def __unicode__(self):
@@ -123,7 +125,7 @@ class Relationship(models.Model):
 
     @property
     def description_or_role(self):
-        """If the description is empty, fall back to profile role."""
+        """If the description is empty, fall back to from_profile role."""
         return self.description or self.from_profile.role
 
 

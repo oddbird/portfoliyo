@@ -1,35 +1,37 @@
 # -*- coding: utf-8 -*-
+import base64
 import datetime
+import hashlib
 from south.db import db
-from south.v2 import SchemaMigration
+from south.v2 import DataMigration
 from django.db import models
 
 
-class Migration(SchemaMigration):
+# 1 and 0 already eliminated by base32 encoding
+AMBIGUOUS = ['L', 'I', 'O', 'S', '5']
 
 
-    depends_on = [
-        ('users', '0001_initial'),
-        ]
+def generate_code(username):
+    """Generate a probably-unique six-letter code given a unique username."""
+    full = base64.b32encode(hashlib.sha1(username).digest())
+    for char in AMBIGUOUS:
+        full = full.replace(char, '')
+    return full[:6]
 
+
+class Migration(DataMigration):
 
     def forwards(self, orm):
-        # Adding model 'Post'
-        db.create_table('village_post', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('author', self.gf('django.db.models.fields.related.ForeignKey')(related_name='authored_posts', to=orm['users.Profile'])),
-            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now)),
-            ('student', self.gf('django.db.models.fields.related.ForeignKey')(related_name='posts_in_village', to=orm['users.Profile'])),
-            ('original_text', self.gf('django.db.models.fields.TextField')()),
-            ('html_text', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('village', ['Post'])
-
+        "Write your forwards methods here."
+        for profile in orm.Profile.objects.filter(school_staff=True).filter(code__isnull=True).select_related('user'):
+            profile.code = generate_code(profile.user.username)
+            profile.save()
 
     def backwards(self, orm):
-        # Deleting model 'Post'
-        db.delete_table('village_post')
-
+        "Write your backwards methods here."
+        for profile in orm.Profile.objects.filter(school_staff=True).filter(code__isnull=False):
+            profile.code = None
+            profile.save()
 
     models = {
         'auth.group': {
@@ -70,6 +72,7 @@ class Migration(SchemaMigration):
         },
         'users.profile': {
             'Meta': {'object_name': 'Profile'},
+            'code': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
@@ -77,15 +80,15 @@ class Migration(SchemaMigration):
             'school_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'user': ('portfoliyo.users.models.AutoOneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
-        'village.post': {
-            'Meta': {'object_name': 'Post'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'authored_posts'", 'to': "orm['users.Profile']"}),
-            'html_text': ('django.db.models.fields.TextField', [], {}),
+        'users.relationship': {
+            'Meta': {'unique_together': "[('from_profile', 'to_profile', 'kind')]", 'object_name': 'Relationship'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'from_profile': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_from'", 'to': "orm['users.Profile']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'original_text': ('django.db.models.fields.TextField', [], {}),
-            'student': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'posts_in_village'", 'to': "orm['users.Profile']"}),
-            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now'})
+            'kind': ('django.db.models.fields.CharField', [], {'default': "'elder'", 'max_length': '20'}),
+            'to_profile': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_to'", 'to': "orm['users.Profile']"})
         }
     }
 
-    complete_apps = ['village']
+    complete_apps = ['users']
+    symmetrical = True
