@@ -1457,15 +1457,15 @@ textarea {
   overflow-y: scroll;
 }
 
-.village-add-form, .dashboard, .elder-add-form {
+.village-add-form, .dashboard, .pjax-error, .elder-add-form {
   height: 100%;
   padding: 2.55556em;
   overflow-y: scroll;
 }
-.village-add-form > :last-child, .dashboard > :last-child, .elder-add-form > :last-child {
+.village-add-form > :last-child, .dashboard > :last-child, .pjax-error > :last-child, .elder-add-form > :last-child {
   margin-bottom: 2.55556em;
 }
-.village-add-form h2, .dashboard h2, .elder-add-form h2 {
+.village-add-form h2, .dashboard h2, .pjax-error h2, .elder-add-form h2 {
   font-size: 1.94444em;
   line-height: 1.31429em;
   margin-bottom: 0.65714em;
@@ -1473,7 +1473,7 @@ textarea {
   font-weight: bold;
 }
 
-.village-add-form, .dashboard {
+.village-add-form, .dashboard, .pjax-error {
   width: 74.60317%;
   float: right;
   margin-right: 0;
@@ -1836,14 +1836,14 @@ textarea {
   text-transform: uppercase;
 }
 
-.post .timeout, .feed-error {
+.post .timeout, .feed-error, .pjax-error p {
   background: #dc322f;
   color: #fdf6e3;
 }
-.post .timeout a:link, .feed-error a:link, .post .timeout a:visited, .feed-error a:visited {
+.post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
   color: #b1d0dd;
 }
-.post .timeout a:focus, .feed-error a:focus, .post .timeout a:hover, .feed-error a:hover, .post .timeout a:active, .feed-error a:active {
+.post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
   color: #eeb2c1;
 }
 
@@ -1904,6 +1904,10 @@ textarea {
   display: block;
   border-color: #93a1a1;
   padding-left: 0.82143em;
+}
+
+.pjax-error p {
+  padding: 1.27778em;
 }
 
 @-moz-keyframes loading {
