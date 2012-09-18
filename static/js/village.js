@@ -304,6 +304,8 @@ var PYO = (function (PYO, $) {
             context.on('click', 'a.ajax-link', function (e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
+                context.find('.village-nav .ajax-link').not($(this)).removeClass('active');
+                $(this).addClass('active');
                 PYO.ajaxLoad(url);
             });
         }
