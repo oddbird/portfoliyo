@@ -2,7 +2,7 @@
 
 {% block village-content %}
 <div class="village-main">
-  <form method="POST" class="elder-add-form" id="invite-elders-form">
+  <form method="POST" action="{% url invite_elders student_id=student.id %}" class="elder-add-form" id="invite-elders-form">
     {% csrf_token %}
     <h2>Invite Elders for {{ student }}</h2>
     {{ form.non_field_errors }}

@@ -2,7 +2,7 @@
 {% load widget_tweaks %}
 
 {% block village-content %}
-<form method="POST" class="village-add-form" id="add-student-form">
+<form method="POST" action="{% url add_student %}" class="village-add-form" id="add-student-form">
   {% csrf_token %}
   <h2>Add Student</h2>
   {{ form.non_field_errors }}
