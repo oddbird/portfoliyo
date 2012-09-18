@@ -18,7 +18,7 @@
   speak: none;
 }
 
-%icon::before {
+%icon:before {
   @extend %icon-content;
   margin-right: .4em;
 }
@@ -30,12 +30,11 @@
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
-  .lt-ie9 & { text-indent: 0; }
   &:focus {
     outline: 0;
-    &::before { outline: 1px dotted; }
+    &:before { outline: 1px dotted; }
   }
-  &::before {
+  &:before {
     position: absolute;
     top: 0;
     left: 0;
@@ -44,42 +43,33 @@
   }
 }
 
-%icon-expand {
-  @include transition(max-width 400ms);
-  display: inline-block;
-  max-width: 1em;
-  height: rhythm(1);
-  overflow: hidden;
-  #{$focus} { max-width: 100%; }
-}
-
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
   @extend %icon-content;
   content: attr(data-icon);
 }
 
-%icon-partial:before { content: "\25a3"; .lt-ie9 & { content: ""; } }
-%icon-unchecked:before { content: "\2610"; .lt-ie9 & { content: ""; } }
-%icon-checked:before { content: "\2611"; .lt-ie9 & { content: ""; } }
-%icon-radio-checked:before { content: "\25c9"; .lt-ie9 & { content: ""; } }
-%icon-radio-unchecked:before { content: "\25ef"; .lt-ie9 & { content: ""; } }
-%icon-user:before { content: "\265f"; .lt-ie9 & { content: ""; } }
-%icon-users:before { content: "\265b"; .lt-ie9 & { content: ""; } }
-%icon-settings:before { content: "\2731"; .lt-ie9 & { content: ""; } }
-%icon-comments:before { content: "\2601"; .lt-ie9 & { content: ""; } }
-%icon-exit:before { content: "\261b"; .lt-ie9 & { content: ""; } }
-%icon-key:before { content: "\2762"; .lt-ie9 & { content: ""; } }
-%icon-pencil:before { content: "\270e"; .lt-ie9 & { content: ""; } }
-%icon-fire:before { content: "\2668"; .lt-ie9 & { content: ""; } }
-%icon-checkmark:before { content: "\2713"; .lt-ie9 & { content: ""; } }
-%icon-x:before { content: "\2717"; .lt-ie9 & { content: ""; } }
-%icon-x-altx-alt:before { content: "\2718"; .lt-ie9 & { content: ""; } }
-%icon-info-circle:before { content: "\69"; .lt-ie9 & { content: ""; } }
-%icon-warning:before { content: "\26a0"; .lt-ie9 & { content: ""; } }
-%icon-home:before { content: "\2617"; .lt-ie9 & { content: ""; } }
-%icon-help:before { content: "\3f"; .lt-ie9 & { content: ""; } }
-%icon-plus:before { content: "\2b"; .lt-ie9 & { content: ""; } }
-%icon-plus-alt:before { content: "\271a"; .lt-ie9 & { content: ""; } }
-%icon-mobile:before { content: "\275f"; .lt-ie9 & { content: ""; } }
-%icon-circle:before { content: "\25cf"; .lt-ie9 & { content: ""; } }
+%icon-partial:before { content: "\25a3"; }
+%icon-unchecked:before { content: "\2610"; }
+%icon-checked:before { content: "\2611"; }
+%icon-radio-checked:before { content: "\25c9"; }
+%icon-radio-unchecked:before { content: "\25ef"; }
+%icon-user:before { content: "\265f"; }
+%icon-users:before { content: "\265b"; }
+%icon-settings:before { content: "\2731"; }
+%icon-comments:before { content: "\2601"; }
+%icon-exit:before { content: "\261b"; }
+%icon-key:before { content: "\2762"; }
+%icon-pencil:before { content: "\270e"; }
+%icon-checkmark:before { content: "\2713"; }
+%icon-x:before { content: "\2717"; }
+%icon-x-alt:before { content: "\2718"; }
+%icon-info-circle:before { content: "\69"; }
+%icon-warning:before { content: "\26a0"; }
+%icon-home:before { content: "\2617"; }
+%icon-help:before { content: "\3f"; }
+%icon-plus:before { content: "\2b"; }
+%icon-plus-alt:before { content: "\271a"; }
+%icon-mobile:before { content: "\275f"; }
+%icon-record:before { content: "\25cf"; }
+%icon-fire:before { content: "\2668"; }

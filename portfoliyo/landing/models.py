@@ -7,7 +7,8 @@ from django.utils.timezone import now
 class Lead(models.Model):
     """Someone who signs up for more info at the landing page."""
     email = models.EmailField()
-    following_up = models.ForeignKey(User, blank=True, null=True)
+    following_up = models.ForeignKey(
+        User, blank=True, null=True, limit_choices_to={'is_staff': True})
     notes = models.TextField(blank=True)
     signed_up = models.DateTimeField(default=now)
 

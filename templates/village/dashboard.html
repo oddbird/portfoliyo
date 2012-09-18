@@ -1,12 +1,6 @@
 {% extends "village/base.html" %}
 
-{% block maincontent %}
-<article class="village" data-pusher-key="{{ PUSHER_KEY }}">
-
+{% block village %}
   {% include "village/_student_list.html" %}
-
   {% include "village/_dashboard_content.html" %}
-
-</article>
-
-{% endblock maincontent %}
+{% endblock village %}

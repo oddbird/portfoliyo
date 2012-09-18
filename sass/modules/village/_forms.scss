@@ -51,7 +51,7 @@ $formspace: $center;
 
 .remove-row {
   @extend %icon-replace;
-  @extend %icon-x-altx-alt;
+  @extend %icon-x-alt;
   @include adjust-font-size-to($smallpx);
   position: absolute;
   top: rhythm(.25, $smallpx);

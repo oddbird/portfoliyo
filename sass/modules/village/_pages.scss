@@ -34,8 +34,11 @@
 // ---------------------------------------------------------------------------
 // Village Lists
 
-$village-list-size: $smallpx;
-$village-border-color: $base1;
+$village-border-color   : $base1;
+
+$village-list-size      : $smallpx;
+$village-ratio          : $base-font-size / $village-list-size;
+$village-bleed          : $grid-padding * $village-ratio;
 
 %village-lists {
   @include adjust-font-size-to($village-list-size);

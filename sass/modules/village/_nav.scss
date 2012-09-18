@@ -7,16 +7,16 @@ $village-nav-bg   : $base2;
   @extend %village-lists;
   @extend %overflow-y;
   @include box-sizing(content-box);
-  left: - $grid-padding;
+  left: - $village-bleed;
   width: columns($left);
-  padding-left: $grid-padding;
+  padding-left: $village-bleed;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
   a {
     #{$link} {
       @extend %village-activenav;
       @include ellipsis;
-      @include bleed($grid-padding, left);
+      @include bleed($village-bleed, left);
       @include trailing-border(1px,.25,$village-list-size);
       @include padding-leader(.25,$village-list-size);
       @include rgba-background(rgba($village-nav-bg,.25));
@@ -24,7 +24,6 @@ $village-nav-bg   : $base2;
       display: block;
       position: relative;
       border-color: $village-border-color;
-      padding-left: $grid-padding;
     }
     #{$focus} {
       @include rgba-background(rgba($village-nav-bg,.5));

@@ -31,6 +31,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
 
   .reset-link {
     @extend %icon-replace;
+    @extend %icon-help;
     width: 1em;
   }
 
@@ -114,7 +115,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
 
   .formfield {
     @include clearfix;
-    &::after { clear: none; }
+    &:after { clear: none; }
     label { @extend %gone; }
     input { @include span-columns(3,5); margin-right: 0; }
     .action-betasignup {
@@ -156,7 +157,7 @@ li {
     position: relative;
     padding-left: 1.5em;
     .lt-ie9 & { padding-left: 0; }
-    &::before {
+    &:before {
       position: absolute;
       left: 0;
       top: 0;
@@ -164,7 +165,7 @@ li {
   }
   .summary & {
     @include trailer(.5);
-    &::before { color: $green; }
+    &:before { color: $green; }
   }
 }
 

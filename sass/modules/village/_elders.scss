@@ -3,29 +3,32 @@
 
 .village-elders {
   @extend %village-lists;
-  @include padding-leader(.5);
-  float: right;
-  width: space($right, $content-width);
+  @extend %overflow-y;
+  @include box-sizing(content-box);
+  right: - $village-bleed;
+  width: columns($right, $content-width);
+  padding-right: $village-bleed;
   padding-left: gutter($content-width);
   height: 100%;
   border-left: 1px solid $village-border-color;
   h2 { @extend %gone; }
+  ul { @include leader(.5, $village-list-size); }
   li {
     @extend %icon;
-    @extend %icon-circle;
-    &::before {
+    @extend %icon-record;
+    &:before {
       float: left;
       margin: 0;
       color: $green;
     }
-    &.offline { &::before { color: $yellow; } }
+    &.offline { &:before { color: $yellow; } }
     &.inactive {
       @extend %icon-warning;
-      &::before { color: $base1; }
+      &:before { color: $base1; }
     }
     &.mobile {
       @extend %icon-mobile;
-      &::before { color: $base; }
+      &:before { color: $base; }
     }
   }
   b, span {
@@ -40,6 +43,7 @@
 .addelder-link {
   @extend %village-addlink;
   @include leader(.5,$village-list-size);
+  @include trailer(.5,$village-list-size);
   @include rhythm-borders(1px,.25,$village-list-size);
   display: block;
   border-color: $village-border-color;
