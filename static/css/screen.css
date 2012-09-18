@@ -169,9 +169,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   text-indent: 0;
   margin-right: 0;
 }
-.lt-ie9 .main-login .reset-link:before, .main-login .lt-ie9 .reset-link:before, .lt-ie9 .add-row:before, .lt-ie9 .remove-row:before, .lt-ie9 #messages .close:before, #messages .lt-ie9 .close:before {
-  display: none;
-}
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
 [data-icon]:before {
