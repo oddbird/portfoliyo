@@ -113,6 +113,7 @@ $input-rhythm: .25;
       display: inline-block;
       padding: 0;
       text-align: left;
+      .lt-ie9 &:before { display: none; }
     }
   }
   .formhelp { @include pre($label, $context); }
@@ -158,12 +159,12 @@ $form-action-note-size: $smallpx;
   .lt-ie9 & { display: inline; }
   + label {
     @extend %icon;
-    &::before {
+    &:before {
       margin-left: .4em;
       color: $base01;
     }
   }
-  &:checked + label { &::before { color: $blue; } }
+  &:checked + label { &:before { color: $blue; } }
   &:focus + label { color: $base03; }
 }
 

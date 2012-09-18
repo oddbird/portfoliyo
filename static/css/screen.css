@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .village-elders li::before, .message::before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-elders li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before, [type="checkbox"] + label::before, [type="radio"] + label::before, .brand .wordmark::before, .meta span::before, .meta a::before, .meta button::before, .reset-link::before, .summary li::before, .benefits li::before, .village-elders li::before, .message::before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-elders li:before, .message:before {
   margin-right: .4em;
 }
 
@@ -156,21 +156,21 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   text-indent: -9999px;
   text-align: left;
 }
-.lt-ie9 .main-login .reset-link, .main-login .lt-ie9 .reset-link, .lt-ie9 .add-row, .lt-ie9 .remove-row, .lt-ie9 #messages .close, #messages .lt-ie9 .close {
-  text-indent: 0;
-}
 .main-login .reset-link:focus, .add-row:focus, .remove-row:focus, #messages .close:focus {
   outline: 0;
 }
-.main-login .reset-link:focus::before, .add-row:focus::before, .remove-row:focus::before, #messages .close:focus::before {
+.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.main-login .reset-link::before, .add-row::before, .remove-row::before, #messages .close::before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before {
   position: absolute;
   top: 0;
   left: 0;
   text-indent: 0;
   margin-right: 0;
+}
+.lt-ie9 .main-login .reset-link:before, .main-login .lt-ie9 .reset-link:before, .lt-ie9 .add-row:before, .lt-ie9 .remove-row:before, .lt-ie9 #messages .close:before, #messages .lt-ie9 .close:before {
+  display: none;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -181,120 +181,69 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 [type="checkbox"] + label:before {
   content: "\2610";
 }
-.lt-ie9 [type="checkbox"] + label:before {
-  content: "";
-}
 
 [type="checkbox"]:checked + label:before {
   content: "\2611";
-}
-.lt-ie9 [type="checkbox"]:checked + label:before {
-  content: "";
 }
 
 [type="radio"]:checked + label:before {
   content: "\25c9";
 }
-.lt-ie9 [type="radio"]:checked + label:before {
-  content: "";
-}
 
 [type="radio"] + label:before {
   content: "\25ef";
-}
-.lt-ie9 [type="radio"] + label:before {
-  content: "";
 }
 
 .meta span:before, .meta a:before, .meta [href*="edit"]:before {
   content: "\2731";
 }
-.lt-ie9 .meta span:before, .meta .lt-ie9 span:before, .lt-ie9 .meta a:before, .meta .lt-ie9 a:before, .lt-ie9 .meta [href*="edit"]:before, .meta .lt-ie9 [href*="edit"]:before {
-  content: "";
-}
 
 .meta button:before {
   content: "\261b";
-}
-.lt-ie9 .meta button:before, .meta .lt-ie9 button:before {
-  content: "";
 }
 
 .meta [href*="password"]:before {
   content: "\2762";
 }
-.lt-ie9 .meta [href*="password"]:before, .meta .lt-ie9 [href*="password"]:before {
-  content: "";
-}
-
-.brand .wordmark:before {
-  content: "\2668";
-}
-.lt-ie9 .brand .wordmark:before, .brand .lt-ie9 .wordmark:before {
-  content: "";
-}
 
 .summary li:before, .benefits li:before, .message.success:before {
   content: "\2713";
-}
-.lt-ie9 .summary li:before, .summary .lt-ie9 li:before, .lt-ie9 .benefits li:before, .benefits .lt-ie9 li:before, .lt-ie9 .message.success:before {
-  content: "";
 }
 
 .message.error:before {
   content: "\2717";
 }
-.lt-ie9 .message.error:before {
-  content: "";
-}
 
 .remove-row:before, #messages .close:before {
   content: "\2718";
-}
-.lt-ie9 .remove-row:before, .lt-ie9 #messages .close:before, #messages .lt-ie9 .close:before {
-  content: "";
 }
 
 .message.info:before {
   content: "\69";
 }
-.lt-ie9 .message.info:before {
-  content: "";
-}
 
 .village-elders li.inactive:before, .message.warning:before {
   content: "\26a0";
 }
-.lt-ie9 .village-elders li.inactive:before, .village-elders .lt-ie9 li.inactive:before, .lt-ie9 .message.warning:before {
-  content: "";
-}
 
-.reset-link:before {
+.main-login .reset-link:before {
   content: "\3f";
-}
-.lt-ie9 .reset-link:before {
-  content: "";
 }
 
 .add-row:before {
   content: "\271a";
 }
-.lt-ie9 .add-row:before {
-  content: "";
-}
 
 .village-elders li.mobile:before {
   content: "\275f";
-}
-.lt-ie9 .village-elders li.mobile:before, .village-elders .lt-ie9 li.mobile:before {
-  content: "";
 }
 
 .village-elders li:before {
   content: "\25cf";
 }
-.lt-ie9 .village-elders li:before, .village-elders .lt-ie9 li:before {
-  content: "";
+
+.brand .wordmark:before {
+  content: "\2668";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -619,11 +568,11 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
 .lt-ie9 [type="checkbox"], .lt-ie9 [type="radio"] {
   display: inline;
 }
-[type="checkbox"] + label::before, [type="radio"] + label::before {
+[type="checkbox"] + label:before, [type="radio"] + label:before {
   margin-left: .4em;
   color: #586e75;
 }
-[type="checkbox"]:checked + label::before, [type="radio"]:checked + label::before {
+[type="checkbox"]:checked + label:before, [type="radio"]:checked + label:before {
   color: #268bd2;
 }
 [type="checkbox"]:focus + label, [type="radio"]:focus + label {
@@ -722,6 +671,9 @@ textarea {
     padding: 0;
     text-align: left;
   }
+  .lt-ie9 .login [type="checkbox"] + label:before, .lt-ie9 .register [type="checkbox"] + label:before, .lt-ie9 .edit-profile [type="checkbox"] + label:before, .lt-ie9 .reset-password [type="checkbox"] + label:before, .lt-ie9 .change-password [type="checkbox"] + label:before, .lt-ie9 .set-password [type="checkbox"] + label:before, .lt-ie9 .initial-password [type="checkbox"] + label:before, .lt-ie9 .login [type="radio"] + label:before, .lt-ie9 .register [type="radio"] + label:before, .lt-ie9 .edit-profile [type="radio"] + label:before, .lt-ie9 .reset-password [type="radio"] + label:before, .lt-ie9 .change-password [type="radio"] + label:before, .lt-ie9 .set-password [type="radio"] + label:before, .lt-ie9 .initial-password [type="radio"] + label:before {
+    display: none;
+  }
   .login .formhelp, .register .formhelp, .edit-profile .formhelp, .reset-password .formhelp, .change-password .formhelp, .set-password .formhelp, .initial-password .formhelp {
     margin-left: 51.47059%;
   }
@@ -759,6 +711,9 @@ textarea {
   display: inline-block;
   padding: 0;
   text-align: left;
+}
+.lt-ie9 .lt-ie9 .login [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .register [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .edit-profile [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .reset-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .change-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .set-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .initial-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .login [type="radio"] + label:before, .lt-ie9 .lt-ie9 .register [type="radio"] + label:before, .lt-ie9 .lt-ie9 .edit-profile [type="radio"] + label:before, .lt-ie9 .lt-ie9 .reset-password [type="radio"] + label:before, .lt-ie9 .lt-ie9 .change-password [type="radio"] + label:before, .lt-ie9 .lt-ie9 .set-password [type="radio"] + label:before, .lt-ie9 .lt-ie9 .initial-password [type="radio"] + label:before {
+  display: none;
 }
 .lt-ie9 .login .formhelp, .lt-ie9 .register .formhelp, .lt-ie9 .edit-profile .formhelp, .lt-ie9 .reset-password .formhelp, .lt-ie9 .change-password .formhelp, .lt-ie9 .set-password .formhelp, .lt-ie9 .initial-password .formhelp {
   margin-left: 51.47059%;
@@ -1614,6 +1569,9 @@ textarea {
   padding: 0;
   text-align: left;
 }
+.lt-ie9 .formset.elders [type="checkbox"] + label:before, .lt-ie9 .formset.elders [type="radio"] + label:before {
+  display: none;
+}
 .formset.elders .formhelp {
   margin-left: 34.14634%;
 }
@@ -1911,18 +1869,18 @@ textarea {
   height: 100%;
   border-left: 1px solid #93a1a1;
 }
-.village-elders li::before {
+.village-elders li:before {
   float: left;
   margin: 0;
   color: #859900;
 }
-.village-elders li.offline::before {
+.village-elders li.offline:before {
   color: #b58900;
 }
-.village-elders li.inactive::before {
+.village-elders li.inactive:before {
   color: #93a1a1;
 }
-.village-elders li.mobile::before {
+.village-elders li.mobile:before {
   color: #657b83;
 }
 .village-elders b, .village-elders span {

@@ -3,11 +3,6 @@
 
 .login { @extend %simple-form; }
 
-.reset-link {
-  @extend %icon;
-  @extend %icon-help;
-}
-
 // ---------------------------------------------------------------------------
 // Activation
 

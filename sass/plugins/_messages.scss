@@ -37,7 +37,7 @@
   z-index: 999;
   .close {
     @extend %icon-replace;
-    @extend %icon-x-altx-alt;
+    @extend %icon-x-alt;
     position: absolute;
     right: rhythm(.5);
     top: rhythm(.5);;

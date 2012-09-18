@@ -12,20 +12,20 @@
   h2 { @extend %gone; }
   li {
     @extend %icon;
-    @extend %icon-circle;
-    &::before {
+    @extend %icon-record;
+    &:before {
       float: left;
       margin: 0;
       color: $green;
     }
-    &.offline { &::before { color: $yellow; } }
+    &.offline { &:before { color: $yellow; } }
     &.inactive {
       @extend %icon-warning;
-      &::before { color: $base1; }
+      &:before { color: $base1; }
     }
     &.mobile {
       @extend %icon-mobile;
-      &::before { color: $base; }
+      &:before { color: $base; }
     }
   }
   b, span {
