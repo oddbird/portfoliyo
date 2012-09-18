@@ -1,7 +1,67 @@
 """Tests for user models."""
 from django.contrib.auth import models as auth_models
+from django.db import IntegrityError
+import pytest
 
+from .. import utils
 from . import factories
+
+
+class TestUser(object):
+    """Tests for our monkeypatches to User model."""
+    def test_unicode_email(self):
+        """Unicode representation is email address, if present."""
+        user = factories.UserFactory.build(email="foo@example.com")
+
+        assert unicode(user) == u"foo@example.com"
+
+
+    def test_unicode_name(self):
+        """If no email, unicode representation is name."""
+        profile = factories.ProfileFactory.create(
+            user__email=None, name="John Doe")
+
+        assert unicode(profile.user) == u"John Doe"
+
+
+    def test_unicode_phone(self):
+        """If no email or name, unicode representation is phone."""
+        profile = factories.ProfileFactory.create(
+            user__email=None, name="", phone="+13216540987")
+
+        assert unicode(profile.user) == u"+13216540987"
+
+
+    def test_unicode_fallback(self):
+        """If no email/name/phone, unicode representation is <unknown>."""
+        profile = factories.ProfileFactory.create(
+            user__email=None, name="", phone=None)
+
+        assert unicode(profile.user) == u"<unknown>"
+
+
+    def test_email_can_be_None(self):
+        """Email can be set to None."""
+        user = factories.UserFactory.create(email=None)
+
+        assert utils.refresh(user).email == None
+
+
+    def test_email_can_be_long(self):
+        """Email can be longer than 75 chars without truncation."""
+        long_email = ('f' * 75) + '@example.com'
+        user = factories.UserFactory.create(email=long_email)
+
+        assert utils.refresh(user).email == long_email
+
+
+    def test_email_unique(self):
+        """Email must be unique."""
+        factories.UserFactory.create(email="foo@example.com")
+
+        with pytest.raises(IntegrityError):
+            factories.UserFactory.create(email="foo@example.com")
+
 
 
 class TestProfile(object):
