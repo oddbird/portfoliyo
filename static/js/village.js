@@ -306,7 +306,10 @@ var PYO = (function (PYO, $) {
                 e.preventDefault();
                 var url = $(this).attr('href');
                 var title = document.title;
-                History.pushState(null, title, url);
+                var state = {};
+                state.title = title;
+                state.url = url;
+                History.pushState(state, title, url);
                 $(this).blur();
             });
 
@@ -314,7 +317,7 @@ var PYO = (function (PYO, $) {
                 if (window.location.pathname === '/student/') {
                     window.location.href = window.location.href;
                 } else {
-                    var state = History.getState();
+                    var state = History.getState().data;
                     var title = state.title;
                     var url = state.url;
                     document.title = title;
