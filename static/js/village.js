@@ -311,14 +311,18 @@ var PYO = (function (PYO, $) {
             });
 
             $(window).on('statechange', function () {
-                var state = History.getState();
-                var title = state.title;
-                var url = state.url;
-                document.title = title;
-                $('title').text(title);
-                context.find('.village-nav .ajax-link').removeClass('active');
-                context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                PYO.ajaxLoad(url);
+                if (window.location.pathname === '/student/') {
+                    window.location.href = window.location.href;
+                } else {
+                    var state = History.getState();
+                    var title = state.title;
+                    var url = state.url;
+                    document.title = title;
+                    $('title').text(title);
+                    context.find('.village-nav .ajax-link').removeClass('active');
+                    context.find('a.ajax-link[href="' + url + '"]').addClass('active');
+                    PYO.ajaxLoad(url);
+                }
             });
         }
     };
