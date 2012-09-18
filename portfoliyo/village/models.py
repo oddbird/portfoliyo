@@ -10,11 +10,15 @@ from portfoliyo.pusher import get_pusher
 from ..users import invites, models as user_models
 
 
+def now():
+    """Return current datetime as tz-aware UTC."""
+    return timezone.now()
+
 
 class Post(models.Model):
     author = models.ForeignKey(
         user_models.Profile, related_name='authored_posts')
-    timestamp = models.DateTimeField(default=timezone.now)
+    timestamp = models.DateTimeField(default=now)
     # the student in whose village this was posted
     student = models.ForeignKey(
         user_models.Profile, related_name='posts_in_village')
@@ -31,8 +35,7 @@ class Post(models.Model):
     @classmethod
     def create(cls, author, student, text, sequence_id=None):
         """Create and return a Post."""
-        html_text, highlights = replace_highlights(html.escape(text), student)
-        html_text = html_text.replace('\n', '<br>')
+        html_text, highlights = process_text(text, student)
 
         post = cls.objects.create(
             author=author,
@@ -43,9 +46,7 @@ class Post(models.Model):
 
         # notify highlighted text-only users
         for rel in highlights:
-            if (rel.elder.user.is_active and
-                    rel.elder.phone and
-                    not rel.elder.user.email):
+            if (rel.elder.user.is_active and rel.elder.phone):
                 sender_rel = post.get_relationship()
                 prefix = text_notification_prefix(sender_rel)
                 sms_body = prefix + post.original_text
@@ -104,18 +105,37 @@ class Post(models.Model):
 
 
 
+def process_text(text, student):
+    """
+    Process given post text in given student's village.
+
+    Escapes HTML, replaces newlines with <br>, replaces highlights.
+
+    Returns tuple of (rendered-text, set-of-highlighted-relationships).
+
+    """
+    name_map = get_highlight_names(student)
+    html_text, highlights = replace_highlights(html.escape(text), name_map)
+    html_text = html_text.replace('\n', '<br>')
+    return html_text, highlights
+
+
+
 highlight_re = re.compile(r'(\A|[\s[(])@(\S+?)(\Z|[\s,.;:)\]?])')
 
 
 
-def replace_highlights(text, student):
+def replace_highlights(text, name_map):
     """
     Detect highlights and wrap with HTML element.
 
     Returns a tuple of (rendered-text, set-of-highlighted-relationships).
 
+    ``name_map`` should be a mapping of highlightable names to the Relationship
+    with the elder who has that name (such as the map returned by
+    ``get_highlight_names``).
+
     """
-    name_map = get_highlight_names(student)
     highlighted = set()
     for _, highlight_name, _ in highlight_re.findall(text):
         highlight_rel = name_map.get(normalize_name(highlight_name))
@@ -157,7 +177,7 @@ def get_highlight_names(student):
                 collisions.add(name)
             name_map[name] = elder_rel
     for collision in collisions:
-        del name_map[name]
+        del name_map[collision]
     return name_map
 
 
