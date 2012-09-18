@@ -233,7 +233,7 @@
         });
 
         // Clone the form template to generate new form instances:
-        template = $(options.formTemplate);
+        template = $(options.formTemplate).clone(true);
         template.removeAttr('id').find('input, select, textarea').each(function () {
             if ($(this).attr('required')) {
                 $(this).addClass('required');

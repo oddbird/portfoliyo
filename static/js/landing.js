@@ -6,20 +6,22 @@ var PYO = (function (PYO, $) {
         var thisForm = $(form);
         var loadingContainer = loading ? $(loading) : thisForm;
 
-        thisForm.ajaxForm({
-            beforeSubmit: function (arr, form, options) {
-                loadingContainer.loadingOverlay();
-            },
-            success: function (response) {
-                var newForm = $(response.html);
-                loadingContainer.loadingOverlay('remove');
-                if (response.html) {
-                    thisForm.replaceWith(newForm);
-                    PYO.ajaxifyForm(newForm, loading);
-                    newForm.find('input[placeholder], textarea[placeholder]').placeholder();
+        if (thisForm.length) {
+            thisForm.ajaxForm({
+                beforeSubmit: function (arr, form, options) {
+                    loadingContainer.loadingOverlay();
+                },
+                success: function (response) {
+                    var newForm = $(response.html);
+                    loadingContainer.loadingOverlay('remove');
+                    if (response.html) {
+                        thisForm.replaceWith(newForm);
+                        PYO.ajaxifyForm(newForm, loading);
+                        newForm.find('input[placeholder], textarea[placeholder]').placeholder();
+                    }
                 }
-            }
-        });
+            });
+        }
     };
 
     return PYO;

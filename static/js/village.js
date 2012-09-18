@@ -2,10 +2,6 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
-    PYO.activeStudentId = $('.village-feed').data('student-id');
-    PYO.activeUserId = $('.village-feed').data('user-id');
-    PYO.pusherKey = $('.village-feed').data('pusher-key');
-
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
             var page = $(container);
@@ -288,13 +284,59 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.ajaxLoad = function (url) {
+        var container = $('.village-content');
+        if (url) {
+            container.loadingOverlay();
+            $.get(url, function (response) {
+                container.loadingOverlay('remove');
+                if (response && response.html) {
+                    container.replaceWith($(response.html));
+                    PYO.initializePage();
+                }
+            });
+        }
+    };
+
+    PYO.ajaxifyVillages = function (container) {
+        if ($(container).length) {
+            var context = $(container);
+            context.on('click', 'a.ajax-link', function (e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                PYO.ajaxLoad(url);
+            });
+        }
+    };
+
+    PYO.initializeEldersForm = function () {
+        $('.formset.elders').formset({
+            prefix: $('.formset.elders').data('prefix'),
+            formTemplate: '#empty-elder-form',
+            formSelector: '.fieldset.elder',
+            addLink: '<a class="add-row" href="javascript:void(0)" title="more elders">more elders</a>',
+            addAnimationSpeed: 'normal',
+            removeAnimationSpeed: 'fast',
+            optionalIfEmpty: true
+        });
+    };
+
     PYO.initializeFeed = function () {
-        PYO.fetchBacklog('.village-feed');
         PYO.activeStudentId = $('.village-feed').data('student-id');
+        PYO.activeUserId = $('.village-feed').data('user-id');
+        PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
-        PYO.characterCount('.village');
+        PYO.characterCount('.village-main');
         PYO.scrollToBottom('.village-feed');
-        PYO.listenForPusherEvents('.village-feed');
+    };
+
+    PYO.initializePage = function () {
+        if ($('.village-feed').length) {
+            PYO.initializeFeed();
+        }
+        if ($('.formset.elders').length) {
+            PYO.initializeEldersForm();
+        }
     };
 
     return PYO;
