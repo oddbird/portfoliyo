@@ -27,7 +27,7 @@ $body-width: $post-width - $photo-width;
 
   .photo { @include span-columns($photo-width,$post-width) }
   .fn { display: inline; }
-  [pubdate] { &::before { content: " on "; } }
+  [pubdate] { &:before { content: " on "; } }
 }
 
 .body {

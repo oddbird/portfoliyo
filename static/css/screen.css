@@ -814,7 +814,7 @@ textarea {
   display: block;
   overflow: hidden;
 }
-.brand .wordmark::before {
+.brand .wordmark:before {
   margin: 0;
 }
 .brand b {
@@ -1178,7 +1178,7 @@ textarea {
 .village-landing .formfield {
   overflow: hidden;
 }
-.village-landing .formfield::after {
+.village-landing .formfield:after {
   clear: none;
 }
 .village-landing .formfield input {
@@ -1249,7 +1249,7 @@ textarea {
 .lt-ie9 .summary li, .lt-ie9 .benefits li {
   padding-left: 0;
 }
-.summary li::before, .benefits li::before {
+.summary li:before, .benefits li:before {
   position: absolute;
   left: 0;
   top: 0;
@@ -1257,7 +1257,7 @@ textarea {
 .summary li {
   margin-bottom: 0.63889em;
 }
-.summary li::before {
+.summary li:before {
   color: #859900;
 }
 
@@ -1988,7 +1988,7 @@ textarea {
   padding-right: 1em;
   border-color: #657b83;
 }
-.message::before {
+.message:before {
   font-size: 1.27778em;
   line-height: 1em;
 }
