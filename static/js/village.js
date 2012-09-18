@@ -301,13 +301,35 @@ var PYO = (function (PYO, $) {
     PYO.ajaxifyVillages = function (container) {
         if ($(container).length) {
             var context = $(container);
+            var initState = {};
+            var initTitle = document.title;
+            var initUrl = window.location.href;
+            initState.title = initTitle;
+            initState.url = initUrl;
+
             context.on('click', 'a.ajax-link', function (e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
-                context.find('.village-nav .ajax-link').not($(this)).removeClass('active');
-                $(this).addClass('active');
+                var title = document.title;
+                var state = {};
+                state.title = title;
+                state.url = url;
+                History.pushState(state, title, url);
+                $(this).blur();
+            });
+
+            $(window).on('statechange', function () {
+                var state = History.getState().data;
+                var title = state.title;
+                var url = state.url;
+                document.title = title;
+                $('title').text(title);
+                context.find('.village-nav .ajax-link').removeClass('active');
+                context.find('a.ajax-link[href="' + url + '"]').addClass('active');
                 PYO.ajaxLoad(url);
             });
+
+            History.replaceState(initState, initTitle, initUrl);
         }
     };
 

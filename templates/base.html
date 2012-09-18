@@ -91,8 +91,9 @@
 <!-- JavaScript -->
 {% block js %}
 <script src="https://d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery-1.8.1.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.history.min.js"></script>
 {% compress js %}
-<script src="{{ STATIC_URL }}js/jquery-1.8.0.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.placeholder.js"></script>
 <script src="{{ STATIC_URL }}js/jquery.defuscator.js"></script>
 <script src="{{ STATIC_URL }}js/viewport.js"></script>
