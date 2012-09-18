@@ -314,7 +314,7 @@ var PYO = (function (PYO, $) {
                 var url = window.location.pathname;
                 context.find('.village-nav .ajax-link').removeClass('active');
                 context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                PYO.ajaxLoad(url);
+                PYO.ajaxLoad(url + '?ajax=true');
             });
         }
     };
