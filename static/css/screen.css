@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before {
   margin-right: .4em;
 }
 
@@ -225,6 +225,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .main-login .reset-link:before {
   content: "\3f";
+}
+
+.village-nav .addstudent-link:before {
+  content: "\2b";
 }
 
 .add-row:before {
@@ -598,23 +602,23 @@ textarea {
   min-height: 2.46429em;
 }
 
-.initial-password, .village-landing .membership {
+.initial-password, .parent-instructions, .village-landing .membership {
   margin-left: -1em;
   padding-left: 1em;
   margin-right: -1em;
   padding-right: 1em;
 }
 
-.initial-password, .formset.elders {
+.initial-password, .parent-instructions, .formset.elders {
   background: #eee8d5;
 }
-.initial-password:after, .formset.elders:after {
+.initial-password:after, .parent-instructions:after, .formset.elders:after {
   content: "";
   display: table;
   clear: both;
 }
 
-.initial-password {
+.initial-password, .parent-instructions {
   margin-top: 0em;
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
@@ -1521,11 +1525,25 @@ textarea {
   color: #657b83;
 }
 
+.parent-instructions {
+  margin-left: -2.12766%;
+  padding-left: 2.12766%;
+  margin-right: -2.12766%;
+  padding-right: 2.12766%;
+  display: block;
+}
+.parent-instructions:link, .parent-instructions:visited {
+  color: #657b83;
+}
+.parent-instructions:focus, .parent-instructions:hover, .parent-instructions:active {
+  color: #d33682;
+}
+
 .formset.elders {
-  margin-left: -1em;
-  padding-left: 1em;
-  margin-right: -1em;
-  padding-right: 1em;
+  margin-left: -2.12766%;
+  padding-left: 2.12766%;
+  margin-right: -2.12766%;
+  padding-right: 2.12766%;
   margin-top: 1.27778em;
   position: relative;
 }
@@ -1567,10 +1585,10 @@ textarea {
   margin-left: 34.04255%;
 }
 .formset.elders .formset-head {
-  margin-left: -1em;
-  padding-left: 1em;
-  margin-right: -1em;
-  padding-right: 1em;
+  margin-left: -2.12766%;
+  padding-left: 2.12766%;
+  margin-right: -2.12766%;
+  padding-right: 2.12766%;
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
   background: url('../images/rgbapng/586e757f.png?1347831617');
@@ -1701,6 +1719,9 @@ textarea {
 }
 .village-nav .unread.zero {
   display: none;
+}
+.village-nav .addstudent-link {
+  font-weight: bold;
 }
 
 .village-feed {

@@ -3,6 +3,14 @@
 
 .village-add-form { @extend %village-solo-page; }
 
+.parent-instructions {
+  @extend %notice;
+  @include bleed(gutter($center));
+  display: block;
+  #{$link} { color: $base; }
+  #{$focus} { color: $accent; }
+}
+
 // ---------------------------------------------------------------------------
 // Add Elder
 
@@ -12,13 +20,13 @@ $formspace: $center;
 
 .formset.elders {
   @extend %notice-base;
-  @include bleed;
+  @include bleed(gutter($center));
   @include leader;
   @include inline-form($left, $formspace - $left, $formspace);
   position: relative;
 
   .formset-head {
-    @include bleed;
+    @include bleed(gutter($center));
     @include padding-leader(.25);
     @include padding-trailer(.25);
     @include rgba-background(rgba($base01,.5));

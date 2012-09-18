@@ -4,7 +4,15 @@
 {% block village-content %}
 <form method="POST" action="{% url add_student %}" class="village-add-form" id="add-student-form">
   {% csrf_token %}
-  <h2>Add Student</h2>
+
+  <a href="#" class="parent-instructions">
+    Print instructions for parents
+    to add themselves and their students to your class,
+    or use the form below to add them yourself.
+  </a>
+
+  <h2>Add a Student</h2>
+
   {{ form.non_field_errors }}
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}

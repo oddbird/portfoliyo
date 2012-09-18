@@ -43,5 +43,10 @@ $village-nav-bg   : $base2;
     text-align: center;
     &.zero { display: none; }
   }
-  .addstudent-link { @extend %village-addlink; }
+  .addstudent-link {
+    @extend %village-addlink;
+    @extend %icon;
+    @extend %icon-plus;
+    font-weight: bold;
+  }
 }
