@@ -301,25 +301,17 @@ var PYO = (function (PYO, $) {
     PYO.ajaxifyVillages = function (container) {
         if ($(container).length) {
             var context = $(container);
-            var initState = {};
-            var initTitle = document.title;
-            var initUrl = window.location.href;
-            initState.title = initTitle;
-            initState.url = initUrl;
 
             context.on('click', 'a.ajax-link', function (e) {
                 e.preventDefault();
                 var url = $(this).attr('href');
                 var title = document.title;
-                var state = {};
-                state.title = title;
-                state.url = url;
-                History.pushState(state, title, url);
+                History.pushState(null, title, url);
                 $(this).blur();
             });
 
             $(window).on('statechange', function () {
-                var state = History.getState().data;
+                var state = History.getState();
                 var title = state.title;
                 var url = state.url;
                 document.title = title;
@@ -328,8 +320,6 @@ var PYO = (function (PYO, $) {
                 context.find('a.ajax-link[href="' + url + '"]').addClass('active');
                 PYO.ajaxLoad(url);
             });
-
-            History.replaceState(initState, initTitle, initUrl);
         }
     };
 
