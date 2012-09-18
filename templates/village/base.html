@@ -3,6 +3,15 @@
 
 {% block mobile-optimized %}{% endblock mobile-optimized %}
 
+{% block maincontent %}
+<article class="village">
+  {% block village %}
+
+  {% endblock village %}
+</article>
+{% endblock maincontent %}
+
+
 {% block last %}
 <div style="display: none;">
   {% include "village/_elder_form.html" with form=elders_formset.empty_form id="empty-elder-form" %}

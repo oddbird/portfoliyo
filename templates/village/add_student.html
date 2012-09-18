@@ -1,12 +1,6 @@
 {% extends "village/base.html" %}
 
-{% block maincontent %}
-<article class="village">
-
+{% block village %}
   {% include "village/_student_list.html" with add_active="true" %}
-
   {% include "village/_add_student_content.html" %}
-
-</article>
-
-{% endblock maincontent %}
+{% endblock village %}

@@ -4,12 +4,15 @@
 .village-elders {
   @extend %village-lists;
   @extend %overflow-y;
-  right: 0;
-  width: space($right, $content-width);
-  padding: rhythm(.5) gutter($content-width);
+  @include box-sizing(content-box);
+  right: - $village-bleed;
+  width: columns($right, $content-width);
+  padding-right: $village-bleed;
+  padding-left: gutter($content-width);
   height: 100%;
   border-left: 1px solid $village-border-color;
   h2 { @extend %gone; }
+  ul { @include leader(.5, $village-list-size); }
   li {
     @extend %icon;
     @extend %icon-record;
@@ -40,6 +43,7 @@
 .addelder-link {
   @extend %village-addlink;
   @include leader(.5,$village-list-size);
+  @include trailer(.5,$village-list-size);
   @include rhythm-borders(1px,.25,$village-list-size);
   display: block;
   border-color: $village-border-color;

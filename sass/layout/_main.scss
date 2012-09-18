@@ -2,7 +2,6 @@
 // Main
 
 [role="main"] {
-  @include rhythm(0,1,1,0);
   color: $base;
   background: $base3;
   .container { @extend %container; }
