@@ -306,26 +306,15 @@ var PYO = (function (PYO, $) {
                 e.preventDefault();
                 var url = $(this).attr('href');
                 var title = document.title;
-                var state = {};
-                state.title = title;
-                state.url = url;
-                History.pushState(state, title, url);
+                History.pushState(null, title, url);
                 $(this).blur();
             });
 
             $(window).on('statechange', function () {
-                if (window.location.pathname === '/student/') {
-                    window.location.href = window.location.href;
-                } else {
-                    var state = History.getState().data;
-                    var title = state.title;
-                    var url = state.url;
-                    document.title = title;
-                    $('title').text(title);
-                    context.find('.village-nav .ajax-link').removeClass('active');
-                    context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                    PYO.ajaxLoad(url);
-                }
+                var url = window.location.pathname;
+                context.find('.village-nav .ajax-link').removeClass('active');
+                context.find('a.ajax-link[href="' + url + '"]').addClass('active');
+                PYO.ajaxLoad(url);
             });
         }
     };
