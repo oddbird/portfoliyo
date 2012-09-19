@@ -100,7 +100,7 @@ MIDDLEWARE_CLASSES = [
     "session_csrf.CsrfMiddleware",
 ]
 
-ROOT_URLCONF = "portfoliyo.urls"
+ROOT_URLCONF = "portfoliyo.view.urls"
 
 TEMPLATE_DIRS = [
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -125,8 +125,9 @@ INSTALLED_APPS = [
     "form_utils",
     "south",
     "portfoliyo.landing",
-    "portfoliyo.users",
-    "portfoliyo.village",
+    "portfoliyo.model.users",
+    "portfoliyo.model.village",
+    "portfoliyo.view",
 ]
 
 MESSAGE_STORAGE = "django.contrib.messages.storage.fallback.FallbackStorage"
@@ -201,10 +202,10 @@ SECURE_CHECKS = [
 INSTALLED_APPS += ["registration"]
 ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = "/login/"
-AUTHENTICATION_BACKENDS = ["portfoliyo.users.auth_backend.EmailBackend"]
+AUTHENTICATION_BACKENDS = ["portfoliyo.model.users.auth_backend.EmailBackend"]
 LOGIN_REDIRECT_URL = "/"
 
 DEFAULT_FROM_EMAIL = 'Portfoliyo <noreply@portfoliyo.org>'
 
-PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.console.ConsoleSMSBackend'
+PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.backends.console.ConsoleSMSBackend'
 PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'

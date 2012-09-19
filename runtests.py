@@ -9,7 +9,7 @@ import sys
 from _pytest.core import main as pytest_main
 
 def main():
-    os.environ["DJANGO_SETTINGS_MODULE"] = "tests.settings"
+    os.environ["DJANGO_SETTINGS_MODULE"] = "portfoliyo.tests.settings"
 
     # Override pytest-django and run South migrations in tests
     from pytest_django import plugin
@@ -21,7 +21,8 @@ def main():
 
     args = sys.argv[1:]
     if not args:
-        args = ["tests/", "--cov-report", "html", "--cov", "portfoliyo"]
+        args = [
+            "portfoliyo/tests/", "--cov-report", "html", "--cov", "portfoliyo"]
     raise SystemExit(pytest_main(args))
 
 
