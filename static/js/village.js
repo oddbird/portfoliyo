@@ -49,7 +49,7 @@ var PYO = (function (PYO, $) {
     PYO.scrollToBottom = function (container) {
         if ($(container).length) {
             var context = $(container);
-            var height = context.get(0).scrollHeight;
+            var height = parseInt(context.get(0).scrollHeight, 10);
             context.scrollTop(height);
         }
     };
@@ -371,7 +371,7 @@ var PYO = (function (PYO, $) {
         if ($(container).length) {
             var context = $(container);
 
-            context.on('click', 'a.ajax-link', function (e) {
+            $('body').on('click', 'a.ajax-link', function (e) {
                 e.preventDefault();
                 if (!($(this).hasClass('.active'))) {
                     var url = $(this).attr('href');
