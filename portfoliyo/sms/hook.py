@@ -62,9 +62,9 @@ def handle_unknown_source(source, body):
             return "Please include your name after the code."
     else:
         return (
-            "Bummer, we don't recognize your number! "
-            "Have you been invited by your child's teacher "
-            "to use Portfoliyo?"
+            "Bummer, we don't recognize your invite code! "
+            "Please make sure it's typed exactly as it is on the paper, "
+            "followed by a space and then your name."
             )
 
 

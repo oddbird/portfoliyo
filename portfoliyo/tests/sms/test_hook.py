@@ -38,8 +38,9 @@ def test_unknown_profile():
     reply = hook.receive_sms('123', 'foo')
 
     assert reply == (
-        "Bummer, we don't recognize your number! "
-        "Have you been invited by your child's teacher to use Portfoliyo?"
+        "Bummer, we don't recognize your invite code! "
+        "Please make sure it's typed exactly as it is on the paper, "
+        "followed by a space and then your name."
         )
 
 
