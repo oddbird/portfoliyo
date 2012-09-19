@@ -2,6 +2,15 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
+    var pageAjax = {
+        XHR: null,
+        count: 0
+    };
+    var postAjax = {
+        XHR: {},
+        count: 0
+    };
+
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
             var page = $(container);
@@ -77,7 +86,7 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.createPostObj = function (author_sequence) {
+    PYO.createPostObj = function (author_sequence, xhr_count) {
         var feed = $('.village-feed');
         var textarea = $('#post-text');
         var author = feed.data('author');
@@ -103,6 +112,7 @@ var PYO = (function (PYO, $) {
                 time: time,
                 text: text,
                 author_sequence_id: author_sequence,
+                xhr_count: xhr_count,
                 escape: true
             }
         };
@@ -116,29 +126,33 @@ var PYO = (function (PYO, $) {
             var form = context.find('form.post-add-form');
             var button = form.find('.action-post');
             var textarea = form.find('#post-text');
-            var author_sequence;
-            var setAuthSeq = function () {
-                author_sequence = feed.find('.post.mine').length + 1;
-            };
 
             form.submit(function (event) {
                 event.preventDefault();
                 if (textarea.val().length) {
-                    setAuthSeq();
-                    form.ajaxSubmit({
-                        data: { author_sequence_id: author_sequence },
-                        beforeSubmit: function (arr, form, opts) {
-                            var response = PYO.createPostObj(author_sequence);
-                            var post = PYO.addPost(response);
-                            textarea.val('').change();
-                            $.doTimeout('new-post-' + author_sequence, 5000, function () {
-                                PYO.postTimeout(post);
-                            });
-                        },
-                        success: function (response) {
-                            PYO.serverSuccess(response);
-                        }
-                    });
+                    var text = textarea.val();
+                    var author_sequence_id = feed.find('.post.mine').length + 1;
+                    var url = feed.data('post-url');
+                    var count = postAjax.count + 1;
+                    var postObj = PYO.createPostObj(author_sequence_id, count);
+                    var post = PYO.addPost(postObj);
+                    var postData = {
+                        text: text,
+                        author_sequence_id: author_sequence_id
+                    };
+                    postAjax.count = count;
+
+                    if (url) {
+                        postAjax.XHR[count] = $.post(url, postData, function (response) {
+                            PYO.postAjaxSuccess(response, author_sequence_id, count);
+                        }).error(function (request, status, error) {
+                            PYO.postAjaxError(post, author_sequence_id, status, count);
+                            postAjax.XHR[count] = null;
+                        });
+                    }
+
+                    textarea.val('').change();
+                    PYO.addPostTimeout(post, author_sequence_id, count);
                 }
             });
 
@@ -153,59 +167,78 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.serverSuccess = function (response) {
-        if (response) {
-            if (response.posts[0] && response.posts[0].author_sequence_id) {
+    PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
+        if (response && response.posts[0] && response.posts[0].student_id && response.posts[0].student_id === PYO.activeStudentId) {
+            if (response.posts[0].author_sequence_id) {
                 var feed = $('.village-feed');
                 var author_sequence_id = response.posts[0].author_sequence_id;
                 var oldPost = feed.find('.post[data-author-sequence="' + author_sequence_id + '"]');
                 if (oldPost && oldPost.length) {
                     oldPost.loadingOverlay('remove');
                 }
-                PYO.removePostTimeout(author_sequence_id);
             }
             if (response.success && !PYO.pusherKey) {
                 PYO.replacePost(response);
             }
         }
+        PYO.removePostTimeout(old_author_sequence);
+        postAjax.XHR[xhr_count] = null;
     };
 
-    PYO.postTimeout = function (post) {
-        var msg = ich.post_timeout_msg();
-        msg.find('.resend').click(function (e) {
-            e.preventDefault();
-            var thisPost = $(this).closest('.post');
-            PYO.resendPost(thisPost);
-        });
-        msg.find('.cancel').click(function (e) {
-            e.preventDefault();
-            post.remove();
-        });
-        post.addClass('not-posted').prepend(msg).loadingOverlay('remove');
-        PYO.scrollToBottom('.village-feed');
+    PYO.postAjaxError = function (post, author_sequence_id, status, xhr_count) {
+        if (status !== 'abort' && status !== 'timeout') {
+            var msg = ich.post_timeout_msg();
+            msg.find('.resend').click(function (e) {
+                e.preventDefault();
+                var thisPost = $(this).closest('.post');
+                PYO.resendPost(thisPost);
+                if (postAjax.XHR[xhr_count]) { postAjax.XHR[xhr_count].abort(); }
+            });
+            msg.find('.cancel').click(function (e) {
+                e.preventDefault();
+                post.remove();
+                if (postAjax.XHR[xhr_count]) { postAjax.XHR[xhr_count].abort(); }
+            });
+            post.addClass('not-posted').prepend(msg).loadingOverlay('remove');
+            PYO.scrollToBottom('.village-feed');
+            PYO.removePostTimeout(author_sequence_id);
+        }
     };
 
     PYO.removePostTimeout = function (author_sequence_id) {
         $.doTimeout('new-post-' + author_sequence_id);
     };
 
+    PYO.addPostTimeout = function (post, author_sequence_id, xhr_count) {
+        $.doTimeout('new-post-' + author_sequence_id, 10000, function () {
+            PYO.postAjaxError(post, author_sequence_id, 'warning', xhr_count);
+        });
+    };
+
     PYO.resendPost = function (post) {
         var feed = $('.village-feed');
         var url = feed.data('post-url');
-        var author_sequence = post.data('author-sequence');
+        var author_sequence_id = post.data('author-sequence');
         var text = post.find('.post-text').text();
         var postData = {
-            author_sequence_id: author_sequence,
+            author_sequence_id: author_sequence_id,
             text: text
         };
-        $.post(url, postData, function (response) {
-            PYO.serverSuccess(response);
-        });
+        var count = postAjax.count + 1;
+        postAjax.count = count;
+
+        if (url) {
+            postAjax.XHR[count] = $.post(url, postData, function (response) {
+                PYO.postAjaxSuccess(response, author_sequence_id, count);
+            }).error(function (request, status, error) {
+                PYO.postAjaxError(post, author_sequence_id, status, count);
+                postAjax.XHR[count] = null;
+            });
+        }
+
         post.find('.timeout').remove();
         post.loadingOverlay();
-        $.doTimeout('new-post-' + author_sequence, 5000, function () {
-            PYO.postTimeout(post);
-        });
+        PYO.addPostTimeout(post, author_sequence_id, count);
     };
 
     PYO.listenForPusherEvents = function (container) {
@@ -284,43 +317,40 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.ajaxTimeout = function (url) {
+    PYO.pageAjaxError = function (url) {
         var container = $('.village-content');
         var msg = ich.pjax_error_msg();
         msg.find('.reload-pjax').click(function (e) {
             e.preventDefault();
             msg.remove();
-            PYO.ajaxLoad(url);
+            PYO.pageAjaxLoad(url);
         });
         container.loadingOverlay('remove');
         container.html(msg);
     };
 
-    PYO.removeAjaxTimeout = function (count) {
-        $.doTimeout('pjax-' + count);
-    };
+    PYO.pageAjaxLoad = function (url) {
+        if (pageAjax.XHR) { pageAjax.XHR.abort(); }
 
-    PYO.ajaxLoad = function (url) {
         var container = $('.village-content');
-        var count = 0;
-        count = count + 1;
+        var count = pageAjax.count + 1;
+        pageAjax.count = count;
+
         if (url) {
             container.loadingOverlay();
 
-            $.get(url, function (response) {
-                container.loadingOverlay('remove');
-                if (response && response.html) {
+            pageAjax.XHR = $.get(url, function (response) {
+                if (response && response.html && pageAjax.count === count) {
                     container.replaceWith($(response.html));
                     PYO.initializePage();
-                    PYO.removeAjaxTimeout(count);
                 }
+                container.loadingOverlay('remove');
+                pageAjax.XHR = null;
             }).error(function (request, status, error) {
-                PYO.ajaxTimeout(url);
-                PYO.removeAjaxTimeout(count);
-            });
-
-            $.doTimeout('pjax-' + count, 10000, function () {
-                PYO.ajaxTimeout(url);
+                if (status !== 'abort') {
+                    PYO.pageAjaxError(url);
+                }
+                pageAjax.XHR = null;
             });
         }
     };
@@ -341,7 +371,7 @@ var PYO = (function (PYO, $) {
                 var url = window.location.pathname;
                 context.find('.village-nav .ajax-link').removeClass('active');
                 context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                PYO.ajaxLoad(url + '?ajax=true');
+                PYO.pageAjaxLoad(url + '?ajax=true');
             });
         }
     };

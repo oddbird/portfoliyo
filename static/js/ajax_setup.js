@@ -2,6 +2,10 @@
 
     'use strict';
 
+    $.ajaxSetup({
+        timeout: 45000
+    });
+
     $(document).ajaxError(function (event, request, settings, error) {
         var json;
         try {
