@@ -10,6 +10,10 @@ var PYO = (function (PYO, $) {
         XHR: {},
         count: 0
     };
+    var feedAjax = {
+        XHR: null,
+        count: 0
+    };
 
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
@@ -133,14 +137,13 @@ var PYO = (function (PYO, $) {
                     var text = textarea.val();
                     var author_sequence_id = feed.find('.post.mine').length + 1;
                     var url = feed.data('post-url');
-                    var count = postAjax.count + 1;
+                    var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
                     var post = PYO.addPost(postObj);
                     var postData = {
                         text: text,
                         author_sequence_id: author_sequence_id
                     };
-                    postAjax.count = count;
 
                     if (url) {
                         postAjax.XHR[count] = $.post(url, postData, function (response) {
@@ -224,8 +227,7 @@ var PYO = (function (PYO, $) {
             author_sequence_id: author_sequence_id,
             text: text
         };
-        var count = postAjax.count + 1;
-        postAjax.count = count;
+        var count = ++postAjax.count;
 
         if (url) {
             postAjax.XHR[count] = $.post(url, postData, function (response) {
@@ -267,25 +269,35 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.fetchBacklog = function (container) {
+        if (feedAjax.XHR) { feedAjax.XHR.abort(); }
         if ($(container).length) {
             var feed = $(container);
             var context = feed.closest('.village-main');
             var url = feed.data('backlog-url');
+            var count = ++feedAjax.count;
             var loadFeed = function () {
-                context.loadingOverlay();
-                $.get(url, function (data) {
-                    context.loadingOverlay('remove');
-                    PYO.addPost(data);
-                }).error(function (request, status, error) {
-                    var msg = ich.feed_error_msg();
-                    msg.find('.reload-feed').click(function (e) {
-                        e.preventDefault();
-                        msg.remove();
-                        loadFeed();
+                if (url) {
+                    context.loadingOverlay();
+                    feedAjax.XHR = $.get(url, function (response) {
+                        if (response && feedAjax.count === count) {
+                            PYO.addPost(response);
+                        }
+                        context.loadingOverlay('remove');
+                        feedAjax.XHR = null;
+                    }).error(function (request, status, error) {
+                        if (status !== 'abort') {
+                            var msg = ich.feed_error_msg();
+                            msg.find('.reload-feed').click(function (e) {
+                                e.preventDefault();
+                                msg.remove();
+                                loadFeed();
+                            });
+                            feed.prepend(msg);
+                        }
+                        context.loadingOverlay('remove');
+                        feedAjax.XHR = null;
                     });
-                    context.loadingOverlay('remove');
-                    feed.prepend(msg);
-                });
+                }
             };
 
             loadFeed();
