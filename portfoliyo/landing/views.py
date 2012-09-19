@@ -3,8 +3,8 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-from ..users.forms import CaptchaAuthenticationForm
-from ..view.ajax import ajax
+from portfoliyo.view.users.forms import CaptchaAuthenticationForm
+from portfoliyo.view.ajax import ajax
 
 from .forms import LeadForm
 
