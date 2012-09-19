@@ -37,7 +37,7 @@ def send_invite_sms(user, template_name, extra_context):
     """Sends an invite SMS to a user."""
     c = {'user': user}
     c.update(extra_context or {})
-    body = loader.render_to_string(template_name, c)
+    body = loader.render_to_string(template_name, c).strip()
     if len(body) <= 160:
         messages = [body.replace("\n", " ")]
     else:

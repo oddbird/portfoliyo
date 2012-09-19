@@ -32,8 +32,13 @@ class InviteElderForm(forms.Form):
                 "Please supply a valid email address or US mobile number.")
 
 
-    def save(self, request, student):
-        """Given request and student profile, save/return elder profile."""
+    def save(self, request, rel):
+        """
+        Save/return new elder profile and send invites, or return existing.
+
+        Takes request and relationship between inviting elder and student.
+
+        """
         email = self.cleaned_data.get("email")
         phone = self.cleaned_data.get("phone")
         relationship = self.cleaned_data.get("relationship", u"")
@@ -49,29 +54,9 @@ class InviteElderForm(forms.Form):
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
                 email=email, phone=phone, role=relationship)
-            if email:
-                invites.send_invite_email(
-                    profile.user,
-                    email_template_name='registration/invite_elder_email.txt',
-                    subject_template_name='registration/invite_elder_subject.txt',
-                    use_https=request.is_secure(),
-                    extra_context={
-                        'inviter': request.user.profile,
-                        'student': student,
-                        'domain': request.get_host(),
-                        },
-                    )
-            else:
-                invites.send_invite_sms(
-                    profile.user,
-                    template_name='registration/invite_elder_sms.txt',
-                    extra_context={
-                        'inviter': request.user.profile,
-                        'student': student,
-                        'domain': request.get_host(),
-                        },
-                    )
+            created = True
         else:
+            created = False
             # update school_staff and role fields as needed
             if ((staff and not profile.school_staff) or
                     (relationship and not profile.role)):
@@ -80,25 +65,55 @@ class InviteElderForm(forms.Form):
                     profile.role = relationship
                 profile.save()
 
-        # create the student-elder relationship (unless it already exists)
-        model.Relationship.objects.get_or_create(
+        # create student's rel with inviting elder (unless it already exists)
+        new_rel, rel_created = model.Relationship.objects.get_or_create(
             from_profile=profile,
-            to_profile=student,
+            to_profile=rel.student,
             kind=model.Relationship.KIND.elder,
             defaults={'description': relationship},
             )
+
+        # get the relations
+
+        # send invite notifications
+        if created:
+            if email:
+                invites.send_invite_email(
+                    profile.user,
+                    email_template_name='registration/invite_elder_email.txt',
+                    subject_template_name='registration/invite_elder_subject.txt',
+                    use_https=request.is_secure(),
+                    extra_context={
+                        'inviter': rel.elder,
+                        'student': rel.student,
+                        'inviter_rel': rel,
+                        'invitee_rel': new_rel,
+                        'domain': request.get_host(),
+                        },
+                    )
+            else:
+                invites.send_invite_sms(
+                    profile.user,
+                    template_name='registration/invite_elder_sms.txt',
+                    extra_context={
+                        'inviter': rel.elder,
+                        'student': rel.student,
+                        'inviter_rel': rel,
+                        'invitee_rel': new_rel,
+                        },
+                    )
 
         return profile
 
 
 class InviteEldersBaseFormSet(formsets.BaseFormSet):
     """Base formset class for inviting elders."""
-    def save(self, request, student):
+    def save(self, request, rel):
         """Save all elder forms and return list of elders."""
         elders = []
         for form in self:
             if form.has_changed():
-                elders.append(form.save(request, student))
+                elders.append(form.save(request, rel))
 
         return elders
 
@@ -117,12 +132,12 @@ class AddStudentForm(forms.Form):
     name = forms.CharField(max_length=200)
 
 
-    def save(self, added_by=None):
+    def save(self, added_by):
         """
-        Save new student and return their Profile.
+        Save new student and return (student-profile, rel-with-creating-elder).
 
-        Optionally accept the Profile of the current user and create a
-        relationship between them and the student.
+        Takes the Profile of the current user and creates a relationship between
+        them and the student.
 
         """
         assert self.is_valid()
@@ -130,14 +145,13 @@ class AddStudentForm(forms.Form):
 
         profile = model.Profile.create_with_user(name=name)
 
-        if added_by:
-            model.Relationship.objects.create(
-                from_profile=added_by,
-                to_profile=profile,
-                kind=model.Relationship.KIND.elder,
-                )
+        rel = model.Relationship.objects.create(
+            from_profile=added_by,
+            to_profile=profile,
+            kind=model.Relationship.KIND.elder,
+            )
 
-        return profile
+        return (profile, rel)
 
 
 
@@ -164,7 +178,7 @@ class AddStudentAndInviteEldersForm(AddStudentForm):
         Returns a tuple of (student-profile, list-of-elder-profiles).
 
         """
-        student = super(AddStudentAndInviteEldersForm, self).save(*a, **kw)
-        elders = self.elders_formset.save(request, student)
+        student, rel = super(AddStudentAndInviteEldersForm, self).save(*a, **kw)
+        elders = self.elders_formset.save(request, rel)
 
         return (student, elders)

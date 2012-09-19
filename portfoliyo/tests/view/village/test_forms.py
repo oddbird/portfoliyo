@@ -23,28 +23,37 @@ class TestInviteElderForm(object):
 
     def test_phone_contact(self, sms):
         """If contact field is phone, it's normalized and saved to profile."""
-        form = forms.InviteElderForm(self.data(contact='(321)456-7890'))
+        form = forms.InviteElderForm(
+            self.data(contact='(321)456-7890', relationship='father'))
         assert form.is_valid()
+        rel = factories.RelationshipFactory(
+            from_profile__name="Teacher John",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
         request = mock.Mock()
-        request.get_host.return_value = 'portfoliyo.org'
-        request.is_secure.return_value = False
-        request.user = factories.ProfileFactory().user
-        profile = form.save(request, factories.ProfileFactory())
+        request.user = rel.elder.user
+        profile = form.save(request, rel)
 
         assert profile.phone == u'+13214567890'
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == u'+13214567890'
+        assert sms.outbox[0].body == (
+            "Hi! This is Teacher John, Jimmy Doe's Math Teacher. "
+            "Is this Jimmy Doe's father?"
+            )
 
 
     def test_email_contact(self):
         """If contact field is email, invite email is sent."""
         form = forms.InviteElderForm(self.data(contact='bar@EXAMPLE.com'))
         assert form.is_valid()
+        rel = factories.RelationshipFactory()
         request = mock.Mock()
         request.get_host.return_value = 'portfoliyo.org'
         request.is_secure.return_value = False
-        request.user = factories.ProfileFactory().user
-        profile = form.save(request, factories.ProfileFactory())
+        request.user = rel.elder.user
+        profile = form.save(request, rel)
 
         assert profile.user.email == u'bar@example.com'
         assert len(mail.outbox) == 1
@@ -55,7 +64,8 @@ class TestInviteElderForm(object):
         """User created is inactive (so we don't send them emails)."""
         form = forms.InviteElderForm(self.data())
         assert form.is_valid()
-        profile = form.save(mock.Mock(), factories.ProfileFactory())
+        rel = factories.RelationshipFactory()
+        profile = form.save(mock.Mock(), rel)
 
         assert not profile.user.is_active
 
@@ -74,7 +84,7 @@ class TestInviteElderForm(object):
         elder = factories.ProfileFactory(user__email='foo@example.com')
         form = forms.InviteElderForm(self.data(contact='foo@example.COM'))
         assert form.is_valid()
-        profile = form.save(None, factories.ProfileFactory())
+        profile = form.save(None, factories.RelationshipFactory())
 
         assert elder == profile
 
@@ -84,7 +94,7 @@ class TestInviteElderForm(object):
         elder = factories.ProfileFactory(phone='+13214567890')
         form = forms.InviteElderForm(self.data(contact='321.456.7890'))
         assert form.is_valid()
-        profile = form.save(None, factories.ProfileFactory())
+        profile = form.save(None, factories.RelationshipFactory())
 
         assert elder == profile
 
@@ -96,7 +106,7 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(
             self.data(contact=elder.phone, school_staff=True))
         assert form.is_valid()
-        profile = form.save(None, factories.ProfileFactory())
+        profile = form.save(None, factories.RelationshipFactory())
 
         assert elder == profile
         assert profile.school_staff
@@ -108,10 +118,37 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(
             self.data(contact=elder.phone, relationship='foo'))
         assert form.is_valid()
-        profile = form.save(None, factories.ProfileFactory())
+        profile = form.save(None, factories.RelationshipFactory())
 
         assert elder == profile
         assert profile.role == u'foo'
+
+
+    def test_existing_elder_has_role(self):
+        """If existing elder has a role, it isn't updated."""
+        elder = factories.ProfileFactory(
+            school_staff=False, role='something', phone='+13214567890')
+        form = forms.InviteElderForm(
+            self.data(
+                contact=elder.phone, relationship='foo', school_staff=True))
+        assert form.is_valid()
+        profile = form.save(None, factories.RelationshipFactory())
+
+        assert elder == profile
+        assert profile.role == u'something'
+
+
+    def test_existing_elder_needs_no_update(self):
+        """If existing elder has role and is not to be staff, no update done."""
+        elder = factories.ProfileFactory(phone='+13214567890', role='foo')
+        form = forms.InviteElderForm(
+            self.data(contact=elder.phone, school_staff=False))
+        assert form.is_valid()
+        profile = form.save(None, factories.RelationshipFactory())
+
+        assert elder == profile
+        assert not profile.school_staff
+        assert profile.role == 'foo'
 
 
     def test_relationship_exists(self):
@@ -119,7 +156,7 @@ class TestInviteElderForm(object):
         rel = factories.RelationshipFactory(from_profile__phone='+13214567890')
         form = forms.InviteElderForm(self.data(contact=rel.elder.phone))
         assert form.is_valid()
-        profile = form.save(None, rel.student)
+        profile = form.save(None, rel)
 
         assert rel.elder == profile
         assert len(profile.students) == 1
@@ -130,34 +167,28 @@ class TestAddStudentForm(object):
     """Tests for AddStudentForm."""
     def test_add_student(self):
         """Saves a student, given just name."""
+        elder = factories.ProfileFactory()
         form = forms.AddStudentForm({'name': "Some Student"})
         assert form.is_valid()
-        profile = form.save()
+        profile, rel = form.save(elder)
 
         assert profile.name == u"Some Student"
+        assert profile.elders == [elder]
+        assert rel.elder == elder
+        assert rel.student == profile
 
 
     def test_add_two_students_same_name(self):
         """Adding two students with same name causes no username trouble."""
         form = forms.AddStudentForm({'name': "Some Student"})
         assert form.is_valid()
-        profile1 = form.save()
+        profile1, rel1 = form.save(factories.ProfileFactory())
 
         form = forms.AddStudentForm({'name': "Some Student"})
         assert form.is_valid()
-        profile2 = form.save()
+        profile2, rel2 = form.save(factories.ProfileFactory())
 
         assert profile1 != profile2
-
-
-    def test_student_added_by_staff(self):
-        """If profile is passed to save(), relationship is created."""
-        elder = factories.ProfileFactory()
-        form = forms.AddStudentForm({'name': "Some Student"})
-        assert form.is_valid()
-        profile = form.save(elder)
-
-        assert profile.elders == [elder]
 
 
 
@@ -205,7 +236,7 @@ class TestAddStudentAndInviteEldersForm(object):
                 )
             )
         assert form.is_valid()
-        student, elders = form.save(mock.Mock())
+        student, elders = form.save(mock.Mock(), factories.ProfileFactory())
 
         assert set(e.phone for e in elders) == set(
             ['+13214567890', '+13216540987'])
@@ -218,6 +249,6 @@ class TestAddStudentAndInviteEldersForm(object):
             self.data(1, elder0={'contact': '', 'relationship': ''}))
 
         assert form.is_valid()
-        student, elders = form.save(None)
+        student, elders = form.save(None, factories.ProfileFactory())
 
         assert len(elders) == 0

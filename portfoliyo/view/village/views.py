@@ -53,17 +53,6 @@ def add_student(request):
         )
 
 
-
-def get_related_student_or_404(student_id, profile):
-    """Get student with ID student_id who is student of profile, or 404."""
-    return get_object_or_404(
-        model.Profile.objects.filter(
-            relationships_to__from_profile=profile
-            ).select_related('user'),
-        id=student_id,
-        )
-
-
 def get_relationship_or_404(student_id, profile):
     """Get relationship between student_id and profile, or 404."""
     try:
@@ -81,20 +70,20 @@ def get_relationship_or_404(student_id, profile):
 @ajax('village/_invite_elders_content.html')
 def invite_elders(request, student_id):
     """Invite new elder(s) to a student's village."""
-    student = get_related_student_or_404(student_id, request.user.profile)
+    rel = get_relationship_or_404(student_id, request.user.profile)
 
     if request.method == 'POST':
         formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
         if formset.is_valid():
-            formset.save(request, student)
-            return redirect('village', student_id=student.id)
+            formset.save(request, rel)
+            return redirect('village', student_id=rel.student.id)
     else:
         formset = forms.InviteEldersFormSet(prefix='elders')
 
     return TemplateResponse(
         request,
         'village/invite_elders.html',
-        {'elders_formset': formset, 'student': student},
+        {'elders_formset': formset, 'student': rel.student},
         )
 
 
