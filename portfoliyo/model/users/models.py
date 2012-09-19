@@ -83,7 +83,8 @@ class Profile(models.Model):
 
     @classmethod
     def create_with_user(cls, name='', email=None, phone=None, password=None,
-                         role='', school_staff=False, is_active=False):
+                         role='', school_staff=False, is_active=False,
+                         state=None):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -110,6 +111,7 @@ class Profile(models.Model):
             user=user,
             role=role,
             school_staff=school_staff,
+            state=state or cls.STATE.done,
             )
 
 

@@ -1,8 +1,4 @@
 """Village SMS-handling."""
-from base64 import b64encode
-from django.utils import timezone
-from hashlib import sha1
-
 from portfoliyo import model
 
 
@@ -20,19 +16,7 @@ def receive_sms(source, body):
         teacher, parent_name = get_teacher_and_name(body)
         if teacher is not None:
             if parent_name:
-                username = b64encode(sha1(source).digest())
-                now = timezone.now()
-                user = model.User(
-                    username=username,
-                    is_staff=False,
-                    is_active=False,
-                    is_superuser=False,
-                    date_joined=now,
-                    )
-                user.set_unusable_password()
-                user.save()
-                model.Profile.objects.create(
-                    user=user,
+                model.Profile.create_with_user(
                     phone=source,
                     state=model.Profile.STATE.kidname,
                     )
