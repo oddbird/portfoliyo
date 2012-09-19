@@ -2,9 +2,7 @@
 Custom Portfoliyo registration code.
 
 """
-from base64 import b64encode
 from django.contrib.sites.models import RequestSite
-from hashlib import sha1
 
 from registration.backends.default import DefaultBackend
 from registration.models import RegistrationProfile
@@ -28,19 +26,18 @@ class RegistrationBackend(DefaultBackend):
         activation.
 
         """
-        username = b64encode(sha1(email).digest())
+        profile = model.Profile.create_with_user(
+            name=name,
+            email=email,
+            password=password,
+            role=role,
+            school_staff=True,
+            )
 
-        new_user = model.User.objects.create_user(username, email, password)
-        new_user.is_active = False
-        new_user.save()
-
-        model.Profile.objects.create(
-            user=new_user, name=name, role=role, school_staff=True)
-
-        reg_profile = RegistrationProfile.objects.create_profile(new_user)
+        reg_profile = RegistrationProfile.objects.create_profile(profile.user)
         reg_profile.send_activation_email(RequestSite(request))
 
-        return new_user
+        return profile.user
 
 
     def get_form_class(self, request):

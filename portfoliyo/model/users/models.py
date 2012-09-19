@@ -2,9 +2,13 @@
 Portfoliyo network models.
 
 """
+from base64 import b64encode
+import time
+from hashlib import sha1
 from django.contrib.auth import models as auth_models
 from django.db import models
 from django.db.models.fields.related import SingleRelatedObjectDescriptor
+from django.utils import timezone
 
 from model_utils import Choices
 
@@ -75,6 +79,38 @@ class Profile(models.Model):
         if self.user.is_staff:
             self.school_staff = True
         return super(Profile, self).save(*a, **kw)
+
+
+    @classmethod
+    def create_with_user(cls, name='', email=None, phone=None, password=None,
+                         role='', school_staff=False, is_active=False):
+        """
+        Create a Profile and associated User and return the new Profile.
+
+        Generates a unique username to satisfy the User model by hashing the
+        email, phone, or current timestamp, depending on what is provided.
+
+        """
+        to_hash = email or phone or "%s%f" % (name, time.time())
+        username = b64encode(sha1(to_hash).digest())
+        now = timezone.now()
+        user = auth_models.User(
+            username=username,
+            email=email,
+            is_staff=False,
+            is_active=is_active,
+            is_superuser=False,
+            date_joined=now,
+            )
+        user.set_password(password)
+        user.save()
+        return cls.objects.create(
+            name=name,
+            phone=phone,
+            user=user,
+            role=role,
+            school_staff=school_staff,
+            )
 
 
     @property

@@ -2,12 +2,7 @@
 Student/elder forms.
 
 """
-from base64 import b64encode
-from hashlib import sha1
-import time
-
 from django.forms import formsets
-from django.utils import timezone
 
 import floppyforms as forms
 
@@ -52,23 +47,11 @@ class InviteElderForm(forms.Form):
         try:
             profile = model.Profile.objects.get(**dupe_query)
         except model.Profile.DoesNotExist:
-            username = b64encode(sha1(email or phone).digest())
-            now = timezone.now()
-            user = model.User(
-                username=username,
-                email=email,
-                is_staff=False,
-                is_active=False,
-                is_superuser=False,
-                date_joined=now,
-                )
-            user.set_unusable_password()
-            user.save()
-            profile = model.Profile.objects.create(
-                user=user, phone=phone, role=relationship)
+            profile = model.Profile.create_with_user(
+                email=email, phone=phone, role=relationship)
             if email:
                 invites.send_invite_email(
-                    user,
+                    profile.user,
                     email_template_name='registration/invite_elder_email.txt',
                     subject_template_name='registration/invite_elder_subject.txt',
                     use_https=request.is_secure(),
@@ -80,7 +63,7 @@ class InviteElderForm(forms.Form):
                     )
             else:
                 invites.send_invite_sms(
-                    user,
+                    profile.user,
                     template_name='registration/invite_elder_sms.txt',
                     extra_context={
                         'inviter': request.user.profile,
@@ -145,20 +128,7 @@ class AddStudentForm(forms.Form):
         assert self.is_valid()
         name = self.cleaned_data["name"]
 
-        # name may not be unique, and it's all the info we have on a student,
-        # so append the time to seed a hash to generate a unique username
-        username = b64encode(sha1("%s%f" % (name, time.time())).digest())
-        now = timezone.now()
-        user = model.User(
-            username=username,
-            is_staff=False,
-            is_active=False,
-            is_superuser=False,
-            date_joined=now,
-            )
-        user.set_unusable_password()
-        user.save()
-        profile = model.Profile.objects.create(name=name, user=user)
+        profile = model.Profile.create_with_user(name=name)
 
         if added_by:
             model.Relationship.objects.create(
