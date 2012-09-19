@@ -74,7 +74,7 @@ def test_no_students():
 def test_code_signup():
     """Parent can create account by texting teacher code and their name."""
     phone = '+13216430987'
-    factories.ProfileFactory.create(
+    teacher = factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF")
 
     reply = hook.receive_sms(phone, "abcdef John Doe")
@@ -84,6 +84,7 @@ def test_code_signup():
         )
     profile = model.Profile.objects.get(phone=phone)
     assert profile.state == model.Profile.STATE.kidname
+    assert profile.invited_by == teacher
 
 
 def test_code_signup_lacks_name():
@@ -97,6 +98,63 @@ def test_code_signup_lacks_name():
     assert reply == (
         "Please include your name after the code."
         )
+
+
+def test_code_signup_student_name():
+    """Parent can continue code signup by providing student name."""
+    phone = '+13216430987'
+    teacher = factories.ProfileFactory.create(
+        school_staff=True, name="Teacher Jane", code="ABCDEF")
+    factories.ProfileFactory.create(
+        name="John Doe",
+        phone=phone,
+        state=model.Profile.STATE.kidname,
+        invited_by=teacher,
+        )
+
+    reply = hook.receive_sms(phone, "Jimmy Doe")
+
+    assert reply == (
+        "Last question: what is your relationship to that child "
+        "(mother, father, ...)?"
+        )
+    parent = model.Profile.objects.get(phone=phone)
+    assert len(parent.students) == 1
+    student = parent.students[0]
+    assert student.name == u"Jimmy Doe"
+    assert set(student.elders) == set([teacher, parent])
+    assert parent.state == model.Profile.STATE.relationship
+
+
+def test_code_signup_student_name_no_invited_by():
+    """
+    If parent somehow has no invited_by, process doesn't blow up.
+
+    This should never happen in the normal flow, since parent signup requires a
+    teacher code and sets invited_by for the new parent to that teacher. But
+    since invited_by is an optional field, the code accounts for the
+    possibility of it being unset, and we test for it.
+
+    """
+    phone = '+13216430987'
+    factories.ProfileFactory.create(
+        name="John Doe",
+        phone=phone,
+        state=model.Profile.STATE.kidname,
+        )
+
+    reply = hook.receive_sms(phone, "Jimmy Doe")
+
+    assert reply == (
+        "Last question: what is your relationship to that child "
+        "(mother, father, ...)?"
+        )
+    parent = model.Profile.objects.get(phone=phone)
+    assert len(parent.students) == 1
+    student = parent.students[0]
+    assert student.name == u"Jimmy Doe"
+    assert set(student.elders) == set([parent])
+    assert parent.state == model.Profile.STATE.relationship
 
 
 def test_get_teacher_and_name():

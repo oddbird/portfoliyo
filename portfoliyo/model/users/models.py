@@ -50,7 +50,8 @@ class AutoOneToOneField(models.OneToOneField):
 
 
 from south.modelsinspector import add_introspection_rules
-add_introspection_rules([], ["^portfoliyo\.users\.models\.AutoOneToOneField"])
+add_introspection_rules(
+    [], ["^portfoliyo\.model\.users\.models\.AutoOneToOneField"])
 
 
 class Profile(models.Model):
@@ -68,6 +69,8 @@ class Profile(models.Model):
     # signup status (for text-based multi-step signup); what are we awaiting?
     STATE = Choices('kidname', 'relationship', 'done')
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
+    # who invited this user to the site?
+    invited_by = models.ForeignKey('self', blank=True, null=True)
 
 
     def __unicode__(self):
@@ -84,7 +87,7 @@ class Profile(models.Model):
     @classmethod
     def create_with_user(cls, name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         state=None):
+                         state=None, invited_by=None):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -112,6 +115,7 @@ class Profile(models.Model):
             role=role,
             school_staff=school_staff,
             state=state or cls.STATE.done,
+            invited_by=invited_by,
             )
 
 

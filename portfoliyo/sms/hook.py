@@ -19,6 +19,7 @@ def receive_sms(source, body):
                 model.Profile.create_with_user(
                     phone=source,
                     state=model.Profile.STATE.kidname,
+                    invited_by=teacher,
                     )
                 return (
                     "Thanks! What is the name of your child in %s's class?"
@@ -36,6 +37,26 @@ def receive_sms(source, body):
     if not profile.user.is_active:
         profile.user.is_active = True
         profile.user.save()
+
+    if profile.state == model.Profile.STATE.kidname:
+        student = model.Profile.create_with_user(name=body)
+        model.Relationship.objects.create(
+            from_profile=profile,
+            to_profile=student,
+            kind=model.Relationship.KIND.elder,
+            )
+        if profile.invited_by:
+            model.Relationship.objects.create(
+                from_profile=profile.invited_by,
+                to_profile=student,
+                kind=model.Relationship.KIND.elder,
+                )
+        profile.state = model.Profile.STATE.relationship
+        profile.save()
+        return (
+            "Last question: what is your relationship to that child "
+            "(mother, father, ...)?"
+            )
 
     students = profile.students
 
