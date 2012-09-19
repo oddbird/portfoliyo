@@ -345,11 +345,11 @@ var PYO = (function (PYO, $) {
         if (pageAjax.XHR) { pageAjax.XHR.abort(); }
 
         var container = $('.village-content');
-        var count = pageAjax.count + 1;
-        pageAjax.count = count;
+        var count = ++pageAjax.count;
 
         if (url) {
             container.loadingOverlay();
+            container.find('.feed-error, .pjax-error').remove();
 
             pageAjax.XHR = $.get(url, function (response) {
                 if (response && response.html && pageAjax.count === count) {
@@ -373,9 +373,11 @@ var PYO = (function (PYO, $) {
 
             context.on('click', 'a.ajax-link', function (e) {
                 e.preventDefault();
-                var url = $(this).attr('href');
-                var title = document.title;
-                History.pushState(null, title, url);
+                if (!($(this).hasClass('.active'))) {
+                    var url = $(this).attr('href');
+                    var title = document.title;
+                    History.pushState(null, title, url);
+                }
                 $(this).blur();
             });
 
