@@ -91,12 +91,13 @@ class Profile(models.Model):
         """
         Create a Profile and associated User and return the new Profile.
 
-        Generates a unique username to satisfy the User model by hashing the
-        email, phone, or current timestamp, depending on what is provided.
+        Generates a unique username to satisfy the User model by hashing as
+        much user data as we're given, plus a timestamp.
 
         """
-        to_hash = email or phone or "%s%f" % (name, time.time())
-        username = b64encode(sha1(to_hash).digest())
+        to_hash = u"-".join(
+            [email or u'', phone or u'', name, u'%f' % time.time()])
+        username = b64encode(sha1(to_hash.encode('utf-8')).digest())
         now = timezone.now()
         user = auth_models.User(
             username=username,
