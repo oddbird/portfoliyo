@@ -178,6 +178,7 @@ def test_code_signup_role():
         )
     parent = model.Profile.objects.get(phone=phone)
     assert parent.role == "father"
+    assert parent.state == model.Profile.STATE.done
     parent_rel = utils.refresh(parent_rel)
     assert parent_rel.description == "father"
     # and the role is sent on to the village chat as a post

@@ -106,6 +106,7 @@ def handle_role_update(parent, role):
     parent.relationships_from.filter(
         description=parent.role).update(description=role)
     parent.role = role
+    parent.state = model.Profile.STATE.done
     parent.save()
     students = parent.students
     for student in students:
