@@ -61,6 +61,9 @@ class Profile(models.Model):
     school_staff = models.BooleanField(default=False)
     # code for parent-initiated signups
     code = models.CharField(max_length=20, blank=True, null=True, unique=True)
+    # signup status (for text-based multi-step signup); what are we awaiting?
+    STATE = Choices('kidname', 'relationship', 'done')
+    state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
 
 
     def __unicode__(self):
