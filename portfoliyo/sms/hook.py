@@ -13,49 +13,17 @@ def receive_sms(source, body):
         profile = model.Profile.objects.select_related(
             'user').get(phone=source)
     except model.Profile.DoesNotExist:
-        teacher, parent_name = get_teacher_and_name(body)
-        if teacher is not None:
-            if parent_name:
-                model.Profile.create_with_user(
-                    phone=source,
-                    state=model.Profile.STATE.kidname,
-                    invited_by=teacher,
-                    )
-                return (
-                    "Thanks! What is the name of your child in %s's class?"
-                    % teacher.name
-                    )
-            else:
-                return "Please include your name after the code."
-        else:
-            return (
-                "Bummer, we don't recognize your number! "
-                "Have you been invited by your child's teacher "
-                "to use Portfoliyo?"
-                )
+        return handle_unknown_source(source, body)
 
     if not profile.user.is_active:
         profile.user.is_active = True
         profile.user.save()
 
-    if profile.state == model.Profile.STATE.kidname:
-        student = model.Profile.create_with_user(name=body)
-        model.Relationship.objects.create(
-            from_profile=profile,
-            to_profile=student,
-            kind=model.Relationship.KIND.elder,
-            )
-        if profile.invited_by:
-            model.Relationship.objects.create(
-                from_profile=profile.invited_by,
-                to_profile=student,
-                kind=model.Relationship.KIND.elder,
-                )
-        profile.state = model.Profile.STATE.relationship
-        profile.save()
-        return (
-            "Last question: what is your relationship to that child "
-            "(mother, father, ...)?"
+    if profile.state == model.Profile.STATE.kidname and profile.invited_by:
+        return handle_new_student(
+            parent=profile,
+            teacher=profile.invited_by,
+            student_name=body.strip(),
             )
 
     students = profile.students
@@ -72,6 +40,62 @@ def receive_sms(source, body):
             )
 
     model.Post.create(profile, students[0], body)
+
+
+def handle_unknown_source(source, body):
+    """Handle a text from an unknown user."""
+    teacher, parent_name = get_teacher_and_name(body)
+    if teacher is not None:
+        if parent_name:
+            model.Profile.create_with_user(
+                phone=source,
+                state=model.Profile.STATE.kidname,
+                invited_by=teacher,
+                )
+            return (
+                "Thanks! What is the name of your child in %s's class?"
+                % teacher.name
+                )
+        else:
+            return "Please include your name after the code."
+    else:
+        return (
+            "Bummer, we don't recognize your number! "
+            "Have you been invited by your child's teacher "
+            "to use Portfoliyo?"
+            )
+
+
+
+def handle_new_student(parent, teacher, student_name):
+    """Handle addition of a student to a just-signing-up parent's account."""
+    possible_dupes = model.Profile.objects.filter(
+        name__iexact=student_name,
+        relationships_to__from_profile=teacher,
+        )
+    if possible_dupes:
+        dupe_found = True
+        student = possible_dupes[0]
+    else:
+        dupe_found = False
+        student = model.Profile.create_with_user(name=student_name)
+    model.Relationship.objects.create(
+        from_profile=parent,
+        to_profile=student,
+        kind=model.Relationship.KIND.elder,
+        )
+    if not dupe_found:
+        model.Relationship.objects.create(
+            from_profile=teacher,
+            to_profile=student,
+            kind=model.Relationship.KIND.elder,
+            )
+    parent.state = model.Profile.STATE.relationship
+    parent.save()
+    return (
+        "Last question: what is your relationship to that child "
+        "(mother, father, ...)?"
+        )
 
 
 

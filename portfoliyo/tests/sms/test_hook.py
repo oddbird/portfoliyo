@@ -126,21 +126,17 @@ def test_code_signup_student_name():
     assert parent.state == model.Profile.STATE.relationship
 
 
-def test_code_signup_student_name_no_invited_by():
-    """
-    If parent somehow has no invited_by, process doesn't blow up.
-
-    This should never happen in the normal flow, since parent signup requires a
-    teacher code and sets invited_by for the new parent to that teacher. But
-    since invited_by is an optional field, the code accounts for the
-    possibility of it being unset, and we test for it.
-
-    """
+def test_code_signup_student_name_dupe_detection():
+    """Don't create duplicate students in a teacher's class."""
     phone = '+13216430987'
+    rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        to_profile__name="Jimmy Doe")
     factories.ProfileFactory.create(
         name="John Doe",
         phone=phone,
         state=model.Profile.STATE.kidname,
+        invited_by=rel.elder,
         )
 
     reply = hook.receive_sms(phone, "Jimmy Doe")
@@ -152,9 +148,7 @@ def test_code_signup_student_name_no_invited_by():
     parent = model.Profile.objects.get(phone=phone)
     assert len(parent.students) == 1
     student = parent.students[0]
-    assert student.name == u"Jimmy Doe"
-    assert set(student.elders) == set([parent])
-    assert parent.state == model.Profile.STATE.relationship
+    assert student == rel.student
 
 
 def test_get_teacher_and_name():
