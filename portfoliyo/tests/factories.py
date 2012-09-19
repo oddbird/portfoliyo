@@ -9,7 +9,6 @@ class UserFactory(factory.Factory):
     FACTORY_FOR = model.User
 
     username = factory.Sequence(lambda n: "test{0}".format(n))
-    email = factory.Sequence(lambda n: "test{0}@example.com".format(n))
 
 
     @classmethod
@@ -28,9 +27,6 @@ class ProfileFactory(factory.Factory):
     FACTORY_FOR = model.Profile
 
     user = factory.SubFactory(UserFactory)
-    name = "Test User"
-    phone = factory.Sequence(lambda n: "+1321999{0:>04}".format(n))
-    role = "Some Role"
 
 
 

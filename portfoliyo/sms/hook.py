@@ -25,6 +25,8 @@ def receive_sms(source, body):
             teacher=profile.invited_by,
             student_name=body.strip(),
             )
+    elif profile.state == model.Profile.STATE.relationship:
+        return handle_role_update(parent=profile, role=body.strip())
 
     students = profile.students
 
@@ -92,9 +94,25 @@ def handle_new_student(parent, teacher, student_name):
             )
     parent.state = model.Profile.STATE.relationship
     parent.save()
+    model.Post.create(parent, student, student_name)
     return (
         "Last question: what is your relationship to that child "
         "(mother, father, ...)?"
+        )
+
+
+def handle_role_update(parent, role):
+    """Handle defining role of parent in relation to student."""
+    parent.relationships_from.filter(
+        description=parent.role).update(description=role)
+    parent.role = role
+    parent.save()
+    students = parent.students
+    for student in students:
+        model.Post.create(parent, student, role)
+    return  (
+        "All done, thank you! You can text this number any time "
+        "to talk with your child's teachers."
         )
 
 

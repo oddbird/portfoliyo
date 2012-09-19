@@ -91,7 +91,8 @@ class TestInviteElderForm(object):
 
     def test_update_existing_elder_to_staff(self):
         """If a non-staff is added as staff elder, they gain staff status."""
-        elder = factories.ProfileFactory(school_staff=False)
+        elder = factories.ProfileFactory(
+            school_staff=False, phone='+13214567890')
         form = forms.InviteElderForm(
             self.data(contact=elder.phone, school_staff=True))
         assert form.is_valid()
@@ -103,7 +104,7 @@ class TestInviteElderForm(object):
 
     def test_update_existing_elder_role(self):
         """If existing elder has no role, update from new relationship."""
-        elder = factories.ProfileFactory(role='')
+        elder = factories.ProfileFactory(role='', phone='+13214567890')
         form = forms.InviteElderForm(
             self.data(contact=elder.phone, relationship='foo'))
         assert form.is_valid()
@@ -115,7 +116,7 @@ class TestInviteElderForm(object):
 
     def test_relationship_exists(self):
         """If existing elder is already elder for student, no error."""
-        rel = factories.RelationshipFactory()
+        rel = factories.RelationshipFactory(from_profile__phone='+13214567890')
         form = forms.InviteElderForm(self.data(contact=rel.elder.phone))
         assert form.is_valid()
         profile = form.save(None, rel.student)

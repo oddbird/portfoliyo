@@ -124,6 +124,9 @@ def test_code_signup_student_name():
     assert student.name == u"Jimmy Doe"
     assert set(student.elders) == set([teacher, parent])
     assert parent.state == model.Profile.STATE.relationship
+    # and the name is sent on to the village chat as a post
+    post = model.Post.objects.get(author=parent, student=student)
+    assert post.original_text == "Jimmy Doe"
 
 
 def test_code_signup_student_name_dupe_detection():
@@ -149,6 +152,37 @@ def test_code_signup_student_name_dupe_detection():
     assert len(parent.students) == 1
     student = parent.students[0]
     assert student == rel.student
+
+
+def test_code_signup_role():
+    """Parent can finish code signup by providing their role."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        to_profile__name="Jimmy Doe")
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="John Doe",
+        from_profile__role="",
+        from_profile__phone=phone,
+        from_profile__state=model.Profile.STATE.relationship,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        description="",
+        )
+
+    reply = hook.receive_sms(phone, "father")
+
+    assert reply == (
+        "All done, thank you! You can text this number any time "
+        "to talk with your child's teachers."
+        )
+    parent = model.Profile.objects.get(phone=phone)
+    assert parent.role == "father"
+    parent_rel = utils.refresh(parent_rel)
+    assert parent_rel.description == "father"
+    # and the role is sent on to the village chat as a post
+    post = model.Post.objects.get(author=parent, student=teacher_rel.student)
+    assert post.original_text == "father"
 
 
 def test_get_teacher_and_name():
