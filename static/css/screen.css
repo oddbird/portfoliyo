@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -223,7 +223,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\69";
 }
 
-.elder.inactive:before, .message.warning:before {
+.village-elders .elder.inactive:before, .message.warning:before {
   content: "\26a0";
 }
 
@@ -239,11 +239,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\271a";
 }
 
-.elder.mobile:before {
+.village-elders .elder.mobile:before {
   content: "\275f";
 }
 
-.elder:before {
+.village-elders .elder:before {
   content: "\25cf";
 }
 
@@ -2012,23 +2012,23 @@ button {
   border-left: 1px solid #93a1a1;
 }
 
-.elder:before {
+.village-elders .elder:before {
   padding-top: 0.41071em;
   position: relative;
   float: left;
   color: #859900;
   z-index: 2;
 }
-.elder.offline:before {
+.village-elders .elder.offline:before {
   color: #b58900;
 }
-.elder.inactive:before {
+.village-elders .elder.inactive:before {
   color: #93a1a1;
 }
-.elder.mobile:before {
+.village-elders .elder.mobile:before {
   color: #657b83;
 }
-.elder .edit-elder {
+.village-elders .edit-elder {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
   margin-right: -1.28571em;
@@ -2041,10 +2041,10 @@ button {
   display: block;
   border-color: #eee8d5;
 }
-.elder .edit-elder:focus, .elder .edit-elder:hover, .elder .edit-elder:active {
+.village-elders .edit-elder:focus, .village-elders .edit-elder:hover, .village-elders .edit-elder:active {
   background: #eee8d5;
 }
-.elder .title, .elder .fn {
+.village-elders .title, .village-elders .fn {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -2053,10 +2053,10 @@ button {
   display: block;
   margin-left: 1.5em;
 }
-.elder .title {
+.village-elders .title {
   font-weight: bold;
 }
-.elder .fn {
+.village-elders .fn {
   color: #93a1a1;
 }
 

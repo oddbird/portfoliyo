@@ -1,26 +1,28 @@
 // ---------------------------------------------------------------------------
 // Village Elders
 
-.village-elders { h2 { @extend %gone; } }
+.village-elders {
+  h2 { @extend %gone; }
 
-.elder {
-  @extend %icon;
-  @extend %icon-record;
-  &:before {
-    @include padding-leader(.25,$village-list-size);
-    position: relative;
-    float: left;
-    color: $green;
-    z-index: 2;
-  }
-  &.offline { &:before { color: $yellow; } }
-  &.inactive {
-    @extend %icon-warning;
-    &:before { color: $base1; }
-  }
-  &.mobile {
-    @extend %icon-mobile;
-    &:before { color: $base; }
+  .elder {
+    @extend %icon;
+    @extend %icon-record;
+    &:before {
+      @include padding-leader(.25,$village-list-size);
+      position: relative;
+      float: left;
+      color: $green;
+      z-index: 2;
+    }
+    &.offline { &:before { color: $yellow; } }
+    &.inactive {
+      @extend %icon-warning;
+      &:before { color: $base1; }
+    }
+    &.mobile {
+      @extend %icon-mobile;
+      &:before { color: $base; }
+    }
   }
 
   .edit-elder {
