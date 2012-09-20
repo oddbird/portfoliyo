@@ -2,20 +2,15 @@
 Student/elder (village) views.
 
 """
-import io
 import json
-import os
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
-import pyPdf
-from reportlab.lib.pagesizes import LETTER, landscape
-from reportlab.pdfgen import canvas
 
-from portfoliyo import model, formats
+from portfoliyo import model, pdf
 from ..decorators import school_staff_required
 from ..ajax import ajax
 from . import forms
@@ -163,32 +158,10 @@ def pdf_parent_instructions(request):
     response = HttpResponse(mimetype='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=instructions.pdf'
 
-    template_path = os.path.join(
-        os.path.dirname(__file__), 'parent-instructions-template.pdf')
-    template_page = pyPdf.PdfFileReader(open(template_path, 'rb')).getPage(0)
-
-    buffer = io.BytesIO()
-
-    p = canvas.Canvas(buffer, pagesize=landscape(LETTER))
-
-    p.setFont('Helvetica-Bold', 16)
-
-    p.drawString(390, 372, request.user.profile.code)
-    p.drawString(
-        380, 347, formats.display_phone(settings.PORTFOLIYO_SMS_DEFAULT_FROM))
-    p.drawString(438, 300, request.user.profile.code)
-
-    p.showPage()
-    p.save()
-
-    # Get the value of the BytesIO buffer and write it to the response.
-    additions_page = pyPdf.PdfFileReader(buffer).getPage(0)
-    template_page.mergePage(additions_page)
-
-    output = pyPdf.PdfFileWriter()
-    output.addPage(template_page)
-    output.write(response)
-
-    buffer.close()
+    pdf.generate_instructions_pdf(
+        stream=response,
+        code=request.user.profile.code,
+        phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
+        )
 
     return response
