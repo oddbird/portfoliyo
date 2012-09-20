@@ -2,15 +2,6 @@
 // Village Elders
 
 .village-elders {
-  @extend %village-lists;
-  @extend %overflow-y;
-  @include box-sizing(content-box);
-  right: - $village-bleed;
-  width: columns($right, $content-width);
-  padding-right: $village-bleed;
-  padding-left: gutter($content-width);
-  height: 100%;
-  border-left: 1px solid $village-border-color;
   h2 { @extend %gone; }
   ul { @include leader(.5, $village-list-size); }
   li {

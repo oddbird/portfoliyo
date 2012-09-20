@@ -1458,7 +1458,7 @@ textarea {
   height: 100%;
 }
 
-.village-nav, .village-feed, .village-elders {
+.village-nav, .village-feed, .village-info {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1493,17 +1493,17 @@ textarea {
   margin-left: 2.12766%;
 }
 
-.village-nav, .village-elders {
+.village-nav, .village-info {
   font-size: 0.77778em;
   line-height: 1.64286em;
 }
-.village-nav ul, .village-elders ul {
+.village-nav ul, .village-info ul {
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
 }
-.village-nav ul li, .village-elders ul li {
+.village-nav ul li, .village-info ul li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
@@ -1540,7 +1540,7 @@ textarea {
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
-  background: url('../images/rgbapng/268bd240.png?1348160748');
+  background: url('../images/rgbapng/268bd240.png?1348161986');
   background: rgba(38, 139, 210, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
@@ -1556,7 +1556,7 @@ textarea {
   color: #586e75;
 }
 .parent-instructions:focus, .parent-instructions:hover, .parent-instructions:active {
-  background: url('../images/rgbapng/d3368240.png?1348160748');
+  background: url('../images/rgbapng/d3368240.png?1348161986');
   background: rgba(211, 54, 130, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(211, 54, 130, 0)), color-stop(100%, rgba(211, 54, 130, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
@@ -1908,7 +1908,7 @@ textarea {
   padding: 1.27778em;
 }
 
-.village-elders {
+.village-info {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
@@ -1919,6 +1919,7 @@ textarea {
   height: 100%;
   border-left: 1px solid #93a1a1;
 }
+
 .village-elders ul {
   margin-top: 0.82143em;
 }
