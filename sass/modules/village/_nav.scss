@@ -54,30 +54,42 @@ $village-nav-bg   : $base2;
 }
 
 .student-actions {
-  @extend %village-nav-span;
-  @include transition(all 300ms);
+  @include transition(all 400ms);
+  margin-left: - $village-bleed;
   background: $orange;
   color: $base03;
+  text-transform: capitalize;
 
   @include opacity(0);
   max-height: 0;
   .active + & {
     @include opacity(1);
-    @include rhythm(0,.25,.25,0);
-    @include css-arrow(top, rhythm(.5), $orange);
+    @include css-arrow(top, rhythm(.25,$village-list-size), $orange);
     max-height: rhythm(2,$village-list-size);
   }
 
   a, button {
     @extend %icon;
-    margin-right: .4em;
+    display: inline-block;
+    position: relative;
+    width: 50%;
+    margin-right: -.5em;
+    padding: rhythm(.25,$village-list-size) $village-bleed;
+    text-align: center;
     &, #{$link} { color: $base2; }
-    #{$focus} { color: $base3; }
+    #{$focus} {
+      color: $base3;
+      @include rgba-background(rgba($base03,.25));
+    }
   }
   .edit-student { @extend %icon-pencil; }
   .save-student {
-    @extend %icon-floppy;
+    @extend %icon-checkmark;
     display: none;
+  }
+  .remove-student {
+    @extend %icon-trashcan;
+    left: .25em;
   }
 }
 

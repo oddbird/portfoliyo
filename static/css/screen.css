@@ -207,7 +207,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\270e";
 }
 
-.summary li:before, .benefits li:before, .message.success:before {
+.summary li:before, .benefits li:before, .student-actions .save-student:before, .message.success:before {
   content: "\2713";
 }
 
@@ -255,8 +255,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\274f";
 }
 
-.student-actions .save-student:before {
-  content: "\e000";
+.student-actions .remove-student:before {
+  content: "\27f0";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -1715,7 +1715,7 @@ button {
   font-weight: bold;
 }
 
-.select-student, .addstudent-link, .student-actions {
+.select-student, .addstudent-link {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
   display: block;
@@ -1784,13 +1784,15 @@ button {
 }
 
 .student-actions {
-  -webkit-transition: all 300ms;
-  -moz-transition: all 300ms;
-  -ms-transition: all 300ms;
-  -o-transition: all 300ms;
-  transition: all 300ms;
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  -ms-transition: all 400ms;
+  -o-transition: all 400ms;
+  transition: all 400ms;
+  margin-left: -1.28571em;
   background: #cb4b16;
   color: #002b36;
+  text-transform: capitalize;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   max-height: 0;
@@ -1798,10 +1800,6 @@ button {
 .active + .student-actions {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
-  margin-top: 0em;
-  padding-top: 0.31944em;
-  padding-bottom: 0.31944em;
-  margin-bottom: 0em;
   position: relative;
   background: #cb4b16;
   max-height: 3.28571em;
@@ -1817,27 +1815,37 @@ button {
 }
 .active + .student-actions:after {
   border-bottom-color: #cb4b16;
-  border-width: 0.63889em;
+  border-width: 0.41071em;
   left: 50%;
-  margin-left: -0.63889em;
+  margin-left: -0.41071em;
 }
 .active + .student-actions:before {
   border-bottom-color: false;
-  border-width: 0.63889em;
+  border-width: 0.41071em;
   left: 50%;
-  margin-left: -0.63889em;
+  margin-left: -0.41071em;
 }
 .student-actions a, .student-actions button {
-  margin-right: .4em;
+  display: inline-block;
+  position: relative;
+  width: 50%;
+  margin-right: -0.5em;
+  padding: 0.41071em 1.28571em;
+  text-align: center;
 }
 .student-actions a, .student-actions a:link, .student-actions a:visited, .student-actions button, .student-actions button:link, .student-actions button:visited {
   color: #eee8d5;
 }
 .student-actions a:focus, .student-actions a:hover, .student-actions a:active, .student-actions button:focus, .student-actions button:hover, .student-actions button:active {
   color: #fdf6e3;
+  background: url('../images/rgbapng/002b3640.png?1347746559');
+  background: rgba(0, 43, 54, 0.25);
 }
 .student-actions .save-student {
   display: none;
+}
+.student-actions .remove-student {
+  left: .25em;
 }
 
 .addstudent-link {
