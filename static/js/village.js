@@ -280,11 +280,11 @@ var PYO = (function (PYO, $) {
                 if (url) {
                     context.loadingOverlay();
                     feedAjax.XHR = $.get(url, function (response) {
+                        context.loadingOverlay('remove');
                         if (response && feedAjax.count === count) {
                             PYO.addPost(response);
                             PYO.authorPosts = feed.find('.post.mine').length;
                         }
-                        context.loadingOverlay('remove');
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
@@ -423,7 +423,6 @@ var PYO = (function (PYO, $) {
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
-        PYO.scrollToBottom('.village-feed');
     };
 
     PYO.initializePage = function () {
