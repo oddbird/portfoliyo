@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -223,7 +223,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\69";
 }
 
-.village-elders li.inactive:before, .message.warning:before {
+.elder.inactive:before, .message.warning:before {
   content: "\26a0";
 }
 
@@ -239,11 +239,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\271a";
 }
 
-.village-elders li.mobile:before {
+.elder.mobile:before {
   content: "\275f";
 }
 
-.village-elders li:before {
+.elder:before {
   content: "\25cf";
 }
 
@@ -2012,48 +2012,66 @@ button {
   border-left: 1px solid #93a1a1;
 }
 
-.village-elders ul {
-  margin-top: 0.82143em;
-}
-.village-elders li:before {
+.elder:before {
+  padding-top: 0.41071em;
+  position: relative;
   float: left;
-  margin: 0;
   color: #859900;
+  z-index: 2;
 }
-.village-elders li.offline:before {
+.elder.offline:before {
   color: #b58900;
 }
-.village-elders li.inactive:before {
+.elder.inactive:before {
   color: #93a1a1;
 }
-.village-elders li.mobile:before {
+.elder.mobile:before {
   color: #657b83;
 }
-.village-elders b, .village-elders span {
+.elder .edit-elder {
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  margin-right: -1.28571em;
+  padding-right: 1.28571em;
+  padding-top: 0.41071em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
+  position: relative;
+  display: block;
+  border-color: #eee8d5;
+}
+.elder .edit-elder:focus, .elder .edit-elder:hover, .elder .edit-elder:active {
+  background: #eee8d5;
+}
+.elder .title, .elder .fn {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   display: block;
-  margin-left: 1.125em;
+  margin-left: 1.5em;
 }
-.village-elders b {
+.elder .title {
   font-weight: bold;
 }
-.village-elders span {
+.elder .fn {
   color: #93a1a1;
 }
 
 .addelder-link {
-  margin-top: 0.82143em;
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  margin-right: -1.28571em;
+  padding-right: 1.28571em;
   margin-bottom: 0.82143em;
   border-style: solid;
   border-width: 0.07143em;
   padding: 0.33929em;
   display: block;
   border-color: #93a1a1;
-  padding-left: 0.82143em;
+  padding-left: 1.28571em;
 }
 
 .pjax-error p {

@@ -4,9 +4,11 @@
     {% for rel in student.elder_relationships %}
     {# @@@ status classes: offline | inactive | mobile #}
     {% with rel.elder as elder %}
-    <li class="{% if not elder.user.is_active %}inactive{% elif not elder.user.email %}mobile{% elif elder.user != request.user %}offline{% endif %}">
-      <b>{{ rel.description_or_role }}:</b>
-      <span>{% firstof elder.name elder.user.email elder.phone %}</span>
+    <li class="elder vcard {% if not elder.user.is_active %}inactive{% elif not elder.user.email %}mobile{% elif elder.user != request.user %}offline{% endif %}">
+      <a href="#" class="edit-elder">
+        <b class="title">{{ rel.description_or_role }}:</b>
+        <span class="fn">{% firstof elder.name elder.user.email elder.phone %}</span>
+      </a>
     </li>
     {% endwith %}
     {% endfor %}
