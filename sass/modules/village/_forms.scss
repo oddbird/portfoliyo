@@ -3,12 +3,33 @@
 
 .village-add-form { @extend %village-solo-page; }
 
+$village-bleed: gutter($center);
+
+$instruction-size: $medpx;
+
 .parent-instructions {
-  @extend %notice;
-  @include bleed(gutter($center));
+  @extend %icon;
+  @extend %icon-document-alt-stroke;
+  @include clearfix;
+  @include adjust-font-size-to($instruction-size);
+  @include rhythm-borders(1px,1,$instruction-size);
+  @include bleed($village-bleed);
+  @include rgba-background(rgba($alt,.25));
+  @include background-image(linear-gradient(top, rgba($alt,0), rgba($alt,.25)));
   display: block;
-  #{$link} { color: $base; }
-  #{$focus} { color: $accent; }
+  position: relative;
+  top: rhythm(-1,$instruction-size);
+  #{$link} { color: $base01; }
+  #{$focus} {
+    @include rgba-background(rgba($accent,.25));
+    @include background-image(linear-gradient(top, rgba($accent,0), rgba($accent,.25)));
+  }
+  &:before {
+    @include adjust-font-size-to($xxlargepx,$from-size: $instruction-size);
+    float: left;
+    margin: 0 rhythm(1,$xxlargepx) 0 rhythm(.5,$xxlargepx);
+  }
+  &:after { content: "»"; }
 }
 
 // ---------------------------------------------------------------------------
@@ -20,13 +41,13 @@ $formspace: $center;
 
 .formset.elders {
   @extend %notice-base;
-  @include bleed(gutter($center));
+  @include bleed($village-bleed);
   @include leader;
   @include inline-form($left, $formspace - $left, $formspace);
   position: relative;
 
   .formset-head {
-    @include bleed(gutter($center));
+    @include bleed($village-bleed);
     @include padding-leader(.25);
     @include padding-trailer(.25);
     @include rgba-background(rgba($base01,.5));

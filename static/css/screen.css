@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before {
   margin-right: .4em;
 }
 
@@ -245,6 +245,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .brand .wordmark:before {
   content: "\2668";
+}
+
+.parent-instructions:before {
+  content: "\274f";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -602,23 +606,23 @@ textarea {
   min-height: 2.46429em;
 }
 
-.initial-password, .parent-instructions, .village-landing .membership {
+.initial-password, .village-landing .membership {
   margin-left: -1em;
   padding-left: 1em;
   margin-right: -1em;
   padding-right: 1em;
 }
 
-.initial-password, .parent-instructions, .formset.elders {
+.initial-password, .formset.elders {
   background: #eee8d5;
 }
-.initial-password:after, .parent-instructions:after, .formset.elders:after {
+.initial-password:after, .formset.elders:after {
   content: "";
   display: table;
   clear: both;
 }
 
-.initial-password, .parent-instructions {
+.initial-password {
   margin-top: 0em;
   padding-top: 0.63889em;
   padding-bottom: 0.63889em;
@@ -1526,17 +1530,49 @@ textarea {
 }
 
 .parent-instructions {
+  overflow: hidden;
+  font-size: 1.27778em;
+  line-height: 1.5em;
+  border-style: solid;
+  border-width: 0.04348em;
+  padding: 0.95652em;
   margin-left: -2.12766%;
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
+  background: url('../images/rgbapng/268bd240.png?1348160748');
+  background: rgba(38, 139, 210, 0.25);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
+  background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
+  background-image: -moz-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
+  background-image: -o-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
+  background-image: -ms-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
+  background-image: linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
   display: block;
+  position: relative;
+  top: -1em;
 }
 .parent-instructions:link, .parent-instructions:visited {
-  color: #657b83;
+  color: #586e75;
 }
 .parent-instructions:focus, .parent-instructions:hover, .parent-instructions:active {
-  color: #d33682;
+  background: url('../images/rgbapng/d3368240.png?1348160748');
+  background: rgba(211, 54, 130, 0.25);
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(211, 54, 130, 0)), color-stop(100%, rgba(211, 54, 130, 0.25)));
+  background-image: -webkit-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
+  background-image: -moz-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
+  background-image: -o-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
+  background-image: -ms-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
+  background-image: linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
+}
+.parent-instructions:before {
+  font-size: 4.65217em;
+  line-height: 1.07477em;
+  float: left;
+  margin: 0 0.21495em 0 0.10748em;
+}
+.parent-instructions:after {
+  content: "»";
 }
 
 .formset.elders {
@@ -1659,9 +1695,9 @@ textarea {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  left: -1.28571em;
+  left: -2.12766%;
   width: 18.98734%;
-  padding-left: 1.28571em;
+  padding-left: 2.12766%;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
 }
@@ -1671,8 +1707,8 @@ textarea {
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  margin-left: -1.28571em;
-  padding-left: 1.28571em;
+  margin-left: -2.12766%;
+  padding-left: 2.12766%;
   border-bottom-style: solid;
   border-bottom-width: 0.07143em;
   padding-bottom: 0.33929em;
@@ -1876,9 +1912,9 @@ textarea {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  right: -1.28571em;
+  right: -2.12766%;
   width: 23.80952%;
-  padding-right: 1.28571em;
+  padding-right: 2.12766%;
   padding-left: 1.5873%;
   height: 100%;
   border-left: 1px solid #93a1a1;
