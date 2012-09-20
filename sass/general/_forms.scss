@@ -67,17 +67,22 @@ $input-rhythm: .25;
 %button {
   margin: 0;
   background-color: $green;
+  text-align: center;
   @include sassy-button;
 }
 
-%reset-button {
+@mixin reset-button {
   @include reset-box-model;
   @include reset-font;
-  @include box-shadow(none);
-  @include text-shadow(none);
   background: none;
   color: inherit;
   text-align: left;
+}
+
+%reset-button {
+  @include reset-button;
+  @include box-shadow(none);
+  @include text-shadow(none);
 }
 
 .linkaction { @extend %button; }
@@ -140,6 +145,7 @@ $form-action-note-size: $smallpx;
     display: inline-block;
     margin: 0 .4em rhythm(.5,$form-action-note-size) 0;
   }
+  button { @extend %button; }
 }
 
 .iqtest {
@@ -202,4 +208,4 @@ textarea {
   min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
 }
 
-button { @extend %button; }
+button { @include reset-button; }

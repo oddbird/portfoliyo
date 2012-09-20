@@ -3,6 +3,19 @@
 
 $village-nav-bg   : $base2;
 
+%village-nav-span {
+  @include bleed($village-bleed, left);
+  display: block;
+  position: relative;
+}
+
+%village-nav-item {
+  @extend %village-nav-span;
+  @include trailing-border(1px,.25,$village-list-size);
+  @include padding-leader(.25,$village-list-size);
+  border-color: $village-border-color;
+}
+
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;
@@ -12,23 +25,18 @@ $village-nav-bg   : $base2;
   padding-left: $village-bleed;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
-  a {
-    #{$link} {
-      @extend %village-activenav;
-      @include ellipsis;
-      @include bleed($village-bleed, left);
-      @include trailing-border(1px,.25,$village-list-size);
-      @include padding-leader(.25,$village-list-size);
-      @include rgba-background(rgba($village-nav-bg,.25));
-      @include background(linear-gradient(bottom, rgba($village-nav-bg,.5), rgba($village-nav-bg,.125)));
-      display: block;
-      position: relative;
-      border-color: $village-border-color;
-    }
-    #{$focus} {
-      @include rgba-background(rgba($village-nav-bg,.5));
-      @include background(linear-gradient(bottom, rgba($village-nav-bg,1), rgba($village-nav-bg,.25)));
-    }
+}
+
+.select-student {
+  @extend %village-nav-item;
+  #{$link} {
+    @extend %village-activenav;
+    @include rgba-background(rgba($village-nav-bg,.25));
+    @include background(linear-gradient(bottom, rgba($village-nav-bg,.5), rgba($village-nav-bg,.125)));
+  }
+  #{$focus} {
+    @include rgba-background(rgba($village-nav-bg,.5));
+    @include background(linear-gradient(bottom, rgba($village-nav-bg,1), rgba($village-nav-bg,.25)));
   }
   .unread {
     display: none; // @@@ TEMPORARY DISABLING
@@ -43,10 +51,40 @@ $village-nav-bg   : $base2;
     text-align: center;
     &.zero { display: none; }
   }
-  .addstudent-link {
-    @extend %village-addlink;
-    @extend %icon;
-    @extend %icon-plus;
-    font-weight: bold;
+}
+
+.student-actions {
+  @extend %village-nav-span;
+  @include transition(all 300ms);
+  background: $orange;
+  color: $base03;
+
+  @include opacity(0);
+  max-height: 0;
+  .active + & {
+    @include opacity(1);
+    @include rhythm(0,.25,.25,0);
+    @include css-arrow(top, rhythm(.5), $orange);
+    max-height: rhythm(2,$village-list-size);
   }
+
+  a, button {
+    @extend %icon;
+    margin-right: .4em;
+    &, #{$link} { color: $base2; }
+    #{$focus} { color: $base3; }
+  }
+  .edit-student { @extend %icon-pencil; }
+  .save-student {
+    @extend %icon-floppy;
+    display: none;
+  }
+}
+
+.addstudent-link {
+  @extend %village-nav-item;
+  @extend %village-addlink;
+  @extend %icon;
+  @extend %icon-plus;
+  font-weight: bold;
 }

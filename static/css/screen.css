@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .village-elders li:before, .message:before {
   margin-right: .4em;
 }
 
@@ -203,6 +203,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2762";
 }
 
+.student-actions .edit-student:before {
+  content: "\270e";
+}
+
 .summary li:before, .benefits li:before, .message.success:before {
   content: "\2713";
 }
@@ -227,7 +231,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\3f";
 }
 
-.village-nav .addstudent-link:before {
+.addstudent-link:before {
   content: "\2b";
 }
 
@@ -249,6 +253,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .parent-instructions:before {
   content: "\274f";
+}
+
+.student-actions .save-student:before {
+  content: "\e000";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -433,9 +441,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   padding: 0 .5em;
 }
 
-.linkaction, button {
+.linkaction, .form-actions button, .village-landing .formfield .action-betasignup {
   margin: 0;
   background-color: #859900;
+  text-align: center;
   font-size: 18px;
   padding: 0.31944em 1.27778em;
   display: inline-block;
@@ -461,10 +470,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   color: #fdf6e3;
   text-shadow: #121400 0 -1px 0;
 }
-.linkaction:hover, button:hover {
+.linkaction:hover, .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
   text-decoration: none;
 }
-.linkaction:hover, button:hover {
+.linkaction:hover, .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
   background-color: #424d00;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
   background: -webkit-linear-gradient(#6f8000, #424d00);
@@ -473,12 +482,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   background: -ms-linear-gradient(#6f8000, #424d00);
   background: linear-gradient(#6f8000, #424d00);
 }
-.linkaction:active, button:active {
+.linkaction:active, .form-actions button:active, .village-landing .formfield .action-betasignup:active {
   -webkit-box-shadow: #353d00 0 1px 2px inset;
   -moz-box-shadow: #353d00 0 1px 2px inset;
   box-shadow: #353d00 0 1px 2px inset;
 }
-.disabled.linkaction, button.disabled, [disabled].linkaction, button[disabled] {
+.disabled.linkaction, .form-actions button.disabled, .village-landing .formfield .disabled.action-betasignup, [disabled].linkaction, .form-actions button[disabled], .village-landing .formfield [disabled].action-betasignup {
   opacity: 0.6;
   background: #596600;
   cursor: default;
@@ -486,7 +495,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.linkaction::-moz-focus-inner, button::-moz-focus-inner {
+.linkaction::-moz-focus-inner, .form-actions button::-moz-focus-inner, .village-landing .formfield .action-betasignup::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
@@ -498,13 +507,13 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   font: inherit;
   font-size: 100%;
   vertical-align: baseline;
+  background: none;
+  color: inherit;
+  text-align: left;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   text-shadow: none;
-  background: none;
-  color: inherit;
-  text-align: left;
 }
 
 .errorlist {
@@ -604,6 +613,18 @@ textarea {
   -o-transition: 200ms min-height;
   transition: 200ms min-height;
   min-height: 2.46429em;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: none;
+  color: inherit;
+  text-align: left;
 }
 
 .initial-password, .village-landing .membership {
@@ -852,6 +873,9 @@ textarea {
 }
 .meta span, .meta a {
   display: block;
+}
+.meta button {
+  width: 100%;
 }
 .meta button:link, .meta button:visited {
   color: #fdf6e3;
@@ -1509,7 +1533,7 @@ textarea {
   margin-left: 0;
 }
 
-.village-nav .active.addstudent-link:link, .active.addelder-link:link, .village-nav .active.addstudent-link:visited, .active.addelder-link:visited, .village-nav a.active:link, .village-nav a.active:visited {
+.active.addstudent-link:link, .active.addelder-link:link, .active.addstudent-link:visited, .active.addelder-link:visited, .active.select-student:link, .active.select-student:visited {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -1517,7 +1541,7 @@ textarea {
   color: #fdf6e3;
 }
 
-.village-nav .addstudent-link:link, .addelder-link:link, .village-nav .addstudent-link:visited, .addelder-link:visited {
+.addstudent-link:link, .addelder-link:link, .addstudent-link:visited, .addelder-link:visited {
   background: url('../images/rgbapng/85990060.png?1347821926');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
@@ -1691,6 +1715,21 @@ textarea {
   font-weight: bold;
 }
 
+.select-student, .addstudent-link, .student-actions {
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  display: block;
+  position: relative;
+}
+
+.select-student, .addstudent-link {
+  border-bottom-style: solid;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
+  padding-top: 0.41071em;
+  border-color: #93a1a1;
+}
+
 .village-nav {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
@@ -1701,18 +1740,8 @@ textarea {
   border: 1px solid #93a1a1;
   border-width: 0 1px;
 }
-.village-nav a:link, .village-nav a:visited {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  margin-left: -1.28571em;
-  padding-left: 1.28571em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.07143em;
-  padding-bottom: 0.33929em;
-  padding-top: 0.41071em;
+
+.select-student:link, .select-student:visited {
   background: url('../images/rgbapng/eee8d540.png?1347821926');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
@@ -1721,11 +1750,8 @@ textarea {
   background: -o-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
-  display: block;
-  position: relative;
-  border-color: #93a1a1;
 }
-.village-nav a:focus, .village-nav a:hover, .village-nav a:active {
+.select-student:focus, .select-student:hover, .select-student:active {
   background: url('../images/rgbapng/eee8d57f.png?1347821926');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
@@ -1735,7 +1761,7 @@ textarea {
   background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
-.village-nav .unread {
+.select-student .unread {
   display: none;
   -webkit-border-radius: 30em;
   -moz-border-radius: 30em;
@@ -1753,10 +1779,68 @@ textarea {
   font-weight: bold;
   text-align: center;
 }
-.village-nav .unread.zero {
+.select-student .unread.zero {
   display: none;
 }
-.village-nav .addstudent-link {
+
+.student-actions {
+  -webkit-transition: all 300ms;
+  -moz-transition: all 300ms;
+  -ms-transition: all 300ms;
+  -o-transition: all 300ms;
+  transition: all 300ms;
+  background: #cb4b16;
+  color: #002b36;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  max-height: 0;
+}
+.active + .student-actions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  margin-top: 0em;
+  padding-top: 0.31944em;
+  padding-bottom: 0.31944em;
+  margin-bottom: 0em;
+  position: relative;
+  background: #cb4b16;
+  max-height: 3.28571em;
+}
+.active + .student-actions:after, .active + .student-actions:before {
+  bottom: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.active + .student-actions:after {
+  border-bottom-color: #cb4b16;
+  border-width: 0.63889em;
+  left: 50%;
+  margin-left: -0.63889em;
+}
+.active + .student-actions:before {
+  border-bottom-color: false;
+  border-width: 0.63889em;
+  left: 50%;
+  margin-left: -0.63889em;
+}
+.student-actions a, .student-actions button {
+  margin-right: .4em;
+}
+.student-actions a, .student-actions a:link, .student-actions a:visited, .student-actions button, .student-actions button:link, .student-actions button:visited {
+  color: #eee8d5;
+}
+.student-actions a:focus, .student-actions a:hover, .student-actions a:active, .student-actions button:focus, .student-actions button:hover, .student-actions button:active {
+  color: #fdf6e3;
+}
+.student-actions .save-student {
+  display: none;
+}
+
+.addstudent-link {
   font-weight: bold;
 }
 

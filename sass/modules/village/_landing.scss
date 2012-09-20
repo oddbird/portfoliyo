@@ -119,6 +119,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
     label { @extend %gone; }
     input { @include span-columns(3,5); margin-right: 0; }
     .action-betasignup {
+      @extend %button;
       @extend %ellipsis;
       @include span-columns(2 omega,5);
     }
