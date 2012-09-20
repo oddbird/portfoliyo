@@ -39,3 +39,8 @@ def test_get_user_nonexistent():
     user = backend.get_user(999)
 
     assert user is None
+
+
+def test_legacy_import():
+    """Can still import from legacy location."""
+    from portfoliyo.users.auth_backend import EmailBackend

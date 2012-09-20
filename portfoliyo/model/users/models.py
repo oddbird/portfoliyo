@@ -6,7 +6,7 @@ import base64
 import time
 from hashlib import sha1
 from django.contrib.auth import models as auth_models
-from django.db import models
+from django.db import models, transaction, IntegrityError
 from django.db.models.fields.related import SingleRelatedObjectDescriptor
 from django.utils import timezone
 
@@ -110,7 +110,7 @@ class Profile(models.Model):
         user.set_password(password)
         user.save()
         code = generate_code(username) if school_staff else None
-        return cls.objects.create(
+        profile = cls(
             name=name,
             phone=phone,
             user=user,
@@ -118,9 +118,27 @@ class Profile(models.Model):
             school_staff=school_staff,
             state=state or cls.STATE.done,
             invited_by=invited_by,
-            # @@@ handle possible integrityerror if code isn't unique
             code=code,
             )
+
+        # try a few times to generate a unique code, if we keep failing (quite
+        # unlikely until we have many many users) give up and set code to None
+        for i in range(5):
+            try:
+                sid = transaction.savepoint()
+                profile.save()
+                break
+            except IntegrityError:
+                if code is not None:
+                    transaction.savepoint_rollback(sid)
+                    profile.code = generate_code(u'%s%s' % (username, i))
+                else:
+                    raise
+        else:
+            profile.code = None
+            profile.save()
+
+        return profile
 
 
     @property

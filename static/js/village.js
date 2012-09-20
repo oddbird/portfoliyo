@@ -380,10 +380,15 @@ var PYO = (function (PYO, $) {
                         return true;
                     } else {
                         e.preventDefault();
-                        if (!($(this).hasClass('.active'))) {
-                            var url = $(this).attr('href');
+                        var url = $(this).attr('href');
+                        if ($(this).hasClass('active')) {
+                            PYO.pageAjaxLoad(url + '?ajax=true');
+                        } else {
                             var title = document.title;
                             var data = { url: url };
+                            if ($(this).hasClass('addelder-link')) {
+                                data.remainActive = true;
+                            }
                             History.pushState(data, title, url);
                         }
                         $(this).blur();
@@ -391,13 +396,11 @@ var PYO = (function (PYO, $) {
                 });
 
                 $(window).bind('statechange', function () {
-                    var url;
-                    if (History.getState().data && History.getState().data.url) {
-                        url = History.getState().data.url;
-                    } else {
-                        url = window.location.pathname;
+                    var data = History.getState().data;
+                    var url = data.url ? data.url : window.location.pathname;
+                    if (!data.remainActive) {
+                        context.find('.village-nav .ajax-link').removeClass('active');
                     }
-                    context.find('.village-nav .ajax-link').removeClass('active');
                     context.find('a.ajax-link[href="' + url + '"]').addClass('active');
                     PYO.pageAjaxLoad(url + '?ajax=true');
                 });
