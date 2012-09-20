@@ -5,11 +5,13 @@
 <form method="POST" action="{% url add_student %}" class="village-add-form" id="add-student-form">
   {% csrf_token %}
 
+  {% if request.user.profile.code %}
   <a href="{% url pdf_parent_instructions %}" target="_new" class="parent-instructions">
     Print instructions for parents
     to add themselves and their students to your class,
     or use the form below to add them yourself.
   </a>
+  {% endif %}
 
   <h2>Add a Student</h2>
 
