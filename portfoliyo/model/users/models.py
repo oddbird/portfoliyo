@@ -2,7 +2,7 @@
 Portfoliyo network models.
 
 """
-from base64 import b64encode
+import base64
 import time
 from hashlib import sha1
 from django.contrib.auth import models as auth_models
@@ -97,7 +97,7 @@ class Profile(models.Model):
         """
         to_hash = u"-".join(
             [email or u'', phone or u'', name, u'%f' % time.time()])
-        username = b64encode(sha1(to_hash.encode('utf-8')).digest())
+        username = base64.b64encode(sha1(to_hash.encode('utf-8')).digest())
         now = timezone.now()
         user = auth_models.User(
             username=username,
@@ -109,6 +109,7 @@ class Profile(models.Model):
             )
         user.set_password(password)
         user.save()
+        code = generate_code(username) if school_staff else None
         return cls.objects.create(
             name=name,
             phone=phone,
@@ -117,6 +118,8 @@ class Profile(models.Model):
             school_staff=school_staff,
             state=state or cls.STATE.done,
             invited_by=invited_by,
+            # @@@ handle possible integrityerror if code isn't unique
+            code=code,
             )
 
 
@@ -184,3 +187,16 @@ class Relationship(models.Model):
     @property
     def student(self):
         return self.to_profile
+
+
+
+# 1 and 0 already eliminated by base32 encoding
+AMBIGUOUS = ['L', 'I', 'O', 'S', '5']
+
+
+def generate_code(username):
+    """Generate a probably-unique six-letter code given a unique username."""
+    full = base64.b32encode(sha1(username).digest())
+    for char in AMBIGUOUS:
+        full = full.replace(char, '')
+    return full[:6]

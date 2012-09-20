@@ -70,6 +70,13 @@ def test_register_creates_school_staff():
     assert user.profile.school_staff
 
 
+def test_register_creates_code():
+    """A newly-registered user has a unique code."""
+    user = _register()
+
+    assert user.profile.code
+
+
 def test_register_creates_registration_profile():
     """register method creates RegistrationProfile."""
     user = _register()
