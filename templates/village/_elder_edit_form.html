@@ -1,0 +1,15 @@
+{% extends "village/_village_content_main.html" %}
+
+{% block village-content %}
+<div class="village-main">
+  <form method="POST" id="edit-elder-form">
+    {# csrf_token #}
+    <h2>Edit { Elder Name }</h2>
+
+    <div class="formfield">The form fields</div>
+
+  </form>
+</div>
+
+{% include "village/_village_info.html" %}
+{% endblock village-content %}
