@@ -290,3 +290,27 @@ class TestJsonPosts(object):
 
         posts = response.json['posts']
         assert [p['text'] for p in posts] == ['post1']
+
+
+
+class TestPdfParentInstructions(object):
+    def test_basic(self, client):
+        """Smoke test that we get a PDF response back and nothing breaks."""
+        elder = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
+        url = reverse('pdf_parent_instructions')
+        resp = client.get(url, user=elder.user, status=200)
+
+        assert resp.headers[
+            'Content-Disposition'] == 'attachment; filename=instructions.pdf'
+        assert resp.headers['Content-Type'] == 'application/pdf'
+
+
+    def test_no_code(self, client):
+        """Doesn't blow up if requesting user has no code."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        url = reverse('pdf_parent_instructions')
+        resp = client.get(url, user=elder.user, status=200)
+
+        assert resp.headers[
+            'Content-Disposition'] == 'attachment; filename=instructions.pdf'
+        assert resp.headers['Content-Type'] == 'application/pdf'

@@ -155,12 +155,12 @@ def json_posts(request, student_id):
 @school_staff_required
 def pdf_parent_instructions(request):
     """Render a PDF for sending home with parents."""
-    response = HttpResponse(mimetype='application/pdf')
+    response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'attachment; filename=instructions.pdf'
 
     pdf.generate_instructions_pdf(
         stream=response,
-        code=request.user.profile.code,
+        code=request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
         )
 
