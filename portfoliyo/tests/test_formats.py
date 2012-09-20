@@ -49,3 +49,8 @@ def test_valid_emails(raw, output):
 def test_invalid_emails(raw):
     """Returns None for unparseable emails."""
     assert formats.normalize_email(raw) is None
+
+
+def test_display_phone():
+    """Converts E.164 to XXX-XXX-XXXX."""
+    assert formats.display_phone('+15555555555') == '555-555-5555'
