@@ -92,6 +92,7 @@ MIDDLEWARE_CLASSES = [
     "django.middleware.gzip.GZipMiddleware",
     "django.middleware.http.ConditionalGetMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "portfoliyo.caching.NeverCacheAjaxGetMiddleware",
     "djangosecure.middleware.SecurityMiddleware",
     "django.middleware.transaction.TransactionMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
