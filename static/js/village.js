@@ -380,8 +380,10 @@ var PYO = (function (PYO, $) {
                         return true;
                     } else {
                         e.preventDefault();
-                        if (!($(this).hasClass('active'))) {
-                            var url = $(this).attr('href');
+                        var url = $(this).attr('href');
+                        if ($(this).hasClass('active')) {
+                            PYO.pageAjaxLoad(url + '?ajax=true');
+                        } else {
                             var title = document.title;
                             var data = { url: url };
                             if ($(this).hasClass('addelder-link')) {
