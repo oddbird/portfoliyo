@@ -76,12 +76,13 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.replacePost = function (data) {
-        if (data && data.posts[0] && data.posts[0].author_sequence_id) {
+        if (data && data.posts[0] && data.posts[0].author_sequence_id && data.posts[0].author_id) {
             var feed = $('.village-feed');
             var author_sequence_id = data.posts[0].author_sequence_id;
-            var newPost = PYO.renderPost(data);
-            var oldPost = feed.find('.post[data-author-sequence="' + author_sequence_id + '"]');
+            var author_id = data.posts[0].author_id;
+            var oldPost = feed.find('.post[data-author-id="' + author_id + '"][data-author-sequence="' + author_sequence_id + '"]');
             if (oldPost && oldPost.length) {
+                var newPost = PYO.renderPost(data);
                 oldPost.replaceWith(newPost);
                 PYO.scrollToBottom('.village-feed');
                 $.doTimeout('new-post-' + author_sequence_id);
@@ -135,7 +136,7 @@ var PYO = (function (PYO, $) {
                 event.preventDefault();
                 if (textarea.val().length) {
                     var text = textarea.val();
-                    var author_sequence_id = feed.find('.post.mine').length + 1;
+                    var author_sequence_id = ++PYO.authorPosts;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
@@ -175,7 +176,7 @@ var PYO = (function (PYO, $) {
             if (response.posts[0].author_sequence_id) {
                 var feed = $('.village-feed');
                 var author_sequence_id = response.posts[0].author_sequence_id;
-                var oldPost = feed.find('.post[data-author-sequence="' + author_sequence_id + '"]');
+                var oldPost = feed.find('.post.mine[data-author-sequence="' + author_sequence_id + '"]');
                 if (oldPost && oldPost.length) {
                     oldPost.loadingOverlay('remove');
                 }
@@ -281,6 +282,7 @@ var PYO = (function (PYO, $) {
                     feedAjax.XHR = $.get(url, function (response) {
                         if (response && feedAjax.count === count) {
                             PYO.addPost(response);
+                            PYO.authorPosts = feed.find('.post.mine').length;
                         }
                         context.loadingOverlay('remove');
                         feedAjax.XHR = null;
@@ -397,7 +399,7 @@ var PYO = (function (PYO, $) {
                     }
                     context.find('.village-nav .ajax-link').removeClass('active');
                     context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                    PYO.pageAjaxLoad(url);
+                    PYO.pageAjaxLoad(url + '?ajax=true');
                 });
             }
         }
