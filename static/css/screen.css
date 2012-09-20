@@ -1695,9 +1695,9 @@ textarea {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  left: -2.12766%;
+  left: -1.28571em;
   width: 18.98734%;
-  padding-left: 2.12766%;
+  padding-left: 1.28571em;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
 }
@@ -1707,8 +1707,8 @@ textarea {
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  margin-left: -2.12766%;
-  padding-left: 2.12766%;
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
   border-bottom-style: solid;
   border-bottom-width: 0.07143em;
   padding-bottom: 0.33929em;
@@ -1912,9 +1912,9 @@ textarea {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  right: -2.12766%;
+  right: -1.28571em;
   width: 23.80952%;
-  padding-right: 2.12766%;
+  padding-right: 1.28571em;
   padding-left: 1.5873%;
   height: 100%;
   border-left: 1px solid #93a1a1;

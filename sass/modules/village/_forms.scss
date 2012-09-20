@@ -3,7 +3,7 @@
 
 .village-add-form { @extend %village-solo-page; }
 
-$village-bleed: gutter($center);
+$village-center-bleed: gutter($center);
 
 $instruction-size: $medpx;
 
@@ -13,7 +13,7 @@ $instruction-size: $medpx;
   @include clearfix;
   @include adjust-font-size-to($instruction-size);
   @include rhythm-borders(1px,1,$instruction-size);
-  @include bleed($village-bleed);
+  @include bleed($village-center-bleed);
   @include rgba-background(rgba($alt,.25));
   @include background-image(linear-gradient(top, rgba($alt,0), rgba($alt,.25)));
   display: block;
@@ -41,13 +41,13 @@ $formspace: $center;
 
 .formset.elders {
   @extend %notice-base;
-  @include bleed($village-bleed);
+  @include bleed($village-center-bleed);
   @include leader;
   @include inline-form($left, $formspace - $left, $formspace);
   position: relative;
 
   .formset-head {
-    @include bleed($village-bleed);
+    @include bleed($village-center-bleed);
     @include padding-leader(.25);
     @include padding-trailer(.25);
     @include rgba-background(rgba($base01,.5));
