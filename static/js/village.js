@@ -383,7 +383,7 @@ var PYO = (function (PYO, $) {
                     $(this).blur();
                 });
 
-                $(window).on('statechange', function () {
+                $(window).bind('statechange', function () {
                     var url = window.location.pathname;
                     context.find('.village-nav .ajax-link').removeClass('active');
                     context.find('a.ajax-link[href="' + url + '"]').addClass('active');
