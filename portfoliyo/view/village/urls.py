@@ -14,5 +14,9 @@ urlpatterns = patterns(
     '',
     url(r'^$', views.dashboard, name='dashboard'),
     url(r'^add/$', views.add_student, name='add_student'),
+    url(r'^instructions.pdf$',
+        views.pdf_parent_instructions,
+        name='pdf_parent_instructions',
+        ),
     url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
     )
