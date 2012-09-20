@@ -370,23 +370,26 @@ var PYO = (function (PYO, $) {
     PYO.ajaxifyVillages = function (container) {
         if ($(container).length) {
             var context = $(container);
+            var History = window.History;
 
-            $('body').on('click', 'a.ajax-link', function (e) {
-                e.preventDefault();
-                if (!($(this).hasClass('.active'))) {
-                    var url = $(this).attr('href');
-                    var title = document.title;
-                    History.pushState(null, title, url);
-                }
-                $(this).blur();
-            });
+            if (History.enabled) {
+                $('body').on('click', 'a.ajax-link', function (e) {
+                    e.preventDefault();
+                    if (!($(this).hasClass('.active'))) {
+                        var url = $(this).attr('href');
+                        var title = document.title;
+                        History.pushState(null, title, url);
+                    }
+                    $(this).blur();
+                });
 
-            $(window).on('statechange', function () {
-                var url = window.location.pathname;
-                context.find('.village-nav .ajax-link').removeClass('active');
-                context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                PYO.pageAjaxLoad(url + '?ajax=true');
-            });
+                $(window).on('statechange', function () {
+                    var url = window.location.pathname;
+                    context.find('.village-nav .ajax-link').removeClass('active');
+                    context.find('a.ajax-link[href="' + url + '"]').addClass('active');
+                    PYO.pageAjaxLoad(url);
+                });
+            }
         }
     };
 
