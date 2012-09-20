@@ -40,3 +40,11 @@ def normalize_email(value):
     if email_re.search(smart_unicode(value)):
         return UserManager.normalize_email(value)
     return None
+
+
+
+def display_phone(value):
+    """Convert a phone number to more user-friendly XXX-XXX-XXXX format."""
+    p = phonenumbers.parse(value)
+    return phonenumbers.format_number(
+        p, phonenumbers.PhoneNumberFormat.RFC3966)[7:]
