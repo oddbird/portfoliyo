@@ -7,4 +7,4 @@ class NeverCacheAjaxGetMiddleware(object):
     def process_response(self, request, response):
         if request.is_ajax() and request.method == "GET":
             add_never_cache_headers(response)
-            return response
+        return response
