@@ -17,7 +17,8 @@ def test_create_post(mock_Post):
     reply = hook.receive_sms(phone, 'foo')
 
     assert reply is None
-    mock_Post.create.assert_called_with(profile, rel.student, 'foo')
+    mock_Post.create.assert_called_with(
+        profile, rel.student, 'foo', from_sms=True)
 
 
 

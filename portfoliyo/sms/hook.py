@@ -49,7 +49,7 @@ def receive_sms(source, body):
             "so we're not able to deliver your message. Sorry!"
             )
 
-    model.Post.create(profile, students[0], body)
+    model.Post.create(profile, students[0], body, from_sms=True)
 
     if activated:
         return (
