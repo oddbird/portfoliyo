@@ -1563,10 +1563,10 @@ textarea {
   top: -1em;
 }
 .parent-instructions:before {
-  font-size: 4.65217em;
-  line-height: 1.07477em;
+  font-size: 6.56522em;
+  line-height: 1.06623em;
   float: left;
-  margin: 0 0.21495em 0.21495em 0.10748em;
+  margin: 0 0.15232em 0 0.07616em;
 }
 .parent-instructions p, .parent-instructions ul {
   overflow: hidden;

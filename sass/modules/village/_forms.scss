@@ -5,7 +5,8 @@
 
 $village-center-bleed: gutter($center);
 
-$instruction-size: $medpx;
+$instruction-size : $medpx;
+$inst-icon-size   : $xxlargepx + $xlargepx;
 
 .parent-instructions {
   @extend %icon;
@@ -21,9 +22,9 @@ $instruction-size: $medpx;
   position: relative;
   top: rhythm(-1,$instruction-size);
   &:before {
-    @include adjust-font-size-to($xxlargepx,$from-size: $instruction-size);
+    @include adjust-font-size-to($inst-icon-size,$from-size: $instruction-size);
     float: left;
-    margin: 0 rhythm(1,$xxlargepx) rhythm(1,$xxlargepx) rhythm(.5,$xxlargepx);
+    margin: 0 rhythm(1,$inst-icon-size) 0 rhythm(.5,$inst-icon-size);
   }
   p, ul { overflow: hidden; }
   p { @include trailer(1,$instruction-size); }
