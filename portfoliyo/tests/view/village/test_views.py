@@ -179,6 +179,90 @@ class TestVillage(object):
         client.get(self.url(student), user=elder.user, status=404)
 
 
+    def test_edit_student(self, no_csrf_client):
+        """POSTing 'name' to village view edits student name."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            to_profile__name='Old Name',
+            )
+
+        no_csrf_client.post(
+            self.url(rel.student),
+            {'name': 'New Name'},
+            user=rel.elder.user,
+            status=302,
+            )
+
+        assert utils.refresh(rel.student).name == u'New Name'
+
+
+    def test_edit_student_error(self, no_csrf_client):
+        """POSTing bad name returns errors as messages."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            to_profile__name='Old Name',
+            )
+
+        res = no_csrf_client.post(
+            self.url(rel.student),
+            {'name': ''},
+            user=rel.elder.user,
+            status=302,
+            ).follow()
+
+        assert utils.refresh(rel.student).name == 'Old Name'
+        res.mustcontain('This field is required')
+
+
+    def test_edit_student_ajax(self, no_csrf_client):
+        """POSTing 'name' via ajax edits student name and returns JSON."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            to_profile__name='Old Name',
+            )
+
+        resp = no_csrf_client.post(
+            self.url(rel.student),
+            {'name': 'New Name'},
+            user=rel.elder.user,
+            status=200,
+            ajax=True,
+            )
+
+        assert utils.refresh(rel.student).name == u'New Name'
+        assert resp.json == {
+            'messages': [], 'success': True, 'name': 'New Name'}
+
+
+    def test_edit_student_ajax_error(self, no_csrf_client):
+        """POSTing bad name via ajax returns error message in JSON."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            to_profile__name='Old Name',
+            )
+
+        resp = no_csrf_client.post(
+            self.url(rel.student),
+            {'name': ''},
+            user=rel.elder.user,
+            status=200,
+            ajax=True,
+            )
+
+        assert utils.refresh(rel.student).name == u'Old Name'
+        assert resp.json == {
+            'messages': [
+                {
+                    'level': 40,
+                    'tags': 'error',
+                    'message': 'This field is required.',
+                    }
+                ],
+            'success': False,
+            'name': 'Old Name',
+            }
+
+
 
 class TestJsonPosts(object):
     """Tests for json_posts view."""

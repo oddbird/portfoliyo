@@ -6,6 +6,7 @@ import json
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
@@ -94,6 +95,19 @@ def invite_elders(request, student_id):
 def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
+
+    if request.method == 'POST' and 'name' in request.POST:
+        form = forms.EditStudentForm(request.POST)
+        if form.is_valid():
+            form.save(rel.student)
+            data = {'success': True, 'name': rel.student.name}
+        else:
+            for error in form.errors['name']:
+                messages.error(request, error)
+            data = {'success': False, 'name': rel.student.name}
+        if not request.is_ajax():
+            return redirect(request.path)
+        return HttpResponse(json.dumps(data), content_type='application/json')
 
     return TemplateResponse(
         request,
