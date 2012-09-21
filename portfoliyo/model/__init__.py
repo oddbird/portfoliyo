@@ -10,4 +10,4 @@ and then reference any model class as e.g. model.User, model.Profile...
 """
 from django.contrib.auth.models import User
 from .users.models import Profile, Relationship
-from .village.models import Post, post_char_limit
+from .village.models import Post, post_char_limit, post_dict

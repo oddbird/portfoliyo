@@ -132,7 +132,7 @@ def json_posts(request, student_id):
 
         data = {
             'success': True,
-            'posts': [post.json_data(author_sequence_id=sequence_id)],
+            'posts': [model.post_dict(post, author_sequence_id=sequence_id)],
             }
 
         return HttpResponse(json.dumps(data), content_type='application/json')
@@ -140,7 +140,7 @@ def json_posts(request, student_id):
     data = {
         'posts':
             [
-            post.json_data() for post in
+            model.post_dict(post) for post in
             reversed(
                 rel.student.posts_in_village.order_by(
                     '-timestamp')[:BACKLOG_POSTS]
