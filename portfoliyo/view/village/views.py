@@ -96,7 +96,9 @@ def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
 
-    if request.method == 'POST' and 'name' in request.POST:
+    if request.method == 'POST':
+        if not rel.elder.school_staff:
+            return redirect(request.path)
         form = forms.EditStudentForm(request.POST)
         if form.is_valid():
             form.save(rel.student)

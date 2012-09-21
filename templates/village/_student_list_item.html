@@ -8,10 +8,15 @@
     <span class="unread{# if zero #} zero{# endif #}">0</span>
   </a>
 
+  {% if request.user.profile.school_staff %}
   <div class="student-actions">
     {# @@@ hide edit-student, and show save-student while editing #}
     <a href="#" class="edit-student" title="edit student name">edit</a>
     <button class="save-student" title="save changes">save</button>
-    <button class="remove-student" title="remove student">remove</button>
+    <form action="{{ request.path }}" method="POST">
+      {% csrf_token %}
+      <button class="remove-student" title="remove student" name="remove" value="{{ nav_student.id }}">remove</button>
+    </form>
   </div>
+  {% endif %}
 </li>
