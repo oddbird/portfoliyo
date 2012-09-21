@@ -83,7 +83,7 @@
   {% endif %}
 </head>
 
-<body id="portfoliyo" class="{% block bodyclasses %}{% endblock %}">
+<body id="portfoliyo" class="{% block bodyclasses %}{% if request.real_user %} impersonate {% endif %}{% endblock %}">
 {% block body %}
 
 {% endblock body %}
