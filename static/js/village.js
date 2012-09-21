@@ -418,6 +418,11 @@ var PYO = (function (PYO, $) {
             removeAnimationSpeed: 'fast',
             optionalIfEmpty: true
         });
+        if ($('#id_name').length) {
+            $('#id_name').focus();
+        } else {
+            $('#id_elders-0-contact').focus();
+        }
     };
 
     PYO.initializeFeed = function () {
