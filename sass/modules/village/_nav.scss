@@ -56,6 +56,7 @@ $village-nav-bg   : $base2;
   &.editing {
     @include mono;
     background: lighten($orange,40);
+    min-height: rhythm(1,$village-list-size);
   }
 }
 
