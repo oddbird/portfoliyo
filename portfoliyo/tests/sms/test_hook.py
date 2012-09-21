@@ -22,14 +22,19 @@ def test_create_post(mock_Post):
 
 
 def test_activate_user():
-    """Receiving an SMS from a user activates that user."""
+    """Receiving an SMS from a user activates and gives them more info."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
         user__is_active=False, phone=phone)
+    factories.RelationshipFactory.create(from_profile=profile)
 
-    hook.receive_sms(phone, 'foo')
+    reply = hook.receive_sms(phone, 'foo')
 
     assert utils.refresh(profile.user).is_active
+    assert reply == (
+        "Thank you! You can text this number any time "
+        "to talk with your child's teachers."
+        )
 
 
 
