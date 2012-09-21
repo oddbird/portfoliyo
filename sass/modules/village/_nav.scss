@@ -27,6 +27,8 @@ $village-nav-bg   : $base2;
   border-width: 0 1px;
 }
 
+.student { position: relative; }
+
 .select-student {
   @extend %village-nav-item;
   #{$link} {
@@ -53,20 +55,28 @@ $village-nav-bg   : $base2;
   }
 }
 
+$student-action-color : $orange;
+
 .student-actions {
   @include transition(all 400ms);
+  @include css-arrow(top, rhythm(.25,$village-list-size), $student-action-color);
+  @include box-shadow;
+  @include stretch-x;
+  top: 100%;
   margin-left: - $village-bleed;
-  background: $orange;
+  background: $student-action-color;
   color: $base03;
   text-transform: capitalize;
 
   @include opacity(0);
   max-height: 0;
-  .active + & {
+  .active:hover + &, .active + &:hover {
     @include opacity(1);
-    @include css-arrow(top, rhythm(.25,$village-list-size), $orange);
     max-height: rhythm(2,$village-list-size);
+    z-index: 100;
   }
+
+  form { display: inline; }
 
   a, button {
     @extend %icon;

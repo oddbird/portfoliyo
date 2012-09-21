@@ -1540,7 +1540,7 @@ button {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  background: #93a1a1;
+  background: #586e75;
   color: #fdf6e3;
 }
 
@@ -1744,6 +1744,10 @@ button {
   border-width: 0 1px;
 }
 
+.student {
+  position: relative;
+}
+
 .select-student:link, .select-student:visited {
   background: url('../images/rgbapng/eee8d540.png?1347821926');
   background: rgba(238, 232, 213, 0.25);
@@ -1792,6 +1796,15 @@ button {
   -ms-transition: all 400ms;
   -o-transition: all 400ms;
   transition: all 400ms;
+  position: relative;
+  background: #cb4b16;
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
   margin-left: -1.28571em;
   background: #cb4b16;
   color: #002b36;
@@ -1800,14 +1813,7 @@ button {
   opacity: 0;
   max-height: 0;
 }
-.active + .student-actions {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1;
-  position: relative;
-  background: #cb4b16;
-  max-height: 3.28571em;
-}
-.active + .student-actions:after, .active + .student-actions:before {
+.student-actions:after, .student-actions:before {
   bottom: 100%;
   border: solid transparent;
   content: " ";
@@ -1816,17 +1822,26 @@ button {
   position: absolute;
   pointer-events: none;
 }
-.active + .student-actions:after {
+.student-actions:after {
   border-bottom-color: #cb4b16;
   border-width: 0.41071em;
   left: 50%;
   margin-left: -0.41071em;
 }
-.active + .student-actions:before {
+.student-actions:before {
   border-bottom-color: false;
   border-width: 0.41071em;
   left: 50%;
   margin-left: -0.41071em;
+}
+.active:hover + .student-actions, .active + .student-actions:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  max-height: 3.28571em;
+  z-index: 100;
+}
+.student-actions form {
+  display: inline;
 }
 .student-actions a, .student-actions button {
   display: inline-block;
