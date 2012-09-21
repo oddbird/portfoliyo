@@ -4,7 +4,7 @@ import datetime
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.utils.timezone import utc
-
+import mock
 import pytest
 
 from portfoliyo.view.village import views
@@ -300,20 +300,30 @@ class TestPdfParentInstructions(object):
     def test_basic(self, client):
         """Smoke test that we get a PDF response back and nothing breaks."""
         elder = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
-        url = reverse('pdf_parent_instructions')
+        url = reverse('pdf_parent_instructions', kwargs={'lang': 'es'})
         resp = client.get(url, user=elder.user, status=200)
 
         assert resp.headers[
-            'Content-Disposition'] == 'attachment; filename=instructions.pdf'
+            'Content-Disposition'] == 'attachment; filename=instructions-es.pdf'
         assert resp.headers['Content-Type'] == 'application/pdf'
 
 
     def test_no_code(self, client):
         """Doesn't blow up if requesting user has no code."""
         elder = factories.ProfileFactory.create(school_staff=True)
-        url = reverse('pdf_parent_instructions')
+        url = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
         resp = client.get(url, user=elder.user, status=200)
 
         assert resp.headers[
-            'Content-Disposition'] == 'attachment; filename=instructions.pdf'
+            'Content-Disposition'] == 'attachment; filename=instructions-en.pdf'
         assert resp.headers['Content-Type'] == 'application/pdf'
+
+
+    def test_missing_template(self, client):
+        """404 if template for requested lang is missing."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        url = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
+        target = 'portfoliyo.view.village.views.os.path.isfile'
+        with mock.patch(target) as mock_isfile:
+            mock_isfile.return_value = False
+            client.get(url, user=elder.user, status=404)

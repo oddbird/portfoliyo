@@ -1,6 +1,5 @@
 """PDF code."""
 import io
-import os
 
 import pyPdf
 from reportlab.lib.pagesizes import LETTER, landscape
@@ -10,10 +9,8 @@ from portfoliyo import formats
 
 
 
-def generate_instructions_pdf(stream, code, phone):
+def generate_instructions_pdf(template_path, stream, code, phone):
     """Generate a parent signup instructions PDF and write it to stream."""
-    template_path = os.path.join(
-        os.path.dirname(__file__), 'parent-instructions-template.pdf')
     template_page = pyPdf.PdfFileReader(open(template_path, 'rb')).getPage(0)
 
     buffer = io.BytesIO()
