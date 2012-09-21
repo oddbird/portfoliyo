@@ -20,8 +20,8 @@ def test_unicode():
 
 
 
-def test_json_data():
-    """json_data method returns dictionary of post data."""
+def test_post_dict():
+    """post_dict returns dictionary of post data."""
     rel = factories.RelationshipFactory.create(
         from_profile__name='The Teacher', description='desc')
     post = factories.PostFactory.create(
@@ -31,21 +31,21 @@ def test_json_data():
         html_text='Foo',
         )
 
-    assert post.json_data(extra="extra") == {
+    assert models.post_dict(post, extra="extra") == {
         'author_id': rel.elder.id,
         'student_id': rel.student.id,
         'author': 'The Teacher',
         'role': 'desc',
-        'timestamp': '2012-09-17T05:30:00+00:00',
+        'timestamp': '2012-09-17T01:30:00-04:00',
         'date': '9/17/2012',
-        'time': '5:30 a.m.',
+        'time': '1:30 a.m.',
         'text': 'Foo',
         'extra': 'extra',
         }
 
 
 
-def test_json_data_no_relationship():
+def test_post_dict_no_relationship():
     """If relationship is gone, uses author's role instead."""
     rel = factories.RelationshipFactory.create(
         from_profile__name='The Teacher',
@@ -58,7 +58,7 @@ def test_json_data_no_relationship():
         )
     rel.delete()
 
-    assert post.json_data()['role'] == 'role'
+    assert models.post_dict(post)['role'] == 'role'
 
 
 

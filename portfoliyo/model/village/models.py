@@ -4,7 +4,7 @@ from __future__ import absolute_import
 import re
 
 from django.db import models
-from django.utils import timezone, dateformat, html
+from django.utils import dateformat, html, timezone
 
 from portfoliyo.pusher import get_pusher
 from portfoliyo import sms
@@ -53,13 +53,13 @@ class Post(models.Model):
                 sms_body = prefix + post.original_text
                 sms.send(rel.elder.phone, sms_body)
 
-        # trigger Pusher event, if Pusher is configured
+        # trigger Pusher event, if configured
         pusher = get_pusher()
         if pusher is not None:
             channel = 'student_%s' % student.id
             pusher[channel].trigger(
                 'message_posted',
-                {'posts': [post.json_data(author_sequence_id=sequence_id)]},
+                {'posts': [post_dict(post, author_sequence_id=sequence_id)]},
                 )
 
         return post
@@ -75,34 +75,6 @@ class Post(models.Model):
                 )
         except user_models.Relationship.DoesNotExist:
             return None
-
-
-    def json_data(self, **extra):
-        """Return this post rendered as dictionary, ready for JSONification."""
-        author_name = (
-            self.author.name or self.author.user.email or self.author.phone)
-
-        relationship = self.get_relationship()
-
-        if relationship is None:
-            role = self.author.role
-        else:
-            role = relationship.description or self.author.role
-
-        data = {
-            'author_id': self.author_id,
-            'student_id': self.student_id,
-            'author': author_name,
-            'role': role,
-            'timestamp': self.timestamp.isoformat(),
-            'date': dateformat.format(self.timestamp, 'n/j/Y'),
-            'time': dateformat.time_format(self.timestamp, 'P'),
-            'text': self.html_text,
-            }
-
-        data.update(extra)
-
-        return data
 
 
 
@@ -197,3 +169,34 @@ def text_notification_prefix(relationship):
 def post_char_limit(relationship):
     """Max length for posts from this profile/student relationship."""
     return 160 - len(text_notification_prefix(relationship))
+
+
+
+def post_dict(post, **extra):
+    """Return given post rendered as dictionary, ready for JSONification."""
+    author_name = (
+        post.author.name or post.author.user.email or post.author.phone)
+
+    relationship = post.get_relationship()
+
+    if relationship is None:
+        role = post.author.role
+    else:
+        role = relationship.description or post.author.role
+
+    timestamp = timezone.localtime(post.timestamp)
+
+    data = {
+        'author_id': post.author_id,
+        'student_id': post.student_id,
+        'author': author_name,
+        'role': role,
+        'timestamp': timestamp.isoformat(),
+        'date': dateformat.format(timestamp, 'n/j/Y'),
+        'time': dateformat.time_format(timestamp, 'P'),
+        'text': post.html_text,
+        }
+
+    data.update(extra)
+
+    return data
