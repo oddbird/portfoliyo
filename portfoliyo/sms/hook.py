@@ -57,6 +57,7 @@ def handle_unknown_source(source, body):
         if parent_name:
             model.Profile.create_with_user(
                 phone=source,
+                name=parent_name,
                 state=model.Profile.STATE.kidname,
                 invited_by=teacher,
                 )

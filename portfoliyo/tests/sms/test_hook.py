@@ -84,6 +84,7 @@ def test_code_signup():
         "Thanks! What is the name of your child in Teacher Jane's class?"
         )
     profile = model.Profile.objects.get(phone=phone)
+    assert profile.name == "John Doe"
     assert profile.state == model.Profile.STATE.kidname
     assert profile.invited_by == teacher
 
