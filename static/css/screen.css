@@ -269,6 +269,9 @@ body {
   background: #073642;
   color: #eee8d5;
 }
+body.impersonate {
+  background: #cb4b16;
+}
 
 /* -------------------------------------------------------------------------*/
 /* Selected Text */
