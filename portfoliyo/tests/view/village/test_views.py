@@ -17,15 +17,18 @@ from portfoliyo.tests import factories, utils
 class TestDashboard(object):
     def test_dashboard(self, client):
         """A picklist of students."""
-        rel = factories.RelationshipFactory(to_profile__name="Student One")
+        rel = factories.RelationshipFactory(to_profile__name="Student Two")
         factories.RelationshipFactory(
-            from_profile=rel.elder, to_profile__name="Student Two")
+            from_profile=rel.elder, to_profile__name="Student One")
         response = client.get(
             reverse('dashboard'), user=rel.elder.user, status=200)
 
         response.mustcontain("Please select a student")
         response.mustcontain("Student One")
         response.mustcontain("Student Two")
+        # alphabetical ordering
+        c = response.content
+        assert c.index("Student One") < c.index("Student Two")
 
 
 
