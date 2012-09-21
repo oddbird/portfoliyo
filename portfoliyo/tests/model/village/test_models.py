@@ -49,6 +49,7 @@ def test_post_dict():
         'time': '1:30 a.m.',
         'text': 'Foo',
         'extra': 'extra',
+        'sms': False,
         }
 
 

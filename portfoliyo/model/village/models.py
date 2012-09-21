@@ -210,6 +210,7 @@ def post_dict(post, **extra):
         'date': dateformat.format(timestamp, 'n/j/Y'),
         'time': dateformat.time_format(timestamp, 'P'),
         'text': post.html_text,
+        'sms': post.sms,
         }
 
     data.update(extra)
