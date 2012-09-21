@@ -3,7 +3,7 @@
     'use strict';
 
     $.ajaxSetup({
-        timeout: 45000
+        timeout: 30000
     });
 
     $(document).ajaxError(function (event, request, settings, error) {

@@ -19,6 +19,14 @@ def test_unicode():
     assert unicode(p) == u'foo'
 
 
+def test_sms():
+    """sms property is true if either from_sms or to_sms or both."""
+    assert not factories.PostFactory.build(from_sms=False, to_sms=False).sms
+    assert factories.PostFactory.build(from_sms=True, to_sms=False).sms
+    assert factories.PostFactory.build(from_sms=False, to_sms=True).sms
+    assert factories.PostFactory.build(from_sms=True, to_sms=True).sms
+
+
 
 def test_post_dict():
     """post_dict returns dictionary of post data."""
@@ -41,6 +49,7 @@ def test_post_dict():
         'time': '1:30 a.m.',
         'text': 'Foo',
         'extra': 'extra',
+        'sms': False,
         }
 
 
@@ -77,6 +86,27 @@ class TestPostCreate(object):
         assert post.timestamp == mock_now.return_value
         assert post.original_text == 'Foo\n'
         assert post.html_text == 'Foo<br>'
+        assert post.from_sms == False
+        assert post.to_sms == False
+
+
+    @mock.patch('portfoliyo.model.village.models.timezone.now')
+    def test_creates_post_from_sms(self, mock_now):
+        """Post object can have from_sms set to True."""
+        mock_now.return_value = datetime.datetime(
+            2012, 9, 17, 6, 25, tzinfo=utc)
+        rel = factories.RelationshipFactory.create()
+
+        post = models.Post.create(
+            rel.elder, rel.student, 'Foo\n', from_sms=True)
+
+        assert post.author == rel.elder
+        assert post.student == rel.student
+        assert post.timestamp == mock_now.return_value
+        assert post.original_text == 'Foo\n'
+        assert post.html_text == 'Foo<br>'
+        assert post.from_sms == True
+        assert post.to_sms == False
 
 
     @mock.patch('portfoliyo.model.village.models.get_pusher')
@@ -114,10 +144,11 @@ class TestPostCreate(object):
             description="Father",
             )
 
-        models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
 
         mock_send_sms.assert_called_with(
             "+13216540987", "John Doe: Hey @father")
+        assert post.to_sms == True
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -138,9 +169,10 @@ class TestPostCreate(object):
             description="Father",
             )
 
-        models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
 
         assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -161,9 +193,10 @@ class TestPostCreate(object):
             description="Father",
             )
 
-        models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
 
         assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
 
 
 class TestProcessText(object):

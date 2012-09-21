@@ -25,6 +25,7 @@ $village-nav-bg   : $base2;
   padding-left: $village-bleed;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
+  z-index: 5;
 }
 
 .student { position: relative; }

@@ -20,7 +20,7 @@
       &:before { color: $base1; }
     }
     &.mobile {
-      @extend %icon-mobile;
+      @extend %icon-phone;
       &:before { color: $base; }
     }
   }
