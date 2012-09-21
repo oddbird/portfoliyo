@@ -41,23 +41,23 @@ $post-padding     : .25;
     }
   }
 
-  .post-text {
-    @extend %icon;
-    @extend %icon-phone;
-    @include clearfix;
-    &:before { margin-right: 0; }
-    &.no-sms {
-      @extend %icon-no-phone;
-      &:before { color: $red; }
-    }
-  }
-
   &.mine { background: lighten($blue,45); }
   &.not-posted { background: lighten($red,45); }
 
   .timeout {
     @extend %error;
     @include bleed(gutter($center));
+  }
+}
+
+.post-text {
+  @extend %icon;
+  @include clearfix;
+  &:before { margin-right: 0; }
+  &.sms { @extend %icon-phone; }
+  &.no-sms {
+    @extend %icon-no-phone;
+    &:before { color: $red; }
   }
 }
 
