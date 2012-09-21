@@ -82,6 +82,19 @@ def test_stop_impersonating():
     assert req.user == real_user
 
 
+def test_stop_impersonating_again():
+    """Trying to stop impersonating when you're not doesn't cause an error."""
+    real_user = factories.UserFactory.create(is_superuser=True)
+    req = mock.Mock()
+    req.user = real_user
+    req.session = {}
+    req.GET = {'impersonate': "stop"}
+
+    assert _call(req) is None
+    assert impersonate.SESSION_KEY not in req.session
+    assert req.user == real_user
+
+
 def test_bad_email():
     """Returns simple error response if bad email is given."""
     real_user = factories.UserFactory.create(is_superuser=True)

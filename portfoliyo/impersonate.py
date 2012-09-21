@@ -23,7 +23,8 @@ class ImpersonationMiddleware(object):
         if 'impersonate' in request.GET:
             email = request.GET['impersonate']
             if email == 'stop':
-                del request.session[SESSION_KEY]
+                if SESSION_KEY in request.session:
+                    del request.session[SESSION_KEY]
                 return None
             try:
                 impersonate = model.User.objects.get(email=email)
