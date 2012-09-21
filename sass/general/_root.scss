@@ -16,6 +16,7 @@ body{
   @include sans;
   background: $back;
   color: $base2;
+  &.impersonate { background: $orange; }
 }
 
 /* -------------------------------------------------------------------------*/
