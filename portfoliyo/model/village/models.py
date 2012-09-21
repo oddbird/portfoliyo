@@ -27,22 +27,34 @@ class Post(models.Model):
     original_text = models.TextField()
     # the parsed text as HTML, with highlights wrapped in <b>
     html_text = models.TextField()
+    # message was received via SMS
+    from_sms = models.BooleanField(default=False)
+    # message was sent to at least one SMS
+    to_sms = models.BooleanField(default=False)
 
 
     def __unicode__(self):
         return self.original_text
 
 
+    @property
+    def sms(self):
+        """Post was either received from or sent by SMS."""
+        return self.from_sms or self.to_sms
+
+
     @classmethod
-    def create(cls, author, student, text, sequence_id=None):
+    def create(cls, author, student, text, sequence_id=None, from_sms=False):
         """Create and return a Post."""
         html_text, highlights = process_text(text, student)
 
-        post = cls.objects.create(
+        post = cls(
             author=author,
             student=student,
             original_text=text,
             html_text=html_text,
+            from_sms=from_sms,
+            to_sms=False,
             )
 
         # notify highlighted text-only users
@@ -52,6 +64,9 @@ class Post(models.Model):
                 prefix = text_notification_prefix(sender_rel)
                 sms_body = prefix + post.original_text
                 sms.send(rel.elder.phone, sms_body)
+                post.to_sms = True
+
+        post.save()
 
         # trigger Pusher event, if configured
         pusher = get_pusher()
@@ -195,6 +210,7 @@ def post_dict(post, **extra):
         'date': dateformat.format(timestamp, 'n/j/Y'),
         'time': dateformat.time_format(timestamp, 'P'),
         'text': post.html_text,
+        'sms': post.sms,
         }
 
     data.update(extra)

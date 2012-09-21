@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before {
   margin-right: .4em;
 }
 
@@ -235,10 +235,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\271a";
 }
 
-.village-elders li.mobile:before {
-  content: "\275f";
-}
-
 .village-elders li:before {
   content: "\25cf";
 }
@@ -249,6 +245,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .parent-instructions:before {
   content: "\274f";
+}
+
+.post .post-text:before, .village-elders li.mobile:before {
+  content: "\e000";
+}
+
+.post .post-text.no-sms:before {
+  content: "\e001";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -331,25 +335,25 @@ img {
   border: 1px solid #073642;
 }
 
-.activationfailed h1, .awaiting-activation h1, .village-landing h1, .no-students h1, [class^="errorpage-"] h1, .activationfailed h2, .awaiting-activation h2, .village-landing h2, .no-students h2, [class^="errorpage-"] h2, .activationfailed h3, .awaiting-activation h3, .village-landing h3, .no-students h3, [class^="errorpage-"] h3, .activationfailed h4, .awaiting-activation h4, .village-landing h4, .no-students h4, [class^="errorpage-"] h4, .activationfailed h5, .awaiting-activation h5, .village-landing h5, .no-students h5, [class^="errorpage-"] h5, .activationfailed h6, .awaiting-activation h6, .village-landing h6, .no-students h6, [class^="errorpage-"] h6 {
+.activationfailed h1, .awaiting-activation h1, .village-landing h1, .no-students h1, .getting-started h1, [class^="errorpage-"] h1, .activationfailed h2, .awaiting-activation h2, .village-landing h2, .no-students h2, .getting-started h2, [class^="errorpage-"] h2, .activationfailed h3, .awaiting-activation h3, .village-landing h3, .no-students h3, .getting-started h3, [class^="errorpage-"] h3, .activationfailed h4, .awaiting-activation h4, .village-landing h4, .no-students h4, .getting-started h4, [class^="errorpage-"] h4, .activationfailed h5, .awaiting-activation h5, .village-landing h5, .no-students h5, .getting-started h5, [class^="errorpage-"] h5, .activationfailed h6, .awaiting-activation h6, .village-landing h6, .no-students h6, .getting-started h6, [class^="errorpage-"] h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.activationfailed p, .awaiting-activation p, .village-landing p, .no-students p, [class^="errorpage-"] p, .activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, [class^="errorpage-"] ul, .activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, [class^="errorpage-"] ol {
+.activationfailed p, .awaiting-activation p, .village-landing p, .no-students p, .getting-started p, [class^="errorpage-"] p, .activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, .getting-started ul, [class^="errorpage-"] ul, .activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, .getting-started ol, [class^="errorpage-"] ol {
   margin-bottom: 1.27778em;
 }
-.activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, [class^="errorpage-"] ul {
+.activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, .getting-started ul, [class^="errorpage-"] ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, [class^="errorpage-"] ol {
+.activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, .getting-started ol, [class^="errorpage-"] ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.activationfailed em, .awaiting-activation em, .village-landing em, .no-students em, [class^="errorpage-"] em {
+.activationfailed em, .awaiting-activation em, .village-landing em, .no-students em, .getting-started em, [class^="errorpage-"] em {
   font-style: italic;
 }
-.activationfailed strong, .awaiting-activation strong, .village-landing strong, .no-students strong, [class^="errorpage-"] strong {
+.activationfailed strong, .awaiting-activation strong, .village-landing strong, .no-students strong, .getting-started strong, [class^="errorpage-"] strong {
   font-weight: 500;
 }
 
@@ -1543,7 +1547,7 @@ textarea {
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
-  background: url('../images/rgbapng/268bd240.png?1348161986');
+  background: url('../images/rgbapng/268bd240.png?1348255252');
   background: rgba(38, 139, 210, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
@@ -1559,7 +1563,7 @@ textarea {
   color: #586e75;
 }
 .parent-instructions:focus, .parent-instructions:hover, .parent-instructions:active {
-  background: url('../images/rgbapng/d3368240.png?1348161986');
+  background: url('../images/rgbapng/d3368240.png?1348255252');
   background: rgba(211, 54, 130, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(211, 54, 130, 0)), color-stop(100%, rgba(211, 54, 130, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
@@ -1703,6 +1707,7 @@ textarea {
   padding-left: 1.28571em;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
+  z-index: 5;
 }
 .village-nav a:link, .village-nav a:visited {
   white-space: nowrap;
@@ -1810,37 +1815,65 @@ textarea {
   width: 49%;
   text-align: right;
 }
-.post .body {
+.post .post-text {
   overflow: hidden;
 }
+.post .post-text:before {
+  margin-right: 0;
+}
+.post .post-text.no-sms:before {
+  color: #dc322f;
+}
 .post.mine {
-  background: url('../images/rgbapng/268bd21a.png?1347821926');
-  background: rgba(38, 139, 210, 0.1);
+  background: #e3f1fa;
 }
 .post.not-posted {
-  background: url('../images/rgbapng/dc322f1a.png?1347821926');
-  background: rgba(220, 50, 47, 0.1);
-}
-.post .nametag {
-  -webkit-border-radius: 0.512em;
-  -moz-border-radius: 0.512em;
-  -ms-border-radius: 0.512em;
-  -o-border-radius: 0.512em;
-  border-radius: 0.512em;
-  display: inline-block;
-  padding: 0 .4em;
-  background: #657b83;
-  color: #fdf6e3;
-}
-.post .nametag.me {
-  background: #268bd2;
-  color: #fdf6e3;
+  background: #fdf4f3;
 }
 .post .timeout {
   margin-left: -2.12766%;
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
+}
+
+.nametag {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background: url('../images/rgbapng/93a1a140.png?1348260015');
+  background: rgba(147, 161, 161, 0.25);
+  display: inline-block;
+  padding: 0 .4em;
+  border: 1px solid #586e75;
+}
+.nametag.me {
+  background: #268bd2;
+  color: #fdf6e3;
+}
+
+.getting-started {
+  padding-top: 1.27778em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 1.22222em;
+  padding-left: 2.12766%;
+  padding-right: 2.12766%;
+  border-color: #93a1a1;
+  background: white;
+}
+.getting-started h2 {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
+}
+.getting-started li {
+  padding-bottom: 0.31944em;
+}
+.getting-started :last-child {
+  margin-bottom: 0;
 }
 
 .post-add-form {
