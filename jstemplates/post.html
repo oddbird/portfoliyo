@@ -9,9 +9,9 @@
     <time datetime="{{ timestamp }}">{{ date }} at {{ time }}</time>
   </header>
 
-  <div class="body">
-    <p class="post-text">{{# escape }}{{ text }}{{/ escape }}{{^ escape }}{{{ text }}}{{/ escape }}</p>
-  </div>
+  <p class="post-text">
+    {{# escape }}{{ text }}{{/ escape }}{{^ escape }}{{{ text }}}{{/ escape }}
+  </p>
 
 </article>
 {{/ posts }}

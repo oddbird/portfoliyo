@@ -40,7 +40,17 @@ $post-padding     : .25;
       text-align: right;
     }
   }
-  .body { @include clearfix; }
+
+  .post-text {
+    @extend %icon;
+    @extend %icon-phone;
+    @include clearfix;
+    &:before { margin-right: 0; }
+    &.no-sms {
+      @extend %icon-no-phone;
+      &:before { color: $red; }
+    }
+  }
 
   &.mine { background: lighten($blue,45); }
   &.not-posted { background: lighten($red,45); }

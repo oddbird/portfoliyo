@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before {
   margin-right: .4em;
 }
 
@@ -235,10 +235,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\271a";
 }
 
-.village-elders li.mobile:before {
-  content: "\275f";
-}
-
 .village-elders li:before {
   content: "\25cf";
 }
@@ -249,6 +245,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .parent-instructions:before {
   content: "\274f";
+}
+
+.post .post-text:before, .village-elders li.mobile:before {
+  content: "\e000";
+}
+
+.post .post-text.no-sms:before {
+  content: "\e001";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -1811,8 +1815,14 @@ textarea {
   width: 49%;
   text-align: right;
 }
-.post .body {
+.post .post-text {
   overflow: hidden;
+}
+.post .post-text:before {
+  margin-right: 0;
+}
+.post .post-text.no-sms:before {
+  color: #dc322f;
 }
 .post.mine {
   background: #e3f1fa;
