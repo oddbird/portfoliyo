@@ -476,7 +476,7 @@ var PYO = (function (PYO, $) {
                 var link = student.data('link');
                 var name = link.find('.student-name');
                 var oldName = editing.data('original-name');
-                var newName = editing.text().trim();
+                var newName = $.trim(editing.text());
 
                 if (url && newName && newName !== oldName) {
                     student.loadingOverlay();
