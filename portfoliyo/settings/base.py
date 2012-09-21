@@ -99,6 +99,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "session_csrf.CsrfMiddleware",
+    "portfoliyo.impersonate.ImpersonationMiddleware",
 ]
 
 ROOT_URLCONF = "portfoliyo.view.urls"
