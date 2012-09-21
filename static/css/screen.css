@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .village-nav .addstudent-link:before, .post .post-text:before, .village-elders li:before, .message:before {
   margin-right: .4em;
 }
 
@@ -243,7 +243,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2668";
 }
 
-.parent-instructions:before {
+.parent-instructions:before, .parent-instructions [class^="pdf-"]:before {
   content: "\274f";
 }
 
@@ -1543,6 +1543,9 @@ textarea {
   border-style: solid;
   border-width: 0.04348em;
   padding: 0.95652em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.04348em;
+  padding-bottom: 0.45652em;
   margin-left: -2.12766%;
   padding-left: 2.12766%;
   margin-right: -2.12766%;
@@ -1559,27 +1562,44 @@ textarea {
   position: relative;
   top: -1em;
 }
-.parent-instructions:link, .parent-instructions:visited {
-  color: #586e75;
-}
-.parent-instructions:focus, .parent-instructions:hover, .parent-instructions:active {
-  background: url('../images/rgbapng/d3368240.png?1348255252');
-  background: rgba(211, 54, 130, 0.25);
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(211, 54, 130, 0)), color-stop(100%, rgba(211, 54, 130, 0.25)));
-  background-image: -webkit-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: -moz-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: -o-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: -ms-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-}
 .parent-instructions:before {
   font-size: 4.65217em;
   line-height: 1.07477em;
   float: left;
-  margin: 0 0.21495em 0 0.10748em;
+  margin: 0 0.21495em 0.21495em 0.10748em;
 }
-.parent-instructions:after {
-  content: "»";
+.parent-instructions p, .parent-instructions ul {
+  overflow: hidden;
+}
+.parent-instructions p {
+  margin-bottom: 1em;
+}
+.parent-instructions ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  text-align: right;
+}
+.parent-instructions ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  white-space: nowrap;
+}
+.parent-instructions ul li {
+  *display: inline;
+}
+.parent-instructions [class^="pdf-"] {
+  margin-right: 1em;
+}
+.parent-instructions [class^="pdf-"]:after {
+  content: " »";
 }
 
 .formset.elders {
@@ -1843,7 +1863,7 @@ textarea {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('../images/rgbapng/93a1a140.png?1348260015');
+  background: url('../images/rgbapng/93a1a140.png?1348266167');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
