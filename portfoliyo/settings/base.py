@@ -166,11 +166,25 @@ LOGGING = {
             "()": "django.utils.log.RequireDebugFalse",
         },
     },
+    "root": {
+        "level": "WARNING",
+        "handlers": ["console"],
+    },
+    "formatters": {
+        "verbose": {
+            "format": "%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s"
+        },
+    },
     "handlers": {
         "mail_admins": {
             "level": "ERROR",
             "filters": ["require_debug_false"],
             "class": "django.utils.log.AdminEmailHandler",
+        },
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose"
         },
     },
     "loggers": {
@@ -206,7 +220,7 @@ LOGIN_URL = "/login/"
 AUTHENTICATION_BACKENDS = ["portfoliyo.model.users.auth_backend.EmailBackend"]
 LOGIN_REDIRECT_URL = "/"
 
-DEFAULT_FROM_EMAIL = 'Portfoliyo <noreply@portfoliyo.org>'
+DEFAULT_FROM_EMAIL = "Portfoliyo <noreply@portfoliyo.org>"
 
-PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.backends.console.ConsoleSMSBackend'
-PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'
+PORTFOLIYO_SMS_BACKEND = "portfoliyo.sms.backends.console.ConsoleSMSBackend"
+PORTFOLIYO_SMS_DEFAULT_FROM = "+15555555555"

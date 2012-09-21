@@ -1,5 +1,11 @@
 """Village SMS-handling."""
+import logging
+
 from portfoliyo import model
+
+
+logger = logging.getLogger(__name__)
+
 
 
 def receive_sms(source, body):
@@ -61,6 +67,7 @@ def handle_unknown_source(source, body):
         else:
             return "Please include your name after the code."
     else:
+        logger.error("Unknown text from %s: %s" % (source, body))
         return (
             "Bummer, we don't recognize your invite code! "
             "Please make sure it's typed exactly as it is on the paper, "
