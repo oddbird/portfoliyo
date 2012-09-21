@@ -12,6 +12,7 @@ from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
 from portfoliyo import model, pdf
+from portfoliyo.view import home
 from ..decorators import school_staff_required
 from ..ajax import ajax
 from . import forms
@@ -99,6 +100,10 @@ def village(request, student_id):
     if request.method == 'POST':
         if not rel.elder.school_staff:
             return redirect(request.path)
+        if 'remove' in request.POST:
+            rel.student.deleted = True
+            rel.student.save()
+            return redirect(home.redirect_home(request.user))
         form = forms.EditStudentForm(request.POST)
         if form.is_valid():
             form.save(rel.student)

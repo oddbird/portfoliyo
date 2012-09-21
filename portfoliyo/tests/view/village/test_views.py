@@ -196,6 +196,37 @@ class TestVillage(object):
         client.get(self.url(student), user=elder.user, status=404)
 
 
+    def test_remove_student(self, no_csrf_client):
+        """POSTing 'remove': student-id to village view soft-deletes student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        resp = no_csrf_client.post(
+            self.url(rel.student),
+            {'remove': rel.student.id},
+            user=rel.elder.user,
+            status=302,
+            )
+
+        assert utils.refresh(rel.student).deleted
+        assert resp['Location'] == utils.location(reverse('add_student'))
+
+
+    def test_remove_student_requires_school_staff(self, no_csrf_client):
+        """POSTing 'remove' to village view does nothing if not school staff."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=False)
+
+        no_csrf_client.post(
+            self.url(rel.student),
+            {'remove': rel.student.id},
+            user=rel.elder.user,
+            status=302,
+            )
+
+        assert not utils.refresh(rel.student).deleted
+
+
     def test_edit_student(self, no_csrf_client):
         """POSTing 'name' to village view edits student name."""
         rel = factories.RelationshipFactory.create(
