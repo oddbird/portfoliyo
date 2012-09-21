@@ -144,7 +144,8 @@ class Profile(models.Model):
     @property
     def elder_relationships(self):
         return self.relationships_to.filter(
-            kind=Relationship.KIND.elder).select_related("from_profile")
+            kind=Relationship.KIND.elder).order_by(
+            'description').select_related("from_profile")
 
 
     @property
@@ -155,7 +156,8 @@ class Profile(models.Model):
     @property
     def student_relationships(self):
         return self.relationships_from.filter(
-            kind=Relationship.KIND.elder).select_related("to_profile")
+            kind=Relationship.KIND.elder).order_by(
+            'to_profile__name').select_related("to_profile")
 
 
     @property

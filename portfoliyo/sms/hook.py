@@ -21,9 +21,11 @@ def receive_sms(source, body):
     except model.Profile.DoesNotExist:
         return handle_unknown_source(source, body)
 
+    activated = False
     if not profile.user.is_active:
         profile.user.is_active = True
         profile.user.save()
+        activated = True
 
     if profile.state == model.Profile.STATE.kidname and profile.invited_by:
         return handle_new_student(
@@ -49,6 +51,13 @@ def receive_sms(source, body):
 
     model.Post.create(profile, students[0], body)
 
+    if activated:
+        return (
+            "Thank you! You can text this number any time "
+            "to talk with your child's teachers."
+        )
+
+
 
 def handle_unknown_source(source, body):
     """Handle a text from an unknown user."""
@@ -57,6 +66,7 @@ def handle_unknown_source(source, body):
         if parent_name:
             model.Profile.create_with_user(
                 phone=source,
+                name=parent_name,
                 state=model.Profile.STATE.kidname,
                 invited_by=teacher,
                 )

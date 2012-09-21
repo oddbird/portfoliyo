@@ -2,7 +2,7 @@
 
 {% load icanhaz %}
 
-{% block bodyclasses %}village-app{% endblock bodyclasses %}
+{% block bodyclasses %}{{ block.super }} village-app{% endblock bodyclasses %}
 
 {% block mobile-optimized %}{% endblock mobile-optimized %}
 
