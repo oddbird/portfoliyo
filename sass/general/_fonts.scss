@@ -15,3 +15,4 @@ $mono-stack : Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "Dej
 
 @mixin serif { font-family: $serif-stack; }
 @mixin sans { font-family: $sans-stack; }
+@mixin mono { font-family: $mono-stack; }

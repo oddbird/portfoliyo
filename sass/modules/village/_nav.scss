@@ -53,6 +53,10 @@ $village-nav-bg   : $base2;
     text-align: center;
     &.zero { display: none; }
   }
+  &.editing {
+    @include mono;
+    background: lighten($orange,40);
+  }
 }
 
 $student-action-color : $orange;
