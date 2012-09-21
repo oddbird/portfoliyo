@@ -461,6 +461,7 @@ var PYO = (function (PYO, $) {
                     }
                     if (e.keyCode === PYO.keycodes.ESC) {
                         e.preventDefault();
+                        $(this).blur();
                         cancel(student);
                     }
                 });
