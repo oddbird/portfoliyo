@@ -118,6 +118,7 @@ var PYO = (function (PYO, $) {
                 text: text,
                 author_sequence_id: author_sequence,
                 xhr_count: xhr_count,
+                local: true,
                 escape: true
             }
         };
