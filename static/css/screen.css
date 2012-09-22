@@ -1953,9 +1953,6 @@ button {
 .post-text:before {
   margin-right: 0;
 }
-.post-text.no-sms:before {
-  color: #dc322f;
-}
 
 .nametag {
   -webkit-border-radius: 4px;

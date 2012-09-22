@@ -55,10 +55,7 @@ $post-padding     : .25;
   @include clearfix;
   &:before { margin-right: 0; }
   &.sms { @extend %icon-phone; }
-  &.no-sms {
-    @extend %icon-no-phone;
-    &:before { color: $red; }
-  }
+  &.no-sms { @extend %icon-no-phone; }
 }
 
 .nametag {
