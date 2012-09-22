@@ -1,2 +1,2 @@
 Hi! {{ student }}'s {{ inviter_rel.description_or_role }}{% if inviter.name %} ({{ inviter.name }}){% endif %} wants to message you.
-Say hello! (or 'no' to decline)
+Say hello! (or 'stop' to decline)
