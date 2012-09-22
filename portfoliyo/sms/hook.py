@@ -23,6 +23,10 @@ def receive_sms(source, body):
 
     activated = False
     if not profile.user.is_active:
+        if body.strip().lower() == 'no':
+            profile.declined = True
+            profile.save()
+            return "No problem! Sorry to have bothered you."
         profile.user.is_active = True
         profile.user.save()
         activated = True

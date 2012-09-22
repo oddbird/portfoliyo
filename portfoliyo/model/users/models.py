@@ -72,6 +72,7 @@ class Profile(models.Model):
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
     deleted = models.BooleanField(default=False)
+    declined = models.BooleanField(default=False)
 
 
     def __unicode__(self):

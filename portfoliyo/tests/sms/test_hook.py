@@ -39,6 +39,23 @@ def test_activate_user():
 
 
 
+def test_decline():
+    """If an inactive user replies with 'no', they are marked declined."""
+    phone = '+13216430987'
+    profile = factories.ProfileFactory.create(
+        user__is_active=False, phone=phone)
+    factories.RelationshipFactory.create(from_profile=profile)
+
+    reply = hook.receive_sms(phone, 'no')
+
+    assert not utils.refresh(profile.user).is_active
+    assert utils.refresh(profile).declined
+    assert reply == (
+        "No problem! Sorry to have bothered you."
+        )
+
+
+
 def test_unknown_profile():
     """Reply if profile is unknown."""
     reply = hook.receive_sms('123', 'foo')
