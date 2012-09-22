@@ -96,3 +96,8 @@ $formspace: $center;
   #{$link} { color: rgba($base1,.5); }
   #{$focus} { color: $red; }
 }
+
+// ---------------------------------------------------------------------------
+// Edit Elder
+
+.elder-edit-form { @extend %village-main-page; }

@@ -1496,15 +1496,15 @@ button {
   overflow-y: scroll;
 }
 
-.village-add-form, .dashboard, .pjax-error, .elder-add-form {
+.village-add-form, .dashboard, .pjax-error, .elder-add-form, .elder-edit-form {
   height: 100%;
   padding: 2.55556em;
   overflow-y: scroll;
 }
-.village-add-form > :last-child, .dashboard > :last-child, .pjax-error > :last-child, .elder-add-form > :last-child {
+.village-add-form > :last-child, .dashboard > :last-child, .pjax-error > :last-child, .elder-add-form > :last-child, .elder-edit-form > :last-child {
   margin-bottom: 2.55556em;
 }
-.village-add-form h2, .dashboard h2, .pjax-error h2, .elder-add-form h2 {
+.village-add-form h2, .dashboard h2, .pjax-error h2, .elder-add-form h2, .elder-edit-form h2 {
   font-size: 1.94444em;
   line-height: 1.31429em;
   margin-bottom: 0.65714em;
@@ -1520,7 +1520,7 @@ button {
   margin-left: 1.5873%;
 }
 
-.elder-add-form {
+.elder-add-form, .elder-edit-form {
   margin-left: 2.12766%;
 }
 
