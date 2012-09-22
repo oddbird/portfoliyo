@@ -392,7 +392,9 @@ var PYO = (function (PYO, $) {
                     } else {
                         e.preventDefault();
                         var url = $(this).attr('href');
-                        if ($(this).hasClass('active')) {
+                        var stateData = History.getState().data;
+                        var currentUrl = stateData.url ? stateData.url : window.location.pathname;
+                        if (url === currentUrl) {
                             PYO.pageAjaxLoad(url + '?ajax=true');
                         } else {
                             var title = document.title;
