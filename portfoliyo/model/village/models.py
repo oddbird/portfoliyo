@@ -109,7 +109,7 @@ def process_text(text, student):
 
 
 
-highlight_re = re.compile(r'(\A|[\s[(])(@(\S+?))(\Z|[\s,.;:)\]?])')
+highlight_re = re.compile(r'(\A|[\s[(])(@(\S+?))(?=\Z|[\s,.;:)\]?])')
 
 
 
