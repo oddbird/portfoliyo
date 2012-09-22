@@ -229,7 +229,7 @@ def test_code_signup_role():
 
     assert reply == (
         "All done, thank you! You can text this number any time "
-        "to talk with your child's teachers."
+        "to talk with Jimmy Doe's teachers."
         )
     parent = model.Profile.objects.get(phone=phone)
     assert parent.role == "father"

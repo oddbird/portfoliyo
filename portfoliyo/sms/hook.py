@@ -135,7 +135,7 @@ def handle_role_update(parent, role):
         model.Post.create(parent, student, role, from_sms=True)
     return  (
         "All done, thank you! You can text this number any time "
-        "to talk with your child's teachers."
+        "to talk with %s's teachers." % students[0].name
         )
 
 
