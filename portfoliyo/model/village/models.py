@@ -146,7 +146,7 @@ def replace_highlights(text, name_map):
         highlight_rels = name_map.get(normalize_name(highlight_name))
         if highlight_rels:
             replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
-                u' all' if highlight_name == 'all' else u'',
+                u' all me' if highlight_name == 'all' else u'',
                 u','.join([unicode(r.elder.id) for r in highlight_rels]),
                 full_highlight,
                 )

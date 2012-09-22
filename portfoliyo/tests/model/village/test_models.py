@@ -283,7 +283,7 @@ class TestReplaceHighlights(object):
         html, highlights = self.call("Hello @all")
 
         assert html == (
-            'Hello <b class="nametag all" data-user-id="1,2">@all</b>')
+            'Hello <b class="nametag all me" data-user-id="1,2">@all</b>')
         assert highlights == set([self.rel1, self.rel2])
 
 
