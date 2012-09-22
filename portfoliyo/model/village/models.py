@@ -109,7 +109,7 @@ def process_text(text, student):
 
 
 
-highlight_re = re.compile(r'(\A|[\s[(])@(\S+?)(\Z|[\s,.;:)\]?])')
+highlight_re = re.compile(r'(\A|[\s[(])(@(\S+?))(\Z|[\s,.;:)\]?])')
 
 
 
@@ -125,13 +125,17 @@ def replace_highlights(text, name_map):
 
     """
     highlighted = set()
-    for _, highlight_name, _ in highlight_re.findall(text):
+    offset = 0 # how much we've increased the length of ``text``
+    for match in highlight_re.finditer(text):
+        full_highlight = match.group(2)
+        highlight_name = match.group(3)
         highlight_rel = name_map.get(normalize_name(highlight_name))
         if highlight_rel:
-            full_highlight = '@%s' % highlight_name
-            replace_with = '<b class="nametag" data-user-id="%s">%s</b>' % (
+            replace_with = u'<b class="nametag" data-user-id="%s">%s</b>' % (
                 highlight_rel.elder.id, full_highlight)
-            text = text.replace(full_highlight, replace_with)
+            start, end = match.span(2)
+            text = text[:start+offset] + replace_with + text[end+offset:]
+            offset += len(replace_with) - (end - start)
             highlighted.add(highlight_rel)
     return text, highlighted
 

@@ -280,11 +280,33 @@ class TestReplaceHighlights(object):
         assert not highlights
 
 
+    def test_no_embedded(self):
+        """Highlights have to be delimited by whitespace or punctuation."""
+        _, highlights = self.call("example@one.com")
+
+        assert len(highlights) == 0
+
+
     def test_multiple_highlights(self):
         """Can find multiple highlights in a text."""
         _, highlights = self.call("Hello @one and @two")
 
         assert len(highlights) == 2
+
+
+    def test_multiple_adjacent_highlights(self):
+        """Can find multiple adjacent highlights in a text."""
+        _, highlights = self.call("Hello @one @two")
+
+        assert len(highlights) == 2
+
+
+    def test_multiple_highlights_same_name(self):
+        """If multiple highlights of same name, no double-replace."""
+        html, highlights = self.call("Hello @one and @one")
+
+        assert len(highlights) == 1
+        assert html.count('data-user-id') == 2
 
 
     def assert_finds(self, text, name='one'):
