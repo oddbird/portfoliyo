@@ -211,7 +211,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2713";
 }
 
-.message.error:before {
+.village-elders .elder.declined:before, .message.error:before {
   content: "\2717";
 }
 
@@ -1540,7 +1540,7 @@ button {
   margin-left: 0;
 }
 
-.active.addstudent-link:link, .active.addelder-link:link, .active.addstudent-link:visited, .active.addelder-link:visited, .active.select-student:link, .active.select-student:visited {
+.active.addstudent-link:link, .active.addelder-link:link, .active.addstudent-link:visited, .active.addelder-link:visited, .active.select-student:link, .active.select-student:visited, .village-elders .active.edit-elder:link, .village-elders .active.edit-elder:visited {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -2115,7 +2115,14 @@ button {
 .village-elders .elder.mobile:before {
   color: #657b83;
 }
-.village-elders .edit-elder {
+.village-elders .elder.declined {
+  background: url('../images/rgbapng/dc322f20.png?1348339932');
+  background: rgba(220, 50, 47, 0.125);
+}
+.village-elders .elder.declined:before {
+  color: #dc322f;
+}
+.village-elders .edit-elder:link, .village-elders .edit-elder:visited {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
   margin-right: -1.28571em;
