@@ -107,7 +107,7 @@ var PYO = (function (PYO, $) {
         var period = (hour > 12) ? 'p.m.' : 'a.m.';
         hour = (hour > 12) ? hour - 12 : hour;
         var time = hour + ':' + minute + ' ' + period;
-        var text = textarea.val();
+        var text = $.trim(textarea.val());
         var postObj = {
             posts: {
                 author: author,
@@ -118,6 +118,7 @@ var PYO = (function (PYO, $) {
                 text: text,
                 author_sequence_id: author_sequence,
                 xhr_count: xhr_count,
+                local: true,
                 escape: true
             }
         };
@@ -135,7 +136,7 @@ var PYO = (function (PYO, $) {
             form.submit(function (event) {
                 event.preventDefault();
                 if (textarea.val().length) {
-                    var text = textarea.val();
+                    var text = $.trim(textarea.val());
                     var author_sequence_id = ++PYO.authorPosts;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
@@ -223,7 +224,7 @@ var PYO = (function (PYO, $) {
         var feed = $('.village-feed');
         var url = feed.data('post-url');
         var author_sequence_id = post.data('author-sequence');
-        var text = post.find('.post-text').text();
+        var text = $.trim(post.find('.post-text').text());
         var postData = {
             author_sequence_id: author_sequence_id,
             text: text
@@ -315,7 +316,7 @@ var PYO = (function (PYO, $) {
             var count = form.find('.charcount');
             var button = form.find('.action-post');
             var updateCount = function () {
-                var chars = textarea.val().length;
+                var chars = $.trim(textarea.val()).length;
                 var remain = limit - chars;
                 if (remain < 0) {
                     count.addClass('overlimit');

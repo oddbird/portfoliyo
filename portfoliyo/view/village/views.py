@@ -3,6 +3,7 @@ Student/elder (village) views.
 
 """
 import json
+import os
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -174,12 +175,23 @@ def json_posts(request, student_id):
 
 
 @school_staff_required
-def pdf_parent_instructions(request):
+def pdf_parent_instructions(request, lang):
     """Render a PDF for sending home with parents."""
+    template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
+    template_path = os.path.join(
+        template_dir,
+        'parent-instructions-template-%s.pdf' % lang,
+        )
+
+    if not os.path.isfile(template_path):
+        raise Http404
+
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=instructions.pdf'
+    response['Content-Disposition'] = (
+        'attachment; filename=instructions-%s.pdf' % lang)
 
     pdf.generate_instructions_pdf(
+        template_path=template_path,
         stream=response,
         code=request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,

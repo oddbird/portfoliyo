@@ -5,31 +5,39 @@
 
 $village-center-bleed: gutter($center);
 
-$instruction-size: $medpx;
+$instruction-size : $medpx;
+$inst-icon-size   : $xxlargepx + $xlargepx;
 
 .parent-instructions {
   @extend %icon;
   @extend %icon-document-alt-stroke;
   @include clearfix;
   @include adjust-font-size-to($instruction-size);
-  @include rhythm-borders(1px,1,$instruction-size);
+  @include rhythm-borders(1px, 1, $instruction-size);
+  @include trailing-border(1px, .5, $instruction-size);
   @include bleed($village-center-bleed);
   @include rgba-background(rgba($alt,.25));
   @include background-image(linear-gradient(top, rgba($alt,0), rgba($alt,.25)));
   display: block;
   position: relative;
   top: rhythm(-1,$instruction-size);
-  #{$link} { color: $base01; }
-  #{$focus} {
-    @include rgba-background(rgba($accent,.25));
-    @include background-image(linear-gradient(top, rgba($accent,0), rgba($accent,.25)));
-  }
   &:before {
-    @include adjust-font-size-to($xxlargepx,$from-size: $instruction-size);
+    @include adjust-font-size-to($inst-icon-size,$from-size: $instruction-size);
     float: left;
-    margin: 0 rhythm(1,$xxlargepx) 0 rhythm(.5,$xxlargepx);
+    margin: 0 rhythm(1,$inst-icon-size) 0 rhythm(.5,$inst-icon-size);
   }
-  &:after { content: "»"; }
+  p, ul { overflow: hidden; }
+  p { @include trailer(1,$instruction-size); }
+  ul {
+    @include inline-block-list;
+    text-align: right;
+  }
+  [class^="pdf-"] {
+    @extend %icon;
+    @extend %icon-document-alt-stroke;
+    margin-right: 1em;
+    &:after { content: " »"; }
+  }
 }
 
 // ---------------------------------------------------------------------------
