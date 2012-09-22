@@ -1281,9 +1281,6 @@ button {
   position: relative;
   padding-left: 1.5em;
 }
-.lt-ie9 .summary li, .lt-ie9 .benefits li {
-  padding-left: 0;
-}
 .summary li:before, .benefits li:before {
   position: absolute;
   left: 0;

@@ -157,7 +157,6 @@ li {
     @extend %icon-checkmark;
     position: relative;
     padding-left: 1.5em;
-    .lt-ie9 & { padding-left: 0; }
     &:before {
       position: absolute;
       left: 0;
