@@ -91,6 +91,7 @@ def handle_new_student(parent, teacher, student_name):
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
         relationships_to__from_profile=teacher,
+        deleted=False,
         )
     if possible_dupes:
         dupe_found = True
@@ -111,7 +112,7 @@ def handle_new_student(parent, teacher, student_name):
             )
     parent.state = model.Profile.STATE.relationship
     parent.save()
-    model.Post.create(parent, student, student_name)
+    model.Post.create(parent, student, student_name, from_sms=True)
     return (
         "Last question: what is your relationship to that child "
         "(mother, father, ...)?"
@@ -127,7 +128,7 @@ def handle_role_update(parent, role):
     parent.save()
     students = parent.students
     for student in students:
-        model.Post.create(parent, student, role)
+        model.Post.create(parent, student, role, from_sms=True)
     return  (
         "All done, thank you! You can text this number any time "
         "to talk with your child's teachers."
