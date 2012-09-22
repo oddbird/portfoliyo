@@ -138,31 +138,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .student-actions a:before, .student-actions button:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, .add-row, .remove-row, #messages .close {
+.main-login .reset-link, .add-row, .remove-row, .student-actions a, .student-actions button, #messages .close {
   display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, #messages .close:focus {
+.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .student-actions a:focus, .student-actions button:focus, #messages .close:focus {
   outline: 0;
 }
-.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, #messages .close:focus:before {
+.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .student-actions a:focus:before, .student-actions button:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, #messages .close:before {
   position: absolute;
   top: 0;
   left: 0;
@@ -1540,7 +1540,7 @@ button {
   margin-left: 0;
 }
 
-.active.addstudent-link:link, .active.addelder-link:link, .active.addstudent-link:visited, .active.addelder-link:visited, .active.select-student:link, .active.select-student:visited, .village-elders .active.edit-elder:link, .village-elders .active.edit-elder:visited {
+.active.addstudent-link:link, .active.addelder-link:link, .active.addstudent-link:visited, .active.addelder-link:visited, .active.select-student:link, .active.select-student:visited, .village-elders .active.edit-elder, .village-elders .active.edit-elder:link, .village-elders .active.edit-elder:visited {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -1827,24 +1827,21 @@ button {
   -o-transition: all 400ms;
   transition: all 400ms;
   position: relative;
-  background: #cb4b16;
-  -webkit-box-shadow: 0px 0px 5px #333333;
-  -moz-box-shadow: 0px 0px 5px #333333;
-  box-shadow: 0px 0px 5px #333333;
+  background: #002b36;
   position: absolute;
-  left: 0;
+  top: -1px;
   right: 0;
-  top: 100%;
-  margin-left: -1.28571em;
-  background: #cb4b16;
-  color: #002b36;
+  bottom: 1px;
+  padding: 0.41071em;
+  padding-right: 0.82143em;
+  background: #002b36;
+  color: #073642;
   text-transform: capitalize;
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
-  max-height: 0;
 }
 .student-actions:after, .student-actions:before {
-  bottom: 100%;
+  right: 100%;
   border: solid transparent;
   content: " ";
   height: 0;
@@ -1853,47 +1850,37 @@ button {
   pointer-events: none;
 }
 .student-actions:after {
-  border-bottom-color: #cb4b16;
+  border-right-color: #002b36;
   border-width: 0.41071em;
-  left: 50%;
-  margin-left: -0.41071em;
+  top: 50%;
+  margin-top: -0.41071em;
 }
 .student-actions:before {
-  border-bottom-color: false;
+  border-right-color: false;
   border-width: 0.41071em;
-  left: 50%;
-  margin-left: -0.41071em;
+  top: 50%;
+  margin-top: -0.41071em;
 }
-.active:hover + .student-actions, .active + .student-actions:hover {
+.student:hover .student-actions {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
-  max-height: 3.28571em;
   z-index: 100;
 }
 .student-actions form {
   display: inline;
 }
 .student-actions a, .student-actions button {
-  display: inline-block;
-  position: relative;
-  width: 50%;
-  margin-right: -0.5em;
-  padding: 0.41071em 1.28571em;
-  text-align: center;
+  margin-left: 0.82143em;
 }
 .student-actions a, .student-actions a:link, .student-actions a:visited, .student-actions button, .student-actions button:link, .student-actions button:visited {
-  color: #eee8d5;
+  color: #fdf6e3;
+  text-decoration: none;
 }
 .student-actions a:focus, .student-actions a:hover, .student-actions a:active, .student-actions button:focus, .student-actions button:hover, .student-actions button:active {
-  color: #fdf6e3;
-  background: url('../images/rgbapng/002b3640.png?1347746559');
-  background: rgba(0, 43, 54, 0.25);
+  color: #e896b2;
 }
 .student-actions .save-student {
   display: none;
-}
-.student-actions .remove-student {
-  left: .25em;
 }
 
 .addstudent-link {
@@ -2066,7 +2053,7 @@ button {
   background: #dc322f;
   color: #fdf6e3;
 }
-.post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
+.post .timeout a, .feed-error a, .pjax-error p a, .post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
   color: #b1d0dd;
 }
 .post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
@@ -2116,13 +2103,13 @@ button {
   color: #657b83;
 }
 .village-elders .elder.declined {
-  background: url('../images/rgbapng/dc322f20.png?1348339932');
+  background: url('../images/rgbapng/dc322f20.png?1348340347');
   background: rgba(220, 50, 47, 0.125);
 }
 .village-elders .elder.declined:before {
   color: #dc322f;
 }
-.village-elders .edit-elder:link, .village-elders .edit-elder:visited {
+.village-elders .edit-elder, .village-elders .edit-elder:link, .village-elders .edit-elder:visited {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
   margin-right: -1.28571em;
@@ -2307,7 +2294,7 @@ button {
   top: 0.63889em;
   width: 1em;
 }
-#messages .close:link, #messages .close:visited {
+#messages .close, #messages .close:link, #messages .close:visited {
   color: #073642;
 }
 #messages .close:focus, #messages .close:hover, #messages .close:active {

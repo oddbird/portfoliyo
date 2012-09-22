@@ -1,7 +1,8 @@
 // ---------------------------------------------------------------------------
 // Village Nav
 
-$village-nav-bg   : $base2;
+$village-nav-bg       : $base2;
+$village-nav-rhythm   : .25;
 
 %village-nav-span {
   @include bleed($village-bleed, left);
@@ -11,8 +12,8 @@ $village-nav-bg   : $base2;
 
 %village-nav-item {
   @extend %village-nav-span;
-  @include trailing-border(1px,.25,$village-list-size);
-  @include padding-leader(.25,$village-list-size);
+  @include trailing-border(1px,$village-nav-rhythm,$village-list-size);
+  @include padding-leader($village-nav-rhythm,$village-list-size);
   border-color: $village-border-color;
 }
 
@@ -61,52 +62,40 @@ $village-nav-bg   : $base2;
   }
 }
 
-$student-action-color : $orange;
+$student-action-color : $base03;
 
 .student-actions {
   @include transition(all 400ms);
-  @include css-arrow(top, rhythm(.25,$village-list-size), $student-action-color);
-  @include box-shadow;
-  @include stretch-x;
-  top: 100%;
-  margin-left: - $village-bleed;
+  @include css-arrow(left, rhythm($village-nav-rhythm,$village-list-size), $student-action-color);
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 1px;
+  padding: rhythm($village-nav-rhythm,$village-list-size);
+  padding-right: rhythm(.5,$village-list-size);
   background: $student-action-color;
-  color: $base03;
+  color: $back;
   text-transform: capitalize;
 
   @include opacity(0);
-  max-height: 0;
-  .active:hover + &, .active + &:hover {
+  .student:hover & {
     @include opacity(1);
-    max-height: rhythm(2,$village-list-size);
     z-index: 100;
   }
 
   form { display: inline; }
 
   a, button {
-    @extend %icon;
-    display: inline-block;
-    position: relative;
-    width: 50%;
-    margin-right: -.5em;
-    padding: rhythm(.25,$village-list-size) $village-bleed;
-    text-align: center;
-    &, #{$link} { color: $base2; }
-    #{$focus} {
-      color: $base3;
-      @include rgba-background(rgba($base03,.25));
-    }
+    @extend %icon-replace;
+    @include link(light,true);
+    margin-left: rhythm(.5,$village-list-size);
   }
   .edit-student { @extend %icon-pencil; }
   .save-student {
     @extend %icon-checkmark;
     display: none;
   }
-  .remove-student {
-    @extend %icon-trashcan;
-    left: .25em;
-  }
+  .remove-student { @extend %icon-trashcan; }
 }
 
 .addstudent-link {
