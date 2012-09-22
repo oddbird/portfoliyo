@@ -1,6 +1,7 @@
 """Village models."""
 from __future__ import absolute_import
 
+from collections import defaultdict
 import re
 
 from django.db import models
@@ -109,7 +110,20 @@ def process_text(text, student):
 
 
 
-highlight_re = re.compile(r'(\A|[\s[(])@(\S+?)(\Z|[\s,.;:)\]?])')
+# The ending delimiter here must use a lookahead assertion rather than a simple
+# match, otherwise adjacent highlights separated by a single space fail to
+# match the second highlight, because re.finditer returns only non-overlapping
+# matches, and without the lookahead both highlight matches would want to grab
+# that same intervening space. We could use lookbehind for the initial
+# delimiter as well, except that lookbehind requires a fixed-width pattern, and
+# our delimiter pattern is not fixed-width (it's zero or one).
+highlight_re = re.compile(
+    r"""(\A|[\s[(])          # string-start or whitespace/punctuation
+        (@(\S+?))            # @ followed by (non-greedy) non-whitespace
+        (?=\Z|[\s,.;:)\]?])  # string-end or whitespace/punctuation
+    """,
+    re.VERBOSE,
+    )
 
 
 
@@ -125,14 +139,21 @@ def replace_highlights(text, name_map):
 
     """
     highlighted = set()
-    for _, highlight_name, _ in highlight_re.findall(text):
-        highlight_rel = name_map.get(normalize_name(highlight_name))
-        if highlight_rel:
-            full_highlight = '@%s' % highlight_name
-            replace_with = '<b class="nametag" data-user-id="%s">%s</b>' % (
-                highlight_rel.elder.id, full_highlight)
-            text = text.replace(full_highlight, replace_with)
-            highlighted.add(highlight_rel)
+    offset = 0 # how much we've increased the length of ``text``
+    for match in highlight_re.finditer(text):
+        full_highlight = match.group(2)
+        highlight_name = match.group(3)
+        highlight_rels = name_map.get(normalize_name(highlight_name))
+        if highlight_rels:
+            replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
+                u' all me' if highlight_name == 'all' else u'',
+                u','.join([unicode(r.elder.id) for r in highlight_rels]),
+                full_highlight,
+                )
+            start, end = match.span(2)
+            text = text[:start+offset] + replace_with + text[end+offset:]
+            offset += len(replace_with) - (end - start)
+            highlighted.update(highlight_rels)
     return text, highlighted
 
 
@@ -141,11 +162,10 @@ def get_highlight_names(student):
     """
     Get highlightable names in given student's village.
 
-    Returns dictionary mapping names to relationships.
+    Returns dictionary mapping names to sets of relationships.
 
     """
-    name_map = {}
-    collisions = set()
+    name_map = defaultdict(set)
     for elder_rel in student.elder_relationships:
         elder = elder_rel.elder
         possible_names = []
@@ -159,13 +179,8 @@ def get_highlight_names(student):
             possible_names.append(normalize_name(elder.user.email))
         possible_names.append(normalize_name(elder_rel.description_or_role))
         for name in possible_names:
-            if name in name_map:
-                # if there's a collision, nobody gets to use that name
-                # @@@ when we have autocomplete, maybe add disambiguators?
-                collisions.add(name)
-            name_map[name] = elder_rel
-    for collision in collisions:
-        del name_map[collision]
+            name_map[name].add(elder_rel)
+        name_map['all'].add(elder_rel)
     return name_map
 
 
