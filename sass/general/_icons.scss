@@ -1,14 +1,16 @@
-@include font-face (
-  'pyo',
-  font-files(
-    'pyo.svg#pyo', svg,
-    'pyo.woff', woff,
-    'pyo.ttf', truetype
-  ),
-  'pyo.eot',
-  normal,
-  normal
-);
+$icon-font    : 'pyo';
+$icon-cache   : '0001';
+
+@font-face {
+  font-family: $icon-font;
+  src: font-url($icon-font + '.eot?' + $icon-cache);
+  src: font-url($icon-font + '.eot?#iefix' + $icon-cache) format('embedded-opentype'),
+       font-url($icon-font + '.svg?' + $icon-cache + '#' + $icon-font) format('svg'),
+       font-url($icon-font + '.woff?' + $icon-cache) format('woff'),
+       font-url($icon-font + '.ttf?' + $icon-cache) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
 
 /* Use the following CSS code if you want to have a class per icon */
 %icon-content {
