@@ -1831,7 +1831,7 @@ button {
   position: absolute;
   top: -1px;
   right: 0;
-  bottom: 1px;
+  bottom: 0px;
   padding: 0.41071em;
   padding-right: 0.82143em;
   background: #002b36;
