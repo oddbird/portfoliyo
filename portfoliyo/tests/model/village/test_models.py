@@ -256,7 +256,13 @@ class TestReplaceHighlights(object):
             self.elder.id = elder_id
 
 
-    name_map = {'one': MockRel(1), 'two': MockRel(2)}
+    rel1 = MockRel(1)
+    rel2 = MockRel(2)
+    name_map = {
+        'one': set([rel1]),
+        'two': set([rel2]),
+        'all': set([rel1, rel2]),
+        }
 
 
     def call(self, text):
@@ -269,7 +275,16 @@ class TestReplaceHighlights(object):
         html, highlights = self.call("Hello @one")
 
         assert html == 'Hello <b class="nametag" data-user-id="1">@one</b>'
-        assert highlights == set([self.name_map['one']])
+        assert highlights == set([self.rel1])
+
+
+    def test_all(self):
+        """Can highlight all users with @all."""
+        html, highlights = self.call("Hello @all")
+
+        assert html == (
+            'Hello <b class="nametag all" data-user-id="1,2">@all</b>')
+        assert highlights == set([self.rel1, self.rel2])
 
 
     def test_false_alarm(self):
@@ -313,7 +328,7 @@ class TestReplaceHighlights(object):
         """Assert that given name is found as highlight in text."""
         _, highlights = self.call(text)
 
-        assert highlights == set([self.name_map['one']])
+        assert highlights == set([self.rel1])
 
 
     @pytest.mark.parametrize(
@@ -354,16 +369,17 @@ def test_get_highlight_names():
 
     name_map = models.get_highlight_names(rel1.to_profile)
 
-    # nobody can be highlighted as 'father' since its a dupe
-    assert len(name_map) == 8
-    assert name_map['johndoe'] == rel1
-    assert name_map['john@example.com'] == rel1
-    assert name_map['mathteacher'] == rel1
-    assert name_map['maxdad'] == rel2
-    assert name_map['+13216540987'] == rel2
-    assert name_map['3216540987'] == rel2
-    assert name_map['+15671234567'] == rel3
-    assert name_map['5671234567'] == rel3
+    assert len(name_map) == 10
+    assert name_map['johndoe'] == set([rel1])
+    assert name_map['john@example.com'] == set([rel1])
+    assert name_map['mathteacher'] == set([rel1])
+    assert name_map['maxdad'] == set([rel2])
+    assert name_map['+13216540987'] == set([rel2])
+    assert name_map['3216540987'] == set([rel2])
+    assert name_map['father'] == set([rel2, rel3])
+    assert name_map['+15671234567'] == set([rel3])
+    assert name_map['5671234567'] == set([rel3])
+    assert name_map['all'] == set([rel1, rel2, rel3])
 
 
 
