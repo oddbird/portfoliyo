@@ -387,7 +387,7 @@ var PYO = (function (PYO, $) {
                         } else {
                             var title = document.title;
                             var data = { url: url };
-                            if ($(this).hasClass('addelder-link')) {
+                            if ($(this).hasClass('addelder-link') || $(this).hasClass('edit-elder')) {
                                 data.remainActive = true;
                             }
                             History.pushState(data, title, url);
