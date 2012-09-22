@@ -55,35 +55,33 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.renderPost = function (data) {
-        var post;
+        var posts;
         if (data) {
-            post = ich.post(data);
+            posts = ich.post(data);
         }
-        if (post) {
-            var nametag = post.find('.nametag');
-            if (nametag) {
-                nametag.each(function () {
-                    var thisTag = $(this);
-                    var userID = thisTag.data('user-id');
-                    if (userID) {
-                        var mentions = userID.toString().split(',');
-                        if ($.inArray(PYO.activeUserId.toString(), mentions) !== -1) {
-                            thisTag.addClass('me');
-                        }
+        if (posts) {
+            var nametag = posts.find('.nametag');
+            nametag.each(function () {
+                var thisTag = $(this);
+                var userID = thisTag.data('user-id');
+                if (userID) {
+                    var mentions = userID.toString().split(',');
+                    if ($.inArray(PYO.activeUserId.toString(), mentions) !== -1) {
+                        thisTag.addClass('me');
                     }
-                });
-            }
-            post.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
-            return post;
+                }
+            });
+            posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
+            return posts;
         }
     };
 
     PYO.addPost = function (data) {
         if (data) {
-            var post = PYO.renderPost(data);
-            $('.village-feed').append(post);
+            var posts = PYO.renderPost(data);
+            $('.village-feed').append(posts);
             PYO.scrollToBottom('.village-feed');
-            return post;
+            return posts;
         }
     };
 
