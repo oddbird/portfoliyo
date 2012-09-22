@@ -109,7 +109,20 @@ def process_text(text, student):
 
 
 
-highlight_re = re.compile(r'(\A|[\s[(])(@(\S+?))(?=\Z|[\s,.;:)\]?])')
+# The ending delimiter here must use a lookahead assertion rather than a simple
+# match, otherwise adjacent highlights separated by a single space fail to
+# match the second highlight, because re.finditer returns only non-overlapping
+# matches, and without the lookahead both highlight matches would want to grab
+# that same intervening space. We could use lookbehind for the initial
+# delimiter as well, except that lookbehind requires a fixed-width pattern, and
+# our delimiter pattern is not fixed-width (it's zero or one).
+highlight_re = re.compile(
+    r"""(\A|[\s[(])          # string-start or whitespace/punctuation
+        (@(\S+?))            # @ followed by (non-greedy) non-whitespace
+        (?=\Z|[\s,.;:)\]?])  # string-end or whitespace/punctuation
+    """,
+    re.VERBOSE,
+    )
 
 
 
