@@ -120,7 +120,7 @@ def process_text(text, student):
 highlight_re = re.compile(
     r"""(\A|[\s[(])          # string-start or whitespace/punctuation
         (@(\S+?))            # @ followed by (non-greedy) non-whitespace
-        (?=\Z|[\s,.;:)\]?])  # string-end or whitespace/punctuation
+        (?=\Z|[\s,;:)\]?])  # string-end or whitespace/punctuation
     """,
     re.VERBOSE,
     )
@@ -143,6 +143,14 @@ def replace_highlights(text, name_map):
     for match in highlight_re.finditer(text):
         full_highlight = match.group(2)
         highlight_name = match.group(3)
+        # special handling for period (rather than putting it into the regex as
+        # highlight-terminating punctuation) so that we can support highlights
+        # with internal periods (i.e. email addresses)
+        stripped = 0
+        while highlight_name.endswith('.'):
+            highlight_name = highlight_name[:-1]
+            full_highlight = full_highlight[:-1]
+            stripped += 1
         highlight_rels = name_map.get(normalize_name(highlight_name))
         if highlight_rels:
             replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
@@ -151,6 +159,7 @@ def replace_highlights(text, name_map):
                 full_highlight,
                 )
             start, end = match.span(2)
+            end -= stripped
             text = text[:start+offset] + replace_with + text[end+offset:]
             offset += len(replace_with) - (end - start)
             highlighted.update(highlight_rels)

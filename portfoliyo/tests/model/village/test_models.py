@@ -258,9 +258,11 @@ class TestReplaceHighlights(object):
 
     rel1 = MockRel(1)
     rel2 = MockRel(2)
+    rel3 = MockRel(3)
     name_map = {
         'one': set([rel1]),
         'two': set([rel2]),
+        'foo@example.com': set([rel3]),
         'all': set([rel1, rel2]),
         }
 
@@ -285,6 +287,13 @@ class TestReplaceHighlights(object):
         assert html == (
             'Hello <b class="nametag all me" data-user-id="1,2">@all</b>')
         assert highlights == set([self.rel1, self.rel2])
+
+
+    def test_email(self):
+        """Can highlight a user by email address."""
+        _, highlights = self.call("Hello @foo@example.com")
+
+        assert highlights == set([self.rel3])
 
 
     def test_false_alarm(self):
@@ -332,7 +341,7 @@ class TestReplaceHighlights(object):
 
 
     @pytest.mark.parametrize(
-        'symbol', ['.', '?', ',', ';', ':', ')', ']', ' ', ''])
+        'symbol', ['.', '?', ',', ';', ':', ')', ']', ' ', '', '...'])
     def test_followed_by(self, symbol):
         """Can detect a highlight immediately followed by some punctuation."""
         self.assert_finds("Hey @one%s" % symbol)
