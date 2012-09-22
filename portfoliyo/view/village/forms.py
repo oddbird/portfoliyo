@@ -7,6 +7,13 @@ from django.forms import formsets
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
+from ..users.forms import EditProfileForm
+
+
+
+class EditElderForm(EditProfileForm):
+    """At this point, editing an elder is same as editing a profile."""
+    pass
 
 
 

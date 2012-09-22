@@ -9,7 +9,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 
 from portfoliyo import model, pdf
@@ -171,6 +171,39 @@ def json_posts(request, student_id):
         }
 
     return HttpResponse(json.dumps(data), content_type='application/json')
+
+
+@school_staff_required
+@ajax('village/_edit_elder_content.html')
+def edit_elder(request, student_id, elder_id):
+    """Edit a village elder."""
+    get_relationship_or_404(student_id, request.user.profile)
+    elder = get_object_or_404(
+        model.Profile.objects.select_related('user'), id=elder_id)
+    # can't edit the profile of another school staff
+    if elder.school_staff:
+        raise Http404
+    elder_rel = get_relationship_or_404(student_id, elder)
+
+    if request.method == 'POST':
+        form = forms.EditElderForm(request.POST, profile=elder)
+        if form.is_valid():
+            form.save()
+            messages.success(request, u"Changes saved!")
+            return redirect('village', student_id=student_id)
+    else:
+        form = forms.EditElderForm(profile=elder)
+
+    return TemplateResponse(
+        request,
+        'village/edit_elder.html',
+        {
+            'form': form,
+            'student': elder_rel.student,
+            'elder': elder_rel.elder,
+            'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
+            },
+        )
 
 
 

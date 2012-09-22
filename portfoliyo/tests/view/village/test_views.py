@@ -445,6 +445,89 @@ class TestJsonPosts(object):
 
 
 
+class TestEditElder(object):
+    def url(self, rel=None):
+        """rel is relationship between a student and elder to be edited."""
+        if rel is None:
+            rel = factories.RelationshipFactory()
+        return reverse(
+            'edit_elder',
+            kwargs={'student_id': rel.student.id, 'elder_id': rel.elder.id},
+            )
+
+
+    def test_success(self, client):
+        """School staff can edit profile of non school staff."""
+        rel = factories.RelationshipFactory(
+            from_profile__name='Old Name', from_profile__role='Old Role')
+        editor_rel = factories.RelationshipFactory(
+            from_profile__school_staff=True, to_profile=rel.to_profile)
+        url = self.url(rel)
+
+        form = client.get(
+            url, user=editor_rel.elder.user).forms['edit-elder-form']
+        form['name'] = 'New Name'
+        form['role'] = 'New Role'
+        res = form.submit(status=302)
+
+        assert res['Location'] == utils.location(
+            reverse('village', kwargs={'student_id': rel.student.id}))
+        elder = utils.refresh(rel.elder)
+        assert elder.name == 'New Name'
+        assert elder.role == 'New Role'
+
+
+    def test_error(self, client):
+        """Test form redisplay with errors."""
+        rel = factories.RelationshipFactory()
+        editor_rel = factories.RelationshipFactory(
+            from_profile__school_staff=True, to_profile=rel.to_profile)
+        url = self.url(rel)
+
+        form = client.get(
+            url, user=editor_rel.elder.user).forms['edit-elder-form']
+        form['name'] = 'New Name'
+        form['role'] = ''
+        res = form.submit(status=200)
+
+        res.mustcontain('field is required')
+
+
+    def test_school_staff_required(self, client):
+        """Only school staff can access."""
+        rel = factories.RelationshipFactory(
+            from_profile__name='Old Name', from_profile__role='Old Role')
+        editor_rel = factories.RelationshipFactory(
+            from_profile__school_staff=False, to_profile=rel.to_profile)
+        url = self.url(rel)
+
+        res = client.get(
+            url, user=editor_rel.elder.user, status=302).follow()
+
+        res.mustcontain("account doesn't have access")
+
+
+    def test_cannot_edit_school_staff(self, client):
+        """Cannot edit other school staff."""
+        rel = factories.RelationshipFactory(
+            from_profile__school_staff=True)
+        editor_rel = factories.RelationshipFactory(
+            from_profile__school_staff=True, to_profile=rel.to_profile)
+        url = self.url(rel)
+
+        client.get(url, user=editor_rel.elder.user, status=404)
+
+
+    def test_requires_relationship(self, client):
+        """Editing user must have relationship with student."""
+        rel = factories.RelationshipFactory()
+        editor = factories.ProfileFactory(school_staff=True)
+        url = self.url(rel)
+
+        client.get(url, user=editor.user, status=404)
+
+
+
 class TestPdfParentInstructions(object):
     def test_basic(self, client):
         """Smoke test that we get a PDF response back and nothing breaks."""
