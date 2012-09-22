@@ -1,2 +1,2 @@
-Hi! This is {% if inviter.name %}{{ inviter.name }}, {% endif %}{{ student }}'s {{ inviter_rel.description_or_role }}.
-Is this {{ student }}'s {{ invitee_rel.description_or_role }}?
+Hi! {{ student }}'s {{ inviter_rel.description_or_role }}{% if inviter.name %} ({{ inviter.name }}){% endif %} wants to message you.
+Say hello! (or 'no' to decline)

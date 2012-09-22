@@ -39,8 +39,8 @@ class TestInviteElderForm(object):
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == u'+13214567890'
         assert sms.outbox[0].body == (
-            "Hi! This is Teacher John, Jimmy Doe's Math Teacher. "
-            "Is this Jimmy Doe's father?"
+            "Hi! Jimmy Doe's Math Teacher (Teacher John) wants to message you. "
+            "Say hello! (or 'no' to decline)"
             )
 
 
