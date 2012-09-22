@@ -9,7 +9,7 @@
     <time datetime="{{ timestamp }}">{{ date }} at {{ time }}</time>
   </header>
 
-  <p class="post-text">
+  <p class="post-text{{^ local }}{{# sms }} sms{{/ sms }}{{^ sms }} no-sms{{/ sms }}{{/ local }}">
     {{# escape }}{{ text }}{{/ escape }}{{^ escape }}{{{ text }}}{{/ escape }}
   </p>
 
