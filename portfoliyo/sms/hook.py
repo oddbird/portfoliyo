@@ -43,11 +43,15 @@ def receive_sms(source, body):
     students = profile.students
 
     if len(students) > 1:
+        logger.warning(
+            "Text from %s (has multiple students): %s" % (source, body))
         return (
             "You're part of more than one student's Portfoliyo Village; "
             "we're not yet able to route your texts. We'll fix that soon!"
             )
     elif not students:
+        logger.warning(
+            "Text from %s (has no students): %s" % (source, body))
         return (
             "You're not part of any student's Portfoliyo Village, "
             "so we're not able to deliver your message. Sorry!"
