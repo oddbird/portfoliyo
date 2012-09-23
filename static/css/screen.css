@@ -131,8 +131,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 @font-face {
   font-family: "pyo";
-  src: url('../fonts/pyo.eot?0001');
-  src: url('../fonts/pyo.eot?#iefix0001') format("embedded-opentype"), url('../fonts/pyo.svg?0001#pyo') format("svg"), url('../fonts/pyo.woff?0001') format("woff"), url('../fonts/pyo.ttf?0001') format("truetype");
+  src: url('../fonts/pyo.eot');
+  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
