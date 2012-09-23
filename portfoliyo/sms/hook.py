@@ -58,7 +58,7 @@ def receive_sms(source, body):
     if activated:
         return (
             "Thank you! You can text this number any time "
-            "to talk with your child's teachers."
+            "to talk with %s's teachers." % students[0].name
         )
 
 

@@ -27,14 +27,15 @@ def test_activate_user():
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
         user__is_active=False, phone=phone)
-    factories.RelationshipFactory.create(from_profile=profile)
+    factories.RelationshipFactory.create(
+        from_profile=profile, to_profile__name="Jimmy Doe")
 
     reply = hook.receive_sms(phone, 'foo')
 
     assert utils.refresh(profile.user).is_active
     assert reply == (
         "Thank you! You can text this number any time "
-        "to talk with your child's teachers."
+        "to talk with Jimmy Doe's teachers."
         )
 
 
