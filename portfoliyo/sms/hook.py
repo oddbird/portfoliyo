@@ -21,12 +21,15 @@ def receive_sms(source, body):
     except model.Profile.DoesNotExist:
         return handle_unknown_source(source, body)
 
+    if body.strip().lower() == 'stop':
+        profile.declined = True
+        profile.save()
+        profile.user.is_active = False
+        profile.user.save()
+        return "No problem! Sorry to have bothered you."
+
     activated = False
     if not profile.user.is_active:
-        if body.strip().lower() == 'stop':
-            profile.declined = True
-            profile.save()
-            return "No problem! Sorry to have bothered you."
         profile.user.is_active = True
         profile.user.save()
         activated = True

@@ -52,7 +52,8 @@ class TestEditProfileForm(object):
         rel2 = factories.RelationshipFactory.create(
             description='bar', from_profile=rel1.elder)
 
-        form = forms.EditProfileForm({'name': 'New', 'role': 'new'}, profile=rel1.elder)
+        form = forms.EditProfileForm(
+            {'name': 'New', 'role': 'new'}, profile=rel1.elder)
         assert form.is_valid()
         form.save()
 
