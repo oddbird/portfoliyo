@@ -20,6 +20,7 @@
     &.offline { &:before { color: $yellow; } }
     &.inactive {
       @extend %icon-warning;
+      background: lighten($yellow,50);
       &:before { color: $base1; }
     }
     &.mobile {
