@@ -60,6 +60,13 @@ $village-nav-rhythm   : .25;
     background: lighten($orange,40);
     min-height: rhythm(1,$village-list-size);
   }
+  &.removed {
+    @extend %icon;
+    @extend %icon-x;
+    @include box-shadow($back 0 0 3px inset);
+    color: $red;
+    background: lighten($red,40);
+  }
 }
 
 $student-action-color : $base03;
@@ -96,6 +103,7 @@ $student-action-color : $base03;
     display: none;
   }
   .remove-student { @extend %icon-trashcan; }
+  .undo-remove-student { @extend %icon-undo; }
 }
 
 .addstudent-link {

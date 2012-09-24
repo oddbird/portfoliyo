@@ -1,0 +1,10 @@
+<span class="select-student removed">
+  {{ name }}
+</span>
+
+<div class="student-actions">
+  <form action="#" method="POST">
+    {% csrf_token %}
+    <button class="undo-remove-student" title="undo removal" name="undo-remove" value="{{ nav_student.id }}">undo removal</button>
+  </form>
+</div>
