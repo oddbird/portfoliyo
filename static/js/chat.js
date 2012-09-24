@@ -37,7 +37,6 @@ var PYO = (function (PYO, $) {
         if (data) {
             var posts = PYO.renderPost(data);
             $('.village-feed').append(posts);
-            PYO.scrollToBottom('.village-feed');
             return posts;
         }
     };
@@ -51,7 +50,6 @@ var PYO = (function (PYO, $) {
             if (oldPost && oldPost.length) {
                 var newPost = PYO.renderPost(data);
                 oldPost.replaceWith(newPost);
-                PYO.scrollToBottom('.village-feed');
                 $.doTimeout('new-post-' + author_sequence_id);
                 return true;
             }
@@ -124,6 +122,7 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
+                    PYO.scrollToBottom('.village-feed');
                     PYO.addPostTimeout(post, author_sequence_id, count);
                 }
             });
@@ -225,8 +224,10 @@ var PYO = (function (PYO, $) {
 
                 channel.bind('message_posted', function (data) {
                     if (id === PYO.activeStudentId) {
+                        var scroll = PYO.scrolledToBottom('.village-feed');
                         if (!PYO.replacePost(data)) {
                             PYO.addPost(data);
+                            if (scroll) { PYO.scrollToBottom('.village-feed'); }
                         }
                     } else {
                         var count = parseInt(unread.text(), 10);
@@ -251,6 +252,7 @@ var PYO = (function (PYO, $) {
                         context.loadingOverlay('remove');
                         if (response && feedAjax.count === count) {
                             PYO.addPost(response);
+                            PYO.scrollToBottom('.village-feed');
                             PYO.authorPosts = feed.find('.post.mine').length;
                         }
                         feedAjax.XHR = null;

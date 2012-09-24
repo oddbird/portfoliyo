@@ -63,6 +63,15 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.scrolledToBottom = function (container) {
+        var context = $(container);
+        var bottom = false;
+        if (context.get(0).scrollHeight - context.scrollTop() - context.outerHeight() <= 50) {
+            bottom = true;
+        }
+        return bottom;
+    };
+
     PYO.pageAjaxError = function (url) {
         var container = $('.village-content');
         var msg = ich.pjax_error_msg();
