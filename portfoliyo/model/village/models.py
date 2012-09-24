@@ -19,7 +19,10 @@ def now():
 
 class Post(models.Model):
     author = models.ForeignKey(
-        user_models.Profile, related_name='authored_posts')
+        user_models.Profile,
+        related_name='authored_posts',
+        blank=True, null=True,
+        ) # null author means "automated message sent by Portfoliyo"
     timestamp = models.DateTimeField(default=now)
     # the student in whose village this was posted
     student = models.ForeignKey(
@@ -213,20 +216,25 @@ def post_char_limit(relationship):
 
 def post_dict(post, **extra):
     """Return given post rendered as dictionary, ready for JSONification."""
-    author_name = (
-        post.author.name or post.author.user.email or post.author.phone)
+    if post.author:
+        author_name = (
+            post.author.name or post.author.user.email or post.author.phone
+            )
 
-    relationship = post.get_relationship()
+        relationship = post.get_relationship()
 
-    if relationship is None:
-        role = post.author.role
+        if relationship is None:
+            role = post.author.role
+        else:
+            role = relationship.description or post.author.role
     else:
-        role = relationship.description or post.author.role
+        author_name = "none"
+        role = "auto"
 
     timestamp = timezone.localtime(post.timestamp)
 
     data = {
-        'author_id': post.author_id,
+        'author_id': post.author_id if post.author else 0,
         'student_id': post.student_id,
         'author': author_name,
         'role': role,

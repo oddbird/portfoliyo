@@ -54,6 +54,19 @@ def test_post_dict():
 
 
 
+def test_post_dict_no_author():
+    """Special handling for author-less (automated) posts."""
+    student = factories.ProfileFactory.create()
+    post = factories.PostFactory.create(author=None, student=student)
+
+    d = models.post_dict(post)
+
+    assert d['author_id'] == 0
+    assert d['author'] == "none"
+    assert d['role'] == "auto"
+
+
+
 def test_post_dict_no_relationship():
     """If relationship is gone, uses author's role instead."""
     rel = factories.RelationshipFactory.create(
