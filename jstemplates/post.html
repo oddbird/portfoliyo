@@ -9,7 +9,7 @@
     <time datetime="{{ timestamp }}">{{ date }} at {{ time }}</time>
   </header>
 
-  <p class="post-text{{^ local }}{{# sms }} sms{{/ sms }}{{^ sms }} no-sms{{/ sms }}{{/ local }}">
+  <p class="post-text{{^ local }}{{# sms }} sms{{/ sms }}{{^ sms }} no-sms{{/ sms }}{{/ local }}" title="{{! @@@ detailed sms-status tooltip here }}{{^ local }}{{^ sms }}No {{/ sms }}{{/ local }}text messages were sent.">
     {{# escape }}{{ text }}{{/ escape }}{{^ escape }}{{{ text }}}{{/ escape }}
   </p>
 
