@@ -84,6 +84,11 @@ $post-padding     : .25;
   }
   li { @include padding-trailer(.25); }
   :last-child { margin-bottom: 0; }
+  .mobile {
+    @extend %icon-replace;
+    @extend %icon-phone;
+    display: inline-block;
+  }
 }
 
 // ---------------------------------------------------------------------------
