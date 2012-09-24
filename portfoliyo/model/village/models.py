@@ -48,7 +48,8 @@ class Post(models.Model):
 
 
     @classmethod
-    def create(cls, author, student, text, sequence_id=None, from_sms=False):
+    def create(cls, author, student, text,
+               sequence_id=None, from_sms=False, to_sms=False, notify=True):
         """Create and return a Post."""
         html_text, highlights = process_text(text, student)
 
@@ -58,17 +59,18 @@ class Post(models.Model):
             original_text=text,
             html_text=html_text,
             from_sms=from_sms,
-            to_sms=False,
+            to_sms=to_sms,
             )
 
         # notify highlighted text-only users
-        for rel in highlights:
-            if (rel.elder.user.is_active and rel.elder.phone):
-                sender_rel = post.get_relationship()
-                prefix = text_notification_prefix(sender_rel)
-                sms_body = prefix + post.original_text
-                sms.send(rel.elder.phone, sms_body)
-                post.to_sms = True
+        if notify:
+            for rel in highlights:
+                if (rel.elder.user.is_active and rel.elder.phone):
+                    sender_rel = post.get_relationship()
+                    prefix = text_notification_prefix(sender_rel)
+                    sms_body = prefix + post.original_text
+                    sms.send(rel.elder.phone, sms_body)
+                    post.to_sms = True
 
         post.save()
 

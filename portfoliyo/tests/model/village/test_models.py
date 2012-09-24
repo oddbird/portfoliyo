@@ -103,23 +103,26 @@ class TestPostCreate(object):
         assert post.to_sms == False
 
 
-    @mock.patch('portfoliyo.model.village.models.timezone.now')
-    def test_creates_post_from_sms(self, mock_now):
+    def test_creates_post_from_sms(self):
         """Post object can have from_sms set to True."""
-        mock_now.return_value = datetime.datetime(
-            2012, 9, 17, 6, 25, tzinfo=utc)
         rel = factories.RelationshipFactory.create()
 
         post = models.Post.create(
             rel.elder, rel.student, 'Foo\n', from_sms=True)
 
-        assert post.author == rel.elder
-        assert post.student == rel.student
-        assert post.timestamp == mock_now.return_value
-        assert post.original_text == 'Foo\n'
-        assert post.html_text == 'Foo<br>'
         assert post.from_sms == True
         assert post.to_sms == False
+
+
+    def test_creates_post_to_sms(self):
+        """Post object can have to_sms explicitly set to True."""
+        rel = factories.RelationshipFactory.create()
+
+        post = models.Post.create(
+            rel.elder, rel.student, 'Foo\n', to_sms=True)
+
+        assert post.from_sms == False
+        assert post.to_sms == True
 
 
     @mock.patch('portfoliyo.model.village.models.get_pusher')
@@ -144,14 +147,10 @@ class TestPostCreate(object):
         """Sends text to highlighted active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
             from_profile__phone=None,
-            description="Math Teacher",
             )
         factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__name="Max Dad",
-            from_profile__user__email=None,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
             description="Father",
@@ -168,15 +167,10 @@ class TestPostCreate(object):
     def test_only_notifies_active_mobile_users(self, mock_send_sms):
         """Sends text only to active users."""
         rel1 = factories.RelationshipFactory.create(
-            from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
             from_profile__phone=None,
-            description="Math Teacher",
             )
         factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__name="Max Dad",
-            from_profile__user__email=None,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=False,
             description="Father",
@@ -192,21 +186,35 @@ class TestPostCreate(object):
     def test_only_notifies_mobile_users(self, mock_send_sms):
         """Sends text only to users with phone numbers."""
         rel1 = factories.RelationshipFactory.create(
-            from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
-            from_profile__phone=None,
-            description="Math Teacher",
-            )
+            from_profile__phone=None)
         factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__name="Max Dad",
-            from_profile__user__email=None,
             from_profile__phone=None,
             from_profile__user__is_active=True,
             description="Father",
             )
 
         post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+
+        assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
+
+
+    @mock.patch('portfoliyo.model.village.models.sms.send')
+    def test_can_disable_notifications(self, mock_send_sms):
+        """Sends no text if given notify=False."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__phone=None,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__user__is_active=True,
+            description="Father",
+            )
+
+        post = models.Post.create(
+            rel1.elder, rel1.student, 'Hey @father', notify=False)
 
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False

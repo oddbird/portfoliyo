@@ -7,32 +7,35 @@ from portfoliyo.sms import hook
 from portfoliyo.tests import factories, utils
 
 
-@mock.patch('portfoliyo.sms.hook.model.Post')
-def test_create_post(mock_Post):
+def test_create_post():
     """Creates Post (and no reply) if one associated student."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(phone=phone)
     rel = factories.RelationshipFactory.create(from_profile=profile)
 
-    reply = hook.receive_sms(phone, 'foo')
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, 'foo')
 
     assert reply is None
-    mock_Post.create.assert_called_with(
+    mock_create.assert_called_once_with(
         profile, rel.student, 'foo', from_sms=True)
 
 
 
 def test_activate_user():
-    """Receiving an SMS from a user activates and gives them more info."""
+    """Receiving SMS from inactive user activates and gives them more info."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
         user__is_active=False, phone=phone)
-    factories.RelationshipFactory.create(
+    rel = factories.RelationshipFactory.create(
         from_profile=profile, to_profile__name="Jimmy Doe")
 
-    reply = hook.receive_sms(phone, 'foo')
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, 'foo')
 
     assert utils.refresh(profile.user).is_active
+    mock_create.assert_any_call(
+        None, rel.student, hook.tag(phone, reply), to_sms=True, notify=False)
     assert reply == (
         "Thank you! You can text this number any time "
         "to talk with Jimmy Doe's teachers."
@@ -45,15 +48,19 @@ def test_decline():
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
         user__is_active=False, phone=phone)
-    factories.RelationshipFactory.create(from_profile=profile)
+    rel = factories.RelationshipFactory.create(from_profile=profile)
 
-    reply = hook.receive_sms(phone, 'stop')
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, 'stop')
 
     assert not utils.refresh(profile.user).is_active
     assert utils.refresh(profile).declined
     assert reply == (
         "No problem! Sorry to have bothered you."
         )
+    mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
+    mock_create.assert_any_call(
+        None, rel.student, hook.tag(phone, reply), to_sms=True, notify=False)
 
 
 
@@ -62,15 +69,19 @@ def test_active_user_decline():
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
         user__is_active=True, phone=phone)
-    factories.RelationshipFactory.create(from_profile=profile)
+    rel = factories.RelationshipFactory.create(from_profile=profile)
 
-    reply = hook.receive_sms(phone, 'stop')
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, 'stop')
 
     assert not utils.refresh(profile.user).is_active
     assert utils.refresh(profile).declined
     assert reply == (
         "No problem! Sorry to have bothered you."
         )
+    mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
+    mock_create.assert_any_call(
+        None, rel.student, hook.tag(phone, reply), to_sms=True, notify=False)
 
 
 
@@ -119,7 +130,8 @@ def test_code_signup():
     teacher = factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF")
 
-    reply = hook.receive_sms(phone, "abcdef John Doe")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, "abcdef John Doe")
 
     assert reply == (
         "Thanks! What is the name of your child in Teacher Jane's class?"
@@ -128,6 +140,7 @@ def test_code_signup():
     assert profile.name == "John Doe"
     assert profile.state == model.Profile.STATE.kidname
     assert profile.invited_by == teacher
+    assert not mock_create.call_count
 
 
 def test_code_signup_lacks_name():
@@ -136,11 +149,13 @@ def test_code_signup_lacks_name():
     factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF")
 
-    reply = hook.receive_sms(phone, "ABCDEF")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, "ABCDEF")
 
     assert reply == (
         "Please include your name after the code."
         )
+    assert not mock_create.call_count
 
 
 def test_code_signup_student_name():
@@ -155,7 +170,8 @@ def test_code_signup_student_name():
         invited_by=teacher,
         )
 
-    reply = hook.receive_sms(phone, "Jimmy Doe")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
         "Last question: what is your relationship to that child "
@@ -168,9 +184,10 @@ def test_code_signup_student_name():
     assert set(student.elders) == set([teacher, parent])
     assert parent.state == model.Profile.STATE.relationship
     # and the name is sent on to the village chat as a post
-    post = model.Post.objects.get(author=parent, student=student)
-    assert post.original_text == "Jimmy Doe"
-    assert post.from_sms
+    mock_create.assert_any_call(parent, student, "Jimmy Doe", from_sms=True)
+    # and the automated reply is also sent on to village chat
+    mock_create.assert_any_call(
+        None, student, hook.tag(phone, reply), to_sms=True, notify=False)
 
 
 def test_code_signup_student_name_dupe_detection():
@@ -186,7 +203,8 @@ def test_code_signup_student_name_dupe_detection():
         invited_by=rel.elder,
         )
 
-    reply = hook.receive_sms(phone, "Jimmy Doe")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
         "Last question: what is your relationship to that child "
@@ -213,7 +231,8 @@ def test_code_signup_student_name_dupe_detection_excludes_deleted():
         invited_by=rel.elder,
         )
 
-    reply = hook.receive_sms(phone, "Jimmy Doe")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
         "Last question: what is your relationship to that child "
@@ -243,7 +262,8 @@ def test_code_signup_role():
         description="",
         )
 
-    reply = hook.receive_sms(phone, "father")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, "father")
 
     assert reply == (
         "All done, thank you! You can text this number any time "
@@ -254,10 +274,12 @@ def test_code_signup_role():
     assert parent.state == model.Profile.STATE.done
     parent_rel = utils.refresh(parent_rel)
     assert parent_rel.description == "father"
+    student = teacher_rel.student
     # and the role is sent on to the village chat as a post
-    post = model.Post.objects.get(author=parent, student=teacher_rel.student)
-    assert post.original_text == "father"
-    assert post.from_sms
+    mock_create.assert_any_call(parent, student, "father", from_sms=True)
+    # and the automated reply is also sent on to village chat
+    mock_create.assert_any_call(
+        None, student, hook.tag(phone, reply), to_sms=True, notify=False)
 
 
 def test_get_teacher_and_name():

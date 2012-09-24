@@ -26,7 +26,10 @@ def receive_sms(source, body):
         profile.save()
         profile.user.is_active = False
         profile.user.save()
-        return "No problem! Sorry to have bothered you."
+        for student in profile.students:
+            model.Post.create(profile, student, body, from_sms=True)
+        return reply(
+            source, profile.students, "No problem! Sorry to have bothered you.")
 
     activated = False
     if not profile.user.is_active:
@@ -63,7 +66,9 @@ def receive_sms(source, body):
     model.Post.create(profile, students[0], body, from_sms=True)
 
     if activated:
-        return (
+        return reply(
+            source,
+            profile.students,
             "Thank you! You can text this number any time "
             "to talk with %s's teachers." % students[0].name
         )
@@ -124,7 +129,9 @@ def handle_new_student(parent, teacher, student_name):
     parent.state = model.Profile.STATE.relationship
     parent.save()
     model.Post.create(parent, student, student_name, from_sms=True)
-    return (
+    return reply(
+        parent.phone,
+        [student],
         "Last question: what is your relationship to that child "
         "(mother, father, ...)?"
         )
@@ -140,7 +147,9 @@ def handle_role_update(parent, role):
     students = parent.students
     for student in students:
         model.Post.create(parent, student, role, from_sms=True)
-    return  (
+    return reply(
+        parent.phone,
+        parent.students,
         "All done, thank you! You can text this number any time "
         "to talk with %s's teachers." % students[0].name
         )
@@ -168,3 +177,19 @@ def get_teacher_and_name(body):
     except model.Profile.DoesNotExist:
         return (None, '')
     return (teacher, parent_name)
+
+
+
+def reply(phone, students, body):
+    """Save given reply to given students' villages before returning it."""
+    tagged = tag(phone, body)
+    for student in students:
+        model.Post.create(None, student, tagged, to_sms=True, notify=False)
+    return body
+
+
+
+def tag(phone, body):
+    """Prepend a mention of the given phone number to given text."""
+    return "@%s %s" % (phone.lstrip('+').lstrip('1'), body)
+
