@@ -11,52 +11,69 @@
 $post-byline-cols : 2;
 $post-size        : $smallpx;
 $post-time-size   : $xsmallpx;
-$post-padding     : .25;
+$post-v-padding   : .25;
+$post-h-padding   : gutter($center);
 
 .post {
   @include pie-clearfix;
   @include adjust-font-size-to($post-size);
-  @include trailing-border(1px, $post-padding, $post-size);
-  padding-left: gutter($center);
-  padding-right: gutter($center);
+  @include trailing-border(1px, $post-v-padding, $post-size);
+  padding-left: $post-h-padding;
+  padding-right: $post-h-padding;
   border-color: $base1;
-  .byline {
-    @include clearfix;
-    color: $base1;
-
-    h3, time { @include ellipsis; }
-    h3 {
-      float: left;
-      width: 50%;
-    }
-    b {
-      color: $base;
-      font-weight: bold;
-    }
-    time {
-     @include adjust-font-size-to($post-time-size, 1, $post-size);
-      float: right;
-      width: 49%;
-      text-align: right;
-    }
-  }
 
   &.mine { background: lighten($blue,45); }
   &.not-posted { background: lighten($red,45); }
 
   .timeout {
     @extend %error;
-    @include bleed(gutter($center));
+    @include bleed($post-h-padding);
   }
 }
 
-.post-text {
-  @extend %icon;
-  @include clearfix;
-  &:before { margin-right: 0; }
-  &.sms { @extend %icon-phone; }
-  &.no-sms { @extend %icon-no-phone; }
+.post-meta {
+  @include pie-clearfix;
+  position: relative;
+  color: $base1;
+
+  .byline, .pubdate {
+    @include ellipsis;
+    max-width: 45%;
+  }
+  .byline { float: left; }
+  .title {
+    color: $base;
+    font-weight: bold;
+  }
+  .pubdate {
+   @include adjust-font-size-to($post-time-size, 1, $post-size);
+    float: right;
+    text-align: right;
+  }
 }
+
+.sms-info {
+  .summary {
+    @extend %icon-replace;
+    float: left;
+    margin-right: .2em;
+    .sms & { @extend %icon-phone; }
+    .no-sms & { @extend %icon-no-phone; }
+  }
+
+  .details-body {
+    @include bleed($post-h-padding);
+    @include trailer($post-v-padding);
+    @include css-arrow(bottom, .375em, $back);
+    display: none;
+    background: $back;
+    &:after { left: $post-h-padding; margin-left: 0; }
+  }
+
+  &.open .details-body { display: block; }
+}
+
+.post-text { @include clearfix; }
 
 .nametag {
   @include border-radius(4px);
@@ -74,8 +91,8 @@ $post-padding     : .25;
   @extend %type;
   @include padding-leader;
   @include trailing-border(1px, 1);
-  padding-left: gutter($center);
-  padding-right: gutter($center);
+  padding-left: $post-h-padding;
+  padding-right: $post-h-padding;
   border-color: $base1;
   background: lighten($base3,10);
   h2 {

@@ -138,31 +138,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, .add-row, .remove-row, .student-actions a, .student-actions button, .getting-started .mobile, #messages .close {
+.main-login .reset-link, .add-row, .remove-row, .student-actions a, .student-actions button, .sms-info .summary, .getting-started .mobile, #messages .close {
   display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .student-actions a:focus, .student-actions button:focus, .getting-started .mobile:focus, #messages .close:focus {
+.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .student-actions a:focus, .student-actions button:focus, .sms-info .summary:focus, .getting-started .mobile:focus, #messages .close:focus {
   outline: 0;
 }
-.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .student-actions a:focus:before, .student-actions button:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
+.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .student-actions a:focus:before, .student-actions button:focus:before, .sms-info .summary:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .getting-started .mobile:before, #messages .close:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before {
   position: absolute;
   top: 0;
   left: 0;
@@ -255,11 +255,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\27f0";
 }
 
-.post-text.sms:before, .getting-started .mobile:before, .village-elders .elder.mobile:before {
+.sms .sms-info .summary:before, .getting-started .mobile:before, .village-elders .elder.mobile:before {
   content: "\e000";
 }
 
-.post-text.no-sms:before {
+.no-sms .sms-info .summary:before {
   content: "\e001";
 }
 
@@ -1905,32 +1905,6 @@ button {
   display: table;
   clear: both;
 }
-.post .byline {
-  overflow: hidden;
-  color: #93a1a1;
-}
-.post .byline h3, .post .byline time {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-}
-.post .byline h3 {
-  float: left;
-  width: 50%;
-}
-.post .byline b {
-  color: #657b83;
-  font-weight: bold;
-}
-.post .byline time {
-  font-size: 0.85714em;
-  line-height: 1.91667em;
-  float: right;
-  width: 49%;
-  text-align: right;
-}
 .post.mine {
   background: #e3f1fa;
 }
@@ -1944,11 +1918,83 @@ button {
   padding-right: 2.12766%;
 }
 
+.post-meta {
+  position: relative;
+  color: #93a1a1;
+}
+.post-meta:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.post-meta .byline, .post-meta .pubdate {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  max-width: 45%;
+}
+.post-meta .byline {
+  float: left;
+}
+.post-meta .title {
+  color: #657b83;
+  font-weight: bold;
+}
+.post-meta .pubdate {
+  font-size: 0.85714em;
+  line-height: 1.91667em;
+  float: right;
+  text-align: right;
+}
+
+.sms-info .summary {
+  float: left;
+  margin-right: .2em;
+}
+.sms-info .details-body {
+  margin-left: -2.12766%;
+  padding-left: 2.12766%;
+  margin-right: -2.12766%;
+  padding-right: 2.12766%;
+  margin-bottom: 0.31944em;
+  position: relative;
+  background: #073642;
+  display: none;
+  background: #073642;
+}
+.sms-info .details-body:after, .sms-info .details-body:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.sms-info .details-body:after {
+  border-top-color: #073642;
+  border-width: 0.375em;
+  left: 50%;
+  margin-left: -0.375em;
+}
+.sms-info .details-body:before {
+  border-top-color: false;
+  border-width: 0.375em;
+  left: 50%;
+  margin-left: -0.375em;
+}
+.sms-info .details-body:after {
+  left: 2.12766%;
+  margin-left: 0;
+}
+.sms-info.open .details-body {
+  display: block;
+}
+
 .post-text {
   overflow: hidden;
-}
-.post-text:before {
-  margin-right: 0;
 }
 
 .nametag {
