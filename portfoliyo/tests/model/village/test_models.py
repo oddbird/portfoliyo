@@ -62,8 +62,8 @@ def test_post_dict_no_author():
     d = models.post_dict(post)
 
     assert d['author_id'] == 0
-    assert d['author'] == "none"
-    assert d['role'] == "auto"
+    assert d['author'] == ""
+    assert d['role'] == "Portfoliyo"
 
 
 

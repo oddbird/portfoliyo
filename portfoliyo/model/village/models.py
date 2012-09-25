@@ -230,8 +230,8 @@ def post_dict(post, **extra):
         else:
             role = relationship.description or post.author.role
     else:
-        author_name = "none"
-        role = "auto"
+        author_name = ""
+        role = "Portfoliyo"
 
     timestamp = timezone.localtime(post.timestamp)
 
