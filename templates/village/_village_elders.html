@@ -2,11 +2,17 @@
   <h2>Village Elders</h2>
   <ul>
     {% for rel in student.elder_relationships %}
-    {# @@@ status classes: offline | inactive | mobile #}
-    {% with rel.elder as elder %}
-    <li class="{% if not elder.user.is_active %}inactive{% elif not elder.user.email %}mobile{% elif elder.user != request.user %}offline{% endif %}">
-      <b>{{ rel.description_or_role }}:</b>
-      <span>{% firstof elder.name elder.user.email elder.phone %}</span>
+    {% with rel.elder as nav_elder %}
+    <li class="elder vcard {% if nav_elder.declined %}declined{% elif not nav_elder.user.is_active %}inactive{% elif not nav_elder.user.email %}mobile{% elif nav_elder.user != request.user %}offline{% endif %}" title="{# @@@ detailed status tooltip here #}{{ rel.description_or_role }}">
+      {% if nav_elder.school_staff %}
+        <b class="title">{{ rel.description_or_role }}:</b>
+        <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
+      {% else %}
+        <a href="{% url edit_elder student_id=student.id elder_id=nav_elder.id %}" class="edit-elder ajax-link{% if nav_elder == elder %} active{% endif %}">
+          <b class="title">{{ rel.description_or_role }}:</b>
+          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
+        </a>
+      {% endif %}
     </li>
     {% endwith %}
     {% endfor %}

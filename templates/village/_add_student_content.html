@@ -6,11 +6,17 @@
   {% csrf_token %}
 
   {% if request.user.profile.code %}
-  <a href="{% url pdf_parent_instructions %}" target="_new" class="parent-instructions">
-    Send this PDF home with students
-    so parents can add themselves to your account.
-    Or add students yourself using the form below.
-  </a>
+  <div class="parent-instructions">
+    <p>
+      Send this PDF home with students
+      so parents can add themselves to your account.
+      Or add students yourself using the form below.
+    </p>
+    <ul>
+      <li><a href="{% url pdf_parent_instructions lang='en' %}" target="_new" class="pdf-en">English PDF</a></li>
+      <li><a href="{% url pdf_parent_instructions lang='es' %}" target="_new" class="pdf-es">Spanish PDF</a></li>
+    </ul>
+  </div>
   {% endif %}
 
   <h2>Add a Student</h2>

@@ -15,7 +15,8 @@ var PYO = (function (PYO, $) {
         PYO.pusherKey = $('.village').data('pusher-key');
         PYO.updatePageHeight('.village');
         PYO.ajaxifyVillages('.village');
-        PYO.listenForPusherEvents('.village');
+        PYO.listenForPosts('.village');
+        PYO.editStudentName('.village-nav');
         PYO.initializePage();
     });
 

@@ -3,14 +3,17 @@ Student/elder (village) views.
 
 """
 import json
+import os
 
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.http import HttpResponse, HttpResponseBadRequest, Http404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 
 from portfoliyo import model, pdf
+from portfoliyo.view import home
 from ..decorators import school_staff_required
 from ..ajax import ajax
 from . import forms
@@ -95,6 +98,25 @@ def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
 
+    if request.method == 'POST':
+        if not rel.elder.school_staff:
+            return redirect(request.path)
+        if 'remove' in request.POST:
+            rel.student.deleted = True
+            rel.student.save()
+            return redirect(home.redirect_home(request.user))
+        form = forms.EditStudentForm(request.POST)
+        if form.is_valid():
+            form.save(rel.student)
+            data = {'success': True, 'name': rel.student.name}
+        else:
+            for error in form.errors['name']:
+                messages.error(request, error)
+            data = {'success': False, 'name': rel.student.name}
+        if not request.is_ajax():
+            return redirect(request.path)
+        return HttpResponse(json.dumps(data), content_type='application/json')
+
     return TemplateResponse(
         request,
         'village/village.html',
@@ -151,14 +173,58 @@ def json_posts(request, student_id):
     return HttpResponse(json.dumps(data), content_type='application/json')
 
 
+@school_staff_required
+@ajax('village/_edit_elder_content.html')
+def edit_elder(request, student_id, elder_id):
+    """Edit a village elder."""
+    get_relationship_or_404(student_id, request.user.profile)
+    elder = get_object_or_404(
+        model.Profile.objects.select_related('user'), id=elder_id)
+    # can't edit the profile of another school staff
+    if elder.school_staff:
+        raise Http404
+    elder_rel = get_relationship_or_404(student_id, elder)
+
+    if request.method == 'POST':
+        form = forms.EditElderForm(request.POST, profile=elder)
+        if form.is_valid():
+            form.save()
+            messages.success(request, u"Changes saved!")
+            return redirect('village', student_id=student_id)
+    else:
+        form = forms.EditElderForm(profile=elder)
+
+    return TemplateResponse(
+        request,
+        'village/edit_elder.html',
+        {
+            'form': form,
+            'student': elder_rel.student,
+            'elder': elder_rel.elder,
+            'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
+            },
+        )
+
+
 
 @school_staff_required
-def pdf_parent_instructions(request):
+def pdf_parent_instructions(request, lang):
     """Render a PDF for sending home with parents."""
+    template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
+    template_path = os.path.join(
+        template_dir,
+        'parent-instructions-template-%s.pdf' % lang,
+        )
+
+    if not os.path.isfile(template_path):
+        raise Http404
+
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=instructions.pdf'
+    response['Content-Disposition'] = (
+        'attachment; filename=instructions-%s.pdf' % lang)
 
     pdf.generate_instructions_pdf(
+        template_path=template_path,
         stream=response,
         code=request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,

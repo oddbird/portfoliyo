@@ -19,6 +19,14 @@ def test_unicode():
     assert unicode(p) == u'foo'
 
 
+def test_sms():
+    """sms property is true if either from_sms or to_sms or both."""
+    assert not factories.PostFactory.build(from_sms=False, to_sms=False).sms
+    assert factories.PostFactory.build(from_sms=True, to_sms=False).sms
+    assert factories.PostFactory.build(from_sms=False, to_sms=True).sms
+    assert factories.PostFactory.build(from_sms=True, to_sms=True).sms
+
+
 
 def test_post_dict():
     """post_dict returns dictionary of post data."""
@@ -41,7 +49,21 @@ def test_post_dict():
         'time': '1:30 a.m.',
         'text': 'Foo',
         'extra': 'extra',
+        'sms': False,
         }
+
+
+
+def test_post_dict_no_author():
+    """Special handling for author-less (automated) posts."""
+    student = factories.ProfileFactory.create()
+    post = factories.PostFactory.create(author=None, student=student)
+
+    d = models.post_dict(post)
+
+    assert d['author_id'] == 0
+    assert d['author'] == ""
+    assert d['role'] == "Portfoliyo"
 
 
 
@@ -77,6 +99,30 @@ class TestPostCreate(object):
         assert post.timestamp == mock_now.return_value
         assert post.original_text == 'Foo\n'
         assert post.html_text == 'Foo<br>'
+        assert post.from_sms == False
+        assert post.to_sms == False
+
+
+    def test_creates_post_from_sms(self):
+        """Post object can have from_sms set to True."""
+        rel = factories.RelationshipFactory.create()
+
+        post = models.Post.create(
+            rel.elder, rel.student, 'Foo\n', from_sms=True)
+
+        assert post.from_sms == True
+        assert post.to_sms == False
+
+
+    def test_creates_post_to_sms(self):
+        """Post object can have to_sms explicitly set to True."""
+        rel = factories.RelationshipFactory.create()
+
+        post = models.Post.create(
+            rel.elder, rel.student, 'Foo\n', to_sms=True)
+
+        assert post.from_sms == False
+        assert post.to_sms == True
 
 
     @mock.patch('portfoliyo.model.village.models.get_pusher')
@@ -101,69 +147,77 @@ class TestPostCreate(object):
         """Sends text to highlighted active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
             from_profile__phone=None,
-            description="Math Teacher",
             )
         factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__name="Max Dad",
-            from_profile__user__email=None,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
             description="Father",
             )
 
-        models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
 
         mock_send_sms.assert_called_with(
             "+13216540987", "John Doe: Hey @father")
+        assert post.to_sms == True
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_only_notifies_active_mobile_users(self, mock_send_sms):
         """Sends text only to active users."""
         rel1 = factories.RelationshipFactory.create(
-            from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
             from_profile__phone=None,
-            description="Math Teacher",
             )
         factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__name="Max Dad",
-            from_profile__user__email=None,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=False,
             description="Father",
             )
 
-        models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
 
         assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_only_notifies_mobile_users(self, mock_send_sms):
         """Sends text only to users with phone numbers."""
         rel1 = factories.RelationshipFactory.create(
-            from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
-            from_profile__phone=None,
-            description="Math Teacher",
-            )
+            from_profile__phone=None)
         factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__name="Max Dad",
-            from_profile__user__email=None,
             from_profile__phone=None,
             from_profile__user__is_active=True,
             description="Father",
             )
 
-        models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
 
         assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
+
+
+    @mock.patch('portfoliyo.model.village.models.sms.send')
+    def test_can_disable_notifications(self, mock_send_sms):
+        """Sends no text if given notify=False."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__phone=None,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__user__is_active=True,
+            description="Father",
+            )
+
+        post = models.Post.create(
+            rel1.elder, rel1.student, 'Hey @father', notify=False)
+
+        assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
 
 
 class TestProcessText(object):
@@ -223,7 +277,15 @@ class TestReplaceHighlights(object):
             self.elder.id = elder_id
 
 
-    name_map = {'one': MockRel(1), 'two': MockRel(2)}
+    rel1 = MockRel(1)
+    rel2 = MockRel(2)
+    rel3 = MockRel(3)
+    name_map = {
+        'one': set([rel1]),
+        'two': set([rel2]),
+        'foo@example.com': set([rel3]),
+        'all': set([rel1, rel2]),
+        }
 
 
     def call(self, text):
@@ -236,7 +298,23 @@ class TestReplaceHighlights(object):
         html, highlights = self.call("Hello @one")
 
         assert html == 'Hello <b class="nametag" data-user-id="1">@one</b>'
-        assert highlights == set([self.name_map['one']])
+        assert highlights == set([self.rel1])
+
+
+    def test_all(self):
+        """Can highlight all users with @all."""
+        html, highlights = self.call("Hello @all")
+
+        assert html == (
+            'Hello <b class="nametag all me" data-user-id="1,2">@all</b>')
+        assert highlights == set([self.rel1, self.rel2])
+
+
+    def test_email(self):
+        """Can highlight a user by email address."""
+        _, highlights = self.call("Hello @foo@example.com")
+
+        assert highlights == set([self.rel3])
 
 
     def test_false_alarm(self):
@@ -247,6 +325,13 @@ class TestReplaceHighlights(object):
         assert not highlights
 
 
+    def test_no_embedded(self):
+        """Highlights have to be delimited by whitespace or punctuation."""
+        _, highlights = self.call("example@one.com")
+
+        assert len(highlights) == 0
+
+
     def test_multiple_highlights(self):
         """Can find multiple highlights in a text."""
         _, highlights = self.call("Hello @one and @two")
@@ -254,15 +339,30 @@ class TestReplaceHighlights(object):
         assert len(highlights) == 2
 
 
+    def test_multiple_adjacent_highlights(self):
+        """Can find multiple adjacent highlights in a text."""
+        _, highlights = self.call("Hello @one @two")
+
+        assert len(highlights) == 2
+
+
+    def test_multiple_highlights_same_name(self):
+        """If multiple highlights of same name, no double-replace."""
+        html, highlights = self.call("Hello @one and @one")
+
+        assert len(highlights) == 1
+        assert html.count('data-user-id') == 2
+
+
     def assert_finds(self, text, name='one'):
         """Assert that given name is found as highlight in text."""
         _, highlights = self.call(text)
 
-        assert highlights == set([self.name_map['one']])
+        assert highlights == set([self.rel1])
 
 
     @pytest.mark.parametrize(
-        'symbol', ['.', '?', ',', ';', ':', ')', ']', ' ', ''])
+        'symbol', ['.', '?', ',', ';', ':', ')', ']', ' ', '', '...'])
     def test_followed_by(self, symbol):
         """Can detect a highlight immediately followed by some punctuation."""
         self.assert_finds("Hey @one%s" % symbol)
@@ -299,16 +399,17 @@ def test_get_highlight_names():
 
     name_map = models.get_highlight_names(rel1.to_profile)
 
-    # nobody can be highlighted as 'father' since its a dupe
-    assert len(name_map) == 8
-    assert name_map['johndoe'] == rel1
-    assert name_map['john@example.com'] == rel1
-    assert name_map['mathteacher'] == rel1
-    assert name_map['maxdad'] == rel2
-    assert name_map['+13216540987'] == rel2
-    assert name_map['3216540987'] == rel2
-    assert name_map['+15671234567'] == rel3
-    assert name_map['5671234567'] == rel3
+    assert len(name_map) == 10
+    assert name_map['johndoe'] == set([rel1])
+    assert name_map['john@example.com'] == set([rel1])
+    assert name_map['mathteacher'] == set([rel1])
+    assert name_map['maxdad'] == set([rel2])
+    assert name_map['+13216540987'] == set([rel2])
+    assert name_map['3216540987'] == set([rel2])
+    assert name_map['father'] == set([rel2, rel3])
+    assert name_map['+15671234567'] == set([rel3])
+    assert name_map['5671234567'] == set([rel3])
+    assert name_map['all'] == set([rel1, rel2, rel3])
 
 
 

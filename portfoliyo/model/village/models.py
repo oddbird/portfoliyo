@@ -1,6 +1,7 @@
 """Village models."""
 from __future__ import absolute_import
 
+from collections import defaultdict
 import re
 
 from django.db import models
@@ -18,7 +19,10 @@ def now():
 
 class Post(models.Model):
     author = models.ForeignKey(
-        user_models.Profile, related_name='authored_posts')
+        user_models.Profile,
+        related_name='authored_posts',
+        blank=True, null=True,
+        ) # null author means "automated message sent by Portfoliyo"
     timestamp = models.DateTimeField(default=now)
     # the student in whose village this was posted
     student = models.ForeignKey(
@@ -27,31 +31,48 @@ class Post(models.Model):
     original_text = models.TextField()
     # the parsed text as HTML, with highlights wrapped in <b>
     html_text = models.TextField()
+    # message was received via SMS
+    from_sms = models.BooleanField(default=False)
+    # message was sent to at least one SMS
+    to_sms = models.BooleanField(default=False)
 
 
     def __unicode__(self):
         return self.original_text
 
 
+    @property
+    def sms(self):
+        """Post was either received from or sent by SMS."""
+        return self.from_sms or self.to_sms
+
+
     @classmethod
-    def create(cls, author, student, text, sequence_id=None):
+    def create(cls, author, student, text,
+               sequence_id=None, from_sms=False, to_sms=False, notify=True):
         """Create and return a Post."""
         html_text, highlights = process_text(text, student)
 
-        post = cls.objects.create(
+        post = cls(
             author=author,
             student=student,
             original_text=text,
             html_text=html_text,
+            from_sms=from_sms,
+            to_sms=to_sms,
             )
 
         # notify highlighted text-only users
-        for rel in highlights:
-            if (rel.elder.user.is_active and rel.elder.phone):
-                sender_rel = post.get_relationship()
-                prefix = text_notification_prefix(sender_rel)
-                sms_body = prefix + post.original_text
-                sms.send(rel.elder.phone, sms_body)
+        if notify:
+            for rel in highlights:
+                if (rel.elder.user.is_active and rel.elder.phone):
+                    sender_rel = post.get_relationship()
+                    prefix = text_notification_prefix(sender_rel)
+                    sms_body = prefix + post.original_text
+                    sms.send(rel.elder.phone, sms_body)
+                    post.to_sms = True
+
+        post.save()
 
         # trigger Pusher event, if configured
         pusher = get_pusher()
@@ -94,7 +115,20 @@ def process_text(text, student):
 
 
 
-highlight_re = re.compile(r'(\A|[\s[(])@(\S+?)(\Z|[\s,.;:)\]?])')
+# The ending delimiter here must use a lookahead assertion rather than a simple
+# match, otherwise adjacent highlights separated by a single space fail to
+# match the second highlight, because re.finditer returns only non-overlapping
+# matches, and without the lookahead both highlight matches would want to grab
+# that same intervening space. We could use lookbehind for the initial
+# delimiter as well, except that lookbehind requires a fixed-width pattern, and
+# our delimiter pattern is not fixed-width (it's zero or one).
+highlight_re = re.compile(
+    r"""(\A|[\s[(])          # string-start or whitespace/punctuation
+        (@(\S+?))            # @ followed by (non-greedy) non-whitespace
+        (?=\Z|[\s,;:)\]?])  # string-end or whitespace/punctuation
+    """,
+    re.VERBOSE,
+    )
 
 
 
@@ -110,14 +144,30 @@ def replace_highlights(text, name_map):
 
     """
     highlighted = set()
-    for _, highlight_name, _ in highlight_re.findall(text):
-        highlight_rel = name_map.get(normalize_name(highlight_name))
-        if highlight_rel:
-            full_highlight = '@%s' % highlight_name
-            replace_with = '<b class="nametag" data-user-id="%s">%s</b>' % (
-                highlight_rel.elder.id, full_highlight)
-            text = text.replace(full_highlight, replace_with)
-            highlighted.add(highlight_rel)
+    offset = 0 # how much we've increased the length of ``text``
+    for match in highlight_re.finditer(text):
+        full_highlight = match.group(2)
+        highlight_name = match.group(3)
+        # special handling for period (rather than putting it into the regex as
+        # highlight-terminating punctuation) so that we can support highlights
+        # with internal periods (i.e. email addresses)
+        stripped = 0
+        while highlight_name.endswith('.'):
+            highlight_name = highlight_name[:-1]
+            full_highlight = full_highlight[:-1]
+            stripped += 1
+        highlight_rels = name_map.get(normalize_name(highlight_name))
+        if highlight_rels:
+            replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
+                u' all me' if highlight_name == 'all' else u'',
+                u','.join([unicode(r.elder.id) for r in highlight_rels]),
+                full_highlight,
+                )
+            start, end = match.span(2)
+            end -= stripped
+            text = text[:start+offset] + replace_with + text[end+offset:]
+            offset += len(replace_with) - (end - start)
+            highlighted.update(highlight_rels)
     return text, highlighted
 
 
@@ -126,11 +176,10 @@ def get_highlight_names(student):
     """
     Get highlightable names in given student's village.
 
-    Returns dictionary mapping names to relationships.
+    Returns dictionary mapping names to sets of relationships.
 
     """
-    name_map = {}
-    collisions = set()
+    name_map = defaultdict(set)
     for elder_rel in student.elder_relationships:
         elder = elder_rel.elder
         possible_names = []
@@ -144,13 +193,8 @@ def get_highlight_names(student):
             possible_names.append(normalize_name(elder.user.email))
         possible_names.append(normalize_name(elder_rel.description_or_role))
         for name in possible_names:
-            if name in name_map:
-                # if there's a collision, nobody gets to use that name
-                # @@@ when we have autocomplete, maybe add disambiguators?
-                collisions.add(name)
-            name_map[name] = elder_rel
-    for collision in collisions:
-        del name_map[collision]
+            name_map[name].add(elder_rel)
+        name_map['all'].add(elder_rel)
     return name_map
 
 
@@ -174,20 +218,25 @@ def post_char_limit(relationship):
 
 def post_dict(post, **extra):
     """Return given post rendered as dictionary, ready for JSONification."""
-    author_name = (
-        post.author.name or post.author.user.email or post.author.phone)
+    if post.author:
+        author_name = (
+            post.author.name or post.author.user.email or post.author.phone
+            )
 
-    relationship = post.get_relationship()
+        relationship = post.get_relationship()
 
-    if relationship is None:
-        role = post.author.role
+        if relationship is None:
+            role = post.author.role
+        else:
+            role = relationship.description or post.author.role
     else:
-        role = relationship.description or post.author.role
+        author_name = ""
+        role = "Portfoliyo"
 
     timestamp = timezone.localtime(post.timestamp)
 
     data = {
-        'author_id': post.author_id,
+        'author_id': post.author_id if post.author else 0,
         'student_id': post.student_id,
         'author': author_name,
         'role': role,
@@ -195,6 +244,7 @@ def post_dict(post, **extra):
         'date': dateformat.format(timestamp, 'n/j/Y'),
         'time': dateformat.time_format(timestamp, 'P'),
         'text': post.html_text,
+        'sms': post.sms,
         }
 
     data.update(extra)

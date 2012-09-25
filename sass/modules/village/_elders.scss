@@ -3,40 +3,63 @@
 
 .village-elders {
   h2 { @extend %gone; }
-  ul { @include leader(.5, $village-list-size); }
-  li {
+
+  .elder {
     @extend %icon;
     @extend %icon-record;
+    @include padding-leader(.25,$village-list-size);
+    @include trailing-border(1px,.25,$village-list-size);
+    @include bleed($village-bleed);
+    border-color: $base2;
     &:before {
+      position: relative;
       float: left;
-      margin: 0;
       color: $green;
+      z-index: 2;
     }
     &.offline { &:before { color: $yellow; } }
     &.inactive {
       @extend %icon-warning;
+      background: lighten($yellow,50);
       &:before { color: $base1; }
     }
     &.mobile {
-      @extend %icon-mobile;
+      @extend %icon-phone;
       &:before { color: $base; }
     }
+    &.declined {
+      @extend %icon-x;
+      @include rgba-background(rgba($red,.125));
+      &:before { color: $red; }
+    }
   }
-  b, span {
+
+  .edit-elder {
+    #{$link} {
+      @extend %village-activenav;
+      @include bleed($village-bleed);
+      @include bleed(rhythm(.25,$village-list-size),top bottom);
+      position: relative;
+      display: block;
+    }
+    #{$focus} { background: $base2; }
+  }
+
+  .title, .fn {
     @include ellipsis;
     display: block;
-    margin-left: 1.125em;
+    margin-left: 1.5em;
   }
-  b { font-weight: bold; }
-  span { color: $base1; }
+  .title { font-weight: bold; }
+  .fn { color: $base1; }
 }
 
 .addelder-link {
   @extend %village-addlink;
-  @include leader(.5,$village-list-size);
+  @include bleed($village-bleed);
   @include trailer(.5,$village-list-size);
   @include rhythm-borders(1px,.25,$village-list-size);
   display: block;
   border-color: $village-border-color;
-  padding-left: rhythm(.5,$village-list-size);
+  padding-left: $village-bleed;
 }

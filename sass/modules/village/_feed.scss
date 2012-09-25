@@ -11,11 +11,12 @@
 $post-byline-cols : 2;
 $post-size        : $smallpx;
 $post-time-size   : $xsmallpx;
+$post-padding     : .25;
 
 .post {
   @include pie-clearfix;
   @include adjust-font-size-to($post-size);
-  @include trailing-border(1px, .25, $post-size);
+  @include trailing-border(1px, $post-padding, $post-size);
   padding-left: gutter($center);
   padding-right: gutter($center);
   border-color: $base1;
@@ -39,25 +40,54 @@ $post-time-size   : $xsmallpx;
       text-align: right;
     }
   }
-  .body { @include clearfix; }
 
-  &.mine { @include rgba-background(rgba($blue,.1)); }
-  &.not-posted { @include rgba-background(rgba($red,.1)); }
+  &.mine { background: lighten($blue,45); }
+  &.not-posted { background: lighten($red,45); }
 
-  .nametag {
-    @include border-radius($xxxsmallem);
-    display: inline-block;
-    padding: 0 .4em;
-    background: $base;
-    color: $base3;
-    &.me {
-      background: $blue;
-      color: $base3;
-    }
-  }
   .timeout {
     @extend %error;
     @include bleed(gutter($center));
+  }
+}
+
+.post-text {
+  @extend %icon;
+  @include clearfix;
+  &:before { margin-right: 0; }
+  &.sms { @extend %icon-phone; }
+  &.no-sms { @extend %icon-no-phone; }
+}
+
+.nametag {
+  @include border-radius(4px);
+  @include rgba-background(rgba($base1,.25));
+  display: inline-block;
+  padding: 0 .4em;
+  border: 1px solid $base01;
+  &.me {
+    background: $blue;
+    color: $base3;
+  }
+}
+
+.getting-started {
+  @extend %type;
+  @include padding-leader;
+  @include trailing-border(1px, 1);
+  padding-left: gutter($center);
+  padding-right: gutter($center);
+  border-color: $base1;
+  background: lighten($base3,10);
+  h2 {
+    @include adjust-font-size-to($largepx);
+    @include trailer(1,$largepx);
+  }
+  li { @include padding-trailer(.25); }
+  :last-child { margin-bottom: 0; }
+  .mobile {
+    @extend %icon-replace;
+    @extend %icon-phone;
+    display: inline-block;
   }
 }
 

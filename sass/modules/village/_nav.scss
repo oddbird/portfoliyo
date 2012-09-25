@@ -1,7 +1,21 @@
 // ---------------------------------------------------------------------------
 // Village Nav
 
-$village-nav-bg   : $base2;
+$village-nav-bg       : $base2;
+$village-nav-rhythm   : .25;
+
+%village-nav-span {
+  @include bleed($village-bleed, left);
+  display: block;
+  position: relative;
+}
+
+%village-nav-item {
+  @extend %village-nav-span;
+  @include trailing-border(1px,$village-nav-rhythm,$village-list-size);
+  @include padding-leader($village-nav-rhythm,$village-list-size);
+  border-color: $village-border-color;
+}
 
 .village-nav {
   @extend %village-lists;
@@ -12,23 +26,21 @@ $village-nav-bg   : $base2;
   padding-left: $village-bleed;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
-  a {
-    #{$link} {
-      @extend %village-activenav;
-      @include ellipsis;
-      @include bleed($village-bleed, left);
-      @include trailing-border(1px,.25,$village-list-size);
-      @include padding-leader(.25,$village-list-size);
-      @include rgba-background(rgba($village-nav-bg,.25));
-      @include background(linear-gradient(bottom, rgba($village-nav-bg,.5), rgba($village-nav-bg,.125)));
-      display: block;
-      position: relative;
-      border-color: $village-border-color;
-    }
-    #{$focus} {
-      @include rgba-background(rgba($village-nav-bg,.5));
-      @include background(linear-gradient(bottom, rgba($village-nav-bg,1), rgba($village-nav-bg,.25)));
-    }
+  z-index: 5;
+}
+
+.student { position: relative; }
+
+.select-student {
+  @extend %village-nav-item;
+  #{$link} {
+    @extend %village-activenav;
+    @include rgba-background(rgba($village-nav-bg,.25));
+    @include background(linear-gradient(bottom, rgba($village-nav-bg,.5), rgba($village-nav-bg,.125)));
+  }
+  #{$focus} {
+    @include rgba-background(rgba($village-nav-bg,.5));
+    @include background(linear-gradient(bottom, rgba($village-nav-bg,1), rgba($village-nav-bg,.25)));
   }
   .unread {
     display: none; // @@@ TEMPORARY DISABLING
@@ -43,10 +55,53 @@ $village-nav-bg   : $base2;
     text-align: center;
     &.zero { display: none; }
   }
-  .addstudent-link {
-    @extend %village-addlink;
-    @extend %icon;
-    @extend %icon-plus;
-    font-weight: bold;
+  &.editing {
+    @include mono;
+    background: lighten($orange,40);
+    min-height: rhythm(1,$village-list-size);
   }
+}
+
+$student-action-color : $base03;
+
+.student-actions {
+  @include transition(all 400ms);
+  @include css-arrow(left, rhythm($village-nav-rhythm,$village-list-size), $student-action-color);
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0px;
+  padding: rhythm($village-nav-rhythm,$village-list-size);
+  padding-right: rhythm(.5,$village-list-size);
+  background: $student-action-color;
+  color: $back;
+  text-transform: capitalize;
+
+  @include opacity(0);
+  .student:hover & {
+    @include opacity(1);
+    z-index: 100;
+  }
+
+  form { display: inline; }
+
+  a, button {
+    @extend %icon-replace;
+    @include link(light,true);
+    margin-left: rhythm(.5,$village-list-size);
+  }
+  .edit-student { @extend %icon-pencil; }
+  .save-student {
+    @extend %icon-checkmark;
+    display: none;
+  }
+  .remove-student { @extend %icon-trashcan; }
+}
+
+.addstudent-link {
+  @extend %village-nav-item;
+  @extend %village-addlink;
+  @extend %icon;
+  @extend %icon-plus;
+  font-weight: bold;
 }

@@ -1,9 +1,10 @@
 // ---------------------------------------------------------------------------
 // Links
 
-@mixin link($light: false) {
-  $color: if($light, $base3, $alt);
-  $hover: if($light, mix($base3,$accent), $accent);
+@mixin link($light: false, $non-links: false) {
+  $color  : if($light, $base3, $alt);
+  $hover  : if($light, mix($base3,$accent), $accent);
+  $link   : if($non-links, '&, ' + $link, $link);
   #{$link} {
     color: $color;
     text-decoration: none;

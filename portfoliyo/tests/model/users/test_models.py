@@ -113,11 +113,29 @@ class TestProfile(object):
         assert list(rel.student.elder_relationships) == [rel]
 
 
+    def test_elder_relationships_no_deleted(self):
+        """elder_relationships property does not include deleted elders."""
+        rel1 = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile, from_profile__deleted=True)
+
+        assert list(rel1.student.elder_relationships) == [rel1]
+
+
     def test_student_relationships(self):
         """student_relationships property is QS of Relationship objects."""
         rel = factories.RelationshipFactory.create()
 
         assert list(rel.elder.student_relationships) == [rel]
+
+
+    def test_student_relationships_no_deleted(self):
+        """student_relationships property does not include deleted students."""
+        rel1 = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile, to_profile__deleted=True)
+
+        assert list(rel1.elder.student_relationships) == [rel1]
 
 
     def test_elders(self):

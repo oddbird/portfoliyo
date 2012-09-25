@@ -39,8 +39,9 @@ class TestInviteElderForm(object):
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == u'+13214567890'
         assert sms.outbox[0].body == (
-            "Hi! This is Teacher John, Jimmy Doe's Math Teacher. "
-            "Is this Jimmy Doe's father?"
+            "Hi! Jimmy Doe's Math Teacher (Teacher John) "
+            "will text you from this number. "
+            "Text 'stop' any time if you don't want this."
             )
 
 
@@ -60,14 +61,24 @@ class TestInviteElderForm(object):
         assert mail.outbox[0].to == [u'bar@example.com']
 
 
-    def test_user_inactive(self):
-        """User created is inactive (so we don't send them emails)."""
+    def test_email_user_inactive(self):
+        """User invited by email is inactive."""
         form = forms.InviteElderForm(self.data())
         assert form.is_valid()
         rel = factories.RelationshipFactory()
         profile = form.save(mock.Mock(), rel)
 
         assert not profile.user.is_active
+
+
+    def test_phone_user_active(self):
+        """User invited by phone is immediately active."""
+        form = forms.InviteElderForm(self.data(contact='+13216540987'))
+        assert form.is_valid()
+        rel = factories.RelationshipFactory()
+        profile = form.save(mock.Mock(), rel)
+
+        assert profile.user.is_active
 
 
     def test_bad_contact(self):

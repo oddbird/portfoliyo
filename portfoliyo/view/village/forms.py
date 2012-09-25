@@ -7,6 +7,13 @@ from django.forms import formsets
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
+from ..users.forms import EditProfileForm
+
+
+
+class EditElderForm(EditProfileForm):
+    """At this point, editing an elder is same as editing a profile."""
+    pass
 
 
 
@@ -47,13 +54,15 @@ class InviteElderForm(forms.Form):
         # first check for an existing user match
         if email:
             dupe_query = {"user__email": email}
+            active = False
         else:
             dupe_query = {"phone": phone}
+            active = True
         try:
             profile = model.Profile.objects.get(**dupe_query)
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
-                email=email, phone=phone, role=relationship)
+                email=email, phone=phone, role=relationship, is_active=active)
             created = True
         else:
             created = False
@@ -127,11 +136,24 @@ InviteEldersFormSet = formsets.formset_factory(
 
 
 
-class AddStudentForm(forms.Form):
-    """A form for adding a new student."""
+class StudentForm(forms.Form):
+    """Common student-form fields."""
     name = forms.CharField(max_length=200)
 
 
+
+class EditStudentForm(StudentForm):
+    """Form for editing a student."""
+    def save(self, student):
+        """Saves the edits to the given student."""
+        student.name = self.cleaned_data['name']
+        student.save()
+        return student
+
+
+
+class AddStudentForm(StudentForm):
+    """A form for adding a new student."""
     def save(self, added_by):
         """
         Save new student and return (student-profile, rel-with-creating-elder).

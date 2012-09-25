@@ -2,10 +2,6 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
-    var pageAjax = {
-        XHR: null,
-        count: 0
-    };
     var postAjax = {
         XHR: {},
         count: 0
@@ -15,63 +11,33 @@ var PYO = (function (PYO, $) {
         count: 0
     };
 
-    PYO.updatePageHeight = function (container) {
-        if ($(container).length) {
-            var page = $(container);
-            var headerHeight = $('div[role="banner"]').outerHeight();
-            var footerHeight = $('footer').outerHeight();
-            var pageHeight, transition;
-            var updateHeight = function (animate) {
-                pageHeight = $(window).height() - headerHeight - footerHeight;
-                if (animate) {
-                    page.css('height', pageHeight.toString() + 'px');
-                } else {
-                    transition = page.css('transition');
-                    page.css({
-                        'transition': 'none',
-                        'height': pageHeight.toString() + 'px'
-                    });
-                    $(window).load(function () {
-                        page.css('transition', transition);
-                    });
-                }
-            };
-            updateHeight();
-
-            $(window).resize(function () {
-                $.doTimeout('resize', 250, function () {
-                    updateHeight(true);
-                });
-            });
-        }
-    };
-
-    PYO.scrollToBottom = function (container) {
-        if ($(container).length) {
-            var context = $(container);
-            var height = parseInt(context.get(0).scrollHeight, 10);
-            context.scrollTop(height);
-        }
-    };
-
     PYO.renderPost = function (data) {
-        var post;
+        var posts;
         if (data) {
-            post = ich.post(data);
+            posts = ich.post(data);
         }
-        if (post) {
-            post.find('.nametag[data-user-id="' + PYO.activeUserId + '"]').addClass('me');
-            post.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
-            return post;
+        if (posts) {
+            var nametag = posts.find('.nametag');
+            nametag.each(function () {
+                var thisTag = $(this);
+                var userID = thisTag.data('user-id');
+                if (userID) {
+                    var mentions = userID.toString().split(',');
+                    if ($.inArray(PYO.activeUserId.toString(), mentions) !== -1) {
+                        thisTag.addClass('me');
+                    }
+                }
+            });
+            posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
+            return posts;
         }
     };
 
     PYO.addPost = function (data) {
         if (data) {
-            var post = PYO.renderPost(data);
-            $('.village-feed').append(post);
-            PYO.scrollToBottom('.village-feed');
-            return post;
+            var posts = PYO.renderPost(data);
+            $('.village-feed').append(posts);
+            return posts;
         }
     };
 
@@ -84,7 +50,6 @@ var PYO = (function (PYO, $) {
             if (oldPost && oldPost.length) {
                 var newPost = PYO.renderPost(data);
                 oldPost.replaceWith(newPost);
-                PYO.scrollToBottom('.village-feed');
                 $.doTimeout('new-post-' + author_sequence_id);
                 return true;
             }
@@ -107,7 +72,7 @@ var PYO = (function (PYO, $) {
         var period = (hour > 12) ? 'p.m.' : 'a.m.';
         hour = (hour > 12) ? hour - 12 : hour;
         var time = hour + ':' + minute + ' ' + period;
-        var text = textarea.val();
+        var text = $.trim(textarea.val());
         var postObj = {
             posts: {
                 author: author,
@@ -118,6 +83,7 @@ var PYO = (function (PYO, $) {
                 text: text,
                 author_sequence_id: author_sequence,
                 xhr_count: xhr_count,
+                local: true,
                 escape: true
             }
         };
@@ -135,7 +101,7 @@ var PYO = (function (PYO, $) {
             form.submit(function (event) {
                 event.preventDefault();
                 if (textarea.val().length) {
-                    var text = textarea.val();
+                    var text = $.trim(textarea.val());
                     var author_sequence_id = ++PYO.authorPosts;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
@@ -156,6 +122,7 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
+                    PYO.scrollToBottom('.village-feed');
                     PYO.addPostTimeout(post, author_sequence_id, count);
                 }
             });
@@ -223,7 +190,7 @@ var PYO = (function (PYO, $) {
         var feed = $('.village-feed');
         var url = feed.data('post-url');
         var author_sequence_id = post.data('author-sequence');
-        var text = post.find('.post-text').text();
+        var text = $.trim(post.find('.post-text').text());
         var postData = {
             author_sequence_id: author_sequence_id,
             text: text
@@ -244,7 +211,7 @@ var PYO = (function (PYO, $) {
         PYO.addPostTimeout(post, author_sequence_id, count);
     };
 
-    PYO.listenForPusherEvents = function (container) {
+    PYO.listenForPosts = function (container) {
         if ($(container).length && PYO.pusherKey) {
             var pusher = new Pusher(PYO.pusherKey, {encrypted: true});
             var students = $('.village-nav .student a');
@@ -257,8 +224,10 @@ var PYO = (function (PYO, $) {
 
                 channel.bind('message_posted', function (data) {
                     if (id === PYO.activeStudentId) {
+                        var scroll = PYO.scrolledToBottom('.village-feed');
                         if (!PYO.replacePost(data)) {
                             PYO.addPost(data);
+                            if (scroll) { PYO.scrollToBottom('.village-feed'); }
                         }
                     } else {
                         var count = parseInt(unread.text(), 10);
@@ -283,6 +252,7 @@ var PYO = (function (PYO, $) {
                         context.loadingOverlay('remove');
                         if (response && feedAjax.count === count) {
                             PYO.addPost(response);
+                            PYO.scrollToBottom('.village-feed');
                             PYO.authorPosts = feed.find('.post.mine').length;
                         }
                         feedAjax.XHR = null;
@@ -315,7 +285,7 @@ var PYO = (function (PYO, $) {
             var count = form.find('.charcount');
             var button = form.find('.action-post');
             var updateCount = function () {
-                var chars = textarea.val().length;
+                var chars = $.trim(textarea.val()).length;
                 var remain = limit - chars;
                 if (remain < 0) {
                     count.addClass('overlimit');
@@ -328,112 +298,6 @@ var PYO = (function (PYO, $) {
             };
 
             textarea.keyup(updateCount).change(updateCount);
-        }
-    };
-
-    PYO.pageAjaxError = function (url) {
-        var container = $('.village-content');
-        var msg = ich.pjax_error_msg();
-        msg.find('.reload-pjax').click(function (e) {
-            e.preventDefault();
-            msg.remove();
-            PYO.pageAjaxLoad(url);
-        });
-        container.loadingOverlay('remove');
-        container.html(msg);
-    };
-
-    PYO.pageAjaxLoad = function (url) {
-        if (pageAjax.XHR) { pageAjax.XHR.abort(); }
-
-        var container = $('.village-content');
-        var count = ++pageAjax.count;
-
-        if (url) {
-            container.loadingOverlay();
-            container.find('.feed-error, .pjax-error').remove();
-
-            pageAjax.XHR = $.get(url, function (response) {
-                if (response && response.html && pageAjax.count === count) {
-                    container.replaceWith($(response.html));
-                    PYO.initializePage();
-                }
-                container.loadingOverlay('remove');
-                pageAjax.XHR = null;
-            }).error(function (request, status, error) {
-                if (status !== 'abort') {
-                    PYO.pageAjaxError(url);
-                }
-                pageAjax.XHR = null;
-            });
-        }
-    };
-
-    PYO.ajaxifyVillages = function (container) {
-        if ($(container).length) {
-            var context = $(container);
-            var History = window.History;
-
-            if (History.enabled) {
-                $('body').on('click', 'a.ajax-link', function (e) {
-                    if (e.which === 2 || e.metaKey) {
-                        return true;
-                    } else {
-                        e.preventDefault();
-                        var url = $(this).attr('href');
-                        if ($(this).hasClass('active')) {
-                            PYO.pageAjaxLoad(url + '?ajax=true');
-                        } else {
-                            var title = document.title;
-                            var data = { url: url };
-                            if ($(this).hasClass('addelder-link')) {
-                                data.remainActive = true;
-                            }
-                            History.pushState(data, title, url);
-                        }
-                        $(this).blur();
-                    }
-                });
-
-                $(window).bind('statechange', function () {
-                    var data = History.getState().data;
-                    var url = data.url ? data.url : window.location.pathname;
-                    if (!data.remainActive) {
-                        context.find('.village-nav .ajax-link').removeClass('active');
-                    }
-                    context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                    PYO.pageAjaxLoad(url + '?ajax=true');
-                });
-            }
-        }
-    };
-
-    PYO.initializeEldersForm = function () {
-        $('.formset.elders').formset({
-            prefix: $('.formset.elders').data('prefix'),
-            formTemplate: '#empty-elder-form',
-            formSelector: '.fieldset.elder',
-            addLink: '<a class="add-row" href="javascript:void(0)" title="more elders">more elders</a>',
-            addAnimationSpeed: 'normal',
-            removeAnimationSpeed: 'fast',
-            optionalIfEmpty: true
-        });
-    };
-
-    PYO.initializeFeed = function () {
-        PYO.activeStudentId = $('.village-feed').data('student-id');
-        PYO.activeUserId = $('.village-feed').data('user-id');
-        PYO.fetchBacklog('.village-feed');
-        PYO.submitPost('.village-feed');
-        PYO.characterCount('.village-main');
-    };
-
-    PYO.initializePage = function () {
-        if ($('.village-feed').length) {
-            PYO.initializeFeed();
-        }
-        if ($('.formset.elders').length) {
-            PYO.initializeEldersForm();
         }
     };
 

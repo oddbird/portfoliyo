@@ -138,31 +138,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .village-nav .addstudent-link:before, .village-elders li:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .post-text:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, .add-row, .remove-row, #messages .close {
+.main-login .reset-link, .add-row, .remove-row, .student-actions a, .student-actions button, .getting-started .mobile, #messages .close {
   display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, #messages .close:focus {
+.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .student-actions a:focus, .student-actions button:focus, .getting-started .mobile:focus, #messages .close:focus {
   outline: 0;
 }
-.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, #messages .close:focus:before {
+.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .student-actions a:focus:before, .student-actions button:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.main-login .reset-link:before, .add-row:before, .remove-row:before, #messages .close:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .getting-started .mobile:before, #messages .close:before {
   position: absolute;
   top: 0;
   left: 0;
@@ -203,11 +203,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2762";
 }
 
-.summary li:before, .benefits li:before, .message.success:before {
+.student-actions .edit-student:before {
+  content: "\270e";
+}
+
+.summary li:before, .benefits li:before, .student-actions .save-student:before, .message.success:before {
   content: "\2713";
 }
 
-.message.error:before {
+.village-elders .elder.declined:before, .message.error:before {
   content: "\2717";
 }
 
@@ -219,7 +223,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\69";
 }
 
-.village-elders li.inactive:before, .message.warning:before {
+.village-elders .elder.inactive:before, .message.warning:before {
   content: "\26a0";
 }
 
@@ -227,7 +231,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\3f";
 }
 
-.village-nav .addstudent-link:before {
+.addstudent-link:before {
   content: "\2b";
 }
 
@@ -235,11 +239,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\271a";
 }
 
-.village-elders li.mobile:before {
-  content: "\275f";
-}
-
-.village-elders li:before {
+.village-elders .elder:before {
   content: "\25cf";
 }
 
@@ -247,8 +247,20 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2668";
 }
 
-.parent-instructions:before {
+.parent-instructions:before, .parent-instructions [class^="pdf-"]:before {
   content: "\274f";
+}
+
+.student-actions .remove-student:before {
+  content: "\27f0";
+}
+
+.post-text.sms:before, .getting-started .mobile:before, .village-elders .elder.mobile:before {
+  content: "\e000";
+}
+
+.post-text.no-sms:before {
+  content: "\e001";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -331,25 +343,25 @@ img {
   border: 1px solid #073642;
 }
 
-.activationfailed h1, .awaiting-activation h1, .village-landing h1, .no-students h1, [class^="errorpage-"] h1, .activationfailed h2, .awaiting-activation h2, .village-landing h2, .no-students h2, [class^="errorpage-"] h2, .activationfailed h3, .awaiting-activation h3, .village-landing h3, .no-students h3, [class^="errorpage-"] h3, .activationfailed h4, .awaiting-activation h4, .village-landing h4, .no-students h4, [class^="errorpage-"] h4, .activationfailed h5, .awaiting-activation h5, .village-landing h5, .no-students h5, [class^="errorpage-"] h5, .activationfailed h6, .awaiting-activation h6, .village-landing h6, .no-students h6, [class^="errorpage-"] h6 {
+.activationfailed h1, .awaiting-activation h1, .village-landing h1, .no-students h1, .getting-started h1, [class^="errorpage-"] h1, .activationfailed h2, .awaiting-activation h2, .village-landing h2, .no-students h2, .getting-started h2, [class^="errorpage-"] h2, .activationfailed h3, .awaiting-activation h3, .village-landing h3, .no-students h3, .getting-started h3, [class^="errorpage-"] h3, .activationfailed h4, .awaiting-activation h4, .village-landing h4, .no-students h4, .getting-started h4, [class^="errorpage-"] h4, .activationfailed h5, .awaiting-activation h5, .village-landing h5, .no-students h5, .getting-started h5, [class^="errorpage-"] h5, .activationfailed h6, .awaiting-activation h6, .village-landing h6, .no-students h6, .getting-started h6, [class^="errorpage-"] h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.activationfailed p, .awaiting-activation p, .village-landing p, .no-students p, [class^="errorpage-"] p, .activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, [class^="errorpage-"] ul, .activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, [class^="errorpage-"] ol {
+.activationfailed p, .awaiting-activation p, .village-landing p, .no-students p, .getting-started p, [class^="errorpage-"] p, .activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, .getting-started ul, [class^="errorpage-"] ul, .activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, .getting-started ol, [class^="errorpage-"] ol {
   margin-bottom: 1.27778em;
 }
-.activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, [class^="errorpage-"] ul {
+.activationfailed ul, .awaiting-activation ul, .village-landing ul, .no-students ul, .getting-started ul, [class^="errorpage-"] ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, [class^="errorpage-"] ol {
+.activationfailed ol, .awaiting-activation ol, .village-landing ol, .no-students ol, .getting-started ol, [class^="errorpage-"] ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.activationfailed em, .awaiting-activation em, .village-landing em, .no-students em, [class^="errorpage-"] em {
+.activationfailed em, .awaiting-activation em, .village-landing em, .no-students em, .getting-started em, [class^="errorpage-"] em {
   font-style: italic;
 }
-.activationfailed strong, .awaiting-activation strong, .village-landing strong, .no-students strong, [class^="errorpage-"] strong {
+.activationfailed strong, .awaiting-activation strong, .village-landing strong, .no-students strong, .getting-started strong, [class^="errorpage-"] strong {
   font-weight: 500;
 }
 
@@ -424,7 +436,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('../images/rgbapng/ffffff40.png?1347746559');
+  background: url('../images/rgbapng/ffffff40.png?1348510397');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -436,9 +448,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   padding: 0 .5em;
 }
 
-.linkaction, button {
+.linkaction, .form-actions button, .village-landing .formfield .action-betasignup {
   margin: 0;
   background-color: #859900;
+  text-align: center;
   font-size: 18px;
   padding: 0.31944em 1.27778em;
   display: inline-block;
@@ -464,10 +477,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   color: #fdf6e3;
   text-shadow: #121400 0 -1px 0;
 }
-.linkaction:hover, button:hover {
+.linkaction:hover, .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
   text-decoration: none;
 }
-.linkaction:hover, button:hover {
+.linkaction:hover, .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
   background-color: #424d00;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
   background: -webkit-linear-gradient(#6f8000, #424d00);
@@ -476,12 +489,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   background: -ms-linear-gradient(#6f8000, #424d00);
   background: linear-gradient(#6f8000, #424d00);
 }
-.linkaction:active, button:active {
+.linkaction:active, .form-actions button:active, .village-landing .formfield .action-betasignup:active {
   -webkit-box-shadow: #353d00 0 1px 2px inset;
   -moz-box-shadow: #353d00 0 1px 2px inset;
   box-shadow: #353d00 0 1px 2px inset;
 }
-.disabled.linkaction, button.disabled, [disabled].linkaction, button[disabled] {
+.disabled.linkaction, .form-actions button.disabled, .village-landing .formfield .disabled.action-betasignup, [disabled].linkaction, .form-actions button[disabled], .village-landing .formfield [disabled].action-betasignup {
   opacity: 0.6;
   background: #596600;
   cursor: default;
@@ -489,7 +502,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.linkaction::-moz-focus-inner, button::-moz-focus-inner {
+.linkaction::-moz-focus-inner, .form-actions button::-moz-focus-inner, .village-landing .formfield .action-betasignup::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
@@ -501,13 +514,13 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   font: inherit;
   font-size: 100%;
   vertical-align: baseline;
+  background: none;
+  color: inherit;
+  text-align: left;
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
   text-shadow: none;
-  background: none;
-  color: inherit;
-  text-align: left;
 }
 
 .errorlist {
@@ -607,6 +620,18 @@ textarea {
   -o-transition: 200ms min-height;
   transition: 200ms min-height;
   min-height: 2.46429em;
+}
+
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: none;
+  color: inherit;
+  text-align: left;
 }
 
 .initial-password, .village-landing .membership {
@@ -855,6 +880,9 @@ textarea {
 }
 .meta span, .meta a {
   display: block;
+}
+.meta button {
+  width: 100%;
 }
 .meta button:link, .meta button:visited {
   color: #fdf6e3;
@@ -1253,9 +1281,6 @@ textarea {
   position: relative;
   padding-left: 1.5em;
 }
-.lt-ie9 .summary li, .lt-ie9 .benefits li {
-  padding-left: 0;
-}
 .summary li:before, .benefits li:before {
   position: absolute;
   left: 0;
@@ -1322,7 +1347,7 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1347746559');
+  background: url('../images/rgbapng/586e7540.png?1348510397');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1468,15 +1493,15 @@ textarea {
   overflow-y: scroll;
 }
 
-.village-add-form, .dashboard, .pjax-error, .elder-add-form {
+.village-add-form, .dashboard, .pjax-error, .elder-add-form, .elder-edit-form {
   height: 100%;
   padding: 2.55556em;
   overflow-y: scroll;
 }
-.village-add-form > :last-child, .dashboard > :last-child, .pjax-error > :last-child, .elder-add-form > :last-child {
+.village-add-form > :last-child, .dashboard > :last-child, .pjax-error > :last-child, .elder-add-form > :last-child, .elder-edit-form > :last-child {
   margin-bottom: 2.55556em;
 }
-.village-add-form h2, .dashboard h2, .pjax-error h2, .elder-add-form h2 {
+.village-add-form h2, .dashboard h2, .pjax-error h2, .elder-add-form h2, .elder-edit-form h2 {
   font-size: 1.94444em;
   line-height: 1.31429em;
   margin-bottom: 0.65714em;
@@ -1492,7 +1517,7 @@ textarea {
   margin-left: 1.5873%;
 }
 
-.elder-add-form {
+.elder-add-form, .elder-edit-form {
   margin-left: 2.12766%;
 }
 
@@ -1512,16 +1537,16 @@ textarea {
   margin-left: 0;
 }
 
-.village-nav .active.addstudent-link:link, .active.addelder-link:link, .village-nav .active.addstudent-link:visited, .active.addelder-link:visited, .village-nav a.active:link, .village-nav a.active:visited {
+.active.addstudent-link:link, .active.addelder-link:link, .active.addstudent-link:visited, .active.addelder-link:visited, .active.select-student:link, .active.select-student:visited, .village-elders .active.edit-elder, .village-elders .active.edit-elder:link, .village-elders .active.edit-elder:visited {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
-  background: #93a1a1;
+  background: #586e75;
   color: #fdf6e3;
 }
 
-.village-nav .addstudent-link:link, .addelder-link:link, .village-nav .addstudent-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/85990060.png?1347821926');
+.addstudent-link:link, .addelder-link:link, .addstudent-link:visited, .addelder-link:visited {
+  background: url('../images/rgbapng/85990060.png?1348510397');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1539,11 +1564,14 @@ textarea {
   border-style: solid;
   border-width: 0.04348em;
   padding: 0.95652em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.04348em;
+  padding-bottom: 0.45652em;
   margin-left: -2.12766%;
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
-  background: url('../images/rgbapng/268bd240.png?1348161986');
+  background: url('../images/rgbapng/268bd240.png?1348510397');
   background: rgba(38, 139, 210, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
@@ -1555,27 +1583,44 @@ textarea {
   position: relative;
   top: -1em;
 }
-.parent-instructions:link, .parent-instructions:visited {
-  color: #586e75;
-}
-.parent-instructions:focus, .parent-instructions:hover, .parent-instructions:active {
-  background: url('../images/rgbapng/d3368240.png?1348161986');
-  background: rgba(211, 54, 130, 0.25);
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(211, 54, 130, 0)), color-stop(100%, rgba(211, 54, 130, 0.25)));
-  background-image: -webkit-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: -moz-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: -o-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: -ms-linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-  background-image: linear-gradient(top, rgba(211, 54, 130, 0), rgba(211, 54, 130, 0.25));
-}
 .parent-instructions:before {
-  font-size: 4.65217em;
-  line-height: 1.07477em;
+  font-size: 6.56522em;
+  line-height: 1.06623em;
   float: left;
-  margin: 0 0.21495em 0 0.10748em;
+  margin: 0 0.15232em 0 0.07616em;
 }
-.parent-instructions:after {
-  content: "»";
+.parent-instructions p, .parent-instructions ul {
+  overflow: hidden;
+}
+.parent-instructions p {
+  margin-bottom: 1em;
+}
+.parent-instructions ul {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  text-align: right;
+}
+.parent-instructions ul li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-box;
+  -moz-box-orient: vertical;
+  display: inline-block;
+  vertical-align: middle;
+  *vertical-align: auto;
+  white-space: nowrap;
+}
+.parent-instructions ul li {
+  *display: inline;
+}
+.parent-instructions [class^="pdf-"] {
+  margin-right: 1em;
+}
+.parent-instructions [class^="pdf-"]:after {
+  content: " »";
 }
 
 .formset.elders {
@@ -1630,7 +1675,7 @@ textarea {
   padding-right: 2.12766%;
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
-  background: url('../images/rgbapng/586e757f.png?1347831617');
+  background: url('../images/rgbapng/586e757f.png?1348510397');
   background: rgba(88, 110, 117, 0.5);
   color: #fdf6e3;
 }
@@ -1694,6 +1739,21 @@ textarea {
   font-weight: bold;
 }
 
+.select-student, .addstudent-link {
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  display: block;
+  position: relative;
+}
+
+.select-student, .addstudent-link {
+  border-bottom-style: solid;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
+  padding-top: 0.41071em;
+  border-color: #93a1a1;
+}
+
 .village-nav {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
@@ -1703,20 +1763,15 @@ textarea {
   padding-left: 1.28571em;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
+  z-index: 5;
 }
-.village-nav a:link, .village-nav a:visited {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  margin-left: -1.28571em;
-  padding-left: 1.28571em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.07143em;
-  padding-bottom: 0.33929em;
-  padding-top: 0.41071em;
-  background: url('../images/rgbapng/eee8d540.png?1347821926');
+
+.student {
+  position: relative;
+}
+
+.select-student:link, .select-student:visited {
+  background: url('../images/rgbapng/eee8d540.png?1348510397');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -1724,12 +1779,9 @@ textarea {
   background: -o-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
-  display: block;
-  position: relative;
-  border-color: #93a1a1;
 }
-.village-nav a:focus, .village-nav a:hover, .village-nav a:active {
-  background: url('../images/rgbapng/eee8d57f.png?1347821926');
+.select-student:focus, .select-student:hover, .select-student:active {
+  background: url('../images/rgbapng/eee8d57f.png?1348510397');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -1738,7 +1790,7 @@ textarea {
   background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
-.village-nav .unread {
+.select-student .unread {
   display: none;
   -webkit-border-radius: 30em;
   -moz-border-radius: 30em;
@@ -1756,10 +1808,79 @@ textarea {
   font-weight: bold;
   text-align: center;
 }
-.village-nav .unread.zero {
+.select-student .unread.zero {
   display: none;
 }
-.village-nav .addstudent-link {
+.select-student.editing {
+  font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
+  background: #f7c9b6;
+  min-height: 1.64286em;
+}
+
+.student-actions {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  -ms-transition: all 400ms;
+  -o-transition: all 400ms;
+  transition: all 400ms;
+  position: relative;
+  background: #002b36;
+  position: absolute;
+  top: -1px;
+  right: 0;
+  bottom: 0px;
+  padding: 0.41071em;
+  padding-right: 0.82143em;
+  background: #002b36;
+  color: #073642;
+  text-transform: capitalize;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+}
+.student-actions:after, .student-actions:before {
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.student-actions:after {
+  border-right-color: #002b36;
+  border-width: 0.41071em;
+  top: 50%;
+  margin-top: -0.41071em;
+}
+.student-actions:before {
+  border-right-color: false;
+  border-width: 0.41071em;
+  top: 50%;
+  margin-top: -0.41071em;
+}
+.student:hover .student-actions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  z-index: 100;
+}
+.student-actions form {
+  display: inline;
+}
+.student-actions a, .student-actions button {
+  margin-left: 0.82143em;
+}
+.student-actions a, .student-actions a:link, .student-actions a:visited, .student-actions button, .student-actions button:link, .student-actions button:visited {
+  color: #fdf6e3;
+  text-decoration: none;
+}
+.student-actions a:focus, .student-actions a:hover, .student-actions a:active, .student-actions button:focus, .student-actions button:hover, .student-actions button:active {
+  color: #e896b2;
+}
+.student-actions .save-student {
+  display: none;
+}
+
+.addstudent-link {
   font-weight: bold;
 }
 
@@ -1810,37 +1931,66 @@ textarea {
   width: 49%;
   text-align: right;
 }
-.post .body {
-  overflow: hidden;
-}
 .post.mine {
-  background: url('../images/rgbapng/268bd21a.png?1347821926');
-  background: rgba(38, 139, 210, 0.1);
+  background: #e3f1fa;
 }
 .post.not-posted {
-  background: url('../images/rgbapng/dc322f1a.png?1347821926');
-  background: rgba(220, 50, 47, 0.1);
-}
-.post .nametag {
-  -webkit-border-radius: 0.512em;
-  -moz-border-radius: 0.512em;
-  -ms-border-radius: 0.512em;
-  -o-border-radius: 0.512em;
-  border-radius: 0.512em;
-  display: inline-block;
-  padding: 0 .4em;
-  background: #657b83;
-  color: #fdf6e3;
-}
-.post .nametag.me {
-  background: #268bd2;
-  color: #fdf6e3;
+  background: #fdf4f3;
 }
 .post .timeout {
   margin-left: -2.12766%;
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
+}
+
+.post-text {
+  overflow: hidden;
+}
+.post-text:before {
+  margin-right: 0;
+}
+
+.nametag {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -o-border-radius: 4px;
+  border-radius: 4px;
+  background: url('../images/rgbapng/93a1a140.png?1348510397');
+  background: rgba(147, 161, 161, 0.25);
+  display: inline-block;
+  padding: 0 .4em;
+  border: 1px solid #586e75;
+}
+.nametag.me {
+  background: #268bd2;
+  color: #fdf6e3;
+}
+
+.getting-started {
+  padding-top: 1.27778em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 1.22222em;
+  padding-left: 2.12766%;
+  padding-right: 2.12766%;
+  border-color: #93a1a1;
+  background: white;
+}
+.getting-started h2 {
+  font-size: 1.94444em;
+  line-height: 1.31429em;
+  margin-bottom: 0.65714em;
+}
+.getting-started li {
+  padding-bottom: 0.31944em;
+}
+.getting-started :last-child {
+  margin-bottom: 0;
+}
+.getting-started .mobile {
+  display: inline-block;
 }
 
 .post-add-form {
@@ -1900,7 +2050,7 @@ textarea {
   background: #dc322f;
   color: #fdf6e3;
 }
-.post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
+.post .timeout a, .feed-error a, .pjax-error p a, .post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
   color: #b1d0dd;
 }
 .post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
@@ -1923,48 +2073,85 @@ textarea {
   border-left: 1px solid #93a1a1;
 }
 
-.village-elders ul {
-  margin-top: 0.82143em;
+.village-elders .elder {
+  padding-top: 0.41071em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  margin-right: -1.28571em;
+  padding-right: 1.28571em;
+  border-color: #eee8d5;
 }
-.village-elders li:before {
+.village-elders .elder:before {
+  position: relative;
   float: left;
-  margin: 0;
   color: #859900;
+  z-index: 2;
 }
-.village-elders li.offline:before {
+.village-elders .elder.offline:before {
   color: #b58900;
 }
-.village-elders li.inactive:before {
+.village-elders .elder.inactive {
+  background: #ffedb5;
+}
+.village-elders .elder.inactive:before {
   color: #93a1a1;
 }
-.village-elders li.mobile:before {
+.village-elders .elder.mobile:before {
   color: #657b83;
 }
-.village-elders b, .village-elders span {
+.village-elders .elder.declined {
+  background: url('../images/rgbapng/dc322f20.png?1348510397');
+  background: rgba(220, 50, 47, 0.125);
+}
+.village-elders .elder.declined:before {
+  color: #dc322f;
+}
+.village-elders .edit-elder, .village-elders .edit-elder:link, .village-elders .edit-elder:visited {
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  margin-right: -1.28571em;
+  padding-right: 1.28571em;
+  margin-top: -0.41071em;
+  padding-top: 0.41071em;
+  margin-bottom: -0.41071em;
+  padding-bottom: 0.41071em;
+  position: relative;
+  display: block;
+}
+.village-elders .edit-elder:focus, .village-elders .edit-elder:hover, .village-elders .edit-elder:active {
+  background: #eee8d5;
+}
+.village-elders .title, .village-elders .fn {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   display: block;
-  margin-left: 1.125em;
+  margin-left: 1.5em;
 }
-.village-elders b {
+.village-elders .title {
   font-weight: bold;
 }
-.village-elders span {
+.village-elders .fn {
   color: #93a1a1;
 }
 
 .addelder-link {
-  margin-top: 0.82143em;
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  margin-right: -1.28571em;
+  padding-right: 1.28571em;
   margin-bottom: 0.82143em;
   border-style: solid;
   border-width: 0.07143em;
   padding: 0.33929em;
   display: block;
   border-color: #93a1a1;
-  padding-left: 0.82143em;
+  padding-left: 1.28571em;
 }
 
 .pjax-error p {
@@ -2036,7 +2223,7 @@ textarea {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1347746559');
+  background: url('../images/rgbapng/002b3640.png?1348510397');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
@@ -2059,19 +2246,19 @@ textarea {
   line-height: 1em;
 }
 .message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1346789020');
+  background: url('../images/rgbapng/268bd2e5.png?1348510397');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: url('../images/rgbapng/859900e5.png?1346789020');
+  background: url('../images/rgbapng/859900e5.png?1348510397');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1346789020');
+  background: url('../images/rgbapng/b58900e5.png?1348510397');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1346789020');
+  background: url('../images/rgbapng/dc322fe5.png?1348510397');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -2086,7 +2273,7 @@ textarea {
   -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/002b367f.png?1347746456');
+  background: url('../images/rgbapng/002b367f.png?1348510397');
   background: rgba(0, 43, 54, 0.5);
   position: fixed;
   top: 0;
@@ -2107,7 +2294,7 @@ textarea {
   top: 0.63889em;
   width: 1em;
 }
-#messages .close:link, #messages .close:visited {
+#messages .close, #messages .close:link, #messages .close:visited {
   color: #073642;
 }
 #messages .close:focus, #messages .close:hover, #messages .close:active {

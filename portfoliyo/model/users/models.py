@@ -71,6 +71,8 @@ class Profile(models.Model):
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
+    deleted = models.BooleanField(default=False)
+    declined = models.BooleanField(default=False)
 
 
     def __unicode__(self):
@@ -144,7 +146,7 @@ class Profile(models.Model):
     @property
     def elder_relationships(self):
         return self.relationships_to.filter(
-            kind=Relationship.KIND.elder).order_by(
+            kind=Relationship.KIND.elder, from_profile__deleted=False).order_by(
             'description').select_related("from_profile")
 
 
@@ -156,7 +158,7 @@ class Profile(models.Model):
     @property
     def student_relationships(self):
         return self.relationships_from.filter(
-            kind=Relationship.KIND.elder).order_by(
+            kind=Relationship.KIND.elder, to_profile__deleted=False).order_by(
             'to_profile__name').select_related("to_profile")
 
 
