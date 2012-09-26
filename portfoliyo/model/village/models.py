@@ -236,6 +236,7 @@ def post_dict(post, **extra):
     timestamp = timezone.localtime(post.timestamp)
 
     data = {
+        'post_id': post.id,
         'author_id': post.author_id if post.author else 0,
         'student_id': post.student_id,
         'author': author_name,

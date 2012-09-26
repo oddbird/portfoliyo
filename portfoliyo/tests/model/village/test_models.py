@@ -40,6 +40,7 @@ def test_post_dict():
         )
 
     assert models.post_dict(post, extra="extra") == {
+        'post_id': post.id,
         'author_id': rel.elder.id,
         'student_id': rel.student.id,
         'author': 'The Teacher',
