@@ -8,8 +8,8 @@
 
 .message {
   @extend %icon;
-  @include padding-leader(.5);
-  @include trailing-border(1px,.5);
+  @include padding-leader(2);
+  @include trailing-border(1px,2);
   position: relative;
   padding-left: $grid-padding;
   padding-right: $grid-padding;
@@ -29,9 +29,9 @@
   @include box-shadow($base03 0 0 rhythm(.25), $base03 0 0 rhythm(.5));
   @include rgba-background(rgba($base03,.5));
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
+  top: 25%;
+  right: 10%;
+  left: 10%;
   background: rgba($base03,.5);
   color: $base3;
   z-index: 999;
