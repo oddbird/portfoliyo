@@ -1,17 +1,17 @@
-<li class="student" data-url="{% url village student_id=nav_student.id %}">
+<li class="listitem student" data-url="{% url village student_id=nav_student.id %}">
 
-  <a href="{% url village student_id=nav_student.id %}" class="ajax-link select-student{% if student == nav_student %} active{% endif %}" data-id="{{ nav_student.id }}">
-    <span class="student-name">{{ nav_student }}</span>
+  <a href="{% url village student_id=nav_student.id %}" class="ajax-link listitem-select{% if student == nav_student %} active{% endif %}" data-id="{{ nav_student.id }}">
+    <span class="listitem-name">{{ nav_student }}</span>
     <span class="unread{# if zero #} zero{# endif #}">0</span>
   </a>
 
   {% if request.user.profile.school_staff %}
-  <div class="student-actions">
-    <a href="#" class="edit-student" title="edit student name">edit</a>
-    <button class="save-student" title="save changes">save</button>
+  <div class="listitem-actions">
+    <a href="#" class="action-edit" title="edit student name">edit</a>
+    <button class="action-save" title="save changes">save</button>
     <form action="{% url village student_id=nav_student.id %}" method="POST">
       {% csrf_token %}
-      <button class="remove-student" title="remove student" name="remove" value="{{ nav_student.id }}">remove</button>
+      <button class="action-remove" title="remove student" name="remove" value="{{ nav_student.id }}">remove</button>
     </form>
   </div>
   {% endif %}

@@ -138,31 +138,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .additem-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, .add-row, .remove-row, .student-actions a, .student-actions button, .sms-info .summary, .getting-started .mobile, #messages .close {
+.main-login .reset-link, .add-row, .remove-row, .listitem-actions a, .listitem-actions button, .sms-info .summary, .getting-started .mobile, #messages .close {
   display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .student-actions a:focus, .student-actions button:focus, .sms-info .summary:focus, .getting-started .mobile:focus, #messages .close:focus {
+.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .listitem-actions a:focus, .listitem-actions button:focus, .sms-info .summary:focus, .getting-started .mobile:focus, #messages .close:focus {
   outline: 0;
 }
-.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .student-actions a:focus:before, .student-actions button:focus:before, .sms-info .summary:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
+.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .sms-info .summary:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before {
   position: absolute;
   top: 0;
   left: 0;
@@ -191,6 +191,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\25ef";
 }
 
+.listitem-actions .action-back.groups:before {
+  content: "\265b";
+}
+
 .meta span:before, .meta a:before, .meta [href*="edit"]:before {
   content: "\2731";
 }
@@ -203,11 +207,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2762";
 }
 
-.student-actions .edit-student:before {
+.listitem-actions .action-edit:before {
   content: "\270e";
 }
 
-.summary li:before, .benefits li:before, .student-actions .save-student:before, .message.success:before {
+.summary li:before, .benefits li:before, .listitem-actions .action-save:before, .message.success:before {
   content: "\2713";
 }
 
@@ -231,7 +235,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\3f";
 }
 
-.addstudent-link:before {
+.additem-link:before {
   content: "\2b";
 }
 
@@ -251,7 +255,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\274f";
 }
 
-.student-actions .remove-student:before {
+.listitem-actions .action-remove:before {
   content: "\27f0";
 }
 
@@ -1537,7 +1541,7 @@ button {
   margin-left: 0;
 }
 
-.active.addstudent-link:link, .active.addelder-link:link, .active.addstudent-link:visited, .active.addelder-link:visited, .active.select-student:link, .active.select-student:visited, .village-elders .active.edit-elder, .village-elders .active.edit-elder:link, .village-elders .active.edit-elder:visited {
+.active.additem-link:link, .active.addelder-link:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:link, .active.listitem-select:visited, .village-elders .active.edit-elder, .village-elders .active.edit-elder:link, .village-elders .active.edit-elder:visited {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -1545,7 +1549,7 @@ button {
   color: #fdf6e3;
 }
 
-.addstudent-link:link, .addelder-link:link, .addstudent-link:visited, .addelder-link:visited {
+.additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
   background: url('../images/rgbapng/85990060.png?1348510397');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
@@ -1739,14 +1743,14 @@ button {
   font-weight: bold;
 }
 
-.select-student, .addstudent-link {
+.listitem-select, .additem-link {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
   display: block;
   position: relative;
 }
 
-.select-student, .addstudent-link {
+.listitem-select, .additem-link {
   border-bottom-style: solid;
   border-bottom-width: 0.07143em;
   padding-bottom: 0.33929em;
@@ -1766,11 +1770,11 @@ button {
   z-index: 5;
 }
 
-.student {
+.listitem {
   position: relative;
 }
 
-.select-student:link, .select-student:visited {
+.listitem-select:link, .listitem-select:visited {
   background: url('../images/rgbapng/eee8d540.png?1348510397');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
@@ -1780,7 +1784,19 @@ button {
   background: -ms-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
 }
-.select-student:focus, .select-student:hover, .select-student:active {
+.title .listitem-select:link, .title .listitem-select:visited {
+  background: url('../images/rgbapng/268bd240.png?1348510397');
+  background: rgba(38, 139, 210, 0.25);
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(38, 139, 210, 0.5)), color-stop(100%, rgba(38, 139, 210, 0.125)));
+  background: -webkit-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
+  background: -moz-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
+  background: -o-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
+  background: -ms-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
+  background: linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
+  font-weight: bold;
+  color: #073642;
+}
+.listitem-select:focus, .listitem-select:hover, .listitem-select:active {
   background: url('../images/rgbapng/eee8d57f.png?1348510397');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
@@ -1790,7 +1806,17 @@ button {
   background: -ms-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
-.select-student .unread {
+.title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
+  background: url('../images/rgbapng/268bd27f.png?1348684769');
+  background: rgba(38, 139, 210, 0.5);
+  background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
+  background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
+  background: -moz-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
+  background: -o-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
+  background: -ms-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
+  background: linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
+}
+.listitem-select .unread {
   display: none;
   -webkit-border-radius: 30em;
   -moz-border-radius: 30em;
@@ -1808,24 +1834,22 @@ button {
   font-weight: bold;
   text-align: center;
 }
-.select-student .unread.zero {
+.listitem-select .unread.zero {
   display: none;
 }
-.select-student.editing {
+.listitem-select.editing {
   font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
   background: #f7c9b6;
   min-height: 1.64286em;
 }
 
-.student-actions {
+.listitem-actions {
   -webkit-transition: all 400ms;
   -moz-transition: all 400ms;
   -ms-transition: all 400ms;
   -o-transition: all 400ms;
   transition: all 400ms;
-  position: relative;
-  background: #002b36;
-  position: absolute;
+  position: absolute !important;
   top: -1px;
   right: 0;
   bottom: 0px;
@@ -1837,7 +1861,17 @@ button {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
 }
-.student-actions:after, .student-actions:before {
+.listitem:hover .listitem-actions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+  z-index: 100;
+}
+
+.listitem-actions {
+  position: relative;
+  background: #002b36;
+}
+.listitem-actions:after, .listitem-actions:before {
   right: 100%;
   border: solid transparent;
   content: " ";
@@ -1846,41 +1880,62 @@ button {
   position: absolute;
   pointer-events: none;
 }
-.student-actions:after {
+.listitem-actions:after {
   border-right-color: #002b36;
   border-width: 0.41071em;
   top: 50%;
   margin-top: -0.41071em;
 }
-.student-actions:before {
+.listitem-actions:before {
   border-right-color: false;
   border-width: 0.41071em;
   top: 50%;
   margin-top: -0.41071em;
 }
-.student:hover .student-actions {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1;
-  z-index: 100;
+.title .listitem-actions {
+  position: relative;
+  background: #002b36;
+  padding-left: 0;
 }
-.student-actions form {
+.title .listitem-actions:after, .title .listitem-actions:before {
+  right: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.title .listitem-actions:after {
+  border-right-color: #002b36;
+  border-width: 1.23214em;
+  top: 50%;
+  margin-top: -1.23214em;
+}
+.title .listitem-actions:before {
+  border-right-color: false;
+  border-width: 1.23214em;
+  top: 50%;
+  margin-top: -1.23214em;
+}
+.listitem-actions form {
   display: inline;
 }
-.student-actions a, .student-actions button {
+.listitem-actions a, .listitem-actions button {
   margin-left: 0.82143em;
 }
-.student-actions a, .student-actions a:link, .student-actions a:visited, .student-actions button, .student-actions button:link, .student-actions button:visited {
+.listitem-actions a, .listitem-actions a:link, .listitem-actions a:visited, .listitem-actions button, .listitem-actions button:link, .listitem-actions button:visited {
   color: #fdf6e3;
   text-decoration: none;
 }
-.student-actions a:focus, .student-actions a:hover, .student-actions a:active, .student-actions button:focus, .student-actions button:hover, .student-actions button:active {
+.listitem-actions a:focus, .listitem-actions a:hover, .listitem-actions a:active, .listitem-actions button:focus, .listitem-actions button:hover, .listitem-actions button:active {
   color: #e896b2;
 }
-.student-actions .save-student {
+.listitem-actions .action-save {
   display: none;
 }
 
-.addstudent-link {
+.additem-link {
   font-weight: bold;
 }
 

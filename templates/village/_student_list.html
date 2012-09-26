@@ -1,12 +1,20 @@
-<nav class="village-nav">
-  <ul>
+{% extends "village/_village_nav.html" %}
+
+{% block village-nav %}
+  <h2 class="listitem title grouptitle">
+    <a href="#" class="listitem-select">1st Period Algebra</a>
+    <div class="listitem-actions">
+      <a href="#" class="action-back groups" title="Go back to group list">Groups</a>
+    </div>
+  </h2>
+  <ul class="itemlist">
     {% for nav_student in request.user.profile.students %}
     {% include "village/_student_list_item.html" %}
     {% endfor %}
   </ul>
   {% if request.user.profile.school_staff %}
-  <aside class="add-student">
-    <a href="{% url add_student %}" class="addstudent-link ajax-link{% if add_active %} active{% endif %}">Add Students</a>
+  <aside class="additem">
+    <a href="{% url add_student %}" class="additem-link ajax-link{% if add_active %} active{% endif %}">Add Student</a>
   </aside>
   {% endif %}
-</nav>
+{% endblock village-nav %}
