@@ -9,10 +9,7 @@
   <div class="student-actions">
     <a href="#" class="edit-student" title="edit student name">edit</a>
     <button class="save-student" title="save changes">save</button>
-    <form action="{% url village student_id=nav_student.id %}" method="POST">
-      {% csrf_token %}
-      <button class="remove-student" title="remove student" name="remove" value="{{ nav_student.id }}">remove</button>
-    </form>
+    <button class="remove-student" title="remove student" name="remove" value="{{ nav_student.id }}">remove</button>
   </div>
   {% endif %}
 </li>
