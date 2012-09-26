@@ -83,56 +83,56 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
  */
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round-webfont.eot');
-  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round-webfont.eot');
+  src: url('/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_semibold-webfont.eot');
-  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_semibold-webfont.eot');
+  src: url('/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_bold-webfont.eot');
-  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_bold-webfont.eot');
+  src: url('/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_it-webfont.eot');
-  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_it-webfont.eot');
+  src: url('/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('../fonts/SquareSerif-Book-webfont.eot');
-  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  src: url('/SquareSerif-Book-webfont.eot');
+  src: url('/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('../fonts/SquareSerif-Bold-webfont.eot');
-  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  src: url('/SquareSerif-Bold-webfont.eot');
+  src: url('/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "pyo";
-  src: url('../fonts/pyo.eot');
-  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('/pyo.eot');
+  src: url('/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -436,7 +436,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('../images/rgbapng/ffffff40.png?1348510397');
+  background: url('rgbapng/ffffff40.png?1348510397');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -1295,13 +1295,13 @@ button {
 
 .team {
   padding-top: 2.55556em;
-  background: #002b36 url('../images/landing/space.png?1342738619');
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1342738619');
-  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
-  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
-  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
-  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
-  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background: #002b36 url('landing/space.png?1342738619');
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('landing/space.png?1342738619');
+  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1342738619');
+  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1342738619');
+  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1342738619');
+  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1342738619');
+  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1342738619');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1347,7 +1347,7 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1348510397');
+  background: url('rgbapng/586e7540.png?1348510397');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1546,7 +1546,7 @@ button {
 }
 
 .addstudent-link:link, .addelder-link:link, .addstudent-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/85990060.png?1348510397');
+  background: url('rgbapng/85990060.png?1348510397');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1571,7 +1571,7 @@ button {
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
-  background: url('../images/rgbapng/268bd240.png?1348510397');
+  background: url('rgbapng/268bd240.png?1348510397');
   background: rgba(38, 139, 210, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
@@ -1675,7 +1675,7 @@ button {
   padding-right: 2.12766%;
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
-  background: url('../images/rgbapng/586e757f.png?1348510397');
+  background: url('rgbapng/586e757f.png?1348510397');
   background: rgba(88, 110, 117, 0.5);
   color: #fdf6e3;
 }
@@ -1735,7 +1735,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('../images/start-arrow.png?1347746559') no-repeat left bottom;
+  background: url('start-arrow.png?1347746559') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -1771,7 +1771,7 @@ button {
 }
 
 .select-student:link, .select-student:visited {
-  background: url('../images/rgbapng/eee8d540.png?1348510397');
+  background: url('rgbapng/eee8d540.png?1348510397');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -1781,7 +1781,7 @@ button {
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
 }
 .select-student:focus, .select-student:hover, .select-student:active {
-  background: url('../images/rgbapng/eee8d57f.png?1348510397');
+  background: url('rgbapng/eee8d57f.png?1348510397');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -2003,7 +2003,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('../images/rgbapng/93a1a140.png?1348510397');
+  background: url('rgbapng/93a1a140.png?1348510397');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2149,7 +2149,7 @@ button {
   color: #657b83;
 }
 .village-elders .elder.declined {
-  background: url('../images/rgbapng/dc322f20.png?1348510397');
+  background: url('rgbapng/dc322f20.png?1348510397');
   background: rgba(220, 50, 47, 0.125);
 }
 .village-elders .elder.declined:before {
@@ -2269,7 +2269,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1348510397');
+  background: url('rgbapng/002b3640.png?1348510397');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
@@ -2278,10 +2278,10 @@ button {
 }
 
 .message {
-  padding-top: 0.63889em;
+  padding-top: 2.55556em;
   border-bottom-style: solid;
   border-bottom-width: 0.05556em;
-  padding-bottom: 0.58333em;
+  padding-bottom: 2.5em;
   position: relative;
   padding-left: 1em;
   padding-right: 1em;
@@ -2292,19 +2292,19 @@ button {
   line-height: 1em;
 }
 .message.info {
-  background: url('../images/rgbapng/268bd2e5.png?1348510397');
+  background: url('rgbapng/268bd2e5.png?1348510397');
   background: rgba(38, 139, 210, 0.9);
 }
 .message.success {
-  background: url('../images/rgbapng/859900e5.png?1348510397');
+  background: url('rgbapng/859900e5.png?1348510397');
   background: rgba(133, 153, 0, 0.9);
 }
 .message.warning {
-  background: url('../images/rgbapng/b58900e5.png?1348510397');
+  background: url('rgbapng/b58900e5.png?1348510397');
   background: rgba(181, 137, 0, 0.9);
 }
 .message.error {
-  background: url('../images/rgbapng/dc322fe5.png?1348510397');
+  background: url('rgbapng/dc322fe5.png?1348510397');
   background: rgba(220, 50, 47, 0.9);
 }
 .message p {
@@ -2319,12 +2319,12 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/002b367f.png?1348510397');
+  background: url('rgbapng/002b367f.png?1348510397');
   background: rgba(0, 43, 54, 0.5);
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
+  top: 25%;
+  right: 10%;
+  left: 10%;
   background: rgba(0, 43, 54, 0.5);
   color: #fdf6e3;
   z-index: 999;
