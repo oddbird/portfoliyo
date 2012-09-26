@@ -152,6 +152,15 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.detectFlashSupport = function (container) {
+        if ($(container).length) {
+            if (Pusher && Pusher.TransportType !== 'native' && FlashDetect && !FlashDetect.versionAtLeast(10)) {
+                ich.flash_warning_msg().appendTo('#messages');
+                $('#messages').messages();
+            }
+        }
+    };
+
     PYO.initializeEldersForm = function () {
         $('.formset.elders').formset({
             prefix: $('.formset.elders').data('prefix'),

@@ -18,6 +18,7 @@ var PYO = (function (PYO, $) {
         PYO.listenForPosts('.village');
         PYO.editStudentName('.village-nav');
         PYO.initializePage();
+        PYO.detectFlashSupport('.village');
     });
 
     return PYO;
