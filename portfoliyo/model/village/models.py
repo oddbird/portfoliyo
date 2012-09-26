@@ -19,7 +19,10 @@ def now():
 
 class Post(models.Model):
     author = models.ForeignKey(
-        user_models.Profile, related_name='authored_posts')
+        user_models.Profile,
+        related_name='authored_posts',
+        blank=True, null=True,
+        ) # null author means "automated message sent by Portfoliyo"
     timestamp = models.DateTimeField(default=now)
     # the student in whose village this was posted
     student = models.ForeignKey(
@@ -45,7 +48,8 @@ class Post(models.Model):
 
 
     @classmethod
-    def create(cls, author, student, text, sequence_id=None, from_sms=False):
+    def create(cls, author, student, text,
+               sequence_id=None, from_sms=False, to_sms=False, notify=True):
         """Create and return a Post."""
         html_text, highlights = process_text(text, student)
 
@@ -55,17 +59,18 @@ class Post(models.Model):
             original_text=text,
             html_text=html_text,
             from_sms=from_sms,
-            to_sms=False,
+            to_sms=to_sms,
             )
 
         # notify highlighted text-only users
-        for rel in highlights:
-            if (rel.elder.user.is_active and rel.elder.phone):
-                sender_rel = post.get_relationship()
-                prefix = text_notification_prefix(sender_rel)
-                sms_body = prefix + post.original_text
-                sms.send(rel.elder.phone, sms_body)
-                post.to_sms = True
+        if notify:
+            for rel in highlights:
+                if (rel.elder.user.is_active and rel.elder.phone):
+                    sender_rel = post.get_relationship()
+                    prefix = text_notification_prefix(sender_rel)
+                    sms_body = prefix + post.original_text
+                    sms.send(rel.elder.phone, sms_body)
+                    post.to_sms = True
 
         post.save()
 
@@ -213,20 +218,25 @@ def post_char_limit(relationship):
 
 def post_dict(post, **extra):
     """Return given post rendered as dictionary, ready for JSONification."""
-    author_name = (
-        post.author.name or post.author.user.email or post.author.phone)
+    if post.author:
+        author_name = (
+            post.author.name or post.author.user.email or post.author.phone
+            )
 
-    relationship = post.get_relationship()
+        relationship = post.get_relationship()
 
-    if relationship is None:
-        role = post.author.role
+        if relationship is None:
+            role = post.author.role
+        else:
+            role = relationship.description or post.author.role
     else:
-        role = relationship.description or post.author.role
+        author_name = ""
+        role = "Portfoliyo"
 
     timestamp = timezone.localtime(post.timestamp)
 
     data = {
-        'author_id': post.author_id,
+        'author_id': post.author_id if post.author else 0,
         'student_id': post.student_id,
         'author': author_name,
         'role': role,

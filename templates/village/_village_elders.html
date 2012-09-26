@@ -3,7 +3,7 @@
   <ul>
     {% for rel in student.elder_relationships %}
     {% with rel.elder as nav_elder %}
-    <li class="elder vcard {% if nav_elder.declined %}declined{% elif not nav_elder.user.is_active %}inactive{% elif not nav_elder.user.email %}mobile{% elif nav_elder.user != request.user %}offline{% endif %}">
+    <li class="elder vcard {% if nav_elder.declined %}declined{% elif not nav_elder.user.is_active %}inactive{% elif not nav_elder.user.email %}mobile{% elif nav_elder.user != request.user %}offline{% endif %}" title="{# @@@ detailed status tooltip here #}{{ rel.description_or_role }}">
       {% if nav_elder.school_staff %}
         <b class="title">{{ rel.description_or_role }}:</b>
         <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>

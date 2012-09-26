@@ -1,2 +1,2 @@
-Hi! {{ student }}'s {{ inviter_rel.description_or_role }}{% if inviter.name %} ({{ inviter.name }}){% endif %} wants to message you.
-Say hello! (or 'stop' to decline)
+Hi! {{ student }}'s {{ inviter_rel.description_or_role }}{% if inviter.name %} ({{ inviter.name }}){% endif %} will text you from this number.
+Text 'stop' any time if you don't want this.
