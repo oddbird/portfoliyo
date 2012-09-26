@@ -22,21 +22,21 @@ var PYO = (function (PYO, $) {
             };
             var cancel = function (student) {
                 var link = student.data('link');
-                var edit = student.find('.edit-student');
-                var save = student.find('.save-student');
-                var editing = student.find('.select-student.editing');
+                var edit = student.find('.action-edit');
+                var save = student.find('.action-save');
+                var editing = student.find('.listitem-select.editing');
                 editing.replaceWith(link);
                 save.hide();
                 edit.show();
             };
 
-            nav.on('click', '.edit-student', function (e) {
+            nav.on('click', '.action-edit', function (e) {
                 e.preventDefault();
                 var edit = $(this);
-                var student = edit.closest('.student');
-                var link = student.find('.select-student');
-                var name = student.find('.student-name').text();
-                var save = student.find('.save-student');
+                var student = edit.closest('.listitem');
+                var link = student.find('.listitem-select');
+                var name = student.find('.listitem-name').text();
+                var save = student.find('.action-save');
                 var editing = ich.edit_student({name: name});
 
                 student.data('link', link);
@@ -60,14 +60,14 @@ var PYO = (function (PYO, $) {
                 });
             });
 
-            nav.on('click', '.save-student', function (e) {
+            nav.on('click', '.action-save', function (e) {
                 var save = $(this);
-                var student = save.closest('.student');
+                var student = save.closest('.listitem');
                 var url = student.data('url');
-                var edit = student.find('.edit-student');
-                var editing = student.find('.select-student.editing');
+                var edit = student.find('.action-edit');
+                var editing = student.find('.listitem-select.editing');
                 var link = student.data('link');
-                var name = link.find('.student-name');
+                var name = link.find('.listitem-name');
                 var oldName = editing.data('original-name');
                 var newName = $.trim(editing.text());
 
@@ -88,8 +88,8 @@ var PYO = (function (PYO, $) {
             });
 
             $('.village').on('pjax-load', function (e) {
-                nav.find('.select-student.editing').each(function () {
-                    var student = $(this).closest('.student');
+                nav.find('.listitem-select.editing').each(function () {
+                    var student = $(this).closest('.listitem');
                     cancel(student);
                 });
             });
