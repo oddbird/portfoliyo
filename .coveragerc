@@ -5,3 +5,4 @@ omit =
   */settings/*
   */wsgi.py
   */tests/*
+  */selenium/*

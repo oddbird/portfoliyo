@@ -2,22 +2,19 @@
 <article class="post {{^ local }}{{# sms }} sms{{/ sms }}{{^ sms }} no-sms{{/ sms }}{{/ local }}" data-author-id="{{ author_id }}"{{# author_sequence_id }} data-author-sequence="{{ author_sequence_id }}"{{/ author_sequence_id }}{{# xhr_count }} data-xhr-count="{{ xhr_count }}"{{/ xhr_count }}>
 
   <header class="post-meta">
-    <div class="sms-info details" title="{{! @@@ detailed sms-status tooltip here }}{{^ local }}{{^ sms }}No {{/ sms }}{{/ local }}text messages were sent.">
+    {{^ local }}
+    {{!   @@@ This block needs details/summary JS   }}
+    <div class="sms-info details" title="{{^ sms }}no {{/ sms }}text messages were sent.">
 
-      {{!   @@@ SMS Details   }}
-      {{!   - The <span> above should become an <a> linking to the following ID.  }}
-      {{!   - This entire details/summary block should get standard details/summary JS.   }}
-      {{!   - Full message in details-body below.   }}
+      <div class="details-body" id="sms-post-{{ post_id }}-details">
+        {{^ highlighted }}No texts sent because no users were mentioned.{{/ highlighted }}
+        {{# sms_notified }}Texts sent to {{ sms_notified }}{{/ sms_notified }}
+        {{# sms_inactive }}No texts sent to {{ sms_inactive }} because they do not accept texts.{{/ sms_inactive }}
+      </div>
 
-      {{! <div class="details-body" id="sms-post-id-details">   }}
-      {{!   @@@ SMS messages here   }}
-      {{!   - "Texts sent to { list of roles/names }."  }}
-      {{!   - "No texts sent because no users were mentioned."  }}
-      {{!   - "No texts sent to { list of roles/names } because they do not accept SMS messaging."  }}
-      {{! </div>  }}
-
-      <span class="summary">{{^ local }}{{# sms }}sms sent{{/ sms }}{{^ sms }}no sms sent{{/ sms }}{{/ local }}</span>
+      <a href="#sms-post-{{ post_id }}-details" class="summary">{{^ sms }}no {{/ sms }}texts sent</a>
     </div>
+    {{/ local}}
     <h3 class="byline vcard">
       <b class="title">{{ role }}:</b>
       <span class="fn">{{ author }}</span>

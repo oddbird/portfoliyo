@@ -25,6 +25,8 @@ django-ajax-loading-overlay==0.1.2
 
 django-model-utils==1.1.0
 
+django-jsonfield==0.8.11
+
 django-registration==0.8
 
 django-ratelimit==0.1
