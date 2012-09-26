@@ -155,10 +155,7 @@ var PYO = (function (PYO, $) {
     PYO.detectFlashSupport = function (container) {
         if ($(container).length) {
             if (Pusher && Pusher.TransportType !== 'native' && FlashDetect && !FlashDetect.versionAtLeast(10)) {
-                ich.message({
-                    message: 'This site requires Flash Player version 10.0.0 or higher.',
-                    tags: 'error'
-                }).appendTo('#messages');
+                ich.flash_warning_msg().appendTo('#messages');
                 $('#messages').messages();
             }
         }
