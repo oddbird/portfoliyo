@@ -19,6 +19,7 @@ api_v1 = api.Api(api_name='v1')
 api_v1.register(resources.GroupResource())
 api_v1.register(resources.ProfileResource())
 api_v1.register(resources.PostResource())
+api_v1.register(resources.ElderRelationshipResource())
 
 
 urlpatterns = patterns(

@@ -215,8 +215,8 @@ class Relationship(models.Model):
 class Group(models.Model):
     """A group of students, set up by a particular teacher."""
     name = models.CharField(max_length=200)
-    owner = models.ForeignKey(Profile, related_name='groups')
-    members = models.ManyToManyField(Profile, related_name='member_of_groups')
+    owner = models.ForeignKey(Profile, related_name='owned_groups')
+    members = models.ManyToManyField(Profile, related_name='in_groups')
 
 
     def __unicode__(self):
