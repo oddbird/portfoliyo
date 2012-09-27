@@ -3,6 +3,7 @@ import datetime
 from django.utils.timezone import utc
 import mock
 import pytest
+import re
 
 
 from portfoliyo.model.village import models
@@ -305,8 +306,9 @@ class TestReplaceHighlights(object):
         """Can highlight all users with @all."""
         html, highlights = self.call("Hello @all")
 
-        assert html == (
-            'Hello <b class="nametag all me" data-user-id="1,2">@all</b>')
+        assert re.match(
+            'Hello <b class="nametag all me" data-user-id="(1,2|2,1)">@all</b>',
+            html)
         assert highlights == set([self.rel1, self.rel2])
 
 
