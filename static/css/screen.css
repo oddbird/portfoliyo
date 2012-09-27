@@ -672,6 +672,10 @@ button {
   margin-bottom: 1.27778em;
 }
 
+.login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed, .awaiting-activation, .no-students, [class^="errorpage-"] {
+  padding-top: 2.55556em;
+  padding-bottom: 2.55556em;
+}
 .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;

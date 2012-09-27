@@ -44,6 +44,8 @@ $simple-center: $simple-width - $simple-side;
     font-weight: bold;
   }
   @include at-breakpoint($break) { @include pad($simple-side,$simple-side); }
+  @include padding-leader(2);
+  @include padding-trailer(2);
 }
 
 %simple-inline-form {

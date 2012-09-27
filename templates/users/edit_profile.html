@@ -1,4 +1,5 @@
 {% extends "base_site.html" %}
+{% load widget_tweaks %}
 
 {% block maincontent %}
 
@@ -11,8 +12,8 @@
     {{ form.non_field_errors }}
 
     <div class="fieldset bio">
-      {% include "forms/_field.html" with field=form.name label="What do students call you?" %}
-      {% include "forms/_field.html" with field=form.role label="Relation to student(s)" %}
+      {% include "forms/_field.html" with field=form.name label="Students call me..." %}
+      {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
     </div>
 
     <div class="form-actions">
