@@ -6,12 +6,26 @@
     <div class="sms-info details" title="{{^ sms }}no {{/ sms }}text messages were sent.">
 
       <div class="details-body" id="sms-post-{{ post_id }}-details">
-        {{^ highlighted }}No texts sent because no users were mentioned.{{/ highlighted }}
-        {{# sms_notified }}Texts sent to {{ sms_notified }}{{/ sms_notified }}
-        {{# sms_inactive }}No texts sent to {{ sms_inactive }} because they do not accept texts.{{/ sms_inactive }}
+        {{# no_highlights }}
+        {{^ sms }}No {{/ sms }}text messages were sent.
+        {{/ no_highlights }}
+
+        {{^ no_highlights }}
+
+        {{# highlighted }}
+        {{# sms_notified }}Text messages were sent to {{ sms_notified }}.{{/ sms_notified }}
+        {{# sms_inactive }}No text messages were sent to {{ sms_inactive }} because they do not accept texts.{{/ sms_inactive }}
+        {{/ highlighted }}
+
+        {{^ highlighted }}
+        No text messages were sent because no users were mentioned.
+        {{/ highlighted }}
+
+        {{/ no_highlights }}
       </div>
 
-      <a href="#sms-post-{{ post_id }}-details" class="summary">{{^ sms }}no {{/ sms }}texts sent</a>
+      <a href="#sms-post-{{ post_id }}-details" class="summary">{{^ sms }}no {{/ sms }}text messages sent</a>
+
     </div>
     {{/ local }}
     <h3 class="byline vcard">
