@@ -57,7 +57,6 @@ var PYO = (function (PYO, $) {
                 }
             });
             posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
-            posts.find('.details').html5accordion();
             return posts;
         }
     };
@@ -65,6 +64,7 @@ var PYO = (function (PYO, $) {
     PYO.addPost = function (data) {
         if (data) {
             var posts = PYO.renderPost(data);
+            posts.find('.details').html5accordion();
             $('.village-feed').append(posts);
             return posts;
         }
@@ -78,8 +78,14 @@ var PYO = (function (PYO, $) {
             var oldPost = feed.find('.post[data-author-id="' + author_id + '"][data-author-sequence="' + author_sequence_id + '"]');
             if (oldPost && oldPost.length) {
                 var newPost = PYO.renderPost(data);
+                var scroll = PYO.scrolledToBottom('.village-feed');
+                newPost.filter('.post[data-author-id="' + PYO.activeUserId + '"]').each(function () {
+                    $(this).find('.details').addClass('open auto');
+                });
+                newPost.find('.details').html5accordion();
                 oldPost.replaceWith(newPost);
                 $.doTimeout('new-post-' + author_sequence_id);
+                if (scroll) { PYO.scrollToBottom('.village-feed'); }
                 return true;
             }
         }
@@ -103,17 +109,19 @@ var PYO = (function (PYO, $) {
         var time = hour + ':' + minute + ' ' + period;
         var text = $.trim(textarea.val());
         var postObj = {
-            posts: {
-                author: author,
-                author_id: PYO.activeUserId,
-                role: role,
-                date: date,
-                time: time,
-                text: text,
-                author_sequence_id: author_sequence,
-                xhr_count: xhr_count,
-                local: true
-            }
+            posts: [
+                {
+                    author: author,
+                    author_id: PYO.activeUserId,
+                    role: role,
+                    date: date,
+                    time: time,
+                    text: text,
+                    author_sequence_id: author_sequence,
+                    xhr_count: xhr_count,
+                    local: true
+                }
+            ]
         };
         return postObj;
     };
@@ -150,6 +158,7 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
+                    feed.find('.post.mine .details.open.auto').removeClass('auto').find('.summary').click().blur();
                     PYO.scrollToBottom('.village-feed');
                     PYO.addPostTimeout(post, author_sequence_id, count);
                 }
