@@ -55,18 +55,18 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.scrollToBottom = function (container) {
-        if ($(container).length) {
-            var context = $(container);
-            var height = parseInt(context.get(0).scrollHeight, 10);
-            context.scrollTop(height);
+    PYO.scrollToBottom = function () {
+        if ($('.village-feed').length) {
+            var feed = $('.village-feed');
+            var height = parseInt(feed.get(0).scrollHeight, 10);
+            feed.scrollTop(height);
         }
     };
 
-    PYO.scrolledToBottom = function (container) {
-        var context = $(container);
+    PYO.scrolledToBottom = function () {
+        var feed = $('.village-feed');
         var bottom = false;
-        if (context.get(0).scrollHeight - context.scrollTop() - context.outerHeight() <= 50) {
+        if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
             bottom = true;
         }
         return bottom;

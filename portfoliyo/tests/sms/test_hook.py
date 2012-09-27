@@ -34,8 +34,7 @@ def test_activate_user():
         reply = hook.receive_sms(phone, 'foo')
 
     assert utils.refresh(profile.user).is_active
-    mock_create.assert_any_call(
-        None, rel.student, hook.tag(phone, reply), to_sms=True, notify=False)
+    mock_create.assert_any_call(None, rel.student, reply, in_reply_to=phone)
     assert reply == (
         "Thank you! You can text this number any time "
         "to talk with Jimmy Doe's teachers."
@@ -59,8 +58,7 @@ def test_decline():
         "No problem! Sorry to have bothered you."
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
-    mock_create.assert_any_call(
-        None, rel.student, hook.tag(phone, reply), to_sms=True, notify=False)
+    mock_create.assert_any_call(None, rel.student, reply, in_reply_to=phone)
 
 
 
@@ -80,8 +78,7 @@ def test_active_user_decline():
         "No problem! Sorry to have bothered you."
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
-    mock_create.assert_any_call(
-        None, rel.student, hook.tag(phone, reply), to_sms=True, notify=False)
+    mock_create.assert_any_call(None, rel.student, reply, in_reply_to=phone)
 
 
 
@@ -186,8 +183,7 @@ def test_code_signup_student_name():
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(parent, student, "Jimmy Doe", from_sms=True)
     # and the automated reply is also sent on to village chat
-    mock_create.assert_any_call(
-        None, student, hook.tag(phone, reply), to_sms=True, notify=False)
+    mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
 
 
 def test_code_signup_student_name_dupe_detection():
@@ -278,8 +274,7 @@ def test_code_signup_role():
     # and the role is sent on to the village chat as a post
     mock_create.assert_any_call(parent, student, "father", from_sms=True)
     # and the automated reply is also sent on to village chat
-    mock_create.assert_any_call(
-        None, student, hook.tag(phone, reply), to_sms=True, notify=False)
+    mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
 
 
 def test_get_teacher_and_name():

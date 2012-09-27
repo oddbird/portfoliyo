@@ -74,6 +74,27 @@ class TestProfile(object):
         assert unicode(profile) == u"Some Name"
 
 
+    def test_unicode_phone(self):
+        """If no name, unicode representation of a Profile is its phone."""
+        profile = factories.ProfileFactory.build(phone="+13216540987")
+
+        assert unicode(profile) == u"+13216540987"
+
+
+    def test_unicode_email(self):
+        """If no name or phone, unicode representation of a Profile is email."""
+        profile = factories.ProfileFactory.create(user__email="foo@example.com")
+
+        assert unicode(profile) == u"foo@example.com"
+
+
+    def test_unicode_unknown(self):
+        """If no name/phone/email, unicode rep of a Profile is <unknown>."""
+        profile = factories.ProfileFactory.build()
+
+        assert unicode(profile) == u"<unknown>"
+
+
     def test_profile_autocreated(self):
         """A User without a profile gets one automatically on first access."""
         user = factories.UserFactory.create()
