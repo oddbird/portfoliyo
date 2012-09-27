@@ -267,7 +267,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e001";
 }
 
-.listitem-actions .undo-remove-student:before {
+.listitem-actions .undo-action-remove:before {
   content: "\21ba";
 }
 
@@ -1811,7 +1811,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1348763889');
+  background: url('../images/rgbapng/268bd27f.png?1348764291');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));

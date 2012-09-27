@@ -123,7 +123,7 @@ $village-nav-action-color : $base03;
   }
   .action-remove { @extend %icon-trashcan; }
   .action-back.groups { @extend %icon-users; }
-  .undo-remove-student { @extend %icon-undo; }
+  .undo-action-remove { @extend %icon-undo; }
 }
 
 .additem-link {
