@@ -104,17 +104,20 @@ def village(request, student_id):
         if 'remove' in request.POST:
             rel.student.deleted = True
             rel.student.save()
-            return redirect(home.redirect_home(request.user))
-        form = forms.EditStudentForm(request.POST)
-        if form.is_valid():
-            form.save(rel.student)
-            data = {'success': True, 'name': rel.student.name}
+            if not request.is_ajax():
+                return redirect(home.redirect_home(request.user))
+            data = {'success': True}
         else:
-            for error in form.errors['name']:
-                messages.error(request, error)
-            data = {'success': False, 'name': rel.student.name}
-        if not request.is_ajax():
-            return redirect(request.path)
+            form = forms.EditStudentForm(request.POST)
+            if form.is_valid():
+                form.save(rel.student)
+                data = {'success': True, 'name': rel.student.name}
+            else:
+                for error in form.errors['name']:
+                    messages.error(request, error)
+                data = {'success': False, 'name': rel.student.name}
+            if not request.is_ajax():
+                return redirect(request.path)
         return HttpResponse(json.dumps(data), content_type='application/json')
 
     return TemplateResponse(
