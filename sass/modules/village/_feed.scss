@@ -69,8 +69,6 @@ $post-h-padding   : gutter($center);
     background: $back;
     &:after { left: $post-h-padding; margin-left: 0; }
   }
-
-  &.open .details-body { display: block; }
 }
 
 .post-text { @include clearfix; }

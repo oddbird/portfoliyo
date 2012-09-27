@@ -10,6 +10,11 @@ var PYO = (function (PYO, $) {
         XHR: null,
         count: 0
     };
+    var smsDetailsOpened = function (trigger) {
+        if (trigger.closest('.post').is(':last-child')) {
+            PYO.scrollToBottom();
+        }
+    };
 
     PYO.renderPost = function (data) {
         var posts;
@@ -64,7 +69,10 @@ var PYO = (function (PYO, $) {
     PYO.addPost = function (data) {
         if (data) {
             var posts = PYO.renderPost(data);
-            posts.find('.details').html5accordion();
+            posts.find('.details').html5accordion({
+                initialSlideSpeed: 0,
+                openCallback: smsDetailsOpened
+            });
             $('.village-feed').append(posts);
             return posts;
         }
@@ -78,14 +86,17 @@ var PYO = (function (PYO, $) {
             var oldPost = feed.find('.post[data-author-id="' + author_id + '"][data-author-sequence="' + author_sequence_id + '"]');
             if (oldPost && oldPost.length) {
                 var newPost = PYO.renderPost(data);
-                var scroll = PYO.scrolledToBottom('.village-feed');
+                var scroll = PYO.scrolledToBottom();
                 newPost.filter('.post[data-author-id="' + PYO.activeUserId + '"]').each(function () {
                     $(this).find('.details').addClass('open auto');
                 });
-                newPost.find('.details').html5accordion();
+                newPost.find('.details').html5accordion({
+                    initialSlideSpeed: 0,
+                    openCallback: smsDetailsOpened
+                });
                 oldPost.replaceWith(newPost);
                 $.doTimeout('new-post-' + author_sequence_id);
-                if (scroll) { PYO.scrollToBottom('.village-feed'); }
+                if (scroll) { PYO.scrollToBottom(); }
                 return true;
             }
         }
@@ -158,8 +169,9 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
-                    feed.find('.post.mine .details.open.auto').removeClass('auto').find('.summary').click().blur();
-                    PYO.scrollToBottom('.village-feed');
+                    feed.find('.post.mine .details.open.auto').removeClass('open').prop('open', false).find('.details-body').hide();
+                    feed.find('.post .details.auto').removeClass('auto');
+                    PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                 }
             });
@@ -208,7 +220,7 @@ var PYO = (function (PYO, $) {
                 if (postAjax.XHR[xhr_count]) { postAjax.XHR[xhr_count].abort(); }
             });
             post.addClass('not-posted').prepend(msg).loadingOverlay('remove');
-            PYO.scrollToBottom('.village-feed');
+            PYO.scrollToBottom();
             PYO.removePostTimeout(author_sequence_id);
         }
     };
@@ -261,10 +273,10 @@ var PYO = (function (PYO, $) {
 
                 channel.bind('message_posted', function (data) {
                     if (id === PYO.activeStudentId) {
-                        var scroll = PYO.scrolledToBottom('.village-feed');
+                        var scroll = PYO.scrolledToBottom();
                         if (!PYO.replacePost(data)) {
                             PYO.addPost(data);
-                            if (scroll) { PYO.scrollToBottom('.village-feed'); }
+                            if (scroll) { PYO.scrollToBottom(); }
                         }
                     } else {
                         var count = parseInt(unread.text(), 10);
@@ -289,7 +301,7 @@ var PYO = (function (PYO, $) {
                         context.loadingOverlay('remove');
                         if (response && feedAjax.count === count) {
                             PYO.addPost(response);
-                            PYO.scrollToBottom('.village-feed');
+                            PYO.scrollToBottom();
                             PYO.authorPosts = feed.find('.post.mine').length;
                         }
                         feedAjax.XHR = null;
