@@ -121,10 +121,10 @@ $input-rhythm: .25;
       .lt-ie9 &:before { display: none; }
     }
   }
-  .formhelp { @include pre($label, $context); }
+  .formfield-help { @include pre($label, $context); }
 }
 
-.formhelp {
+.formfield-help {
   @include adjust-font-size-to($smallpx);
   display: block;
   clear: both;
@@ -132,6 +132,8 @@ $input-rhythm: .25;
   color: $base1;
   font-style: italic;
 }
+
+.formfield-optional { @include gone; }
 
 $form-action-note-size: $smallpx;
 

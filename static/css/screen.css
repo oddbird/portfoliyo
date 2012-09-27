@@ -550,7 +550,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   clear: both;
 }
 
-.formhelp {
+.formfield-help {
   font-size: 0.77778em;
   line-height: 1.64286em;
   display: block;
@@ -558,6 +558,17 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   margin: 0;
   color: #93a1a1;
   font-style: italic;
+}
+
+.formfield-optional {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
 }
 
 .form-actions {
@@ -711,7 +722,7 @@ button {
   .lt-ie9 .login [type="checkbox"] + label:before, .lt-ie9 .register [type="checkbox"] + label:before, .lt-ie9 .edit-profile [type="checkbox"] + label:before, .lt-ie9 .reset-password [type="checkbox"] + label:before, .lt-ie9 .change-password [type="checkbox"] + label:before, .lt-ie9 .set-password [type="checkbox"] + label:before, .lt-ie9 .initial-password [type="checkbox"] + label:before, .lt-ie9 .login [type="radio"] + label:before, .lt-ie9 .register [type="radio"] + label:before, .lt-ie9 .edit-profile [type="radio"] + label:before, .lt-ie9 .reset-password [type="radio"] + label:before, .lt-ie9 .change-password [type="radio"] + label:before, .lt-ie9 .set-password [type="radio"] + label:before, .lt-ie9 .initial-password [type="radio"] + label:before {
     display: none;
   }
-  .login .formhelp, .register .formhelp, .edit-profile .formhelp, .reset-password .formhelp, .change-password .formhelp, .set-password .formhelp, .initial-password .formhelp {
+  .login .formfield-help, .register .formfield-help, .edit-profile .formfield-help, .reset-password .formfield-help, .change-password .formfield-help, .set-password .formfield-help, .initial-password .formfield-help {
     margin-left: 51.28205%;
   }
   .login label, .register label, .edit-profile label, .reset-password label, .change-password label, .set-password label, .initial-password label {
@@ -752,7 +763,7 @@ button {
 .lt-ie9 .lt-ie9 .login [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .register [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .edit-profile [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .reset-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .change-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .set-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .initial-password [type="checkbox"] + label:before, .lt-ie9 .lt-ie9 .login [type="radio"] + label:before, .lt-ie9 .lt-ie9 .register [type="radio"] + label:before, .lt-ie9 .lt-ie9 .edit-profile [type="radio"] + label:before, .lt-ie9 .lt-ie9 .reset-password [type="radio"] + label:before, .lt-ie9 .lt-ie9 .change-password [type="radio"] + label:before, .lt-ie9 .lt-ie9 .set-password [type="radio"] + label:before, .lt-ie9 .lt-ie9 .initial-password [type="radio"] + label:before {
   display: none;
 }
-.lt-ie9 .login .formhelp, .lt-ie9 .register .formhelp, .lt-ie9 .edit-profile .formhelp, .lt-ie9 .reset-password .formhelp, .lt-ie9 .change-password .formhelp, .lt-ie9 .set-password .formhelp, .lt-ie9 .initial-password .formhelp {
+.lt-ie9 .login .formfield-help, .lt-ie9 .register .formfield-help, .lt-ie9 .edit-profile .formfield-help, .lt-ie9 .reset-password .formfield-help, .lt-ie9 .change-password .formfield-help, .lt-ie9 .set-password .formfield-help, .lt-ie9 .initial-password .formfield-help {
   margin-left: 51.28205%;
 }
 .lt-ie9 .login label, .lt-ie9 .register label, .lt-ie9 .edit-profile label, .lt-ie9 .reset-password label, .lt-ie9 .change-password label, .lt-ie9 .set-password label, .lt-ie9 .initial-password label {
@@ -1669,7 +1680,7 @@ button {
 .lt-ie9 .formset.elders [type="checkbox"] + label:before, .lt-ie9 .formset.elders [type="radio"] + label:before {
   display: none;
 }
-.formset.elders .formhelp {
+.formset.elders .formfield-help {
   margin-left: 34.04255%;
 }
 .formset.elders .formset-head {

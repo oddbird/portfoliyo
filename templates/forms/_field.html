@@ -14,8 +14,11 @@
     {% include "forms/field/_input.html" %}
   {% endif %}
 
-  {% if field|optional %}
-    <p class="formhelp">optional</p>
+  {% if helptext or field|optional %}
+    <p class="formfield-help">
+      {% if field|optional %}<span class="formfield-optional">[optional]</span>{% endif %}
+      {% if helptext %}{{ helptext }}{% endif %}
+    </p>
   {% endif %}
 
   {% if errorslast %}

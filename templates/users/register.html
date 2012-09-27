@@ -21,7 +21,7 @@
     {{ form.non_field_errors }}
 
     <div class="fieldset bio">
-      {% include "forms/_field.html" with field=form.name %}
+      {% include "forms/_field.html" with field=form.name label="What do students call you?" %}
 
       <div class="fieldset initial-password">
         {% include "forms/_field.html" with field=form.password %}
