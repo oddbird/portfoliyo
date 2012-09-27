@@ -212,6 +212,23 @@ class TestVillage(object):
         assert resp['Location'] == utils.location(reverse('add_student'))
 
 
+    def test_remove_student_ajax(self, no_csrf_client):
+        """POSTing 'remove': student-id via ajax returns JSON, not redirect."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        resp = no_csrf_client.post(
+            self.url(rel.student),
+            {'remove': rel.student.id},
+            user=rel.elder.user,
+            status=200,
+            ajax=True,
+            )
+
+        assert utils.refresh(rel.student).deleted
+        assert resp.json['success'] == True
+
+
     def test_remove_student_requires_school_staff(self, no_csrf_client):
         """POSTing 'remove' to village view does nothing if not school staff."""
         rel = factories.RelationshipFactory.create(

@@ -1,0 +1,17 @@
+{% load icanhaz %}
+
+{% icanhaz "message" %}
+
+<ul id="messages">
+  <noscript>
+    <li class="message error js-warning">
+      <p>Please enable JavaScript in your browser to use this site.</p>
+    </li>
+  </noscript>
+  {% for message in messages %}
+  <li class="message{% if message.tags %} {{ message.tags }}{% endif %}">
+    <p>{{ message|safe }}</p>
+    <a href="#" class="close">dismiss this message</a>
+  </li>
+  {% endfor %}
+</ul>
