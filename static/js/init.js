@@ -16,9 +16,9 @@ var PYO = (function (PYO, $) {
         PYO.updatePageHeight('.village');
         PYO.ajaxifyVillages('.village');
         PYO.listenForPosts('.village');
-        PYO.editStudentName('.village-nav');
-        PYO.initializePage();
         PYO.detectFlashSupport('.village');
+        PYO.studentActionHandlers('.village-nav');
+        PYO.initializePage();
     });
 
     return PYO;
