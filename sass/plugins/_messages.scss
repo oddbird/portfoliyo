@@ -3,19 +3,23 @@
 
 @mixin message($c: $blue, $i: info-circle) {
   @extend %icon-#{$i};
-  @include rgba-background(rgba($c,.9));
+  background: $c;
 }
 
 .message {
   @extend %icon;
-  @include padding-leader(2);
-  @include trailing-border(1px,2);
+  @include padding-leader(1);
+  @include trailing-border(1px,1);
+  @include box-shadow($base03 0 0 rhythm(.25), $base03 0 0 rhythm(.5));
   position: relative;
   padding-left: $grid-padding;
   padding-right: $grid-padding;
   border-color: $base;
 
-  &:before { @include adjust-font-size-to($medpx,1); }
+  &:before {
+    @include adjust-font-size-to($xlargepx);
+    vertical-align: middle;
+  }
   &.info { @include message($blue, info-circle); }
   &.success { @include message($green, checkmark); }
   &.warning { @include message($yellow, warning); }
@@ -28,13 +32,10 @@
 
 #messages {
   @include no-style-list;
-  @include box-shadow($base03 0 0 rhythm(.25), $base03 0 0 rhythm(.5));
-  @include rgba-background(rgba($base03,.5));
   position: fixed;
   top: 25%;
   right: 10%;
   left: 10%;
-  background: rgba($base03,.5);
   color: $base3;
   z-index: 999;
   .close {
