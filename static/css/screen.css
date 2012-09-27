@@ -2318,6 +2318,9 @@ button {
   background: url('../images/rgbapng/dc322fe5.png?1347683955');
   background: rgba(220, 50, 47, 0.9);
 }
+.js .message.js-warning {
+  display: none;
+}
 .message p {
   display: inline;
 }

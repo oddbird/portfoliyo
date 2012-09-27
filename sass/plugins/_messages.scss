@@ -21,6 +21,8 @@
   &.warning { @include message($yellow, warning); }
   &.error { @include message($red, x); }
 
+  .js &.js-warning { display: none; }
+
   p { display: inline; }
 }
 
