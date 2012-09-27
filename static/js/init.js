@@ -6,6 +6,7 @@ var PYO = (function (PYO, $) {
         // plugins
         $('input[placeholder], textarea[placeholder]').placeholder();
         $('#messages').messages({handleAjax: true});
+        $('.details:not(html)').html5accordion();
         $('.email').defuscate();
 
         // landing.js

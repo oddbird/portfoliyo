@@ -29,6 +29,7 @@ var PYO = (function (PYO, $) {
                 }
             });
             posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
+            posts.find('.details').html5accordion();
             return posts;
         }
     };
@@ -83,8 +84,7 @@ var PYO = (function (PYO, $) {
                 text: text,
                 author_sequence_id: author_sequence,
                 xhr_count: xhr_count,
-                local: true,
-                escape: true
+                local: true
             }
         };
         return postObj;
