@@ -15,6 +15,10 @@ class PortfoliyoResource(ModelResource):
         authentication = SessionAuthentication()
         authorization = ReadOnlyAuthorization()
         allowed_methods = ['get']
+        # @@@ this should be high enough to never cause pagination in our use
+        # cases, but we should have a better solution here than a magic number
+        # (like maybe a custom paginator class that doesn't paginate?)
+        limit = 200
 
 
 
@@ -63,6 +67,15 @@ class ProfileResource(PortfoliyoResource):
             orm_filters['in_groups__in'] = groups
 
         return orm_filters
+
+
+    def dehydrate(self, bundle):
+        bundle.data['village_uri'] = reverse(
+            'village',
+            kwargs={'student_id': bundle.obj.id},
+            )
+
+        return bundle
 
 
     class Meta(PortfoliyoResource.Meta):
