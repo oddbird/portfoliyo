@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .select-student.removed:before, .addstudent-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .addstudent-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .student-actions a:before, .student-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .select-student.removed:before, .addstudent-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -211,7 +211,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2713";
 }
 
-.village-elders .elder.declined:before, .message.error:before {
+.select-student.removed:before, .village-elders .elder.declined:before, .message.error:before {
   content: "\2717";
 }
 
@@ -261,6 +261,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .no-sms .sms-info .summary:before {
   content: "\e001";
+}
+
+.student-actions .undo-remove-student:before {
+  content: "\21ba";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -1816,6 +1820,13 @@ button {
   background: #f7c9b6;
   min-height: 1.64286em;
 }
+.select-student.removed {
+  -webkit-box-shadow: #073642 0 0 3px inset;
+  -moz-box-shadow: #073642 0 0 3px inset;
+  box-shadow: #073642 0 0 3px inset;
+  color: #dc322f;
+  background: #f9dede;
+}
 
 .student-actions {
   -webkit-transition: all 400ms;
@@ -1858,7 +1869,7 @@ button {
   top: 50%;
   margin-top: -0.41071em;
 }
-.student:hover .student-actions {
+.student:hover .student-actions, .removed + .student-actions {
   filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
   z-index: 100;
