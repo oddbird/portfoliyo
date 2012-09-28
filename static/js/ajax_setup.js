@@ -3,7 +3,8 @@
     'use strict';
 
     $.ajaxSetup({
-        timeout: 30000
+        timeout: 30000,
+        headers: { Accept: 'application/json' }
     });
 
     $(document).ajaxError(function (event, request, settings, error) {
