@@ -284,6 +284,8 @@ def post_dict(post, **extra):
         'time': dateformat.time_format(timestamp, 'P'),
         'text': post.html_text,
         'sms': post.sms,
+        'to_sms': post.to_sms,
+        'from_sms': post.from_sms,
         'meta': post.meta,
         }
 

@@ -3,18 +3,18 @@
 
   <header class="post-meta">
     {{^ local }}
-    <div class="sms-info details" title="{{^ sms }}no {{/ sms }}text messages were sent.">
+    <div class="sms-info details" title="{{# from_sms }}Received by text. {{/ from_sms }}{{^ to_sms }} No texts {{/ to_sms }}{{# to_sms }} Texts {{/ to_sms }} sent.">
 
       <div class="details-body" id="sms-post-{{ post_id }}-details">
         {{# no_highlights }}
-        {{^ sms }}No {{/ sms }}text messages were sent.
+        {{# from_sms }}Received by text. {{/ from_sms }}{{^ to_sms }} No texts {{/ to_sms }}{{# to_sms }} Texts {{/ to_sms }} sent.
         {{/ no_highlights }}
 
         {{^ no_highlights }}
 
         {{# highlighted }}
-        {{# sms_notified }}Text messages were sent to {{ sms_notified }}.{{/ sms_notified }}
-        {{# sms_inactive }}No text messages were sent to {{ sms_inactive }} because they do not accept texts.{{/ sms_inactive }}
+        {{# sms_notified }}Text sent to {{ sms_notified }}.{{/ sms_notified }}
+        {{# sms_inactive }}No text sent to {{ sms_inactive }} because they do not accept texts.{{/ sms_inactive }}
         {{/ highlighted }}
 
         {{^ highlighted }}

@@ -52,6 +52,8 @@ def test_post_dict():
         'text': 'Foo',
         'extra': 'extra',
         'sms': False,
+        'to_sms': False,
+        'from_sms': False,
         'meta': {},
         }
 
