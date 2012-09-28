@@ -182,14 +182,6 @@ def get_teacher_and_name(body):
 
 def reply(phone, students, body):
     """Save given reply to given students' villages before returning it."""
-    tagged = tag(phone, body)
     for student in students:
-        model.Post.create(None, student, tagged, to_sms=True, notify=False)
+        model.Post.create(None, student, body, in_reply_to=phone)
     return body
-
-
-
-def tag(phone, body):
-    """Prepend a mention of the given phone number to given text."""
-    return "@%s %s" % (phone.lstrip('+').lstrip('1'), body)
-

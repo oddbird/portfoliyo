@@ -229,6 +229,7 @@ def pdf_parent_instructions(request, lang):
     pdf.generate_instructions_pdf(
         template_path=template_path,
         stream=response,
+        name=request.user.profile.name or "Your Child's Teacher",
         code=request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
         )

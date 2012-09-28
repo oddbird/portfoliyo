@@ -41,16 +41,20 @@ def test_post_dict():
         )
 
     assert models.post_dict(post, extra="extra") == {
+        'post_id': post.id,
         'author_id': rel.elder.id,
         'student_id': rel.student.id,
         'author': 'The Teacher',
-        'role': 'desc',
+        'role': u'desc',
         'timestamp': '2012-09-17T01:30:00-04:00',
-        'date': '9/17/2012',
-        'time': '1:30 a.m.',
+        'date': u'9/17/2012',
+        'time': u'1:30 a.m.',
         'text': 'Foo',
         'extra': 'extra',
         'sms': False,
+        'to_sms': False,
+        'from_sms': False,
+        'meta': {},
         }
 
 
@@ -102,6 +106,7 @@ class TestPostCreate(object):
         assert post.html_text == 'Foo<br>'
         assert post.from_sms == False
         assert post.to_sms == False
+        assert post.meta == {'highlights': []}
 
 
     def test_creates_post_from_sms(self):
@@ -113,17 +118,6 @@ class TestPostCreate(object):
 
         assert post.from_sms == True
         assert post.to_sms == False
-
-
-    def test_creates_post_to_sms(self):
-        """Post object can have to_sms explicitly set to True."""
-        rel = factories.RelationshipFactory.create()
-
-        post = models.Post.create(
-            rel.elder, rel.student, 'Foo\n', to_sms=True)
-
-        assert post.from_sms == False
-        assert post.to_sms == True
 
 
     @mock.patch('portfoliyo.model.village.models.get_pusher')
@@ -150,7 +144,7 @@ class TestPostCreate(object):
             from_profile__name="John Doe",
             from_profile__phone=None,
             )
-        factories.RelationshipFactory.create(
+        rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
@@ -162,6 +156,19 @@ class TestPostCreate(object):
         mock_send_sms.assert_called_with(
             "+13216540987", "John Doe: Hey @father")
         assert post.to_sms == True
+        assert post.meta['highlights'] == [
+            {
+                'id': rel2.elder.id,
+                'mentioned_as': ['father'],
+                'role': 'Father',
+                'name': '',
+                'phone': "+13216540987",
+                'email': None,
+                'is_active': True,
+                'declined': False,
+                'sms_sent': True,
+                }
+            ]
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -181,6 +188,7 @@ class TestPostCreate(object):
 
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False
+        assert post.meta['highlights'][0]['sms_sent'] == False
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -199,15 +207,16 @@ class TestPostCreate(object):
 
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False
+        assert post.meta['highlights'][0]['sms_sent'] == False
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_can_disable_notifications(self, mock_send_sms):
-        """Sends no text if given notify=False."""
+    def test_can_create_autoreply_post(self, mock_send_sms):
+        """Auto-reply prepends phone mention, sends no text to that phone."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None,
             )
-        factories.RelationshipFactory.create(
+        rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
@@ -215,10 +224,14 @@ class TestPostCreate(object):
             )
 
         post = models.Post.create(
-            rel1.elder, rel1.student, 'Hey @father', notify=False)
+            rel1.elder, rel1.student, 'Thank you!', in_reply_to="+13216540987")
 
         assert mock_send_sms.call_count == 0
-        assert post.to_sms == False
+        assert post.original_text == "@+13216540987 Thank you!"
+        # With in_reply_to we assume that an SMS was sent by the caller
+        assert post.meta['highlights'][0]['id'] == rel2.elder.id
+        assert post.meta['highlights'][0]['sms_sent'] == True
+        assert post.to_sms == True
 
 
 class TestProcessText(object):
@@ -266,7 +279,7 @@ class TestProcessText(object):
             "How&#39;s it?" % (rel1.elder.id, rel2.elder.id)
             )
 
-        assert highlights == set([rel1, rel2])
+        assert highlights == {rel1: ['johndoe'], rel2: ['father']}
 
 
 
@@ -299,7 +312,7 @@ class TestReplaceHighlights(object):
         html, highlights = self.call("Hello @one")
 
         assert html == 'Hello <b class="nametag" data-user-id="1">@one</b>'
-        assert highlights == set([self.rel1])
+        assert highlights == {self.rel1: ["one"]}
 
 
     def test_all(self):
@@ -309,14 +322,14 @@ class TestReplaceHighlights(object):
         assert re.match(
             'Hello <b class="nametag all me" data-user-id="(1,2|2,1)">@all</b>',
             html)
-        assert highlights == set([self.rel1, self.rel2])
+        assert highlights == {self.rel1: ["all"], self.rel2: ["all"]}
 
 
     def test_email(self):
         """Can highlight a user by email address."""
         _, highlights = self.call("Hello @foo@example.com")
 
-        assert highlights == set([self.rel3])
+        assert highlights == {self.rel3: ["foo@example.com"]}
 
 
     def test_false_alarm(self):
@@ -356,11 +369,11 @@ class TestReplaceHighlights(object):
         assert html.count('data-user-id') == 2
 
 
-    def assert_finds(self, text, name='one'):
-        """Assert that given name is found as highlight in text."""
+    def assert_finds(self, text):
+        """Assert that 'one' is found as highlight in text."""
         _, highlights = self.call(text)
 
-        assert highlights == set([self.rel1])
+        assert self.rel1 in highlights
 
 
     @pytest.mark.parametrize(

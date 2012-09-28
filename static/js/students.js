@@ -126,6 +126,7 @@ var PYO = (function (PYO, $) {
     PYO.removeStudent = function (trigger) {
         var remove = trigger;
         var listitem = remove.closest('.listitem');
+        var link = listitem.find('.listitem-select');
         var url = listitem.data('url');
         var name = listitem.find('.listitem-name').text();
         var removed = ich.remove_student({name: name});
@@ -136,6 +137,9 @@ var PYO = (function (PYO, $) {
             if (url) {
                 $.post(url, {remove: true}, function (response) {
                     if (response && response.success) {
+                        if (link.hasClass('active')) {
+                            window.location.href = '/';
+                        }
                         listitem.remove();
                     }
                 });

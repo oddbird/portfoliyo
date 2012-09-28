@@ -15,14 +15,22 @@ from portfoliyo import formats
 
 LOCATIONS = {
     'parent-instructions-template-en.pdf': {
-        'code': (358, 225),
-        'phone': (342, 207),
-        'example': (386, 171),
+        'name': (408, 505),
+        'code': (358, 224),
+        'phone': (342, 206),
+        'example': (388, 170),
+        'sample_to': (145, 470),
+        'sample_message_label': (145, 440),
+        'sample_message': (145, 420),
         },
     'parent-instructions-template-es.pdf': {
-        'code': (370, 189),
-        'phone': (345, 171),
-        'example': (386, 135),
+        'name': (424, 505),
+        'code': (371, 170),
+        'phone': (345, 152),
+        'example': (386, 116),
+        'sample_to': (145, 470),
+        'sample_message_label': (145, 440),
+        'sample_message': (145, 420),
         },
     }
 
@@ -31,7 +39,13 @@ COLOR = (7, 54, 66)
 
 
 
-def generate_instructions_pdf(template_path, stream, code, phone):
+def draw(canvas, location, text):
+    """Draw ``text`` on ``canvas`` at ``location`` (x, y) tuple."""
+    canvas.drawString(location[0], location[1], text)
+
+
+
+def generate_instructions_pdf(template_path, stream, name, code, phone):
     """Generate a parent signup instructions PDF and write it to stream."""
     template_page = pyPdf.PdfFileReader(open(template_path, 'rb')).getPage(0)
 
@@ -44,24 +58,31 @@ def generate_instructions_pdf(template_path, stream, code, phone):
     # addMapping('Cambridge-Round-Bold', 0, 0, 'Cambridge-Round-Bold')
 
     locations = LOCATIONS[os.path.basename(template_path)]
-    code_loc = locations['code']
-    phone_loc = locations['phone']
-    example_loc = locations['example']
+    example = '%s Jane Doe' % code
+    display_phone = formats.display_phone(phone)
 
     buffer = io.BytesIO()
 
-    p = canvas.Canvas(buffer, pagesize=landscape(LETTER))
+    c = canvas.Canvas(buffer, pagesize=landscape(LETTER))
+    c.setFillColorRGB(*[color/255.0 for color in COLOR])
 
-    p.setFont('Helvetica-Bold', 11)
-    p.setFillColorRGB(*[c/255.0 for c in COLOR])
+    c.setFont('Helvetica-Bold', 36)
+    draw(c, locations['name'], name)
 
-    p.drawString(code_loc[0], code_loc[1], code)
-    p.drawString(
-        phone_loc[0], phone_loc[1], formats.display_phone(phone))
-    p.drawString(example_loc[0], example_loc[1], '%s Jane Doe' % code)
+    c.setFont('Helvetica-Bold', 9)
 
-    p.showPage()
-    p.save()
+    draw(c, locations['sample_to'], 'To: %s' % display_phone)
+    draw(c, locations['sample_message_label'], 'Message:')
+    draw(c, locations['sample_message'], example)
+
+    c.setFont('Helvetica-Bold', 12)
+
+    draw(c, locations['code'], code)
+    draw(c, locations['phone'], display_phone)
+    draw(c, locations['example'], example)
+
+    c.showPage()
+    c.save()
 
     # Get the value of the BytesIO buffer and write it to the response.
     additions_page = pyPdf.PdfFileReader(buffer).getPage(0)

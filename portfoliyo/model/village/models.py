@@ -6,6 +6,7 @@ import re
 
 from django.db import models
 from django.utils import dateformat, html, timezone
+from jsonfield import JSONField
 
 from portfoliyo.pusher import get_pusher
 from portfoliyo import sms
@@ -35,6 +36,8 @@ class Post(models.Model):
     from_sms = models.BooleanField(default=False)
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
+    # arbitrary additional metadata, currently just highlights
+    meta = JSONField(default={})
 
 
     def __unicode__(self):
@@ -49,8 +52,23 @@ class Post(models.Model):
 
     @classmethod
     def create(cls, author, student, text,
-               sequence_id=None, from_sms=False, to_sms=False, notify=True):
-        """Create and return a Post."""
+               sequence_id=None, from_sms=False, in_reply_to=None):
+        """
+        Create/return a Post, triggering a Pusher event and SMS notifications.
+
+        ``sequence_id`` is an arbitrary ID generated on the client-side to
+        uniquely identify posts by the current user within a given browser
+        session; we just pass it through to the Pusher event.
+
+        ``in_reply_to`` can be set to a phone number, in which case a mention
+        of that phone number will be prepended to the post body, and it will be
+        assumed that an SMS was already sent to that number (thus no additional
+        notification will be sent).
+
+        """
+        if in_reply_to:
+            text = u"@%s %s" % (in_reply_to, text)
+
         html_text, highlights = process_text(text, student)
 
         post = cls(
@@ -59,18 +77,35 @@ class Post(models.Model):
             original_text=text,
             html_text=html_text,
             from_sms=from_sms,
-            to_sms=to_sms,
+            to_sms=False,
             )
 
-        # notify highlighted text-only users
-        if notify:
-            for rel in highlights:
-                if (rel.elder.user.is_active and rel.elder.phone):
+        # notify highlighted SMS users
+        meta_highlights = []
+        for rel, mentioned_as in highlights.items():
+            highlight_data = {
+                'id': rel.elder.id,
+                'mentioned_as': mentioned_as,
+                'role': rel.description_or_role,
+                'name': rel.elder.name,
+                'email': rel.elder.user.email,
+                'phone': rel.elder.phone,
+                'is_active': rel.elder.user.is_active,
+                'declined': rel.elder.declined,
+                'sms_sent': False,
+                }
+            if rel.elder.user.is_active and rel.elder.phone:
+                if rel.elder.phone != in_reply_to:
                     sender_rel = post.get_relationship()
                     prefix = text_notification_prefix(sender_rel)
                     sms_body = prefix + post.original_text
                     sms.send(rel.elder.phone, sms_body)
-                    post.to_sms = True
+                post.to_sms = True
+                highlight_data['sms_sent'] = True
+
+            meta_highlights.append(highlight_data)
+
+        post.meta['highlights'] = meta_highlights
 
         post.save()
 
@@ -105,7 +140,8 @@ def process_text(text, student):
 
     Escapes HTML, replaces newlines with <br>, replaces highlights.
 
-    Returns tuple of (rendered-text, set-of-highlighted-relationships).
+    Returns tuple of (rendered-text,
+    dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
 
     """
     name_map = get_highlight_names(student)
@@ -136,14 +172,15 @@ def replace_highlights(text, name_map):
     """
     Detect highlights and wrap with HTML element.
 
-    Returns a tuple of (rendered-text, set-of-highlighted-relationships).
+    Returns a tuple of (rendered-text,
+    dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
 
     ``name_map`` should be a mapping of highlightable names to the Relationship
     with the elder who has that name (such as the map returned by
     ``get_highlight_names``).
 
     """
-    highlighted = set()
+    highlighted = {}
     offset = 0 # how much we've increased the length of ``text``
     for match in highlight_re.finditer(text):
         full_highlight = match.group(2)
@@ -167,7 +204,8 @@ def replace_highlights(text, name_map):
             end -= stripped
             text = text[:start+offset] + replace_with + text[end+offset:]
             offset += len(replace_with) - (end - start)
-            highlighted.update(highlight_rels)
+            for rel in highlight_rels:
+                highlighted.setdefault(rel, []).append(highlight_name)
     return text, highlighted
 
 
@@ -236,6 +274,7 @@ def post_dict(post, **extra):
     timestamp = timezone.localtime(post.timestamp)
 
     data = {
+        'post_id': post.id,
         'author_id': post.author_id if post.author else 0,
         'student_id': post.student_id,
         'author': author_name,
@@ -245,6 +284,9 @@ def post_dict(post, **extra):
         'time': dateformat.time_format(timestamp, 'P'),
         'text': post.html_text,
         'sms': post.sms,
+        'to_sms': post.to_sms,
+        'from_sms': post.from_sms,
+        'meta': post.meta,
         }
 
     data.update(extra)

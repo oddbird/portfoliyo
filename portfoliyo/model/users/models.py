@@ -76,7 +76,7 @@ class Profile(models.Model):
 
 
     def __unicode__(self):
-        return self.name
+        return self.name or self.phone or self.user.email or u'<unknown>'
 
 
     def save(self, *a, **kw):
