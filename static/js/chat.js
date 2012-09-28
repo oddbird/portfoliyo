@@ -299,11 +299,11 @@ var PYO = (function (PYO, $) {
                     context.loadingOverlay();
                     feedAjax.XHR = $.get(url, function (response) {
                         context.loadingOverlay('remove');
-                        if (response && feedAjax.count === count) {
+                        if (response && response.posts && response.posts.length && feedAjax.count === count) {
                             PYO.addPost(response);
                             PYO.scrollToBottom();
-                            PYO.authorPosts = feed.find('.post.mine').length;
                         }
+                        PYO.authorPosts = feed.find('.post.mine').length;
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
