@@ -4,7 +4,7 @@
 
     $.ajaxSetup({
         timeout: 30000,
-        headers: { Accept: 'application/json' }
+        dataType: 'json'
     });
 
     $(document).ajaxError(function (event, request, settings, error) {
