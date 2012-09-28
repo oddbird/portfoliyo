@@ -63,6 +63,7 @@ def get_relationship_or_404(student_id, profile):
         return model.Relationship.objects.select_related().get(
             from_profile=profile,
             to_profile_id=student_id,
+            to_profile__deleted=False,
             kind=model.Relationship.KIND.elder,
             )
     except model.Relationship.DoesNotExist:

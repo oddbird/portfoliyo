@@ -196,6 +196,16 @@ class TestVillage(object):
         client.get(self.url(student), user=elder.user, status=404)
 
 
+    def test_404_deleted_student(self, client):
+        """Can't view village of a deleted student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            to_profile__deleted=True,
+            )
+
+        client.get(self.url(rel.student), user=rel.elder.user, status=404)
+
+
     def test_remove_student(self, no_csrf_client):
         """POSTing 'remove': student-id to village view soft-deletes student."""
         rel = factories.RelationshipFactory.create(
