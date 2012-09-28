@@ -12,14 +12,18 @@ var PYO = (function (PYO, $) {
         // landing.js
         PYO.ajaxifyForm('.village-landing .membership form', '.village-landing .membership');
 
-        // village.js
-        PYO.pusherKey = $('.village').data('pusher-key');
+        // base.js
         PYO.updatePageHeight('.village');
         PYO.ajaxifyVillages('.village');
-        PYO.listenForPosts('.village');
         PYO.detectFlashSupport('.village');
-        PYO.studentActionHandlers('.village-nav');
         PYO.initializePage();
+
+        // nav.js
+        PYO.studentActionHandlers('.village-nav');
+
+        // chat.js
+        PYO.pusherKey = $('.village').data('pusher-key');
+        PYO.listenForPosts('.village');
     });
 
     return PYO;
