@@ -7,14 +7,16 @@
 
       <div class="details-body" id="sms-post-{{ post_id }}-details">
         {{# no_highlights }}
-        {{# from_sms }}Received by text. {{/ from_sms }}{{^ to_sms }} No texts {{/ to_sms }}{{# to_sms }} Texts {{/ to_sms }} sent.
+        {{# from_sms }} Received by text. {{/ from_sms }}{{^ to_sms }} No texts {{/ to_sms }}{{# to_sms }} Texts {{/ to_sms }} sent.
         {{/ no_highlights }}
 
         {{^ no_highlights }}
 
+        {{# from_sms }} Received by text. {{/ from_sms }}
+
         {{# highlighted }}
-        {{# sms_notified }}Text sent to {{ sms_notified }}.{{/ sms_notified }}
-        {{# sms_inactive }}No text sent to {{ sms_inactive }} because they do not accept texts.{{/ sms_inactive }}
+        {{# sms_notified }} Text sent to {{ sms_notified }}.{{/ sms_notified }}
+        {{# sms_inactive }} No text sent to {{ sms_inactive }} because they do not accept texts.{{/ sms_inactive }}
         {{/ highlighted }}
 
         {{^ highlighted }}
