@@ -16,6 +16,11 @@
       {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
     </div>
 
+    {% comment %}
+    {# @@@ checkbox (checked by default): "Email me when a text is sent to one of my villages." #}
+    {% include "forms/_field.html" with field=form.notifications %}
+    {% endcomment %}
+
     <div class="form-actions">
       <button type="submit">Save changes</button>
     </div>
