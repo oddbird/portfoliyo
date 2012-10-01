@@ -1811,20 +1811,22 @@ button {
 }
 .select-student .unread {
   display: none;
-  -webkit-border-radius: 30em;
-  -moz-border-radius: 30em;
-  -ms-border-radius: 30em;
-  -o-border-radius: 30em;
-  border-radius: 30em;
-  -webkit-box-shadow: #073642 0 0 1px;
-  -moz-box-shadow: #073642 0 0 1px;
-  box-shadow: #073642 0 0 1px;
+  font-size: 1em;
+  line-height: 1.23214em;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -ms-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
   position: absolute;
-  right: 0.512em;
-  min-width: 1.64286em;
+  right: 9px;
+  top: 0.61607em;
+  padding: 0 .25em;
   background: #d33682;
   color: #fdf6e3;
-  font-weight: bold;
   text-align: center;
 }
 .select-student .unread.zero {
