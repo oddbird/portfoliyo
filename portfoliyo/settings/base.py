@@ -85,6 +85,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "session_csrf.context_processor",
     "portfoliyo.google_analytics.context_processor",
     "portfoliyo.uservoice.context_processor",
+    "portfoliyo.snapengage.context_processor",
     "portfoliyo.pusher.context_processor",
 ]
 
