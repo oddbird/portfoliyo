@@ -440,7 +440,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('../images/rgbapng/ffffff40.png?1347802112');
+  background: url('../images/rgbapng/ffffff40.png?1348763889');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -1314,13 +1314,13 @@ button {
 
 .team {
   padding-top: 2.55556em;
-  background: #002b36 url('../images/landing/space.png?1343065448');
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1343065448');
-  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
+  background: #002b36 url('../images/landing/space.png?1342738619');
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1342738619');
+  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1366,7 +1366,7 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1347802112');
+  background: url('../images/rgbapng/586e7540.png?1348763889');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1565,7 +1565,7 @@ button {
 }
 
 .addstudent-link:link, .addelder-link:link, .addstudent-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/85990060.png?1347998213');
+  background: url('../images/rgbapng/85990060.png?1348763889');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1590,7 +1590,7 @@ button {
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
-  background: url('../images/rgbapng/268bd240.png?1348163272');
+  background: url('../images/rgbapng/268bd240.png?1348763889');
   background: rgba(38, 139, 210, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
@@ -1694,7 +1694,7 @@ button {
   padding-right: 2.12766%;
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
-  background: url('../images/rgbapng/586e757f.png?1347998213');
+  background: url('../images/rgbapng/586e757f.png?1348763889');
   background: rgba(88, 110, 117, 0.5);
   color: #fdf6e3;
 }
@@ -1754,7 +1754,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('../images/start-arrow.png?1347802112') no-repeat left bottom;
+  background: url('../images/start-arrow.png?1347746559') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -1790,7 +1790,7 @@ button {
 }
 
 .select-student:link, .select-student:visited {
-  background: url('../images/rgbapng/eee8d540.png?1347998213');
+  background: url('../images/rgbapng/eee8d540.png?1348763889');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -1800,7 +1800,7 @@ button {
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
 }
 .select-student:focus, .select-student:hover, .select-student:active {
-  background: url('../images/rgbapng/eee8d57f.png?1347998213');
+  background: url('../images/rgbapng/eee8d57f.png?1348763889');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -2028,7 +2028,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('../images/rgbapng/93a1a140.png?1348586467');
+  background: url('../images/rgbapng/93a1a140.png?1348763889');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2174,7 +2174,7 @@ button {
   color: #657b83;
 }
 .village-elders .elder.declined {
-  background: url('../images/rgbapng/dc322f20.png?1348586467');
+  background: url('../images/rgbapng/dc322f20.png?1348769813');
   background: rgba(220, 50, 47, 0.125);
 }
 .village-elders .elder.declined:before {
@@ -2294,7 +2294,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1347802112');
+  background: url('../images/rgbapng/002b3640.png?1348763889');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
