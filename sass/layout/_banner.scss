@@ -21,7 +21,7 @@ $banner-leading : 1 + $banner-rhythm*2;
 .brand {
   @include adjust-font-size-to($banner-size);
   @include span-columns($half-small);
-  @include at-breakpoint($break) { @include span-columns($half-break); }
+  @include at-breakpoint($break) { @include span-columns($left + 2); }
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
