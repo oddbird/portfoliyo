@@ -16,7 +16,7 @@ from portfoliyo.tests import factories, utils
 
 class TestDashboard(object):
     def test_dashboard(self, client):
-        """A picklist of students."""
+        """Asks user to pick a student."""
         rel = factories.RelationshipFactory(to_profile__name="Student Two")
         factories.RelationshipFactory(
             from_profile=rel.elder, to_profile__name="Student One")
@@ -24,11 +24,6 @@ class TestDashboard(object):
             reverse('dashboard'), user=rel.elder.user, status=200)
 
         response.mustcontain("Please select a student")
-        response.mustcontain("Student One")
-        response.mustcontain("Student Two")
-        # alphabetical ordering
-        c = response.content
-        assert c.index("Student One") < c.index("Student Two")
 
 
 
@@ -150,7 +145,7 @@ class TestVillage(object):
         return reverse('village', kwargs=dict(student_id=student.id))
 
 
-    @pytest.mark.parametrize('link_target', ['add_student', 'invite_elders'])
+    @pytest.mark.parametrize('link_target', ['invite_elders'])
     def test_link_only_if_staff(self, client, link_target):
         """Link with given target is only present for school staff."""
         parent_rel = factories.RelationshipFactory.create(
@@ -166,23 +161,6 @@ class TestVillage(object):
         target_url = reverse(link_target, kwargs=reverse_kwargs)
         parent_links = parent_response.html.findAll('a', href=target_url)
         teacher_links = teacher_response.html.findAll('a', href=target_url)
-
-        assert len(teacher_links) == 1
-        assert len(parent_links) == 0
-
-
-    @pytest.mark.parametrize('button_name', ['remove'])
-    def test_button_only_if_staff(self, client, button_name):
-        """Button with given name is only present for school staff."""
-        parent_rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=False)
-        teacher_rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True, to_profile=parent_rel.student)
-        url = self.url(parent_rel.student)
-        parent_response = client.get(url, user=parent_rel.elder.user)
-        teacher_response = client.get(url, user=teacher_rel.elder.user)
-        parent_links = parent_response.html.findAll('button', dict(name=button_name))
-        teacher_links = teacher_response.html.findAll('button', dict(name=button_name))
 
         assert len(teacher_links) == 1
         assert len(parent_links) == 0
