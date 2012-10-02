@@ -28,25 +28,25 @@ var PYO = (function (PYO, $) {
                 });
             };
 
-            nav.on('click', '.action-edit', function (e) {
+            nav.on('click', '.student .action-edit', function (e) {
                 e.preventDefault();
                 cancelEdits();
                 PYO.editStudent($(this));
             });
 
-            nav.on('click', '.action-save', function (e) {
+            nav.on('click', '.student .action-save', function (e) {
                 e.preventDefault();
                 PYO.saveStudent($(this));
             });
 
-            nav.on('click', '.action-remove', function (e) {
+            nav.on('click', '.student .action-remove', function (e) {
                 e.preventDefault();
                 var listitem = $(this).closest('.listitem');
                 PYO.cancelEditStudent(listitem);
                 PYO.removeStudent($(this));
             });
 
-            nav.on('click', '.undo-action-remove', function (e) {
+            nav.on('click', '.student .undo-action-remove', function (e) {
                 e.preventDefault();
                 PYO.undoRemoveStudent($(this));
             });
@@ -155,7 +155,7 @@ var PYO = (function (PYO, $) {
         listitem.html(original);
     };
 
-    PYO.groupHandlers = function () {
+    PYO.navHandlers = function () {
         var nav = $('.village-nav');
         nav.on('click', '.group-link', function (e) {
             e.preventDefault();
@@ -168,6 +168,10 @@ var PYO = (function (PYO, $) {
         nav.on('click', '.groups.action-back', function (e) {
             e.preventDefault();
             PYO.fetchGroups();
+        });
+
+        nav.on('before-replace', function (e) {
+            PYO.unsubscribeFromPosts();
         });
     };
 
@@ -184,7 +188,7 @@ var PYO = (function (PYO, $) {
                 data.staff = nav.data('is-staff');
                 data.objects.unshift(allStudents);
                 var newGroups = ich.group_list(data);
-                nav.html(newGroups);
+                nav.trigger('before-replace').html(newGroups);
             }
         };
 
@@ -193,27 +197,68 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.fetchStudents = function (url, name) {
-        if (url && name) {
+    PYO.fetchStudents = function (group_url, group_name) {
+        if (group_url && group_name) {
             var nav = $('.village-nav');
             var replaceNav = function (data) {
                 if (data) {
-                    data.group_name = name;
-                    data.group_uri = url;
+                    data.group_name = group_name;
+                    data.group_uri = group_url;
                     data.staff = nav.data('is-staff');
                     var students = ich.student_list(data);
-                    nav.html(students);
+                    var url = window.location.pathname;
+                    students.find('a.ajax-link[href="' + url + '"]').addClass('active');
+                    nav.trigger('before-replace').html(students);
+                    PYO.listenForPosts('.village');
                 }
             };
 
-            $.get(url, replaceNav);
+            $.get(group_url, replaceNav);
         }
+    };
+
+    PYO.listenForPosts = function () {
+        var students = $('.village-nav .student a.ajax-link');
+
+        students.each(function () {
+            var el = $(this);
+            var id = el.data('id');
+            var unread = el.find('.unread');
+            var channel = PYO.pusher.subscribe('student_' + id);
+
+            channel.bind('message_posted', function (data) {
+                if (id === PYO.activeStudentId && PYO.scrolledToBottom()) {
+                    if (!PYO.replacePost(data)) {
+                        PYO.addPost(data);
+                        PYO.scrollToBottom();
+                    }
+                } else {
+                    var count = parseInt(unread.text(), 10);
+                    unread.removeClass('zero').text(++count);
+                }
+            });
+        });
+    };
+
+    PYO.unsubscribeFromPosts = function () {
+        var students = $('.village-nav .student a.ajax-link');
+
+        students.each(function () {
+            var el = $(this);
+            var id = el.data('id');
+            PYO.pusher.unsubscribe('student_' + id);
+        });
     };
 
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
-            PYO.groupHandlers();
-            PYO.fetchGroups();
+            PYO.navHandlers();
+            if ($('.village-feed').length || $('#add-student-form').length) {
+                var studentsUrl = $('.village-nav').data('students-url');
+                PYO.fetchStudents(studentsUrl, 'All Students');
+            } else {
+                PYO.fetchGroups();
+            }
         }
     };
 

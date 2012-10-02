@@ -260,33 +260,6 @@ var PYO = (function (PYO, $) {
         PYO.addPostTimeout(post, author_sequence_id, count);
     };
 
-    PYO.listenForPosts = function (container) {
-        if ($(container).length && PYO.pusherKey) {
-            var pusher = new Pusher(PYO.pusherKey, {encrypted: true});
-            var students = $('.village-nav .student a');
-
-            students.each(function () {
-                var el = $(this);
-                var id = el.data('id');
-                var unread = el.find('.unread');
-                var channel = pusher.subscribe('student_' + id);
-
-                channel.bind('message_posted', function (data) {
-                    if (id === PYO.activeStudentId) {
-                        var scroll = PYO.scrolledToBottom();
-                        if (!PYO.replacePost(data)) {
-                            PYO.addPost(data);
-                            if (scroll) { PYO.scrollToBottom(); }
-                        }
-                    } else {
-                        var count = parseInt(unread.text(), 10);
-                        unread.removeClass('zero').text(++count);
-                    }
-                });
-            });
-        }
-    };
-
     PYO.fetchBacklog = function (container) {
         if (feedAjax.XHR) { feedAjax.XHR.abort(); }
         if ($(container).length) {

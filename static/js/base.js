@@ -186,6 +186,11 @@ var PYO = (function (PYO, $) {
         PYO.characterCount('.village-main');
     };
 
+    PYO.initializePusher = function () {
+        PYO.pusherKey = $('.village').data('pusher-key');
+        if (PYO.pusherKey) { PYO.pusher = new Pusher(PYO.pusherKey, {encrypted: true}); }
+    };
+
     PYO.initializePage = function () {
         if ($('.village-feed').length) {
             PYO.initializeFeed();
