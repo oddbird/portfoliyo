@@ -3,13 +3,6 @@ import django_webtest
 
 
 
-def pytest_runtest_setup(item):
-    """Clear out Redis prior to each test."""
-    from portfoliyo.redis import client
-    client.flushdb()
-
-
-
 def pytest_funcarg__client(request):
     """Give a test access to a WebTest client for integration-testing views."""
     # We don't use TestCase classes, but we instantiate the django_webtest

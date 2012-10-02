@@ -228,4 +228,4 @@ DEFAULT_FROM_EMAIL = "Portfoliyo <noreply@portfoliyo.org>"
 PORTFOLIYO_SMS_BACKEND = "portfoliyo.sms.backends.console.ConsoleSMSBackend"
 PORTFOLIYO_SMS_DEFAULT_FROM = "+15555555555"
 
-REDIS_URL = "redis://localhost:6379/0"
+REDIS_URL = None
