@@ -1,0 +1,16 @@
+{{# objects }}
+<li class="listitem group">
+  <a href="{{ members_uri }}" class="listitem-select">
+    <span class="listitem-name">{{ name }}</span>
+    <span class="unread">0</span>
+  </a>
+
+  {{# staff }}
+  <div class="listitem-actions">
+    <a href="#" class="action-edit" title="edit group name">edit</a>
+    <button class="action-save" title="save changes">save</button>
+    <button class="action-remove" title="remove group" name="remove" value="">remove</button>
+  </div>
+  {{/ staff }}
+</li>
+{{/ objects }}

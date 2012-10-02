@@ -51,7 +51,7 @@ var PYO = (function (PYO, $) {
                 PYO.undoRemoveStudent($(this));
             });
 
-            $('.village').on('pjax-load', function (e) {
+            $('.village').on('pjax-load', function () {
                 cancelEdits();
             });
         }
@@ -153,6 +153,34 @@ var PYO = (function (PYO, $) {
         var original = listitem.data('original');
         listitem.find('.listitem-select.removed').stop();
         listitem.html(original);
+    };
+
+    PYO.fetchGroups = function () {
+        var nav = $('.village-nav');
+        var url = nav.data('groups-url');
+        var studentsUrl = nav.data('students-url');
+        var replaceGroups = function (data) {
+            if (data) {
+                var allStudents = {
+                    name: 'All Students',
+                    members_uri: studentsUrl
+                };
+                data.staff = nav.data('is-staff');
+                data.objects.unshift(allStudents);
+                var newGroups = ich.group_list(data);
+                nav.html(newGroups);
+            }
+        };
+
+        if (url) {
+            $.get(url, replaceGroups);
+        }
+    };
+
+    PYO.initializeNav = function () {
+        if ($('.village-nav').length) {
+            PYO.fetchGroups();
+        }
     };
 
     return PYO;

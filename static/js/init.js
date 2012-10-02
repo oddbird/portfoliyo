@@ -20,6 +20,7 @@ var PYO = (function (PYO, $) {
 
         // nav.js
         PYO.studentActionHandlers('.village-nav');
+        PYO.initializeNav();
 
         // chat.js
         PYO.pusherKey = $('.village').data('pusher-key');
