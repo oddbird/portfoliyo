@@ -7,6 +7,7 @@
 }
 
 %village-page {
+  @extend %formdefaults;
   height: 100%;
   padding: rhythm(2);
   overflow-y: scroll;

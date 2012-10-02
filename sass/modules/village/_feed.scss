@@ -112,6 +112,7 @@ $post-h-padding   : gutter($center);
 $addnote-fontsize: $input-font-size;
 
 .post-add-form {
+  @extend %formdefaults;
   @include stretch-x;
   bottom: 0;
   padding: rhythm(.5) gutter();
