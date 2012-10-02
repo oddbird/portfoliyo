@@ -1,4 +1,4 @@
-"""Tests for GA support code."""
+"""Tests for UserVoice support code."""
 from django.test.utils import override_settings
 
 from portfoliyo import uservoice

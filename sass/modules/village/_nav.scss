@@ -57,14 +57,15 @@ $village-nav-action-color : $base03;
 
   .unread {
     display: none; // @@@ TEMPORARY DISABLING
-    @include border-radius(30em);
-    @include box-shadow($back 0 0 1px);
+    @include adjust-font-size-to($smallpx,.75,$village-list-size);
+    @include border-radius(.25em);
+    @include box-shadow(rgba($back,.5) 0 0 3px inset);
     position: absolute;
-    right: $xxxsmallem;
-    min-width: rhythm(1,$village-list-size);
+    right: $xxxsmallpx;
+    top: rhythm(.375,$smallpx);
+    padding: 0 .25em;
     background: $accent;
     color: $base3;
-    font-weight: bold;
     text-align: center;
     &.zero { display: none; }
   }

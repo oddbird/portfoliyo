@@ -83,69 +83,69 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
  */
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round-webfont.eot');
-  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round-webfont.eot');
+  src: url('/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_semibold-webfont.eot');
-  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_semibold-webfont.eot');
+  src: url('/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_bold-webfont.eot');
-  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_bold-webfont.eot');
+  src: url('/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('../fonts/cambridge_round_it-webfont.eot');
-  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  src: url('/cambridge_round_it-webfont.eot');
+  src: url('/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('../fonts/SquareSerif-Book-webfont.eot');
-  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  src: url('/SquareSerif-Book-webfont.eot');
+  src: url('/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('../fonts/SquareSerif-Bold-webfont.eot');
-  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  src: url('/SquareSerif-Bold-webfont.eot');
+  src: url('/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "pyo";
-  src: url('../fonts/pyo.eot');
-  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('/pyo.eot');
+  src: url('/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, [type="checkbox"] + label:before, [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -175,19 +175,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-[type="checkbox"] + label:before {
+.main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before {
   content: "\2610";
 }
 
-[type="checkbox"]:checked + label:before {
+.main-login [type="checkbox"]:checked + label:before, .village-landing [type="checkbox"]:checked + label:before, .village-add-form [type="checkbox"]:checked + label:before, .dashboard [type="checkbox"]:checked + label:before, .pjax-error [type="checkbox"]:checked + label:before, .elder-add-form [type="checkbox"]:checked + label:before, .elder-edit-form [type="checkbox"]:checked + label:before, .post-add-form [type="checkbox"]:checked + label:before {
   content: "\2611";
 }
 
-[type="radio"]:checked + label:before {
+.main-login [type="radio"]:checked + label:before, .village-landing [type="radio"]:checked + label:before, .village-add-form [type="radio"]:checked + label:before, .dashboard [type="radio"]:checked + label:before, .pjax-error [type="radio"]:checked + label:before, .elder-add-form [type="radio"]:checked + label:before, .elder-edit-form [type="radio"]:checked + label:before, .post-add-form [type="radio"]:checked + label:before {
   content: "\25c9";
 }
 
-[type="radio"] + label:before {
+.main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before {
   content: "\25ef";
 }
 
@@ -231,7 +231,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\26a0";
 }
 
-.main-login .reset-link:before {
+.meta .helplink:before, .main-login .reset-link:before {
   content: "\3f";
 }
 
@@ -343,7 +343,7 @@ a:focus, a:hover, a:active {
   border: 0;
 }
 
-img {
+.village-landing img {
   -webkit-box-shadow: #073642 0 0 0.125em;
   -moz-box-shadow: #073642 0 0 0.125em;
   box-shadow: #073642 0 0 0.125em;
@@ -434,7 +434,7 @@ optgroup {
   font-style: italic;
 }
 
-input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"], textarea {
+.main-login input[type="text"], .village-landing input[type="text"], .village-add-form input[type="text"], .dashboard input[type="text"], .pjax-error input[type="text"], .elder-add-form input[type="text"], .elder-edit-form input[type="text"], .post-add-form input[type="text"], .main-login input[type="password"], .village-landing input[type="password"], .village-add-form input[type="password"], .dashboard input[type="password"], .pjax-error input[type="password"], .elder-add-form input[type="password"], .elder-edit-form input[type="password"], .post-add-form input[type="password"], .main-login input[type="email"], .village-landing input[type="email"], .village-add-form input[type="email"], .dashboard input[type="email"], .pjax-error input[type="email"], .elder-add-form input[type="email"], .elder-edit-form input[type="email"], .post-add-form input[type="email"], .main-login input[type="url"], .village-landing input[type="url"], .village-add-form input[type="url"], .dashboard input[type="url"], .pjax-error input[type="url"], .elder-add-form input[type="url"], .elder-edit-form input[type="url"], .post-add-form input[type="url"], .main-login input[type="tel"], .village-landing input[type="tel"], .village-add-form input[type="tel"], .dashboard input[type="tel"], .pjax-error input[type="tel"], .elder-add-form input[type="tel"], .elder-edit-form input[type="tel"], .post-add-form input[type="tel"], .main-login input[type="date"], .village-landing input[type="date"], .village-add-form input[type="date"], .dashboard input[type="date"], .pjax-error input[type="date"], .elder-add-form input[type="date"], .elder-edit-form input[type="date"], .post-add-form input[type="date"], .main-login input[type="datetime"], .village-landing input[type="datetime"], .village-add-form input[type="datetime"], .dashboard input[type="datetime"], .pjax-error input[type="datetime"], .elder-add-form input[type="datetime"], .elder-edit-form input[type="datetime"], .post-add-form input[type="datetime"], .main-login input[type="datetime-local"], .village-landing input[type="datetime-local"], .village-add-form input[type="datetime-local"], .dashboard input[type="datetime-local"], .pjax-error input[type="datetime-local"], .elder-add-form input[type="datetime-local"], .elder-edit-form input[type="datetime-local"], .post-add-form input[type="datetime-local"], .main-login input[type="month"], .village-landing input[type="month"], .village-add-form input[type="month"], .dashboard input[type="month"], .pjax-error input[type="month"], .elder-add-form input[type="month"], .elder-edit-form input[type="month"], .post-add-form input[type="month"], .main-login input[type="week"], .village-landing input[type="week"], .village-add-form input[type="week"], .dashboard input[type="week"], .pjax-error input[type="week"], .elder-add-form input[type="week"], .elder-edit-form input[type="week"], .post-add-form input[type="week"], .main-login input[type="time"], .village-landing input[type="time"], .village-add-form input[type="time"], .dashboard input[type="time"], .pjax-error input[type="time"], .elder-add-form input[type="time"], .elder-edit-form input[type="time"], .post-add-form input[type="time"], .main-login input[type="number"], .village-landing input[type="number"], .village-add-form input[type="number"], .dashboard input[type="number"], .pjax-error input[type="number"], .elder-add-form input[type="number"], .elder-edit-form input[type="number"], .post-add-form input[type="number"], .main-login input[type="search"], .village-landing input[type="search"], .village-add-form input[type="search"], .dashboard input[type="search"], .pjax-error input[type="search"], .elder-add-form input[type="search"], .elder-edit-form input[type="search"], .post-add-form input[type="search"], .main-login input[type="color"], .village-landing input[type="color"], .village-add-form input[type="color"], .dashboard input[type="color"], .pjax-error input[type="color"], .elder-add-form input[type="color"], .elder-edit-form input[type="color"], .post-add-form input[type="color"], .main-login textarea, .village-landing textarea, .village-add-form textarea, .dashboard textarea, .pjax-error textarea, .elder-add-form textarea, .elder-edit-form textarea, .post-add-form textarea {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 0.77778em;
   line-height: 1.64286em;
@@ -444,7 +444,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('../images/rgbapng/ffffff40.png?1347802112');
+  background: url('rgbapng/ffffff40.png?1347802112');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -452,11 +452,11 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   vertical-align: top;
   outline: 0;
 }
-.lt-ie9 input[type="text"], .lt-ie9 input[type="password"], .lt-ie9 input[type="email"], .lt-ie9 input[type="url"], .lt-ie9 input[type="tel"], .lt-ie9 input[type="date"], .lt-ie9 input[type="datetime"], .lt-ie9 input[type="datetime-local"], .lt-ie9 input[type="month"], .lt-ie9 input[type="week"], .lt-ie9 input[type="time"], .lt-ie9 input[type="number"], .lt-ie9 input[type="search"], .lt-ie9 input[type="color"], .lt-ie9 textarea {
+.lt-ie9 .main-login input[type="text"], .main-login .lt-ie9 input[type="text"], .lt-ie9 .village-landing input[type="text"], .village-landing .lt-ie9 input[type="text"], .lt-ie9 .village-add-form input[type="text"], .village-add-form .lt-ie9 input[type="text"], .lt-ie9 .dashboard input[type="text"], .dashboard .lt-ie9 input[type="text"], .lt-ie9 .pjax-error input[type="text"], .pjax-error .lt-ie9 input[type="text"], .lt-ie9 .elder-add-form input[type="text"], .elder-add-form .lt-ie9 input[type="text"], .lt-ie9 .elder-edit-form input[type="text"], .elder-edit-form .lt-ie9 input[type="text"], .lt-ie9 .post-add-form input[type="text"], .post-add-form .lt-ie9 input[type="text"], .lt-ie9 .main-login input[type="password"], .main-login .lt-ie9 input[type="password"], .lt-ie9 .village-landing input[type="password"], .village-landing .lt-ie9 input[type="password"], .lt-ie9 .village-add-form input[type="password"], .village-add-form .lt-ie9 input[type="password"], .lt-ie9 .dashboard input[type="password"], .dashboard .lt-ie9 input[type="password"], .lt-ie9 .pjax-error input[type="password"], .pjax-error .lt-ie9 input[type="password"], .lt-ie9 .elder-add-form input[type="password"], .elder-add-form .lt-ie9 input[type="password"], .lt-ie9 .elder-edit-form input[type="password"], .elder-edit-form .lt-ie9 input[type="password"], .lt-ie9 .post-add-form input[type="password"], .post-add-form .lt-ie9 input[type="password"], .lt-ie9 .main-login input[type="email"], .main-login .lt-ie9 input[type="email"], .lt-ie9 .village-landing input[type="email"], .village-landing .lt-ie9 input[type="email"], .lt-ie9 .village-add-form input[type="email"], .village-add-form .lt-ie9 input[type="email"], .lt-ie9 .dashboard input[type="email"], .dashboard .lt-ie9 input[type="email"], .lt-ie9 .pjax-error input[type="email"], .pjax-error .lt-ie9 input[type="email"], .lt-ie9 .elder-add-form input[type="email"], .elder-add-form .lt-ie9 input[type="email"], .lt-ie9 .elder-edit-form input[type="email"], .elder-edit-form .lt-ie9 input[type="email"], .lt-ie9 .post-add-form input[type="email"], .post-add-form .lt-ie9 input[type="email"], .lt-ie9 .main-login input[type="url"], .main-login .lt-ie9 input[type="url"], .lt-ie9 .village-landing input[type="url"], .village-landing .lt-ie9 input[type="url"], .lt-ie9 .village-add-form input[type="url"], .village-add-form .lt-ie9 input[type="url"], .lt-ie9 .dashboard input[type="url"], .dashboard .lt-ie9 input[type="url"], .lt-ie9 .pjax-error input[type="url"], .pjax-error .lt-ie9 input[type="url"], .lt-ie9 .elder-add-form input[type="url"], .elder-add-form .lt-ie9 input[type="url"], .lt-ie9 .elder-edit-form input[type="url"], .elder-edit-form .lt-ie9 input[type="url"], .lt-ie9 .post-add-form input[type="url"], .post-add-form .lt-ie9 input[type="url"], .lt-ie9 .main-login input[type="tel"], .main-login .lt-ie9 input[type="tel"], .lt-ie9 .village-landing input[type="tel"], .village-landing .lt-ie9 input[type="tel"], .lt-ie9 .village-add-form input[type="tel"], .village-add-form .lt-ie9 input[type="tel"], .lt-ie9 .dashboard input[type="tel"], .dashboard .lt-ie9 input[type="tel"], .lt-ie9 .pjax-error input[type="tel"], .pjax-error .lt-ie9 input[type="tel"], .lt-ie9 .elder-add-form input[type="tel"], .elder-add-form .lt-ie9 input[type="tel"], .lt-ie9 .elder-edit-form input[type="tel"], .elder-edit-form .lt-ie9 input[type="tel"], .lt-ie9 .post-add-form input[type="tel"], .post-add-form .lt-ie9 input[type="tel"], .lt-ie9 .main-login input[type="date"], .main-login .lt-ie9 input[type="date"], .lt-ie9 .village-landing input[type="date"], .village-landing .lt-ie9 input[type="date"], .lt-ie9 .village-add-form input[type="date"], .village-add-form .lt-ie9 input[type="date"], .lt-ie9 .dashboard input[type="date"], .dashboard .lt-ie9 input[type="date"], .lt-ie9 .pjax-error input[type="date"], .pjax-error .lt-ie9 input[type="date"], .lt-ie9 .elder-add-form input[type="date"], .elder-add-form .lt-ie9 input[type="date"], .lt-ie9 .elder-edit-form input[type="date"], .elder-edit-form .lt-ie9 input[type="date"], .lt-ie9 .post-add-form input[type="date"], .post-add-form .lt-ie9 input[type="date"], .lt-ie9 .main-login input[type="datetime"], .main-login .lt-ie9 input[type="datetime"], .lt-ie9 .village-landing input[type="datetime"], .village-landing .lt-ie9 input[type="datetime"], .lt-ie9 .village-add-form input[type="datetime"], .village-add-form .lt-ie9 input[type="datetime"], .lt-ie9 .dashboard input[type="datetime"], .dashboard .lt-ie9 input[type="datetime"], .lt-ie9 .pjax-error input[type="datetime"], .pjax-error .lt-ie9 input[type="datetime"], .lt-ie9 .elder-add-form input[type="datetime"], .elder-add-form .lt-ie9 input[type="datetime"], .lt-ie9 .elder-edit-form input[type="datetime"], .elder-edit-form .lt-ie9 input[type="datetime"], .lt-ie9 .post-add-form input[type="datetime"], .post-add-form .lt-ie9 input[type="datetime"], .lt-ie9 .main-login input[type="datetime-local"], .main-login .lt-ie9 input[type="datetime-local"], .lt-ie9 .village-landing input[type="datetime-local"], .village-landing .lt-ie9 input[type="datetime-local"], .lt-ie9 .village-add-form input[type="datetime-local"], .village-add-form .lt-ie9 input[type="datetime-local"], .lt-ie9 .dashboard input[type="datetime-local"], .dashboard .lt-ie9 input[type="datetime-local"], .lt-ie9 .pjax-error input[type="datetime-local"], .pjax-error .lt-ie9 input[type="datetime-local"], .lt-ie9 .elder-add-form input[type="datetime-local"], .elder-add-form .lt-ie9 input[type="datetime-local"], .lt-ie9 .elder-edit-form input[type="datetime-local"], .elder-edit-form .lt-ie9 input[type="datetime-local"], .lt-ie9 .post-add-form input[type="datetime-local"], .post-add-form .lt-ie9 input[type="datetime-local"], .lt-ie9 .main-login input[type="month"], .main-login .lt-ie9 input[type="month"], .lt-ie9 .village-landing input[type="month"], .village-landing .lt-ie9 input[type="month"], .lt-ie9 .village-add-form input[type="month"], .village-add-form .lt-ie9 input[type="month"], .lt-ie9 .dashboard input[type="month"], .dashboard .lt-ie9 input[type="month"], .lt-ie9 .pjax-error input[type="month"], .pjax-error .lt-ie9 input[type="month"], .lt-ie9 .elder-add-form input[type="month"], .elder-add-form .lt-ie9 input[type="month"], .lt-ie9 .elder-edit-form input[type="month"], .elder-edit-form .lt-ie9 input[type="month"], .lt-ie9 .post-add-form input[type="month"], .post-add-form .lt-ie9 input[type="month"], .lt-ie9 .main-login input[type="week"], .main-login .lt-ie9 input[type="week"], .lt-ie9 .village-landing input[type="week"], .village-landing .lt-ie9 input[type="week"], .lt-ie9 .village-add-form input[type="week"], .village-add-form .lt-ie9 input[type="week"], .lt-ie9 .dashboard input[type="week"], .dashboard .lt-ie9 input[type="week"], .lt-ie9 .pjax-error input[type="week"], .pjax-error .lt-ie9 input[type="week"], .lt-ie9 .elder-add-form input[type="week"], .elder-add-form .lt-ie9 input[type="week"], .lt-ie9 .elder-edit-form input[type="week"], .elder-edit-form .lt-ie9 input[type="week"], .lt-ie9 .post-add-form input[type="week"], .post-add-form .lt-ie9 input[type="week"], .lt-ie9 .main-login input[type="time"], .main-login .lt-ie9 input[type="time"], .lt-ie9 .village-landing input[type="time"], .village-landing .lt-ie9 input[type="time"], .lt-ie9 .village-add-form input[type="time"], .village-add-form .lt-ie9 input[type="time"], .lt-ie9 .dashboard input[type="time"], .dashboard .lt-ie9 input[type="time"], .lt-ie9 .pjax-error input[type="time"], .pjax-error .lt-ie9 input[type="time"], .lt-ie9 .elder-add-form input[type="time"], .elder-add-form .lt-ie9 input[type="time"], .lt-ie9 .elder-edit-form input[type="time"], .elder-edit-form .lt-ie9 input[type="time"], .lt-ie9 .post-add-form input[type="time"], .post-add-form .lt-ie9 input[type="time"], .lt-ie9 .main-login input[type="number"], .main-login .lt-ie9 input[type="number"], .lt-ie9 .village-landing input[type="number"], .village-landing .lt-ie9 input[type="number"], .lt-ie9 .village-add-form input[type="number"], .village-add-form .lt-ie9 input[type="number"], .lt-ie9 .dashboard input[type="number"], .dashboard .lt-ie9 input[type="number"], .lt-ie9 .pjax-error input[type="number"], .pjax-error .lt-ie9 input[type="number"], .lt-ie9 .elder-add-form input[type="number"], .elder-add-form .lt-ie9 input[type="number"], .lt-ie9 .elder-edit-form input[type="number"], .elder-edit-form .lt-ie9 input[type="number"], .lt-ie9 .post-add-form input[type="number"], .post-add-form .lt-ie9 input[type="number"], .lt-ie9 .main-login input[type="search"], .main-login .lt-ie9 input[type="search"], .lt-ie9 .village-landing input[type="search"], .village-landing .lt-ie9 input[type="search"], .lt-ie9 .village-add-form input[type="search"], .village-add-form .lt-ie9 input[type="search"], .lt-ie9 .dashboard input[type="search"], .dashboard .lt-ie9 input[type="search"], .lt-ie9 .pjax-error input[type="search"], .pjax-error .lt-ie9 input[type="search"], .lt-ie9 .elder-add-form input[type="search"], .elder-add-form .lt-ie9 input[type="search"], .lt-ie9 .elder-edit-form input[type="search"], .elder-edit-form .lt-ie9 input[type="search"], .lt-ie9 .post-add-form input[type="search"], .post-add-form .lt-ie9 input[type="search"], .lt-ie9 .main-login input[type="color"], .main-login .lt-ie9 input[type="color"], .lt-ie9 .village-landing input[type="color"], .village-landing .lt-ie9 input[type="color"], .lt-ie9 .village-add-form input[type="color"], .village-add-form .lt-ie9 input[type="color"], .lt-ie9 .dashboard input[type="color"], .dashboard .lt-ie9 input[type="color"], .lt-ie9 .pjax-error input[type="color"], .pjax-error .lt-ie9 input[type="color"], .lt-ie9 .elder-add-form input[type="color"], .elder-add-form .lt-ie9 input[type="color"], .lt-ie9 .elder-edit-form input[type="color"], .elder-edit-form .lt-ie9 input[type="color"], .lt-ie9 .post-add-form input[type="color"], .post-add-form .lt-ie9 input[type="color"], .lt-ie9 .main-login textarea, .main-login .lt-ie9 textarea, .lt-ie9 .village-landing textarea, .village-landing .lt-ie9 textarea, .lt-ie9 .village-add-form textarea, .village-add-form .lt-ie9 textarea, .lt-ie9 .dashboard textarea, .dashboard .lt-ie9 textarea, .lt-ie9 .pjax-error textarea, .pjax-error .lt-ie9 textarea, .lt-ie9 .elder-add-form textarea, .elder-add-form .lt-ie9 textarea, .lt-ie9 .elder-edit-form textarea, .elder-edit-form .lt-ie9 textarea, .lt-ie9 .post-add-form textarea, .post-add-form .lt-ie9 textarea {
   padding: 0 .5em;
 }
 
-.linkaction, .form-actions button, .village-landing .formfield .action-betasignup {
+.linkaction, .main-login .form-actions button, .village-landing .form-actions button, .village-add-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .village-landing .formfield .action-betasignup {
   margin: 0;
   background-color: #859900;
   text-align: center;
@@ -485,10 +485,10 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   color: #fdf6e3;
   text-shadow: #121400 0 -1px 0;
 }
-.linkaction:hover, .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
+.linkaction:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .village-add-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
   text-decoration: none;
 }
-.linkaction:hover, .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
+.linkaction:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .village-add-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
   background-color: #424d00;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
   background: -webkit-linear-gradient(#6f8000, #424d00);
@@ -497,12 +497,12 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   background: -ms-linear-gradient(#6f8000, #424d00);
   background: linear-gradient(#6f8000, #424d00);
 }
-.linkaction:active, .form-actions button:active, .village-landing .formfield .action-betasignup:active {
+.linkaction:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .village-add-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .village-landing .formfield .action-betasignup:active {
   -webkit-box-shadow: #353d00 0 1px 2px inset;
   -moz-box-shadow: #353d00 0 1px 2px inset;
   box-shadow: #353d00 0 1px 2px inset;
 }
-.disabled.linkaction, .form-actions button.disabled, .village-landing .formfield .disabled.action-betasignup, [disabled].linkaction, .form-actions button[disabled], .village-landing .formfield [disabled].action-betasignup {
+.disabled.linkaction, .main-login .form-actions button.disabled, .village-landing .form-actions button.disabled, .village-add-form .form-actions button.disabled, .dashboard .form-actions button.disabled, .pjax-error .form-actions button.disabled, .elder-add-form .form-actions button.disabled, .elder-edit-form .form-actions button.disabled, .post-add-form .form-actions button.disabled, .village-landing .formfield .disabled.action-betasignup, [disabled].linkaction, .main-login .form-actions button[disabled], .village-landing .form-actions button[disabled], .village-add-form .form-actions button[disabled], .dashboard .form-actions button[disabled], .pjax-error .form-actions button[disabled], .elder-add-form .form-actions button[disabled], .elder-edit-form .form-actions button[disabled], .post-add-form .form-actions button[disabled], .village-landing .formfield [disabled].action-betasignup {
   opacity: 0.6;
   background: #596600;
   cursor: default;
@@ -510,7 +510,7 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.linkaction::-moz-focus-inner, .form-actions button::-moz-focus-inner, .village-landing .formfield .action-betasignup::-moz-focus-inner {
+.linkaction::-moz-focus-inner, .main-login .form-actions button::-moz-focus-inner, .village-landing .form-actions button::-moz-focus-inner, .village-add-form .form-actions button::-moz-focus-inner, .dashboard .form-actions button::-moz-focus-inner, .pjax-error .form-actions button::-moz-focus-inner, .elder-add-form .form-actions button::-moz-focus-inner, .elder-edit-form .form-actions button::-moz-focus-inner, .post-add-form .form-actions button::-moz-focus-inner, .village-landing .formfield .action-betasignup::-moz-focus-inner {
   padding: 0 !important;
   margin: -1px !important;
 }
@@ -554,43 +554,6 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   clear: both;
 }
 
-.formfield-help {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
-  display: block;
-  clear: both;
-  margin: 0;
-  color: #93a1a1;
-  font-style: italic;
-}
-
-.formfield-optional {
-  position: absolute;
-  clip: rect(0 0 0 0);
-  overflow: hidden;
-  margin: -1px;
-  padding: 0;
-  height: 1px;
-  width: 1px;
-  border: 0;
-}
-
-.form-actions {
-  margin-top: 0.63889em;
-  padding-top: 0em;
-  padding-bottom: 0em;
-  margin-bottom: 0.63889em;
-  position: relative;
-  clear: both;
-  text-align: right;
-}
-.form-actions p {
-  font-size: 0.77778em;
-  line-height: 1.64286em;
-  display: inline-block;
-  margin: 0 0.4em 0.82143em 0;
-}
-
 .iqtest {
   margin-bottom: 2.55556em;
 }
@@ -602,43 +565,74 @@ input[type="text"], input[type="password"], input[type="email"], input[type="url
   font-style: italic;
 }
 
-[type="checkbox"], [type="radio"] {
+.main-login [type="checkbox"], .village-landing [type="checkbox"], .village-add-form [type="checkbox"], .dashboard [type="checkbox"], .pjax-error [type="checkbox"], .elder-add-form [type="checkbox"], .elder-edit-form [type="checkbox"], .post-add-form [type="checkbox"], .main-login [type="radio"], .village-landing [type="radio"], .village-add-form [type="radio"], .dashboard [type="radio"], .pjax-error [type="radio"], .elder-add-form [type="radio"], .elder-edit-form [type="radio"], .post-add-form [type="radio"] {
   display: none;
 }
-.lt-ie9 [type="checkbox"], .lt-ie9 [type="radio"] {
+.lt-ie9 .main-login [type="checkbox"], .lt-ie9 .village-landing [type="checkbox"], .lt-ie9 .village-add-form [type="checkbox"], .lt-ie9 .dashboard [type="checkbox"], .lt-ie9 .pjax-error [type="checkbox"], .lt-ie9 .elder-add-form [type="checkbox"], .lt-ie9 .elder-edit-form [type="checkbox"], .lt-ie9 .post-add-form [type="checkbox"], .lt-ie9 .main-login [type="radio"], .lt-ie9 .village-landing [type="radio"], .lt-ie9 .village-add-form [type="radio"], .lt-ie9 .dashboard [type="radio"], .lt-ie9 .pjax-error [type="radio"], .lt-ie9 .elder-add-form [type="radio"], .lt-ie9 .elder-edit-form [type="radio"], .lt-ie9 .post-add-form [type="radio"] {
   display: inline;
 }
-[type="checkbox"] + label:before, [type="radio"] + label:before {
+.main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before {
   margin-left: .4em;
   color: #586e75;
 }
-[type="checkbox"]:checked + label:before, [type="radio"]:checked + label:before {
+.main-login [type="checkbox"]:checked + label:before, .village-landing [type="checkbox"]:checked + label:before, .village-add-form [type="checkbox"]:checked + label:before, .dashboard [type="checkbox"]:checked + label:before, .pjax-error [type="checkbox"]:checked + label:before, .elder-add-form [type="checkbox"]:checked + label:before, .elder-edit-form [type="checkbox"]:checked + label:before, .post-add-form [type="checkbox"]:checked + label:before, .main-login [type="radio"]:checked + label:before, .village-landing [type="radio"]:checked + label:before, .village-add-form [type="radio"]:checked + label:before, .dashboard [type="radio"]:checked + label:before, .pjax-error [type="radio"]:checked + label:before, .elder-add-form [type="radio"]:checked + label:before, .elder-edit-form [type="radio"]:checked + label:before, .post-add-form [type="radio"]:checked + label:before {
   color: #268bd2;
 }
-[type="checkbox"]:focus + label, [type="radio"]:focus + label {
+.main-login [type="checkbox"]:focus + label, .village-landing [type="checkbox"]:focus + label, .village-add-form [type="checkbox"]:focus + label, .dashboard [type="checkbox"]:focus + label, .pjax-error [type="checkbox"]:focus + label, .elder-add-form [type="checkbox"]:focus + label, .elder-edit-form [type="checkbox"]:focus + label, .post-add-form [type="checkbox"]:focus + label, .main-login [type="radio"]:focus + label, .village-landing [type="radio"]:focus + label, .village-add-form [type="radio"]:focus + label, .dashboard [type="radio"]:focus + label, .pjax-error [type="radio"]:focus + label, .elder-add-form [type="radio"]:focus + label, .elder-edit-form [type="radio"]:focus + label, .post-add-form [type="radio"]:focus + label {
   color: #002b36;
 }
-
-label {
+.main-login label, .village-landing label, .village-add-form label, .dashboard label, .pjax-error label, .elder-add-form label, .elder-edit-form label, .post-add-form label {
   display: block;
   color: #586e75;
 }
-label:first-letter {
+.main-login label:first-letter, .village-landing label:first-letter, .village-add-form label:first-letter, .dashboard label:first-letter, .pjax-error label:first-letter, .elder-add-form label:first-letter, .elder-edit-form label:first-letter, .post-add-form label:first-letter {
   text-transform: uppercase;
 }
-
-input[type="text"], input[type="password"], input[type="email"], input[type="url"], input[type="tel"], input[type="date"], input[type="datetime"], input[type="datetime-local"], input[type="month"], input[type="week"], input[type="time"], input[type="number"], input[type="search"], input[type="color"] {
+.main-login input[type="text"], .village-landing input[type="text"], .village-add-form input[type="text"], .dashboard input[type="text"], .pjax-error input[type="text"], .elder-add-form input[type="text"], .elder-edit-form input[type="text"], .post-add-form input[type="text"], .main-login input[type="password"], .village-landing input[type="password"], .village-add-form input[type="password"], .dashboard input[type="password"], .pjax-error input[type="password"], .elder-add-form input[type="password"], .elder-edit-form input[type="password"], .post-add-form input[type="password"], .main-login input[type="email"], .village-landing input[type="email"], .village-add-form input[type="email"], .dashboard input[type="email"], .pjax-error input[type="email"], .elder-add-form input[type="email"], .elder-edit-form input[type="email"], .post-add-form input[type="email"], .main-login input[type="url"], .village-landing input[type="url"], .village-add-form input[type="url"], .dashboard input[type="url"], .pjax-error input[type="url"], .elder-add-form input[type="url"], .elder-edit-form input[type="url"], .post-add-form input[type="url"], .main-login input[type="tel"], .village-landing input[type="tel"], .village-add-form input[type="tel"], .dashboard input[type="tel"], .pjax-error input[type="tel"], .elder-add-form input[type="tel"], .elder-edit-form input[type="tel"], .post-add-form input[type="tel"], .main-login input[type="date"], .village-landing input[type="date"], .village-add-form input[type="date"], .dashboard input[type="date"], .pjax-error input[type="date"], .elder-add-form input[type="date"], .elder-edit-form input[type="date"], .post-add-form input[type="date"], .main-login input[type="datetime"], .village-landing input[type="datetime"], .village-add-form input[type="datetime"], .dashboard input[type="datetime"], .pjax-error input[type="datetime"], .elder-add-form input[type="datetime"], .elder-edit-form input[type="datetime"], .post-add-form input[type="datetime"], .main-login input[type="datetime-local"], .village-landing input[type="datetime-local"], .village-add-form input[type="datetime-local"], .dashboard input[type="datetime-local"], .pjax-error input[type="datetime-local"], .elder-add-form input[type="datetime-local"], .elder-edit-form input[type="datetime-local"], .post-add-form input[type="datetime-local"], .main-login input[type="month"], .village-landing input[type="month"], .village-add-form input[type="month"], .dashboard input[type="month"], .pjax-error input[type="month"], .elder-add-form input[type="month"], .elder-edit-form input[type="month"], .post-add-form input[type="month"], .main-login input[type="week"], .village-landing input[type="week"], .village-add-form input[type="week"], .dashboard input[type="week"], .pjax-error input[type="week"], .elder-add-form input[type="week"], .elder-edit-form input[type="week"], .post-add-form input[type="week"], .main-login input[type="time"], .village-landing input[type="time"], .village-add-form input[type="time"], .dashboard input[type="time"], .pjax-error input[type="time"], .elder-add-form input[type="time"], .elder-edit-form input[type="time"], .post-add-form input[type="time"], .main-login input[type="number"], .village-landing input[type="number"], .village-add-form input[type="number"], .dashboard input[type="number"], .pjax-error input[type="number"], .elder-add-form input[type="number"], .elder-edit-form input[type="number"], .post-add-form input[type="number"], .main-login input[type="search"], .village-landing input[type="search"], .village-add-form input[type="search"], .dashboard input[type="search"], .pjax-error input[type="search"], .elder-add-form input[type="search"], .elder-edit-form input[type="search"], .post-add-form input[type="search"], .main-login input[type="color"], .village-landing input[type="color"], .village-add-form input[type="color"], .dashboard input[type="color"], .pjax-error input[type="color"], .elder-add-form input[type="color"], .elder-edit-form input[type="color"], .post-add-form input[type="color"] {
   margin: 0;
   min-height: 2.46429em;
 }
-
-textarea {
+.main-login textarea, .village-landing textarea, .village-add-form textarea, .dashboard textarea, .pjax-error textarea, .elder-add-form textarea, .elder-edit-form textarea, .post-add-form textarea {
   -webkit-transition: 200ms min-height;
   -moz-transition: 200ms min-height;
   -ms-transition: 200ms min-height;
   -o-transition: 200ms min-height;
   transition: 200ms min-height;
   min-height: 2.46429em;
+}
+.main-login .formfield-help, .village-landing .formfield-help, .village-add-form .formfield-help, .dashboard .formfield-help, .pjax-error .formfield-help, .elder-add-form .formfield-help, .elder-edit-form .formfield-help, .post-add-form .formfield-help {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  display: block;
+  clear: both;
+  margin: 0;
+  color: #93a1a1;
+  font-style: italic;
+}
+.main-login .formfield-optional, .village-landing .formfield-optional, .village-add-form .formfield-optional, .dashboard .formfield-optional, .pjax-error .formfield-optional, .elder-add-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
+}
+.main-login .form-actions, .village-landing .form-actions, .village-add-form .form-actions, .dashboard .form-actions, .pjax-error .form-actions, .elder-add-form .form-actions, .elder-edit-form .form-actions, .post-add-form .form-actions {
+  margin-top: 0.63889em;
+  padding-top: 0em;
+  padding-bottom: 0em;
+  margin-bottom: 0.63889em;
+  position: relative;
+  clear: both;
+  text-align: right;
+}
+.main-login .form-actions p, .village-landing .form-actions p, .village-add-form .form-actions p, .dashboard .form-actions p, .pjax-error .form-actions p, .elder-add-form .form-actions p, .elder-edit-form .form-actions p, .post-add-form .form-actions p {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  display: inline-block;
+  margin: 0 0.4em 0.82143em 0;
 }
 
 button {
@@ -857,13 +851,13 @@ button {
 }
 @media (min-width: 43.875em) {
   .brand {
-    width: 39.24051%;
+    width: 49.36709%;
     float: left;
     margin-right: 1.26582%;
   }
 }
 .lt-ie9 .brand {
-  width: 39.24051%;
+  width: 49.36709%;
   float: left;
   margin-right: 1.26582%;
 }
@@ -891,18 +885,78 @@ button {
 }
 @media (min-width: 43.875em) {
   .meta {
-    width: 18.98734%;
+    width: 24.05063%;
     float: right;
     margin-right: 0;
   }
 }
 .lt-ie9 .meta {
-  width: 18.98734%;
+  width: 24.05063%;
   float: right;
   margin-right: 0;
 }
 .meta span, .meta a {
   display: block;
+}
+.meta .helplink {
+  font-size: 14px;
+  padding: 1.5;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.27778em;
+  -webkit-border-radius: 0.125em;
+  -moz-border-radius: 0.125em;
+  -ms-border-radius: 0.125em;
+  -o-border-radius: 0.125em;
+  border-radius: 0.125em;
+  background-color: #cb4b16;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eb7443), color-stop(70%, #cb4b16));
+  background: -webkit-linear-gradient(#eb7443, #cb4b16 70%);
+  background: -moz-linear-gradient(#eb7443, #cb4b16 70%);
+  background: -o-linear-gradient(#eb7443, #cb4b16 70%);
+  background: -ms-linear-gradient(#eb7443, #cb4b16 70%);
+  background: linear-gradient(#eb7443, #cb4b16 70%);
+  -webkit-box-shadow: #f2a788 0 1px 0 inset;
+  -moz-box-shadow: #f2a788 0 1px 0 inset;
+  box-shadow: #f2a788 0 1px 0 inset;
+  border: 1px solid #b44214;
+  color: #fdf6e3;
+  text-shadow: #963710 0 -1px 0;
+  margin-top: 0.20536em;
+  float: right;
+  line-height: 1em;
+  margin-left: 1em;
+  padding-left: 0.82143em;
+  padding-right: 0.82143em;
+}
+.meta .helplink:hover {
+  text-decoration: none;
+}
+.meta .helplink:hover {
+  background-color: #b44214;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(3%, #e8632c), color-stop(75%, #b44214));
+  background: -webkit-linear-gradient(#e8632c 3%, #b44214 75%);
+  background: -moz-linear-gradient(#e8632c 3%, #b44214 75%);
+  background: -o-linear-gradient(#e8632c 3%, #b44214 75%);
+  background: -ms-linear-gradient(#e8632c 3%, #b44214 75%);
+  background: linear-gradient(#e8632c 3%, #b44214 75%);
+}
+.meta .helplink:active {
+  -webkit-box-shadow: #a63d12 0 1px 2px inset;
+  -moz-box-shadow: #a63d12 0 1px 2px inset;
+  box-shadow: #a63d12 0 1px 2px inset;
+}
+.meta .helplink.disabled, .meta .helplink[disabled] {
+  opacity: 0.6;
+  background: #cb4b16;
+  cursor: default;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.meta .helplink:link, .meta .helplink:visited {
+  color: #fdf6e3;
 }
 .meta button {
   width: 100%;
@@ -925,7 +979,7 @@ button {
   left: 0;
   right: 0;
   top: 100%;
-  margin: -2px -0.41071em 0;
+  margin: -2px 0 0;
   border: 2px solid #073642;
   background: #586e75;
   text-align: left;
@@ -1111,11 +1165,11 @@ button {
     top: 0;
     right: 116.28571%;
   }
-  .main-login input {
+  .main-login .login-form input {
     min-height: 0;
     line-height: 1em;
   }
-  .main-login button {
+  .main-login .login-form button {
     font-size: 14px;
     padding: 0.41071em;
     display: inline-block;
@@ -1144,10 +1198,10 @@ button {
     background-color: #268bd2;
     width: 100%;
   }
-  .main-login button:hover {
+  .main-login .login-form button:hover {
     text-decoration: none;
   }
-  .main-login button:hover {
+  .main-login .login-form button:hover {
     background-color: #445258;
     background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a6d75), color-stop(100%, #445258));
     background: -webkit-linear-gradient(#5a6d75, #445258);
@@ -1156,12 +1210,12 @@ button {
     background: -ms-linear-gradient(#5a6d75, #445258);
     background: linear-gradient(#5a6d75, #445258);
   }
-  .main-login button:active {
+  .main-login .login-form button:active {
     -webkit-box-shadow: #3d4a4f 0 1px 2px inset;
     -moz-box-shadow: #3d4a4f 0 1px 2px inset;
     box-shadow: #3d4a4f 0 1px 2px inset;
   }
-  .main-login button.disabled, .main-login button[disabled] {
+  .main-login .login-form button.disabled, .main-login .login-form button[disabled] {
     opacity: 0.6;
     background: #4f6066;
     cursor: default;
@@ -1318,13 +1372,13 @@ button {
 
 .team {
   padding-top: 2.55556em;
-  background: #002b36 url('../images/landing/space.png?1343065448');
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1343065448');
-  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
-  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1343065448');
+  background: #002b36 url('landing/space.png?1343065448');
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('landing/space.png?1343065448');
+  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
+  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
+  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
+  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
+  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1370,7 +1424,7 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1347802112');
+  background: url('rgbapng/586e7540.png?1347802112');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1569,7 +1623,7 @@ button {
 }
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/85990060.png?1347998213');
+  background: url('rgbapng/85990060.png?1347998213');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1594,7 +1648,7 @@ button {
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
-  background: url('../images/rgbapng/268bd240.png?1348163272');
+  background: url('rgbapng/268bd240.png?1348163272');
   background: rgba(38, 139, 210, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
@@ -1698,7 +1752,7 @@ button {
   padding-right: 2.12766%;
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
-  background: url('../images/rgbapng/586e757f.png?1347998213');
+  background: url('rgbapng/586e757f.png?1347998213');
   background: rgba(88, 110, 117, 0.5);
   color: #fdf6e3;
 }
@@ -1758,7 +1812,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('../images/start-arrow.png?1347802112') no-repeat left bottom;
+  background: url('start-arrow.png?1347802112') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -1794,7 +1848,7 @@ button {
 }
 
 .listitem-select:link, .listitem-select:visited {
-  background: url('../images/rgbapng/eee8d540.png?1347998213');
+  background: url('rgbapng/eee8d540.png?1347998213');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -1804,7 +1858,7 @@ button {
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
 }
 .title .listitem-select:link, .title .listitem-select:visited {
-  background: url('../images/rgbapng/268bd240.png?1348163272');
+  background: url('rgbapng/268bd240.png?1348163272');
   background: rgba(38, 139, 210, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(38, 139, 210, 0.5)), color-stop(100%, rgba(38, 139, 210, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
@@ -1816,7 +1870,7 @@ button {
   color: #073642;
 }
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
-  background: url('../images/rgbapng/eee8d57f.png?1347998213');
+  background: url('rgbapng/eee8d57f.png?1347998213');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -1826,7 +1880,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1348841142');
+  background: url('rgbapng/268bd27f.png?1349205019');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
@@ -1837,20 +1891,22 @@ button {
 }
 .listitem-select .unread {
   display: none;
-  -webkit-border-radius: 30em;
-  -moz-border-radius: 30em;
-  -ms-border-radius: 30em;
-  -o-border-radius: 30em;
-  border-radius: 30em;
-  -webkit-box-shadow: #073642 0 0 1px;
-  -moz-box-shadow: #073642 0 0 1px;
-  box-shadow: #073642 0 0 1px;
+  font-size: 1em;
+  line-height: 1.23214em;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -ms-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
   position: absolute;
-  right: 0.512em;
-  min-width: 1.64286em;
+  right: 9px;
+  top: 0.61607em;
+  padding: 0 .25em;
   background: #d33682;
   color: #fdf6e3;
-  font-weight: bold;
   text-align: center;
 }
 .listitem-select .unread.zero {
@@ -2081,7 +2137,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('../images/rgbapng/93a1a140.png?1348586467');
+  background: url('rgbapng/93a1a140.png?1348586467');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2227,7 +2283,7 @@ button {
   color: #657b83;
 }
 .village-elders .elder.declined {
-  background: url('../images/rgbapng/dc322f20.png?1348586467');
+  background: url('rgbapng/dc322f20.png?1348586467');
   background: rgba(220, 50, 47, 0.125);
 }
 .village-elders .elder.declined:before {
@@ -2347,7 +2403,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1347802112');
+  background: url('rgbapng/002b3640.png?1347802112');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;

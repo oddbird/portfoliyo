@@ -279,8 +279,9 @@ def test_code_signup_role():
 
 def test_get_teacher_and_name():
     """Gets teacher and parent name if text starts with teacher code."""
-    teacher = factories.ProfileFactory.create(school_staff=True, code="ABCDEF")
+    t = factories.ProfileFactory.create(school_staff=True, code="ABCDEF")
 
-    assert hook.get_teacher_and_name("abcdef foo") == (teacher, "foo")
-    assert hook.get_teacher_and_name("ABCDEF") == (teacher, '')
+    assert hook.get_teacher_and_name("abcdef foo") == (t, "foo")
+    assert hook.get_teacher_and_name("ABCDEF") == (t, '')
     assert hook.get_teacher_and_name("ACDC bar") == (None, '')
+    assert hook.get_teacher_and_name("ABCDEF. some name") == (t, "some name")

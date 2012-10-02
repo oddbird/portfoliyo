@@ -173,7 +173,8 @@ def get_teacher_and_name(body):
         possible_code = body
         parent_name = ''
     try:
-        teacher = model.Profile.objects.get(code=possible_code.upper())
+        teacher = model.Profile.objects.get(
+            code=possible_code.rstrip('.,:;').upper())
     except model.Profile.DoesNotExist:
         return (None, '')
     return (teacher, parent_name)
