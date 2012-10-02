@@ -45,6 +45,10 @@ $village-nav-action-color : $base03;
       font-weight: bold;
       color: $back;
     }
+    .group & {
+      @extend %icon;
+      @extend %icon-users;
+    }
   }
   #{$focus} {
     @include rgba-background(rgba($village-nav-bg,.5));
@@ -123,18 +127,18 @@ $village-nav-action-color : $base03;
 
 .action-back.groups {
   @extend %icon-replace;
-  @extend %icon-users;
+  @extend %icon-arrow-left;
   @include box-sizing(content-box);
+  @include leader($village-nav-rhythm/2,$village-list-size);
+  @include border-radius(.125em);
+  @include rgba-background(rgba($back,.5));
   position: relative;
   float: left;
-  padding: rhythm($village-nav-rhythm,$village-list-size);
-  padding-left: 0;
+  margin-right: .4em;
+  padding: rhythm($village-nav-rhythm/2,$village-list-size) rhythm($village-nav-rhythm,$village-list-size);
   z-index: 6;
-  #{$link} { color: $back; }
-  #{$focus} {
-    @extend %icon-arrow-left;
-    color: $accent;
-  }
+  color: $base3;
+  #{$focus} { background: $accent; }
 }
 
 .additem-link {

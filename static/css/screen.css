@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -194,7 +194,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\25ef";
 }
 
-.action-back.groups:before {
+.group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\265b";
 }
 
@@ -274,7 +274,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\21ba";
 }
 
-.action-back.groups:focus:before, .action-back.groups:hover:before, .action-back.groups:active:before {
+.action-back.groups:before {
   content: "\2190";
 }
 
@@ -1888,7 +1888,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1349208770');
+  background: url('../images/rgbapng/268bd27f.png?1349210755');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
@@ -2003,17 +2003,23 @@ button {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
+  margin-top: 0.20536em;
+  -webkit-border-radius: 0.125em;
+  -moz-border-radius: 0.125em;
+  -ms-border-radius: 0.125em;
+  -o-border-radius: 0.125em;
+  border-radius: 0.125em;
+  background: url('../images/rgbapng/0736427f.png?1349211952');
+  background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
-  padding: 0.41071em;
-  padding-left: 0;
+  margin-right: .4em;
+  padding: 0.20536em 0.41071em;
   z-index: 6;
-}
-.action-back.groups, .action-back.groups:link, .action-back.groups:visited {
-  color: #073642;
+  color: #fdf6e3;
 }
 .action-back.groups:focus, .action-back.groups:hover, .action-back.groups:active {
-  color: #d33682;
+  background: #d33682;
 }
 
 .additem-link {
