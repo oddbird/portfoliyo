@@ -324,7 +324,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.meta span, .meta a, .village-landing .formfield .action-betasignup {
+.meta .settingslink, .useractions a, .useractions button, .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -851,13 +851,13 @@ button {
 }
 @media (min-width: 43.875em) {
   .brand {
-    width: 49.36709%;
+    width: 29.11392%;
     float: left;
     margin-right: 1.26582%;
   }
 }
 .lt-ie9 .brand {
-  width: 49.36709%;
+  width: 29.11392%;
   float: left;
   margin-right: 1.26582%;
 }
@@ -929,6 +929,7 @@ button {
   margin-left: 1em;
   padding-left: 0.82143em;
   padding-right: 0.82143em;
+  text-align: left;
 }
 .meta .helplink:hover {
   text-decoration: none;
