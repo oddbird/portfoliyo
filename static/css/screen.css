@@ -2013,6 +2013,7 @@ button {
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
+  margin-left: -0.41071em;
   margin-right: .4em;
   padding: 0.20536em 0.41071em;
   z-index: 6;
