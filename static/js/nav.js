@@ -155,11 +155,27 @@ var PYO = (function (PYO, $) {
         listitem.html(original);
     };
 
+    PYO.groupHandlers = function () {
+        var nav = $('.village-nav');
+        nav.on('click', '.group-link', function (e) {
+            e.preventDefault();
+            $(this).blur();
+            var url = $(this).attr('href');
+            var name = $(this).data('group-name');
+            PYO.fetchStudents(url, name);
+        });
+
+        nav.on('click', '.groups.action-back', function (e) {
+            e.preventDefault();
+            PYO.fetchGroups();
+        });
+    };
+
     PYO.fetchGroups = function () {
         var nav = $('.village-nav');
         var url = nav.data('groups-url');
         var studentsUrl = nav.data('students-url');
-        var replaceGroups = function (data) {
+        var replaceNav = function (data) {
             if (data) {
                 var allStudents = {
                     name: 'All Students',
@@ -173,12 +189,30 @@ var PYO = (function (PYO, $) {
         };
 
         if (url) {
-            $.get(url, replaceGroups);
+            $.get(url, replaceNav);
+        }
+    };
+
+    PYO.fetchStudents = function (url, name) {
+        if (url && name) {
+            var nav = $('.village-nav');
+            var replaceNav = function (data) {
+                if (data) {
+                    data.group_name = name;
+                    data.group_uri = url;
+                    data.staff = nav.data('is-staff');
+                    var students = ich.student_list(data);
+                    nav.html(students);
+                }
+            };
+
+            $.get(url, replaceNav);
         }
     };
 
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
+            PYO.groupHandlers();
             PYO.fetchGroups();
         }
     };
