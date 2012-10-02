@@ -83,91 +83,94 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
  */
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round-webfont.eot');
-  src: url('/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round-webfont.eot');
+  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_semibold-webfont.eot');
-  src: url('/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_bold-webfont.eot');
-  src: url('/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_bold-webfont.eot');
+  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_it-webfont.eot');
-  src: url('/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_it-webfont.eot');
+  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('/SquareSerif-Book-webfont.eot');
-  src: url('/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  src: url('../fonts/SquareSerif-Book-webfont.eot');
+  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('/SquareSerif-Bold-webfont.eot');
-  src: url('/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "pyo";
-  src: url('/pyo.eot');
-  src: url('/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('../fonts/pyo.eot');
+  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .main-login [type="checkbox"] + label:before, .village-landing [type="checkbox"] + label:before, .village-add-form [type="checkbox"] + label:before, .dashboard [type="checkbox"] + label:before, .pjax-error [type="checkbox"] + label:before, .elder-add-form [type="checkbox"] + label:before, .elder-edit-form [type="checkbox"] + label:before, .post-add-form [type="checkbox"] + label:before, .main-login [type="radio"] + label:before, .village-landing [type="radio"] + label:before, .village-add-form [type="radio"] + label:before, .dashboard [type="radio"] + label:before, .pjax-error [type="radio"] + label:before, .elder-add-form [type="radio"] + label:before, .elder-edit-form [type="radio"] + label:before, .post-add-form [type="radio"] + label:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, .add-row, .remove-row, .listitem-actions a, .listitem-actions button, .sms-info .summary, .getting-started .mobile, #messages .close {
+.main-login .reset-link, .add-row, .remove-row, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, .getting-started .mobile, #messages .close {
   display: inline-block;
   position: relative;
   min-width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .listitem-actions a:focus, .listitem-actions button:focus, .sms-info .summary:focus, .getting-started .mobile:focus, #messages .close:focus {
+.main-login .reset-link:focus, .add-row:focus, .remove-row:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus, .getting-started .mobile:focus, #messages .close:focus {
   outline: 0;
 }
-.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .sms-info .summary:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
+.main-login .reset-link:focus:before, .add-row:focus:before, .remove-row:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before {
+.main-login .reset-link:before, .add-row:before, .remove-row:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before {
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 0;
+  right: 0;
   text-indent: 0;
   margin-right: 0;
+  padding: inherit;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -191,7 +194,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\25ef";
 }
 
-.listitem-actions .action-back.groups:before {
+.action-back.groups:before {
   content: "\265b";
 }
 
@@ -269,6 +272,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .listitem-actions .undo-action-remove:before {
   content: "\21ba";
+}
+
+.action-back.groups:focus:before, .action-back.groups:hover:before, .action-back.groups:active:before {
+  content: "\2190";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -444,7 +451,7 @@ optgroup {
   -webkit-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   -moz-box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
   box-shadow: inset rgba(38, 139, 210, 0.5) 0 0 0.512em;
-  background: url('rgbapng/ffffff40.png?1347802112');
+  background: url('../images/rgbapng/ffffff40.png?1348763889');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -1373,13 +1380,13 @@ button {
 
 .team {
   padding-top: 2.55556em;
-  background: #002b36 url('landing/space.png?1343065448');
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('landing/space.png?1343065448');
-  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
-  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
-  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
-  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
-  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1343065448');
+  background: #002b36 url('../images/landing/space.png?1342738619');
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1342738619');
+  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1425,7 +1432,7 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('rgbapng/586e7540.png?1347802112');
+  background: url('../images/rgbapng/586e7540.png?1348763889');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1624,7 +1631,7 @@ button {
 }
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
-  background: url('rgbapng/85990060.png?1347998213');
+  background: url('../images/rgbapng/85990060.png?1348763889');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1649,7 +1656,7 @@ button {
   padding-left: 2.12766%;
   margin-right: -2.12766%;
   padding-right: 2.12766%;
-  background: url('rgbapng/268bd240.png?1348163272');
+  background: url('../images/rgbapng/268bd240.png?1348763889');
   background: rgba(38, 139, 210, 0.25);
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
@@ -1753,7 +1760,7 @@ button {
   padding-right: 2.12766%;
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
-  background: url('rgbapng/586e757f.png?1347998213');
+  background: url('../images/rgbapng/586e757f.png?1348763889');
   background: rgba(88, 110, 117, 0.5);
   color: #fdf6e3;
 }
@@ -1813,7 +1820,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('start-arrow.png?1347802112') no-repeat left bottom;
+  background: url('../images/start-arrow.png?1347746559') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -1849,7 +1856,7 @@ button {
 }
 
 .listitem-select:link, .listitem-select:visited {
-  background: url('rgbapng/eee8d540.png?1347998213');
+  background: url('../images/rgbapng/eee8d540.png?1348763889');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -1859,7 +1866,7 @@ button {
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
 }
 .title .listitem-select:link, .title .listitem-select:visited {
-  background: url('rgbapng/268bd240.png?1348163272');
+  background: url('../images/rgbapng/268bd240.png?1348763889');
   background: rgba(38, 139, 210, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(38, 139, 210, 0.5)), color-stop(100%, rgba(38, 139, 210, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
@@ -1871,7 +1878,7 @@ button {
   color: #073642;
 }
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
-  background: url('rgbapng/eee8d57f.png?1347998213');
+  background: url('../images/rgbapng/eee8d57f.png?1348763889');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -1881,7 +1888,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('rgbapng/268bd27f.png?1349205019');
+  background: url('../images/rgbapng/268bd27f.png?1349208770');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
@@ -1975,32 +1982,6 @@ button {
   top: 50%;
   margin-top: -0.41071em;
 }
-.title .listitem-actions {
-  position: relative;
-  background: #002b36;
-  padding-left: 0;
-}
-.title .listitem-actions:after, .title .listitem-actions:before {
-  right: 100%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-.title .listitem-actions:after {
-  border-right-color: #002b36;
-  border-width: 1.23214em;
-  top: 50%;
-  margin-top: -1.23214em;
-}
-.title .listitem-actions:before {
-  border-right-color: false;
-  border-width: 1.23214em;
-  top: 50%;
-  margin-top: -1.23214em;
-}
 .listitem-actions form {
   display: inline;
 }
@@ -2016,6 +1997,23 @@ button {
 }
 .listitem-actions .action-save {
   display: none;
+}
+
+.action-back.groups {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  position: relative;
+  float: left;
+  padding: 0.41071em;
+  padding-left: 0;
+  z-index: 6;
+}
+.action-back.groups, .action-back.groups:link, .action-back.groups:visited {
+  color: #073642;
+}
+.action-back.groups:focus, .action-back.groups:hover, .action-back.groups:active {
+  color: #d33682;
 }
 
 .additem-link {
@@ -2138,7 +2136,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('rgbapng/93a1a140.png?1348586467');
+  background: url('../images/rgbapng/93a1a140.png?1348763889');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2284,7 +2282,7 @@ button {
   color: #657b83;
 }
 .village-elders .elder.declined {
-  background: url('rgbapng/dc322f20.png?1348586467');
+  background: url('../images/rgbapng/dc322f20.png?1348769813');
   background: rgba(220, 50, 47, 0.125);
 }
 .village-elders .elder.declined:before {
@@ -2404,7 +2402,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('rgbapng/002b3640.png?1347802112');
+  background: url('../images/rgbapng/002b3640.png?1348763889');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
