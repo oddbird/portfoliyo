@@ -320,7 +320,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.meta span, .meta a, .village-landing .formfield .action-betasignup {
+.meta .settingslink, .useractions a, .useractions button, .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -925,6 +925,7 @@ button {
   margin-left: 1em;
   padding-left: 0.82143em;
   padding-right: 0.82143em;
+  text-align: left;
 }
 .meta .helplink:hover {
   text-decoration: none;

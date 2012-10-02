@@ -67,10 +67,10 @@ $banner-leading : 1 + $banner-rhythm*2;
     @extend %icon;
     @extend %icon-settings;
     @extend %banner-item;
-    @extend %ellipsis;
     display: block;
   }
 
+  .settingslink { @extend %ellipsis; }
   .helplink {
     @extend %icon-help;
     @include sassy-button-structure($font-size: $banner-size, $padding: $banner-leading);
@@ -81,6 +81,7 @@ $banner-leading : 1 + $banner-rhythm*2;
     margin-left: 1em;
     padding-left: rhythm(.5,$banner-size);
     padding-right: rhythm(.5,$banner-size);
+    text-align: left;
     #{$link} { color: $base3; }
   }
   [href*="edit"] { @extend %icon-settings; }
@@ -112,7 +113,10 @@ $useraction-background    : $base01;
   z-index: 900;
   display: none;
 
-  a, button { padding: rhythm(.5, $useraction-size); }
+  a, button {
+    @extend %ellipsis;
+    padding: rhythm(.5, $useraction-size);
+  }
   .meta:hover & { display: block; }
 }
 
