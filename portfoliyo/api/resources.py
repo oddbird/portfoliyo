@@ -83,6 +83,7 @@ class ProfileResource(PortfoliyoResource):
             model.Profile.objects.filter(deleted=False).select_related('user'))
         resource_name = 'user'
         fields = [
+            'id',
             'name',
             'email',
             'phone',
@@ -136,7 +137,7 @@ class GroupResource(PortfoliyoResource):
     class Meta(PortfoliyoResource.Meta):
         queryset = model.Group.objects.all()
         resource_name = 'group'
-        fields = ['name', 'owner', 'members']
+        fields = ['id', 'name', 'owner', 'members']
         filtering = {
             'owner': ['exact'],
             }
@@ -152,6 +153,7 @@ class PostResource(PortfoliyoResource):
         queryset = model.Post.objects.all()
         resource_name = 'post'
         fields = [
+            'id',
             'author',
             'timestamp',
             'student',
