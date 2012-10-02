@@ -416,7 +416,7 @@ class TestJsonPosts(object):
         # length limit is 160 - len('Fred: ')
         assert response.json == {
             'success': False,
-            'error': "Posts are limited to 154 characters."
+            'error': "Posts are limited to 153 characters."
             }
 
 

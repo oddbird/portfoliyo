@@ -82,6 +82,9 @@ class Post(models.Model):
 
         # notify highlighted SMS users
         meta_highlights = []
+        sender_rel = post.get_relationship()
+        suffix = text_notification_suffix(sender_rel)
+        sms_body = post.original_text + suffix
         for rel, mentioned_as in highlights.items():
             highlight_data = {
                 'id': rel.elder.id,
@@ -96,10 +99,10 @@ class Post(models.Model):
                 }
             if rel.elder.user.is_active and rel.elder.phone:
                 if rel.elder.phone != in_reply_to:
-                    sender_rel = post.get_relationship()
-                    prefix = text_notification_prefix(sender_rel)
-                    sms_body = prefix + post.original_text
-                    sms.send(rel.elder.phone, sms_body)
+                    sms.send(
+                        rel.elder.phone,
+                        strip_initial_mention(sms_body, mentioned_as),
+                        )
                 post.to_sms = True
                 highlight_data['sms_sent'] = True
 
@@ -124,13 +127,18 @@ class Post(models.Model):
     def get_relationship(self):
         """The Relationship object between the author and the student."""
         try:
-            return user_models.Relationship.objects.select_related().get(
-                kind=user_models.Relationship.KIND.elder,
-                from_profile=self.author,
-                to_profile=self.student,
-                )
-        except user_models.Relationship.DoesNotExist:
-            return None
+            return self._rel
+        except AttributeError:
+            try:
+                self._rel = user_models.Relationship.objects.select_related(
+                    ).get(
+                    kind=user_models.Relationship.KIND.elder,
+                    from_profile=self.author,
+                    to_profile=self.student,
+                    )
+            except user_models.Relationship.DoesNotExist:
+                self._rel = None
+        return self._rel
 
 
 
@@ -242,15 +250,22 @@ def normalize_name(name):
     return name.lower().replace(' ', '')
 
 
-def text_notification_prefix(relationship):
+def text_notification_suffix(relationship):
     """The prefix for texts sent out from this elder/student relationship."""
-    return u'%s: ' % (
+    return u' --%s' % (
         relationship.elder.name or relationship.description_or_role,)
 
 
 def post_char_limit(relationship):
     """Max length for posts from this profile/student relationship."""
-    return 160 - len(text_notification_prefix(relationship))
+    return 160 - len(text_notification_suffix(relationship))
+
+
+def strip_initial_mention(sms_body, mentioned_as):
+    """Given an SMS and a list of highlight names, strip initial mention."""
+    initial_mention_re = re.compile(
+        '^\s*@(%s)\s*' % '|'.join(mentioned_as), re.I)
+    return initial_mention_re.sub(u"", sms_body)
 
 
 

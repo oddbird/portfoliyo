@@ -154,7 +154,7 @@ class TestPostCreate(object):
         post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "John Doe: Hey @father")
+            "+13216540987", "Hey @father --John Doe")
         assert post.to_sms == True
         assert post.meta['highlights'] == [
             {
@@ -208,6 +208,41 @@ class TestPostCreate(object):
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False
         assert post.meta['highlights'][0]['sms_sent'] == False
+
+
+    @mock.patch('portfoliyo.model.village.models.sms.send')
+    def test_elides_initial_mention(self, mock_send_sms):
+        """Initial mention of user elided in text notification to that user."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__name="John Doe",
+            from_profile__phone=None,
+            )
+        rel2 = factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__user__is_active=True,
+            description="Father",
+            )
+
+        post = models.Post.create(
+            rel1.elder, rel1.student, '@father are you there?')
+
+        mock_send_sms.assert_called_with(
+            "+13216540987", "are you there? --John Doe")
+        assert post.to_sms == True
+        assert post.meta['highlights'] == [
+            {
+                'id': rel2.elder.id,
+                'mentioned_as': ['father'],
+                'role': 'Father',
+                'name': '',
+                'phone': "+13216540987",
+                'email': None,
+                'is_active': True,
+                'declined': False,
+                'sms_sent': True,
+                }
+            ]
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -428,27 +463,42 @@ def test_get_highlight_names():
 
 
 
-def test_text_notification_prefix_elder_has_name():
-    """Text notification prefix is elder name followed by ': '."""
+def test_text_notification_suffix_elder_has_name():
+    """Text notification suffix is elder name preceded by ' --'."""
     rel = mock.Mock()
     rel.elder.name = "Foo"
-    assert models.text_notification_prefix(rel) == "Foo: "
+    assert models.text_notification_suffix(rel) == " --Foo"
 
 
 
-def test_text_notification_prefix_no_name():
-    """If elder has no name, text prefix uses relationship role."""
+def test_text_notification_suffix_no_name():
+    """If elder has no name, text suffix uses relationship role."""
     rel = mock.Mock()
     rel.elder.name = ""
     rel.description_or_role = "Math Teacher"
-    assert models.text_notification_prefix(rel) == "Math Teacher: "
+    assert models.text_notification_suffix(rel) == " --Math Teacher"
 
 
 
-@mock.patch('portfoliyo.model.village.models.text_notification_prefix')
-def test_post_char_limit(mock_text_notification_prefix):
-    """Char limit for a post is 160 - length of prefix."""
-    mock_text_notification_prefix.return_value = "a" * 10
+@mock.patch('portfoliyo.model.village.models.text_notification_suffix')
+def test_post_char_limit(mock_text_notification_suffix):
+    """Char limit for a post is 160 - length of suffix."""
+    mock_text_notification_suffix.return_value = "a" * 10
     rel = mock.Mock()
 
     assert models.post_char_limit(rel) == 150
+
+
+def test_strip_initial_mention_case():
+    """strip_initial_mention is case-insensitive."""
+    assert models.strip_initial_mention('@Father foo', ['father']) == 'foo'
+
+
+def test_strip_initial_mention_only_initial():
+    """strip_initial_mention only strips initial mentions."""
+    assert models.strip_initial_mention('hi @dad', ['dad']) == 'hi @dad'
+
+
+def test_strip_initial_mention_only_given():
+    """strip_initial_mention only strips given names."""
+    assert models.strip_initial_mention('@dad hey', ['mom']) == '@dad hey'
