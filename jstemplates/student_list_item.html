@@ -1,15 +1,17 @@
-<li class="listitem student" data-url="{% url village student_id=nav_student.id %}">
+{{# objects }}
+<li class="listitem student" data-url="{{ village_uri }}">
 
-  <a href="{% url village student_id=nav_student.id %}" class="ajax-link listitem-select{% if student == nav_student %} active{% endif %}" data-id="{{ nav_student.id }}">
-    <span class="listitem-name">{{ nav_student }}</span>
-    <span class="unread{# if zero #} zero{# endif #}">0</span>
+  <a href="{{ village_uri }}" class="ajax-link listitem-select" data-id="{{ id }}">
+    <span class="listitem-name">{{ name }}</span>
+    <span class="unread">0</span>
   </a>
 
-  {% if request.user.profile.school_staff %}
+  {{# staff }}
   <div class="listitem-actions">
     <a href="#" class="action-edit" title="edit student name">edit</a>
     <button class="action-save" title="save changes">save</button>
     <button class="action-remove" title="remove student">remove</button>
   </div>
-  {% endif %}
+  {{/ staff }}
 </li>
+{{/ objects }}

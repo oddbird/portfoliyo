@@ -105,13 +105,8 @@ $village-nav-action-color : $base03;
 .listitem-actions {
   @extend %actions-base;
   @include css-arrow(left, rhythm($village-nav-rhythm,$village-list-size), $village-nav-action-color);
-  .title & {
-    @include css-arrow(left, rhythm(.75, $village-list-size), $village-nav-action-color);
-    padding-left: 0;
-  }
 
   form { display: inline; }
-
   a, button {
     @extend %icon-replace;
     @include link(light,true);
@@ -123,8 +118,23 @@ $village-nav-action-color : $base03;
     display: none;
   }
   .action-remove { @extend %icon-trashcan; }
-  .action-back.groups { @extend %icon-users; }
   .undo-action-remove { @extend %icon-undo; }
+}
+
+.action-back.groups {
+  @extend %icon-replace;
+  @extend %icon-users;
+  @include box-sizing(content-box);
+  position: relative;
+  float: left;
+  padding: rhythm($village-nav-rhythm,$village-list-size);
+  padding-left: 0;
+  z-index: 6;
+  #{$link} { color: $back; }
+  #{$focus} {
+    @extend %icon-arrow-left;
+    color: $accent;
+  }
 }
 
 .additem-link {
