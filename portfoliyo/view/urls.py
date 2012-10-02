@@ -2,8 +2,10 @@ from django.conf import settings
 from django.conf.urls.defaults import patterns, url, include
 from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
+from tastypie import api
 
 from .. import admin
+from ..api import resources
 from . import home as home_views
 from . import sms as sms_views
 
@@ -11,6 +13,13 @@ admin.autodiscover()
 
 import session_csrf
 session_csrf.monkeypatch()
+
+
+api_v1 = api.Api(api_name='v1')
+api_v1.register(resources.GroupResource())
+api_v1.register(resources.ProfileResource())
+api_v1.register(resources.PostResource())
+api_v1.register(resources.ElderRelationshipResource())
 
 
 urlpatterns = patterns(
@@ -24,6 +33,7 @@ urlpatterns = patterns(
         ),
     url(r'^student/', include('portfoliyo.view.village.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(api_v1.urls)),
     url(r'^', include('portfoliyo.view.users.urls')),
     )
 

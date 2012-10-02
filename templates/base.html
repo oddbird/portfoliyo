@@ -110,7 +110,7 @@
 <script src="{{ STATIC_URL }}js/landing.js"></script>
 <script src="{{ STATIC_URL }}js/base.js"></script>
 <script src="{{ STATIC_URL }}js/chat.js"></script>
-<script src="{{ STATIC_URL }}js/students.js"></script>
+<script src="{{ STATIC_URL }}js/nav.js"></script>
 <script src="{{ STATIC_URL }}js/init.js"></script>
 {% endcompress %}
 {% endblock js %}
@@ -131,7 +131,7 @@
 {% if SNAPENGAGE_ID %}
 <script type="text/javascript">
 document.write(unescape("%3Cscript src='//www.snapengage.com/snapabug.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">
-SnapABug.addButton("","1","55%");
+SnapABug.init(".helplink");
 </script>
 {% endif %}
 </body>

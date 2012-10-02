@@ -21,7 +21,7 @@ $banner-leading : 1 + $banner-rhythm*2;
 .brand {
   @include adjust-font-size-to($banner-size);
   @include span-columns($half-small);
-  @include at-breakpoint($break) { @include span-columns($left + $right); }
+  @include at-breakpoint($break) { @include span-columns($half-break); }
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
@@ -59,7 +59,7 @@ $banner-leading : 1 + $banner-rhythm*2;
 .meta {
   @include adjust-font-size-to($banner-size);
   @include span-columns($half-small omega);
-  @include at-breakpoint($break) { @include span-columns($right omega); }
+  @include at-breakpoint($break) { @include span-columns($right + 1 omega); }
   position: relative;
   text-align: right;
 
@@ -71,6 +71,18 @@ $banner-leading : 1 + $banner-rhythm*2;
     display: block;
   }
 
+  .helplink {
+    @extend %icon-help;
+    @include sassy-button-structure($font-size: $banner-size, $padding: $banner-leading);
+    @include sassy-button-gradient(matte, $orange);
+    @include leader($banner-rhythm/2, $banner-size);
+    float: right;
+    line-height: 1em;
+    margin-left: 1em;
+    padding-left: rhythm(.5,$banner-size);
+    padding-right: rhythm(.5,$banner-size);
+    #{$link} { color: $base3; }
+  }
   [href*="edit"] { @extend %icon-settings; }
   [href*="password"] { @extend %icon-key; }
   button {
@@ -93,7 +105,7 @@ $useraction-background    : $base01;
   @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
   @include stretch-x;
   top: 100%;
-  margin: - $useraction-border-size rhythm(- $banner-rhythm, $useraction-size) 0;
+  margin: - $useraction-border-size 0 0;
   border: $useraction-border-size solid $useraction-border-color;
   background: $useraction-background;
   text-align: left;

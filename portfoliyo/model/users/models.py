@@ -111,7 +111,7 @@ class Profile(models.Model):
             )
         user.set_password(password)
         user.save()
-        code = generate_code(username) if school_staff else None
+        code = generate_code(username, 6) if school_staff else None
         profile = cls(
             name=name,
             phone=phone,
@@ -133,7 +133,7 @@ class Profile(models.Model):
             except IntegrityError:
                 if code is not None:
                     transaction.savepoint_rollback(sid)
-                    profile.code = generate_code(u'%s%s' % (username, i))
+                    profile.code = generate_code(u'%s%s' % (username, i), 6)
                 else:
                     raise
         else:
@@ -212,13 +212,29 @@ class Relationship(models.Model):
 
 
 
+class Group(models.Model):
+    """A group of students, set up by a particular teacher."""
+    name = models.CharField(max_length=200)
+    owner = models.ForeignKey(Profile, related_name='owned_groups')
+    members = models.ManyToManyField(Profile, related_name='in_groups')
+
+
+    def __unicode__(self):
+        return self.name
+
+
+    class Meta:
+        unique_together = [('name', 'owner')]
+
+
+
 # 1 and 0 already eliminated by base32 encoding
 AMBIGUOUS = ['L', 'I', 'O', 'S', '5']
 
 
-def generate_code(username):
-    """Generate a probably-unique six-letter code given a unique username."""
-    full = base64.b32encode(sha1(username).digest())
+def generate_code(seed, length):
+    """Generate a probably-unique length-letter code given a unique seed."""
+    full = base64.b32encode(sha1(seed).digest())
     for char in AMBIGUOUS:
         full = full.replace(char, '')
-    return full[:6]
+    return full[:length]

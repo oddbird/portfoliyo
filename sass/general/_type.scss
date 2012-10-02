@@ -24,7 +24,7 @@ a {
 // ---------------------------------------------------------------------------
 // Images
 
-img {
+%img {
   @include box-shadow($back 0 0 .125em);
   max-width: 100%;
   border: 1px solid $back;

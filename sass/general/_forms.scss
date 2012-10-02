@@ -124,32 +124,6 @@ $input-rhythm: .25;
   .formfield-help { @include pre($label, $context); }
 }
 
-.formfield-help {
-  @include adjust-font-size-to($smallpx);
-  display: block;
-  clear: both;
-  margin: 0;
-  color: $base1;
-  font-style: italic;
-}
-
-.formfield-optional { @include gone; }
-
-$form-action-note-size: $smallpx;
-
-.form-actions {
-  @include rhythm(.5,0,0,.5);
-  position: relative;
-  clear: both;
-  text-align: right;
-  p {
-    @include adjust-font-size-to($form-action-note-size);
-    display: inline-block;
-    margin: 0 .4em rhythm(.5,$form-action-note-size) 0;
-  }
-  button { @extend %button; }
-}
-
 .iqtest {
   @include trailer(2);
   > p {
@@ -162,52 +136,80 @@ $form-action-note-size: $smallpx;
 // ---------------------------------------------------------------------------
 // Elements
 
-[type="checkbox"], [type="radio"] {
-  display: none;
-  .lt-ie9 & { display: inline; }
-  + label {
-    @extend %icon;
-    &:before {
-      margin-left: .4em;
-      color: $base01;
+%formdefaults {
+  [type="checkbox"], [type="radio"] {
+    display: none;
+    .lt-ie9 & { display: inline; }
+    + label {
+      @extend %icon;
+      &:before {
+        margin-left: .4em;
+        color: $base01;
+      }
+    }
+    &:checked + label { &:before { color: $blue; } }
+    &:focus + label { color: $base03; }
+  }
+
+  [type="checkbox"] {
+    + label { @extend %icon-unchecked; }
+    &:checked + label { @extend %icon-checked; }
+  }
+
+  [type="radio"] {
+    + label { @extend %icon-radio-unchecked; }
+    &:checked + label { @extend %icon-radio-checked; }
+  }
+
+  label {
+    display: block;
+    color: $base01;
+    &:first-letter { text-transform: uppercase; }
+  }
+
+  input {
+    &[type="text"], &[type="password"],
+    &[type="email"], &[type="url"], &[type="tel"],
+    &[type="date"], &[type="datetime"], &[type="datetime-local"],
+    &[type="month"], &[type="week"], &[type="time"],
+    &[type="number"], &[type="search"], &[type="color"] {
+      @extend %input;
+      margin: 0;
+      min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
     }
   }
-  &:checked + label { &:before { color: $blue; } }
-  &:focus + label { color: $base03; }
-}
 
-[type="checkbox"] {
-  + label { @extend %icon-unchecked; }
-  &:checked + label { @extend %icon-checked; }
-}
-
-[type="radio"] {
-  + label { @extend %icon-radio-unchecked; }
-  &:checked + label { @extend %icon-radio-checked; }
-}
-
-label {
-  display: block;
-  color: $base01;
-  &:first-letter { text-transform: uppercase; }
-}
-
-input {
-  &[type="text"], &[type="password"],
-  &[type="email"], &[type="url"], &[type="tel"],
-  &[type="date"], &[type="datetime"], &[type="datetime-local"],
-  &[type="month"], &[type="week"], &[type="time"],
-  &[type="number"], &[type="search"], &[type="color"] {
+  textarea {
     @extend %input;
-    margin: 0;
+    @include transition(200ms min-height);
     min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
   }
-}
 
-textarea {
-  @extend %input;
-  @include transition(200ms min-height);
-  min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+  .formfield-help {
+    @include adjust-font-size-to($smallpx);
+    display: block;
+    clear: both;
+    margin: 0;
+    color: $base1;
+    font-style: italic;
+  }
+
+  .formfield-optional { @include gone; }
+
+  $form-action-note-size: $smallpx;
+
+  .form-actions {
+    @include rhythm(.5,0,0,.5);
+    position: relative;
+    clear: both;
+    text-align: right;
+    p {
+      @include adjust-font-size-to($form-action-note-size);
+      display: inline-block;
+      margin: 0 .4em rhythm(.5,$form-action-note-size) 0;
+    }
+    button { @extend %button; }
+  }
 }
 
 button { @include reset-button; }

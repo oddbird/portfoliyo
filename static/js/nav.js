@@ -22,36 +22,36 @@ var PYO = (function (PYO, $) {
         if ($(container).length) {
             var nav = $(container);
             var cancelEdits = function () {
-                nav.find('.select-student.editing').each(function () {
-                    var listitem = $(this).closest('.student');
+                nav.find('.listitem-select.editing').each(function () {
+                    var listitem = $(this).closest('.listitem');
                     PYO.cancelEditStudent(listitem);
                 });
             };
 
-            nav.on('click', '.edit-student', function (e) {
+            nav.on('click', '.action-edit', function (e) {
                 e.preventDefault();
                 cancelEdits();
                 PYO.editStudent($(this));
             });
 
-            nav.on('click', '.save-student', function (e) {
+            nav.on('click', '.action-save', function (e) {
                 e.preventDefault();
                 PYO.saveStudent($(this));
             });
 
-            nav.on('click', '.remove-student', function (e) {
+            nav.on('click', '.action-remove', function (e) {
                 e.preventDefault();
-                var listitem = $(this).closest('.student');
+                var listitem = $(this).closest('.listitem');
                 PYO.cancelEditStudent(listitem);
                 PYO.removeStudent($(this));
             });
 
-            nav.on('click', '.undo-remove-student', function (e) {
+            nav.on('click', '.undo-action-remove', function (e) {
                 e.preventDefault();
                 PYO.undoRemoveStudent($(this));
             });
 
-            $('.village').on('pjax-load', function (e) {
+            $('.village').on('pjax-load', function () {
                 cancelEdits();
             });
         }
@@ -59,10 +59,10 @@ var PYO = (function (PYO, $) {
 
     PYO.editStudent = function (trigger) {
         var edit = trigger;
-        var listitem = edit.closest('.student');
-        var original = listitem.find('.select-student');
-        var name = listitem.find('.student-name').text();
-        var save = listitem.find('.save-student');
+        var listitem = edit.closest('.listitem');
+        var original = listitem.find('.listitem-select');
+        var name = listitem.find('.listitem-name').text();
+        var save = listitem.find('.action-save');
         var editing = ich.edit_student({name: name});
 
         listitem.data('original-link', original);
@@ -88,12 +88,12 @@ var PYO = (function (PYO, $) {
 
     PYO.saveStudent = function (trigger) {
         var save = trigger;
-        var listitem = save.closest('.student');
+        var listitem = save.closest('.listitem');
         var url = listitem.data('url');
-        var edit = listitem.find('.edit-student');
-        var editing = listitem.find('.select-student.editing');
+        var edit = listitem.find('.action-edit');
+        var editing = listitem.find('.listitem-select.editing');
         var original = listitem.data('original-link');
-        var name = original.find('.student-name');
+        var name = original.find('.listitem-name');
         var oldName = editing.data('original-name');
         var newName = $.trim(editing.text());
 
@@ -115,9 +115,9 @@ var PYO = (function (PYO, $) {
 
     PYO.cancelEditStudent = function (listitem) {
         var original = listitem.data('original-link');
-        var edit = listitem.find('.edit-student');
-        var save = listitem.find('.save-student');
-        var editing = listitem.find('.select-student.editing');
+        var edit = listitem.find('.action-edit');
+        var save = listitem.find('.action-save');
+        var editing = listitem.find('.listitem-select.editing');
         editing.replaceWith(original);
         save.hide();
         edit.show();
@@ -125,15 +125,15 @@ var PYO = (function (PYO, $) {
 
     PYO.removeStudent = function (trigger) {
         var remove = trigger;
-        var listitem = remove.closest('.student');
-        var link = listitem.find('.select-student');
+        var listitem = remove.closest('.listitem');
+        var link = listitem.find('.listitem-select');
         var url = listitem.data('url');
-        var name = listitem.find('.student-name').text();
+        var name = listitem.find('.listitem-name').text();
         var removed = ich.remove_student({name: name});
 
         listitem.data('original', listitem.html());
         listitem.html(removed);
-        listitem.find('.select-student.removed').fadeOut(5000, function () {
+        listitem.find('.listitem-select.removed').fadeOut(5000, function () {
             if (url) {
                 $.post(url, {remove: true}, function (response) {
                     if (response && response.success) {
@@ -149,10 +149,38 @@ var PYO = (function (PYO, $) {
 
     PYO.undoRemoveStudent = function (trigger) {
         var undo = trigger;
-        var listitem = undo.closest('.student');
+        var listitem = undo.closest('.listitem');
         var original = listitem.data('original');
-        listitem.find('.select-student.removed').stop();
+        listitem.find('.listitem-select.removed').stop();
         listitem.html(original);
+    };
+
+    PYO.fetchGroups = function () {
+        var nav = $('.village-nav');
+        var url = nav.data('groups-url');
+        var studentsUrl = nav.data('students-url');
+        var replaceGroups = function (data) {
+            if (data) {
+                var allStudents = {
+                    name: 'All Students',
+                    members_uri: studentsUrl
+                };
+                data.staff = nav.data('is-staff');
+                data.objects.unshift(allStudents);
+                var newGroups = ich.group_list(data);
+                nav.html(newGroups);
+            }
+        };
+
+        if (url) {
+            $.get(url, replaceGroups);
+        }
+    };
+
+    PYO.initializeNav = function () {
+        if ($('.village-nav').length) {
+            PYO.fetchGroups();
+        }
     };
 
     return PYO;

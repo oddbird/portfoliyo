@@ -14,6 +14,8 @@ $login-button-padding   : rhythm(.25,$login-button-size);
 }
 
 .main-login {
+  @extend %formdefaults;
+
   .login-form {
     display: none;
     position: relative;
@@ -58,14 +60,16 @@ $login-button-padding   : rhythm(.25,$login-button-size);
       top: 0;
       right: 102% + gutter(2);
     }
-    input {
-      min-height: 0;
-      line-height: 1em;
-    }
-    button {
-      @include login-button;
-      background-color: $blue;
-      width: 100%;
+    .login-form {
+      input {
+        min-height: 0;
+        line-height: 1em;
+      }
+      button {
+        @include login-button;
+        background-color: $blue;
+        width: 100%;
+      }
     }
   }
 }
@@ -75,6 +79,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
 
 .village-landing {
   @extend %type;
+  @extend %formdefaults;
   @include padding-leader;
   color: $base;
   background: $base3;
@@ -83,6 +88,8 @@ $login-button-padding   : rhythm(.25,$login-button-size);
     @include no-style-list;
     @include trailer;
   }
+
+  img { @extend %img; }
 
   .tagline {
     @include adjust-font-size-to($largepx);

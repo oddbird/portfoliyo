@@ -179,9 +179,9 @@ class TestProfile(object):
         # we need the first two calls to return the same thing, and the
         # third call something different.
         calls = []
-        def _mock_generate_code(username):
+        def _mock_generate_code(seed, length):
             returns = ['ABCDEF', 'ABCDEF', 'FADCBE']
-            calls.append(username)
+            calls.append(seed)
             return returns[len(calls)-1]
         with mock.patch(target, _mock_generate_code):
             p1 = model.Profile.create_with_user(school_staff=True)
@@ -253,3 +253,13 @@ class TestRelationship(object):
         rel = factories.RelationshipFactory.build()
 
         assert rel.student is rel.to_profile
+
+
+
+class TestGroup(object):
+    """Tests for Group model."""
+    def test_unicode(self):
+        """Unicode representation is the name."""
+        g = factories.GroupFactory.create(name="foo")
+
+        assert unicode(g) == u"foo"

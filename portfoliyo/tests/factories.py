@@ -38,6 +38,13 @@ class RelationshipFactory(factory.Factory):
     description = ""
 
 
+class GroupFactory(factory.Factory):
+    FACTORY_FOR = model.Group
+
+    name = "Test Group"
+    owner = factory.SubFactory(ProfileFactory)
+
+
 class PostFactory(factory.Factory):
     FACTORY_FOR = model.Post
 
