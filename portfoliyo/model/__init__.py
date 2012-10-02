@@ -11,3 +11,4 @@ and then reference any model class as e.g. model.User, model.Profile...
 from django.contrib.auth.models import User
 from .users.models import Profile, Relationship, Group
 from .village.models import Post, post_char_limit, post_dict
+from .village import unread
