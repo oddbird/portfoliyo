@@ -83,7 +83,10 @@ class Post(models.Model):
         # notify highlighted SMS users
         meta_highlights = []
         sender_rel = post.get_relationship()
-        suffix = text_notification_suffix(sender_rel)
+        if sender_rel:
+            suffix = relationship_notification_suffix(sender_rel)
+        else:
+            suffix = u''
         sms_body = post.original_text + suffix
         for rel, mentioned_as in highlights.items():
             highlight_data = {
@@ -250,15 +253,20 @@ def normalize_name(name):
     return name.lower().replace(' ', '')
 
 
-def text_notification_suffix(relationship):
-    """The prefix for texts sent out from this elder/student relationship."""
-    return u' --%s' % (
-        relationship.elder.name or relationship.description_or_role,)
+def relationship_notification_suffix(relationship):
+    """The suffix for texts sent out from this elder/student relationship."""
+    return notification_suffix(
+        relationship.elder.name or relationship.description_or_role)
+
+
+def notification_suffix(name):
+    """The suffix for texts sent out from this name."""
+    return u' --%s' % name
 
 
 def post_char_limit(relationship):
     """Max length for posts from this profile/student relationship."""
-    return 160 - len(text_notification_suffix(relationship))
+    return 160 - len(relationship_notification_suffix(relationship))
 
 
 def strip_initial_mention(sms_body, mentioned_as):

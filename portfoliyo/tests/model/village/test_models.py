@@ -248,23 +248,19 @@ class TestPostCreate(object):
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_can_create_autoreply_post(self, mock_send_sms):
         """Auto-reply prepends phone mention, sends no text to that phone."""
-        rel1 = factories.RelationshipFactory.create(
-            from_profile__phone=None,
-            )
-        rel2 = factories.RelationshipFactory.create(
-            to_profile=rel1.to_profile,
+        rel = factories.RelationshipFactory.create(
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
             description="Father",
             )
 
         post = models.Post.create(
-            rel1.elder, rel1.student, 'Thank you!', in_reply_to="+13216540987")
+            None, rel.student, 'Thank you!', in_reply_to="+13216540987")
 
         assert mock_send_sms.call_count == 0
         assert post.original_text == "@+13216540987 Thank you!"
         # With in_reply_to we assume that an SMS was sent by the caller
-        assert post.meta['highlights'][0]['id'] == rel2.elder.id
+        assert post.meta['highlights'][0]['id'] == rel.elder.id
         assert post.meta['highlights'][0]['sms_sent'] == True
         assert post.to_sms == True
 
@@ -463,27 +459,33 @@ def test_get_highlight_names():
 
 
 
-def test_text_notification_suffix_elder_has_name():
+def test_relationship_notification_suffix_elder_has_name():
     """Text notification suffix is elder name preceded by ' --'."""
     rel = mock.Mock()
     rel.elder.name = "Foo"
-    assert models.text_notification_suffix(rel) == " --Foo"
+    assert models.relationship_notification_suffix(rel) == " --Foo"
 
 
 
-def test_text_notification_suffix_no_name():
+def test_relationship_notification_suffix_no_name():
     """If elder has no name, text suffix uses relationship role."""
     rel = mock.Mock()
     rel.elder.name = ""
     rel.description_or_role = "Math Teacher"
-    assert models.text_notification_suffix(rel) == " --Math Teacher"
+    assert models.relationship_notification_suffix(rel) == " --Math Teacher"
 
 
 
-@mock.patch('portfoliyo.model.village.models.text_notification_suffix')
-def test_post_char_limit(mock_text_notification_suffix):
+def test_notification_suffix():
+    """Can construct suffix with arbitrary name."""
+    assert models.notification_suffix("foo") == " --foo"
+
+
+
+@mock.patch('portfoliyo.model.village.models.relationship_notification_suffix')
+def test_post_char_limit(mock_relationship_notification_suffix):
     """Char limit for a post is 160 - length of suffix."""
-    mock_text_notification_suffix.return_value = "a" * 10
+    mock_relationship_notification_suffix.return_value = "a" * 10
     rel = mock.Mock()
 
     assert models.post_char_limit(rel) == 150
