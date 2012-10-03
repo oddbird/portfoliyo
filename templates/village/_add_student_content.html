@@ -5,27 +5,15 @@
 <form method="POST" action="{% url add_student %}" class="village-add-form" id="add-student-form">
   {% csrf_token %}
 
-  {% if request.user.profile.code %}
-  <div class="parent-instructions">
-    <p>
-      Send this PDF home with students
-      so parents can add themselves to your account.
-      Or add students yourself using the form below.
-    </p>
-    <ul>
-      <li><a href="{% url pdf_parent_instructions lang='en' %}" target="_new" class="pdf-en">English PDF</a></li>
-      <li><a href="{% url pdf_parent_instructions lang='es' %}" target="_new" class="pdf-es">Spanish PDF</a></li>
-    </ul>
-  </div>
-  {% endif %}
-
   <h2>Add a Student</h2>
 
   {{ form.non_field_errors }}
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
 
-  {% include "village/_elders_formset.html" %}
+  <p>[groups]</p>
+
+  <p>[elders]</p>
 
   <div class="form-actions">
     <button type="submit" class="action-post">add</button>
