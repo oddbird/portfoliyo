@@ -43,6 +43,7 @@ var PYO = (function (PYO, $) {
         listitem.data('original', listitem.html());
         listitem.html(removed);
         listitem.find('.listitem-select.removed').fadeOut(5000, function () {
+            listitem.hide();
             if (url) {
                 $.post(url, {remove: true}, function (response) {
                     if (response && response.success) {
@@ -69,6 +70,7 @@ var PYO = (function (PYO, $) {
         var url = nav.data('groups-url');
         var studentsUrl = nav.data('students-url');
         var replaceNav = function (data) {
+            nav.loadingOverlay('remove');
             if (data) {
                 var allStudents = {
                     name: 'All Students',
@@ -82,6 +84,7 @@ var PYO = (function (PYO, $) {
         };
 
         if (url) {
+            nav.loadingOverlay();
             $.get(url, replaceNav);
         }
     };
@@ -90,6 +93,7 @@ var PYO = (function (PYO, $) {
         if (group_url && group_name) {
             var nav = $('.village-nav');
             var replaceNav = function (data) {
+                nav.loadingOverlay('remove');
                 if (data) {
                     data.group_name = group_name;
                     data.group_uri = group_url;
@@ -102,6 +106,7 @@ var PYO = (function (PYO, $) {
                 }
             };
 
+            nav.loadingOverlay();
             $.get(group_url, replaceNav);
         }
     };
