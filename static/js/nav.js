@@ -95,7 +95,7 @@ var PYO = (function (PYO, $) {
             if (data) {
                 var allStudents = {
                     name: 'All Students',
-                    members_uri: studentsUrl
+                    students_uri: studentsUrl
                 };
                 data.staff = nav.data('is-staff');
                 data.objects.unshift(allStudents);
