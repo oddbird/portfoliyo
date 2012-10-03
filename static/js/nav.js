@@ -20,7 +20,7 @@ var PYO = (function (PYO, $) {
         nav.on('click', '.group-link', function (e) {
             e.preventDefault();
             $(this).blur();
-            var url = $(this).data('api-url');
+            var url = $(this).data('group-url');
             var name = $(this).data('name');
             PYO.fetchStudents(url, name);
         });
@@ -43,21 +43,38 @@ var PYO = (function (PYO, $) {
         var url = listitem.data('api-url');
         var name = link.data('name');
         var removed = ich.remove_listitem({name: name});
-
-        listitem.data('original', listitem.html());
-        listitem.html(removed);
-        listitem.find('.listitem-select.removed').fadeOut(5000, function () {
+        var removeItem = function () {
             listitem.hide();
             if (url) {
-                $.post(url, {remove: true}, function (response) {
-                    if (response && response.success) {
+                $.ajax(url, {
+                    type: 'DELETE',
+                    success: function (response) {
                         if (link.hasClass('active')) {
                             window.location.href = '/';
                         }
                         listitem.remove();
+                    },
+                    error: function (request, status, error) {
+                        listitem.find('.undo-action-remove').click();
+                        var msg = ich.ajax_error_msg({
+                            error_class: 'remove-error',
+                            message: 'Unable to remove this item.'
+                        });
+                        msg.find('.try-again').click(function (e) {
+                            e.preventDefault();
+                            msg.remove();
+                            removeItem();
+                        });
+                        listitem.prepend(msg).show();
                     }
                 });
             }
+        };
+
+        listitem.data('original', listitem.html());
+        listitem.html(removed);
+        listitem.find('.listitem-select.removed').fadeOut(5000, function () {
+            removeItem();
         });
     };
 
