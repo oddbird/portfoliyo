@@ -93,12 +93,8 @@ var PYO = (function (PYO, $) {
         var replaceNav = function (data) {
             nav.loadingOverlay('remove');
             if (data) {
-                var allStudents = {
-                    name: 'All Students',
-                    students_uri: studentsUrl
-                };
+                data.all_students_uri = studentsUrl;
                 data.staff = nav.data('is-staff');
-                data.objects.unshift(allStudents);
                 var newGroups = ich.group_list(data);
                 nav.trigger('before-replace').html(newGroups);
             }
