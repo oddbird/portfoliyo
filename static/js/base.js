@@ -139,7 +139,6 @@ var PYO = (function (PYO, $) {
                 });
 
                 $(window).bind('statechange', function () {
-                    context.trigger('pjax-load');
                     var data = History.getState().data;
                     var url = data.url ? data.url : window.location.pathname;
                     if (!data.remainActive) {
@@ -184,6 +183,11 @@ var PYO = (function (PYO, $) {
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
+    };
+
+    PYO.initializePusher = function () {
+        PYO.pusherKey = $('.village').data('pusher-key');
+        if (PYO.pusherKey) { PYO.pusher = new Pusher(PYO.pusherKey, {encrypted: true}); }
     };
 
     PYO.initializePage = function () {
