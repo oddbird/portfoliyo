@@ -74,8 +74,11 @@ var PYO = (function (PYO, $) {
 
     PYO.pageAjaxError = function (url) {
         var container = $('.village-content');
-        var msg = ich.pjax_error_msg();
-        msg.find('.reload-pjax').click(function (e) {
+        var msg = ich.ajax_error_msg({
+            error_class: 'pjax-error',
+            message: 'Unable to load the requested page.'
+        });
+        msg.find('.try-again').click(function (e) {
             e.preventDefault();
             msg.remove();
             PYO.pageAjaxLoad(url);

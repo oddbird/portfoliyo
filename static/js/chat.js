@@ -280,8 +280,11 @@ var PYO = (function (PYO, $) {
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
-                            var msg = ich.feed_error_msg();
-                            msg.find('.reload-feed').click(function (e) {
+                            var msg = ich.ajax_error_msg({
+                                error_class: 'feed-error',
+                                message: 'Unable to load prior posts in this village.'
+                            });
+                            msg.find('.try-again').click(function (e) {
                                 e.preventDefault();
                                 msg.remove();
                                 loadFeed();
