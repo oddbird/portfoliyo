@@ -7,16 +7,19 @@ var PYO = (function (PYO, $) {
 
         nav.on('click', '.action-remove', function (e) {
             e.preventDefault();
+            $(this).blur();
             PYO.removeListitem($(this));
         });
 
         nav.on('click', '.undo-action-remove', function (e) {
             e.preventDefault();
+            $(this).blur();
             PYO.undoRemoveListitem($(this));
         });
 
         nav.on('click', '.group-link', function (e) {
             e.preventDefault();
+            $(this).blur();
             var url = $(this).attr('href');
             var name = $(this).data('name');
             PYO.fetchStudents(url, name);
@@ -24,6 +27,7 @@ var PYO = (function (PYO, $) {
 
         nav.on('click', '.groups.action-back', function (e) {
             e.preventDefault();
+            $(this).blur();
             PYO.fetchGroups();
         });
 
@@ -119,7 +123,19 @@ var PYO = (function (PYO, $) {
             };
 
             nav.loadingOverlay();
-            $.get(group_url, replaceNav);
+            $.get(group_url, replaceNav).error(function (request, status, error) {
+                var msg = ich.ajax_error_msg({
+                    error_class: 'nav-error',
+                    message: 'Unable to load students.'
+                });
+                msg.find('.try-again').click(function (e) {
+                    e.preventDefault();
+                    msg.remove();
+                    PYO.fetchStudents(group_url, group_name);
+                });
+                nav.prepend(msg);
+                nav.loadingOverlay('remove');
+            });
         }
     };
 
