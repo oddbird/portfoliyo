@@ -39,13 +39,14 @@ $simple-width: $break-cols - $simple-side;
 $simple-center: $simple-width - $simple-side;
 
 %simple-page {
+  @extend %formdefaults;
+  @include padding-leader(2);
+  @include padding-trailer(2);
+  @include at-breakpoint($break) { @include pad($simple-side,$simple-side); }
   h2 {
     @include serif;
     font-weight: bold;
   }
-  @include at-breakpoint($break) { @include pad($simple-side,$simple-side); }
-  @include padding-leader(2);
-  @include padding-trailer(2);
 }
 
 %simple-inline-form {
