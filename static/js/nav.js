@@ -107,36 +107,40 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.listenForPosts = function () {
-        var students = $('.village-nav .student a.ajax-link');
+        if (PYO.pusherKey) {
+            var students = $('.village-nav .student a.ajax-link');
 
-        students.each(function () {
-            var el = $(this);
-            var id = el.data('id');
-            var unread = el.find('.unread');
-            var channel = PYO.pusher.subscribe('student_' + id);
+            students.each(function () {
+                var el = $(this);
+                var id = el.data('id');
+                var unread = el.find('.unread');
+                var channel = PYO.pusher.subscribe('student_' + id);
 
-            channel.bind('message_posted', function (data) {
-                if (id === PYO.activeStudentId && PYO.scrolledToBottom()) {
-                    if (!PYO.replacePost(data)) {
-                        PYO.addPost(data);
-                        PYO.scrollToBottom();
+                channel.bind('message_posted', function (data) {
+                    if (id === PYO.activeStudentId && PYO.scrolledToBottom()) {
+                        if (!PYO.replacePost(data)) {
+                            PYO.addPost(data);
+                            PYO.scrollToBottom();
+                        }
+                    } else {
+                        var count = parseInt(unread.text(), 10);
+                        unread.removeClass('zero').text(++count);
                     }
-                } else {
-                    var count = parseInt(unread.text(), 10);
-                    unread.removeClass('zero').text(++count);
-                }
+                });
             });
-        });
+        }
     };
 
     PYO.unsubscribeFromPosts = function () {
-        var students = $('.village-nav .student a.ajax-link');
+        if (PYO.pusherKey) {
+            var students = $('.village-nav .student a.ajax-link');
 
-        students.each(function () {
-            var el = $(this);
-            var id = el.data('id');
-            PYO.pusher.unsubscribe('student_' + id);
-        });
+            students.each(function () {
+                var el = $(this);
+                var id = el.data('id');
+                PYO.pusher.unsubscribe('student_' + id);
+            });
+        }
     };
 
     PYO.initializeNav = function () {
