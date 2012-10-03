@@ -16,7 +16,9 @@
     {% block metanav %}
     {% if user.is_authenticated %}
     <nav class="meta">
+      {% if SNAPENGAGE_ID %}
       <a href="#" class="helplink" onClick="return SnapABug.startLink();">Help</a>
+      {% endif %}
       <a href="{% url edit_profile %}" class="settingslink">{% firstof user.profile.name user.email %}</a>
       <ul class="useractions">
         <li><a href="{% url edit_profile %}">Edit profile</a></li>
