@@ -20,7 +20,6 @@ var PYO = (function (PYO, $) {
         PYO.initializePage();
 
         // nav.js
-        PYO.studentActionHandlers('.village-nav');
         PYO.initializeNav();
     });
 

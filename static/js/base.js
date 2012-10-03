@@ -139,7 +139,6 @@ var PYO = (function (PYO, $) {
                 });
 
                 $(window).bind('statechange', function () {
-                    context.trigger('pjax-load');
                     var data = History.getState().data;
                     var url = data.url ? data.url : window.location.pathname;
                     if (!data.remainActive) {
