@@ -216,7 +216,10 @@ class Group(models.Model):
     """A group of students, set up by a particular teacher."""
     name = models.CharField(max_length=200)
     owner = models.ForeignKey(Profile, related_name='owned_groups')
-    members = models.ManyToManyField(Profile, related_name='in_groups')
+    students = models.ManyToManyField(
+        Profile, related_name='student_in_groups', blank=True)
+    elders = models.ManyToManyField(
+        Profile, related_name='elder_in_groups', blank=True)
 
 
     def __unicode__(self):

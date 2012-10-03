@@ -55,7 +55,8 @@ class ProfileResource(PortfoliyoResource):
 
         elders = filters.pop('elders', None)
         students = filters.pop('students', None)
-        groups = filters.pop('groups', None)
+        student_in_groups = filters.pop('student_in_groups', None)
+        elder_in_groups = filters.pop('elder_in_groups', None)
 
         orm_filters = super(ProfileResource, self).build_filters(filters)
 
@@ -63,8 +64,10 @@ class ProfileResource(PortfoliyoResource):
             orm_filters['relationships_to__from_profile__in'] = elders
         if students:
             orm_filters['relationships_from__to_profile__in'] = students
-        if groups:
-            orm_filters['in_groups__in'] = groups
+        if student_in_groups:
+            orm_filters['student_in_groups__in'] = student_in_groups
+        if elder_in_groups:
+            orm_filters['elder_in_groups__in'] = elder_in_groups
 
         return orm_filters
 
@@ -122,14 +125,15 @@ class ElderRelationshipResource(PortfoliyoResource):
 
 class GroupResource(PortfoliyoResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
-    members = fields.ManyToManyField(ProfileResource, 'members')
+    students = fields.ManyToManyField(ProfileResource, 'students')
+    elders = fields.ManyToManyField(ProfileResource, 'elders')
 
 
     def dehydrate(self, bundle):
-        bundle.data['members_uri'] = reverse(
+        bundle.data['students_uri'] = reverse(
             'api_dispatch_list',
             kwargs={'resource_name': 'user', 'api_name': 'v1'},
-            ) + '?groups=' + str(bundle.obj.id)
+            ) + '?student_in_groups=' + str(bundle.obj.id)
 
         return bundle
 

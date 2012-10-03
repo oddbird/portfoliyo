@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth import models as auth_models
 
 from . import models
 
@@ -36,3 +37,6 @@ admin.site.register(
     list_filter=['school_staff', 'state', 'deleted', 'declined'],
     )
 admin.site.register(models.Group)
+
+
+admin.site.unregister(auth_models.Group)
