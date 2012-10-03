@@ -85,7 +85,19 @@ var PYO = (function (PYO, $) {
 
         if (url) {
             nav.loadingOverlay();
-            $.get(url, replaceNav);
+            $.get(url, replaceNav).error(function (request, status, error) {
+                var msg = ich.ajax_error_msg({
+                    error_class: 'nav-error',
+                    message: 'Unable to load groups.'
+                });
+                msg.find('.try-again').click(function (e) {
+                    e.preventDefault();
+                    msg.remove();
+                    PYO.fetchGroups();
+                });
+                nav.prepend(msg);
+                nav.loadingOverlay('remove');
+            });
         }
     };
 
