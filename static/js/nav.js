@@ -20,7 +20,7 @@ var PYO = (function (PYO, $) {
         nav.on('click', '.group-link', function (e) {
             e.preventDefault();
             $(this).blur();
-            var url = $(this).attr('href');
+            var url = $(this).data('api-url');
             var name = $(this).data('name');
             PYO.fetchStudents(url, name);
         });
