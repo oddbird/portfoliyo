@@ -171,6 +171,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   text-indent: 0;
   margin-right: 0;
   padding: inherit;
+  text-align: center;
 }
 
 /* Use the following CSS code if you want to use data attributes for inserting your icons */
@@ -2000,10 +2001,9 @@ button {
 }
 
 .action-back.groups {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin-top: 0.20536em;
+  font-size: 1.28571em;
+  line-height: 1.27778em;
+  margin-top: 0.31944em;
   -webkit-border-radius: 0.125em;
   -moz-border-radius: 0.125em;
   -ms-border-radius: 0.125em;
@@ -2013,9 +2013,8 @@ button {
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
-  margin-left: -0.41071em;
+  width: 1.27778em;
   margin-right: .4em;
-  padding: 0.20536em 0.41071em;
   z-index: 6;
   color: #fdf6e3;
 }
