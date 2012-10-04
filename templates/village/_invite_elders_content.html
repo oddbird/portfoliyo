@@ -4,10 +4,10 @@
 <div class="village-main">
   <form method="POST" action="{% url invite_elders student_id=student.id %}" class="elder-add-form" id="invite-elders-form">
     {% csrf_token %}
-    <h2>Invite Elders for {{ student }}</h2>
+    <h2>Invite Elder for {{ student }}</h2>
     {{ form.non_field_errors }}
 
-    {% include "village/_elders_formset.html" %}
+    {% include "village/_elder_form.html" %}
 
     <div class="form-actions">
       <button type="submit" class="action-post">invite</button>

@@ -30,7 +30,7 @@ def dashboard(request):
     return TemplateResponse(
         request,
         'village/dashboard.html',
-        {'elders_formset': forms.InviteEldersFormSet(prefix='elders')},
+        {},
         )
 
 
@@ -40,19 +40,18 @@ def dashboard(request):
 def add_student(request):
     """Add a student and elders."""
     if request.method == 'POST':
-        form = forms.AddStudentAndInviteEldersForm(request.POST)
+        form = forms.AddStudentForm(request.POST)
         if form.is_valid():
-            student, _ = form.save(request, added_by=request.user.profile)
+            student, _ = form.save(added_by=request.user.profile)
             return redirect('village', student_id=student.id)
     else:
-        form = forms.AddStudentAndInviteEldersForm()
+        form = forms.AddStudentForm()
 
     return TemplateResponse(
         request,
         'village/add_student.html',
         {
             'form': form,
-            'elders_formset': form.elders_formset,
             },
         )
 
@@ -78,17 +77,17 @@ def invite_elders(request, student_id):
     rel = get_relationship_or_404(student_id, request.user.profile)
 
     if request.method == 'POST':
-        formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
-        if formset.is_valid():
-            formset.save(request, rel)
+        form = forms.InviteElderForm(request.POST)
+        if form.is_valid():
+            form.save(request, rel)
             return redirect('village', student_id=rel.student.id)
     else:
-        formset = forms.InviteEldersFormSet(prefix='elders')
+        form = forms.InviteElderForm()
 
     return TemplateResponse(
         request,
         'village/invite_elders.html',
-        {'elders_formset': formset, 'student': rel.student},
+        {'form': form, 'student': rel.student},
         )
 
 
@@ -128,7 +127,6 @@ def village(request, student_id):
             'student': rel.student,
             'relationship': rel,
             'post_char_limit': model.post_char_limit(rel),
-            'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
             },
         )
 
@@ -205,7 +203,6 @@ def edit_elder(request, student_id, elder_id):
             'form': form,
             'student': elder_rel.student,
             'elder': elder_rel.elder,
-            'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
             },
         )
 

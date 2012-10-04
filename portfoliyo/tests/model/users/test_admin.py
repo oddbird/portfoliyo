@@ -5,7 +5,7 @@ from portfoliyo.model.users import admin
 
 
 
-def test_dehydrate_email():
+def test_denormalized_email():
     email = 'foo@example.com'
     profile = mock.Mock()
     profile.user.email = email

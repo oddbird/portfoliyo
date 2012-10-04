@@ -5,6 +5,14 @@ from portfoliyo import model
 
 
 
+class SchoolFactory(factory.Factory):
+    FACTORY_FOR = model.School
+
+    name = "Some School"
+    postcode = factory.Sequence(lambda n: "{0:>05}".format(n))
+
+
+
 class UserFactory(factory.Factory):
     FACTORY_FOR = model.User
 
@@ -27,6 +35,7 @@ class ProfileFactory(factory.Factory):
     FACTORY_FOR = model.Profile
 
     user = factory.SubFactory(UserFactory)
+    school = factory.SubFactory(SchoolFactory)
 
 
 

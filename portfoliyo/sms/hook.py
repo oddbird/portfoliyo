@@ -81,6 +81,7 @@ def handle_unknown_source(source, body):
     if teacher is not None:
         if parent_name:
             model.Profile.create_with_user(
+                school=teacher.school,
                 phone=source,
                 name=parent_name,
                 state=model.Profile.STATE.kidname,
@@ -114,7 +115,8 @@ def handle_new_student(parent, teacher, student_name):
         student = possible_dupes[0]
     else:
         dupe_found = False
-        student = model.Profile.create_with_user(name=student_name)
+        student = model.Profile.create_with_user(
+            name=student_name, invited_by=teacher, school=teacher.school)
     model.Relationship.objects.create(
         from_profile=parent,
         to_profile=student,

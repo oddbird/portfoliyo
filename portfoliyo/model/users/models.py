@@ -24,39 +24,25 @@ auth_models.User.__unicode__ = lambda self: (
     self.email or self.profile.name or self.profile.phone or u'<unknown>')
 
 
-class AutoSingleRelatedObjectDescriptor(SingleRelatedObjectDescriptor):
-    def __get__(self, instance, instance_type=None):
-        value = None
-        try:
-            value = super(AutoSingleRelatedObjectDescriptor, self).__get__(instance, instance_type)
-        except self.related.model.DoesNotExist:
-            pass
-        if value is None:
-            obj = self.related.model(**{self.related.field.name: instance})
-            obj.save()
-            setattr(instance, self.cache_name, obj)
-            value = obj
-        return value
+
+class School(models.Model):
+    name = models.CharField(max_length=200)
+    postcode = models.CharField(max_length=20)
 
 
-class AutoOneToOneField(models.OneToOneField):
-    """OneToOneField that creates related obj on first access if needed."""
-    def contribute_to_related_class(self, cls, related):
-        setattr(
-            cls,
-            related.get_accessor_name(),
-            AutoSingleRelatedObjectDescriptor(related),
-            )
+    def __unicode__(self):
+        return self.name
 
 
-from south.modelsinspector import add_introspection_rules
-add_introspection_rules(
-    [], ["^portfoliyo\.model\.users\.models\.AutoOneToOneField"])
+    class Meta:
+        unique_together = [('name', 'postcode')]
+
 
 
 class Profile(models.Model):
     """A Portfoliyo user profile."""
-    user = AutoOneToOneField(auth_models.User)
+    user = models.OneToOneField(auth_models.User)
+    school = models.ForeignKey(School)
     # fields from User we use: username, password, email
     name = models.CharField(max_length=200)
     phone = models.CharField(max_length=20, blank=True, null=True, unique=True)
@@ -87,7 +73,8 @@ class Profile(models.Model):
 
 
     @classmethod
-    def create_with_user(cls, name='', email=None, phone=None, password=None,
+    def create_with_user(cls, school,
+                         name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
                          state=None, invited_by=None):
         """
@@ -113,6 +100,7 @@ class Profile(models.Model):
         user.save()
         code = generate_code(username, 6) if school_staff else None
         profile = cls(
+            school=school,
             name=name,
             phone=phone,
             user=user,

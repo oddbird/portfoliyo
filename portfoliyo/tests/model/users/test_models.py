@@ -8,6 +8,16 @@ from portfoliyo import model
 from portfoliyo.tests import factories, utils
 
 
+
+class TestSchool(object):
+    def test_unicode(self):
+        """Unicode representation is school name."""
+        s = factories.SchoolFactory.build(name="Some School")
+
+        assert unicode(s) == u"Some School"
+
+
+
 class TestUser(object):
     """Tests for our monkeypatches to User model."""
     def test_unicode_email(self):
@@ -95,30 +105,6 @@ class TestProfile(object):
         assert unicode(profile) == u"<unknown>"
 
 
-    def test_profile_autocreated(self):
-        """A User without a profile gets one automatically on first access."""
-        user = factories.UserFactory.create()
-
-        assert user.profile is not None
-
-
-    def test_profile_autocreated_even_after_select_related(self):
-        """select_related('profile') doesn't break profile autocreation."""
-        factories.UserFactory.create()
-        user = auth_models.User.objects.select_related('profile').get()
-
-        assert user.profile is not None
-
-
-    def test_double_profile_access_after_select_related(self):
-        """select_related('profile') doesn't break two profile accesses."""
-        factories.UserFactory.create()
-        user = auth_models.User.objects.select_related('profile').get()
-
-        assert user.profile is not None
-        assert user.profile is not None
-
-
     def test_site_staff_are_school_staff(self):
         """Any user with is_staff is also school_staff."""
         user = factories.UserFactory.create(is_staff=True)
@@ -175,6 +161,7 @@ class TestProfile(object):
 
     def test_create_dupe_code(self):
         """Robust against off-chance of duplicate teacher code."""
+        school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.generate_code'
         # we need the first two calls to return the same thing, and the
         # third call something different.
@@ -184,8 +171,8 @@ class TestProfile(object):
             calls.append(seed)
             return returns[len(calls)-1]
         with mock.patch(target, _mock_generate_code):
-            p1 = model.Profile.create_with_user(school_staff=True)
-            p2 = model.Profile.create_with_user(school_staff=True)
+            p1 = model.Profile.create_with_user(school, school_staff=True)
+            p2 = model.Profile.create_with_user(school, school_staff=True)
 
         assert p1.code != p2.code
         # different username passed to generate_code each time
@@ -194,20 +181,22 @@ class TestProfile(object):
 
     def test_create_dupe_code_other_integrity_error(self):
         """If we get some other integrity error, just re-raise it."""
+        school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.Profile.save'
         with mock.patch(target) as mock_save:
             mock_save.side_effect = IntegrityError('foo')
             with pytest.raises(IntegrityError):
-                model.Profile.create_with_user()
+                model.Profile.create_with_user(school)
 
 
     def test_create_dupe_code_give_up(self):
         """If we get 10 dupes in a row, we give up and set code to None."""
+        school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.generate_code'
         with mock.patch(target) as mock_generate_code:
             mock_generate_code.return_value = 'ABCDEF'
-            model.Profile.create_with_user(school_staff=True)
-            p2 = model.Profile.create_with_user(school_staff=True)
+            model.Profile.create_with_user(school, school_staff=True)
+            p2 = model.Profile.create_with_user(school, school_staff=True)
 
         assert p2.code is None
 

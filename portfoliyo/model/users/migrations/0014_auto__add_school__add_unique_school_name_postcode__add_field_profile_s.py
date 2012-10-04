@@ -8,23 +8,32 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Post.from_sms'
-        db.add_column('village_post', 'from_sms',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
-                      keep_default=False)
+        # Adding model 'School'
+        db.create_table('users_school', (
+            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
+            ('postcode', self.gf('django.db.models.fields.CharField')(max_length=20)),
+        ))
+        db.send_create_signal('users', ['School'])
 
-        # Adding field 'Post.to_sms'
-        db.add_column('village_post', 'to_sms',
-                      self.gf('django.db.models.fields.BooleanField')(default=False),
+        # Adding unique constraint on 'School', fields ['name', 'postcode']
+        db.create_unique('users_school', ['name', 'postcode'])
+
+        # Adding field 'Profile.school'
+        db.add_column('users_profile', 'school',
+                      self.gf('django.db.models.fields.related.ForeignKey')(to=orm['users.School'], null=True),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'Post.from_sms'
-        db.delete_column('village_post', 'from_sms')
+        # Removing unique constraint on 'School', fields ['name', 'postcode']
+        db.delete_unique('users_school', ['name', 'postcode'])
 
-        # Deleting field 'Post.to_sms'
-        db.delete_column('village_post', 'to_sms')
+        # Deleting model 'School'
+        db.delete_table('users_school')
+
+        # Deleting field 'Profile.school'
+        db.delete_column('users_profile', 'school_id')
 
 
     models = {
@@ -64,29 +73,43 @@ class Migration(SchemaMigration):
             'model': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
+        'users.group': {
+            'Meta': {'unique_together': "[('name', 'owner')]", 'object_name': 'Group'},
+            'elders': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'elder_in_groups'", 'blank': 'True', 'to': "orm['users.Profile']"}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'owned_groups'", 'to': "orm['users.Profile']"}),
+            'students': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'student_in_groups'", 'blank': 'True', 'to': "orm['users.Profile']"})
+        },
         'users.profile': {
             'Meta': {'object_name': 'Profile'},
             'code': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
+            'declined': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'invited_by': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.Profile']", 'null': 'True', 'blank': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'school': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.School']", 'null': 'True'}),
             'school_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'done'", 'max_length': '20'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
-        'village.post': {
-            'Meta': {'object_name': 'Post'},
-            'author': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'authored_posts'", 'to': "orm['users.Profile']"}),
-            'from_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'html_text': ('django.db.models.fields.TextField', [], {}),
+        'users.relationship': {
+            'Meta': {'unique_together': "[('from_profile', 'to_profile', 'kind')]", 'object_name': 'Relationship'},
+            'description': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
+            'from_profile': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_from'", 'to': "orm['users.Profile']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'original_text': ('django.db.models.fields.TextField', [], {}),
-            'student': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'posts_in_village'", 'to': "orm['users.Profile']"}),
-            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 9, 21, 0, 0)'}),
-            'to_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+            'kind': ('django.db.models.fields.CharField', [], {'default': "'elder'", 'max_length': '20'}),
+            'to_profile': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_to'", 'to': "orm['users.Profile']"})
+        },
+        'users.school': {
+            'Meta': {'unique_together': "[('name', 'postcode')]", 'object_name': 'School'},
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'postcode': ('django.db.models.fields.CharField', [], {'max_length': '20'})
         }
     }
 
-    complete_apps = ['village']
+    complete_apps = ['users']

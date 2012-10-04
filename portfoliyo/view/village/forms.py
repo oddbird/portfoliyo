@@ -2,8 +2,6 @@
 Student/elder forms.
 
 """
-from django.forms import formsets
-
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
@@ -62,7 +60,12 @@ class InviteElderForm(forms.Form):
             profile = model.Profile.objects.get(**dupe_query)
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
-                email=email, phone=phone, role=relationship, is_active=active)
+                school=rel.student.school,
+                email=email,
+                phone=phone,
+                role=relationship,
+                is_active=active,
+                )
             created = True
         else:
             created = False
@@ -74,15 +77,13 @@ class InviteElderForm(forms.Form):
                     profile.role = relationship
                 profile.save()
 
-        # create student's rel with inviting elder (unless it already exists)
+        # create student's rel with invited elder (unless it already exists)
         new_rel, rel_created = model.Relationship.objects.get_or_create(
             from_profile=profile,
             to_profile=rel.student,
             kind=model.Relationship.KIND.elder,
             defaults={'description': relationship},
             )
-
-        # get the relations
 
         # send invite notifications
         if created:
@@ -115,26 +116,6 @@ class InviteElderForm(forms.Form):
         return profile
 
 
-class InviteEldersBaseFormSet(formsets.BaseFormSet):
-    """Base formset class for inviting elders."""
-    def save(self, request, rel):
-        """Save all elder forms and return list of elders."""
-        elders = []
-        for form in self:
-            if form.has_changed():
-                elders.append(form.save(request, rel))
-
-        return elders
-
-
-
-InviteEldersFormSet = formsets.formset_factory(
-    form=InviteElderForm,
-    formset=InviteEldersBaseFormSet,
-    extra=1,
-    )
-
-
 
 class StudentForm(forms.Form):
     """Common student-form fields."""
@@ -165,7 +146,8 @@ class AddStudentForm(StudentForm):
         assert self.is_valid()
         name = self.cleaned_data["name"]
 
-        profile = model.Profile.create_with_user(name=name, invited_by=added_by)
+        profile = model.Profile.create_with_user(
+            school=added_by.school, name=name, invited_by=added_by)
 
         rel = model.Relationship.objects.create(
             from_profile=added_by,
@@ -174,33 +156,3 @@ class AddStudentForm(StudentForm):
             )
 
         return (profile, rel)
-
-
-
-class AddStudentAndInviteEldersForm(AddStudentForm):
-    """Form to add a student and invite any number of elders for them."""
-    def __init__(self, *args, **kwargs):
-        """Initialize AddStudentForm, including InviteEldersFormSet."""
-        super(AddStudentAndInviteEldersForm, self).__init__(*args, **kwargs)
-
-        self.elders_formset = InviteEldersFormSet(
-            data=self.data or None, prefix='elders')
-
-
-    def is_valid(self):
-        """The student form and the elders formset must both be valid."""
-        return self.elders_formset.is_valid() and super(
-            AddStudentAndInviteEldersForm, self).is_valid()
-
-
-    def save(self, request, *a, **kw):
-        """
-        Save the student and any associated elders.
-
-        Returns a tuple of (student-profile, list-of-elder-profiles).
-
-        """
-        student, rel = super(AddStudentAndInviteEldersForm, self).save(*a, **kw)
-        elders = self.elders_formset.save(request, rel)
-
-        return (student, elders)

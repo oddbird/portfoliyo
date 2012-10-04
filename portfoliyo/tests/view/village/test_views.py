@@ -30,14 +30,11 @@ class TestDashboard(object):
 class TestAddStudent(object):
     """Tests for add_student view."""
     def test_add_student(self, client):
-        """User can add a student and invite some elders."""
+        """User can add a student."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
             reverse('add_student'), user=teacher.user).forms['add-student-form']
         form['name'] = "Some Student"
-        form['elders-0-contact'] = "(123)456-7890"
-        form['elders-0-relationship'] = "Father"
-        form['elders-0-school_staff'] = False
         response = form.submit()
 
         student = teacher.students[0]
@@ -52,9 +49,6 @@ class TestAddStudent(object):
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
             reverse('add_student'), user=teacher.user).forms['add-student-form']
-        form['elders-0-contact'] = "(123)456-7890"
-        form['elders-0-relationship'] = "Father"
-        form['elders-0-school_staff'] = False
         response = form.submit(status=200)
 
         response.mustcontain("field is required")
@@ -91,9 +85,9 @@ class TestInviteElders(object):
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-elders-form']
-        form['elders-0-contact'] = "dad@example.com"
-        form['elders-0-relationship'] = "Father"
-        form['elders-0-school_staff'] = False
+        form['contact'] = "dad@example.com"
+        form['relationship'] = "Father"
+        form['school_staff'] = False
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -110,9 +104,9 @@ class TestInviteElders(object):
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-elders-form']
-        form['elders-0-contact'] = "(123)456-7890"
-        form['elders-0-relationship'] = ""
-        form['elders-0-school_staff'] = False
+        form['contact'] = "(123)456-7890"
+        form['relationship'] = ""
+        form['school_staff'] = False
         response = form.submit(status=200)
 
         response.mustcontain("field is required")

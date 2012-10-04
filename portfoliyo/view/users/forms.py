@@ -28,6 +28,7 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     role = forms.CharField(max_length=200)
+    school = forms.ModelChoiceField(model.School.objects.all())
 
 
     def clean(self):

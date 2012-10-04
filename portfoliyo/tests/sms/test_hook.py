@@ -178,6 +178,8 @@ def test_code_signup_student_name():
     assert len(parent.students) == 1
     student = parent.students[0]
     assert student.name == u"Jimmy Doe"
+    assert student.invited_by == teacher
+    assert student.school == teacher.school
     assert set(student.elders) == set([teacher, parent])
     assert parent.state == model.Profile.STATE.relationship
     # and the name is sent on to the village chat as a post
