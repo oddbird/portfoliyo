@@ -213,7 +213,7 @@ class Relationship(models.Model):
 
 
 class Group(models.Model):
-    """A group of students, set up by a particular teacher."""
+    """A group of students and elders, set up by a particular teacher."""
     name = models.CharField(max_length=200)
     owner = models.ForeignKey(Profile, related_name='owned_groups')
     students = models.ManyToManyField(
@@ -236,7 +236,7 @@ AMBIGUOUS = ['L', 'I', 'O', 'S', '5']
 
 
 def generate_code(seed, length):
-    """Generate a probably-unique length-letter code given a unique seed."""
+    """Generate a probably-unique code given a unique seed."""
     full = base64.b32encode(sha1(seed).digest())
     for char in AMBIGUOUS:
         full = full.replace(char, '')
