@@ -184,6 +184,7 @@ class TestAddStudentForm(object):
         profile, rel = form.save(elder)
 
         assert profile.name == u"Some Student"
+        assert profile.invited_by == elder
         assert profile.elders == [elder]
         assert rel.elder == elder
         assert rel.student == profile
