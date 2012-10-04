@@ -19,6 +19,11 @@ $village-nav-action-color : $base03;
   border-color: $village-border-color;
 }
 
+.nav-error {
+  @extend %error;
+  @include bleed($village-bleed, left);
+}
+
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;

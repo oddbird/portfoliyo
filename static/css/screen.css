@@ -1840,6 +1840,11 @@ button {
   border-color: #93a1a1;
 }
 
+.nav-error {
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+}
+
 .village-nav {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
@@ -1889,7 +1894,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1349281723');
+  background: url('../images/rgbapng/268bd27f.png?1349378135');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
@@ -2009,7 +2014,7 @@ button {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/rgbapng/0736427f.png?1349281723');
+  background: url('../images/rgbapng/0736427f.png?1349378135');
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
@@ -2231,14 +2236,14 @@ button {
   text-transform: uppercase;
 }
 
-.post .timeout, .feed-error, .pjax-error p {
+.nav-error, .post .timeout, .feed-error, .pjax-error p {
   background: #dc322f;
   color: #fdf6e3;
 }
-.post .timeout a, .feed-error a, .pjax-error p a, .post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
+.nav-error a, .post .timeout a, .feed-error a, .pjax-error p a, .nav-error a:link, .post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .nav-error a:visited, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
   color: #b1d0dd;
 }
-.post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
+.nav-error a:focus, .post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .nav-error a:hover, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .nav-error a:active, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
   color: #eeb2c1;
 }
 
