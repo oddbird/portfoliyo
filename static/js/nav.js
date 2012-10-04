@@ -65,7 +65,8 @@ var PYO = (function (PYO, $) {
                             msg.remove();
                             removeItem();
                         });
-                        listitem.prepend(msg).show();
+                        listitem.before(msg).show();
+                        msg.wrap('<li />');
                     }
                 });
             }
