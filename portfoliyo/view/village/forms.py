@@ -165,7 +165,7 @@ class AddStudentForm(StudentForm):
         assert self.is_valid()
         name = self.cleaned_data["name"]
 
-        profile = model.Profile.create_with_user(name=name)
+        profile = model.Profile.create_with_user(name=name, invited_by=added_by)
 
         rel = model.Relationship.objects.create(
             from_profile=added_by,
