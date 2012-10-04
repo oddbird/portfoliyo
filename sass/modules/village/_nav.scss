@@ -19,7 +19,7 @@ $village-nav-action-color : $base03;
   border-color: $village-border-color;
 }
 
-.nav-error {
+.nav-error, .remove-error {
   @extend %error;
   @include bleed($village-bleed, left);
 }

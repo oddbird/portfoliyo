@@ -1843,7 +1843,7 @@ button {
   border-color: #93a1a1;
 }
 
-.nav-error {
+.nav-error, .remove-error {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
 }
@@ -2239,14 +2239,14 @@ button {
   text-transform: uppercase;
 }
 
-.nav-error, .post .timeout, .feed-error, .pjax-error p {
+.nav-error, .remove-error, .post .timeout, .feed-error, .pjax-error p {
   background: #dc322f;
   color: #fdf6e3;
 }
-.nav-error a, .post .timeout a, .feed-error a, .pjax-error p a, .nav-error a:link, .post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .nav-error a:visited, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
+.nav-error a, .remove-error a, .post .timeout a, .feed-error a, .pjax-error p a, .nav-error a:link, .remove-error a:link, .post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .nav-error a:visited, .remove-error a:visited, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
   color: #b1d0dd;
 }
-.nav-error a:focus, .post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .nav-error a:hover, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .nav-error a:active, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
+.nav-error a:focus, .remove-error a:focus, .post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .nav-error a:hover, .remove-error a:hover, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .nav-error a:active, .remove-error a:active, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
   color: #eeb2c1;
 }
 
