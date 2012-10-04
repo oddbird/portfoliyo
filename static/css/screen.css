@@ -1578,6 +1578,9 @@ button {
   bottom: 0;
   overflow-y: scroll;
 }
+.loading.village-nav, .loading.village-feed, .loading.village-info {
+  position: absolute;
+}
 
 .village-add-form, .dashboard, .pjax-error, .elder-add-form, .elder-edit-form {
   height: 100%;
