@@ -350,6 +350,28 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.initializeMultiselect = function () {
+        var context = $('.village-main');
+        var form = context.find('.post-add-form');
+        var select = form.find('#sms-target');
+        select.multiselect({
+            checkAllText: 'select all',
+            uncheckAllText: 'select none',
+            noneSelectedText: 'no one',
+            selectedText: function (checked, total, arr) {
+                if (checked === total) {
+                    return 'all <i class="mobile">mobile</i> users';
+                } else {
+                    if (checked <= 3) {
+                        return $(arr).map(function () { return $(this).next().text(); }).get().join(', ');
+                    } else {
+                        return checked + ' <i class="mobile">mobile</i> users';
+                    }
+                }
+            }
+        });
+    };
+
     return PYO;
 
 }(PYO || {}, jQuery));

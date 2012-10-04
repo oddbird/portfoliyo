@@ -184,6 +184,7 @@ var PYO = (function (PYO, $) {
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
+        PYO.initializeMultiselect();
     };
 
     PYO.initializePage = function () {
