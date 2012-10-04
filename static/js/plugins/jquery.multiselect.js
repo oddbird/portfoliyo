@@ -189,8 +189,8 @@ $.widget("ech.multiselect", {
 		this.inputs = this.labels.children('input');
 
 		// set widths
-		this._setButtonWidth();
-		this._setMenuWidth();
+		// this._setButtonWidth();
+		// this._setMenuWidth();
 
 		// remember default value
 		this.button[0].defaultValue = this.update();
@@ -570,10 +570,10 @@ $.widget("ech.multiselect", {
 
 		// if position utility is not available...
 		} else {
-			menu.css({
-				top: pos.top + button.outerHeight(),
-				left: pos.left
-			});
+			// menu.css({
+			// 	top: pos.top + button.outerHeight(),
+			// 	left: pos.left
+			// });
 		}
 
 		// show the menu, maybe with a speed/effect combo
