@@ -7,7 +7,6 @@ import time
 from hashlib import sha1
 from django.contrib.auth import models as auth_models
 from django.db import models, transaction, IntegrityError
-from django.db.models.fields.related import SingleRelatedObjectDescriptor
 from django.utils import timezone
 
 from model_utils import Choices
@@ -208,6 +207,7 @@ class Group(models.Model):
         Profile, related_name='student_in_groups', blank=True)
     elders = models.ManyToManyField(
         Profile, related_name='elder_in_groups', blank=True)
+    deleted = models.BooleanField(default=False)
 
 
     def __unicode__(self):
