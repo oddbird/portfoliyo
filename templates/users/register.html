@@ -24,16 +24,49 @@
     <div class="fieldset bio">
       {% include "forms/_field.html" with field=form.name label="Students call me..." %}
       {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
-
-      <div class="fieldset initial-password">
-        {% include "forms/_field.html" with field=form.password %}
-
-        {% include "forms/_field.html" with field=form.password_confirm %}
-      </div>
-
       {% include "forms/_field.html" with field=form.email %}
-      {# @@@ include "forms/_field.html" with field=form.school #}
     </div>
+
+    <div class="fieldset initial-password">
+      {% include "forms/_field.html" with field=form.password %}
+      {% include "forms/_field.html" with field=form.password_confirm %}
+    </div>
+
+    <div class="formfield school-field">
+      <p class="label">School</p>
+      <ul class="radio-options">
+        <li class="option">
+          <input type="radio" name="school" id="school1" value="1" checked/>
+          <label for="school1">I'm not affiliated with a school</label>
+        </li>
+        <li class="option">
+          <input type="radio" name="school" id="school2" value="2"/>
+          <label for="school2">Goshen Middle School <span class="zip">46526</span></label>
+        </li>
+        <li class="option">
+          <input type="radio" name="school" id="school3" value="3"/>
+          <label for="school3">Millersburg Elementary School <span class="zip">46543</span></label>
+        </li>
+        <li class="option">
+          <input type="radio" name="school" id="school4" value="4"/>
+          <label for="school4">New Paris Elementary School <span class="zip">46553</span></label>
+        </li>
+      </ul>
+      <p class="formfield-help">
+        Don't see your school listed?
+        <a href="#add-school">Add a new school</a>.
+      </p>
+    </div>
+
+    <div class="formfield add-school-name-field">
+      <label title="School name (required)" class="type" for="id_school_name">School name</label>
+      <input type="text" maxlength="200" class="value" id="id_school_name" required="" name="school name">
+    </div>
+    <div class="formfield add-school-zip-field">
+      <label title="School zip code (required)" class="type" for="id_school_zip">School zip code</label>
+      <input type="text" maxlength="5" class="value" id="id_school_zip" required="" name="school zip">
+    </div>
+
 
     <div class="form-actions">
       <button type="submit" class="go-network">Continue</button>

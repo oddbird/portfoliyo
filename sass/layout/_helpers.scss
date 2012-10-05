@@ -49,11 +49,7 @@ $simple-center: $simple-width - $simple-side;
 %simple-inline-form {
   @include at-breakpoint($break) {
     @include inline-form($simple-side, $simple-center, $simple-center);
-    label { @include pull($simple-side, $simple-center); }
-    [type="checkbox"], [type="radio"] {
-      + label { margin-left: 0; }
-      .lt-ie9 & { left: 0; }
-    }
+    label, .label { @include pull($simple-side, $simple-center); }
   }
 }
 
