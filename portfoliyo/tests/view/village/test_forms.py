@@ -4,7 +4,46 @@ import mock
 
 from portfoliyo.view.village import forms
 
-from portfoliyo.tests import factories
+from portfoliyo.tests import factories, utils
+
+
+class TestEditElderForm(object):
+    def test_edit_custom_relationship_description(self):
+        """
+        Editing elder changes role in that village, profile only if matched.
+
+        Elder's role in particular village may be different from their profile
+        role; the new role should always take effect in the village in which
+        they are being edited, and their profile role should only be updated if
+        it was the same as their role in that village.
+
+        """
+        rel = factories.RelationshipFactory(
+            description="gifted and talented teacher",
+            from_profile__role="math teacher",
+            )
+        form = forms.EditElderForm(
+            {'name': 'John Doe', 'role': 'science teacher'}, profile=rel.elder)
+        assert form.is_valid()
+        profile = form.save(rel)
+
+        assert profile.role == 'math teacher'
+        assert utils.refresh(rel).description == 'science teacher'
+
+
+    def test_empty_relationship_description_left_alone(self):
+        """Empty relationship description left empty."""
+        rel = factories.RelationshipFactory(
+            description="",
+            from_profile__role="math teacher",
+            )
+        form = forms.EditElderForm(
+            {'name': 'John Doe', 'role': 'science teacher'}, profile=rel.elder)
+        assert form.is_valid()
+        profile = form.save(rel)
+
+        assert profile.role == 'science teacher'
+        assert utils.refresh(rel).description == ''
 
 
 

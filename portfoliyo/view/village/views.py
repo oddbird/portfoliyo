@@ -190,7 +190,7 @@ def edit_elder(request, student_id, elder_id):
     if request.method == 'POST':
         form = forms.EditElderForm(request.POST, profile=elder)
         if form.is_valid():
-            form.save()
+            form.save(rel=elder_rel)
             messages.success(request, u"Changes saved!")
             return redirect('village', student_id=student_id)
     else:
