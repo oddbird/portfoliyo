@@ -43,8 +43,30 @@ class RelationshipFactory(factory.Factory):
     FACTORY_FOR = model.Relationship
 
     from_profile = factory.SubFactory(ProfileFactory)
-    to_profile = factory.SubFactory(ProfileFactory)
+    to_profile = factory.SubFactory(
+        ProfileFactory,
+        school=factory.ContainerAttribute(
+            lambda o, containers: containers[0].from_profile.school),
+        )
     description = ""
+
+
+    @classmethod
+    def create(cls, **kwargs):
+        """Special handling for school; prevent cross-school relationships."""
+        school = kwargs.pop("school", None)
+        if school is not None:
+            kwargs['from_profile__school'] = school
+            kwargs['to_profile__school'] = school
+        if ('to_profile__school' in kwargs and
+                not 'from_profile__school' in kwargs):
+            kwargs['from_profile__school'] = kwargs['to_profile__school']
+        if 'to_profile' in kwargs and not 'from_profile' in kwargs:
+            kwargs['from_profile__school'] = kwargs['to_profile'].school
+        rel = super(RelationshipFactory, cls).create(**kwargs)
+        if rel.from_profile.school != rel.to_profile.school:
+            raise ValueError("Cannot create relationship across schools.")
+        return rel
 
 
 class GroupFactory(factory.Factory):
