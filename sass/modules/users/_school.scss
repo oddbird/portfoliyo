@@ -1,9 +1,0 @@
-// ---------------------------------------------------------------------------
-// School registration
-
-.select-school {
-  @extend %simple-form;
-  .radio-options { @extend %radio-options; }
-  .school-field { @include trailer; }
-}
-.action-individual { @include link(false,true); }
