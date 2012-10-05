@@ -33,37 +33,10 @@
 
       {% include "forms/_field.html" with field=form.email %}
       {# @@@ include "forms/_field.html" with field=form.school #}
-
-      <div class="formfield school-field">
-        <label title="School (required)" class="type" for="id_school">School</label>
-        <select id="id_school" class=" value" required="required" name="school">
-          <option value="">---------</option>
-          <option value="1">Benton Elementary School<span class="zip">46526</span></option>
-          <option value="2">Goshen Middle School<span class="zip">46526</span></option>
-          <option value="3">Millersburg Elementary School<span class="zip">46543</span></option>
-          <option value="4">New Paris Elementary School<span class="zip">46553</span></option>
-          <option value="add">add a new school</option>
-        </select>
-      </div>
-
-      <div class="fieldset add-school">
-
-        <div class="formfield add-school-name-field">
-          <label title="School name (required)" class="type" for="id_school_name">School name</label>
-          <input type="text" maxlength="200" class="value" id="id_school_name" required="" name="school name">
-        </div>
-
-        <div class="formfield add-school-zip-field">
-          <label title="School zip code (required)" class="type" for="id_school_zip">School zip code</label>
-          <input type="text" maxlength="5" class="value" id="id_school_zip" required="" name="school zip">
-        </div>
-
-      </div>
-
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="go-network">Get started!</button>
+      <button type="submit" class="go-network">Continue</button>
     </div>
   </form>
 </article>

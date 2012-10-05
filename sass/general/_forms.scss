@@ -54,7 +54,6 @@ $input-rhythm: .25;
   @include sans;
   @include adjust-font-size-to($input-font-size);
   @include rhythm-borders(1px,$input-rhythm,$input-font-size);
-  @include box-shadow(inset rgba($blue,.5) 0 0 $xxxsmallem);
   @include rgba-background(rgba(white,.25));
   width: 100%;
   color: inherit;
@@ -147,7 +146,10 @@ $input-rhythm: .25;
         color: $base01;
       }
     }
-    &:checked + label { &:before { color: $blue; } }
+    &:checked + label {
+      font-weight: bold;
+      &:before { color: $blue; }
+    }
     &:focus + label { color: $base03; }
   }
 
@@ -213,3 +215,18 @@ $input-rhythm: .25;
 }
 
 button { @include reset-button; }
+
+// ---------------------------------------------------------------------------
+// Radio/Checkbox Options
+
+%radio-options {
+  @include adjust-font-size-to($input-font-size);
+  @include reset-box-model;
+  @include no-style-list;
+  @include rhythm-borders(1px,.5,$input-font-size);
+  @include rgba-background(rgba(white,.25));
+  max-height: rhythm(8,$input-font-size);
+  overflow-y: scroll;
+
+  label { vertical-align: middle; }
+}
