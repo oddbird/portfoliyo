@@ -182,7 +182,6 @@ var PYO = (function (PYO, $) {
 
     PYO.initializeFeed = function () {
         PYO.activeStudentId = $('.village-feed').data('student-id');
-        PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');

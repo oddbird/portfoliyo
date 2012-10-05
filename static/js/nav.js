@@ -187,15 +187,37 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.listenForStudents = function () {
-        if (PYO.pusherKey) {
+    PYO.listenForStudentChanges = function () {
+        if (PYO.pusherKey && PYO.activeUserId) {
             var nav = $('.village-nav');
+            var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
+
+            channel.bind('student_added', function (data) {
+                if (data && nav.find('.grouptitle .group-link[data-name="All Students"]').length) {
+                    data.staff = nav.data('is-staff');
+                    var student = ich.student_list_item(data);
+                    var url = window.location.pathname;
+                    var inserted = false;
+                    student.find('a.ajax-link[href="' + url + '"]').addClass('active');
+                    nav.find('.student').each(function () {
+                        if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                            student.insertBefore($(this));
+                            inserted = true;
+                        }
+                    });
+                    if (!inserted) {
+                        nav.find('.itemlist').append(student);
+                    }
+                    PYO.listenForPosts(student);
+                }
+            });
         }
     };
 
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
             PYO.navHandlers();
+            PYO.listenForStudentChanges();
             if ($('.village-feed').length || $('#add-student-form').length) {
                 var studentsUrl = $('.village-nav').data('students-url');
                 PYO.fetchStudents(studentsUrl, 'All Students');
