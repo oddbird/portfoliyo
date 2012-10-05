@@ -63,6 +63,16 @@ class TestProfileResource(object):
         assert response.json['objects'][0]['village_uri'] == village_url
 
 
+    def test_edit_student_uri(self, no_csrf_client):
+        """Each profile has an edit_student_uri in the API response."""
+        s = factories.ProfileFactory.create(school_staff=True)
+        edit_url = reverse('edit_student', kwargs={'student_id': s.id})
+
+        response = no_csrf_client.get(self.list_url(), user=s.user)
+
+        assert response.json['objects'][0]['edit_student_uri'] == edit_url
+
+
 
     def test_filter_by_elder(self, no_csrf_client):
         """Can filter profiles by elders."""

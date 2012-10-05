@@ -186,6 +186,10 @@ class ProfileResource(SoftDeletedResource):
             'village',
             kwargs={'student_id': bundle.obj.id},
             )
+        bundle.data['edit_student_uri'] = reverse(
+            'edit_student',
+            kwargs={'student_id': bundle.obj.id},
+            )
 
         return bundle
 

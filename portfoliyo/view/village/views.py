@@ -13,7 +13,6 @@ from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 
 from portfoliyo import model, pdf
-from portfoliyo.view import home
 from ..decorators import school_staff_required
 from ..ajax import ajax
 from . import forms
@@ -34,28 +33,6 @@ def dashboard(request):
         )
 
 
-
-@school_staff_required
-@ajax('village/_add_student_content.html')
-def add_student(request):
-    """Add a student and elders."""
-    if request.method == 'POST':
-        form = forms.AddStudentForm(request.POST)
-        if form.is_valid():
-            student, _ = form.save(added_by=request.user.profile)
-            return redirect('village', student_id=student.id)
-    else:
-        form = forms.AddStudentForm()
-
-    return TemplateResponse(
-        request,
-        'village/add_student.html',
-        {
-            'form': form,
-            },
-        )
-
-
 def get_relationship_or_404(student_id, profile):
     """Get relationship between student_id and profile, or 404."""
     try:
@@ -67,6 +44,53 @@ def get_relationship_or_404(student_id, profile):
             )
     except model.Relationship.DoesNotExist:
         raise Http404
+
+
+
+@school_staff_required
+@ajax('village/_add_student_content.html')
+def add_student(request):
+    """Add a student."""
+    if request.method == 'POST':
+        form = forms.StudentForm(request.POST)
+        if form.is_valid():
+            student = form.save(request.user.profile)
+            return redirect('village', student_id=student.id)
+    else:
+        form = forms.StudentForm()
+
+    return TemplateResponse(
+        request,
+        'village/add_student.html',
+        {
+            'form': form,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_edit_student_content.html')
+def edit_student(request, student_id):
+    """Edit a student."""
+    rel = get_relationship_or_404(student_id, request.user.profile)
+
+    if request.method == 'POST':
+        form = forms.StudentForm(request.POST, instance=rel.student)
+        if form.is_valid():
+            student = form.save(request.user.profile)
+            return redirect('village', student_id=student.id)
+    else:
+        form = forms.StudentForm(instance=rel.student)
+
+    return TemplateResponse(
+        request,
+        'village/edit_student.html',
+        {
+            'form': form,
+            'student': rel.student,
+            },
+        )
 
 
 

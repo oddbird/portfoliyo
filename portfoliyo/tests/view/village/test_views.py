@@ -71,6 +71,61 @@ class TestAddStudent(object):
 
 
 
+class TestEditStudent(object):
+    """Tests for edit_student view."""
+    def url(self, student=None):
+        """Shortcut to get URL of edit-student view."""
+        if student is None:
+            student = factories.ProfileFactory.create()
+        return reverse('edit_student', kwargs={'student_id': student.id})
+
+
+    def test_edit_student(self, client):
+        """User can edit a student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            self.url(rel.student),
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = "Some Student"
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('village', kwargs={'student_id': rel.student.id}))
+
+
+    def test_validation_error(self, client):
+        """Name of student must be provided."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            self.url(rel.student),
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = ""
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_relationship(self, client):
+        """Adding a student requires elder relationship."""
+        someone = factories.ProfileFactory.create(school_staff=True)
+        client.get(self.url(), user=someone.user, status=404)
+
+
+    def test_requires_school_staff(self, client):
+        """Adding a student requires ``school_staff`` attribute."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=False)
+        response = client.get(
+            self.url(rel.student), user=rel.elder.user, status=302).follow()
+
+        response.mustcontain("account doesn't have access"), response.html
+
+
+
 class TestInviteElders(object):
     """Tests for invite_elders view."""
     def url(self, student=None):
