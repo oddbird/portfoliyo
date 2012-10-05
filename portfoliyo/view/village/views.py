@@ -98,28 +98,6 @@ def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
 
-    if request.method == 'POST':
-        if not rel.elder.school_staff:
-            return redirect(request.path)
-        if 'remove' in request.POST:
-            rel.student.deleted = True
-            rel.student.save()
-            if not request.is_ajax():
-                return redirect(home.redirect_home(request.user))
-            data = {'success': True}
-        else:
-            form = forms.EditStudentForm(request.POST)
-            if form.is_valid():
-                form.save(rel.student)
-                data = {'success': True, 'name': rel.student.name}
-            else:
-                for error in form.errors['name']:
-                    messages.error(request, error)
-                data = {'success': False, 'name': rel.student.name}
-            if not request.is_ajax():
-                return redirect(request.path)
-        return HttpResponse(json.dumps(data), content_type='application/json')
-
     return TemplateResponse(
         request,
         'village/village.html',
