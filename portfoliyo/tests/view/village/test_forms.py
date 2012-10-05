@@ -213,11 +213,11 @@ class TestInviteElderForm(object):
 
 
 
-class TestStudentForm(object):
+class TestAddStudentForm(object):
     def test_add_student(self):
         """Saves a student, given just name."""
         elder = factories.ProfileFactory()
-        form = forms.StudentForm({'name': "Some Student"})
+        form = forms.AddStudentForm({'name': "Some Student"})
         assert form.is_valid()
         profile = form.save(elder)
         rel = profile.elder_relationships[0]
@@ -231,11 +231,11 @@ class TestStudentForm(object):
 
     def test_add_two_students_same_name(self):
         """Adding two students with same name causes no username trouble."""
-        form = forms.StudentForm({'name': "Some Student"})
+        form = forms.AddStudentForm({'name': "Some Student"})
         assert form.is_valid()
         profile1 = form.save(factories.ProfileFactory())
 
-        form = forms.StudentForm({'name': "Some Student"})
+        form = forms.AddStudentForm({'name': "Some Student"})
         assert form.is_valid()
         profile2 = form.save(factories.ProfileFactory())
 

@@ -133,34 +133,50 @@ class InviteElderForm(forms.Form):
 
 
 class StudentForm(forms.ModelForm):
-    """Form for adding or editing a student."""
+    """Form for editing a student."""
     class Meta:
         model = model.Profile
         fields = ['name']
 
 
+class AddStudentForm(StudentForm):
+    """Form for adding a student."""
     def save(self, user):
         """
-        Save and return student.
+        Save and return new student.
 
-        Takes the Profile of the current user and, if a new student was
-        created, creates a relationship between them and the student.
+        Takes the Profile of the current user and creates a relationship
+        between them and the new student.
 
         """
         assert self.is_valid()
         name = self.cleaned_data["name"]
 
-        if self.instance.id is not None:
-            self.instance.name = name
-            self.instance.save()
-        else:
-            self.instance = model.Profile.create_with_user(
-                school=user.school, name=name, invited_by=user)
+        profile = model.Profile.create_with_user(
+            school=user.school, name=name, invited_by=user)
 
-            model.Relationship.objects.create(
-                from_profile=user,
-                to_profile=self.instance,
-                kind=model.Relationship.KIND.elder,
-                )
+        model.Relationship.objects.create(
+            from_profile=user,
+            to_profile=profile,
+            kind=model.Relationship.KIND.elder,
+            )
 
-        return self.instance
+        return profile
+
+
+
+class GroupForm(forms.ModelForm):
+    """Form for editing Groups."""
+    class Meta:
+        model = model.Group
+        fields = ['name']
+
+
+
+class AddGroupForm(GroupForm):
+    def save(self, owner):
+        """Save group, attaching new group to owner."""
+        group = super(AddGroupForm, self).save(commit=False)
+        group.owner = owner
+        group.save()
+        return group

@@ -1,0 +1,23 @@
+{% extends "village/_village_content_main.html" %}
+{% load widget_tweaks %}
+
+{% block village-content %}
+<form method="POST" action="{% url edit_group group_id=group.id %}" class="group-edit-form" id="edit-group-form">
+  {% csrf_token %}
+
+  <h2>Edit '{{ group }}'</h2>
+
+  {{ form.non_field_errors }}
+
+  {% include "forms/_field.html" with field=form.name label="Group Name" %}
+
+  <p>[students]</p>
+
+  <p>[elders]</p>
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">save</button>
+  </div>
+
+</form>
+{% endblock village-content %}

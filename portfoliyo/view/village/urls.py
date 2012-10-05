@@ -21,4 +21,9 @@ urlpatterns = patterns(
         name='pdf_parent_instructions',
         ),
     url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
+    url(r'^group/add/$', views.add_group, name='add_group'),
+    url(r'^group/(?P<group_id>\d+)/edit/$',
+        views.edit_group,
+        name='edit_group',
+        ),
     )

@@ -73,7 +73,6 @@ class TestProfileResource(object):
         assert response.json['objects'][0]['edit_student_uri'] == edit_url
 
 
-
     def test_filter_by_elder(self, no_csrf_client):
         """Can filter profiles by elders."""
         rel = factories.RelationshipFactory.create()
@@ -245,3 +244,13 @@ class TestGroupResource(object):
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
         assert response.json['objects'][0]['students_uri'] == students_url
+
+
+    def test_edit_uri(self, no_csrf_client):
+        """Each group has an edit_uri in the API response."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        edit_url = reverse('edit_group', kwargs={'group_id': g.id})
+
+        response = no_csrf_client.get(self.list_url(), user=g.owner.user)
+
+        assert response.json['objects'][0]['edit_uri'] == edit_url

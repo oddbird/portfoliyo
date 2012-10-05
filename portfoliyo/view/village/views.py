@@ -13,8 +13,9 @@ from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 
 from portfoliyo import model, pdf
-from ..decorators import school_staff_required
 from ..ajax import ajax
+from ..decorators import school_staff_required
+from .. import home
 from . import forms
 
 
@@ -52,12 +53,12 @@ def get_relationship_or_404(student_id, profile):
 def add_student(request):
     """Add a student."""
     if request.method == 'POST':
-        form = forms.StudentForm(request.POST)
+        form = forms.AddStudentForm(request.POST)
         if form.is_valid():
             student = form.save(request.user.profile)
             return redirect('village', student_id=student.id)
     else:
-        form = forms.StudentForm()
+        form = forms.AddStudentForm()
 
     return TemplateResponse(
         request,
@@ -78,7 +79,7 @@ def edit_student(request, student_id):
     if request.method == 'POST':
         form = forms.StudentForm(request.POST, instance=rel.student)
         if form.is_valid():
-            student = form.save(request.user.profile)
+            student = form.save()
             return redirect('village', student_id=student.id)
     else:
         form = forms.StudentForm(instance=rel.student)
@@ -89,6 +90,56 @@ def edit_student(request, student_id):
         {
             'form': form,
             'student': rel.student,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_add_group_content.html')
+def add_group(request):
+    """Add a group."""
+    if request.method == 'POST':
+        form = forms.AddGroupForm(request.POST)
+        if form.is_valid():
+            form.save(request.user.profile)
+            return redirect(home.redirect_home(request.user))
+    else:
+        form = forms.AddGroupForm()
+
+    return TemplateResponse(
+        request,
+        'village/add_group.html',
+        {
+            'form': form,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_edit_group_content.html')
+def edit_group(request, group_id):
+    """Edit a group."""
+    group = get_object_or_404(
+        model.Group.objects.select_related('owner'), pk=group_id)
+    if group.owner != request.user.profile:
+        raise Http404
+
+    if request.method == 'POST':
+        form = forms.GroupForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return redirect(home.redirect_home(request.user))
+    else:
+        form = forms.GroupForm(instance=group)
+
+    return TemplateResponse(
+        request,
+        'village/edit_group.html',
+        {
+            'form': form,
+            'group': group,
             },
         )
 
