@@ -40,11 +40,11 @@ class TestRegistrationForm(object):
 class TestEditProfileForm(object):
     def test_update_relationships(self):
         """
-        Updating role updates matching relationship descriptions.
+        Updating role updates matching relationship descriptions to empty.
 
         If I have my role set in my profile as 'foo' and I change it to 'bar',
         any relationships where I am the elder and the relationship description
-        is 'foo' will also be updated to 'bar'.
+        is 'foo' will be updated to '' (which falls back to profile role).
 
         """
         rel1 = factories.RelationshipFactory.create(
@@ -60,5 +60,5 @@ class TestEditProfileForm(object):
         rel1 = utils.refresh(rel1)
         rel2 = utils.refresh(rel2)
 
-        assert rel1.description == 'new'
+        assert rel1.description == ''
         assert rel2.description == 'bar'

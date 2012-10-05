@@ -13,7 +13,22 @@ from ..users.forms import EditProfileForm
 
 class EditElderForm(EditProfileForm):
     """At this point, editing an elder is same as editing a profile."""
-    pass
+    def save(self, rel):
+        """Save this elder in context of given village relationship."""
+        self.profile.name = self.cleaned_data['name']
+        old_profile_role = self.profile.role
+        old_relationship_role = rel.description_or_role
+        new_role = self.cleaned_data['role']
+        if old_profile_role == old_relationship_role:
+            self.profile.role = new_role
+            self.profile.relationships_from.filter(
+                description=old_profile_role).update(
+                description='')
+        else:
+            rel.description = new_role
+            rel.save()
+        self.profile.save()
+        return self.profile
 
 
 

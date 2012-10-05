@@ -193,6 +193,6 @@ class EditProfileForm(forms.Form):
         self.profile.role = new_role
         self.profile.save()
         self.profile.relationships_from.filter(description=old_role).update(
-            description=new_role)
+            description='')
 
         return self.profile
