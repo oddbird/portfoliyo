@@ -2,12 +2,12 @@
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from tastypie import constants, fields
-from tastypie.authentication import SessionAuthentication
 from tastypie.authorization import ReadOnlyAuthorization
 from tastypie.bundle import Bundle
 from tastypie.exceptions import NotFound
 from tastypie.resources import ModelResource
 
+from portfoliyo.api.authentication import SessionAuthentication
 from portfoliyo.api.authorization import (
     ProfileAuthorization, GroupAuthorization)
 from portfoliyo import model
@@ -38,6 +38,13 @@ class PortfoliyoResource(ModelResource):
         # cases, but we should have a better solution here than a magic number
         # (like maybe a custom paginator class that doesn't paginate?)
         limit = 200
+
+
+    def wrap_view(self, view):
+        """Undo csrf-exempt on view wrapper; we want session-csrf to run."""
+        wrapper = super(PortfoliyoResource, self).wrap_view(view)
+        wrapper.csrf_exempt = False
+        return wrapper
 
 
     def is_authorized(self, request, object=None):

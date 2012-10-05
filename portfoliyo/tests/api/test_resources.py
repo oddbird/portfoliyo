@@ -144,6 +144,14 @@ class TestProfileResource(object):
         assert utils.refresh(p).deleted
 
 
+    def test_delete_profile_csrf_protected(self, client):
+        """Deletion is CSRF-protected."""
+        p = factories.ProfileFactory.create()
+        p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
+
+        client.delete(self.detail_url(p), user=p2.user, status=403)
+
+
     def test_delete_profile_requires_school_staff(self, no_csrf_client):
         """A non-school-staff user may not delete a profile."""
         p = factories.ProfileFactory.create()
