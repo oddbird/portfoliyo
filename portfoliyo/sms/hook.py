@@ -114,7 +114,8 @@ def handle_new_student(parent, teacher, student_name):
         student = possible_dupes[0]
     else:
         dupe_found = False
-        student = model.Profile.create_with_user(name=student_name)
+        student = model.Profile.create_with_user(
+            name=student_name, invited_by=teacher)
     model.Relationship.objects.create(
         from_profile=parent,
         to_profile=student,
