@@ -32,7 +32,8 @@ var PYO = (function (PYO, $) {
         });
 
         nav.on('before-replace', function () {
-            PYO.unsubscribeFromPosts();
+            var students = nav.find('.student');
+            PYO.unsubscribeFromPosts(students);
         });
     };
 
@@ -132,7 +133,7 @@ var PYO = (function (PYO, $) {
                     var url = window.location.pathname;
                     students.find('a.ajax-link[href="' + url + '"]').addClass('active');
                     nav.trigger('before-replace').html(students);
-                    PYO.listenForPosts('.village');
+                    PYO.listenForPosts(students.find('.student'));
                 }
             };
 
@@ -153,11 +154,9 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.listenForPosts = function () {
-        if (PYO.pusherKey) {
-            var students = $('.village-nav .student a.ajax-link');
-
-            students.each(function () {
+    PYO.listenForPosts = function (students) {
+        if (PYO.pusherKey && students) {
+            students.find('a.ajax-link').each(function () {
                 var el = $(this);
                 var id = el.data('id');
                 var unread = el.find('.unread');
@@ -178,15 +177,19 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.unsubscribeFromPosts = function () {
-        if (PYO.pusherKey) {
-            var students = $('.village-nav .student a.ajax-link');
-
-            students.each(function () {
+    PYO.unsubscribeFromPosts = function (students) {
+        if (PYO.pusherKey && students) {
+            students.find('a.ajax-link').each(function () {
                 var el = $(this);
                 var id = el.data('id');
                 PYO.pusher.unsubscribe('student_' + id);
             });
+        }
+    };
+
+    PYO.listenForStudents = function () {
+        if (PYO.pusherKey) {
+            var nav = $('.village-nav');
         }
     };
 
