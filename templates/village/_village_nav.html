@@ -1,2 +1,2 @@
-<nav class="village-nav" data-groups-url="{% url api_dispatch_list resource_name='group' api_name='v1' %}?owner={{ request.user.profile.id }}" data-students-url="{% url api_dispatch_list resource_name='user' api_name='v1' %}?elders={{ request.user.profile.id }}" data-is-staff="{{ request.user.profile.school_staff }}">
+<nav class="village-nav" data-groups-url="{% url api_dispatch_list resource_name='group' api_name='v1' %}" data-students-url="{% url api_dispatch_list resource_name='user' api_name='v1' %}?elders={{ request.user.profile.id }}" data-is-staff="{{ request.user.profile.school_staff }}">
 </nav>

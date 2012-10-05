@@ -1,16 +1,35 @@
 """Portfoliyo API resources."""
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 from tastypie import constants, fields
 from tastypie.authentication import SessionAuthentication
 from tastypie.authorization import ReadOnlyAuthorization
 from tastypie.bundle import Bundle
+from tastypie.exceptions import NotFound
 from tastypie.resources import ModelResource
 
+from portfoliyo.api.authorization import (
+    ProfileAuthorization, GroupAuthorization)
 from portfoliyo import model
 
 
 class PortfoliyoResource(ModelResource):
-    """Common default values for all resources."""
+    """
+    Common default values for all resources.
+
+    Also supports per-row authorization, for detail requests only, in the
+    simplest way possible without switching to this incomplete branch of
+    Tastypie:
+    https://github.com/toastdriven/django-tastypie/compare/master...perms
+
+    This implementation assumes that all action methods (e.g. get_detail,
+    post_list, etc) will all eventually call obj_get_list/cached_obj_get_list
+    or obj_get/cached_obj_get at least once passing the request object. It also
+    assumes the authorization check is cheap enough that it's ok to potentially
+    perform the authorization check twice in case of a cache miss when used a
+    cached_* method.
+
+    """
     class Meta:
         authentication = SessionAuthentication()
         authorization = ReadOnlyAuthorization()
@@ -19,6 +38,89 @@ class PortfoliyoResource(ModelResource):
         # cases, but we should have a better solution here than a magic number
         # (like maybe a custom paginator class that doesn't paginate?)
         limit = 200
+
+
+    def is_authorized(self, request, object=None):
+        """Neuter built-in to avoid failure when dispatch calls it w/o obj."""
+        pass
+
+
+    def real_is_authorized(self, request, object=None):
+        """Provide real is_authorized method under different name."""
+        return super(PortfoliyoResource, self).is_authorized(request, object)
+
+
+    def cached_obj_get_list(self, request=None, **kwargs):
+        """Get the object list (maybe from cache), then verify authorization."""
+        objs = super(PortfoliyoResource, self).cached_obj_get_list(
+            request, **kwargs)
+        if request is not None:
+            self.real_is_authorized(request)
+        return objs
+
+
+    def obj_get_list(self, request=None, **kwargs):
+        """Get the object list, then verify authorization."""
+        objs = super(PortfoliyoResource, self).obj_get_list(request, **kwargs)
+        if request is not None:
+            self.real_is_authorized(request)
+        return objs
+
+
+    def cached_obj_get(self, request=None, **kwargs):
+        """Get the object (perhaps from cache) then verify authorization."""
+        obj = super(PortfoliyoResource, self).cached_obj_get(request, **kwargs)
+        if request is not None:
+            self.real_is_authorized(request, obj)
+        return obj
+
+
+    def obj_get(self, request=None, **kwargs):
+        """Get the object, then verify authorization."""
+        obj = super(PortfoliyoResource, self).obj_get(request, **kwargs)
+        if request is not None:
+            self.real_is_authorized(request, obj)
+        return obj
+
+
+
+
+class SoftDeletedResource(PortfoliyoResource):
+    """Base Resource class for soft-deletes (sets deleted flag)."""
+    def obj_delete_list(self, request=None, **kwargs):
+        """Soft-delete a list of objects."""
+        base_object_list = self.get_object_list(request).filter(**kwargs)
+        authed_object_list = self.apply_authorization_limits(
+            request, base_object_list)
+
+        if hasattr(authed_object_list, 'delete'):
+            # It's likely a ``QuerySet``. Call ``.update()`` for efficiency.
+            authed_object_list.update(deleted=True)
+        else:
+            for authed_obj in authed_object_list:
+                authed_obj.deleted = True
+                authed_obj.save()
+
+    def obj_delete(self, request=None, **kwargs):
+        """Soft-delete a single object."""
+        obj = kwargs.pop('_obj', None)
+
+        if not hasattr(obj, 'save'):
+            try:
+                obj = self.obj_get(request, **kwargs)
+            except ObjectDoesNotExist:
+                raise NotFound(
+                    "A model instance matching the provided arguments "
+                    "could not be found."
+                    )
+
+        obj.deleted = True
+        obj.save()
+
+
+    class Meta(PortfoliyoResource.Meta):
+        pass
+
 
 
 
@@ -39,7 +141,7 @@ class SimpleToManyField(fields.ToManyField):
 
 
 
-class ProfileResource(PortfoliyoResource):
+class ProfileResource(SoftDeletedResource):
     invited_by = fields.ForeignKey('self', 'invited_by', blank=True, null=True)
     elders = SimpleToManyField('self', 'elders')
     students = SimpleToManyField('self', 'students')
@@ -81,7 +183,7 @@ class ProfileResource(PortfoliyoResource):
         return bundle
 
 
-    class Meta(PortfoliyoResource.Meta):
+    class Meta(SoftDeletedResource.Meta):
         queryset = (
             model.Profile.objects.filter(deleted=False).select_related('user'))
         resource_name = 'user'
@@ -101,6 +203,8 @@ class ProfileResource(PortfoliyoResource):
         filtering = {
             'school_staff': constants.ALL,
             }
+        authorization = ProfileAuthorization()
+        detail_allowed_methods = ['get', 'delete']
 
 
 
@@ -123,7 +227,7 @@ class ElderRelationshipResource(PortfoliyoResource):
 
 
 
-class GroupResource(PortfoliyoResource):
+class GroupResource(SoftDeletedResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
     students = fields.ManyToManyField(ProfileResource, 'students')
     elders = fields.ManyToManyField(ProfileResource, 'elders')
@@ -138,13 +242,15 @@ class GroupResource(PortfoliyoResource):
         return bundle
 
 
-    class Meta(PortfoliyoResource.Meta):
-        queryset = model.Group.objects.all()
+    class Meta(SoftDeletedResource.Meta):
+        queryset = model.Group.objects.filter(deleted=False)
         resource_name = 'group'
         fields = ['id', 'name', 'owner', 'members']
         filtering = {
             'owner': ['exact'],
             }
+        authorization = GroupAuthorization()
+        detail_allowed_methods = ['get', 'delete']
 
 
 
