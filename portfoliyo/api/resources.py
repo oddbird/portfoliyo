@@ -249,6 +249,10 @@ class GroupResource(SoftDeletedResource):
             'api_dispatch_list',
             kwargs={'resource_name': 'user', 'api_name': 'v1'},
             ) + '?student_in_groups=' + str(bundle.obj.id)
+        bundle.data['group_uri'] = reverse(
+            'group',
+            kwargs={'group_id': bundle.obj.id},
+            )
         bundle.data['edit_uri'] = reverse(
             'edit_group',
             kwargs={'group_id': bundle.obj.id},

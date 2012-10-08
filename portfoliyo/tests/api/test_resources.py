@@ -234,7 +234,18 @@ class TestGroupResource(object):
         assert not utils.refresh(group).deleted
 
 
+    def test_group_uri(self, no_csrf_client):
+        """Each group has a group_uri for use in the web UI."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        group_url = reverse('group', kwargs={'group_id': g.id})
+
+        response = no_csrf_client.get(self.list_url(), user=g.owner.user)
+
+        assert response.json['objects'][0]['group_uri'] == group_url
+
+
     def test_students_uri(self, no_csrf_client):
+        """Each group has a students_uri for fetching its student list."""
         g = factories.GroupFactory.create(owner__school_staff=True)
         students_url = reverse(
             'api_dispatch_list',
