@@ -214,10 +214,6 @@ class Group(models.Model):
         return self.name
 
 
-    class Meta:
-        unique_together = [('name', 'owner')]
-
-
 
 # 1 and 0 already eliminated by base32 encoding
 AMBIGUOUS = ['L', 'I', 'O', 'S', '5']
