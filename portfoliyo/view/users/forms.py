@@ -4,6 +4,7 @@ Account-related forms.
 """
 import operator
 import random
+import time
 
 from django.contrib.auth import forms as auth_forms
 
@@ -83,10 +84,16 @@ class RegistrationForm(forms.Form):
             raise forms.ValidationError("The passwords didn't match.")
         if data.get('addschool'):
             if self.addschool_form.is_valid():
-                data['school'] = self.addschool_form.save()
+                data['school'] = self.addschool_form.save(commit=False)
             else:
                 raise forms.ValidationError(
                     "Could not add a school.")
+        elif data.get('email') and not data.get('school'):
+            data['school'] = model.School(
+                name=(u"%f-%s" % (time.time(), data['email']))[:200],
+                postcode="",
+                auto=True,
+                )
         return data
 
 

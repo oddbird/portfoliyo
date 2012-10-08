@@ -49,6 +49,8 @@ class TestRegistrationForm(object):
         school = form.cleaned_data['school']
         assert school.name == u"New School"
         assert school.postcode == u"12345"
+        # don't save the school to DB on form validation, reg backend will
+        assert school.id is None
 
 
     def test_add_school_validation_error(self):
@@ -63,6 +65,19 @@ class TestRegistrationForm(object):
         assert form.errors['__all__'] == [u"Could not add a school."]
         assert form.addschool_form.errors['postcode'] == [
             u"This field is required."]
+
+
+    def test_no_school(self):
+        """If no school selected, create one."""
+        form = forms.RegistrationForm(self.base_data.copy())
+
+        assert form.is_valid()
+        school = form.cleaned_data['school']
+        assert school.auto
+        assert not school.postcode
+        # don't save the school to DB on form validation, reg backend will
+        assert school.id is None
+
 
 
 class TestEditProfileForm(object):
