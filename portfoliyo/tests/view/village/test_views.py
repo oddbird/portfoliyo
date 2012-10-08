@@ -318,6 +318,40 @@ class TestVillage(object):
 
 
 
+class TestGroupDetail(object):
+    """Tests for group chat view."""
+    def url(self, group=None):
+        if group is None:
+            group = factories.GroupFactory.create()
+        return reverse('group', kwargs=dict(group_id=group.id))
+
+
+    def test_group_detail(self, client):
+        """Can view a group detail page."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
+
+        client.get(self.url(group), user=group.owner.user, status=200)
+
+
+    def test_requires_ownership(self, client):
+        """Only the owner of a group can view it."""
+        group = factories.GroupFactory.create()
+        someone = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+
+        client.get(self.url(group), user=someone.user, status=404)
+
+
+    def test_404_deleted_group(self, client):
+        """Can't view a deleted group."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True, deleted=True)
+
+        client.get(self.url(group), user=group.owner.user, status=404)
+
+
+
 class TestJsonPosts(object):
     """Tests for json_posts view."""
     def url(self, student=None):

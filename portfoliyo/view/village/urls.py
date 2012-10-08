@@ -12,18 +12,22 @@ per_student_patterns = patterns(
     )
 
 
+per_group_patterns = patterns(
+    '',
+    url(r'^$', views.group, name='group'),
+    url(r'^edit/$', views.edit_group, name='edit_group'),
+    )
+
+
 urlpatterns = patterns(
     '',
     url(r'^$', views.dashboard, name='dashboard'),
     url(r'^add/$', views.add_student, name='add_student'),
+    url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
+    url(r'^group/add/$', views.add_group, name='add_group'),
+    url(r'^group/(?P<group_id>\d+)/', include(per_group_patterns)),
     url(r'^instructions-(?P<lang>en|es).pdf$',
         views.pdf_parent_instructions,
         name='pdf_parent_instructions',
-        ),
-    url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
-    url(r'^group/add/$', views.add_group, name='add_group'),
-    url(r'^group/(?P<group_id>\d+)/edit/$',
-        views.edit_group,
-        name='edit_group',
         ),
     )

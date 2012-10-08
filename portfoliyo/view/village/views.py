@@ -186,6 +186,28 @@ def village(request, student_id):
 
 
 @login_required
+@ajax('village/_group_content.html')
+def group(request, group_id):
+    """The main chat view for a group."""
+    group = get_object_or_404(
+        model.Group.objects.filter(
+            owner=request.user.profile,
+            deleted=False,
+            ),
+        id=group_id)
+
+    return TemplateResponse(
+        request,
+        'village/group.html',
+        {
+            'group': group,
+            'post_char_limit': 140 # @@@,
+            },
+        )
+
+
+
+@login_required
 def json_posts(request, student_id):
     """Get backlog of up to 100 latest posts, or POST a post."""
     rel = get_relationship_or_404(student_id, request.user.profile)
