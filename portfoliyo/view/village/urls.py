@@ -24,6 +24,7 @@ urlpatterns = patterns(
     url(r'^$', views.dashboard, name='dashboard'),
     url(r'^add/$', views.add_student, name='add_student'),
     url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
+    url(r'^all/$', views.all_students, name='all_students'),
     url(r'^group/add/$', views.add_group, name='add_group'),
     url(r'^group/(?P<group_id>\d+)/', include(per_group_patterns)),
     url(r'^instructions-(?P<lang>en|es).pdf$',

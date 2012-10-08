@@ -207,6 +207,30 @@ def group(request, group_id):
 
 
 
+class AllStudentsGroup(object):
+    """Stand-in for a Group instance for all-students."""
+    id = 0
+    name = 'All Students'
+
+
+
+@login_required
+@ajax('village/_group_content.html')
+def all_students(request):
+    """Main chat view for all-students 'group'."""
+    group = AllStudentsGroup()
+
+    return TemplateResponse(
+        request,
+        'village/group.html',
+        {
+            'group': group,
+            'post_char_limit': 140, # @@@
+            }
+        )
+
+
+
 @login_required
 def json_posts(request, student_id):
     """Get backlog of up to 100 latest posts, or POST a post."""

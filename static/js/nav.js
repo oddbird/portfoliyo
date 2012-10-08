@@ -90,11 +90,11 @@ var PYO = (function (PYO, $) {
     PYO.fetchGroups = function () {
         var nav = $('.village-nav');
         var url = nav.data('groups-url');
-        var studentsUrl = nav.data('students-url');
+        var studentsApiUrl = nav.data('all-students-api-url');
         var replaceNav = function (data) {
             nav.loadingOverlay('remove');
             if (data) {
-                data.all_students_uri = studentsUrl;
+                data.all_students_uri = studentsApiUrl;
                 data.staff = nav.data('is-staff');
                 var newGroups = ich.group_list(data);
                 nav.trigger('before-replace').html(newGroups);
@@ -194,8 +194,8 @@ var PYO = (function (PYO, $) {
         if ($('.village-nav').length) {
             PYO.navHandlers();
             if ($('.village-feed').length || $('#add-student-form').length) {
-                var studentsUrl = $('.village-nav').data('students-url');
-                PYO.fetchStudents(studentsUrl, 'All Students');
+                var studentsApiUrl = $('.village-nav').data('all-students-api-url');
+                PYO.fetchStudents(studentsApiUrl, 'All Students');
             } else {
                 PYO.fetchGroups();
             }

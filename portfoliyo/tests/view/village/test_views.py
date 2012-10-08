@@ -318,6 +318,18 @@ class TestVillage(object):
 
 
 
+class TestAllStudents(object):
+    def url(self):
+        return reverse('all_students')
+
+
+    def test_all_students(self, client):
+        """Can view an all-students page."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        client.get(self.url(), user=teacher.user, status=200)
+
+
+
 class TestGroupDetail(object):
     """Tests for group chat view."""
     def url(self, group=None):
