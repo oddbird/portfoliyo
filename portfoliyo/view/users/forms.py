@@ -12,6 +12,20 @@ import floppyforms as forms
 from portfoliyo import model
 
 
+class SchoolRadioSelect(forms.RadioSelect):
+    """A RadioSelect with a custom display template."""
+    template_name = 'users/school_radio.html'
+
+
+
+class TemplateLabelModelChoiceField(forms.ModelChoiceField):
+    """A ModelChoiceField that relies on rendering template to handle label."""
+
+    def label_from_instance(self, obj):
+        """Return the object itself, not a string; template renders to label."""
+        return obj
+
+
 
 class RegistrationForm(forms.Form):
     """
@@ -28,7 +42,15 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     role = forms.CharField(max_length=200)
-    school = forms.ModelChoiceField(model.School.objects.all())
+    school = TemplateLabelModelChoiceField(
+        queryset=model.School.objects.filter(auto=False).order_by('name'),
+        empty_label=u"I'm not affiliated with a school",
+        required=False,
+        widget=SchoolRadioSelect,
+        initial=u'',
+        )
+#    new_school_name = forms.CharField(max_length=200)
+#    new_school_postcode = forms.CharField(max_length=20)
 
 
     def clean(self):
@@ -50,6 +72,17 @@ class RegistrationForm(forms.Form):
                 )
         return self.cleaned_data['email']
 
+
+    def clean_school(self):
+        """
+        Ensure a School object is available in the cleaned data 'school' key.
+
+        If new_school_* are provided, build a new School based on them.
+
+        If they are not, and no school was selected, auto-construct one.
+
+        """
+        return self.cleaned_data['school'] # @@@
 
 
 class PasswordResetForm(auth_forms.PasswordResetForm):

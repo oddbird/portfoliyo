@@ -32,31 +32,7 @@
       {% include "forms/_field.html" with field=form.password_confirm %}
     </div>
 
-    <div class="formfield school-field">
-      <p class="label">School</p>
-      <ul class="radio-options">
-        <li class="option">
-          <input type="radio" name="school" id="school1" value="1" checked/>
-          <label for="school1">I'm not affiliated with a school</label>
-        </li>
-        <li class="option">
-          <input type="radio" name="school" id="school2" value="2"/>
-          <label for="school2">Goshen Middle School <span class="zip">46526</span></label>
-        </li>
-        <li class="option">
-          <input type="radio" name="school" id="school3" value="3"/>
-          <label for="school3">Millersburg Elementary School <span class="zip">46543</span></label>
-        </li>
-        <li class="option">
-          <input type="radio" name="school" id="school4" value="4"/>
-          <label for="school4">New Paris Elementary School <span class="zip">46553</span></label>
-        </li>
-      </ul>
-      <p class="formfield-help">
-        Don't see your school listed?
-        <a href="#add-school">Add a new school</a>.
-      </p>
-    </div>
+    {% include "forms/_field.html" with field=form.school helptext="Don't see your school listed? <a href='#add-school'>Add a new school</a>." %}
 
     <div class="formfield add-school-name-field">
       <label title="School name (required)" class="type" for="id_school_name">School name</label>
