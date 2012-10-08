@@ -56,6 +56,8 @@ class RegistrationForm(forms.Form):
         widget=SchoolRadioSelect,
         initial=u'',
         )
+    addschool = forms.BooleanField(
+        initial=False, required=False, widget=forms.HiddenInput)
 
 
     def __init__(self, *args, **kwargs):
@@ -65,12 +67,27 @@ class RegistrationForm(forms.Form):
 
 
     def clean(self):
-        """Verify that the password fields match."""
-        password = self.cleaned_data.get("password")
-        confirm = self.cleaned_data.get("password_confirm")
+        """
+        Verify password fields match and school is provided.
+
+        If addschool is True, build a new School based on data in nested
+        SchoolForm.
+
+        If not, and no school was selected, auto-construct one.
+
+        """
+        data = self.cleaned_data
+        password = data.get('password')
+        confirm = data.get('password_confirm')
         if password != confirm:
             raise forms.ValidationError("The passwords didn't match.")
-        return self.cleaned_data
+        if data.get('addschool'):
+            if self.addschool_form.is_valid():
+                data['school'] = self.addschool_form.save()
+            else:
+                raise forms.ValidationError(
+                    "Could not add a school.")
+        return data
 
 
     def clean_email(self):
@@ -83,17 +100,6 @@ class RegistrationForm(forms.Form):
                 )
         return self.cleaned_data['email']
 
-
-    def clean_school(self):
-        """
-        Ensure a School object is available in the cleaned data 'school' key.
-
-        If new_school_* are provided, build a new School based on them.
-
-        If they are not, and no school was selected, auto-construct one.
-
-        """
-        return self.cleaned_data['school'] # @@@
 
 
 class PasswordResetForm(auth_forms.PasswordResetForm):
