@@ -34,15 +34,10 @@
 
     {% include "forms/_field.html" with field=form.school helptext="Don't see your school listed? <a href='#add-school'>Add a new school</a>." %}
 
-    <div class="formfield add-school-name-field">
-      <label title="School name (required)" class="type" for="id_school_name">School name</label>
-      <input type="text" maxlength="200" class="value" id="id_school_name" required="" name="school name">
+    <div class="fieldset add-school">
+      {% include "forms/_field.html" with field=form.addschool_form.name label="School name" %}
+      {% include "forms/_field.html" with field=form.addschool_form.postcode label="School zip code" %}
     </div>
-    <div class="formfield add-school-zip-field">
-      <label title="School zip code (required)" class="type" for="id_school_zip">School zip code</label>
-      <input type="text" maxlength="5" class="value" id="id_school_zip" required="" name="school zip">
-    </div>
-
 
     <div class="form-actions">
       <button type="submit" class="go-network">Continue</button>

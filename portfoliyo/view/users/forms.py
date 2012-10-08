@@ -27,6 +27,13 @@ class TemplateLabelModelChoiceField(forms.ModelChoiceField):
 
 
 
+class SchoolForm(forms.ModelForm):
+    class Meta:
+        model = model.School
+        fields = ['name', 'postcode']
+
+
+
 class RegistrationForm(forms.Form):
     """
     Form for registering a new user account.
@@ -49,8 +56,12 @@ class RegistrationForm(forms.Form):
         widget=SchoolRadioSelect,
         initial=u'',
         )
-#    new_school_name = forms.CharField(max_length=200)
-#    new_school_postcode = forms.CharField(max_length=20)
+
+
+    def __init__(self, *args, **kwargs):
+        """Also instantiate a nested SchoolForm."""
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.addschool_form = SchoolForm(self.data or None, prefix='addschool')
 
 
     def clean(self):
