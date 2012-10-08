@@ -3,7 +3,7 @@
 {% block village-content %}
 <div class="village-main">
   {% block village-main %}
-  <section class="village-feed" data-student-id="{{ student.id }}" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ relationship.description_or_role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url json_posts student_id=student.id %}">
+  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ relationship.description_or_role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url json_posts student_id=student.id %}">
 
     <article class="getting-started">
       <h2>Welcome to {{ student.name }}'s Village!</h2>

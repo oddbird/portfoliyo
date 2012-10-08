@@ -1,13 +1,13 @@
 {{# objects }}
 <li class="listitem group" data-api-url="{{ resource_uri }}">
-  <a href="#" class="group-link listitem-select" data-name="{{ name }}" data-group-url="{{ students_uri }}">
+  <a href="{{ group_uri }}" class="group-link ajax-link listitem-select" data-name="{{ name }}" data-group-api-url="{{ students_uri }}" data-group-id="{{ id }}">
     <span class="listitem-name">{{ name }}</span>
     <span class="unread">0</span>
   </a>
 
   {{# staff }}
   <div class="listitem-actions">
-    <a href="{{ edit_uri }}" class="action-edit" title="edit group">edit</a>
+    <a href="{{ edit_uri }}" class="action-edit ajax-link" title="edit group">edit</a>
     <button class="action-remove" title="remove group" name="remove" value="">remove</button>
   </div>
   {{/ staff }}

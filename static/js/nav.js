@@ -20,9 +20,11 @@ var PYO = (function (PYO, $) {
         nav.on('click', '.group-link', function (e) {
             e.preventDefault();
             $(this).blur();
-            var url = $(this).data('group-url');
+            var api_url = $(this).data('group-api-url');
+            var url = $(this).attr('href');
             var name = $(this).data('name');
-            PYO.fetchStudents(url, name);
+            var id = $(this).data('group-id');
+            PYO.fetchStudents(url, api_url, name, id);
         });
 
         nav.on('click', '.groups.action-back', function (e) {
@@ -89,21 +91,23 @@ var PYO = (function (PYO, $) {
 
     PYO.fetchGroups = function () {
         var nav = $('.village-nav');
-        var url = nav.data('groups-url');
-        var studentsApiUrl = nav.data('all-students-api-url');
+        var groups_url = nav.data('groups-url');
         var replaceNav = function (data) {
             nav.loadingOverlay('remove');
             if (data) {
-                data.all_students_uri = studentsApiUrl;
+                data.all_students_api_url = nav.data('all-students-api-url');
+                data.all_students_url = nav.data('all-students-url');
                 data.staff = nav.data('is-staff');
+                data.add_group_url = nav.data('add-group-url');
                 var newGroups = ich.group_list(data);
+                PYO.updateNavActiveClasses(newGroups);
                 nav.trigger('before-replace').html(newGroups);
             }
         };
 
-        if (url) {
+        if (groups_url) {
             nav.loadingOverlay();
-            $.get(url, replaceNav).error(function (request, status, error) {
+            $.get(groups_url, replaceNav).error(function (request, status, error) {
                 var msg = ich.ajax_error_msg({
                     error_class: 'nav-error',
                     message: 'Unable to load groups.'
@@ -119,25 +123,27 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.fetchStudents = function (group_url, group_name) {
-        if (group_url && group_name) {
+    PYO.fetchStudents = function (group_url, group_api_url, group_name, group_id) {
+        if (group_url && group_api_url && group_name) {
             var nav = $('.village-nav');
             var replaceNav = function (data) {
                 nav.loadingOverlay('remove');
                 if (data) {
                     data.group_name = group_name;
-                    data.group_uri = group_url;
+                    data.group_url = group_url;
+                    data.group_api_url = group_api_url;
+                    data.group_id = group_id;
                     data.staff = nav.data('is-staff');
+                    data.add_student_url = nav.data('add-student-url');
                     var students = ich.student_list(data);
-                    var url = window.location.pathname;
-                    students.find('a.ajax-link[href="' + url + '"]').addClass('active');
+                    PYO.updateNavActiveClasses(students);
                     nav.trigger('before-replace').html(students);
                     PYO.listenForPosts('.village');
                 }
             };
 
             nav.loadingOverlay();
-            $.get(group_url, replaceNav).error(function (request, status, error) {
+            $.get(group_api_url, replaceNav).error(function (request, status, error) {
                 var msg = ich.ajax_error_msg({
                     error_class: 'nav-error',
                     message: 'Unable to load students.'
@@ -155,7 +161,7 @@ var PYO = (function (PYO, $) {
 
     PYO.listenForPosts = function () {
         if (PYO.pusherKey) {
-            var students = $('.village-nav .student a.ajax-link');
+            var students = $('.village-nav .student a.ajax-link.listitem-select');
 
             students.each(function () {
                 var el = $(this);
@@ -180,7 +186,7 @@ var PYO = (function (PYO, $) {
 
     PYO.unsubscribeFromPosts = function () {
         if (PYO.pusherKey) {
-            var students = $('.village-nav .student a.ajax-link');
+            var students = $('.village-nav .student a.ajax-link.listitem-select');
 
             students.each(function () {
                 var el = $(this);
@@ -193,9 +199,17 @@ var PYO = (function (PYO, $) {
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
             PYO.navHandlers();
-            if ($('.village-feed').length || $('#add-student-form').length) {
+            if (PYO.activeStudentId || $('#add-student-form').length || PYO.activeGroupId === 0) {
                 var studentsApiUrl = $('.village-nav').data('all-students-api-url');
-                PYO.fetchStudents(studentsApiUrl, 'All Students');
+                var studentsUrl = $('.village-nav').data('all-students-url');
+                PYO.fetchStudents(studentsUrl, studentsApiUrl, 'All Students', '0');
+            } else if (PYO.activeGroupId) {
+                var group = $('.village-content');
+                var group_url = group.data('group-url');
+                var group_api_url = group.data('group-api-url');
+                var group_name = group.data('group-name');
+                var group_id = group.data('group-id');
+                PYO.fetchStudents(group_url, group_api_url, group_name, group_id);
             } else {
                 PYO.fetchGroups();
             }
