@@ -220,38 +220,47 @@ var PYO = (function (PYO, $) {
             var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
 
             channel.bind('student_added', function (data) {
-                if (data && nav.find('.grouptitle .group-link[data-name="All Students"]').length) {
-                    data.staff = nav.data('is-staff');
-                    var student = ich.student_list_item(data);
-                    var url = window.location.pathname;
-                    var inserted = false;
-                    student.hide().find('a.ajax-link[href="' + url + '"]').addClass('active');
-                    nav.find('.student').each(function () {
-                        if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
-                            student.insertBefore($(this)).slideDown();
-                            inserted = true;
+                if (data && data.objects && data.objects.length && nav.find('.grouptitle .group-link[data-name="All Students"]').length) {
+                    $.each(data.objects, function (index, value) {
+                        this.staff = nav.data('is-staff');
+                        this.objects = true;
+                        var student = ich.student_list_item(this);
+                        var inserted = false;
+                        nav.find('.student').each(function () {
+                            if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                                student.insertBefore($(this)).slideDown();
+                                inserted = true;
+                            }
+                        });
+                        if (!inserted) {
+                            nav.find('.itemlist').append(student);
+                            student.slideDown();
                         }
+                        PYO.listenForPosts(student);
                     });
-                    if (!inserted) {
-                        nav.find('.itemlist').append(student);
-                        student.slideDown();
-                    }
-                    PYO.listenForPosts(student);
                 }
             });
 
             channel.bind('student_edited', function (data) {
-                if (data && data.objects && data.objects[0] && data.objects[0].id && data.objects[0].name && nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]').length) {
-                    var student = nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]');
-                    student.find('.listitem-name').text(data.objects[0].name);
-                    student.data('name', data.objects[0].name);
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function (index, value) {
+                        if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]');
+                            student.find('.listitem-name').text(this.name);
+                            student.data('name', this.name);
+                        }
+                    });
                 }
             });
 
             channel.bind('student_removed', function (data) {
-                if (data && data.objects && data.objects[0] && data.objects[0].id && nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]').length) {
-                    var student = nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]').closest('.student');
-                    student.slideUp(function () { $(this).remove(); });
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function (index, value) {
+                        if (this.id && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]').closest('.student');
+                            student.slideUp(function () { $(this).remove(); });
+                        }
+                    });
                 }
             });
         }
