@@ -239,6 +239,14 @@ var PYO = (function (PYO, $) {
                     PYO.listenForPosts(student);
                 }
             });
+
+            channel.bind('student_edited', function (data) {
+                if (data && data.objects && data.objects[0] && data.objects[0].id && data.objects[0].name && nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]').length) {
+                    var student = nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]');
+                    student.find('.listitem-name').text(data.objects[0].name);
+                    student.data('name', data.objects[0].name);
+                }
+            });
         }
     };
 

@@ -79,7 +79,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.replacePost = function (data) {
-        if (data && data.posts[0] && data.posts[0].author_sequence_id && data.posts[0].author_id) {
+        if (data && data.posts && data.posts[0] && data.posts[0].author_sequence_id && data.posts[0].author_id) {
             var feed = $('.village-feed');
             var author_sequence_id = data.posts[0].author_sequence_id;
             var author_id = data.posts[0].author_id;
