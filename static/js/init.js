@@ -21,6 +21,9 @@ var PYO = (function (PYO, $) {
 
         // nav.js
         PYO.initializeNav();
+
+        // user.js
+        PYO.addSchool('#register-form');
     });
 
     return PYO;
