@@ -225,15 +225,16 @@ var PYO = (function (PYO, $) {
                     var student = ich.student_list_item(data);
                     var url = window.location.pathname;
                     var inserted = false;
-                    student.find('a.ajax-link[href="' + url + '"]').addClass('active');
+                    student.hide().find('a.ajax-link[href="' + url + '"]').addClass('active');
                     nav.find('.student').each(function () {
                         if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
-                            student.insertBefore($(this));
+                            student.insertBefore($(this)).slideDown();
                             inserted = true;
                         }
                     });
                     if (!inserted) {
                         nav.find('.itemlist').append(student);
+                        student.slideDown();
                     }
                     PYO.listenForPosts(student);
                 }
