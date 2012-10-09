@@ -324,10 +324,10 @@ var PYO = (function (PYO, $) {
                 var remain = limit - chars;
                 if (remain < 0) {
                     count.addClass('overlimit');
-                    button.attr('disabled', 'true');
+                    button.not('.disabled').attr('disabled', 'disabled');
                 } else {
                     count.removeClass('overlimit');
-                    button.removeAttr('disabled');
+                    button.not('.disabled').removeAttr('disabled');
                 }
                 count.text(remain + ' characters remaining...');
             };

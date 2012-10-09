@@ -259,6 +259,12 @@ var PYO = (function (PYO, $) {
                         if (this.id && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
                             var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]').closest('.student');
                             student.slideUp(function () { $(this).remove(); });
+                            if (this.id === PYO.activeStudentId) {
+                                var msg = ich.active_student_removed_msg();
+                                msg.appendTo($('#messages'));
+                                $('#messages').messages();
+                                $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
+                            }
                         }
                     });
                 }
