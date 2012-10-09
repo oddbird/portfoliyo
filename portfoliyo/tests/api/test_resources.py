@@ -144,11 +144,30 @@ class TestProfileResource(object):
 
 
     def test_delete_profile(self, no_csrf_client):
-        """A school-staff user from same school may delete another profile."""
-        p = factories.ProfileFactory.create()
+        """A staff user from same school may delete a non-staff profile."""
+        p = factories.ProfileFactory.create(school_staff=False)
         p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
 
         no_csrf_client.delete(self.detail_url(p), user=p2.user, status=204)
+
+        assert utils.refresh(p).deleted
+
+
+    def test_cannot_delete_school_staff_profile(self, no_csrf_client):
+        """Another user may not delete a school-staff user's profile."""
+        p = factories.ProfileFactory.create(school_staff=True)
+        p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
+
+        no_csrf_client.delete(self.detail_url(p), user=p2.user, status=403)
+
+        assert not utils.refresh(p).deleted
+
+
+    def test_can_delete_own_profile(self, no_csrf_client):
+        """A staff user may delete their own profile."""
+        p = factories.ProfileFactory.create(school_staff=True)
+
+        no_csrf_client.delete(self.detail_url(p), user=p.user, status=204)
 
         assert utils.refresh(p).deleted
 
