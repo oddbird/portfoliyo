@@ -20,13 +20,15 @@ var PYO = (function (PYO, $) {
         nav.on('click', '.group-link', function (e) {
             e.preventDefault();
             var trigger = $(this).blur();
-            var api_url = trigger.data('group-api-url');
-            var url = trigger.attr('href');
-            var name = trigger.data('name');
-            var id = trigger.data('group-id');
-            var edit_group_url = trigger.data('edit-url');
-            var group_resource_url = trigger.closest('.listitem').data('api-url');
-            PYO.fetchStudents(url, api_url, name, id, edit_group_url, group_resource_url);
+            var group_obj = {
+                name: trigger.data('name'),
+                url: trigger.attr('href'),
+                students_url: trigger.data('group-api-url'),
+                id: trigger.data('group-id'),
+                edit_url: trigger.data('edit-url'),
+                resource_url: trigger.closest('.listitem').data('api-url')
+            };
+            PYO.fetchStudents(group_obj);
         });
 
         nav.on('click', '.groups.action-back', function (e) {
@@ -56,9 +58,13 @@ var PYO = (function (PYO, $) {
                         if (link.hasClass('active')) {
                             window.location.href = '/';
                         } else if (listitem.hasClass('grouptitle')) {
-                            var studentsApiUrl = $('.village-nav').data('all-students-api-url');
-                            var studentsUrl = $('.village-nav').data('all-students-url');
-                            PYO.fetchStudents(studentsUrl, studentsApiUrl, 'All Students', '0');
+                            var group_obj = {
+                                name: 'All Students',
+                                url: $('.village-nav').data('all-students-url'),
+                                students_url: $('.village-nav').data('all-students-api-url'),
+                                id: '0'
+                            };
+                            PYO.fetchStudents(group_obj);
                         }
                         listitem.remove();
                     },
@@ -136,18 +142,18 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.fetchStudents = function (group_url, group_api_url, group_name, group_id, edit_group_url, group_resource_url) {
-        if (group_url && group_api_url && group_name) {
+    PYO.fetchStudents = function (group_obj) {
+        if (group_obj && group_obj.url && group_obj.students_url && group_obj.name) {
             var nav = $('.village-nav');
             var replaceNav = function (data) {
                 nav.loadingOverlay('remove');
                 if (data) {
-                    data.group_name = group_name;
-                    data.group_url = group_url;
-                    data.group_api_url = group_api_url;
-                    data.group_id = group_id;
-                    data.edit_group_url = edit_group_url;
-                    data.group_resource_url = group_resource_url;
+                    data.group_name = group_obj.name;
+                    data.group_url = group_obj.url;
+                    data.group_api_url = group_obj.students_url;
+                    data.group_id = group_obj.id;
+                    data.edit_group_url = group_obj.edit_url;
+                    data.group_resource_url = group_obj.resource_url;
                     data.staff = nav.data('is-staff');
                     data.add_student_url = nav.data('add-student-url');
                     var students = ich.student_list(data);
@@ -158,7 +164,7 @@ var PYO = (function (PYO, $) {
             };
 
             nav.loadingOverlay();
-            $.get(group_api_url, replaceNav).error(function (request, status, error) {
+            $.get(group_obj.students_url, replaceNav).error(function (request, status, error) {
                 var msg = ich.ajax_error_msg({
                     error_class: 'nav-error',
                     message: 'Unable to load students.'
@@ -166,7 +172,7 @@ var PYO = (function (PYO, $) {
                 msg.find('.try-again').click(function (e) {
                     e.preventDefault();
                     msg.remove();
-                    PYO.fetchStudents(group_url, group_api_url, group_name, group_id, edit_group_url, group_resource_url);
+                    PYO.fetchStudents(group_obj);
                 });
                 nav.prepend(msg);
                 nav.loadingOverlay('remove');
@@ -213,20 +219,27 @@ var PYO = (function (PYO, $) {
 
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
+            var group_obj;
             PYO.navHandlers();
             if (PYO.activeStudentId || $('#add-student-form').length || PYO.activeGroupId === 0) {
-                var studentsApiUrl = $('.village-nav').data('all-students-api-url');
-                var studentsUrl = $('.village-nav').data('all-students-url');
-                PYO.fetchStudents(studentsUrl, studentsApiUrl, 'All Students', '0');
+                group_obj = {
+                    name: 'All Students',
+                    url: $('.village-nav').data('all-students-url'),
+                    students_url: $('.village-nav').data('all-students-api-url'),
+                    id: '0'
+                };
+                PYO.fetchStudents(group_obj);
             } else if (PYO.activeGroupId) {
                 var group = $('.village-content');
-                var group_url = group.data('group-url');
-                var group_api_url = group.data('group-api-url');
-                var group_name = group.data('group-name');
-                var group_id = group.data('group-id');
-                var group_edit_url = group.data('group-edit-url');
-                var group_resource_url = group.data('group-resource-url');
-                PYO.fetchStudents(group_url, group_api_url, group_name, group_id, group_edit_url, group_resource_url);
+                group_obj = {
+                    name: group.data('group-name'),
+                    url: group.data('group-url'),
+                    students_url: group.data('group-api-url'),
+                    id: group.data('group-id'),
+                    edit_url: group.data('group-edit-url'),
+                    resource_url: group.data('group-resource-url')
+                };
+                PYO.fetchStudents(group_obj);
             } else {
                 PYO.fetchGroups();
             }
