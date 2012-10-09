@@ -247,6 +247,13 @@ var PYO = (function (PYO, $) {
                     student.data('name', data.objects[0].name);
                 }
             });
+
+            channel.bind('student_removed', function (data) {
+                if (data && data.objects && data.objects[0] && data.objects[0].id && nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]').length) {
+                    var student = nav.find('.student .listitem-select[data-id="' + data.objects[0].id + '"]').closest('.student');
+                    student.slideUp(function () { $(this).remove(); });
+                }
+            });
         }
     };
 
