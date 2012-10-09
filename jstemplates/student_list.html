@@ -1,6 +1,14 @@
 <h2 class="listitem title grouptitle">
   <a href="#" class="action-back groups" title="Go back to group list">Group:</a>
-  <a href="{{ group_url }}" class="group-link ajax-link listitem-select" data-name="{{ group_name }}" data-group-api-url="{{ group_api_url }}" data-group-id="{{ group_id }}">{{ group_name }}</a>
+  <a href="{{ group_url }}" class="group-link ajax-link listitem-select" data-name="{{ group_name }}" data-group-api-url="{{ group_api_url }}" data-group-id="{{ group_id }}" data-edit-url="{{ edit_group_url }}">{{ group_name }}</a>
+  {{# staff }}
+  {{# edit_group_url }}
+  <div class="listitem-actions">
+    <a href="{{ edit_group_url }}" class="action-edit ajax-link" title="edit group">edit</a>
+    <button class="action-remove" title="remove group" name="remove" value="">remove</button>
+  </div>
+  {{/ edit_group_url }}
+  {{/ staff }}
 </h2>
 <ul class="itemlist">
   {{> student_list_item }}
