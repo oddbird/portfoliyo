@@ -79,26 +79,33 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.replacePost = function (data) {
-        if (data && data.posts && data.posts[0] && data.posts[0].author_sequence_id && data.posts[0].author_id) {
+        if (data && data.posts && data.posts.length) {
             var feed = $('.village-feed');
-            var author_sequence_id = data.posts[0].author_sequence_id;
-            var author_id = data.posts[0].author_id;
-            var oldPost = feed.find('.post[data-author-id="' + author_id + '"][data-author-sequence="' + author_sequence_id + '"]');
-            if (oldPost && oldPost.length) {
-                var newPost = PYO.renderPost(data);
-                var scroll = PYO.scrolledToBottom();
-                newPost.filter('.post[data-author-id="' + PYO.activeUserId + '"]').each(function () {
-                    $(this).find('.details').addClass('open auto');
-                });
-                newPost.find('.details').html5accordion({
-                    initialSlideSpeed: 0,
-                    openCallback: smsDetailsOpened
-                });
-                oldPost.replaceWith(newPost);
-                $.doTimeout('new-post-' + author_sequence_id);
-                if (scroll) { PYO.scrollToBottom(); }
-                return true;
-            }
+            var replaced = false;
+            $.each(data.posts, function (index, value) {
+                if (this.author_sequence_id && this.author_id) {
+                    var oldPost = feed.find('.post[data-author-id="' + this.author_id + '"][data-author-sequence="' + this.author_sequence_id + '"]');
+                    if (oldPost && oldPost.length) {
+                        var post_obj = {
+                            posts: [this]
+                        };
+                        var newPost = PYO.renderPost(post_obj);
+                        var scroll = PYO.scrolledToBottom();
+                        newPost.filter('.post[data-author-id="' + PYO.activeUserId + '"]').each(function () {
+                            $(this).find('.details').addClass('open auto');
+                        });
+                        newPost.find('.details').html5accordion({
+                            initialSlideSpeed: 0,
+                            openCallback: smsDetailsOpened
+                        });
+                        oldPost.replaceWith(newPost);
+                        $.doTimeout('new-post-' + this.author_sequence_id);
+                        if (scroll) { PYO.scrollToBottom(); }
+                        replaced = true;
+                    }
+                }
+            });
+            return replaced;
         }
     };
 
@@ -188,16 +195,19 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
-        if (response && response.posts[0] && response.posts[0].student_id && response.posts[0].student_id === PYO.activeStudentId) {
-            if (response.posts[0].author_sequence_id) {
-                var feed = $('.village-feed');
-                var author_sequence_id = response.posts[0].author_sequence_id;
-                var oldPost = feed.find('.post.mine[data-author-sequence="' + author_sequence_id + '"]');
-                if (oldPost && oldPost.length) {
-                    oldPost.loadingOverlay('remove');
+        if (response && response.posts && response.posts.length) {
+            var feed = $('.village-feed');
+            $.each(response.posts, function (index, value) {
+                if (this.student_id && this.student_id === PYO.activeStudentId) {
+                    if (this.author_sequence_id) {
+                        var oldPost = feed.find('.post.mine[data-author-sequence="' + this.author_sequence_id + '"]');
+                        if (oldPost && oldPost.length) {
+                            oldPost.loadingOverlay('remove');
+                        }
+                    }
                 }
-            }
-            if (response.success && !PYO.pusherKey) {
+            });
+            if (!PYO.pusherKey) {
                 PYO.replacePost(response);
             }
         }
