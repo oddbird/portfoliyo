@@ -207,18 +207,11 @@ def group(request, group_id):
 
 
 
-class AllStudentsGroup(object):
-    """Stand-in for a Group instance for all-students."""
-    id = 0
-    name = 'All Students'
-
-
-
 @login_required
 @ajax('village/_group_content.html')
 def all_students(request):
     """Main chat view for all-students 'group'."""
-    group = AllStudentsGroup()
+    group = model.AllStudentsGroup(request.user.profile)
 
     return TemplateResponse(
         request,

@@ -7,36 +7,39 @@ from django.db import models
 
 class Migration(SchemaMigration):
 
+
+    depends_on = [
+        ('users', '0012_auto__add_group__add_unique_group_name_owner'),
+        ]
+
+
     def forwards(self, orm):
-        # Adding model 'Group'
-        db.create_table('users_group', (
+        # Adding model 'BulkPost'
+        db.create_table('village_bulkpost', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('name', self.gf('django.db.models.fields.CharField')(max_length=200)),
-            ('owner', self.gf('django.db.models.fields.related.ForeignKey')(related_name='groups', to=orm['users.Profile'])),
+            ('author', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='authored_bulkposts', null=True, to=orm['users.Profile'])),
+            ('timestamp', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime(2012, 10, 9, 0, 0))),
+            ('original_text', self.gf('django.db.models.fields.TextField')()),
+            ('html_text', self.gf('django.db.models.fields.TextField')()),
+            ('from_sms', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('to_sms', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('meta', self.gf('jsonfield.fields.JSONField')(default={})),
+            ('group', self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='bulk_posts', null=True, to=orm['users.Group'])),
         ))
-        db.send_create_signal('users', ['Group'])
+        db.send_create_signal('village', ['BulkPost'])
 
-        # Adding M2M table for field members on 'Group'
-        db.create_table('users_group_members', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('group', models.ForeignKey(orm['users.group'], null=False)),
-            ('profile', models.ForeignKey(orm['users.profile'], null=False))
-        ))
-        db.create_unique('users_group_members', ['group_id', 'profile_id'])
-
-        # Adding unique constraint on 'Group', fields ['name', 'owner']
-        db.create_unique('users_group', ['name', 'owner_id'])
+        # Adding field 'Post.from_bulk'
+        db.add_column('village_post', 'from_bulk',
+                      self.gf('django.db.models.fields.related.ForeignKey')(blank=True, related_name='triggered', null=True, to=orm['village.BulkPost']),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Removing unique constraint on 'Group', fields ['name', 'owner']
-        db.delete_unique('users_group', ['name', 'owner_id'])
+        # Deleting model 'BulkPost'
+        db.delete_table('village_bulkpost')
 
-        # Deleting model 'Group'
-        db.delete_table('users_group')
-
-        # Removing M2M table for field members on 'Group'
-        db.delete_table('users_group_members')
+        # Deleting field 'Post.from_bulk'
+        db.delete_column('village_post', 'from_bulk_id')
 
 
     models = {
@@ -77,11 +80,13 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'users.group': {
-            'Meta': {'unique_together': "[('name', 'owner')]", 'object_name': 'Group'},
+            'Meta': {'object_name': 'Group'},
+            'deleted': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'elders': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'elder_in_groups'", 'blank': 'True', 'to': "orm['users.Profile']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'members': ('django.db.models.fields.related.ManyToManyField', [], {'related_name': "'member_of_groups'", 'symmetrical': 'False', 'to': "orm['users.Profile']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
-            'owner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'groups'", 'to': "orm['users.Profile']"})
+            'owner': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'owned_groups'", 'to': "orm['users.Profile']"}),
+            'students': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'related_name': "'student_in_groups'", 'blank': 'True', 'to': "orm['users.Profile']"})
         },
         'users.profile': {
             'Meta': {'object_name': 'Profile'},
@@ -93,18 +98,43 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'school': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['users.School']"}),
             'school_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'done'", 'max_length': '20'}),
             'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
-        'users.relationship': {
-            'Meta': {'unique_together': "[('from_profile', 'to_profile', 'kind')]", 'object_name': 'Relationship'},
-            'description': ('django.db.models.fields.CharField', [], {'max_length': '200', 'blank': 'True'}),
-            'from_profile': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_from'", 'to': "orm['users.Profile']"}),
+        'users.school': {
+            'Meta': {'unique_together': "[('name', 'postcode')]", 'object_name': 'School'},
+            'auto': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'kind': ('django.db.models.fields.CharField', [], {'default': "'elder'", 'max_length': '20'}),
-            'to_profile': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'relationships_to'", 'to': "orm['users.Profile']"})
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
+            'postcode': ('django.db.models.fields.CharField', [], {'max_length': '20'})
+        },
+        'village.bulkpost': {
+            'Meta': {'object_name': 'BulkPost'},
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'authored_bulkposts'", 'null': 'True', 'to': "orm['users.Profile']"}),
+            'from_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'group': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'bulk_posts'", 'null': 'True', 'to': "orm['users.Group']"}),
+            'html_text': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'meta': ('jsonfield.fields.JSONField', [], {'default': '{}'}),
+            'original_text': ('django.db.models.fields.TextField', [], {}),
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 9, 0, 0)'}),
+            'to_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+        },
+        'village.post': {
+            'Meta': {'object_name': 'Post'},
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'authored_posts'", 'null': 'True', 'to': "orm['users.Profile']"}),
+            'from_bulk': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'triggered'", 'null': 'True', 'to': "orm['village.BulkPost']"}),
+            'from_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'html_text': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'meta': ('jsonfield.fields.JSONField', [], {'default': '{}'}),
+            'original_text': ('django.db.models.fields.TextField', [], {}),
+            'student': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'posts_in_village'", 'to': "orm['users.Profile']"}),
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 9, 0, 0)'}),
+            'to_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         }
     }
 
-    complete_apps = ['users']
+    complete_apps = ['village']
