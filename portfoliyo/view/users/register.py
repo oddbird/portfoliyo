@@ -26,6 +26,10 @@ class RegistrationBackend(DefaultBackend):
         activation.
 
         """
+        # newly-created school may not be saved yet
+        if school.id is None:
+            school.save()
+
         profile = model.Profile.create_with_user(
             name=name,
             email=email,

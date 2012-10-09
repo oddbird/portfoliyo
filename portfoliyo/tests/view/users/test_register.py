@@ -93,3 +93,11 @@ def test_register_sends_email():
 
     assert len(mail.outbox) == 1
     assert mail.outbox[0].to == [u'foo@example.com']
+
+
+def test_register_saves_school():
+    """register method saves unsaved school."""
+    s = factories.SchoolFactory.build(name='Foo')
+    _register(school=s)
+
+    assert s.__class__.objects.filter(name='Foo').count() == 1

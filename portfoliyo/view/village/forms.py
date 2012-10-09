@@ -132,42 +132,51 @@ class InviteElderForm(forms.Form):
 
 
 
-class StudentForm(forms.Form):
-    """Common student-form fields."""
-    name = forms.CharField(max_length=200)
-
-
-
-class EditStudentForm(StudentForm):
+class StudentForm(forms.ModelForm):
     """Form for editing a student."""
-    def save(self, student):
-        """Saves the edits to the given student."""
-        student.name = self.cleaned_data['name']
-        student.save()
-        return student
-
+    class Meta:
+        model = model.Profile
+        fields = ['name']
 
 
 class AddStudentForm(StudentForm):
-    """A form for adding a new student."""
-    def save(self, added_by):
+    """Form for adding a student."""
+    def save(self, user):
         """
-        Save new student and return (student-profile, rel-with-creating-elder).
+        Save and return new student.
 
-        Takes the Profile of the current user and creates a relationship between
-        them and the student.
+        Takes the Profile of the current user and creates a relationship
+        between them and the new student.
 
         """
         assert self.is_valid()
         name = self.cleaned_data["name"]
 
         profile = model.Profile.create_with_user(
-            school=added_by.school, name=name, invited_by=added_by)
+            school=user.school, name=name, invited_by=user)
 
-        rel = model.Relationship.objects.create(
-            from_profile=added_by,
+        model.Relationship.objects.create(
+            from_profile=user,
             to_profile=profile,
             kind=model.Relationship.KIND.elder,
             )
 
-        return (profile, rel)
+        return profile
+
+
+
+class GroupForm(forms.ModelForm):
+    """Form for editing Groups."""
+    class Meta:
+        model = model.Group
+        fields = ['name']
+
+
+
+class AddGroupForm(GroupForm):
+    def save(self, owner):
+        """Save group, attaching new group to owner."""
+        group = super(AddGroupForm, self).save(commit=False)
+        group.owner = owner
+        group.save()
+        return group

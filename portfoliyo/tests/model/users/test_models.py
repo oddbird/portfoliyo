@@ -1,5 +1,4 @@
 """Tests for user models."""
-from django.contrib.auth import models as auth_models
 from django.db import IntegrityError
 import mock
 import pytest
@@ -252,3 +251,125 @@ class TestGroup(object):
         g = factories.GroupFactory.create(name="foo")
 
         assert unicode(g) == u"foo"
+
+
+    def test_group_creates_relationships(self):
+        """A group creates relationships between its students and elders."""
+        s = factories.ProfileFactory.create()
+        e = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(s)
+        g.elders.add(e)
+
+        rel = g.relationships.get()
+
+        assert rel.elder == e
+        assert rel.student == s
+        assert rel.from_group == g
+
+
+    def test_no_create_dupe_relationship(self):
+        """If a relationship already exists, don't re-create it."""
+        rel = factories.RelationshipFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(rel.student)
+        g.elders.add(rel.elder)
+
+        rel = utils.refresh(rel)
+
+        assert rel.from_group is None
+
+
+    def test_group_removes_relationships(self):
+        """
+        Removing group member removes matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        rel = factories.RelationshipFactory.create()
+        s = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(s)
+        g.elders.add(rel.elder)
+        g.elders.remove(rel.elder)
+
+        assert rel.elder.relationships_from.get() == rel
+
+
+    def test_clears_relationships(self):
+        """
+        Clearing group members clears matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        rel = factories.RelationshipFactory.create()
+        s = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(s)
+        g.elders.add(rel.elder)
+        g.elders.clear()
+
+        assert rel.elder.relationships_from.get() == rel
+
+
+    def test_reverse_add_creates_relationship(self):
+        """Adding a group to a student creates relationship."""
+        s = factories.ProfileFactory.create()
+        e = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        s.student_in_groups.add(g)
+        e.elder_in_groups.add(g)
+
+        rel = g.relationships.get()
+
+        assert rel.elder == e
+        assert rel.student == s
+        assert rel.from_group == g
+
+
+    def test_reverse_add_no_dupe_relationship(self):
+        """Adding a group to a student doesn't re-create dupe relationship."""
+        rel = factories.RelationshipFactory.create()
+        g = factories.GroupFactory.create()
+        rel.student.student_in_groups.add(g)
+        rel.elder.elder_in_groups.add(g)
+
+        rel = utils.refresh(rel)
+
+        assert rel.from_group is None
+
+
+    def test_reverse_remove_removes_relationship(self):
+        """
+        Removing a group from an elder removes matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        s = factories.ProfileFactory.create()
+        rel = factories.RelationshipFactory.create()
+        g = factories.GroupFactory.create()
+        s.student_in_groups.add(g)
+        rel.elder.elder_in_groups.add(g)
+        rel.elder.elder_in_groups.remove(g)
+
+        assert rel.elder.relationships_from.get() == rel
+
+
+    def test_reverse_clear_clears_relationships(self):
+        """
+        Clearing student groups clears matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        rel = factories.RelationshipFactory.create()
+        e = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(rel.student)
+        g.elders.add(e)
+        rel.student.student_in_groups.clear()
+
+        assert rel.student.relationships_to.get() == rel

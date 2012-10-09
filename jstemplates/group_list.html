@@ -1,6 +1,6 @@
 <ul>
   <li class="listitem group">
-    <a href="#" class="group-link listitem-select" data-name="All Students" data-group-url="{{ all_students_uri }}">
+    <a href="{{ all_students_url }}" class="group-link ajax-link listitem-select" data-name="All Students" data-group-api-url="{{ all_students_api_url }}" data-group-id="0">
       <span class="listitem-name">All Students</span>
       <span class="unread">0</span>
     </a>
@@ -9,6 +9,6 @@
 </ul>
 {{# staff }}
 <aside class="additem">
-  <a href="{{! @@@ }}/group/add/" class="additem-link ajax-link">Add Group</a>
+  <a href="{{ add_group_url }}" class="additem-link ajax-link">Add Group</a>
 </aside>
 {{/ staff }}

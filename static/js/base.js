@@ -115,7 +115,6 @@ var PYO = (function (PYO, $) {
 
     PYO.ajaxifyVillages = function (container) {
         if ($(container).length) {
-            var context = $(container);
             var History = window.History;
 
             if (History.enabled) {
@@ -132,9 +131,6 @@ var PYO = (function (PYO, $) {
                         } else {
                             var title = document.title;
                             var data = { url: url };
-                            if ($(this).hasClass('addelder-link') || $(this).hasClass('edit-elder')) {
-                                data.remainActive = true;
-                            }
                             History.pushState(data, title, url);
                         }
                         $(this).blur();
@@ -144,10 +140,6 @@ var PYO = (function (PYO, $) {
                 $(window).bind('statechange', function () {
                     var data = History.getState().data;
                     var url = data.url ? data.url : window.location.pathname;
-                    if (!data.remainActive) {
-                        context.find('.village-nav .ajax-link').removeClass('active');
-                    }
-                    context.find('a.ajax-link[href="' + url + '"]').addClass('active');
                     PYO.pageAjaxLoad(url + '?ajax=true');
                 });
             }
@@ -180,8 +172,29 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.updateNavActiveClasses = function (container) {
+        var context = container ? container : $('.village-nav');
+        var links = context.find('.ajax-link').not('.action-edit').removeClass('active');
+        var url = window.location.pathname;
+        PYO.activeStudentId = $('.village-content').data('student-id');
+        PYO.activeGroupId = $('.village-content').data('group-id');
+
+        links.filter('[href="' + url + '"]').addClass('active');
+
+        links.filter(function () {
+            var id;
+            if ($(this).hasClass('group-link')) {
+                id = $(this).data('group-id');
+                return id === PYO.activeGroupId;
+            } else {
+                id = $(this).data('id');
+                return id === PYO.activeStudentId;
+            }
+        }).addClass('active');
+    };
+
     PYO.initializeFeed = function () {
-        PYO.activeStudentId = $('.village-feed').data('student-id');
+        PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
@@ -193,6 +206,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializePage = function () {
+        PYO.updateNavActiveClasses();
         if ($('.village-feed').length) {
             PYO.initializeFeed();
         }

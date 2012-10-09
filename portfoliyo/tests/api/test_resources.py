@@ -63,6 +63,15 @@ class TestProfileResource(object):
         assert response.json['objects'][0]['village_uri'] == village_url
 
 
+    def test_edit_student_uri(self, no_csrf_client):
+        """Each profile has an edit_student_uri in the API response."""
+        s = factories.ProfileFactory.create(school_staff=True)
+        edit_url = reverse('edit_student', kwargs={'student_id': s.id})
+
+        response = no_csrf_client.get(self.list_url(), user=s.user)
+
+        assert response.json['objects'][0]['edit_student_uri'] == edit_url
+
 
     def test_filter_by_elder(self, no_csrf_client):
         """Can filter profiles by elders."""
@@ -135,11 +144,30 @@ class TestProfileResource(object):
 
 
     def test_delete_profile(self, no_csrf_client):
-        """A school-staff user from same school may delete another profile."""
-        p = factories.ProfileFactory.create()
+        """A staff user from same school may delete a non-staff profile."""
+        p = factories.ProfileFactory.create(school_staff=False)
         p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
 
         no_csrf_client.delete(self.detail_url(p), user=p2.user, status=204)
+
+        assert utils.refresh(p).deleted
+
+
+    def test_cannot_delete_school_staff_profile(self, no_csrf_client):
+        """Another user may not delete a school-staff user's profile."""
+        p = factories.ProfileFactory.create(school_staff=True)
+        p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
+
+        no_csrf_client.delete(self.detail_url(p), user=p2.user, status=403)
+
+        assert not utils.refresh(p).deleted
+
+
+    def test_can_delete_own_profile(self, no_csrf_client):
+        """A staff user may delete their own profile."""
+        p = factories.ProfileFactory.create(school_staff=True)
+
+        no_csrf_client.delete(self.detail_url(p), user=p.user, status=204)
 
         assert utils.refresh(p).deleted
 
@@ -225,7 +253,18 @@ class TestGroupResource(object):
         assert not utils.refresh(group).deleted
 
 
+    def test_group_uri(self, no_csrf_client):
+        """Each group has a group_uri for use in the web UI."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        group_url = reverse('group', kwargs={'group_id': g.id})
+
+        response = no_csrf_client.get(self.list_url(), user=g.owner.user)
+
+        assert response.json['objects'][0]['group_uri'] == group_url
+
+
     def test_students_uri(self, no_csrf_client):
+        """Each group has a students_uri for fetching its student list."""
         g = factories.GroupFactory.create(owner__school_staff=True)
         students_url = reverse(
             'api_dispatch_list',
@@ -235,3 +274,13 @@ class TestGroupResource(object):
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
         assert response.json['objects'][0]['students_uri'] == students_url
+
+
+    def test_edit_uri(self, no_csrf_client):
+        """Each group has an edit_uri in the API response."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        edit_url = reverse('edit_group', kwargs={'group_id': g.id})
+
+        response = no_csrf_client.get(self.list_url(), user=g.owner.user)
+
+        assert response.json['objects'][0]['edit_uri'] == edit_url

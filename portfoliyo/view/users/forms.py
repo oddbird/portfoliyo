@@ -4,12 +4,34 @@ Account-related forms.
 """
 import operator
 import random
+import time
 
 from django.contrib.auth import forms as auth_forms
 
 import floppyforms as forms
 
 from portfoliyo import model
+
+
+class SchoolRadioSelect(forms.RadioSelect):
+    """A RadioSelect with a custom display template."""
+    template_name = 'users/school_radio.html'
+
+
+
+class TemplateLabelModelChoiceField(forms.ModelChoiceField):
+    """A ModelChoiceField that relies on rendering template to handle label."""
+
+    def label_from_instance(self, obj):
+        """Return the object itself, not a string; template renders to label."""
+        return obj
+
+
+
+class SchoolForm(forms.ModelForm):
+    class Meta:
+        model = model.School
+        fields = ['name', 'postcode']
 
 
 
@@ -28,16 +50,51 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     role = forms.CharField(max_length=200)
-    school = forms.ModelChoiceField(model.School.objects.all())
+    school = TemplateLabelModelChoiceField(
+        queryset=model.School.objects.filter(auto=False).order_by('name'),
+        empty_label=u"I'm not affiliated with a school",
+        required=False,
+        widget=SchoolRadioSelect,
+        initial=u'',
+        )
+    addschool = forms.BooleanField(
+        initial=False, required=False, widget=forms.HiddenInput)
+
+
+    def __init__(self, *args, **kwargs):
+        """Also instantiate a nested SchoolForm."""
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.addschool_form = SchoolForm(self.data or None, prefix='addschool')
 
 
     def clean(self):
-        """Verify that the password fields match."""
-        password = self.cleaned_data.get("password")
-        confirm = self.cleaned_data.get("password_confirm")
+        """
+        Verify password fields match and school is provided.
+
+        If addschool is True, build a new School based on data in nested
+        SchoolForm.
+
+        If not, and no school was selected, auto-construct one.
+
+        """
+        data = self.cleaned_data
+        password = data.get('password')
+        confirm = data.get('password_confirm')
         if password != confirm:
             raise forms.ValidationError("The passwords didn't match.")
-        return self.cleaned_data
+        if data.get('addschool'):
+            if self.addschool_form.is_valid():
+                data['school'] = self.addschool_form.save(commit=False)
+            else:
+                raise forms.ValidationError(
+                    "Could not add a school.")
+        elif data.get('email') and not data.get('school'):
+            data['school'] = model.School(
+                name=(u"%f-%s" % (time.time(), data['email']))[:200],
+                postcode="",
+                auto=True,
+                )
+        return data
 
 
     def clean_email(self):

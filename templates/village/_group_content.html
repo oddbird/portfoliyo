@@ -3,10 +3,10 @@
 {% block village-content %}
 <div class="village-main">
   {% block village-main %}
-  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ relationship.description_or_role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url json_posts student_id=student.id %}">
+  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ user.profile.role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{# @@@ #}" data-post-url="{# @@@ #}">
 
     <article class="getting-started">
-      <h2>Welcome to {{ student.name }}'s Village!</h2>
+      <h2>Welcome to {{ group.name }}!</h2>
 
       <p>
         <strong>Send a text message</strong> to any <i class="mobile">mobile</i> user
@@ -27,7 +27,7 @@
     </article>
 
   </section>
-  <form method="POST" class="post-add-form" action="{% url json_posts student_id=student.id %}" data-char-limit="{{ post_char_limit }}">
+  <form method="POST" class="post-add-form" action="#{# @@@ #}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
     <div class="formfield post-textfield">
@@ -43,5 +43,5 @@
   {% endblock village-main %}
 </div>
 
-{% include "village/_village_info.html" %}
+{% include "village/_group_info.html" %}
 {% endblock village-content %}

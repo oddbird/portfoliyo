@@ -13,9 +13,9 @@ from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 
 from portfoliyo import model, pdf
-from portfoliyo.view import home
-from ..decorators import school_staff_required
 from ..ajax import ajax
+from ..decorators import school_staff_required
+from .. import home
 from . import forms
 
 
@@ -34,15 +34,28 @@ def dashboard(request):
         )
 
 
+def get_relationship_or_404(student_id, profile):
+    """Get relationship between student_id and profile, or 404."""
+    try:
+        return model.Relationship.objects.select_related().get(
+            from_profile=profile,
+            to_profile_id=student_id,
+            to_profile__deleted=False,
+            kind=model.Relationship.KIND.elder,
+            )
+    except model.Relationship.DoesNotExist:
+        raise Http404
+
+
 
 @school_staff_required
 @ajax('village/_add_student_content.html')
 def add_student(request):
-    """Add a student and elders."""
+    """Add a student."""
     if request.method == 'POST':
         form = forms.AddStudentForm(request.POST)
         if form.is_valid():
-            student, _ = form.save(added_by=request.user.profile)
+            student = form.save(request.user.profile)
             return redirect('village', student_id=student.id)
     else:
         form = forms.AddStudentForm()
@@ -56,17 +69,79 @@ def add_student(request):
         )
 
 
-def get_relationship_or_404(student_id, profile):
-    """Get relationship between student_id and profile, or 404."""
-    try:
-        return model.Relationship.objects.select_related().get(
-            from_profile=profile,
-            to_profile_id=student_id,
-            to_profile__deleted=False,
-            kind=model.Relationship.KIND.elder,
-            )
-    except model.Relationship.DoesNotExist:
+
+@school_staff_required
+@ajax('village/_edit_student_content.html')
+def edit_student(request, student_id):
+    """Edit a student."""
+    rel = get_relationship_or_404(student_id, request.user.profile)
+
+    if request.method == 'POST':
+        form = forms.StudentForm(request.POST, instance=rel.student)
+        if form.is_valid():
+            student = form.save()
+            return redirect('village', student_id=student.id)
+    else:
+        form = forms.StudentForm(instance=rel.student)
+
+    return TemplateResponse(
+        request,
+        'village/edit_student.html',
+        {
+            'form': form,
+            'student': rel.student,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_add_group_content.html')
+def add_group(request):
+    """Add a group."""
+    if request.method == 'POST':
+        form = forms.AddGroupForm(request.POST)
+        if form.is_valid():
+            form.save(request.user.profile)
+            return redirect(home.redirect_home(request.user))
+    else:
+        form = forms.AddGroupForm()
+
+    return TemplateResponse(
+        request,
+        'village/add_group.html',
+        {
+            'form': form,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_edit_group_content.html')
+def edit_group(request, group_id):
+    """Edit a group."""
+    group = get_object_or_404(
+        model.Group.objects.select_related('owner'), pk=group_id)
+    if group.owner != request.user.profile:
         raise Http404
+
+    if request.method == 'POST':
+        form = forms.GroupForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return redirect(home.redirect_home(request.user))
+    else:
+        form = forms.GroupForm(instance=group)
+
+    return TemplateResponse(
+        request,
+        'village/edit_group.html',
+        {
+            'form': form,
+            'group': group,
+            },
+        )
 
 
 
@@ -106,6 +181,52 @@ def village(request, student_id):
             'relationship': rel,
             'post_char_limit': model.post_char_limit(rel),
             },
+        )
+
+
+
+@login_required
+@ajax('village/_group_content.html')
+def group(request, group_id):
+    """The main chat view for a group."""
+    group = get_object_or_404(
+        model.Group.objects.filter(
+            owner=request.user.profile,
+            deleted=False,
+            ),
+        id=group_id)
+
+    return TemplateResponse(
+        request,
+        'village/group.html',
+        {
+            'group': group,
+            'post_char_limit': 140 # @@@,
+            },
+        )
+
+
+
+class AllStudentsGroup(object):
+    """Stand-in for a Group instance for all-students."""
+    id = 0
+    name = 'All Students'
+
+
+
+@login_required
+@ajax('village/_group_content.html')
+def all_students(request):
+    """Main chat view for all-students 'group'."""
+    group = AllStudentsGroup()
+
+    return TemplateResponse(
+        request,
+        'village/group.html',
+        {
+            'group': group,
+            'post_char_limit': 140, # @@@
+            }
         )
 
 

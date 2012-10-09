@@ -71,6 +71,145 @@ class TestAddStudent(object):
 
 
 
+class TestEditStudent(object):
+    """Tests for edit_student view."""
+    def url(self, student=None):
+        """Shortcut to get URL of edit-student view."""
+        if student is None:
+            student = factories.ProfileFactory.create()
+        return reverse('edit_student', kwargs={'student_id': student.id})
+
+
+    def test_edit_student(self, client):
+        """User can edit a student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            self.url(rel.student),
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = "Some Student"
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('village', kwargs={'student_id': rel.student.id}))
+
+
+    def test_validation_error(self, client):
+        """Name of student must be provided."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            self.url(rel.student),
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = ""
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_relationship(self, client):
+        """Editing a student requires elder relationship."""
+        someone = factories.ProfileFactory.create(school_staff=True)
+        client.get(self.url(), user=someone.user, status=404)
+
+
+    def test_requires_school_staff(self, client):
+        """Editing a student requires ``school_staff`` attribute."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=False)
+        response = client.get(
+            self.url(rel.student), user=rel.elder.user, status=302).follow()
+
+        response.mustcontain("account doesn't have access"), response.html
+
+
+
+class TestAddGroup(object):
+    """Tests for add_group view."""
+    def test_add_group(self, client):
+        """User can add a group."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        form = client.get(
+            reverse('add_group'), user=teacher.user).forms['add-group-form']
+        form['name'] = "Some Group"
+        response = form.submit(status=302)
+
+        group = teacher.owned_groups.get()
+
+        assert group.name == "Some Group"
+        assert response['Location'] == utils.location(reverse('add_student'))
+
+
+    def test_validation_error(self, client):
+        """Name of group must be provided."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        form = client.get(
+            reverse('add_group'), user=teacher.user).forms['add-group-form']
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_school_staff(self, client):
+        """Adding a group requires ``school_staff`` attribute."""
+        someone = factories.ProfileFactory.create(school_staff=False)
+        response = client.get(
+            reverse('add_group'), user=someone.user, status=302).follow()
+
+        response.mustcontain("account doesn't have access"), response.html
+
+
+
+class TestEditGroup(object):
+    """Tests for edit_group view."""
+    def url(self, group=None):
+        """Shortcut to get URL of edit-group view."""
+        if group is None:
+            group = factories.GroupFactory.create()
+        return reverse('edit_group', kwargs={'group_id': group.id})
+
+
+    def test_edit_group(self, client):
+        """User can edit a group."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        form = client.get(
+            self.url(group),
+            user=group.owner.user,
+            ).forms['edit-group-form']
+        form['name'] = "Some Group"
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(reverse('add_student'))
+
+
+    def test_validation_error(self, client):
+        """Name of group must be provided."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
+        form = client.get(
+            self.url(group),
+            user=group.owner.user,
+            ).forms['edit-group-form']
+        form['name'] = ""
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_owner(self, client):
+        """Editing a group requires being its owner."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
+        client.get(
+            self.url(group),
+            user=factories.ProfileFactory.create(school_staff=True).user,
+            status=404,
+            )
+
+
+
 class TestInviteElders(object):
     """Tests for invite_elders view."""
     def url(self, student=None):
@@ -176,6 +315,52 @@ class TestVillage(object):
             )
 
         client.get(self.url(rel.student), user=rel.elder.user, status=404)
+
+
+
+class TestAllStudents(object):
+    def url(self):
+        return reverse('all_students')
+
+
+    def test_all_students(self, client):
+        """Can view an all-students page."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        client.get(self.url(), user=teacher.user, status=200)
+
+
+
+class TestGroupDetail(object):
+    """Tests for group chat view."""
+    def url(self, group=None):
+        if group is None:
+            group = factories.GroupFactory.create()
+        return reverse('group', kwargs=dict(group_id=group.id))
+
+
+    def test_group_detail(self, client):
+        """Can view a group detail page."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
+
+        client.get(self.url(group), user=group.owner.user, status=200)
+
+
+    def test_requires_ownership(self, client):
+        """Only the owner of a group can view it."""
+        group = factories.GroupFactory.create()
+        someone = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+
+        client.get(self.url(group), user=someone.user, status=404)
+
+
+    def test_404_deleted_group(self, client):
+        """Can't view a deleted group."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True, deleted=True)
+
+        client.get(self.url(group), user=group.owner.user, status=404)
 
 
 
