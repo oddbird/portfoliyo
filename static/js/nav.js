@@ -49,8 +49,8 @@ var PYO = (function (PYO, $) {
         var remove = trigger;
         var listitem = remove.closest('.listitem');
         var link = listitem.find('.listitem-select');
-        var url = link.data('group-resource-url');
-        var name = link.data('group-name');
+        var url = listitem.hasClass('student') ? link.data('resource-url') : link.data('group-resource-url');
+        var name = listitem.hasClass('student') ? link.data('name') : link.data('group-name');
         var removed = ich.remove_listitem({name: name});
         var removeItem = function () {
             listitem.hide();
