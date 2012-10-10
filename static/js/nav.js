@@ -40,7 +40,8 @@ var PYO = (function (PYO, $) {
         });
 
         nav.on('before-replace', function () {
-            PYO.unsubscribeFromPosts();
+            var students = nav.find('.student');
+            PYO.unsubscribeFromPosts(students);
         });
     };
 
@@ -170,7 +171,7 @@ var PYO = (function (PYO, $) {
                 var students = ich.student_list(data);
                 PYO.updateNavActiveClasses(students);
                 nav.trigger('before-replace').html(students);
-                PYO.listenForPosts('.village');
+                PYO.listenForPosts(students.find('.student'));
             } else { fetchStudentsError(); }
         };
         var fetchStudentsError = function () {
@@ -227,11 +228,9 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.listenForPosts = function () {
-        if (PYO.pusherKey) {
-            var students = $('.village-nav .student a.ajax-link.listitem-select');
-
-            students.each(function () {
+    PYO.listenForPosts = function (students) {
+        if (PYO.pusherKey && students) {
+            students.find('.ajax-link.listitem-select').each(function () {
                 var el = $(this);
                 var id = el.data('id');
                 var unread = el.find('.unread');
@@ -252,14 +251,70 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.unsubscribeFromPosts = function () {
-        if (PYO.pusherKey) {
-            var students = $('.village-nav .student a.ajax-link.listitem-select');
-
-            students.each(function () {
+    PYO.unsubscribeFromPosts = function (students) {
+        if (PYO.pusherKey && students) {
+            students.find('.ajax-link.listitem-select').each(function () {
                 var el = $(this);
                 var id = el.data('id');
                 PYO.pusher.unsubscribe('student_' + id);
+            });
+        }
+    };
+
+    PYO.listenForStudentChanges = function () {
+        if (PYO.pusherKey && PYO.activeUserId) {
+            var nav = $('.village-nav');
+            var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
+
+            channel.bind('student_added', function (data) {
+                if (data && data.objects && data.objects.length && nav.find('.grouptitle .group-link[data-name="All Students"]').length) {
+                    $.each(data.objects, function () {
+                        this.staff = nav.data('is-staff');
+                        this.objects = true;
+                        var student = ich.student_list_item(this);
+                        var inserted = false;
+                        nav.find('.student').each(function () {
+                            if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                                student.insertBefore($(this)).slideDown();
+                                inserted = true;
+                            }
+                        });
+                        if (!inserted) {
+                            nav.find('.itemlist').append(student);
+                            student.slideDown();
+                        }
+                        PYO.listenForPosts(student);
+                    });
+                }
+            });
+
+            channel.bind('student_edited', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]');
+                            student.find('.listitem-name').text(this.name);
+                            student.data('name', this.name);
+                        }
+                    });
+                }
+            });
+
+            channel.bind('student_removed', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]').closest('.student');
+                            student.slideUp(function () { $(this).remove(); });
+                            if (this.id === PYO.activeStudentId) {
+                                var msg = ich.active_student_removed_msg();
+                                msg.appendTo($('#messages'));
+                                $('#messages').messages();
+                                $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
+                            }
+                        }
+                    });
+                }
             });
         }
     };
@@ -287,6 +342,7 @@ var PYO = (function (PYO, $) {
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
             PYO.navHandlers();
+            PYO.listenForStudentChanges();
             if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
                 PYO.fetchStudents();
             } else {

@@ -7,7 +7,7 @@
 {% block mobile-optimized %}{% endblock mobile-optimized %}
 
 {% block maincontent %}
-<article class="village" data-pusher-key="{{ PUSHER_KEY }}">
+<article class="village" data-pusher-key="{{ PUSHER_KEY }}" data-user-id="{{ request.user.profile.id }}">
   {% block village %}
 
   {% endblock village %}
@@ -26,5 +26,6 @@
 {% icanhaz "group_list_item" %}
 {% icanhaz "student_list" %}
 {% icanhaz "student_list_item" %}
+{% icanhaz "active_student_removed_msg" %}
 
 {% endblock %}

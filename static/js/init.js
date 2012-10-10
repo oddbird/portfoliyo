@@ -13,6 +13,7 @@ var PYO = (function (PYO, $) {
         PYO.ajaxifyForm('.village-landing .membership form', '.village-landing .membership');
 
         // base.js
+        PYO.activeUserId = $('.village').data('user-id');
         PYO.initializePusher();
         PYO.updatePageHeight('.village');
         PYO.ajaxifyVillages('.village');
