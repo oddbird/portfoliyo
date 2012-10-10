@@ -155,6 +155,30 @@ class ProfileResource(SoftDeletedResource):
     email = fields.CharField()
 
 
+    class Meta(SoftDeletedResource.Meta):
+        queryset = model.Profile.objects.filter(
+                deleted=False).select_related('user').order_by('name')
+        resource_name = 'user'
+        fields = [
+            'id',
+            'name',
+            'email',
+            'phone',
+            'role',
+            'school_staff',
+            'code',
+            'invited_by',
+            'declined',
+            'elders',
+            'students',
+            ]
+        filtering = {
+            'school_staff': constants.ALL,
+            }
+        authorization = ProfileAuthorization()
+        detail_allowed_methods = ['get', 'delete']
+
+
     def dehydrate_email(self, bundle):
         return bundle.obj.user.email
 
@@ -192,30 +216,6 @@ class ProfileResource(SoftDeletedResource):
             )
 
         return bundle
-
-
-    class Meta(SoftDeletedResource.Meta):
-        queryset = (
-            model.Profile.objects.filter(deleted=False).select_related('user'))
-        resource_name = 'user'
-        fields = [
-            'id',
-            'name',
-            'email',
-            'phone',
-            'role',
-            'school_staff',
-            'code',
-            'invited_by',
-            'declined',
-            'elders',
-            'students',
-            ]
-        filtering = {
-            'school_staff': constants.ALL,
-            }
-        authorization = ProfileAuthorization()
-        detail_allowed_methods = ['get', 'delete']
 
 
 

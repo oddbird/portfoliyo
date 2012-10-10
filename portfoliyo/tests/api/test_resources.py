@@ -39,6 +39,17 @@ class TestProfileResource(object):
             )
 
 
+    def test_ordering(self, no_csrf_client):
+        """Users ordered alphabetically."""
+        p = factories.ProfileFactory.create(name='B', school_staff=True)
+        factories.ProfileFactory.create(name='A', school=p.school)
+
+        response = no_csrf_client.get(self.list_url(), user=p.user)
+        profiles = response.json['objects']
+
+        assert [p['name'] for p in profiles] == ['A', 'B']
+
+
     def test_only_see_same_school_users(self, no_csrf_client):
         """Users can only see other users from same school in API."""
         p1 = factories.ProfileFactory.create()
