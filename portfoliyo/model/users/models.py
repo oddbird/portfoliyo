@@ -134,6 +134,11 @@ class Profile(models.Model):
 
 
     @property
+    def name_or_role(self):
+        return self.name or self.role
+
+
+    @property
     def elder_relationships(self):
         return self.relationships_to.filter(
             kind=Relationship.KIND.elder, from_profile__deleted=False).order_by(
@@ -171,6 +176,54 @@ class Group(models.Model):
 
     def __unicode__(self):
         return self.name
+
+
+    is_all = False
+
+
+    @property
+    def all_elders(self):
+        """Return queryset of all elders of all students in group."""
+        return Profile.objects.filter(
+            relationships_from__to_profile__in=self.students.all())
+
+
+    @property
+    def elder_relationships(self):
+        """Return queryset of all relationships for students in group."""
+        return Relationship.objects.filter(
+            kind=Relationship.KIND.elder,
+            to_profile__in=self.students.all(),
+            )
+
+
+
+class AllStudentsGroup(object):
+    """Stand-in for a Group instance for all-students."""
+    name = 'All Students'
+    is_all = True
+
+    def __init__(self, owner):
+        self.owner = owner
+
+
+    @property
+    def id(self):
+        return 'all%s' % self.owner.id
+    pk = id
+
+
+    @property
+    def elder_relationships(self):
+        """Return queryset of all relationships for students in group."""
+        return Relationship.objects.filter(
+            kind=Relationship.KIND.elder, to_profile__in=self.owner.students)
+
+
+    @property
+    def students(self):
+        """Return queryset of all students in group."""
+        return Profile.objects.filter(relationships_to__from_profile=self.owner)
 
 
 
@@ -272,6 +325,11 @@ class Relationship(models.Model):
     def description_or_role(self):
         """If the description is empty, fall back to from_profile role."""
         return self.description or self.from_profile.role
+
+
+    @property
+    def name_or_role(self):
+        return self.from_profile.name or self.description_or_role
 
 
     # Add a couple clearer aliases for working with elder relationships

@@ -104,6 +104,20 @@ class TestProfile(object):
         assert unicode(profile) == u"<unknown>"
 
 
+    def test_name_or_role(self):
+        """name_or_role property is name if present."""
+        profile = factories.ProfileFactory.build(name="Foo")
+
+        assert profile.name_or_role == u"Foo"
+
+
+    def test_name_or_role_no_name(self):
+        """name_or_role property is role if no name."""
+        profile = factories.ProfileFactory.build(role="Role")
+
+        assert profile.name_or_role == u"Role"
+
+
     def test_site_staff_are_school_staff(self):
         """Any user with is_staff is also school_staff."""
         user = factories.UserFactory.create(is_staff=True)
@@ -229,6 +243,21 @@ class TestRelationship(object):
         assert rel.description_or_role == u"Bar"
 
 
+    def test_name_or_role(self):
+        """name_or_role property is elder name if present."""
+        rel = factories.RelationshipFactory.build(from_profile__name="Foo")
+
+        assert rel.name_or_role == u"Foo"
+
+
+    def test_name_or_role_no_name(self):
+        """name_or_role property is description_or_role if no name."""
+        rel = factories.RelationshipFactory.build(
+            from_profile__name="", description="Desc")
+
+        assert rel.name_or_role == u"Desc"
+
+
     def test_elder(self):
         """elder property is alias for from_profile."""
         rel = factories.RelationshipFactory.build()
@@ -251,6 +280,31 @@ class TestGroup(object):
         g = factories.GroupFactory.create(name="foo")
 
         assert unicode(g) == u"foo"
+
+
+    def test_all_elders(self):
+        """all_elders property is queryset of elders of students in group."""
+        rel = factories.RelationshipFactory()
+        e = factories.ProfileFactory()
+        s = factories.ProfileFactory()
+        g = factories.GroupFactory()
+        g.students.add(s, rel.student)
+        g.elders.add(e)
+
+        assert set(g.all_elders) == set([rel.elder, e])
+
+
+    def test_elder_relationships(self):
+        """elder_relationships prop is all relationships of group students."""
+        rel = factories.RelationshipFactory()
+        e = factories.ProfileFactory()
+        s = factories.ProfileFactory()
+        g = factories.GroupFactory()
+        g.students.add(s, rel.student)
+        g.elders.add(e)
+
+        exp = set([(e, s), (e, rel.student), (rel.elder, rel.student)])
+        assert set([(r.elder, r.student) for r in g.elder_relationships]) == exp
 
 
     def test_group_creates_relationships(self):
@@ -373,3 +427,25 @@ class TestGroup(object):
         rel.student.student_in_groups.clear()
 
         assert rel.student.relationships_to.get() == rel
+
+
+
+class TestAllStudentsGroup(object):
+    def test_elder_relationships(self):
+        """Can get all elder relationships for all students."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
+        rel3 = factories.RelationshipFactory.create(to_profile=rel.student)
+        g = model.AllStudentsGroup(rel.elder)
+
+        assert set(g.elder_relationships) == set([rel, rel2, rel3])
+
+
+    def test_students(self):
+        """Can get all students in group."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
+        factories.RelationshipFactory.create(to_profile=rel.student)
+        g = model.AllStudentsGroup(rel.elder)
+
+        assert set(g.students) == set([rel.student, rel2.student])

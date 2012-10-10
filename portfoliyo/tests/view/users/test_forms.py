@@ -56,7 +56,7 @@ class TestRegistrationForm(object):
     def test_add_school_validation_error(self):
         """If addschool is True but fields not complete, validation error."""
         data = self.base_data.copy()
-        data['addschool'] = '1'
+        data['addschool'] = 'True'
         data['addschool-name'] = "New School"
         data['addschool-postcode'] = ""
         form = forms.RegistrationForm(data)
@@ -65,6 +65,17 @@ class TestRegistrationForm(object):
         assert form.errors['__all__'] == [u"Could not add a school."]
         assert form.addschool_form.errors['postcode'] == [
             u"This field is required."]
+
+
+    def test_no_addschool_validation_error_if_addschool_false(self):
+        """If addschool is False, addschool form not bound."""
+        data = self.base_data.copy()
+        data['addschool'] = 'False'
+        data['email'] = 'not a valid email'
+        form = forms.RegistrationForm(data)
+
+        assert not form.is_valid()
+        assert not form.addschool_form.is_bound
 
 
     def test_no_school(self):

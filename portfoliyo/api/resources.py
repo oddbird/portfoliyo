@@ -240,8 +240,31 @@ class ElderRelationshipResource(PortfoliyoResource):
 
 class GroupResource(SoftDeletedResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
-    students = fields.ManyToManyField(ProfileResource, 'students')
-    elders = fields.ManyToManyField(ProfileResource, 'elders')
+
+
+    def full_dehydrate(self, bundle):
+        """Special handling for all-students group."""
+        if bundle.obj.is_all:
+            bundle.data.update({
+                    'id': bundle.obj.id,
+                    'name': bundle.obj.name,
+                    'students_uri': reverse(
+                        'api_dispatch_list',
+                        kwargs={'resource_name': 'user', 'api_name': 'v1'},
+                        ) + '?elders=%s' % bundle.obj.owner.id,
+                    'group_uri': reverse('all_students'),
+                    'owner': reverse(
+                        'api_dispatch_detail',
+                        kwargs={
+                            'resource_name': 'user',
+                            'api_name': 'v1',
+                            'pk': bundle.obj.owner.id,
+                            },
+                        )
+                    })
+        else:
+            bundle = super(GroupResource, self).full_dehydrate(bundle)
+        return bundle
 
 
     def dehydrate(self, bundle):
@@ -264,12 +287,17 @@ class GroupResource(SoftDeletedResource):
     class Meta(SoftDeletedResource.Meta):
         queryset = model.Group.objects.filter(deleted=False)
         resource_name = 'group'
-        fields = ['id', 'name', 'owner', 'members']
-        filtering = {
-            'owner': ['exact'],
-            }
+        fields = ['id', 'name', 'owner']
         authorization = GroupAuthorization()
         detail_allowed_methods = ['get', 'delete']
+
+
+    def obj_get_list(self, request=None, **kwargs):
+        qs = super(GroupResource, self).obj_get_list(request, **kwargs)
+        groups = list(qs)
+        if request is not None:
+            groups.append(model.AllStudentsGroup(request.user.profile))
+        return groups
 
 
 

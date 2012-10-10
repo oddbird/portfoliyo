@@ -88,12 +88,15 @@ class RegistrationForm(forms.Form):
             else:
                 raise forms.ValidationError(
                     "Could not add a school.")
-        elif data.get('email') and not data.get('school'):
-            data['school'] = model.School(
-                name=(u"%f-%s" % (time.time(), data['email']))[:200],
-                postcode="",
-                auto=True,
-                )
+        else:
+            # reinstantiate unbound addschool_form to avoid spurious errors
+            self.addschool_form = SchoolForm(prefix='addschool')
+            if data.get('email') and not data.get('school'):
+                data['school'] = model.School(
+                    name=(u"%f-%s" % (time.time(), data['email']))[:200],
+                    postcode="",
+                    auto=True,
+                    )
         return data
 
 

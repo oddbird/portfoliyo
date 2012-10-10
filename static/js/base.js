@@ -172,27 +172,6 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.updateNavActiveClasses = function (container) {
-        var context = container ? container : $('.village-nav');
-        var links = context.find('.ajax-link').not('.action-edit').removeClass('active');
-        var url = window.location.pathname;
-        PYO.activeStudentId = $('.village-content').data('student-id');
-        PYO.activeGroupId = $('.village-content').data('group-id');
-
-        links.filter('[href="' + url + '"]').addClass('active');
-
-        links.filter(function () {
-            var id;
-            if ($(this).hasClass('group-link')) {
-                id = $(this).data('group-id');
-                return id === PYO.activeGroupId;
-            } else {
-                id = $(this).data('id');
-                return id === PYO.activeStudentId;
-            }
-        }).addClass('active');
-    };
-
     PYO.initializeFeed = function () {
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.fetchBacklog('.village-feed');
@@ -206,6 +185,8 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializePage = function () {
+        PYO.activeStudentId = $('.village-content').data('student-id');
+        PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
         if ($('.village-feed').length) {
             PYO.initializeFeed();

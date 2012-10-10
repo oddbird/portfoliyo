@@ -1,15 +1,20 @@
-<h2 class="listitem title grouptitle" data-api-url="{{ group_resource_url }}">
+<h2 class="listitem title grouptitle">
   <a href="#" class="action-back groups" title="Go back to group list">Group:</a>
-  <a href="{{ group_url }}" class="group-link ajax-link listitem-select" data-name="{{ group_name }}" data-group-api-url="{{ group_api_url }}" data-group-id="{{ group_id }}" data-edit-url="{{ edit_group_url }}">{{ group_name }}</a>
+  <a href="{{ group_url }}" class="group-link ajax-link listitem-select" data-group-name="{{ group_name }}" data-group-id="{{ group_id }}" data-group-students-url="{{ group_students_url }}" data-group-resource-url="{{ group_resource_url }}" data-group-edit-url="{{ group_edit_url }}">
+    <span class="listitem-name">{{ group_name }}</span>
+    <span class="unread">0</span>
+  </a>
+
   {{# staff }}
-  {{# edit_group_url }}
+  {{# group_edit_url }}
   <div class="listitem-actions">
-    <a href="{{ edit_group_url }}" class="action-edit ajax-link" title="edit group">edit</a>
-    <button class="action-remove" title="remove group" name="remove" value="">remove</button>
+    <a href="{{ group_edit_url }}" class="action-edit ajax-link" title="edit group">edit</a>
+    {{# group_resource_url }}<button class="action-remove" title="remove group" name="remove" value="">remove</button>{{/ group_resource_url }}
   </div>
-  {{/ edit_group_url }}
+  {{/ group_edit_url }}
   {{/ staff }}
 </h2>
+
 <ul class="itemlist">
   {{> student_list_item }}
 </ul>

@@ -132,7 +132,8 @@
 {% if SNAPENGAGE_ID %}
 <script type="text/javascript">
 document.write(unescape("%3Cscript src='//www.snapengage.com/snapabug.js' type='text/javascript'%3E%3C/script%3E"));</script><script type="text/javascript">
-SnapABug.init(".helplink");
+SnapABug.init("{{ SNAPENGAGE_ID }}");
+SnapABug.setStartChat("Hey, how can I help you?");
 </script>
 {% endif %}
 </body>
