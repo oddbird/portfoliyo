@@ -116,6 +116,7 @@ var PYO = (function (PYO, $) {
                 data.add_group_url = nav.data('add-group-url');
                 var newGroups = ich.group_list(data);
                 PYO.updateNavActiveClasses(newGroups);
+                PYO.listenForPosts(newGroups.find('.listitem'));
                 nav.trigger('before-replace').html(newGroups);
                 if (!all_students_group_obj && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
@@ -171,7 +172,7 @@ var PYO = (function (PYO, $) {
                 var students = ich.student_list(data);
                 PYO.updateNavActiveClasses(students);
                 nav.trigger('before-replace').html(students);
-                PYO.listenForPosts(students.find('.student'));
+                PYO.listenForPosts(students.find('*').andSelf().filter('.listitem'));
             } else { fetchStudentsError(); }
         };
         var fetchStudentsError = function () {
@@ -228,19 +229,28 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.listenForPosts = function (students) {
-        if (PYO.pusherKey && students) {
-            students.find('.ajax-link.listitem-select').each(function () {
+    PYO.listenForPosts = function (items) {
+        if (PYO.pusherKey && items && items.length) {
+            items.find('.ajax-link.listitem-select').each(function () {
                 var el = $(this);
-                var id = el.data('id');
                 var unread = el.find('.unread');
-                var channel = PYO.pusher.subscribe('student_' + id);
+                var id;
+                var channel;
+                var group = el.hasClass('group-link');
+                if (group) {
+                    id = el.data('group-id');
+                    channel = PYO.pusher.subscribe('group_' + id);
+                } else {
+                    id = el.data('id');
+                    channel = PYO.pusher.subscribe('student_' + id);
+                }
 
                 channel.bind('message_posted', function (data) {
-                    if (id === PYO.activeStudentId && PYO.scrolledToBottom()) {
+                    if (id === PYO.activeStudentId || id === PYO.activeGroupId) {
+                        var scroll = PYO.scrolledToBottom();
                         if (!PYO.replacePost(data)) {
                             PYO.addPost(data);
-                            PYO.scrollToBottom();
+                            if (scroll) { PYO.scrollToBottom(); }
                         }
                     } else {
                         var count = parseInt(unread.text(), 10);

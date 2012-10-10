@@ -55,23 +55,6 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.scrollToBottom = function () {
-        if ($('.village-feed').length) {
-            var feed = $('.village-feed');
-            var height = parseInt(feed.get(0).scrollHeight, 10);
-            feed.scrollTop(height);
-        }
-    };
-
-    PYO.scrolledToBottom = function () {
-        var feed = $('.village-feed');
-        var bottom = false;
-        if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
-            bottom = true;
-        }
-        return bottom;
-    };
-
     PYO.pageAjaxError = function (url) {
         var container = $('.village-content');
         var msg = ich.ajax_error_msg({
