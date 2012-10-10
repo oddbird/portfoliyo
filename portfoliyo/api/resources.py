@@ -242,6 +242,14 @@ class GroupResource(SoftDeletedResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
 
 
+    class Meta(SoftDeletedResource.Meta):
+        queryset = model.Group.objects.filter(deleted=False).order_by('name')
+        resource_name = 'group'
+        fields = ['id', 'name', 'owner']
+        authorization = GroupAuthorization()
+        detail_allowed_methods = ['get', 'delete']
+
+
     def full_dehydrate(self, bundle):
         """Special handling for all-students group."""
         if bundle.obj.is_all:
@@ -284,19 +292,11 @@ class GroupResource(SoftDeletedResource):
         return bundle
 
 
-    class Meta(SoftDeletedResource.Meta):
-        queryset = model.Group.objects.filter(deleted=False)
-        resource_name = 'group'
-        fields = ['id', 'name', 'owner']
-        authorization = GroupAuthorization()
-        detail_allowed_methods = ['get', 'delete']
-
-
     def obj_get_list(self, request=None, **kwargs):
         qs = super(GroupResource, self).obj_get_list(request, **kwargs)
         groups = list(qs)
         if request is not None:
-            groups.append(model.AllStudentsGroup(request.user.profile))
+            groups.insert(0, model.AllStudentsGroup(request.user.profile))
         return groups
 
 

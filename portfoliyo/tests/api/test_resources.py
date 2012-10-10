@@ -253,6 +253,17 @@ class TestGroupResource(object):
             )
 
 
+    def test_group_ordering(self, no_csrf_client):
+        """Groups ordered alphabetically, with All Students first."""
+        g = factories.GroupFactory.create(name='B', owner__school_staff=True)
+        factories.GroupFactory.create(name='A', owner=g.owner)
+
+        response = no_csrf_client.get(self.list_url(), user=g.owner.user)
+        groups = response.json['objects']
+
+        assert [g['name'] for g in groups] == ['All Students', 'A', 'B']
+
+
     def test_delete_group(self, no_csrf_client):
         """Owner of a group can delete it."""
         group = factories.GroupFactory.create(owner__school_staff=True)
@@ -282,7 +293,7 @@ class TestGroupResource(object):
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
-        assert response.json['objects'][0]['group_uri'] == group_url
+        assert response.json['objects'][1]['group_uri'] == group_url
 
 
     def test_students_uri(self, no_csrf_client):
@@ -295,7 +306,7 @@ class TestGroupResource(object):
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
-        assert response.json['objects'][0]['students_uri'] == students_url
+        assert response.json['objects'][1]['students_uri'] == students_url
 
 
     def test_edit_uri(self, no_csrf_client):
@@ -305,4 +316,4 @@ class TestGroupResource(object):
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
-        assert response.json['objects'][0]['edit_uri'] == edit_url
+        assert response.json['objects'][1]['edit_uri'] == edit_url
