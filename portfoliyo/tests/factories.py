@@ -63,6 +63,8 @@ class RelationshipFactory(factory.Factory):
             kwargs['from_profile__school'] = kwargs['to_profile__school']
         if 'to_profile' in kwargs and not 'from_profile' in kwargs:
             kwargs['from_profile__school'] = kwargs['to_profile'].school
+        elif 'from_profile' in kwargs and not 'to_profile' in kwargs:
+            kwargs['to_profile__school'] = kwargs['from_profile'].school
         rel = super(RelationshipFactory, cls).create(**kwargs)
         if rel.from_profile.school != rel.to_profile.school:
             raise ValueError("Cannot create relationship across schools.")

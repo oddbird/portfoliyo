@@ -1,23 +1,11 @@
-{% extends "village/_village_content_main.html" %}
-{% load widget_tweaks %}
+{% extends "village/_group_form.html" %}
 
-{% block village-content %}
-<form method="POST" action="{% url add_group %}" class="village-add-form" id="add-group-form">
-  {% csrf_token %}
+{% block form-action %}{% url add_group %}{% endblock %}
 
-  <h2>Add a Group</h2>
+{% block form-class %}village-add-form{% endblock %}
 
-  {{ form.non_field_errors }}
+{% block form-id %}add-group-form{% endblock %}
 
-  {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. 1st Period Math" label="Group Name" %}
+{% block form-header %}Add a Group{% endblock %}
 
-  <p>[students]</p>
-
-  <p>[elders]</p>
-
-  <div class="form-actions">
-    <button type="submit" class="action-post">add</button>
-  </div>
-
-</form>
-{% endblock village-content %}
+{% block form-button-text %}add{% endblock %}

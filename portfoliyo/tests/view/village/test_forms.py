@@ -240,3 +240,94 @@ class TestAddStudentForm(object):
         profile2 = form.save(factories.ProfileFactory())
 
         assert profile1 != profile2
+
+
+
+class TestGroupForm(object):
+    def test_create_group_with_students_and_elders(self):
+        """Can add students and elders to a group when creating it."""
+        me = factories.ProfileFactory.create(school_staff=True)
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=me.school)
+        rel = factories.RelationshipFactory.create(from_profile=me)
+
+        form = forms.AddGroupForm(
+            {
+                'name': 'New Group',
+                'elders': [elder.pk],
+                'students': [rel.student.pk],
+                },
+            owner=me,
+            )
+
+        assert form.is_valid()
+        group = form.save()
+
+        assert set(group.students.all()) == {rel.student}
+        assert set(group.elders.all()) == {elder}
+
+
+    def test_edit_group_with_students_and_elders(self):
+        """Can add/remove students and elders from group when editing."""
+        group = factories.GroupFactory.create()
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+        rel = factories.RelationshipFactory.create(from_profile=group.owner)
+        group.students.add(rel.student)
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid()
+        group = form.save()
+
+        assert len(group.students.all()) == 0
+        assert set(group.elders.all()) == {elder}
+
+
+    def test_cannot_add_elder_from_other_school(self):
+        """Cannot add an elder from a different school to a group."""
+        group = factories.GroupFactory.create()
+        elder = factories.ProfileFactory.create(school_staff=True)
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert not form.is_valid()
+        assert form.errors['elders'] == [
+            u"Select a valid choice. %s is not one of the available choices."
+            % elder.pk
+            ]
+
+
+    def test_cannot_add_unrelated_student(self):
+        """Cannot add a student you aren't related to to a group."""
+        group = factories.GroupFactory.create()
+        student = factories.ProfileFactory.create()
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [],
+                'students': [student.pk],
+                },
+            instance=group,
+            )
+
+        assert not form.is_valid()
+        assert form.errors['students'] == [
+            u"Select a valid choice. %s is not one of the available choices."
+            % student.pk
+            ]

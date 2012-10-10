@@ -9,8 +9,19 @@ from ..users.forms import EditProfileForm
 
 
 
+class StudentCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+    """A CheckboxSelectMultiple widget with a custom template."""
+    template_name = 'village/student_checkbox_select.html'
+
+
+
+class ElderCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+    """A CheckboxSelectMultiple widget with a custom template."""
+    template_name = 'village/elder_checkbox_select.html'
+
+
+
 class EditElderForm(EditProfileForm):
-    """At this point, editing an elder is same as editing a profile."""
     def save(self, rel):
         """Save this elder in context of given village relationship."""
         self.profile.name = self.cleaned_data['name']
@@ -169,14 +180,33 @@ class GroupForm(forms.ModelForm):
     """Form for editing Groups."""
     class Meta:
         model = model.Group
-        fields = ['name']
+        fields = ['name', 'students', 'elders']
+        widgets = {
+            'students': StudentCheckboxSelectMultiple,
+            'elders': ElderCheckboxSelectMultiple,
+            }
+
+
+    def __init__(self, *args, **kwargs):
+        """Store owner, narrow student and elder choices appropriately."""
+        instance = kwargs.get('instance', None)
+        if instance:
+            self.owner = instance.owner
+        else:
+            self.owner = kwargs.pop('owner')
+        super(GroupForm, self).__init__(*args, **kwargs)
+        self.fields['students'].queryset = model.Profile.objects.filter(
+            relationships_to__from_profile=self.owner, deleted=False)
+        self.fields['elders'].queryset = model.Profile.objects.filter(
+            school=self.owner.school, school_staff=True, deleted=False)
 
 
 
 class AddGroupForm(GroupForm):
-    def save(self, owner):
+    def save(self):
         """Save group, attaching new group to owner."""
         group = super(AddGroupForm, self).save(commit=False)
-        group.owner = owner
+        group.owner = self.owner
         group.save()
+        self.save_m2m()
         return group

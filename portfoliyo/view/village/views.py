@@ -100,12 +100,12 @@ def edit_student(request, student_id):
 def add_group(request):
     """Add a group."""
     if request.method == 'POST':
-        form = forms.AddGroupForm(request.POST)
+        form = forms.AddGroupForm(request.POST, owner=request.user.profile)
         if form.is_valid():
-            form.save(request.user.profile)
+            form.save()
             return redirect(home.redirect_home(request.user))
     else:
-        form = forms.AddGroupForm()
+        form = forms.AddGroupForm(owner=request.user.profile)
 
     return TemplateResponse(
         request,
