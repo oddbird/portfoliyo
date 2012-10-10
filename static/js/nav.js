@@ -188,6 +188,7 @@ var PYO = (function (PYO, $) {
         };
         var getActiveGroupInfo = function (data) {
             if (data && data.objects && data.objects.length) {
+                var new_group_obj;
                 $.each(data.objects, function () {
                     if (this.id === PYO.activeGroupId) {
                         new_group_obj = {
@@ -221,7 +222,6 @@ var PYO = (function (PYO, $) {
         } else {
             var groups_url = nav.data('groups-url');
             if (groups_url) {
-                var new_group_obj;
                 $.get(groups_url, getActiveGroupInfo).error(PYO.fetchGroupsError);
             } else { fetchStudentsError(); }
         }
