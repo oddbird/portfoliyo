@@ -40,8 +40,8 @@ var PYO = (function (PYO, $) {
         });
 
         nav.on('before-replace', function () {
-            var students = nav.find('.student');
-            PYO.unsubscribeFromPosts(students);
+            var items = nav.find('.listitem');
+            PYO.unsubscribeFromPosts(items);
         });
     };
 
@@ -116,8 +116,8 @@ var PYO = (function (PYO, $) {
                 data.add_group_url = nav.data('add-group-url');
                 var newGroups = ich.group_list(data);
                 PYO.updateNavActiveClasses(newGroups);
-                PYO.listenForPosts(newGroups.find('.listitem'));
                 nav.trigger('before-replace').html(newGroups);
+                PYO.listenForPosts(newGroups.find('.listitem'));
                 if (!all_students_group_obj && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
                         if (this.id.toString().indexOf('all') !== -1) {
@@ -261,12 +261,19 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.unsubscribeFromPosts = function (students) {
-        if (PYO.pusherKey && students) {
-            students.find('.ajax-link.listitem-select').each(function () {
+    PYO.unsubscribeFromPosts = function (items) {
+        if (PYO.pusherKey && items && items.length) {
+            items.find('.ajax-link.listitem-select').each(function () {
                 var el = $(this);
-                var id = el.data('id');
-                PYO.pusher.unsubscribe('student_' + id);
+                var group = el.hasClass('group-link');
+                var id;
+                if (group) {
+                    id = el.data('group-id');
+                    PYO.pusher.unsubscribe('group_' + id);
+                } else {
+                    id = el.data('id');
+                    PYO.pusher.unsubscribe('student_' + id);
+                }
             });
         }
     };
