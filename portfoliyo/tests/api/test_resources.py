@@ -227,8 +227,30 @@ class TestGroupResource(object):
         response = no_csrf_client.get(self.list_url(), user=g1.owner.user)
         objects = response.json['objects']
 
-        assert len(objects) == 1
-        assert objects[0]['id'] == g1.pk
+        assert len(objects) == 2
+        assert {g['id'] for g in objects} == {g1.pk, 'all%s' % g1.owner.id}
+
+
+    def test_all_students_group(self, no_csrf_client):
+        """All-students group always included in groups list."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+        g = response.json['objects'][0]
+
+        assert g['id'] == 'all%s' % rel.elder.id
+        assert g['name'] == 'All Students'
+        assert g['students_uri'] == reverse(
+            'api_dispatch_list',
+            kwargs={'resource_name': 'user', 'api_name': 'v1'},
+            ) + '?elders=%s' % rel.elder.id
+        assert g['group_uri'] == reverse('all_students')
+        assert g['owner'] == reverse(
+            'api_dispatch_detail',
+            kwargs={
+                'resource_name': 'user', 'api_name': 'v1', 'pk': rel.elder.id},
+            )
 
 
     def test_delete_group(self, no_csrf_client):

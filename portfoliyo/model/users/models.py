@@ -210,6 +210,7 @@ class AllStudentsGroup(object):
     @property
     def id(self):
         return 'all%s' % self.owner.id
+    pk = id
 
 
     @property
