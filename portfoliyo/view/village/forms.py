@@ -5,6 +5,7 @@ Student/elder forms.
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
+from ..forms import TemplateLabelModelMultipleChoiceField
 from ..users.forms import EditProfileForm
 
 
@@ -18,6 +19,12 @@ class StudentCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
 class ElderCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
     """A CheckboxSelectMultiple widget with a custom template."""
     template_name = 'village/elder_checkbox_select.html'
+
+
+
+class GroupCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
+    """A CheckboxSelectMultiple widget with a custom template."""
+    template_name = 'village/group_checkbox_select.html'
 
 
 
@@ -145,46 +152,147 @@ class InviteElderForm(forms.Form):
 
 class StudentForm(forms.ModelForm):
     """Form for editing a student."""
+    groups = TemplateLabelModelMultipleChoiceField(
+        queryset=model.Group.objects.none(),
+        widget=GroupCheckboxSelectMultiple,
+        required=False,
+        )
+    elders = TemplateLabelModelMultipleChoiceField(
+        queryset=model.Profile.objects.none(),
+        widget=ElderCheckboxSelectMultiple,
+        required=False,
+        )
+
+
     class Meta:
         model = model.Profile
-        fields = ['name']
+        fields = ['name', 'groups', 'elders']
+
+
+    def __init__(self, *args, **kwargs):
+        """Store elder, narrow group and elder choices appropriately."""
+        self.elder = kwargs.pop('elder')
+        super(StudentForm, self).__init__(*args, **kwargs)
+        self.fields['groups'].queryset = model.Group.objects.filter(
+            owner=self.elder)
+        self.fields['elders'].queryset = model.Profile.objects.filter(
+            school=self.elder.school, school_staff=True, deleted=False)
+        if self.instance.pk:
+            self.fields['groups'].initial = [
+                g.pk for g in self.instance.student_in_groups.all()]
+            self.fields['elders'].initial = [
+                e.pk for e in self.direct_other_elders(self.instance)]
+
+
+    def save(self):
+        """Save and return student."""
+        student = super(StudentForm, self).save()
+
+        self.update_student_elders(student, self.cleaned_data['elders'])
+        self.update_student_groups(student, self.cleaned_data['groups'])
+
+        return student
+
+
+    def direct_other_elders(self, student):
+        """
+        Get all direct (non-group) other-than-me elders of a student.
+
+        Memoized by student id.
+
+        """
+        if not hasattr(self, '_direct_other_elders'):
+            self._direct_other_elders = {}
+        if self._direct_other_elders.get(student.pk) is None:
+            self._direct_other_elders[student.pk] = [
+                r.elder for r in
+                model.Relationship.objects.filter(
+                    to_profile=self.instance,
+                    from_group=None,
+                    from_profile__deleted=False,
+                    ).exclude(
+                    from_profile=self.elder).select_related('from_profile')
+                ]
+        return self._direct_other_elders[student.pk]
+
+
+    def update_student_elders(self, student, elders):
+        """
+        Update student to have exactly given direct other-than-me elders.
+
+        Excludes elder relationships due to group membership, and excludes the
+        elder editing the student.
+
+        """
+        current = set(self.direct_other_elders(student))
+        target = set(elders)
+        remove = current.difference(target)
+        add = target.difference(current)
+
+        if remove:
+            model.Relationship.objects.filter(
+                to_profile=student,
+                from_profile__in=remove,
+                ).delete()
+
+        for elder in add:
+            model.Relationship.objects.get_or_create(
+                to_profile=student,
+                from_profile=elder,
+                )
+
+
+    def update_student_groups(self, student, groups):
+        """Update student to be in exactly given groups."""
+        student.student_in_groups = groups
+
 
 
 class AddStudentForm(StudentForm):
     """Form for adding a student."""
-    def save(self, user):
+    def save(self):
         """
         Save and return new student.
 
-        Takes the Profile of the current user and creates a relationship
-        between them and the new student.
+        Creates a relationship between the elder adding the student and the new
+        student.
 
         """
-        assert self.is_valid()
         name = self.cleaned_data["name"]
 
-        profile = model.Profile.create_with_user(
-            school=user.school, name=name, invited_by=user)
+        student = model.Profile.create_with_user(
+            school=self.elder.school, name=name, invited_by=self.elder)
+
+        self.update_student_elders(student, self.cleaned_data['elders'])
+        self.update_student_groups(student, self.cleaned_data['groups'])
 
         model.Relationship.objects.create(
-            from_profile=user,
-            to_profile=profile,
+            from_profile=self.elder,
+            to_profile=student,
             kind=model.Relationship.KIND.elder,
             )
 
-        return profile
+        return student
 
 
 
 class GroupForm(forms.ModelForm):
     """Form for editing Groups."""
+    students = TemplateLabelModelMultipleChoiceField(
+        queryset=model.Profile.objects.none(),
+        widget=StudentCheckboxSelectMultiple,
+        required=False,
+        )
+    elders = TemplateLabelModelMultipleChoiceField(
+        queryset=model.Profile.objects.none(),
+        widget=ElderCheckboxSelectMultiple,
+        required=False,
+        )
+
+
     class Meta:
         model = model.Group
         fields = ['name', 'students', 'elders']
-        widgets = {
-            'students': StudentCheckboxSelectMultiple,
-            'elders': ElderCheckboxSelectMultiple,
-            }
 
 
     def __init__(self, *args, **kwargs):

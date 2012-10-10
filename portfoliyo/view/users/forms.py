@@ -11,20 +11,12 @@ from django.contrib.auth import forms as auth_forms
 import floppyforms as forms
 
 from portfoliyo import model
+from ..forms import TemplateLabelModelChoiceField
 
 
 class SchoolRadioSelect(forms.RadioSelect):
     """A RadioSelect with a custom display template."""
     template_name = 'users/school_radio.html'
-
-
-
-class TemplateLabelModelChoiceField(forms.ModelChoiceField):
-    """A ModelChoiceField that relies on rendering template to handle label."""
-
-    def label_from_instance(self, obj):
-        """Return the object itself, not a string; template renders to label."""
-        return obj
 
 
 

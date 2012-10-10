@@ -53,12 +53,12 @@ def get_relationship_or_404(student_id, profile):
 def add_student(request):
     """Add a student."""
     if request.method == 'POST':
-        form = forms.AddStudentForm(request.POST)
+        form = forms.AddStudentForm(request.POST, elder=request.user.profile)
         if form.is_valid():
-            student = form.save(request.user.profile)
+            student = form.save()
             return redirect('village', student_id=student.id)
     else:
-        form = forms.AddStudentForm()
+        form = forms.AddStudentForm(elder=request.user.profile)
 
     return TemplateResponse(
         request,
@@ -77,12 +77,13 @@ def edit_student(request, student_id):
     rel = get_relationship_or_404(student_id, request.user.profile)
 
     if request.method == 'POST':
-        form = forms.StudentForm(request.POST, instance=rel.student)
+        form = forms.StudentForm(
+            request.POST, instance=rel.student, elder=rel.elder)
         if form.is_valid():
             student = form.save()
             return redirect('village', student_id=student.id)
     else:
-        form = forms.StudentForm(instance=rel.student)
+        form = forms.StudentForm(instance=rel.student, elder=rel.elder)
 
     return TemplateResponse(
         request,
