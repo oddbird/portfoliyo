@@ -1,4 +1,4 @@
 {% load url from future %}
-<div class="village-content" data-student-id="{{ student.id }}" data-group-name="{{ group.name }}" data-group-id="{{ group.id }}"{% if group and not group.is_all %} data-group-url="{% url 'group' group_id=group.id %}" data-group-api-url="{% url 'api_dispatch_list' resource_name='user' api_name='v1' %}?student_in_groups={{ group.id }}" data-group-edit-url="{% url 'edit_group' group_id=group.id %}" data-group-resource-url="{% url 'api_dispatch_detail' resource_name='group' api_name='v1' pk=group.id %}"{% endif %}>
+<div class="village-content" data-student-id="{{ student.id }}" data-group-id="{{ group.id }}">
 {% block village-content %}{% endblock village-content %}
 </div>
