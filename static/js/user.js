@@ -9,13 +9,13 @@ var PYO = (function (PYO, $) {
             var selectSchoolLink = form.find('.select-school-link');
             var selectSchool = form.find('.school-field');
             var addSchool = form.find('.add-school');
-
-            addSchool.find('input').attr('disabled', 'disabled').removeAttr('required');
+            var hiddenInput = addSchool.find('#id_addschool');
 
             addSchoolLink.click(function (e) {
                 e.preventDefault();
                 selectSchool.fadeOut('fast', function () {
                     addSchool.find('input').attr('required', 'required').removeAttr('disabled');
+                    hiddenInput.val('True');
                     addSchool.fadeIn('fast');
                 }).find('input').attr('disabled', 'disabled');
             });
@@ -26,7 +26,14 @@ var PYO = (function (PYO, $) {
                     selectSchool.find('input').removeAttr('disabled');
                     selectSchool.fadeIn('fast');
                 }).find('input').attr('disabled', 'disabled').removeAttr('required');
+                hiddenInput.val('False');
             });
+
+            addSchool.find('input').attr('disabled', 'disabled').removeAttr('required');
+
+            if (hiddenInput.val() === 'True') {
+                addSchoolLink.click();
+            }
         }
     };
 
