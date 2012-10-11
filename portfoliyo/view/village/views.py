@@ -147,22 +147,22 @@ def edit_group(request, group_id):
 
 
 @school_staff_required
-@ajax('village/_invite_elders_content.html')
-def invite_elders(request, student_id):
-    """Invite new elder(s) to a student's village."""
+@ajax('village/_invite_elder_content.html')
+def invite_elder(request, student_id):
+    """Invite new elder to a student's village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
 
     if request.method == 'POST':
-        form = forms.InviteElderForm(request.POST)
+        form = forms.InviteElderForm(request.POST, rel=rel)
         if form.is_valid():
-            form.save(request, rel)
+            form.save(request)
             return redirect('village', student_id=rel.student.id)
     else:
-        form = forms.InviteElderForm()
+        form = forms.InviteElderForm(rel=rel)
 
     return TemplateResponse(
         request,
-        'village/invite_elders.html',
+        'village/invite_elder.html',
         {'form': form, 'student': rel.student},
         )
 

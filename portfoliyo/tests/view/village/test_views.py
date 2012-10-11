@@ -211,14 +211,14 @@ class TestEditGroup(object):
 
 
 class TestInviteElders(object):
-    """Tests for invite_elders view."""
+    """Tests for invite_elder view."""
     def url(self, student=None):
         if student is None:
             student = factories.ProfileFactory.create()
-        return reverse('invite_elders', kwargs=dict(student_id=student.id))
+        return reverse('invite_elder', kwargs=dict(student_id=student.id))
 
 
-    def test_invite_elders(self, client):
+    def test_invite_elder(self, client):
         """User can invite some elders."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -278,7 +278,7 @@ class TestVillage(object):
         return reverse('village', kwargs=dict(student_id=student.id))
 
 
-    @pytest.mark.parametrize('link_target', ['invite_elders'])
+    @pytest.mark.parametrize('link_target', ['invite_elder'])
     def test_link_only_if_staff(self, client, link_target):
         """Link with given target is only present for school staff."""
         parent_rel = factories.RelationshipFactory.create(
@@ -289,7 +289,7 @@ class TestVillage(object):
         parent_response = client.get(url, user=parent_rel.elder.user)
         teacher_response = client.get(url, user=teacher_rel.elder.user)
         reverse_kwargs = {}
-        if link_target == 'invite_elders':
+        if link_target == 'invite_elder':
             reverse_kwargs = {'student_id': parent_rel.student.id}
         target_url = reverse(link_target, kwargs=reverse_kwargs)
         parent_links = parent_response.html.findAll('a', href=target_url)

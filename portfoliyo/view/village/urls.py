@@ -4,7 +4,7 @@ from . import views
 
 per_student_patterns = patterns(
     '',
-    url(r'^invite/$', views.invite_elders, name='invite_elders'),
+    url(r'^invite/$', views.invite_elder, name='invite_elder'),
     url(r'^edit/$', views.edit_student, name='edit_student'),
     url(r'^elder/(?P<elder_id>\d+)/$', views.edit_elder, name='edit_elder'),
     url(r'^$', views.village, name='village'),

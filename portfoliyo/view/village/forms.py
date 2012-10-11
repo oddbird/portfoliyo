@@ -126,6 +126,12 @@ class InviteElderForm(forms.Form):
     school_staff = forms.BooleanField(required=False)
 
 
+    def __init__(self, *args, **kwargs):
+        """Accepts ``rel`` - relationship between inviting elder and student."""
+        self.rel = kwargs.pop('rel')
+        super(InviteElderForm, self).__init__(*args, **kwargs)
+
+
     def clean_contact(self):
         contact = self.cleaned_data["contact"]
         as_phone = formats.normalize_phone(contact)
@@ -141,11 +147,11 @@ class InviteElderForm(forms.Form):
                 "Please supply a valid email address or US mobile number.")
 
 
-    def save(self, request, rel):
+    def save(self, request):
         """
         Save/return new elder profile and send invites, or return existing.
 
-        Takes request and relationship between inviting elder and student.
+        Takes request (for details needed for email invite).
 
         """
         email = self.cleaned_data.get("email")
@@ -164,7 +170,7 @@ class InviteElderForm(forms.Form):
             profile = model.Profile.objects.get(**dupe_query)
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
-                school=rel.student.school,
+                school=self.rel.student.school,
                 email=email,
                 phone=phone,
                 role=relationship,
@@ -184,7 +190,7 @@ class InviteElderForm(forms.Form):
         # create student's rel with invited elder (unless it already exists)
         new_rel, rel_created = model.Relationship.objects.get_or_create(
             from_profile=profile,
-            to_profile=rel.student,
+            to_profile=self.rel.student,
             kind=model.Relationship.KIND.elder,
             defaults={'description': relationship},
             )
@@ -198,9 +204,9 @@ class InviteElderForm(forms.Form):
                     subject_template_name='registration/invite_elder_subject.txt',
                     use_https=request.is_secure(),
                     extra_context={
-                        'inviter': rel.elder,
-                        'student': rel.student,
-                        'inviter_rel': rel,
+                        'inviter': self.rel.elder,
+                        'student': self.rel.student,
+                        'inviter_rel': self.rel,
                         'invitee_rel': new_rel,
                         'domain': request.get_host(),
                         },
@@ -210,9 +216,9 @@ class InviteElderForm(forms.Form):
                     profile.user,
                     template_name='registration/invite_elder_sms.txt',
                     extra_context={
-                        'inviter': rel.elder,
-                        'student': rel.student,
-                        'inviter_rel': rel,
+                        'inviter': self.rel.elder,
+                        'student': self.rel.student,
+                        'inviter_rel': self.rel,
                         'invitee_rel': new_rel,
                         },
                     )
