@@ -221,6 +221,25 @@ class TestInviteElderForm(object):
         assert set(profile.students) == {rel.student, rel2.student}
 
 
+    def test_invite_elder_never_removes_student_relationships(self):
+        """Inviting an existing elder never removes their existing students."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(
+            from_profile__user__email='foo@example.com')
+
+        form = forms.InviteElderForm(
+            self.data(
+                contact='foo@example.com',
+                students=[rel.student.pk],
+                ),
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save(mock.Mock())
+
+        assert set(profile.students) == {rel.student, rel2.student}
+
+
     def test_context_student_pre_checked(self):
         """Student from whose village elder is invited is initially checked."""
         rel = factories.RelationshipFactory.create()
