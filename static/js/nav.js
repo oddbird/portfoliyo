@@ -28,7 +28,8 @@ var PYO = (function (PYO, $) {
                 students_url: trigger.data('group-students-url'),
                 id: trigger.data('group-id'),
                 edit_url: trigger.data('group-edit-url'),
-                resource_url: trigger.data('group-resource-url')
+                resource_url: trigger.data('group-resource-url'),
+                add_student_url: trigger.data('group-add-student-url')
             };
             PYO.fetchStudents(group_obj);
         });
@@ -125,7 +126,8 @@ var PYO = (function (PYO, $) {
                                 name: this.name,
                                 url: this.group_uri,
                                 students_url: this.students_uri,
-                                id: this.id
+                                id: this.id,
+                                add_student_url: this.add_student_uri
                             };
                         }
                     });
@@ -167,8 +169,8 @@ var PYO = (function (PYO, $) {
                 data.group_students_url = group_obj.students_url;
                 data.group_edit_url = group_obj.edit_url;
                 data.group_resource_url = group_obj.resource_url;
+                data.group_add_student_url = group_obj.add_student_url;
                 data.staff = nav.data('is-staff');
-                data.add_student_url = nav.data('add-student-url');
                 var students = ich.student_list(data);
                 PYO.updateNavActiveClasses(students);
                 nav.trigger('before-replace').html(students);
@@ -199,7 +201,8 @@ var PYO = (function (PYO, $) {
                             students_url: this.students_uri,
                             id: this.id,
                             edit_url: this.edit_uri,
-                            resource_url: this.resource_uri
+                            resource_url: this.resource_uri,
+                            add_student_url: this.add_student_uri
                         };
                     }
                     if (this.id.toString().indexOf('all') !== -1) {
@@ -207,7 +210,8 @@ var PYO = (function (PYO, $) {
                             name: this.name,
                             url: this.group_uri,
                             students_url: this.students_uri,
-                            id: this.id
+                            id: this.id,
+                            add_student_url: this.add_student_uri
                         };
                     }
                 });
