@@ -53,12 +53,13 @@ $inst-icon-size   : $xxlargepx + $xlargepx;
 }
 
 // ---------------------------------------------------------------------------
-// Add Elder
+// Add Elder & Edit Student
 
-.elder-add-form { @extend %village-main-page; }
-.elder-edit-form { @extend %village-main-page; }
+.elder-add-form, .elder-edit-form { @extend %village-main-page; }
 
 .school_staff-field {
   @extend %radio-check-defaults;
   @include leader;
 }
+
+.village-edit-form { @extend %village-solo-page; }

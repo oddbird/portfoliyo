@@ -49,7 +49,7 @@ $simple-center: $simple-width - $simple-side;
 %simple-inline-form {
   @include at-breakpoint($break) {
     @include inline-form($simple-side, $simple-center, $simple-center);
-    label, .label { @include pull($simple-side, $simple-center); }
+    .type { @include pull($simple-side, $simple-center); }
   }
 }
 

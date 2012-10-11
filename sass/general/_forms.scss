@@ -98,12 +98,12 @@ $input-rhythm: .25;
 }
 
 @mixin inline-form($label: $left, $input: $center - $label, $context: $center, $radio-check: false) {
-  label, .label {
+  .type {
     @include ellipsis;
     @include span-columns($label,$context);
     padding: rhythm($input-rhythm) 0;
     text-align: right;
-    + input, + textarea { @include span-columns($input omega,$context); }
+    + .value { @include span-columns($input omega,$context); }
   }
   @if $radio-check {
     [type="checkbox"], [type="radio"] {
@@ -112,7 +112,7 @@ $input-rhythm: .25;
         left: space($label, $context);
         top: rhythm(-.25);
       }
-      + label {
+      + .type {
         @include reset-columns;
         @include pre($label,$context);
         display: inline-block;
@@ -141,28 +141,29 @@ $input-rhythm: .25;
   [type="checkbox"], [type="radio"] {
     display: none;
     .lt-ie9 & { display: inline; }
-    + label {
+    + .type {
       @extend %icon;
+      display: inline-block;
       &:before {
         margin-left: .4em;
         color: $base01;
       }
     }
-    &:checked + label {
+    &:checked + .type {
       font-weight: bold;
       &:before { color: $blue; }
     }
-    &:focus + label { color: $base03; }
+    &:focus + .type { color: $base03; }
   }
 
   [type="checkbox"] {
-    + label { @extend %icon-unchecked; }
-    &:checked + label { @extend %icon-checked; }
+    + .type { @extend %icon-unchecked; }
+    &:checked + .type { @extend %icon-checked; }
   }
 
   [type="radio"] {
-    + label { @extend %icon-radio-unchecked; }
-    &:checked + label { @extend %icon-radio-checked; }
+    + .type { @extend %icon-radio-unchecked; }
+    &:checked + .type { @extend %icon-radio-checked; }
   }
 }
 
