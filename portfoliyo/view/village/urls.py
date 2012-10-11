@@ -17,6 +17,10 @@ per_group_patterns = patterns(
     url(r'^$', views.group, name='group'),
     url(r'^edit/$', views.edit_group, name='edit_group'),
     url(r'^add/$', views.add_student, name='add_student_in_group'),
+    url(r'^instructions-(?P<lang>en|es).pdf$',
+        views.pdf_parent_instructions,
+        name='pdf_parent_instructions_group',
+        ),
     )
 
 

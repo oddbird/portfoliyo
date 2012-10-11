@@ -308,8 +308,12 @@ def edit_elder(request, student_id, elder_id):
 
 
 @school_staff_required
-def pdf_parent_instructions(request, lang):
+def pdf_parent_instructions(request, lang, group_id=None):
     """Render a PDF for sending home with parents."""
+    group = get_object_or_404(
+        model.Group.objects.filter(
+            owner=request.user.profile, id=group_id)) if group_id else None
+
     template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
     template_path = os.path.join(
         template_dir,
@@ -327,7 +331,7 @@ def pdf_parent_instructions(request, lang):
         template_path=template_path,
         stream=response,
         name=request.user.profile.name or "Your Child's Teacher",
-        code=request.user.profile.code or '',
+        code=group.code if group else request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
         )
 

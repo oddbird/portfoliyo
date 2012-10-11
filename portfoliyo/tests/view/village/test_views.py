@@ -602,13 +602,39 @@ class TestEditElder(object):
 class TestPdfParentInstructions(object):
     def test_basic(self, client):
         """Smoke test that we get a PDF response back and nothing breaks."""
-        elder = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
+        elder = factories.ProfileFactory.create(
+            school_staff=True, code='ABCDEF')
         url = reverse('pdf_parent_instructions', kwargs={'lang': 'es'})
         resp = client.get(url, user=elder.user, status=200)
 
         assert resp.headers[
             'Content-Disposition'] == 'attachment; filename=instructions-es.pdf'
         assert resp.headers['Content-Type'] == 'application/pdf'
+
+
+    def test_group(self, client):
+        """Can get a PDF for a group code."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        url = reverse(
+            'pdf_parent_instructions_group',
+            kwargs={'lang': 'en', 'group_id': group.id},
+            )
+        resp = client.get(url, user=group.owner.user, status=200)
+
+        assert resp.headers[
+            'Content-Disposition'] == 'attachment; filename=instructions-en.pdf'
+        assert resp.headers['Content-Type'] == 'application/pdf'
+
+
+    def test_must_own_group(self, client):
+        """Can't get a PDF for a group that isn't yours."""
+        group = factories.GroupFactory.create()
+        someone = factories.ProfileFactory(school_staff=True)
+        url = reverse(
+            'pdf_parent_instructions_group',
+            kwargs={'lang': 'en', 'group_id': group.id},
+            )
+        client.get(url, user=someone.user, status=404)
 
 
     def test_no_code(self, client):

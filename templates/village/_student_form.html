@@ -2,8 +2,11 @@
 {% load widget_tweaks %}
 
 {% block village-content %}
+
 <form method="POST" action="{% block form-action %}{% endblock %}" class="{% block form-class %}{% endblock %}" id="{% block form-id %}{% endblock %}">
   {% csrf_token %}
+
+  {% block form-top %}{% endblock %}
 
   <h2>{% block form-header %}{% endblock %}</h2>
 
