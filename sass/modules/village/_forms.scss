@@ -10,6 +10,49 @@
   @include nth-omega(last);
 }
 
+$label-colors: $yellow $orange $magenta $violet $cyan $green;
+$adjusted-colors: compact();
+@each $color in $label-colors { $adjusted-colors: join($adjusted-colors, adjust-color($color, $lightness: 15%)); }
+$label-colors: $adjusted-colors;
+@each $color in $label-colors {
+  $new-colors: adjust-color($color, $saturation: -15%, $lightness: 15%);
+  $label-colors: join($label-colors, $new-colors);
+}
+
+.select-groups {
+  [class*="label-color-"] {
+    &:before {
+      @include border-radius(3px);
+      @include box-shadow($back 0 0 2px inset);
+      content: " ";
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+    }
+  }
+  $i: 1;
+  @each $color in $label-colors {
+    .label-color-#{$i}:before { background: $color; }
+    $i: $i + 1;
+  }
+}
+
+.select-students, .select-elders {
+  [class*="group-selected-"] {
+    @extend %icon;
+    @extend %icon-users;
+    &:before { float: left; }
+  }
+  $i: 1;
+  @each $color in $label-colors {
+    .group-selected-#{$i}:before {
+      @include text-shadow($back 0 1px 0);
+      color: $color;
+    }
+    $i: $i + 1;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Add Village
 

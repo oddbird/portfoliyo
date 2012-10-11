@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -195,7 +195,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\25ef";
 }
 
-.group .listitem-select:link:before, .group .listitem-select:visited:before {
+.select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\265b";
 }
 
@@ -1675,6 +1675,109 @@ button {
 .students-field:last-child, .elders-field:last-child, .groups-field:last-child {
   float: right;
   margin-right: 0;
+}
+
+.select-groups [class*="label-color-"]:before {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  -webkit-box-shadow: #073642 0 0 2px inset;
+  -moz-box-shadow: #073642 0 0 2px inset;
+  box-shadow: #073642 0 0 2px inset;
+  content: " ";
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
+.select-groups .label-color-1:before {
+  background: #ffc202;
+}
+.select-groups .label-color-2:before {
+  background: #eb7443;
+}
+.select-groups .label-color-3:before {
+  background: #e175a9;
+}
+.select-groups .label-color-4:before {
+  background: #a3a6da;
+}
+.select-groups .label-color-5:before {
+  background: #48cfc5;
+}
+.select-groups .label-color-6:before {
+  background: #c8e600;
+}
+.select-groups .label-color-7:before {
+  background: #f2cd5c;
+}
+.select-groups .label-color-8:before {
+  background: #e8ab92;
+}
+.select-groups .label-color-9:before {
+  background: #e8bad0;
+}
+.select-groups .label-color-10:before {
+  background: #dddeec;
+}
+.select-groups .label-color-11:before {
+  background: #90d4cf;
+}
+.select-groups .label-color-12:before {
+  background: #d9f042;
+}
+
+.select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before {
+  float: left;
+}
+.select-students .group-selected-1:before, .select-elders .group-selected-1:before {
+  text-shadow: #073642 0 1px 0;
+  color: #ffc202;
+}
+.select-students .group-selected-2:before, .select-elders .group-selected-2:before {
+  text-shadow: #073642 0 1px 0;
+  color: #eb7443;
+}
+.select-students .group-selected-3:before, .select-elders .group-selected-3:before {
+  text-shadow: #073642 0 1px 0;
+  color: #e175a9;
+}
+.select-students .group-selected-4:before, .select-elders .group-selected-4:before {
+  text-shadow: #073642 0 1px 0;
+  color: #a3a6da;
+}
+.select-students .group-selected-5:before, .select-elders .group-selected-5:before {
+  text-shadow: #073642 0 1px 0;
+  color: #48cfc5;
+}
+.select-students .group-selected-6:before, .select-elders .group-selected-6:before {
+  text-shadow: #073642 0 1px 0;
+  color: #c8e600;
+}
+.select-students .group-selected-7:before, .select-elders .group-selected-7:before {
+  text-shadow: #073642 0 1px 0;
+  color: #f2cd5c;
+}
+.select-students .group-selected-8:before, .select-elders .group-selected-8:before {
+  text-shadow: #073642 0 1px 0;
+  color: #e8ab92;
+}
+.select-students .group-selected-9:before, .select-elders .group-selected-9:before {
+  text-shadow: #073642 0 1px 0;
+  color: #e8bad0;
+}
+.select-students .group-selected-10:before, .select-elders .group-selected-10:before {
+  text-shadow: #073642 0 1px 0;
+  color: #dddeec;
+}
+.select-students .group-selected-11:before, .select-elders .group-selected-11:before {
+  text-shadow: #073642 0 1px 0;
+  color: #90d4cf;
+}
+.select-students .group-selected-12:before, .select-elders .group-selected-12:before {
+  text-shadow: #073642 0 1px 0;
+  color: #d9f042;
 }
 
 .parent-instructions {

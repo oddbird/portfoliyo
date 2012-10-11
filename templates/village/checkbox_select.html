@@ -1,4 +1,4 @@
-<ul class="check-options">
+<ul class="check-options {% block checkbox-select-class %}{% endblock checkbox-select-class %}">
   {% for group_name, choices in optgroups %}{% for choice in choices %}
   <li>
     <input {% if choice.0 in value %}checked="checked" {% endif %}class="value" type="checkbox" id="{{ attrs.id }}_{{ forloop.counter }}" name="{{ name }}" value="{{ choice.0 }}">
