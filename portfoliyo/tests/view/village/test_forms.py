@@ -85,6 +85,33 @@ class TestEditElderForm(object):
         assert set(profile.students) == {rel.student}
 
 
+    def test_edit_elder_transforms_group_relationship_to_direct(self):
+        """Can transform a group student relationship to a direct one."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            school=rel.elder.school, from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.elders.add(other_rel.elder)
+        group_rel = group.relationships.get()
+
+        form = forms.EditElderForm(
+            {
+                'name': 'New',
+                'role': 'teacher',
+                'groups': [],
+                'students': [rel.student.pk],
+                },
+            instance=other_rel.elder,
+            editor=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        form.save(other_rel)
+
+        assert utils.refresh(group_rel).from_group is None
+
+
     def test_initial_groups_and_students(self):
         """Initial groups and students set."""
         rel = factories.RelationshipFactory.create()
@@ -243,6 +270,34 @@ class TestInviteElderForm(object):
 
         assert set(profile.elder_in_groups.all()) == {group}
         assert set(profile.students) == {rel.student, rel2.student}
+
+
+    def test_edit_elder_transforms_group_relationship_to_direct(self):
+        """Can transform a group student relationship to a direct one."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            school=rel.elder.school,
+            from_profile__school_staff=True,
+            from_profile__user__email='foo@example.com',
+            )
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.elders.add(other_rel.elder)
+        group_rel = group.relationships.get()
+
+        form = forms.InviteElderForm(
+            self.data(
+                contact='foo@example.com',
+                groups=[],
+                students=[rel.student.pk],
+                ),
+            rel=rel,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        form.save(mock.Mock())
+
+        assert utils.refresh(group_rel).from_group is None
 
 
     def test_invite_elder_never_removes_student_relationships(self):
@@ -529,6 +584,32 @@ class TestStudentForms(object):
         profile = form.save()
 
         assert set(profile.student_in_groups.all()) == {group2}
+
+
+    def test_edit_student_transforms_group_rel_to_direct(self):
+        """Can add a direct relationship where there was a from_group one."""
+        rel = factories.RelationshipFactory.create()
+        other_elder = factories.ProfileFactory.create(
+            school=rel.elder.school, school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.elders.add(other_elder)
+
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'elders': [other_elder.pk],
+                'groups': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        form.save()
+
+        rel = other_elder.student_relationships[0]
+        assert not rel.from_group
 
 
     def test_edit_form_group_and_elder_initial(self):

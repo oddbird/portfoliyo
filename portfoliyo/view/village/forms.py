@@ -95,8 +95,8 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             rel.save()
         self.instance.save()
 
-        self.update_elder_groups(self.instance, self.cleaned_data['groups'])
         self.update_elder_students(self.instance, self.cleaned_data['students'])
+        self.update_elder_groups(self.instance, self.cleaned_data['groups'])
 
         return self.instance
 
@@ -115,10 +115,13 @@ class EditElderForm(ElderFormBase, EditProfileForm):
                 ).delete()
 
         for student in add:
-            model.Relationship.objects.get_or_create(
+            rel, created = model.Relationship.objects.get_or_create(
                 to_profile=student,
                 from_profile=elder,
                 )
+            if not created and rel.from_group:
+                rel.from_group = None
+                rel.save()
 
 
     def direct_students(self, elder):
@@ -239,15 +242,18 @@ class InviteElderForm(ElderFormBase):
                         },
                     )
 
-        self.update_elder_groups(profile, self.cleaned_data['groups'])
         for student in self.cleaned_data['students']:
-            model.Relationship.objects.get_or_create(
+            rel, created = model.Relationship.objects.get_or_create(
                 from_profile=profile,
                 to_profile=student,
                 defaults={
                     'description': relationship,
                     }
                 )
+            if not created and rel.from_group:
+                rel.from_group = None
+                rel.save()
+        self.update_elder_groups(profile, self.cleaned_data['groups'])
 
         return profile
 
@@ -339,10 +345,13 @@ class StudentForm(forms.ModelForm):
                 ).delete()
 
         for elder in add:
-            model.Relationship.objects.get_or_create(
+            rel, created = model.Relationship.objects.get_or_create(
                 to_profile=student,
                 from_profile=elder,
                 )
+            if not created and rel.from_group:
+                rel.from_group = None
+                rel.save()
 
 
     def update_student_groups(self, student, groups):
