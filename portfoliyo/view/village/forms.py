@@ -150,7 +150,6 @@ class InviteElderForm(ElderFormBase):
     """A form for inviting an elder to a student village."""
     contact = forms.CharField(max_length=255)
     relationship = forms.CharField(max_length=200)
-    school_staff = forms.BooleanField(required=False)
 
 
     def __init__(self, *args, **kwargs):
@@ -199,7 +198,7 @@ class InviteElderForm(ElderFormBase):
         email = self.cleaned_data.get("email")
         phone = self.cleaned_data.get("phone")
         relationship = self.cleaned_data.get("relationship", u"")
-        staff = self.cleaned_data.get("school_staff", False)
+        staff = (email is not None)
 
         # first check for an existing user match
         if email:
@@ -217,6 +216,7 @@ class InviteElderForm(ElderFormBase):
                 phone=phone,
                 role=relationship,
                 is_active=active,
+                school_staff=staff,
                 )
             created = True
         else:

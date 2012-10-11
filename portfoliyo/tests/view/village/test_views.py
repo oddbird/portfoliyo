@@ -265,7 +265,6 @@ class TestInviteElders(object):
         form = response.forms['invite-elders-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
-        form['school_staff'] = False
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -286,7 +285,6 @@ class TestInviteElders(object):
         form = response.forms['invite-elders-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
-        form['school_staff'] = True
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -316,7 +314,6 @@ class TestInviteElders(object):
         form = response.forms['invite-elders-form']
         form['contact'] = "(123)456-7890"
         form['relationship'] = ""
-        form['school_staff'] = False
         response = form.submit(status=200)
 
         response.mustcontain("field is required")

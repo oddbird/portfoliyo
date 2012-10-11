@@ -210,7 +210,6 @@ class TestInviteElderForm(object):
         defaults = {
             'contact': 'foo@example.com',
             'relationship': 'mentor',
-            'school_staff': False,
             }
         defaults.update(kwargs)
         return defaults
@@ -230,6 +229,7 @@ class TestInviteElderForm(object):
         profile = form.save(request)
 
         assert profile.phone == u'+13214567890'
+        assert not profile.school_staff
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == u'+13214567890'
         assert sms.outbox[0].body == (
@@ -251,6 +251,7 @@ class TestInviteElderForm(object):
         profile = form.save(request)
 
         assert profile.user.email == u'bar@example.com'
+        assert profile.school_staff
         assert len(mail.outbox) == 1
         assert mail.outbox[0].to == [u'bar@example.com']
 
@@ -435,7 +436,7 @@ class TestInviteElderForm(object):
         elder = factories.ProfileFactory(
             school_staff=False, phone='+13214567890')
         form = forms.InviteElderForm(
-            self.data(contact=elder.phone, school_staff=True),
+            self.data(contact=elder.phone),
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
@@ -465,7 +466,7 @@ class TestInviteElderForm(object):
             school_staff=False, role='something', phone='+13214567890')
         form = forms.InviteElderForm(
             self.data(
-                contact=elder.phone, relationship='foo', school_staff=True),
+                contact=elder.phone, relationship='foo'),
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
@@ -479,7 +480,7 @@ class TestInviteElderForm(object):
         """If existing elder has role and is not to be staff, no update done."""
         elder = factories.ProfileFactory(phone='+13214567890', role='foo')
         form = forms.InviteElderForm(
-            self.data(contact=elder.phone, school_staff=False),
+            self.data(contact=elder.phone),
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
