@@ -332,6 +332,26 @@ class TestInviteElderForm(object):
         assert elder == profile
 
 
+    def test_existing_user_new_role(self):
+        """Inviting an existing elder with a new role doesn't change profile."""
+        factories.ProfileFactory(
+            user__email='foo@example.com', role="math teacher")
+        rel = factories.RelationshipFactory()
+        form = forms.InviteElderForm(
+            self.data(
+                contact='foo@example.com',
+                relationship="science teacher",
+                students=[rel.student.pk],
+                ),
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        p = form.save(None)
+
+        assert p.role == u"math teacher"
+        assert p.student_relationships[0].description == u"science teacher"
+
+
     def test_user_with_phone_exists(self):
         """If a user with given phone already exists, no new user is created."""
         elder = factories.ProfileFactory(phone='+13214567890')

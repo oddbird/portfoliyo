@@ -244,6 +244,9 @@ class InviteElderForm(ElderFormBase):
             model.Relationship.objects.get_or_create(
                 from_profile=profile,
                 to_profile=student,
+                defaults={
+                    'description': relationship,
+                    }
                 )
 
         return profile
