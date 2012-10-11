@@ -103,8 +103,9 @@ class TestEditElderForm(object):
         """Editing an elder doesn't remove them from other users' groups."""
         rel = factories.RelationshipFactory.create()
         editor = factories.ProfileFactory.create(school=rel.elder.school)
-        group = factories.GroupFactory.create()
-        group.elders.add(rel.elder)
+        group1 = factories.GroupFactory.create(owner=editor)
+        group2 = factories.GroupFactory.create()
+        rel.elder.elder_in_groups.add(group1, group2)
 
         form = forms.EditElderForm(
             {
@@ -119,7 +120,7 @@ class TestEditElderForm(object):
         assert form.is_valid(), dict(form.errors)
         profile = form.save(rel)
 
-        assert set(profile.elder_in_groups.all()) == {group}
+        assert set(profile.elder_in_groups.all()) == {group2}
 
 
     def _assert_cannot_add(self, elder, editor=None, student=None, group=None):
@@ -500,8 +501,9 @@ class TestStudentForms(object):
     def test_edit_student_never_removes_from_others_groups(self):
         """Editing a student never removes them from others' groups."""
         rel = factories.RelationshipFactory.create()
-        group = factories.GroupFactory.create()
-        group.students.add(rel.student)
+        group1 = factories.GroupFactory.create(owner=rel.elder)
+        group2 = factories.GroupFactory.create()
+        rel.student.student_in_groups.add(group1, group2)
 
         form = forms.StudentForm(
             {
@@ -515,7 +517,7 @@ class TestStudentForms(object):
         assert form.is_valid(), dict(form.errors)
         profile = form.save()
 
-        assert set(profile.student_in_groups.all()) == {group}
+        assert set(profile.student_in_groups.all()) == {group2}
 
 
     def test_edit_form_group_and_elder_initial(self):
