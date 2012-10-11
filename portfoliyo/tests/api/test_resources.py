@@ -6,6 +6,77 @@ from portfoliyo.api import resources
 from portfoliyo.tests import factories, utils
 
 
+class TestYAGNI(object):
+    """
+    Stub tests for methods we don't actually use yet.
+
+    These methods were parallel to other methods I did need, so I went ahead
+    and implemented them while I was in the area, but we don't actually use
+    them yet. These tests are to achieve 100% coverage until they are used in
+    earnest.
+
+    """
+    def test_cached_obj_get_list(self):
+        r = resources.PortfoliyoResource()
+        request = mock.Mock()
+        target = 'portfoliyo.api.resources.ModelResource.cached_obj_get_list'
+        with mock.patch(target) as mock_super:
+            with mock.patch.object(
+                    r, 'real_is_authorized') as mock_real_is_authorized:
+                r.cached_obj_get_list(request, foo='bar')
+
+        mock_real_is_authorized.assert_called_with(request)
+        mock_super.assert_called_with(request, foo='bar')
+
+
+    def test_cached_obj_get(self):
+        r = resources.PortfoliyoResource()
+        request = mock.Mock()
+        target = 'portfoliyo.api.resources.ModelResource.cached_obj_get'
+        with mock.patch(target) as mock_super:
+            with mock.patch.object(
+                    r, 'real_is_authorized') as mock_real_is_authorized:
+                r.cached_obj_get(request, foo='bar')
+
+        mock_real_is_authorized.assert_called_with(
+            request, mock_super.return_value)
+        mock_super.assert_called_with(request, foo='bar')
+
+
+    def test_obj_delete_list(self):
+        r = resources.SoftDeletedResource()
+        request = mock.Mock()
+        with mock.patch.object(r, 'get_object_list') as mock_get_object_list:
+            with mock.patch.object(
+                    r, 'apply_authorization_limits') as mock_apply_auth_limits:
+                r.obj_delete_list(request, foo='bar')
+
+        mock_get_object_list.assert_called_with(request)
+        mock_get_object_list.return_value.filter.assert_called_with(foo='bar')
+        mock_apply_auth_limits.assert_called_with(
+            request, mock_get_object_list.return_value.filter.return_value)
+        mock_apply_auth_limits.return_value.update.assert_called_with(
+            deleted=True)
+
+
+    def test_obj_delete_list_not_queryset(self):
+        r = resources.SoftDeletedResource()
+        request = mock.Mock()
+        with mock.patch.object(r, 'get_object_list') as mock_get_object_list:
+            with mock.patch.object(
+                    r, 'apply_authorization_limits') as mock_apply_auth_limits:
+                obj = mock.Mock()
+                mock_apply_auth_limits.return_value = [obj]
+                r.obj_delete_list(request, foo='bar')
+
+        mock_get_object_list.assert_called_with(request)
+        mock_get_object_list.return_value.filter.assert_called_with(foo='bar')
+        mock_apply_auth_limits.assert_called_with(
+            request, mock_get_object_list.return_value.filter.return_value)
+        assert obj.deleted == True
+        obj.save.assert_called_with()
+
+
 
 class TestProfileResource(object):
     def test_dehydrate_email(self):

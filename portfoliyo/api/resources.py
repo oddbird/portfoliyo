@@ -61,7 +61,7 @@ class PortfoliyoResource(ModelResource):
         """Get the object list (maybe from cache), then verify authorization."""
         objs = super(PortfoliyoResource, self).cached_obj_get_list(
             request, **kwargs)
-        if request is not None:
+        if request is not None: # pragma: no cover
             self.real_is_authorized(request)
         return objs
 
@@ -69,7 +69,7 @@ class PortfoliyoResource(ModelResource):
     def obj_get_list(self, request=None, **kwargs):
         """Get the object list, then verify authorization."""
         objs = super(PortfoliyoResource, self).obj_get_list(request, **kwargs)
-        if request is not None:
+        if request is not None: # pragma: no cover
             self.real_is_authorized(request)
         return objs
 
@@ -77,7 +77,7 @@ class PortfoliyoResource(ModelResource):
     def cached_obj_get(self, request=None, **kwargs):
         """Get the object (perhaps from cache) then verify authorization."""
         obj = super(PortfoliyoResource, self).cached_obj_get(request, **kwargs)
-        if request is not None:
+        if request is not None: # pragma: no cover
             self.real_is_authorized(request, obj)
         return obj
 
@@ -85,7 +85,7 @@ class PortfoliyoResource(ModelResource):
     def obj_get(self, request=None, **kwargs):
         """Get the object, then verify authorization."""
         obj = super(PortfoliyoResource, self).obj_get(request, **kwargs)
-        if request is not None:
+        if request is not None: # pragma: no cover
             self.real_is_authorized(request, obj)
         return obj
 
@@ -112,7 +112,7 @@ class SoftDeletedResource(PortfoliyoResource):
         """Soft-delete a single object."""
         obj = kwargs.pop('_obj', None)
 
-        if not hasattr(obj, 'save'):
+        if not hasattr(obj, 'save'): # pragma: no cover
             try:
                 obj = self.obj_get(request, **kwargs)
             except ObjectDoesNotExist:
@@ -295,7 +295,7 @@ class GroupResource(SoftDeletedResource):
     def obj_get_list(self, request=None, **kwargs):
         qs = super(GroupResource, self).obj_get_list(request, **kwargs)
         groups = list(qs)
-        if request is not None:
+        if request is not None: # pragma: no cover
             groups.insert(0, model.AllStudentsGroup(request.user.profile))
         return groups
 
