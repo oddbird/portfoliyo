@@ -138,23 +138,6 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeEldersForm = function () {
-        $('.formset.elders').formset({
-            prefix: $('.formset.elders').data('prefix'),
-            formTemplate: '#empty-elder-form',
-            formSelector: '.fieldset.elder',
-            addLink: '<a class="add-row" href="javascript:void(0)" title="more elders">more elders</a>',
-            addAnimationSpeed: 'normal',
-            removeAnimationSpeed: 'fast',
-            optionalIfEmpty: true
-        });
-        if ($('#id_name').length) {
-            $('#id_name').focus();
-        } else {
-            $('#id_elders-0-contact').focus();
-        }
-    };
-
     PYO.initializeFeed = function () {
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.fetchBacklog('.village-feed');
@@ -173,9 +156,6 @@ var PYO = (function (PYO, $) {
         PYO.updateNavActiveClasses();
         if ($('.village-feed').length) {
             PYO.initializeFeed();
-        }
-        if ($('.formset.elders').length) {
-            PYO.initializeEldersForm();
         }
     };
 
