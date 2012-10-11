@@ -50,6 +50,24 @@ class ElderFormBase(forms.Form):
             relationships_to__from_profile=self.editor, deleted=False)
 
 
+    def update_elder_groups(self, elder, groups):
+        """
+        Update elder to be in only given groups of self.editor.
+
+        Don't touch any memberships they may have in anyone else's groups.
+
+        """
+        current = set(elder.elder_in_groups.filter(owner=self.editor))
+        target = set(groups)
+        remove = current.difference(target)
+        add = target.difference(current)
+
+        if remove:
+            elder.elder_in_groups.remove(*remove)
+        if add:
+            elder.elder_in_groups.add(*add)
+
+
 
 class EditElderForm(ElderFormBase, EditProfileForm):
     def __init__(self, *args, **kwargs):
@@ -77,7 +95,7 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             rel.save()
         self.instance.save()
 
-        self.instance.elder_in_groups = self.cleaned_data['groups']
+        self.update_elder_groups(self.instance, self.cleaned_data['groups'])
         self.update_elder_students(self.instance, self.cleaned_data['students'])
 
         return self.instance
@@ -221,7 +239,7 @@ class InviteElderForm(ElderFormBase):
                         },
                     )
 
-        profile.elder_in_groups = self.cleaned_data['groups']
+        self.update_elder_groups(profile, self.cleaned_data['groups'])
         for student in self.cleaned_data['students']:
             model.Relationship.objects.get_or_create(
                 from_profile=profile,
@@ -325,8 +343,21 @@ class StudentForm(forms.ModelForm):
 
 
     def update_student_groups(self, student, groups):
-        """Update student to be in exactly given groups."""
-        student.student_in_groups = groups
+        """
+        Update student to be in only given groups of self.elder.
+
+        Don't touch any memberships they may have in anyone else's groups.
+
+        """
+        current = set(student.student_in_groups.filter(owner=self.elder))
+        target = set(groups)
+        remove = current.difference(target)
+        add = target.difference(current)
+
+        if remove:
+            student.student_in_groups.remove(*remove)
+        if add:
+            student.student_in_groups.add(*add)
 
 
 

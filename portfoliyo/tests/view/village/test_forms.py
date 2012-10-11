@@ -99,6 +99,29 @@ class TestEditElderForm(object):
         assert form.fields['groups'].initial == [group.pk]
 
 
+    def test_edit_elder_doesnt_remove_from_other_users_groups(self):
+        """Editing an elder doesn't remove them from other users' groups."""
+        rel = factories.RelationshipFactory.create()
+        editor = factories.ProfileFactory.create(school=rel.elder.school)
+        group = factories.GroupFactory.create()
+        group.elders.add(rel.elder)
+
+        form = forms.EditElderForm(
+            {
+                'name': 'New',
+                'role': 'teacher',
+                'groups': [],
+                },
+            instance=rel.elder,
+            editor=editor,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save(rel)
+
+        assert set(profile.elder_in_groups.all()) == {group}
+
+
     def _assert_cannot_add(self, elder, editor=None, student=None, group=None):
         if editor is None:
             editor = elder
@@ -238,6 +261,21 @@ class TestInviteElderForm(object):
         profile = form.save(mock.Mock())
 
         assert set(profile.students) == {rel.student, rel2.student}
+
+
+    def test_invite_elder_never_removes_them_from_another_elders_group(self):
+        """Inviting an elder doesn't remove them from another user's groups."""
+        rel = factories.RelationshipFactory.create()
+        elder = factories.ProfileFactory.create(user__email='foo@example.com')
+        group = factories.GroupFactory.create()
+        group.elders.add(elder)
+
+        form = forms.InviteElderForm(
+            self.data(contact='foo@example.com', groups=[]), rel=rel)
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save(mock.Mock())
+
+        assert set(profile.elder_in_groups.all()) == {group}
 
 
     def test_context_student_pre_checked(self):
@@ -437,6 +475,27 @@ class TestStudentForms(object):
 
         assert set(profile.elders) == {rel.elder}
         assert profile.student_in_groups.get() == group
+
+
+    def test_edit_student_never_removes_from_others_groups(self):
+        """Editing a student never removes them from others' groups."""
+        rel = factories.RelationshipFactory.create()
+        group = factories.GroupFactory.create()
+        group.students.add(rel.student)
+
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert set(profile.student_in_groups.all()) == {group}
 
 
     def test_edit_form_group_and_elder_initial(self):
