@@ -142,6 +142,23 @@ class TestAddGroup(object):
         assert response['Location'] == utils.location(reverse('add_student'))
 
 
+    def test_add_group_with_student(self, client):
+        """User can add a group with a student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            reverse('add_group'), user=rel.elder.user).forms['add-group-form']
+        form['name'] = "Some Group"
+        form['students'] = [str(rel.student.pk)]
+        response = form.submit(status=302)
+
+        group = rel.elder.owned_groups.get()
+
+        assert set(group.students.all()) == {rel.student}
+        assert response['Location'] == utils.location(
+            reverse('group', kwargs={'group_id': group.id}))
+
+
     def test_validation_error(self, client):
         """Name of group must be provided."""
         teacher = factories.ProfileFactory.create(school_staff=True)
@@ -181,7 +198,8 @@ class TestEditGroup(object):
         form['name'] = "Some Group"
         response = form.submit(status=302)
 
-        assert response['Location'] == utils.location(reverse('add_student'))
+        assert response['Location'] == utils.location(
+            reverse('group', kwargs={'group_id': group.id}))
 
 
     def test_validation_error(self, client):

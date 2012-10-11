@@ -103,8 +103,10 @@ def add_group(request):
     if request.method == 'POST':
         form = forms.AddGroupForm(request.POST, owner=request.user.profile)
         if form.is_valid():
-            form.save()
-            return redirect(home.redirect_home(request.user))
+            group = form.save()
+            if not group.students.exists():
+                return redirect('add_student') # @@@ should be in group context
+            return redirect('group', group_id=group.id)
     else:
         form = forms.AddGroupForm(owner=request.user.profile)
 
@@ -130,8 +132,8 @@ def edit_group(request, group_id):
     if request.method == 'POST':
         form = forms.GroupForm(request.POST, instance=group)
         if form.is_valid():
-            form.save()
-            return redirect(home.redirect_home(request.user))
+            group = form.save()
+            return redirect('group', group_id=group.id)
     else:
         form = forms.GroupForm(instance=group)
 
