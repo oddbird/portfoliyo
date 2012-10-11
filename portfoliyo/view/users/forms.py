@@ -230,22 +230,22 @@ class EditProfileForm(forms.Form):
 
 
     def __init__(self, *a, **kw):
-        """Pull profile kwarg out."""
-        self.profile = kw.pop('profile')
+        """Pull instance kwarg out."""
+        self.instance = kw.pop('instance')
         initial = kw.setdefault('initial', {})
-        initial['name'] = self.profile.name
-        initial['role'] = self.profile.role
+        initial['name'] = self.instance.name
+        initial['role'] = self.instance.role
         super(EditProfileForm, self).__init__(*a, **kw)
 
 
     def save(self):
         """Save edits and return updated profile."""
-        self.profile.name = self.cleaned_data['name']
-        old_role = self.profile.role
+        self.instance.name = self.cleaned_data['name']
+        old_role = self.instance.role
         new_role = self.cleaned_data['role']
-        self.profile.role = new_role
-        self.profile.save()
-        self.profile.relationships_from.filter(description=old_role).update(
+        self.instance.role = new_role
+        self.instance.save()
+        self.instance.relationships_from.filter(description=old_role).update(
             description='')
 
-        return self.profile
+        return self.instance

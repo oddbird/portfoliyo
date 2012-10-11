@@ -107,7 +107,7 @@ class TestEditProfileForm(object):
             description='bar', from_profile=rel1.elder)
 
         form = forms.EditProfileForm(
-            {'name': 'New', 'role': 'new'}, profile=rel1.elder)
+            {'name': 'New', 'role': 'new'}, instance=rel1.elder)
         assert form.is_valid()
         form.save()
 

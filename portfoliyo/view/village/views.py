@@ -272,7 +272,7 @@ def json_posts(request, student_id):
 @ajax('village/_edit_elder_content.html')
 def edit_elder(request, student_id, elder_id):
     """Edit a village elder."""
-    get_relationship_or_404(student_id, request.user.profile)
+    rel = get_relationship_or_404(student_id, request.user.profile)
     elder = get_object_or_404(
         model.Profile.objects.select_related('user'), id=elder_id)
     # can't edit the profile of another school staff
@@ -281,13 +281,14 @@ def edit_elder(request, student_id, elder_id):
     elder_rel = get_relationship_or_404(student_id, elder)
 
     if request.method == 'POST':
-        form = forms.EditElderForm(request.POST, profile=elder)
+        form = forms.EditElderForm(
+            request.POST, instance=elder, editor=rel.elder)
         if form.is_valid():
-            form.save(rel=elder_rel)
+            form.save(elder_rel)
             messages.success(request, u"Changes saved!")
             return redirect('village', student_id=student_id)
     else:
-        form = forms.EditElderForm(profile=elder)
+        form = forms.EditElderForm(instance=elder, editor=rel.elder)
 
     return TemplateResponse(
         request,

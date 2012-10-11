@@ -156,12 +156,13 @@ def accept_email_invite(request, uidb36, token):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = forms.EditProfileForm(request.POST, profile=request.user.profile)
+        form = forms.EditProfileForm(
+            request.POST, instance=request.user.profile)
         if form.is_valid():
             form.save()
             messages.success(request, u"Profile changes saved!")
             return redirect(redirect_home(request.user))
     else:
-        form = forms.EditProfileForm(profile=request.user.profile)
+        form = forms.EditProfileForm(instance=request.user.profile)
 
     return TemplateResponse(request, 'users/edit_profile.html', {'form': form})

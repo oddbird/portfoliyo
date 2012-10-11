@@ -29,22 +29,93 @@ class GroupCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
 
 
 class EditElderForm(EditProfileForm):
+    groups = TemplateLabelModelMultipleChoiceField(
+        queryset=model.Group.objects.none(),
+        widget=GroupCheckboxSelectMultiple,
+        required=False,
+        )
+    students = TemplateLabelModelMultipleChoiceField(
+        queryset=model.Profile.objects.none(),
+        widget=StudentCheckboxSelectMultiple,
+        required=False,
+        )
+
+
+    def __init__(self, *args, **kwargs):
+        self.editor = kwargs.pop('editor')
+        super(EditElderForm, self).__init__(*args, **kwargs)
+        self.fields['groups'].queryset = model.Group.objects.filter(
+            owner=self.editor)
+        self.fields['students'].queryset = model.Profile.objects.filter(
+            relationships_to__from_profile=self.editor, deleted=False)
+        if self.instance.pk:
+            self.fields['groups'].initial = [
+                g.pk for g in self.instance.elder_in_groups.all()]
+            self.fields['students'].initial = [
+                s.pk for s in self.direct_students(self.instance)]
+
+
     def save(self, rel):
         """Save this elder in context of given village relationship."""
-        self.profile.name = self.cleaned_data['name']
-        old_profile_role = self.profile.role
+        self.instance.name = self.cleaned_data['name']
+        old_profile_role = self.instance.role
         old_relationship_role = rel.description_or_role
         new_role = self.cleaned_data['role']
         if old_profile_role == old_relationship_role:
-            self.profile.role = new_role
-            self.profile.relationships_from.filter(
+            self.instance.role = new_role
+            self.instance.relationships_from.filter(
                 description=old_profile_role).update(
                 description='')
         else:
             rel.description = new_role
             rel.save()
-        self.profile.save()
-        return self.profile
+        self.instance.save()
+
+        self.instance.elder_in_groups = self.cleaned_data['groups']
+        self.update_elder_students(self.instance, self.cleaned_data['students'])
+
+        return self.instance
+
+
+    def update_elder_students(self, elder, students):
+        """Update elder to have exactly given direct (non-group) students."""
+        current = set(self.direct_students(elder))
+        target = set(students)
+        remove = current.difference(target)
+        add = target.difference(current)
+
+        if remove:
+            model.Relationship.objects.filter(
+                from_profile=elder,
+                to_profile__in=remove,
+                ).delete()
+
+        for student in add:
+            model.Relationship.objects.get_or_create(
+                to_profile=student,
+                from_profile=elder,
+                )
+
+
+    def direct_students(self, elder):
+        """
+        Get all direct (non-group) students of an elder.
+
+        Memoized by elder id.
+
+        """
+        if not hasattr(self, '_direct_students'):
+            self._direct_students = {}
+        if self._direct_students.get(elder.pk) is None:
+            self._direct_students[elder.pk] = [
+                r.student for r in
+                model.Relationship.objects.filter(
+                    from_profile=elder,
+                    from_group=None,
+                    to_profile__deleted=False,
+                    ).select_related('to_profile')
+                ]
+        return self._direct_students[elder.pk]
 
 
 
@@ -170,7 +241,7 @@ class StudentForm(forms.ModelForm):
 
 
     def __init__(self, *args, **kwargs):
-        """Store elder, narrow group and elder choices appropriately."""
+        """Store elder, set up group/elder choices and initial values."""
         self.elder = kwargs.pop('elder')
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(

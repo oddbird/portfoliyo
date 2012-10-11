@@ -23,7 +23,14 @@ class TestEditElderForm(object):
             from_profile__role="math teacher",
             )
         form = forms.EditElderForm(
-            {'name': 'John Doe', 'role': 'science teacher'}, profile=rel.elder)
+            {
+                'name': 'John Doe',
+                'role': 'science teacher',
+                'students': [rel.student.pk],
+                },
+            instance=rel.elder,
+            editor=rel.elder,
+            )
         assert form.is_valid(), dict(form.errors)
         profile = form.save(rel)
 
@@ -38,12 +45,96 @@ class TestEditElderForm(object):
             from_profile__role="math teacher",
             )
         form = forms.EditElderForm(
-            {'name': 'John Doe', 'role': 'science teacher'}, profile=rel.elder)
+            {
+                'name': 'John Doe',
+                'role': 'science teacher',
+                'students': [rel.student.pk],
+                },
+            instance=rel.elder,
+            editor=rel.elder,
+            )
         assert form.is_valid(), dict(form.errors)
         profile = form.save(rel)
 
         assert profile.role == 'science teacher'
         assert utils.refresh(rel).description == ''
+
+
+    def test_edit_elder_with_groups_and_students(self):
+        """Can associate elder with groups/students when editing."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            school=rel.elder.school, from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+
+        form = forms.EditElderForm(
+            {
+                'name': 'New',
+                'role': 'teacher',
+                'groups': [group.pk],
+                'students': [rel.student.pk],
+                },
+            instance=other_rel.elder,
+            editor=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save(other_rel)
+
+        assert set(profile.elder_in_groups.all()) == {group}
+        assert set(profile.students) == {rel.student}
+
+
+    def _assert_cannot_add(self, elder, editor=None, student=None, group=None):
+        if editor is None:
+            editor = elder
+        form = forms.EditElderForm(
+            {
+                'name': 'New Name',
+                'role': 'New Role',
+                'students': [student.pk] if student else [],
+                'groups': [group.pk] if group else [],
+                },
+            instance=elder,
+            editor=editor,
+            )
+
+        assert not form.is_valid()
+        if student is not None:
+            assert form.errors['students'] == [
+                u"Select a valid choice. %s is not one of the available choices."
+                % student.pk
+                ]
+        if group is not None:
+            assert form.errors['groups'] == [
+                u"Select a valid choice. %s is not one of the available choices."
+                % group.pk
+                ]
+
+
+    def test_cannot_add_unowned_group(self):
+        """Can only add a group you own."""
+        elder = factories.ProfileFactory.create()
+        group = factories.GroupFactory.create()
+
+        self._assert_cannot_add(elder, group=group)
+
+
+    def test_cannot_add_deleted_student(self):
+        """Cannot add a deleted student."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(
+            from_profile=rel.elder, to_profile__deleted=True)
+
+        self._assert_cannot_add(rel2.elder, rel.elder, student=rel2.student)
+
+
+    def test_cannot_add_unrelated_student(self):
+        """Cannot add an unrelated student."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create()
+
+        self._assert_cannot_add(rel2.elder, rel.elder, student=rel2.student)
 
 
 
