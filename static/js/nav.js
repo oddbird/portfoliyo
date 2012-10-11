@@ -2,218 +2,369 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
-    var selectText = function (element) {
-        var el = element[0];
-        var range;
-        if (document.body.createTextRange) {
-            range = document.body.createTextRange();
-            range.moveToElementText(el);
-            range.select();
-        } else if (window.getSelection && document.createRange) {
-            var selection = window.getSelection();
-            range = document.createRange();
-            range.selectNodeContents(el);
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
-    };
+    var all_students_group_obj;
 
-    PYO.studentActionHandlers = function (container) {
-        if ($(container).length) {
-            var nav = $(container);
-            var cancelEdits = function () {
-                nav.find('.listitem-select.editing').each(function () {
-                    var listitem = $(this).closest('.listitem');
-                    PYO.cancelEditStudent(listitem);
-                });
+    PYO.navHandlers = function () {
+        var nav = $('.village-nav');
+
+        nav.on('click', '.action-remove', function (e) {
+            e.preventDefault();
+            $(this).blur();
+            PYO.removeListitem($(this));
+        });
+
+        nav.on('click', '.undo-action-remove', function (e) {
+            e.preventDefault();
+            $(this).blur();
+            PYO.undoRemoveListitem($(this));
+        });
+
+        nav.on('click', '.group-link', function (e) {
+            e.preventDefault();
+            var trigger = $(this).blur();
+            var group_obj = {
+                name: trigger.data('group-name'),
+                url: trigger.attr('href'),
+                students_url: trigger.data('group-students-url'),
+                id: trigger.data('group-id'),
+                edit_url: trigger.data('group-edit-url'),
+                resource_url: trigger.data('group-resource-url')
             };
+            PYO.fetchStudents(group_obj);
+        });
 
-            nav.on('click', '.action-edit', function (e) {
-                e.preventDefault();
-                cancelEdits();
-                PYO.editStudent($(this));
-            });
+        nav.on('click', '.groups.action-back', function (e) {
+            e.preventDefault();
+            $(this).blur();
+            PYO.fetchGroups();
+        });
 
-            nav.on('click', '.action-save', function (e) {
-                e.preventDefault();
-                PYO.saveStudent($(this));
-            });
-
-            nav.on('click', '.action-remove', function (e) {
-                e.preventDefault();
-                var listitem = $(this).closest('.listitem');
-                PYO.cancelEditStudent(listitem);
-                PYO.removeStudent($(this));
-            });
-
-            nav.on('click', '.undo-action-remove', function (e) {
-                e.preventDefault();
-                PYO.undoRemoveStudent($(this));
-            });
-
-            $('.village').on('pjax-load', function () {
-                cancelEdits();
-            });
-        }
-    };
-
-    PYO.editStudent = function (trigger) {
-        var edit = trigger;
-        var listitem = edit.closest('.listitem');
-        var original = listitem.find('.listitem-select');
-        var name = listitem.find('.listitem-name').text();
-        var save = listitem.find('.action-save');
-        var editing = ich.edit_student({name: name});
-
-        listitem.data('original-link', original);
-        original.replaceWith(editing);
-        editing.focus();
-        selectText(editing);
-        edit.hide();
-        save.show();
-
-        editing.keydown(function (e) {
-            if (e.keyCode === PYO.keycodes.ENTER) {
-                e.preventDefault();
-                $(this).blur();
-                save.click();
-            }
-            if (e.keyCode === PYO.keycodes.ESC) {
-                e.preventDefault();
-                $(this).blur();
-                PYO.cancelEditStudent(listitem);
-            }
+        nav.on('before-replace', function () {
+            var items = nav.find('.listitem');
+            PYO.unsubscribeFromPosts(items);
         });
     };
 
-    PYO.saveStudent = function (trigger) {
-        var save = trigger;
-        var listitem = save.closest('.listitem');
-        var url = listitem.data('url');
-        var edit = listitem.find('.action-edit');
-        var editing = listitem.find('.listitem-select.editing');
-        var original = listitem.data('original-link');
-        var name = original.find('.listitem-name');
-        var oldName = editing.data('original-name');
-        var newName = $.trim(editing.text());
-
-        if (url && newName && newName !== oldName) {
-            listitem.loadingOverlay();
-            $.post(url, {name: newName}, function (response) {
-                listitem.loadingOverlay('remove');
-                if (response && response.name && response.success) {
-                    name.text(response.name);
-                    editing.replaceWith(original);
-                    save.hide();
-                    edit.show();
-                }
-            });
-        } else {
-            PYO.cancelEditStudent(listitem);
-        }
-    };
-
-    PYO.cancelEditStudent = function (listitem) {
-        var original = listitem.data('original-link');
-        var edit = listitem.find('.action-edit');
-        var save = listitem.find('.action-save');
-        var editing = listitem.find('.listitem-select.editing');
-        editing.replaceWith(original);
-        save.hide();
-        edit.show();
-    };
-
-    PYO.removeStudent = function (trigger) {
+    PYO.removeListitem = function (trigger) {
         var remove = trigger;
         var listitem = remove.closest('.listitem');
         var link = listitem.find('.listitem-select');
-        var url = listitem.data('url');
-        var name = listitem.find('.listitem-name').text();
-        var removed = ich.remove_student({name: name});
+        var url = listitem.hasClass('student') ? link.data('resource-url') : link.data('group-resource-url');
+        var name = listitem.hasClass('student') ? link.data('name') : link.data('group-name');
+        var removed = ich.remove_listitem({name: name});
+        var removeItem = function () {
+            listitem.hide();
+            if (url) {
+                $.ajax(url, {
+                    type: 'DELETE',
+                    success: function () {
+                        if (link.hasClass('active')) {
+                            window.location.href = '/';
+                        } else if (listitem.hasClass('grouptitle')) {
+                            PYO.fetchStudents(all_students_group_obj);
+                        }
+                        listitem.remove();
+                    },
+                    error: function () {
+                        ajaxError();
+                    }
+                });
+            } else {
+                ajaxError();
+            }
+        };
+        var ajaxError = function () {
+            listitem.find('.undo-action-remove').click();
+            var msg = ich.ajax_error_msg({
+                error_class: 'remove-error',
+                message: 'Unable to remove this item.'
+            });
+            msg.find('.try-again').click(function (e) {
+                e.preventDefault();
+                msg.remove();
+                removeItem();
+            });
+            listitem.before(msg).show();
+            if (msg.parent().is('ul, ol')) {
+                msg.wrap('<li />');
+            }
+        };
 
         listitem.data('original', listitem.html());
         listitem.html(removed);
         listitem.find('.listitem-select.removed').fadeOut(5000, function () {
-            if (url) {
-                $.post(url, {remove: true}, function (response) {
-                    if (response && response.success) {
-                        if (link.hasClass('active')) {
-                            window.location.href = '/';
-                        }
-                        listitem.remove();
-                    }
-                });
-            }
+            removeItem();
         });
     };
 
-    PYO.undoRemoveStudent = function (trigger) {
+    PYO.undoRemoveListitem = function (trigger) {
         var undo = trigger;
         var listitem = undo.closest('.listitem');
         var original = listitem.data('original');
         listitem.find('.listitem-select.removed').stop();
         listitem.html(original);
-    };
-
-    PYO.groupHandlers = function () {
-        var nav = $('.village-nav');
-        nav.on('click', '.group-link', function (e) {
-            e.preventDefault();
-            $(this).blur();
-            var url = $(this).attr('href');
-            var name = $(this).data('group-name');
-            PYO.fetchStudents(url, name);
-        });
-
-        nav.on('click', '.groups.action-back', function (e) {
-            e.preventDefault();
-            PYO.fetchGroups();
-        });
+        listitem.removeAttr('data-original');
     };
 
     PYO.fetchGroups = function () {
         var nav = $('.village-nav');
-        var url = nav.data('groups-url');
-        var studentsUrl = nav.data('students-url');
+        var groups_url = nav.data('groups-url');
         var replaceNav = function (data) {
+            nav.loadingOverlay('remove');
             if (data) {
-                var allStudents = {
-                    name: 'All Students',
-                    members_uri: studentsUrl
-                };
                 data.staff = nav.data('is-staff');
-                data.objects.unshift(allStudents);
+                data.add_group_url = nav.data('add-group-url');
                 var newGroups = ich.group_list(data);
-                nav.html(newGroups);
-            }
+                PYO.updateNavActiveClasses(newGroups);
+                nav.trigger('before-replace').html(newGroups);
+                PYO.listenForPosts(newGroups.find('.listitem'));
+                if (!all_students_group_obj && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id.toString().indexOf('all') !== -1) {
+                            all_students_group_obj = {
+                                name: this.name,
+                                url: this.group_uri,
+                                students_url: this.students_uri,
+                                id: this.id
+                            };
+                        }
+                    });
+                }
+            } else { PYO.fetchGroupsError(); }
         };
 
-        if (url) {
-            $.get(url, replaceNav);
+        if (groups_url) {
+            nav.loadingOverlay();
+            $.get(groups_url, replaceNav).error(function () {
+                PYO.fetchGroupsError();
+                nav.loadingOverlay('remove');
+            });
         }
     };
 
-    PYO.fetchStudents = function (url, name) {
-        if (url && name) {
-            var nav = $('.village-nav');
-            var replaceNav = function (data) {
-                if (data) {
-                    data.group_name = name;
-                    data.group_uri = url;
-                    data.staff = nav.data('is-staff');
-                    var students = ich.student_list(data);
-                    nav.html(students);
-                }
-            };
+    PYO.fetchGroupsError = function () {
+        var nav = $('.village-nav');
+        var msg = ich.ajax_error_msg({
+            error_class: 'nav-error',
+            message: 'Unable to load groups.'
+        });
+        msg.find('.try-again').click(function (e) {
+            e.preventDefault();
+            msg.remove();
+            PYO.fetchGroups();
+        });
+        nav.prepend(msg);
+    };
 
-            $.get(url, replaceNav);
+    PYO.fetchStudents = function (group_obj) {
+        var nav = $('.village-nav');
+        var replaceNav = function (data) {
+            nav.loadingOverlay('remove');
+            if (data) {
+                data.group_name = group_obj.name;
+                data.group_id = group_obj.id;
+                data.group_url = group_obj.url;
+                data.group_students_url = group_obj.students_url;
+                data.group_edit_url = group_obj.edit_url;
+                data.group_resource_url = group_obj.resource_url;
+                data.staff = nav.data('is-staff');
+                data.add_student_url = nav.data('add-student-url');
+                var students = ich.student_list(data);
+                PYO.updateNavActiveClasses(students);
+                nav.trigger('before-replace').html(students);
+                PYO.listenForPosts(students.find('*').andSelf().filter('.listitem'));
+            } else { fetchStudentsError(); }
+        };
+        var fetchStudentsError = function () {
+            var msg = ich.ajax_error_msg({
+                error_class: 'nav-error',
+                message: 'Unable to load students.'
+            });
+            msg.find('.try-again').click(function (e) {
+                e.preventDefault();
+                msg.remove();
+                PYO.fetchStudents(group_obj);
+            });
+            nav.prepend(msg);
+            nav.loadingOverlay('remove');
+        };
+        var getActiveGroupInfo = function (data) {
+            if (data && data.objects && data.objects.length) {
+                var new_group_obj;
+                $.each(data.objects, function () {
+                    if (this.id === PYO.activeGroupId) {
+                        new_group_obj = {
+                            name: this.name,
+                            url: this.group_uri,
+                            students_url: this.students_uri,
+                            id: this.id,
+                            edit_url: this.edit_uri,
+                            resource_url: this.resource_uri
+                        };
+                    }
+                    if (this.id.toString().indexOf('all') !== -1) {
+                        all_students_group_obj = {
+                            name: this.name,
+                            url: this.group_uri,
+                            students_url: this.students_uri,
+                            id: this.id
+                        };
+                    }
+                });
+                if (!PYO.activeGroupId) { new_group_obj = all_students_group_obj; }
+                if (new_group_obj) { PYO.fetchStudents(new_group_obj); } else { fetchStudentsError(); }
+            }
+        };
+
+        if (group_obj) {
+            if (group_obj.name && group_obj.id && group_obj.url && group_obj.students_url) {
+                nav.loadingOverlay();
+                $.get(group_obj.students_url, replaceNav).error(fetchStudentsError);
+            } else { fetchStudentsError(); }
+        } else {
+            var groups_url = nav.data('groups-url');
+            if (groups_url) {
+                $.get(groups_url, getActiveGroupInfo).error(PYO.fetchGroupsError);
+            } else { fetchStudentsError(); }
+        }
+    };
+
+    PYO.listenForPosts = function (items) {
+        if (PYO.pusherKey && items && items.length) {
+            items.find('.ajax-link.listitem-select').each(function () {
+                var el = $(this);
+                var unread = el.find('.unread');
+                var id;
+                var channel;
+                var group = el.hasClass('group-link');
+                if (group) {
+                    id = el.data('group-id');
+                    channel = PYO.pusher.subscribe('group_' + id);
+                } else {
+                    id = el.data('id');
+                    channel = PYO.pusher.subscribe('student_' + id);
+                }
+
+                channel.bind('message_posted', function (data) {
+                    if (id === PYO.activeStudentId || id === PYO.activeGroupId) {
+                        var scroll = PYO.scrolledToBottom();
+                        if (!PYO.replacePost(data)) {
+                            PYO.addPost(data);
+                            if (scroll) { PYO.scrollToBottom(); }
+                        }
+                    } else {
+                        var count = parseInt(unread.text(), 10);
+                        unread.removeClass('zero').text(++count);
+                    }
+                });
+            });
+        }
+    };
+
+    PYO.unsubscribeFromPosts = function (items) {
+        if (PYO.pusherKey && items && items.length) {
+            items.find('.ajax-link.listitem-select').each(function () {
+                var el = $(this);
+                var group = el.hasClass('group-link');
+                var id;
+                if (group) {
+                    id = el.data('group-id');
+                    PYO.pusher.unsubscribe('group_' + id);
+                } else {
+                    id = el.data('id');
+                    PYO.pusher.unsubscribe('student_' + id);
+                }
+            });
+        }
+    };
+
+    PYO.listenForStudentChanges = function () {
+        if (PYO.pusherKey && PYO.activeUserId) {
+            var nav = $('.village-nav');
+            var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
+
+            channel.bind('student_added', function (data) {
+                if (data && data.objects && data.objects.length && nav.find('.grouptitle .group-link[data-name="All Students"]').length) {
+                    $.each(data.objects, function () {
+                        this.staff = nav.data('is-staff');
+                        this.objects = true;
+                        var student = ich.student_list_item(this);
+                        var inserted = false;
+                        nav.find('.student').each(function () {
+                            if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                                student.insertBefore($(this)).slideDown();
+                                inserted = true;
+                            }
+                        });
+                        if (!inserted) {
+                            nav.find('.itemlist').append(student);
+                            student.slideDown();
+                        }
+                        PYO.listenForPosts(student);
+                    });
+                }
+            });
+
+            channel.bind('student_edited', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]');
+                            student.find('.listitem-name').text(this.name);
+                            student.data('name', this.name);
+                        }
+                    });
+                }
+            });
+
+            channel.bind('student_removed', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]').closest('.student');
+                            student.slideUp(function () { $(this).remove(); });
+                            if (this.id === PYO.activeStudentId) {
+                                var msg = ich.active_student_removed_msg();
+                                msg.appendTo($('#messages'));
+                                $('#messages').messages();
+                                $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    };
+
+    PYO.updateNavActiveClasses = function (container) {
+        var context = container ? container : $('.village-nav');
+        var links = context.find('.ajax-link').not('.action-edit').removeClass('active');
+
+        if (links.length) {
+            var url = window.location.pathname;
+            links.filter('[href="' + url + '"]').addClass('active');
+            links.filter(function () {
+                var id;
+                if ($(this).hasClass('group-link')) {
+                    id = $(this).data('group-id');
+                    return id === PYO.activeGroupId;
+                } else {
+                    id = $(this).data('id');
+                    return id === PYO.activeStudentId;
+                }
+            }).addClass('active');
         }
     };
 
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
-            PYO.groupHandlers();
-            PYO.fetchGroups();
+            PYO.navHandlers();
+            PYO.listenForStudentChanges();
+            if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
+                PYO.fetchStudents();
+            } else {
+                PYO.fetchGroups();
+            }
         }
     };
 

@@ -55,27 +55,13 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.scrollToBottom = function () {
-        if ($('.village-feed').length) {
-            var feed = $('.village-feed');
-            var height = parseInt(feed.get(0).scrollHeight, 10);
-            feed.scrollTop(height);
-        }
-    };
-
-    PYO.scrolledToBottom = function () {
-        var feed = $('.village-feed');
-        var bottom = false;
-        if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
-            bottom = true;
-        }
-        return bottom;
-    };
-
     PYO.pageAjaxError = function (url) {
         var container = $('.village-content');
-        var msg = ich.pjax_error_msg();
-        msg.find('.reload-pjax').click(function (e) {
+        var msg = ich.ajax_error_msg({
+            error_class: 'pjax-error',
+            message: 'Unable to load the requested page.'
+        });
+        msg.find('.try-again').click(function (e) {
             e.preventDefault();
             msg.remove();
             PYO.pageAjaxLoad(url);
@@ -112,7 +98,6 @@ var PYO = (function (PYO, $) {
 
     PYO.ajaxifyVillages = function (container) {
         if ($(container).length) {
-            var context = $(container);
             var History = window.History;
 
             if (History.enabled) {
@@ -129,9 +114,6 @@ var PYO = (function (PYO, $) {
                         } else {
                             var title = document.title;
                             var data = { url: url };
-                            if ($(this).hasClass('addelder-link') || $(this).hasClass('edit-elder')) {
-                                data.remainActive = true;
-                            }
                             History.pushState(data, title, url);
                         }
                         $(this).blur();
@@ -139,13 +121,8 @@ var PYO = (function (PYO, $) {
                 });
 
                 $(window).bind('statechange', function () {
-                    context.trigger('pjax-load');
                     var data = History.getState().data;
                     var url = data.url ? data.url : window.location.pathname;
-                    if (!data.remainActive) {
-                        context.find('.village-nav .ajax-link').removeClass('active');
-                    }
-                    context.find('a.ajax-link[href="' + url + '"]').addClass('active');
                     PYO.pageAjaxLoad(url + '?ajax=true');
                 });
             }
@@ -161,37 +138,24 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeEldersForm = function () {
-        $('.formset.elders').formset({
-            prefix: $('.formset.elders').data('prefix'),
-            formTemplate: '#empty-elder-form',
-            formSelector: '.fieldset.elder',
-            addLink: '<a class="add-row" href="javascript:void(0)" title="more elders">more elders</a>',
-            addAnimationSpeed: 'normal',
-            removeAnimationSpeed: 'fast',
-            optionalIfEmpty: true
-        });
-        if ($('#id_name').length) {
-            $('#id_name').focus();
-        } else {
-            $('#id_elders-0-contact').focus();
-        }
-    };
-
     PYO.initializeFeed = function () {
-        PYO.activeStudentId = $('.village-feed').data('student-id');
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
     };
 
+    PYO.initializePusher = function () {
+        PYO.pusherKey = $('.village').data('pusher-key');
+        if (PYO.pusherKey) { PYO.pusher = new Pusher(PYO.pusherKey, {encrypted: true}); }
+    };
+
     PYO.initializePage = function () {
+        PYO.activeStudentId = $('.village-content').data('student-id');
+        PYO.activeGroupId = $('.village-content').data('group-id');
+        PYO.updateNavActiveClasses();
         if ($('.village-feed').length) {
             PYO.initializeFeed();
-        }
-        if ($('.formset.elders').length) {
-            PYO.initializeEldersForm();
         }
     };
 

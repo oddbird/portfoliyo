@@ -1,3 +1,4 @@
-<div class="village-content">
+{% load url from future %}
+<div class="village-content" data-student-id="{{ student.id }}" data-group-id="{{ group.id }}">
 {% block village-content %}{% endblock village-content %}
 </div>

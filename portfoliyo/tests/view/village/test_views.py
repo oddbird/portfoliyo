@@ -30,14 +30,11 @@ class TestDashboard(object):
 class TestAddStudent(object):
     """Tests for add_student view."""
     def test_add_student(self, client):
-        """User can add a student and invite some elders."""
+        """User can add a student."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
             reverse('add_student'), user=teacher.user).forms['add-student-form']
         form['name'] = "Some Student"
-        form['elders-0-contact'] = "(123)456-7890"
-        form['elders-0-relationship'] = "Father"
-        form['elders-0-school_staff'] = False
         response = form.submit()
 
         student = teacher.students[0]
@@ -52,9 +49,6 @@ class TestAddStudent(object):
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
             reverse('add_student'), user=teacher.user).forms['add-student-form']
-        form['elders-0-contact'] = "(123)456-7890"
-        form['elders-0-relationship'] = "Father"
-        form['elders-0-school_staff'] = False
         response = form.submit(status=200)
 
         response.mustcontain("field is required")
@@ -77,23 +71,162 @@ class TestAddStudent(object):
 
 
 
+class TestEditStudent(object):
+    """Tests for edit_student view."""
+    def url(self, student=None):
+        """Shortcut to get URL of edit-student view."""
+        if student is None:
+            student = factories.ProfileFactory.create()
+        return reverse('edit_student', kwargs={'student_id': student.id})
+
+
+    def test_edit_student(self, client):
+        """User can edit a student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            self.url(rel.student),
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = "Some Student"
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('village', kwargs={'student_id': rel.student.id}))
+
+
+    def test_validation_error(self, client):
+        """Name of student must be provided."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            self.url(rel.student),
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = ""
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_relationship(self, client):
+        """Editing a student requires elder relationship."""
+        someone = factories.ProfileFactory.create(school_staff=True)
+        client.get(self.url(), user=someone.user, status=404)
+
+
+    def test_requires_school_staff(self, client):
+        """Editing a student requires ``school_staff`` attribute."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=False)
+        response = client.get(
+            self.url(rel.student), user=rel.elder.user, status=302).follow()
+
+        response.mustcontain("account doesn't have access"), response.html
+
+
+
+class TestAddGroup(object):
+    """Tests for add_group view."""
+    def test_add_group(self, client):
+        """User can add a group."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        form = client.get(
+            reverse('add_group'), user=teacher.user).forms['add-group-form']
+        form['name'] = "Some Group"
+        response = form.submit(status=302)
+
+        group = teacher.owned_groups.get()
+
+        assert group.name == "Some Group"
+        assert response['Location'] == utils.location(reverse('add_student'))
+
+
+    def test_validation_error(self, client):
+        """Name of group must be provided."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        form = client.get(
+            reverse('add_group'), user=teacher.user).forms['add-group-form']
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_school_staff(self, client):
+        """Adding a group requires ``school_staff`` attribute."""
+        someone = factories.ProfileFactory.create(school_staff=False)
+        response = client.get(
+            reverse('add_group'), user=someone.user, status=302).follow()
+
+        response.mustcontain("account doesn't have access"), response.html
+
+
+
+class TestEditGroup(object):
+    """Tests for edit_group view."""
+    def url(self, group=None):
+        """Shortcut to get URL of edit-group view."""
+        if group is None:
+            group = factories.GroupFactory.create()
+        return reverse('edit_group', kwargs={'group_id': group.id})
+
+
+    def test_edit_group(self, client):
+        """User can edit a group."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        form = client.get(
+            self.url(group),
+            user=group.owner.user,
+            ).forms['edit-group-form']
+        form['name'] = "Some Group"
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(reverse('add_student'))
+
+
+    def test_validation_error(self, client):
+        """Name of group must be provided."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
+        form = client.get(
+            self.url(group),
+            user=group.owner.user,
+            ).forms['edit-group-form']
+        form['name'] = ""
+        response = form.submit(status=200)
+
+        response.mustcontain("field is required")
+
+
+    def test_requires_owner(self, client):
+        """Editing a group requires being its owner."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
+        client.get(
+            self.url(group),
+            user=factories.ProfileFactory.create(school_staff=True).user,
+            status=404,
+            )
+
+
+
 class TestInviteElders(object):
-    """Tests for invite_elders view."""
+    """Tests for invite_elder view."""
     def url(self, student=None):
         if student is None:
             student = factories.ProfileFactory.create()
-        return reverse('invite_elders', kwargs=dict(student_id=student.id))
+        return reverse('invite_elder', kwargs=dict(student_id=student.id))
 
 
-    def test_invite_elders(self, client):
+    def test_invite_elder(self, client):
         """User can invite some elders."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-elders-form']
-        form['elders-0-contact'] = "dad@example.com"
-        form['elders-0-relationship'] = "Father"
-        form['elders-0-school_staff'] = False
+        form['contact'] = "dad@example.com"
+        form['relationship'] = "Father"
+        form['school_staff'] = False
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -110,9 +243,9 @@ class TestInviteElders(object):
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-elders-form']
-        form['elders-0-contact'] = "(123)456-7890"
-        form['elders-0-relationship'] = ""
-        form['elders-0-school_staff'] = False
+        form['contact'] = "(123)456-7890"
+        form['relationship'] = ""
+        form['school_staff'] = False
         response = form.submit(status=200)
 
         response.mustcontain("field is required")
@@ -145,7 +278,7 @@ class TestVillage(object):
         return reverse('village', kwargs=dict(student_id=student.id))
 
 
-    @pytest.mark.parametrize('link_target', ['invite_elders'])
+    @pytest.mark.parametrize('link_target', ['invite_elder'])
     def test_link_only_if_staff(self, client, link_target):
         """Link with given target is only present for school staff."""
         parent_rel = factories.RelationshipFactory.create(
@@ -156,7 +289,7 @@ class TestVillage(object):
         parent_response = client.get(url, user=parent_rel.elder.user)
         teacher_response = client.get(url, user=teacher_rel.elder.user)
         reverse_kwargs = {}
-        if link_target == 'invite_elders':
+        if link_target == 'invite_elder':
             reverse_kwargs = {'student_id': parent_rel.student.id}
         target_url = reverse(link_target, kwargs=reverse_kwargs)
         parent_links = parent_response.html.findAll('a', href=target_url)
@@ -184,153 +317,50 @@ class TestVillage(object):
         client.get(self.url(rel.student), user=rel.elder.user, status=404)
 
 
-    def test_remove_student(self, no_csrf_client):
-        """POSTing 'remove': student-id to village view soft-deletes student."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
 
-        resp = no_csrf_client.post(
-            self.url(rel.student),
-            {'remove': rel.student.id},
-            user=rel.elder.user,
-            status=302,
-            )
-
-        assert utils.refresh(rel.student).deleted
-        assert resp['Location'] == utils.location(reverse('add_student'))
+class TestAllStudents(object):
+    def url(self):
+        return reverse('all_students')
 
 
-    def test_remove_student_ajax(self, no_csrf_client):
-        """POSTing 'remove': student-id via ajax returns JSON, not redirect."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
-
-        resp = no_csrf_client.post(
-            self.url(rel.student),
-            {'remove': rel.student.id},
-            user=rel.elder.user,
-            status=200,
-            ajax=True,
-            )
-
-        assert utils.refresh(rel.student).deleted
-        assert resp.json['success'] == True
+    def test_all_students(self, client):
+        """Can view an all-students page."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        client.get(self.url(), user=teacher.user, status=200)
 
 
-    def test_remove_student_requires_school_staff(self, no_csrf_client):
-        """POSTing 'remove' to village view does nothing if not school staff."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=False)
 
-        no_csrf_client.post(
-            self.url(rel.student),
-            {'remove': rel.student.id},
-            user=rel.elder.user,
-            status=302,
-            )
-
-        assert not utils.refresh(rel.student).deleted
+class TestGroupDetail(object):
+    """Tests for group chat view."""
+    def url(self, group=None):
+        if group is None:
+            group = factories.GroupFactory.create()
+        return reverse('group', kwargs=dict(group_id=group.id))
 
 
-    def test_edit_student(self, no_csrf_client):
-        """POSTing 'name' to village view edits student name."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True,
-            to_profile__name='Old Name',
-            )
+    def test_group_detail(self, client):
+        """Can view a group detail page."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
 
-        no_csrf_client.post(
-            self.url(rel.student),
-            {'name': 'New Name'},
-            user=rel.elder.user,
-            status=302,
-            )
-
-        assert utils.refresh(rel.student).name == u'New Name'
+        client.get(self.url(group), user=group.owner.user, status=200)
 
 
-    def test_edit_student_requires_school_staff(self, no_csrf_client):
-        """POSTing 'name' to village view does nothing if not school staff."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=False,
-            to_profile__name='Old Name',
-            )
+    def test_requires_ownership(self, client):
+        """Only the owner of a group can view it."""
+        group = factories.GroupFactory.create()
+        someone = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
 
-        no_csrf_client.post(
-            self.url(rel.student),
-            {'name': 'New Name'},
-            user=rel.elder.user,
-            status=302,
-            )
-
-        assert utils.refresh(rel.student).name == u'Old Name'
+        client.get(self.url(group), user=someone.user, status=404)
 
 
-    def test_edit_student_error(self, no_csrf_client):
-        """POSTing bad name returns errors as messages."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True,
-            to_profile__name='Old Name',
-            )
+    def test_404_deleted_group(self, client):
+        """Can't view a deleted group."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True, deleted=True)
 
-        res = no_csrf_client.post(
-            self.url(rel.student),
-            {'name': ''},
-            user=rel.elder.user,
-            status=302,
-            ).follow()
-
-        assert utils.refresh(rel.student).name == 'Old Name'
-        res.mustcontain('This field is required')
-
-
-    def test_edit_student_ajax(self, no_csrf_client):
-        """POSTing 'name' via ajax edits student name and returns JSON."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True,
-            to_profile__name='Old Name',
-            )
-
-        resp = no_csrf_client.post(
-            self.url(rel.student),
-            {'name': 'New Name'},
-            user=rel.elder.user,
-            status=200,
-            ajax=True,
-            )
-
-        assert utils.refresh(rel.student).name == u'New Name'
-        assert resp.json == {
-            'messages': [], 'success': True, 'name': 'New Name'}
-
-
-    def test_edit_student_ajax_error(self, no_csrf_client):
-        """POSTing bad name via ajax returns error message in JSON."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True,
-            to_profile__name='Old Name',
-            )
-
-        resp = no_csrf_client.post(
-            self.url(rel.student),
-            {'name': ''},
-            user=rel.elder.user,
-            status=200,
-            ajax=True,
-            )
-
-        assert utils.refresh(rel.student).name == u'Old Name'
-        assert resp.json == {
-            'messages': [
-                {
-                    'level': 40,
-                    'tags': 'error',
-                    'message': 'This field is required.',
-                    }
-                ],
-            'success': False,
-            'name': 'Old Name',
-            }
+        client.get(self.url(group), user=group.owner.user, status=404)
 
 
 

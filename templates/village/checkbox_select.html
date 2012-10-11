@@ -1,0 +1,12 @@
+<ul>
+  {% for group_name, choices in optgroups %}{% for choice in choices %}
+  <li>
+    <label for="{{ attrs.id }}_{{ forloop.counter }}">
+      <input {% if choice.0 in value %}checked="checked" {% endif %}type="checkbox" id="{{ attrs.id }}_{{ forloop.counter }}" name="{{ name }}" value="{{ choice.0 }}">
+      {% with choice.1 as obj %}
+      {% block label-text %}{{ obj }}{% endblock %}
+      {% endwith %}
+    </label>
+  </li>
+{% endfor %}{% endfor %}
+</ul>

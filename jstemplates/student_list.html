@@ -1,12 +1,25 @@
 <h2 class="listitem title grouptitle">
-  <a href="/" class="action-back groups" title="Go back to group list">Group:</a>
-  <a href="{{ group_uri }}" class="group-link listitem-select" data-group-name="{{ group_name }}">{{ group_name }}</a>
+  <a href="#" class="action-back groups" title="Go back to group list">Group:</a>
+  <a href="{{ group_url }}" class="group-link ajax-link listitem-select" data-group-name="{{ group_name }}" data-group-id="{{ group_id }}" data-group-students-url="{{ group_students_url }}" data-group-resource-url="{{ group_resource_url }}" data-group-edit-url="{{ group_edit_url }}">
+    <span class="listitem-name">{{ group_name }}</span>
+    <span class="unread">0</span>
+  </a>
+
+  {{# staff }}
+  {{# group_edit_url }}
+  <div class="listitem-actions">
+    <a href="{{ group_edit_url }}" class="action-edit ajax-link" title="edit group">edit</a>
+    {{# group_resource_url }}<button class="action-remove" title="remove group" name="remove" value="">remove</button>{{/ group_resource_url }}
+  </div>
+  {{/ group_edit_url }}
+  {{/ staff }}
 </h2>
+
 <ul class="itemlist">
   {{> student_list_item }}
 </ul>
 {{# staff }}
 <aside class="additem">
-  <a href="{{! @@@ }}/student/add/" class="additem-link ajax-link">Add Student</a>
+  <a href="{{ add_student_url }}" class="additem-link ajax-link">Add Student</a>
 </aside>
 {{/ staff }}

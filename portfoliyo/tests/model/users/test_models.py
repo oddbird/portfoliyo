@@ -1,11 +1,20 @@
 """Tests for user models."""
-from django.contrib.auth import models as auth_models
 from django.db import IntegrityError
 import mock
 import pytest
 
 from portfoliyo import model
 from portfoliyo.tests import factories, utils
+
+
+
+class TestSchool(object):
+    def test_unicode(self):
+        """Unicode representation is school name."""
+        s = factories.SchoolFactory.build(name="Some School")
+
+        assert unicode(s) == u"Some School"
+
 
 
 class TestUser(object):
@@ -95,28 +104,18 @@ class TestProfile(object):
         assert unicode(profile) == u"<unknown>"
 
 
-    def test_profile_autocreated(self):
-        """A User without a profile gets one automatically on first access."""
-        user = factories.UserFactory.create()
+    def test_name_or_role(self):
+        """name_or_role property is name if present."""
+        profile = factories.ProfileFactory.build(name="Foo")
 
-        assert user.profile is not None
-
-
-    def test_profile_autocreated_even_after_select_related(self):
-        """select_related('profile') doesn't break profile autocreation."""
-        factories.UserFactory.create()
-        user = auth_models.User.objects.select_related('profile').get()
-
-        assert user.profile is not None
+        assert profile.name_or_role == u"Foo"
 
 
-    def test_double_profile_access_after_select_related(self):
-        """select_related('profile') doesn't break two profile accesses."""
-        factories.UserFactory.create()
-        user = auth_models.User.objects.select_related('profile').get()
+    def test_name_or_role_no_name(self):
+        """name_or_role property is role if no name."""
+        profile = factories.ProfileFactory.build(role="Role")
 
-        assert user.profile is not None
-        assert user.profile is not None
+        assert profile.name_or_role == u"Role"
 
 
     def test_site_staff_are_school_staff(self):
@@ -175,6 +174,7 @@ class TestProfile(object):
 
     def test_create_dupe_code(self):
         """Robust against off-chance of duplicate teacher code."""
+        school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.generate_code'
         # we need the first two calls to return the same thing, and the
         # third call something different.
@@ -184,8 +184,8 @@ class TestProfile(object):
             calls.append(seed)
             return returns[len(calls)-1]
         with mock.patch(target, _mock_generate_code):
-            p1 = model.Profile.create_with_user(school_staff=True)
-            p2 = model.Profile.create_with_user(school_staff=True)
+            p1 = model.Profile.create_with_user(school, school_staff=True)
+            p2 = model.Profile.create_with_user(school, school_staff=True)
 
         assert p1.code != p2.code
         # different username passed to generate_code each time
@@ -194,20 +194,22 @@ class TestProfile(object):
 
     def test_create_dupe_code_other_integrity_error(self):
         """If we get some other integrity error, just re-raise it."""
+        school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.Profile.save'
         with mock.patch(target) as mock_save:
             mock_save.side_effect = IntegrityError('foo')
             with pytest.raises(IntegrityError):
-                model.Profile.create_with_user()
+                model.Profile.create_with_user(school)
 
 
     def test_create_dupe_code_give_up(self):
         """If we get 10 dupes in a row, we give up and set code to None."""
+        school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.generate_code'
         with mock.patch(target) as mock_generate_code:
             mock_generate_code.return_value = 'ABCDEF'
-            model.Profile.create_with_user(school_staff=True)
-            p2 = model.Profile.create_with_user(school_staff=True)
+            model.Profile.create_with_user(school, school_staff=True)
+            p2 = model.Profile.create_with_user(school, school_staff=True)
 
         assert p2.code is None
 
@@ -241,6 +243,21 @@ class TestRelationship(object):
         assert rel.description_or_role == u"Bar"
 
 
+    def test_name_or_role(self):
+        """name_or_role property is elder name if present."""
+        rel = factories.RelationshipFactory.build(from_profile__name="Foo")
+
+        assert rel.name_or_role == u"Foo"
+
+
+    def test_name_or_role_no_name(self):
+        """name_or_role property is description_or_role if no name."""
+        rel = factories.RelationshipFactory.build(
+            from_profile__name="", description="Desc")
+
+        assert rel.name_or_role == u"Desc"
+
+
     def test_elder(self):
         """elder property is alias for from_profile."""
         rel = factories.RelationshipFactory.build()
@@ -263,3 +280,172 @@ class TestGroup(object):
         g = factories.GroupFactory.create(name="foo")
 
         assert unicode(g) == u"foo"
+
+
+    def test_all_elders(self):
+        """all_elders property is queryset of elders of students in group."""
+        rel = factories.RelationshipFactory()
+        e = factories.ProfileFactory()
+        s = factories.ProfileFactory()
+        g = factories.GroupFactory()
+        g.students.add(s, rel.student)
+        g.elders.add(e)
+
+        assert set(g.all_elders) == set([rel.elder, e])
+
+
+    def test_elder_relationships(self):
+        """elder_relationships prop is all relationships of group students."""
+        rel = factories.RelationshipFactory()
+        e = factories.ProfileFactory()
+        s = factories.ProfileFactory()
+        g = factories.GroupFactory()
+        g.students.add(s, rel.student)
+        g.elders.add(e)
+
+        exp = set([(e, s), (e, rel.student), (rel.elder, rel.student)])
+        assert set([(r.elder, r.student) for r in g.elder_relationships]) == exp
+
+
+    def test_group_creates_relationships(self):
+        """A group creates relationships between its students and elders."""
+        s = factories.ProfileFactory.create()
+        e = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(s)
+        g.elders.add(e)
+
+        rel = g.relationships.get()
+
+        assert rel.elder == e
+        assert rel.student == s
+        assert rel.from_group == g
+
+
+    def test_no_create_dupe_relationship(self):
+        """If a relationship already exists, don't re-create it."""
+        rel = factories.RelationshipFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(rel.student)
+        g.elders.add(rel.elder)
+
+        rel = utils.refresh(rel)
+
+        assert rel.from_group is None
+
+
+    def test_group_removes_relationships(self):
+        """
+        Removing group member removes matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        rel = factories.RelationshipFactory.create()
+        s = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(s)
+        g.elders.add(rel.elder)
+        g.elders.remove(rel.elder)
+
+        assert rel.elder.relationships_from.get() == rel
+
+
+    def test_clears_relationships(self):
+        """
+        Clearing group members clears matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        rel = factories.RelationshipFactory.create()
+        s = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(s)
+        g.elders.add(rel.elder)
+        g.elders.clear()
+
+        assert rel.elder.relationships_from.get() == rel
+
+
+    def test_reverse_add_creates_relationship(self):
+        """Adding a group to a student creates relationship."""
+        s = factories.ProfileFactory.create()
+        e = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        s.student_in_groups.add(g)
+        e.elder_in_groups.add(g)
+
+        rel = g.relationships.get()
+
+        assert rel.elder == e
+        assert rel.student == s
+        assert rel.from_group == g
+
+
+    def test_reverse_add_no_dupe_relationship(self):
+        """Adding a group to a student doesn't re-create dupe relationship."""
+        rel = factories.RelationshipFactory.create()
+        g = factories.GroupFactory.create()
+        rel.student.student_in_groups.add(g)
+        rel.elder.elder_in_groups.add(g)
+
+        rel = utils.refresh(rel)
+
+        assert rel.from_group is None
+
+
+    def test_reverse_remove_removes_relationship(self):
+        """
+        Removing a group from an elder removes matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        s = factories.ProfileFactory.create()
+        rel = factories.RelationshipFactory.create()
+        g = factories.GroupFactory.create()
+        s.student_in_groups.add(g)
+        rel.elder.elder_in_groups.add(g)
+        rel.elder.elder_in_groups.remove(g)
+
+        assert rel.elder.relationships_from.get() == rel
+
+
+    def test_reverse_clear_clears_relationships(self):
+        """
+        Clearing student groups clears matching relationships.
+
+        (And does not remove non-group-originated relationships).
+
+        """
+        rel = factories.RelationshipFactory.create()
+        e = factories.ProfileFactory.create()
+        g = factories.GroupFactory.create()
+        g.students.add(rel.student)
+        g.elders.add(e)
+        rel.student.student_in_groups.clear()
+
+        assert rel.student.relationships_to.get() == rel
+
+
+
+class TestAllStudentsGroup(object):
+    def test_elder_relationships(self):
+        """Can get all elder relationships for all students."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
+        rel3 = factories.RelationshipFactory.create(to_profile=rel.student)
+        g = model.AllStudentsGroup(rel.elder)
+
+        assert set(g.elder_relationships) == set([rel, rel2, rel3])
+
+
+    def test_students(self):
+        """Can get all students in group."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
+        factories.RelationshipFactory.create(to_profile=rel.student)
+        g = model.AllStudentsGroup(rel.elder)
+
+        assert set(g.students) == set([rel.student, rel2.student])

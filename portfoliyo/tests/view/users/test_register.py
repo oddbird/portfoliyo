@@ -5,6 +5,7 @@ Tests for custom django-registration backend.
 from django.core import mail
 import mock
 
+from portfoliyo.tests import factories
 from portfoliyo.view.users import forms, register
 
 
@@ -26,6 +27,8 @@ def _register(**kwargs):
     backend = register.RegistrationBackend()
     request = mock.Mock()
     request.get_host.return_value = 'example.com'
+    if 'school' not in kwargs:
+        kwargs['school'] = factories.SchoolFactory.create()
     kwargs.setdefault('name', 'Some Name')
     kwargs.setdefault('email', 'some@example.com')
     kwargs.setdefault('password', 'sekrit')
@@ -90,3 +93,11 @@ def test_register_sends_email():
 
     assert len(mail.outbox) == 1
     assert mail.outbox[0].to == [u'foo@example.com']
+
+
+def test_register_saves_school():
+    """register method saves unsaved school."""
+    s = factories.SchoolFactory.build(name='Foo')
+    _register(school=s)
+
+    assert s.__class__.objects.filter(name='Foo').count() == 1

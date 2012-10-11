@@ -39,28 +39,23 @@ $simple-width: $break-cols - $simple-side;
 $simple-center: $simple-width - $simple-side;
 
 %simple-page {
-  h2 {
-    @include serif;
-    font-weight: bold;
-  }
-  @include at-breakpoint($break) { @include pad($simple-side,$simple-side); }
+  @extend %type;
   @include padding-leader(2);
   @include padding-trailer(2);
+  form { @extend %formdefaults; }
+  @include at-breakpoint($break) { @include pad($simple-side,$simple-side); }
 }
 
 %simple-inline-form {
   @include at-breakpoint($break) {
     @include inline-form($simple-side, $simple-center, $simple-center);
-    label { @include pull($simple-side, $simple-center); }
+    label, .label { @include pull($simple-side, $simple-center); }
   }
 }
 
 %simple-form {
   @extend %simple-page;
   @extend %simple-inline-form;
-  p { @include trailer; }
-  b, strong { font-weight: bold; }
-  i, em { font-style: italic; }
 }
 
 .pagehead {

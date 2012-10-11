@@ -1,0 +1,47 @@
+{% extends "village/_village_content_main.html" %}
+
+{% block village-content %}
+<div class="village-main">
+  {% block village-main %}
+  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ user.profile.role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{# @@@ #}" data-post-url="{# @@@ #}">
+
+    <article class="getting-started">
+      <h2>Welcome to {{ group.name }}!</h2>
+
+      <p>
+        <strong>Send a text message</strong> to any <i class="mobile">mobile</i> user
+        by typing the <strong>@ symbol followed by their name or title</strong>
+        (with spaces removed).
+        Or text <b class="nametag">@all</b> <i class="mobile">mobile</i> users at once.
+      </p>
+
+      <ul>
+        <li><b class="nametag">@Mother</b> Jenny’s paper was fantastic!</li>
+        <li><b class="nametag">@Mother</b> and <b class="nametag">@Father</b>, Jenny was missing her Math homework today.</li>
+        <li>Did Jenny show you <b class="nametag">@all</b> the project she is working on?</li>
+      </ul>
+
+      <p>
+        Email notifications coming soon for non-<i class="mobile">mobile</i> users.
+      </p>
+    </article>
+
+  </section>
+  <form method="POST" class="post-add-form" action="#{# @@@ #}" data-char-limit="{{ post_char_limit }}">
+    {% csrf_token %}
+
+    <div class="formfield post-textfield">
+      <textarea id="post-text" name="text" placeholder="Text mobile users with @role (no spaces, e.g. @mathteacher)."></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">send</button>
+    </div>
+
+  </form>
+  {% endblock village-main %}
+</div>
+
+{% include "village/_group_info.html" %}
+{% endblock village-content %}

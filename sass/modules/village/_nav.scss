@@ -19,6 +19,11 @@ $village-nav-action-color : $base03;
   border-color: $village-border-color;
 }
 
+.nav-error, .remove-error {
+  @extend %error;
+  @include bleed($village-bleed, left);
+}
+
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;
@@ -128,14 +133,14 @@ $village-nav-action-color : $base03;
 .action-back.groups {
   @extend %icon-replace;
   @extend %icon-arrow-left;
-  @include box-sizing(content-box);
-  @include leader($village-nav-rhythm/2,$village-list-size);
+  @include adjust-font-size-to($normpx,1,$village-list-size);
+  @include leader($village-nav-rhythm);
   @include border-radius(.125em);
   @include rgba-background(rgba($back,.5));
   position: relative;
   float: left;
+  width: rhythm(1);
   margin-right: .4em;
-  padding: rhythm($village-nav-rhythm/2,$village-list-size) rhythm($village-nav-rhythm,$village-list-size);
   z-index: 6;
   color: $base3;
   #{$focus} { background: $accent; }

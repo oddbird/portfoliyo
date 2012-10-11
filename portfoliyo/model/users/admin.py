@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth import models as auth_models
 
 from . import models
 
@@ -22,6 +23,7 @@ admin.site.register(
     models.Profile,
     inlines=[RelationshipsFromInline, RelationshipsToInline],
     list_display=[
+        'school',
         'name',
         email,
         'phone',
@@ -33,6 +35,12 @@ admin.site.register(
         'deleted',
         'declined',
         ],
-    list_filter=['school_staff', 'state', 'deleted', 'declined'],
+    list_filter=['school', 'school_staff', 'state', 'deleted', 'declined'],
     )
 admin.site.register(models.Group)
+admin.site.register(models.School)
+
+
+# we don't use contrib.auth groups; confusing to have them in the admin
+if auth_models.Group in admin.site._registry: # pragma: no cover
+    admin.site.unregister(auth_models.Group)  # pragma: no cover

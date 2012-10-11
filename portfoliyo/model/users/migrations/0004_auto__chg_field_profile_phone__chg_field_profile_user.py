@@ -13,7 +13,7 @@ class Migration(SchemaMigration):
         db.alter_column('users_profile', 'phone', self.gf('django.db.models.fields.CharField')(max_length=20, unique=True, null=True))
 
         # Changing field 'Profile.user'
-        db.alter_column('users_profile', 'user_id', self.gf('portfoliyo.model.users.models.AutoOneToOneField')(to=orm['auth.User'], unique=True))
+        db.alter_column('users_profile', 'user_id', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True))
 
     def backwards(self, orm):
 
@@ -67,7 +67,7 @@ class Migration(SchemaMigration):
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'school_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'user': ('portfoliyo.model.users.models.AutoOneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
         'users.relationship': {
             'Meta': {'unique_together': "[('from_profile', 'to_profile', 'kind')]", 'object_name': 'Relationship'},

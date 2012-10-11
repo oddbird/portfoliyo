@@ -13,18 +13,18 @@ var PYO = (function (PYO, $) {
         PYO.ajaxifyForm('.village-landing .membership form', '.village-landing .membership');
 
         // base.js
+        PYO.activeUserId = $('.village').data('user-id');
+        PYO.initializePusher();
         PYO.updatePageHeight('.village');
         PYO.ajaxifyVillages('.village');
         PYO.detectFlashSupport('.village');
         PYO.initializePage();
 
         // nav.js
-        PYO.studentActionHandlers('.village-nav');
         PYO.initializeNav();
 
-        // chat.js
-        PYO.pusherKey = $('.village').data('pusher-key');
-        PYO.listenForPosts('.village');
+        // user.js
+        PYO.addSchool('#register-form');
     });
 
     return PYO;

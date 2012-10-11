@@ -3,7 +3,7 @@
 {% block village-content %}
 <div class="village-main">
   {% block village-main %}
-  <section class="village-feed" data-student-id="{{ student.id }}" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ relationship.description_or_role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url json_posts student_id=student.id %}">
+  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ relationship.description_or_role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url json_posts student_id=student.id %}">
 
     <article class="getting-started">
       <h2>Welcome to {{ student.name }}'s Village!</h2>
@@ -27,7 +27,19 @@
     </article>
 
   </section>
-  {% include "posts/_post_add_form.html" %}
+  <form method="POST" class="post-add-form" action="{% url json_posts student_id=student.id %}" data-char-limit="{{ post_char_limit }}">
+    {% csrf_token %}
+
+    <div class="formfield post-textfield">
+      <textarea id="post-text" name="text" placeholder="Text mobile users with @role (no spaces, e.g. @mathteacher)."></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">send</button>
+    </div>
+
+  </form>
   {% endblock village-main %}
 </div>
 

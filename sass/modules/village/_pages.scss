@@ -4,6 +4,7 @@
 %overflow-y {
   @include stretch-y;
   overflow-y: scroll;
+  &.loading { position: absolute; }
 }
 
 %village-page {

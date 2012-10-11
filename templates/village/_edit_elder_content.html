@@ -9,6 +9,9 @@
     {% include "forms/_field.html" with field=form.name %}
     {% include "forms/_field.html" with field=form.role label="Relation to student(s)" %}
 
+    {% include "forms/_field.html" with field=form.groups %}
+    {% include "forms/_field.html" with field=form.students %}
+
     <div class="form-actions">
       <button type="submit">Save changes</button>
     </div>
