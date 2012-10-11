@@ -203,15 +203,14 @@ class TestProfile(object):
 
 
     def test_create_dupe_code_give_up(self):
-        """If we get 10 dupes in a row, we give up and set code to None."""
+        """If we get 10 dupes in a row, we give up and raise the error."""
         school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.generate_code'
         with mock.patch(target) as mock_generate_code:
             mock_generate_code.return_value = 'ABCDEF'
             model.Profile.create_with_user(school, school_staff=True)
-            p2 = model.Profile.create_with_user(school, school_staff=True)
-
-        assert p2.code is None
+            with pytest.raises(IntegrityError):
+                model.Profile.create_with_user(school, school_staff=True)
 
 
 
@@ -427,6 +426,44 @@ class TestGroup(object):
         rel.student.student_in_groups.clear()
 
         assert rel.student.relationships_to.get() == rel
+
+
+    def test_create_dupe_code(self):
+        """Robust against off-chance of duplicate group code."""
+        target = 'portfoliyo.model.users.models.generate_code'
+        # we need the first two calls to return the same thing, and the
+        # third call something different.
+        calls = []
+        def _mock_generate_code(seed, length):
+            returns = ['ABCDEFG', 'ABCDEFG', 'FADCBEA']
+            calls.append(seed)
+            return returns[len(calls)-1]
+        with mock.patch(target, _mock_generate_code):
+            g1 = factories.GroupFactory.create()
+            g2 = factories.GroupFactory.create()
+
+        assert g1.code != g2.code
+        # different seed passed to generate_code each time
+        assert len(set(calls)) == 3
+
+
+    def test_create_dupe_code_other_integrity_error(self):
+        """If we get some other integrity error, just re-raise it."""
+        target = 'portfoliyo.model.users.models.models.Model.save'
+        with mock.patch(target) as mock_save:
+            mock_save.side_effect = IntegrityError('foo')
+            with pytest.raises(IntegrityError):
+                factories.GroupFactory.create()
+
+
+    def test_create_dupe_code_give_up(self):
+        """If we get 10 dupes in a row, we give up and raise the error."""
+        target = 'portfoliyo.model.users.models.generate_code'
+        with mock.patch(target) as mock_generate_code:
+            mock_generate_code.return_value = 'ABCDEFG'
+            factories.GroupFactory.create()
+            with pytest.raises(IntegrityError):
+                factories.GroupFactory.create()
 
 
 

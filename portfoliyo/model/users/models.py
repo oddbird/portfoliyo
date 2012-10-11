@@ -113,21 +113,22 @@ class Profile(models.Model):
             code=code,
             )
 
-        # try a few times to generate a unique code, if we keep failing (quite
-        # unlikely until we have many many users) give up and set code to None
+        # try a few times to generate a unique code, if we keep failing give up
+        # and raise the error
         for i in range(5):
+            sid = transaction.savepoint()
             try:
-                sid = transaction.savepoint()
                 profile.save()
-                break
             except IntegrityError:
                 if code is not None:
                     transaction.savepoint_rollback(sid)
                     profile.code = generate_code(u'%s%s' % (username, i), 6)
                 else:
                     raise
+            else:
+                break
         else:
-            profile.code = None
+            # give up and try one last save without catching errors
             profile.save()
 
         return profile
@@ -171,11 +172,32 @@ class Group(models.Model):
         Profile, related_name='student_in_groups', blank=True)
     elders = models.ManyToManyField(
         Profile, related_name='elder_in_groups', blank=True)
+    # code for parent-initiated signups
+    code = models.CharField(max_length=20, unique=True)
     deleted = models.BooleanField(default=False)
 
 
     def __unicode__(self):
         return self.name
+
+
+    def save(self, *args, **kwargs):
+        """Set code for all new groups."""
+        if self.code:
+            return super(Group, self).save(*args, **kwargs)
+        # try a few times to generate a unique code, then give up and error out
+        for i in range(3):
+            # teacher codes are length 6, group length 7
+            self.code = generate_code(
+                '%s-%f' % (self.owner_id, time.time()), 7)
+            sid = transaction.savepoint()
+            try:
+                return super(Group, self).save(*args, **kwargs)
+            except IntegrityError:
+                transaction.savepoint_rollback(sid)
+
+        # couldn't save, try one last time without catching errors
+        return super(Group, self).save(*args, **kwargs)
 
 
     is_all = False
