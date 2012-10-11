@@ -14,9 +14,13 @@
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
 
-  {% include "forms/_field.html" with field=form.groups %}
-
-  {% include "forms/_field.html" with field=form.elders %}
+  <div class="fieldset relation-fieldset">
+    <p class="fieldset-help">
+      Select existing groups and staff elders to associate with this student.
+    </p>
+    {% include "forms/_field.html" with field=form.groups %}
+    {% include "forms/_field.html" with field=form.elders label="Staff Elders" %}
+  </div>
 
   <div class="form-actions">
     <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>

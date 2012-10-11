@@ -167,7 +167,7 @@ $input-rhythm: .25;
 }
 
 %formdefaults {
-  label {
+  .type {
     display: block;
     color: $base01;
     &:first-letter { text-transform: uppercase; }
@@ -189,6 +189,12 @@ $input-rhythm: .25;
     @extend %input;
     @include transition(200ms min-height);
     min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+  }
+
+  .fieldset-help {
+    @include leader;
+    @include trailer(.5);
+    font-style: italic;
   }
 
   .formfield-help {
@@ -223,7 +229,7 @@ button { @include reset-button; }
 // ---------------------------------------------------------------------------
 // Radio/Checkbox Options
 
-%radio-options {
+%check-options {
   @include adjust-font-size-to($input-font-size);
   @include reset-box-model;
   @include no-style-list;
@@ -232,8 +238,8 @@ button { @include reset-button; }
   border: 1px solid;
   overflow-y: scroll;
 
-  input { display: none; }
-  label {
+  .value { display: none; }
+  .type {
     @include padding-leader(.125,$input-font-size);
     @include trailing-border(1px,.125,$input-font-size);
     padding-left: rhythm(.125,$input-font-size);
@@ -243,13 +249,13 @@ button { @include reset-button; }
     margin: auto;
     position: relative;
     border-color: $base2;
+    border-color: rgba($base1,.25);
     text-align: left;
     #{$focus} { background: $base3; }
   }
 
-
-  :checked + label {
-    background: $base2;
+  :checked + .type {
+    @include rgba-background(rgba($blue,.125));
     font-weight: bold;
   }
 }

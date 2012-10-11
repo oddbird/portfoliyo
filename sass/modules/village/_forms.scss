@@ -1,4 +1,16 @@
 // ---------------------------------------------------------------------------
+// Add/Edit forms
+
+.students-field, .elders-field, .groups-field {
+  .check-options {
+    @extend %check-options;
+    height: rhythm(8,$input-font-size);
+  }
+  @include span-columns($center/2, $center);
+  @include nth-omega(last);
+}
+
+// ---------------------------------------------------------------------------
 // Add Village
 
 .village-add-form { @extend %village-solo-page; }
@@ -44,8 +56,9 @@ $inst-icon-size   : $xxlargepx + $xlargepx;
 // Add Elder
 
 .elder-add-form { @extend %village-main-page; }
-
-// ---------------------------------------------------------------------------
-// Edit Elder
-
 .elder-edit-form { @extend %village-main-page; }
+
+.school_staff-field {
+  @extend %radio-check-defaults;
+  @include leader;
+}

@@ -12,8 +12,13 @@
     {% include "forms/_field.html" with field=form.relationship|attr:"placeholder: e.g. 'Mom', 'Dad', 'Math Teacher', 'Science Teacher', etc." %}
     {% include "forms/_field.html" with field=form.school_staff label="School Staff" %}
 
-    {% include "forms/_field.html" with field=form.groups %}
-    {% include "forms/_field.html" with field=form.students %}
+    <div class="fieldset relation-fieldset">
+      <p class="fieldset-help">
+        Select existing groups and students to associate with this elder.
+      </p>
+      {% include "forms/_field.html" with field=form.groups %}
+      {% include "forms/_field.html" with field=form.students %}
+    </div>
 
     <div class="form-actions">
       <button type="submit" class="action-post">invite</button>
