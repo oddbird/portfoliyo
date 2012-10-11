@@ -85,6 +85,20 @@ class TestEditElderForm(object):
         assert set(profile.students) == {rel.student}
 
 
+    def test_initial_groups_and_students(self):
+        """Initial groups and students set."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student, from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.elders.add(other_rel.elder)
+
+        form = forms.EditElderForm(instance=other_rel.elder, editor=rel.elder)
+
+        assert form.fields['students'].initial == [other_rel.student.pk]
+        assert form.fields['groups'].initial == [group.pk]
+
+
     def _assert_cannot_add(self, elder, editor=None, student=None, group=None):
         if editor is None:
             editor = elder
@@ -162,7 +176,6 @@ class TestInviteElderForm(object):
             self.data(contact='(321)456-7890', relationship='father'), rel=rel)
         assert form.is_valid(), dict(form.errors)
         request = mock.Mock()
-        request.user = rel.elder.user
         profile = form.save(request)
 
         assert profile.phone == u'+13214567890'
@@ -184,12 +197,37 @@ class TestInviteElderForm(object):
         request = mock.Mock()
         request.get_host.return_value = 'portfoliyo.org'
         request.is_secure.return_value = False
-        request.user = rel.elder.user
         profile = form.save(request)
 
         assert profile.user.email == u'bar@example.com'
         assert len(mail.outbox) == 1
         assert mail.outbox[0].to == [u'bar@example.com']
+
+
+    def test_invite_elder_with_students_and_groups(self):
+        """Can associate newly-invited elder with students and groups."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        form = forms.InviteElderForm(
+            self.data(
+                groups=[group.pk], students=[rel.student.pk, rel2.student.pk]),
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save(mock.Mock())
+
+        assert set(profile.elder_in_groups.all()) == {group}
+        assert set(profile.students) == {rel.student, rel2.student}
+
+
+    def test_context_student_pre_checked(self):
+        """Student from whose village elder is invited is initially checked."""
+        rel = factories.RelationshipFactory.create()
+
+        form = forms.InviteElderForm(rel=rel)
+
+        assert form.fields['students'].initial == [rel.student.pk]
 
 
     def test_email_user_inactive(self):

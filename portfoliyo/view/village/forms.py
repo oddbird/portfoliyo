@@ -28,7 +28,8 @@ class GroupCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
 
 
 
-class EditElderForm(EditProfileForm):
+class ElderFormBase(forms.Form):
+    """Common elements of EditElderForm and InviteElderForm."""
     groups = TemplateLabelModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
@@ -42,17 +43,22 @@ class EditElderForm(EditProfileForm):
 
 
     def __init__(self, *args, **kwargs):
-        self.editor = kwargs.pop('editor')
-        super(EditElderForm, self).__init__(*args, **kwargs)
+        super(ElderFormBase, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
             owner=self.editor)
         self.fields['students'].queryset = model.Profile.objects.filter(
             relationships_to__from_profile=self.editor, deleted=False)
-        if self.instance.pk:
-            self.fields['groups'].initial = [
-                g.pk for g in self.instance.elder_in_groups.all()]
-            self.fields['students'].initial = [
-                s.pk for s in self.direct_students(self.instance)]
+
+
+
+class EditElderForm(ElderFormBase, EditProfileForm):
+    def __init__(self, *args, **kwargs):
+        self.editor = kwargs.pop('editor')
+        super(EditElderForm, self).__init__(*args, **kwargs)
+        self.fields['groups'].initial = [
+            g.pk for g in self.instance.elder_in_groups.all()]
+        self.fields['students'].initial = [
+            s.pk for s in self.direct_students(self.instance)]
 
 
     def save(self, rel):
@@ -119,7 +125,7 @@ class EditElderForm(EditProfileForm):
 
 
 
-class InviteElderForm(forms.Form):
+class InviteElderForm(ElderFormBase):
     """A form for inviting an elder to a student village."""
     contact = forms.CharField(max_length=255)
     relationship = forms.CharField(max_length=200)
@@ -129,7 +135,9 @@ class InviteElderForm(forms.Form):
     def __init__(self, *args, **kwargs):
         """Accepts ``rel`` - relationship between inviting elder and student."""
         self.rel = kwargs.pop('rel')
+        self.editor = self.rel.elder
         super(InviteElderForm, self).__init__(*args, **kwargs)
+        self.fields['students'].initial = [self.rel.to_profile_id]
 
 
     def clean_contact(self):
@@ -187,14 +195,6 @@ class InviteElderForm(forms.Form):
                     profile.role = relationship
                 profile.save()
 
-        # create student's rel with invited elder (unless it already exists)
-        new_rel, rel_created = model.Relationship.objects.get_or_create(
-            from_profile=profile,
-            to_profile=self.rel.student,
-            kind=model.Relationship.KIND.elder,
-            defaults={'description': relationship},
-            )
-
         # send invite notifications
         if created:
             if email:
@@ -207,7 +207,6 @@ class InviteElderForm(forms.Form):
                         'inviter': self.rel.elder,
                         'student': self.rel.student,
                         'inviter_rel': self.rel,
-                        'invitee_rel': new_rel,
                         'domain': request.get_host(),
                         },
                     )
@@ -219,9 +218,15 @@ class InviteElderForm(forms.Form):
                         'inviter': self.rel.elder,
                         'student': self.rel.student,
                         'inviter_rel': self.rel,
-                        'invitee_rel': new_rel,
                         },
                     )
+
+        profile.elder_in_groups = self.cleaned_data['groups']
+        for student in self.cleaned_data['students']:
+            model.Relationship.objects.get_or_create(
+                from_profile=profile,
+                to_profile=student,
+                )
 
         return profile
 

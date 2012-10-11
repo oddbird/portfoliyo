@@ -1,4 +1,5 @@
 {% extends "village/_village_content_main.html" %}
+{% load widget_tweaks %}
 
 {% block village-content %}
 <div class="village-main">
@@ -7,7 +8,12 @@
     <h2>Invite Elder for {{ student }}</h2>
     {{ form.non_field_errors }}
 
-    {% include "village/_elder_form.html" %}
+    {% include "forms/_field.html" with field=form.contact|attr:"placeholder: use email address for teachers, and phone number for parents." label="Email or Phone" %}
+    {% include "forms/_field.html" with field=form.relationship|attr:"placeholder: e.g. 'Mom', 'Dad', 'Math Teacher', 'Science Teacher', etc." %}
+    {% include "forms/_field.html" with field=form.school_staff label="School Staff" %}
+
+    {% include "forms/_field.html" with field=form.groups %}
+    {% include "forms/_field.html" with field=form.students %}
 
     <div class="form-actions">
       <button type="submit" class="action-post">invite</button>
