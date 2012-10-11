@@ -20,6 +20,6 @@
     {% endfor %}
   </ul>
   {% if request.user.profile.school_staff %}
-  <a href="{% url invite_elder student_id=student.id %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elders</a>
+  <a href="{% url invite_elder student_id=student.id %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
   {% endif %}
 </div>
