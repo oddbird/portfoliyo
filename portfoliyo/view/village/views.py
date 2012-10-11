@@ -153,22 +153,38 @@ def edit_group(request, group_id):
 
 @school_staff_required
 @ajax('village/_invite_elder_content.html')
-def invite_elder(request, student_id):
-    """Invite new elder to a student's village."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
+def invite_elder(request, student_id=None, group_id=None):
+    """Invite new elder to a student's village or to a group."""
+    if student_id:
+        rel = get_relationship_or_404(student_id, request.user.profile)
+        group = None
+        form_kwargs = {'rel': rel}
+        template_context = {'student': rel.student}
+    elif group_id:
+        group = get_object_or_404(
+            model.Group.objects.filter(owner=request.user.profile), id=group_id)
+        rel = None
+        form_kwargs = {'group': group}
+        template_context = {'group': group}
+    else:
+        raise Http404
 
     if request.method == 'POST':
-        form = forms.InviteElderForm(request.POST, rel=rel)
+        form = forms.InviteElderForm(request.POST, **form_kwargs)
         if form.is_valid():
             form.save(request)
-            return redirect('village', student_id=rel.student.id)
+            if rel:
+                return redirect('village', student_id=rel.student.id)
+            return redirect('group', group_id=group.id)
     else:
-        form = forms.InviteElderForm(rel=rel)
+        form = forms.InviteElderForm(**form_kwargs)
+
+    template_context['form'] = form
 
     return TemplateResponse(
         request,
         'village/invite_elder.html',
-        {'form': form, 'student': rel.student},
+        template_context,
         )
 
 

@@ -3,6 +3,7 @@ import datetime
 
 from django.core import mail
 from django.core.urlresolvers import reverse
+from django import http
 from django.utils.timezone import utc
 import mock
 import pytest
@@ -248,14 +249,16 @@ class TestEditGroup(object):
 
 class TestInviteElders(object):
     """Tests for invite_elder view."""
-    def url(self, student=None):
-        if student is None:
-            student = factories.ProfileFactory.create()
+    def url(self, student=None, group=None):
+        assert student or group
+        if group:
+            return reverse(
+                'invite_elder_to_group', kwargs=dict(group_id=group.id))
         return reverse('invite_elder', kwargs=dict(student_id=student.id))
 
 
     def test_invite_elder(self, client):
-        """User can invite some elders."""
+        """User can invite an elder."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
@@ -271,6 +274,38 @@ class TestInviteElders(object):
         # invite email is sent to new elder
         assert len(mail.outbox) == 1
         assert mail.outbox[0].to == [u'dad@example.com']
+
+        # relationship with student is created
+        assert rel.student.relationships_to.count() == 2
+
+
+    def test_invite_elder_to_group(self, client):
+        """User can invite an elder to a group."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        response = client.get(self.url(group=group), user=group.owner.user)
+        form = response.forms['invite-elders-form']
+        form['contact'] = "dad@example.com"
+        form['relationship'] = "Father"
+        form['school_staff'] = True
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('group', kwargs={'group_id': group.id}))
+
+        # group membership is created
+        assert group.elders.count() == 1
+
+
+    def test_neither_student_nor_group(self):
+        """
+        404 if neither student_id nor group_id given.
+
+        Have to test this by calling view function directly, as the URLconf
+        won't allow this to happen.
+
+        """
+        with pytest.raises(http.Http404):
+            views.invite_elder(mock.Mock())
 
 
     def test_validation_error(self, client):

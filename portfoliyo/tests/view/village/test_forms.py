@@ -233,7 +233,7 @@ class TestInviteElderForm(object):
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == u'+13214567890'
         assert sms.outbox[0].body == (
-            "Hi! Jimmy Doe's Math Teacher (Teacher John) "
+            "Hi! Jimmy Doe's Math Teacher Teacher John "
             "will text you from this number. "
             "Text 'stop' any time if you don't want this."
             )
@@ -341,6 +341,15 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(rel=rel)
 
         assert form.fields['students'].initial == [rel.student.pk]
+
+
+    def test_context_group_pre_checked(self):
+        """Group elder is invited to is initially checked."""
+        group = factories.GroupFactory.create()
+
+        form = forms.InviteElderForm(group=group)
+
+        assert form.fields['groups'].initial == [group.pk]
 
 
     def test_email_user_inactive(self):

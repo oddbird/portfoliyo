@@ -3,9 +3,9 @@
 
 {% block village-content %}
 <div class="village-main">
-  <form method="POST" action="{% url invite_elder student_id=student.id %}" class="elder-add-form" id="invite-elders-form">
+  <form method="POST" action="{% block form-action %}{% endblock %}" class="elder-add-form" id="invite-elders-form">
     {% csrf_token %}
-    <h2>Invite Elder for {{ student }}</h2>
+    <h2>{% block form-header %}{% endblock %}</h2>
     {{ form.non_field_errors }}
 
     {% include "forms/_field.html" with field=form.contact|attr:"placeholder: use email address for teachers, and phone number for parents." label="Email or Phone" %}
@@ -27,5 +27,6 @@
   </form>
 </div>
 
-{% include "village/_village_info.html" with active="true" %}
+{% block info-bar %}{% endblock %}
+
 {% endblock village-content %}

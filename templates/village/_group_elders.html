@@ -10,4 +10,7 @@
     </li>
     {% endfor %}
   </ul>
+  {% if request.user.profile.school_staff and not group.is_all %}
+  <a href="{% url invite_elder_to_group group_id=group.id %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
+  {% endif %}
 </div>

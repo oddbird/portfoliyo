@@ -154,11 +154,24 @@ class InviteElderForm(ElderFormBase):
 
 
     def __init__(self, *args, **kwargs):
-        """Accepts ``rel`` - relationship between inviting elder and student."""
-        self.rel = kwargs.pop('rel')
-        self.editor = self.rel.elder
+        """
+        Accepts ``rel`` or ``group``.
+
+        ``rel`` is relationship between inviting elder and student, if elder is
+        being invited in student context.
+
+        ``group`` is a group owned by inviting elder, if elder is being invited
+        in group context.
+
+        """
+        self.rel = kwargs.pop('rel', None)
+        self.group = kwargs.pop('group', None)
+        self.editor = self.rel.elder if self.rel else self.group.owner
         super(InviteElderForm, self).__init__(*args, **kwargs)
-        self.fields['students'].initial = [self.rel.to_profile_id]
+        if self.rel:
+            self.fields['students'].initial = [self.rel.to_profile_id]
+        if self.group:
+            self.fields['groups'].initial = [self.group.id]
 
 
     def clean_contact(self):
@@ -199,7 +212,7 @@ class InviteElderForm(ElderFormBase):
             profile = model.Profile.objects.get(**dupe_query)
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
-                school=self.rel.student.school,
+                school=self.editor.school,
                 email=email,
                 phone=phone,
                 role=relationship,
@@ -225,8 +238,8 @@ class InviteElderForm(ElderFormBase):
                     subject_template_name='registration/invite_elder_subject.txt',
                     use_https=request.is_secure(),
                     extra_context={
-                        'inviter': self.rel.elder,
-                        'student': self.rel.student,
+                        'inviter': self.editor,
+                        'student': self.rel.student if self.rel else None,
                         'inviter_rel': self.rel,
                         'domain': request.get_host(),
                         },
@@ -236,8 +249,8 @@ class InviteElderForm(ElderFormBase):
                     profile.user,
                     template_name='registration/invite_elder_sms.txt',
                     extra_context={
-                        'inviter': self.rel.elder,
-                        'student': self.rel.student,
+                        'inviter': self.editor,
+                        'student': self.rel.student if self.rel else None,
                         'inviter_rel': self.rel,
                         },
                     )
