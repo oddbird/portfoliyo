@@ -27,10 +27,10 @@ def elder_status_description(elder, current):
         desc = 'This is you!'
     elif elder.declined:
         desc = '%s has declined to receive SMS notifications.' % elder
-    elif not elder.phone:
-        desc = '%s has no phone number on their account.' % elder
     elif not elder.user.is_active:
         desc = '%s is inactive and will not receive SMS notifications.' % elder
+    elif not elder.phone:
+        desc = '%s has no phone number on their account.' % elder
     else:
         desc = '%s will receive SMS notifications if mentioned in a post.' % elder
     return desc
