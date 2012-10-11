@@ -59,6 +59,8 @@ class Profile(models.Model):
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
+    # what group was this user initially invited to?
+    invited_in_group = models.ForeignKey('Group', blank=True, null=True)
     deleted = models.BooleanField(default=False)
     declined = models.BooleanField(default=False)
 
@@ -78,7 +80,7 @@ class Profile(models.Model):
     def create_with_user(cls, school,
                          name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         state=None, invited_by=None):
+                         state=None, invited_by=None, invited_in_group=None):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -110,6 +112,7 @@ class Profile(models.Model):
             school_staff=school_staff,
             state=state or cls.STATE.done,
             invited_by=invited_by,
+            invited_in_group=invited_in_group,
             code=code,
             )
 

@@ -77,7 +77,7 @@ def receive_sms(source, body):
 
 def handle_unknown_source(source, body):
     """Handle a text from an unknown user."""
-    teacher, parent_name = get_teacher_and_name(body)
+    teacher, group, parent_name = get_teacher_group_and_name(body)
     if teacher is not None:
         if parent_name:
             model.Profile.create_with_user(
@@ -86,6 +86,7 @@ def handle_unknown_source(source, body):
                 name=parent_name,
                 state=model.Profile.STATE.kidname,
                 invited_by=teacher,
+                invited_in_group=group,
                 )
             return (
                 "Thanks! What is the name of your child in %s's class?"
@@ -128,6 +129,8 @@ def handle_new_student(parent, teacher, student_name):
             to_profile=student,
             kind=model.Relationship.KIND.elder,
             )
+    if parent.invited_in_group:
+        student.student_in_groups.add(parent.invited_in_group)
     parent.state = model.Profile.STATE.relationship
     parent.save()
     model.Post.create(parent, student, student_name, from_sms=True)
@@ -158,14 +161,15 @@ def handle_role_update(parent, role):
 
 
 
-def get_teacher_and_name(body):
+def get_teacher_group_and_name(body):
     """
-    Try to split a text into a valid teacher code and parent name.
+    Try to split a text into a valid teacher/group code and parent name.
 
-    On success, return tuple (teacher-profile, parent-name). Parent name can be
-    empty string if entire text is teacher code.
+    On success, return tuple (teacher-profile, group, parent-name). Parent name
+    can be empty string if entire text is code. Group can be ``None`` if code
+    is teacher code.
 
-    On failure to find valid teacher code, return (None, '').
+    On failure to find valid code, return (None, None, '').
 
     """
     body = body.strip()
@@ -174,12 +178,19 @@ def get_teacher_and_name(body):
     except ValueError:
         possible_code = body
         parent_name = ''
+    possible_code = possible_code.rstrip('.,:;').upper()
     try:
-        teacher = model.Profile.objects.get(
-            code=possible_code.rstrip('.,:;').upper())
-    except model.Profile.DoesNotExist:
-        return (None, '')
-    return (teacher, parent_name)
+        group = model.Group.objects.get(code=possible_code)
+    except model.Group.DoesNotExist:
+        group = None
+        try:
+            teacher = model.Profile.objects.get(code=possible_code)
+        except model.Profile.DoesNotExist:
+            teacher = None
+            parent_name = ''
+    else:
+        teacher = group.owner
+    return (teacher, group, parent_name)
 
 
 
