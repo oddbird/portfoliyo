@@ -327,6 +327,7 @@ class TestGroupResource(object):
             'api_dispatch_list',
             kwargs={'resource_name': 'user', 'api_name': 'v1'},
             ) + '?elders=%s' % rel.elder.id
+        assert g['add_student_uri'] == reverse('add_student')
         assert g['group_uri'] == reverse('all_students')
         assert g['owner'] == reverse(
             'api_dispatch_detail',
@@ -376,6 +377,17 @@ class TestGroupResource(object):
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
         assert response.json['objects'][1]['group_uri'] == group_url
+
+
+    def test_add_student_uri(self, no_csrf_client):
+        """Each group has an add_student_uri for use in the web UI."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        add_student_url = reverse(
+            'add_student_in_group', kwargs={'group_id': g.id})
+
+        response = no_csrf_client.get(self.list_url(), user=g.owner.user)
+
+        assert response.json['objects'][1]['add_student_uri'] == add_student_url
 
 
     def test_students_uri(self, no_csrf_client):

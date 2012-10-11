@@ -44,6 +44,23 @@ class TestAddStudent(object):
             reverse('village', kwargs={'student_id': student.id}))
 
 
+    def test_add_student_in_group(self, client):
+        """User can add a student in a group context."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        form = client.get(
+            reverse('add_student_in_group', kwargs={'group_id': group.id }),
+            user=group.owner.user,
+            ).forms['add-student-form']
+        form['name'] = "Some Student"
+        response = form.submit()
+
+        student = group.students.get()
+
+        assert response.status_code == 302, response.body
+        assert response['Location'] == utils.location(
+            reverse('village', kwargs={'student_id': student.id}))
+
+
     def test_validation_error(self, client):
         """Name of student must be provided."""
         teacher = factories.ProfileFactory.create(school_staff=True)
@@ -139,7 +156,8 @@ class TestAddGroup(object):
         group = teacher.owned_groups.get()
 
         assert group.name == "Some Group"
-        assert response['Location'] == utils.location(reverse('add_student'))
+        assert response['Location'] == utils.location(
+            reverse('add_student_in_group', kwargs={'group_id': group.id}))
 
 
     def test_add_group_with_student(self, client):

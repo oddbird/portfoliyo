@@ -15,7 +15,6 @@ from django.template.response import TemplateResponse
 from portfoliyo import model, pdf
 from ..ajax import ajax
 from ..decorators import school_staff_required
-from .. import home
 from . import forms
 
 
@@ -50,21 +49,25 @@ def get_relationship_or_404(student_id, profile):
 
 @school_staff_required
 @ajax('village/_add_student_content.html')
-def add_student(request):
+def add_student(request, group_id=None):
     """Add a student."""
+    group = get_object_or_404(model.Group, id=group_id) if group_id else None
+
     if request.method == 'POST':
-        form = forms.AddStudentForm(request.POST, elder=request.user.profile)
+        form = forms.AddStudentForm(
+            request.POST, elder=request.user.profile, group=group)
         if form.is_valid():
             student = form.save()
             return redirect('village', student_id=student.id)
     else:
-        form = forms.AddStudentForm(elder=request.user.profile)
+        form = forms.AddStudentForm(elder=request.user.profile, group=group)
 
     return TemplateResponse(
         request,
         'village/add_student.html',
         {
             'form': form,
+            'group': group,
             },
         )
 
@@ -105,7 +108,7 @@ def add_group(request):
         if form.is_valid():
             group = form.save()
             if not group.students.exists():
-                return redirect('add_student') # @@@ should be in group context
+                return redirect('add_student_in_group', group_id=group.id)
             return redirect('group', group_id=group.id)
     else:
         form = forms.AddGroupForm(owner=request.user.profile)

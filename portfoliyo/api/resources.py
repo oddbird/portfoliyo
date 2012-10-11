@@ -261,6 +261,7 @@ class GroupResource(SoftDeletedResource):
                         kwargs={'resource_name': 'user', 'api_name': 'v1'},
                         ) + '?elders=%s' % bundle.obj.owner.id,
                     'group_uri': reverse('all_students'),
+                    'add_student_uri': reverse('add_student'),
                     'owner': reverse(
                         'api_dispatch_detail',
                         kwargs={
@@ -288,7 +289,8 @@ class GroupResource(SoftDeletedResource):
             'edit_group',
             kwargs={'group_id': bundle.obj.id},
             )
-
+        bundle.data['add_student_uri'] = reverse(
+            'add_student_in_group', kwargs={'group_id': bundle.obj.id})
         return bundle
 
 

@@ -454,6 +454,17 @@ class TestStudentForms(object):
         assert rel.student == profile
 
 
+    def test_add_student_in_group_context(self):
+        """If group is passed in, prepopulate its checkbox."""
+        rel = factories.RelationshipFactory.create()
+        group = factories.GroupFactory.create(owner=rel.elder)
+
+        form = forms.AddStudentForm(
+            instance=rel.student, elder=rel.elder, group=group)
+
+        assert form.fields['groups'].initial == [group.pk]
+
+
     def test_add_student_with_group_and_elder(self):
         """Can associate a student with a group or an elder while creating."""
         elder = factories.ProfileFactory.create()

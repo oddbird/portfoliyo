@@ -366,6 +366,14 @@ class StudentForm(forms.ModelForm):
 
 class AddStudentForm(StudentForm):
     """Form for adding a student."""
+    def __init__(self, *args, **kwargs):
+        """Pre-check group, if in group context."""
+        self.group = kwargs.pop('group', None)
+        super(AddStudentForm, self).__init__(*args, **kwargs)
+        if self.group is not None:
+            self.fields['groups'].initial = [self.group.pk]
+
+
     def save(self):
         """
         Save and return new student.
