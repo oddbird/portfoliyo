@@ -140,6 +140,14 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.disablePreselectedElderAssociations = function () {
+        var form = $('#invite-elders-form');
+        var inputs = form.find('.relation-fieldset .check-options input:checked');
+
+        inputs.attr('disabled', 'disabled');
+        form.submit(function () { inputs.removeAttr('disabled'); });
+    };
+
     PYO.initializeFeed = function () {
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.fetchBacklog('.village-feed');
@@ -156,9 +164,8 @@ var PYO = (function (PYO, $) {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
-        if ($('.village-feed').length) {
-            PYO.initializeFeed();
-        }
+        if ($('#invite-elders-form').length) { PYO.disablePreselectedElderAssociations(); }
+        if ($('.village-feed').length) { PYO.initializeFeed(); }
     };
 
     return PYO;
