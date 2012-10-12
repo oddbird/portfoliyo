@@ -77,7 +77,12 @@ class InviteElderForm(forms.Form):
             profile = model.Profile.objects.get(**dupe_query)
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
-                email=email, phone=phone, role=relationship, is_active=active)
+                email=email,
+                phone=phone,
+                role=relationship,
+                is_active=active,
+                school_staff=staff,
+                )
             created = True
         else:
             created = False
