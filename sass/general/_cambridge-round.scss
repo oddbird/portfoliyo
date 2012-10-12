@@ -2,6 +2,7 @@
 // Settings
 
 $sans-stack : 'CambridgeRound', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+$cond-stack : 'CambridgeRoundCond', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 
 // ---------------------------------------------------------------------------
 // Fonts
@@ -51,6 +52,42 @@ $sans-stack : 'CambridgeRound', 'Helvetica Neue', Arial, Helvetica, sans-serif;
     'cambridge_round_it-webfont.svg#webfont',svg
   ),
   'cambridge_round_it-webfont.eot',
+  normal,
+  italic
+);
+
+@include font-face(
+  'CambridgeRoundCond',
+  font-files(
+    'cambridge_round_cond-webfont.woff',woff,
+    'cambridge_round_cond-webfont.ttf',truetype,
+    'cambridge_round_cond-webfont.svg#webfont',svg
+  ),
+  'cambridge_round_cond-webfont.eot',
+  normal,
+  normal
+);
+
+@include font-face(
+  'CambridgeRoundCond',
+  font-files(
+    'cambridge_round_bold_cond-webfont.woff',woff,
+    'cambridge_round_bold_cond-webfont.ttf',truetype,
+    'cambridge_round_bold_cond-webfont.svg#webfont',svg
+  ),
+  'cambridge_round_bold_cond-webfont.eot',
+  bold,
+  normal
+);
+
+@include font-face(
+  'CambridgeRoundCond',
+  font-files(
+    'cambridge_round_cond_it-webfont.woff',woff,
+    'cambridge_round_cond_it-webfont.ttf',truetype,
+    'cambridge_round_cond_it-webfont.svg#webfont',svg
+  ),
+  'cambridge_round_cond_it-webfont.eot',
   normal,
   italic
 );

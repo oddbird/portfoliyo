@@ -114,6 +114,30 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 @font-face {
+  font-family: "CambridgeRoundCond";
+  src: url('../fonts/cambridge_round_cond-webfont.eot');
+  src: url('../fonts/cambridge_round_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond-webfont.svg#webfont') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRoundCond";
+  src: url('../fonts/cambridge_round_bold_cond-webfont.eot');
+  src: url('../fonts/cambridge_round_bold_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold_cond-webfont.svg#webfont') format('svg');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "CambridgeRoundCond";
+  src: url('../fonts/cambridge_round_cond_it-webfont.eot');
+  src: url('../fonts/cambridge_round_cond_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond_it-webfont.svg#webfont') format('svg');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
   font-family: "SquareSerif";
   src: url('../fonts/SquareSerif-Book-webfont.eot');
   src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
@@ -138,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -239,7 +263,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\3f";
 }
 
-.additem-link:before {
+.additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before {
   content: "\2b";
 }
 
@@ -1629,6 +1653,7 @@ button {
 }
 
 .village-nav, .village-info {
+  font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 0.77778em;
   line-height: 1.64286em;
 }
@@ -1662,6 +1687,7 @@ button {
   background: -ms-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
   background: linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
   color: #657b83;
+  font-weight: bold;
 }
 
 .students-field, .elders-field, .groups-field {
@@ -2057,10 +2083,6 @@ button {
   background: #d33682;
 }
 
-.additem-link {
-  font-weight: bold;
-}
-
 .village-feed {
   left: 0;
   right: 0;
@@ -2306,7 +2328,7 @@ button {
 }
 .village-elders .elder:before {
   position: relative;
-  float: left;
+  margin-right: 0;
   color: #859900;
   z-index: 2;
 }
@@ -2343,15 +2365,6 @@ button {
 }
 .village-elders .edit-elder:focus, .village-elders .edit-elder:hover, .village-elders .edit-elder:active {
   background: #eee8d5;
-}
-.village-elders .title, .village-elders .fn {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  display: block;
-  margin-left: 1.5em;
 }
 .village-elders .title {
   font-weight: bold;

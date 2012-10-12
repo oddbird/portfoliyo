@@ -43,6 +43,7 @@ $village-ratio          : $base-font-size / $village-list-size;
 $village-bleed          : $grid-padding * $village-ratio;
 
 %village-lists {
+  @include cond;
   @include adjust-font-size-to($village-list-size);
   ul { @include no-style-list; }
 }
@@ -57,9 +58,12 @@ $village-bleed          : $grid-padding * $village-ratio;
 
 %village-addlink {
   #{$link} {
+    @extend %icon;
+    @extend %icon-plus;
     @extend %village-activenav;
     @include rgba-background(rgba($green,.375));
     @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.25)));
     color: $base;
+    font-weight: bold;
   }
 }

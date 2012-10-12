@@ -149,7 +149,4 @@ $village-nav-action-color : $base03;
 .additem-link {
   @extend %village-nav-item;
   @extend %village-addlink;
-  @extend %icon;
-  @extend %icon-plus;
-  font-weight: bold;
 }
