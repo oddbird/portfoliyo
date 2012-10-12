@@ -2,29 +2,32 @@
 {% load widget_tweaks %}
 
 {% block village-content %}
-
 <form method="POST" action="{% block form-action %}{% endblock %}" class="{% block form-class %}{% endblock %}" id="{% block form-id %}{% endblock %}">
   {% csrf_token %}
 
   {% block form-top %}{% endblock %}
 
-  <h2>{% block form-header %}{% endblock %}</h2>
+  <div class="details student-form-details">
+    <a href="#" class="summary">You can also add students by hand.</a>
+    <h2>{% block form-header %}{% endblock %}</h2>
 
-  {{ form.non_field_errors }}
+    {{ form.non_field_errors }}
 
-  {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
+    {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
 
-  <div class="fieldset relation-fieldset">
-    <p class="fieldset-help">
-      Select existing groups and staff elders to associate with this student.
-    </p>
-    {% include "forms/_field.html" with field=form.groups %}
-    {% include "forms/_field.html" with field=form.elders label="Staff Elders" %}
-  </div>
+    <div class="fieldset relation-fieldset">
+      <p class="fieldset-help">
+        Select existing groups and staff elders to associate with this student.
+      </p>
+      {% include "forms/_field.html" with field=form.groups %}
+      {% include "forms/_field.html" with field=form.elders label="Staff Elders" %}
+    </div>
 
-  <div class="form-actions">
-    <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>
+    <div class="form-actions">
+      <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>
+    </div>
   </div>
 
 </form>
+</div>
 {% endblock village-content %}

@@ -138,14 +138,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions:before, .parent-instructions [class^="pdf-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .additem-link:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -251,10 +251,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2668";
 }
 
-.parent-instructions:before, .parent-instructions [class^="pdf-"]:before {
-  content: "\274f";
-}
-
 .listitem-actions .action-remove:before {
   content: "\27f0";
 }
@@ -273,6 +269,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .action-back.groups:before {
   content: "\2190";
+}
+
+.parent-instructions .pdf-downloads a:before {
+  content: "\e002";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -347,7 +347,7 @@ a:focus, a:hover, a:active {
   border: 0;
 }
 
-.village-landing img {
+.village-landing img, .parent-instructions .pdf-thumbnail {
   -webkit-box-shadow: #073642 0 0 0.125em;
   -moz-box-shadow: #073642 0 0 0.125em;
   box-shadow: #073642 0 0 0.125em;
@@ -1780,52 +1780,37 @@ button {
   color: #d9f042;
 }
 
-.parent-instructions {
-  overflow: hidden;
-  font-size: 1.27778em;
-  line-height: 1.5em;
-  border-style: solid;
-  border-width: 0.04348em;
-  padding: 0.95652em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.04348em;
-  padding-bottom: 0.45652em;
-  margin-left: -2.12766%;
-  padding-left: 2.12766%;
-  margin-right: -2.12766%;
-  padding-right: 2.12766%;
-  background: url('../images/rgbapng/268bd240.png?1349281723');
-  background: rgba(38, 139, 210, 0.25);
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(38, 139, 210, 0.25)));
-  background-image: -webkit-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
-  background-image: -moz-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
-  background-image: -o-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
-  background-image: -ms-linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
-  background-image: linear-gradient(top, rgba(38, 139, 210, 0), rgba(38, 139, 210, 0.25));
-  display: block;
-  position: relative;
-  top: -1em;
-}
-.parent-instructions:before {
-  font-size: 6.56522em;
-  line-height: 1.06623em;
-  float: left;
-  margin: 0 0.15232em 0 0.07616em;
-}
-.parent-instructions p, .parent-instructions ul {
-  overflow: hidden;
+.parent-instructions h2 {
+  margin-bottom: 0.32857em;
 }
 .parent-instructions p {
-  margin-bottom: 1em;
+  margin-bottom: 1.27778em;
+  overflow: hidden;
 }
-.parent-instructions ul {
+.parent-instructions .pdf-thumbnail {
+  width: 31.91489%;
+  float: left;
+  margin-right: 2.12766%;
+  min-width: 11em;
+}
+.parent-instructions .pdf-downloads {
   margin: 0;
   padding: 0;
   border: 0;
   overflow: hidden;
+  margin-top: 0em;
+  padding-top: 0.63889em;
+  padding-bottom: 0.63889em;
+  margin-bottom: 1.27778em;
+  margin-left: -0.63889em;
+  padding-left: 0.63889em;
+  margin-right: -0.63889em;
+  padding-right: 0.63889em;
+  background: #eee8d5;
   text-align: right;
+  overflow: visible;
 }
-.parent-instructions ul li {
+.parent-instructions .pdf-downloads li {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
@@ -1836,14 +1821,26 @@ button {
   *vertical-align: auto;
   white-space: nowrap;
 }
-.parent-instructions ul li {
+.parent-instructions .pdf-downloads li {
   *display: inline;
 }
-.parent-instructions [class^="pdf-"] {
+.parent-instructions .pdf-downloads a {
   margin-right: 1em;
 }
-.parent-instructions [class^="pdf-"]:after {
+.parent-instructions .pdf-downloads a:after {
   content: " »";
+}
+
+.student-form-details .summary {
+  display: block;
+  text-align: right;
+  font-style: italic;
+}
+.student-form-details .summary:after {
+  content: " »";
+}
+.student-form-details.open .summary {
+  display: none;
 }
 
 .school_staff-field {

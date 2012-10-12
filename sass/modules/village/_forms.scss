@@ -54,49 +54,51 @@ $label-colors: $adjusted-colors;
 }
 
 // ---------------------------------------------------------------------------
-// Add Village
+// Add/Edit Village
 
-.village-add-form { @extend %village-solo-page; }
-
-$village-center-bleed: gutter($center);
-
-$instruction-size : $medpx;
-$inst-icon-size   : $xxlargepx + $xlargepx;
+.village-add-form, .village-edit-form { @extend %village-solo-page; }
 
 .parent-instructions {
-  @extend %icon;
-  @extend %icon-document-alt-stroke;
-  @include clearfix;
-  @include adjust-font-size-to($instruction-size);
-  @include rhythm-borders(1px, 1, $instruction-size);
-  @include trailing-border(1px, .5, $instruction-size);
-  @include bleed($village-center-bleed);
-  @include rgba-background(rgba($alt,.25));
-  @include background-image(linear-gradient(top, rgba($alt,0), rgba($alt,.25)));
-  display: block;
-  position: relative;
-  top: rhythm(-1,$instruction-size);
-  &:before {
-    @include adjust-font-size-to($inst-icon-size,$from-size: $instruction-size);
-    float: left;
-    margin: 0 rhythm(1,$inst-icon-size) 0 rhythm(.5,$inst-icon-size);
+  h2 { @include trailer(.5, $largepx); }
+  p {
+    @include trailer;
+    overflow: hidden;
   }
-  p, ul { overflow: hidden; }
-  p { @include trailer(1,$instruction-size); }
-  ul {
+  .pdf-thumbnail {
+    @extend %img;
+    @include span-columns($left,$center);
+    min-width: columns-width(3);
+  }
+  .pdf-downloads {
     @include inline-block-list;
+    @include rhythm(0,.5,.5,1);
+    @include bleed(rhythm(.5));
+    background: $base2;
     text-align: right;
+    overflow: visible;
+    a {
+      @extend %icon;
+      @extend %icon-file-download;
+      margin-right: 1em;
+      &:after { content: " »"; }
+    }
   }
-  [class^="pdf-"] {
-    @extend %icon;
-    @extend %icon-document-alt-stroke;
-    margin-right: 1em;
+}
+
+.student-form-details {
+  .summary {
+    display: block;
+    text-align: right;
+    font-style: italic;
     &:after { content: " »"; }
+  }
+  &.open .summary {
+    display: none;
   }
 }
 
 // ---------------------------------------------------------------------------
-// Add Elder & Edit Student
+// Add/Edit Elder
 
 .elder-add-form, .elder-edit-form { @extend %village-main-page; }
 
@@ -105,4 +107,3 @@ $inst-icon-size   : $xxlargepx + $xlargepx;
   @include leader;
 }
 
-.village-edit-form { @extend %village-solo-page; }
