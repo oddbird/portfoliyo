@@ -203,15 +203,14 @@ class TestProfile(object):
 
 
     def test_create_dupe_code_give_up(self):
-        """If we get 10 dupes in a row, we give up and set code to None."""
+        """If we get 10 dupes in a row, we give up and raise the error."""
         school = factories.SchoolFactory()
         target = 'portfoliyo.model.users.models.generate_code'
         with mock.patch(target) as mock_generate_code:
             mock_generate_code.return_value = 'ABCDEF'
             model.Profile.create_with_user(school, school_staff=True)
-            p2 = model.Profile.create_with_user(school, school_staff=True)
-
-        assert p2.code is None
+            with pytest.raises(IntegrityError):
+                model.Profile.create_with_user(school, school_staff=True)
 
 
 
@@ -283,15 +282,18 @@ class TestGroup(object):
 
 
     def test_all_elders(self):
-        """all_elders property is queryset of elders of students in group."""
-        rel = factories.RelationshipFactory()
-        e = factories.ProfileFactory()
-        s = factories.ProfileFactory()
-        g = factories.GroupFactory()
+        """Queryset of elders of students in group, ordered by name."""
+        rel = factories.RelationshipFactory.create(from_profile__name='B')
+        e = factories.ProfileFactory.create(name='A')
+        factories.RelationshipFactory.create(
+            from_profile__name='C', from_profile__deleted=True)
+        s = factories.ProfileFactory.create()
+        g = factories.GroupFactory(owner=rel.elder)
         g.students.add(s, rel.student)
         g.elders.add(e)
 
-        assert set(g.all_elders) == set([rel.elder, e])
+        # alphabetically ordered by name
+        assert [e.name for e in g.all_elders] == ['A', 'B']
 
 
     def test_elder_relationships(self):
@@ -429,6 +431,44 @@ class TestGroup(object):
         assert rel.student.relationships_to.get() == rel
 
 
+    def test_create_dupe_code(self):
+        """Robust against off-chance of duplicate group code."""
+        target = 'portfoliyo.model.users.models.generate_code'
+        # we need the first two calls to return the same thing, and the
+        # third call something different.
+        calls = []
+        def _mock_generate_code(seed, length):
+            returns = ['ABCDEFG', 'ABCDEFG', 'FADCBEA']
+            calls.append(seed)
+            return returns[len(calls)-1]
+        with mock.patch(target, _mock_generate_code):
+            g1 = factories.GroupFactory.create()
+            g2 = factories.GroupFactory.create()
+
+        assert g1.code != g2.code
+        # different seed passed to generate_code each time
+        assert len(set(calls)) == 3
+
+
+    def test_create_dupe_code_other_integrity_error(self):
+        """If we get some other integrity error, just re-raise it."""
+        target = 'portfoliyo.model.users.models.models.Model.save'
+        with mock.patch(target) as mock_save:
+            mock_save.side_effect = IntegrityError('foo')
+            with pytest.raises(IntegrityError):
+                factories.GroupFactory.create()
+
+
+    def test_create_dupe_code_give_up(self):
+        """If we get 10 dupes in a row, we give up and raise the error."""
+        target = 'portfoliyo.model.users.models.generate_code'
+        with mock.patch(target) as mock_generate_code:
+            mock_generate_code.return_value = 'ABCDEFG'
+            factories.GroupFactory.create()
+            with pytest.raises(IntegrityError):
+                factories.GroupFactory.create()
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self):
@@ -446,6 +486,23 @@ class TestAllStudentsGroup(object):
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
         factories.RelationshipFactory.create(to_profile=rel.student)
+        factories.RelationshipFactory.create(
+            from_profile=rel.elder, to_profile__deleted=True)
         g = model.AllStudentsGroup(rel.elder)
 
         assert set(g.students) == set([rel.student, rel2.student])
+
+
+    def test_all_elders(self):
+        """Queryset of elders of students in group, ordered by name."""
+        rel = factories.RelationshipFactory.create(from_profile__name='B')
+        factories.RelationshipFactory.create(from_profile=rel.elder)
+        factories.RelationshipFactory.create(
+            from_profile__name='A', to_profile=rel.student)
+        delrel = factories.RelationshipFactory.create(
+            from_profile=rel.elder, to_profile__deleted=True)
+        factories.RelationshipFactory.create(to_profile=delrel.student)
+        g = model.AllStudentsGroup(rel.elder)
+
+        # alphabetically ordered by name
+        assert [e.name for e in g.all_elders] == ['A', 'B']

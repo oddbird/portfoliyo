@@ -59,6 +59,8 @@ class Profile(models.Model):
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
+    # what group was this user initially invited to?
+    invited_in_group = models.ForeignKey('Group', blank=True, null=True)
     deleted = models.BooleanField(default=False)
     declined = models.BooleanField(default=False)
 
@@ -78,7 +80,7 @@ class Profile(models.Model):
     def create_with_user(cls, school,
                          name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         state=None, invited_by=None):
+                         state=None, invited_by=None, invited_in_group=None):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -110,24 +112,26 @@ class Profile(models.Model):
             school_staff=school_staff,
             state=state or cls.STATE.done,
             invited_by=invited_by,
+            invited_in_group=invited_in_group,
             code=code,
             )
 
-        # try a few times to generate a unique code, if we keep failing (quite
-        # unlikely until we have many many users) give up and set code to None
+        # try a few times to generate a unique code, if we keep failing give up
+        # and raise the error
         for i in range(5):
+            sid = transaction.savepoint()
             try:
-                sid = transaction.savepoint()
                 profile.save()
-                break
             except IntegrityError:
                 if code is not None:
                     transaction.savepoint_rollback(sid)
                     profile.code = generate_code(u'%s%s' % (username, i), 6)
                 else:
                     raise
+            else:
+                break
         else:
-            profile.code = None
+            # give up and try one last save without catching errors
             profile.save()
 
         return profile
@@ -163,7 +167,22 @@ class Profile(models.Model):
 
 
 
-class Group(models.Model):
+class GroupBase(object):
+    """Common methods between Group and AllStudentsGroup."""
+    def __unicode__(self):
+        return self.name
+
+
+    @property
+    def all_elders(self):
+        """Return queryset of all elders of all students in group."""
+        return Profile.objects.order_by('name').distinct().filter(
+            relationships_from__to_profile__in=self.students.filter(
+                deleted=False))
+
+
+
+class Group(GroupBase, models.Model):
     """A group of students and elders, set up by a particular teacher."""
     name = models.CharField(max_length=200)
     owner = models.ForeignKey(Profile, related_name='owned_groups')
@@ -171,21 +190,31 @@ class Group(models.Model):
         Profile, related_name='student_in_groups', blank=True)
     elders = models.ManyToManyField(
         Profile, related_name='elder_in_groups', blank=True)
+    # code for parent-initiated signups
+    code = models.CharField(max_length=20, unique=True)
     deleted = models.BooleanField(default=False)
 
 
-    def __unicode__(self):
-        return self.name
+    def save(self, *args, **kwargs):
+        """Set code for all new groups."""
+        if self.code:
+            return super(Group, self).save(*args, **kwargs)
+        # try a few times to generate a unique code, then give up and error out
+        for i in range(3):
+            # teacher codes are length 6, group length 7
+            self.code = generate_code(
+                '%s-%f' % (self.owner_id, time.time()), 7)
+            sid = transaction.savepoint()
+            try:
+                return super(Group, self).save(*args, **kwargs)
+            except IntegrityError:
+                transaction.savepoint_rollback(sid)
+
+        # couldn't save, try one last time without catching errors
+        return super(Group, self).save(*args, **kwargs)
 
 
     is_all = False
-
-
-    @property
-    def all_elders(self):
-        """Return queryset of all elders of all students in group."""
-        return Profile.objects.filter(
-            relationships_from__to_profile__in=self.students.all())
 
 
     @property
@@ -198,7 +227,7 @@ class Group(models.Model):
 
 
 
-class AllStudentsGroup(object):
+class AllStudentsGroup(GroupBase):
     """Stand-in for a Group instance for all-students."""
     name = 'All Students'
     is_all = True
@@ -223,7 +252,8 @@ class AllStudentsGroup(object):
     @property
     def students(self):
         """Return queryset of all students in group."""
-        return Profile.objects.filter(relationships_to__from_profile=self.owner)
+        return Profile.objects.filter(
+            relationships_to__from_profile=self.owner, deleted=False)
 
 
 

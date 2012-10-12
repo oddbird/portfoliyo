@@ -3,6 +3,7 @@ import datetime
 
 from django.core import mail
 from django.core.urlresolvers import reverse
+from django import http
 from django.utils.timezone import utc
 import mock
 import pytest
@@ -38,6 +39,23 @@ class TestAddStudent(object):
         response = form.submit()
 
         student = teacher.students[0]
+
+        assert response.status_code == 302, response.body
+        assert response['Location'] == utils.location(
+            reverse('village', kwargs={'student_id': student.id}))
+
+
+    def test_add_student_in_group(self, client):
+        """User can add a student in a group context."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        form = client.get(
+            reverse('add_student_in_group', kwargs={'group_id': group.id }),
+            user=group.owner.user,
+            ).forms['add-student-form']
+        form['name'] = "Some Student"
+        response = form.submit()
+
+        student = group.students.get()
 
         assert response.status_code == 302, response.body
         assert response['Location'] == utils.location(
@@ -139,7 +157,25 @@ class TestAddGroup(object):
         group = teacher.owned_groups.get()
 
         assert group.name == "Some Group"
-        assert response['Location'] == utils.location(reverse('add_student'))
+        assert response['Location'] == utils.location(
+            reverse('add_student_in_group', kwargs={'group_id': group.id}))
+
+
+    def test_add_group_with_student(self, client):
+        """User can add a group with a student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        form = client.get(
+            reverse('add_group'), user=rel.elder.user).forms['add-group-form']
+        form['name'] = "Some Group"
+        form['students'] = [str(rel.student.pk)]
+        response = form.submit(status=302)
+
+        group = rel.elder.owned_groups.get()
+
+        assert set(group.students.all()) == {rel.student}
+        assert response['Location'] == utils.location(
+            reverse('group', kwargs={'group_id': group.id}))
 
 
     def test_validation_error(self, client):
@@ -181,7 +217,8 @@ class TestEditGroup(object):
         form['name'] = "Some Group"
         response = form.submit(status=302)
 
-        assert response['Location'] == utils.location(reverse('add_student'))
+        assert response['Location'] == utils.location(
+            reverse('group', kwargs={'group_id': group.id}))
 
 
     def test_validation_error(self, client):
@@ -212,21 +249,22 @@ class TestEditGroup(object):
 
 class TestInviteElders(object):
     """Tests for invite_elder view."""
-    def url(self, student=None):
-        if student is None:
-            student = factories.ProfileFactory.create()
+    def url(self, student=None, group=None):
+        assert student or group
+        if group:
+            return reverse(
+                'invite_elder_to_group', kwargs=dict(group_id=group.id))
         return reverse('invite_elder', kwargs=dict(student_id=student.id))
 
 
     def test_invite_elder(self, client):
-        """User can invite some elders."""
+        """User can invite an elder."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-elders-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
-        form['school_staff'] = False
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -235,6 +273,37 @@ class TestInviteElders(object):
         # invite email is sent to new elder
         assert len(mail.outbox) == 1
         assert mail.outbox[0].to == [u'dad@example.com']
+
+        # relationship with student is created
+        assert rel.student.relationships_to.count() == 2
+
+
+    def test_invite_elder_to_group(self, client):
+        """User can invite an elder to a group."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        response = client.get(self.url(group=group), user=group.owner.user)
+        form = response.forms['invite-elders-form']
+        form['contact'] = "dad@example.com"
+        form['relationship'] = "Father"
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('group', kwargs={'group_id': group.id}))
+
+        # group membership is created
+        assert group.elders.count() == 1
+
+
+    def test_neither_student_nor_group(self):
+        """
+        404 if neither student_id nor group_id given.
+
+        Have to test this by calling view function directly, as the URLconf
+        won't allow this to happen.
+
+        """
+        with pytest.raises(http.Http404):
+            views.invite_elder(mock.Mock())
 
 
     def test_validation_error(self, client):
@@ -245,7 +314,6 @@ class TestInviteElders(object):
         form = response.forms['invite-elders-form']
         form['contact'] = "(123)456-7890"
         form['relationship'] = ""
-        form['school_staff'] = False
         response = form.submit(status=200)
 
         response.mustcontain("field is required")
@@ -366,10 +434,14 @@ class TestGroupDetail(object):
 
 class TestJsonPosts(object):
     """Tests for json_posts view."""
-    def url(self, student=None):
-        if student is None:
-            student = factories.ProfileFactory.create()
-        return reverse('json_posts', kwargs=dict(student_id=student.id))
+    def url(self, student=None, group=None):
+        if student is not None:
+            return reverse(
+                'student_json_posts', kwargs=dict(student_id=student.id))
+        elif group is not None:
+            return reverse('group_json_posts', kwargs=dict(group_id=group.id))
+        else:
+            return reverse('json_posts')
 
 
     def test_requires_relationship(self, client):
@@ -377,7 +449,15 @@ class TestJsonPosts(object):
         elder = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
 
-        client.get(self.url(student), user=elder.user, status=404)
+        client.get(self.url(student=student), user=elder.user, status=404)
+
+
+    def test_requires_group_owner(self, client):
+        """Only the owner of a group can get its posts."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        group = factories.GroupFactory.create()
+
+        client.get(self.url(group=group), user=elder.user, status=404)
 
 
     def test_create_post(self, no_csrf_client):
@@ -394,6 +474,38 @@ class TestJsonPosts(object):
         assert post['text'] == 'foo'
         assert post['author_id'] == rel.elder.id
         assert post['student_id'] == rel.student.id
+
+
+    def test_create_group_post(self, no_csrf_client):
+        """Creates a group post and returns its JSON representation."""
+        group = factories.GroupFactory.create()
+
+        response = no_csrf_client.post(
+            self.url(group=group), {'text': 'foo'}, user=group.owner.user)
+
+        assert response.json['success']
+        posts = response.json['posts']
+        assert len(posts) == 1
+        post = posts[0]
+        assert post['text'] == 'foo'
+        assert post['author_id'] == group.owner.id
+        assert post['group_id'] == group.id
+
+
+    def test_create_all_students_post(self, no_csrf_client):
+        """Creates an all-students post and returns its JSON representation."""
+        elder = factories.ProfileFactory.create()
+
+        response = no_csrf_client.post(
+            self.url(), {'text': 'foo'}, user=elder.user)
+
+        assert response.json['success']
+        posts = response.json['posts']
+        assert len(posts) == 1
+        post = posts[0]
+        assert post['text'] == 'foo'
+        assert post['author_id'] == elder.id
+        assert post['group_id'] == 'all%s' % elder.id
 
 
     def test_create_post_with_sequence_id(self, no_csrf_client):
@@ -449,6 +561,57 @@ class TestJsonPosts(object):
         factories.PostFactory()
 
         response = client.get(self.url(rel.student), user=rel.elder.user)
+
+        posts = response.json['posts']
+        assert [p['text'] for p in posts] == ['post2', 'post1']
+
+
+    def test_get_group_posts(self, client):
+        """Get backlog group posts in chronological order."""
+        group = factories.GroupFactory.create(
+            owner__name='Fred')
+
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
+            author=group.owner,
+            group=group,
+            html_text='post1',
+            )
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
+            author=group.owner,
+            group=group,
+            html_text='post2',
+            )
+        # not in same group, shouldn't be returned
+        factories.BulkPostFactory()
+
+        response = client.get(self.url(group=group), user=group.owner.user)
+
+        posts = response.json['posts']
+        assert [p['text'] for p in posts] == ['post2', 'post1']
+
+
+    def test_get_all_student_posts(self, client):
+        """Get backlog all-student posts in chronological order."""
+        elder = factories.ProfileFactory.create()
+
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
+            author=elder,
+            group=None,
+            html_text='post1',
+            )
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
+            author=elder,
+            group=None,
+            html_text='post2',
+            )
+        # not in all-students group, shouldn't be returned
+        factories.BulkPostFactory()
+
+        response = client.get(self.url(), user=elder.user)
 
         posts = response.json['posts']
         assert [p['text'] for p in posts] == ['post2', 'post1']
@@ -566,13 +729,39 @@ class TestEditElder(object):
 class TestPdfParentInstructions(object):
     def test_basic(self, client):
         """Smoke test that we get a PDF response back and nothing breaks."""
-        elder = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
+        elder = factories.ProfileFactory.create(
+            school_staff=True, code='ABCDEF')
         url = reverse('pdf_parent_instructions', kwargs={'lang': 'es'})
         resp = client.get(url, user=elder.user, status=200)
 
         assert resp.headers[
             'Content-Disposition'] == 'attachment; filename=instructions-es.pdf'
         assert resp.headers['Content-Type'] == 'application/pdf'
+
+
+    def test_group(self, client):
+        """Can get a PDF for a group code."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        url = reverse(
+            'pdf_parent_instructions_group',
+            kwargs={'lang': 'en', 'group_id': group.id},
+            )
+        resp = client.get(url, user=group.owner.user, status=200)
+
+        assert resp.headers[
+            'Content-Disposition'] == 'attachment; filename=instructions-en.pdf'
+        assert resp.headers['Content-Type'] == 'application/pdf'
+
+
+    def test_must_own_group(self, client):
+        """Can't get a PDF for a group that isn't yours."""
+        group = factories.GroupFactory.create()
+        someone = factories.ProfileFactory(school_staff=True)
+        url = reverse(
+            'pdf_parent_instructions_group',
+            kwargs={'lang': 'en', 'group_id': group.id},
+            )
+        client.get(url, user=someone.user, status=404)
 
 
     def test_no_code(self, client):

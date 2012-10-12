@@ -15,7 +15,6 @@ from django.template.response import TemplateResponse
 from portfoliyo import model, pdf
 from ..ajax import ajax
 from ..decorators import school_staff_required
-from .. import home
 from . import forms
 
 
@@ -50,21 +49,25 @@ def get_relationship_or_404(student_id, profile):
 
 @school_staff_required
 @ajax('village/_add_student_content.html')
-def add_student(request):
+def add_student(request, group_id=None):
     """Add a student."""
+    group = get_object_or_404(model.Group, id=group_id) if group_id else None
+
     if request.method == 'POST':
-        form = forms.AddStudentForm(request.POST, elder=request.user.profile)
+        form = forms.AddStudentForm(
+            request.POST, elder=request.user.profile, group=group)
         if form.is_valid():
             student = form.save()
             return redirect('village', student_id=student.id)
     else:
-        form = forms.AddStudentForm(elder=request.user.profile)
+        form = forms.AddStudentForm(elder=request.user.profile, group=group)
 
     return TemplateResponse(
         request,
         'village/add_student.html',
         {
             'form': form,
+            'group': group,
             },
         )
 
@@ -103,8 +106,10 @@ def add_group(request):
     if request.method == 'POST':
         form = forms.AddGroupForm(request.POST, owner=request.user.profile)
         if form.is_valid():
-            form.save()
-            return redirect(home.redirect_home(request.user))
+            group = form.save()
+            if not group.students.exists():
+                return redirect('add_student_in_group', group_id=group.id)
+            return redirect('group', group_id=group.id)
     else:
         form = forms.AddGroupForm(owner=request.user.profile)
 
@@ -130,8 +135,8 @@ def edit_group(request, group_id):
     if request.method == 'POST':
         form = forms.GroupForm(request.POST, instance=group)
         if form.is_valid():
-            form.save()
-            return redirect(home.redirect_home(request.user))
+            group = form.save()
+            return redirect('group', group_id=group.id)
     else:
         form = forms.GroupForm(instance=group)
 
@@ -148,22 +153,38 @@ def edit_group(request, group_id):
 
 @school_staff_required
 @ajax('village/_invite_elder_content.html')
-def invite_elder(request, student_id):
-    """Invite new elder to a student's village."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
+def invite_elder(request, student_id=None, group_id=None):
+    """Invite new elder to a student's village or to a group."""
+    if student_id:
+        rel = get_relationship_or_404(student_id, request.user.profile)
+        group = None
+        form_kwargs = {'rel': rel}
+        template_context = {'student': rel.student}
+    elif group_id:
+        group = get_object_or_404(
+            model.Group.objects.filter(owner=request.user.profile), id=group_id)
+        rel = None
+        form_kwargs = {'group': group}
+        template_context = {'group': group}
+    else:
+        raise Http404
 
     if request.method == 'POST':
-        form = forms.InviteElderForm(request.POST, rel=rel)
+        form = forms.InviteElderForm(request.POST, **form_kwargs)
         if form.is_valid():
             form.save(request)
-            return redirect('village', student_id=rel.student.id)
+            if rel:
+                return redirect('village', student_id=rel.student.id)
+            return redirect('group', group_id=group.id)
     else:
-        form = forms.InviteElderForm(rel=rel)
+        form = forms.InviteElderForm(**form_kwargs)
+
+    template_context['form'] = form
 
     return TemplateResponse(
         request,
         'village/invite_elder.html',
-        {'form': form, 'student': rel.student},
+        template_context,
         )
 
 
@@ -173,12 +194,17 @@ def invite_elder(request, student_id):
 def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
+    group_id = request.GET.get('group')
+    group, = (
+        model.Group.objects.filter(students=rel.student, pk=group_id)
+        or [None]) if group_id else [None]
 
     return TemplateResponse(
         request,
         'village/village.html',
         {
             'student': rel.student,
+            'group': group,
             'relationship': rel,
             'post_char_limit': model.post_char_limit(rel),
             },
@@ -202,7 +228,7 @@ def group(request, group_id):
         'village/group.html',
         {
             'group': group,
-            'post_char_limit': 140 # @@@,
+            'post_char_limit': model.post_char_limit(request.user.profile),
             },
         )
 
@@ -219,21 +245,36 @@ def all_students(request):
         'village/group.html',
         {
             'group': group,
-            'post_char_limit': 140, # @@@
+            'post_char_limit': model.post_char_limit(request.user.profile),
             }
         )
 
 
 
 @login_required
-def json_posts(request, student_id):
+def json_posts(request, student_id=None, group_id=None):
     """Get backlog of up to 100 latest posts, or POST a post."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
+    group = None
+    rel = None
+    post_model = model.BulkPost
+    if student_id is not None:
+        rel = get_relationship_or_404(student_id, request.user.profile)
+        post_model = model.Post
+        target = rel.student
+        manager = rel.student.posts_in_village
+    elif group_id is not None:
+        group = get_object_or_404(
+            model.Group.objects.filter(owner=request.user.profile), pk=group_id)
+        target = group
+        manager = group.bulk_posts
+    else:
+        target = None
+        manager = request.user.profile.authored_bulkposts
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
         sequence_id = request.POST.get('author_sequence_id')
-        limit = model.post_char_limit(rel)
+        limit = model.post_char_limit(rel or request.user.profile)
         if len(text) > limit:
             return HttpResponseBadRequest(
                 json.dumps(
@@ -244,8 +285,8 @@ def json_posts(request, student_id):
                     ),
                 content_type='application/json',
                 )
-        post = model.Post.create(
-            request.user.profile, rel.student, text, sequence_id)
+        post = post_model.create(
+            request.user.profile, target, text, sequence_id)
 
         data = {
             'success': True,
@@ -259,9 +300,7 @@ def json_posts(request, student_id):
             [
             model.post_dict(post) for post in
             reversed(
-                rel.student.posts_in_village.order_by(
-                    '-timestamp')[:BACKLOG_POSTS]
-                )
+                manager.order_by('-timestamp')[:BACKLOG_POSTS])
             ],
         }
 
@@ -303,8 +342,12 @@ def edit_elder(request, student_id, elder_id):
 
 
 @school_staff_required
-def pdf_parent_instructions(request, lang):
+def pdf_parent_instructions(request, lang, group_id=None):
     """Render a PDF for sending home with parents."""
+    group = get_object_or_404(
+        model.Group.objects.filter(
+            owner=request.user.profile, id=group_id)) if group_id else None
+
     template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
     template_path = os.path.join(
         template_dir,
@@ -322,7 +365,7 @@ def pdf_parent_instructions(request, lang):
         template_path=template_path,
         stream=response,
         name=request.user.profile.name or "Your Child's Teacher",
-        code=request.user.profile.code or '',
+        code=group.code if group else request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
         )
 

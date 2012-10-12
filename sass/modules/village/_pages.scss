@@ -10,7 +10,7 @@
 %village-page {
   @extend %formdefaults;
   height: 100%;
-  padding: rhythm(2);
+  padding: rhythm();
   overflow-y: scroll;
   > :last-child { @include trailer(2); }
   h2 {

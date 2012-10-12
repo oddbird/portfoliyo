@@ -85,3 +85,12 @@ class PostFactory(factory.Factory):
     student = factory.SubFactory(ProfileFactory)
     original_text = 'foo'
     html_text = 'foo'
+
+
+class BulkPostFactory(factory.Factory):
+    FACTORY_FOR = model.BulkPost
+
+    author = factory.SubFactory(ProfileFactory)
+    group = factory.SubFactory(GroupFactory)
+    original_text = 'foo'
+    html_text = 'foo'

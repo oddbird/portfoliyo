@@ -1,6 +1,6 @@
 <h2 class="listitem title grouptitle">
   <a href="#" class="action-back groups" title="Go back to group list">Group:</a>
-  <a href="{{ group_url }}" class="group-link ajax-link listitem-select" data-group-name="{{ group_name }}" data-group-id="{{ group_id }}" data-group-students-url="{{ group_students_url }}" data-group-resource-url="{{ group_resource_url }}" data-group-edit-url="{{ group_edit_url }}">
+  <a href="{{ group_url }}" class="group-link ajax-link listitem-select" data-group-name="{{ group_name }}" data-group-id="{{ group_id }}" data-group-students-url="{{ group_students_url }}" data-group-resource-url="{{ group_resource_url }}" data-group-edit-url="{{ group_edit_url }}" data-group-add-student-url="{{ group_add_student_url }}">
     <span class="listitem-name">{{ group_name }}</span>
     <span class="unread">0</span>
   </a>
@@ -20,6 +20,6 @@
 </ul>
 {{# staff }}
 <aside class="additem">
-  <a href="{{ add_student_url }}" class="additem-link ajax-link">Add Student</a>
+  <a href="{{ group_add_student_url }}" class="additem-link ajax-link">Add Student</a>
 </aside>
 {{/ staff }}

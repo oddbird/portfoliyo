@@ -3,7 +3,7 @@
 {% block village-content %}
 <div class="village-main">
   {% block village-main %}
-  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ user.profile.role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{# @@@ #}" data-post-url="{# @@@ #}">
+  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ user.profile.role }}" data-user-id="{{ request.user.profile.id }}"{% if group.is_all %} data-backlog-url="{% url json_posts %}" data-post-url="{% url json_posts %}"{% else %} data-backlog-url="{% url group_json_posts group_id=group.id %}" data-post-url="{% url group_json_posts group_id=group.id %}"{% endif %}>
 
     <article class="getting-started">
       <h2>Welcome to {{ group.name }}!</h2>
@@ -27,7 +27,7 @@
     </article>
 
   </section>
-  <form method="POST" class="post-add-form" action="#{# @@@ #}" data-char-limit="{{ post_char_limit }}">
+  <form method="POST" class="post-add-form" action="{% if group.is_all %}{% url json_posts %}{% else %}{% url group_json_posts group_id=group.id %}{% endif %}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
     <div class="formfield post-textfield">

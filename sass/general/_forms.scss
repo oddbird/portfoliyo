@@ -98,12 +98,12 @@ $input-rhythm: .25;
 }
 
 @mixin inline-form($label: $left, $input: $center - $label, $context: $center, $radio-check: false) {
-  label, .label {
+  .type {
     @include ellipsis;
     @include span-columns($label,$context);
     padding: rhythm($input-rhythm) 0;
     text-align: right;
-    + input, + textarea { @include span-columns($input omega,$context); }
+    + .value { @include span-columns($input omega,$context); }
   }
   @if $radio-check {
     [type="checkbox"], [type="radio"] {
@@ -112,7 +112,7 @@ $input-rhythm: .25;
         left: space($label, $context);
         top: rhythm(-.25);
       }
-      + label {
+      + .type {
         @include reset-columns;
         @include pre($label,$context);
         display: inline-block;
@@ -141,33 +141,34 @@ $input-rhythm: .25;
   [type="checkbox"], [type="radio"] {
     display: none;
     .lt-ie9 & { display: inline; }
-    + label {
+    + .type {
       @extend %icon;
+      display: inline-block;
       &:before {
         margin-left: .4em;
         color: $base01;
       }
     }
-    &:checked + label {
+    &:checked + .type {
       font-weight: bold;
       &:before { color: $blue; }
     }
-    &:focus + label { color: $base03; }
+    &:focus + .type { color: $base03; }
   }
 
   [type="checkbox"] {
-    + label { @extend %icon-unchecked; }
-    &:checked + label { @extend %icon-checked; }
+    + .type { @extend %icon-unchecked; }
+    &:checked + .type { @extend %icon-checked; }
   }
 
   [type="radio"] {
-    + label { @extend %icon-radio-unchecked; }
-    &:checked + label { @extend %icon-radio-checked; }
+    + .type { @extend %icon-radio-unchecked; }
+    &:checked + .type { @extend %icon-radio-checked; }
   }
 }
 
 %formdefaults {
-  label {
+  .type {
     display: block;
     color: $base01;
     &:first-letter { text-transform: uppercase; }
@@ -189,6 +190,12 @@ $input-rhythm: .25;
     @extend %input;
     @include transition(200ms min-height);
     min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+  }
+
+  .fieldset-help {
+    @include leader;
+    @include trailer(.5);
+    font-style: italic;
   }
 
   .formfield-help {
@@ -223,7 +230,7 @@ button { @include reset-button; }
 // ---------------------------------------------------------------------------
 // Radio/Checkbox Options
 
-%radio-options {
+%check-options {
   @include adjust-font-size-to($input-font-size);
   @include reset-box-model;
   @include no-style-list;
@@ -232,8 +239,8 @@ button { @include reset-button; }
   border: 1px solid;
   overflow-y: scroll;
 
-  input { display: none; }
-  label {
+  .value { display: none; }
+  .type {
     @include padding-leader(.125,$input-font-size);
     @include trailing-border(1px,.125,$input-font-size);
     padding-left: rhythm(.125,$input-font-size);
@@ -243,13 +250,13 @@ button { @include reset-button; }
     margin: auto;
     position: relative;
     border-color: $base2;
+    border-color: rgba($base1,.25);
     text-align: left;
     #{$focus} { background: $base3; }
   }
 
-
-  :checked + label {
-    background: $base2;
+  :checked + .type {
+    @include rgba-background(rgba($blue,.125));
     font-weight: bold;
   }
 }

@@ -95,8 +95,8 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             rel.save()
         self.instance.save()
 
-        self.update_elder_groups(self.instance, self.cleaned_data['groups'])
         self.update_elder_students(self.instance, self.cleaned_data['students'])
+        self.update_elder_groups(self.instance, self.cleaned_data['groups'])
 
         return self.instance
 
@@ -115,10 +115,13 @@ class EditElderForm(ElderFormBase, EditProfileForm):
                 ).delete()
 
         for student in add:
-            model.Relationship.objects.get_or_create(
+            rel, created = model.Relationship.objects.get_or_create(
                 to_profile=student,
                 from_profile=elder,
                 )
+            if not created and rel.from_group:
+                rel.from_group = None
+                rel.save()
 
 
     def direct_students(self, elder):
@@ -147,15 +150,27 @@ class InviteElderForm(ElderFormBase):
     """A form for inviting an elder to a student village."""
     contact = forms.CharField(max_length=255)
     relationship = forms.CharField(max_length=200)
-    school_staff = forms.BooleanField(required=False)
 
 
     def __init__(self, *args, **kwargs):
-        """Accepts ``rel`` - relationship between inviting elder and student."""
-        self.rel = kwargs.pop('rel')
-        self.editor = self.rel.elder
+        """
+        Accepts ``rel`` or ``group``.
+
+        ``rel`` is relationship between inviting elder and student, if elder is
+        being invited in student context.
+
+        ``group`` is a group owned by inviting elder, if elder is being invited
+        in group context.
+
+        """
+        self.rel = kwargs.pop('rel', None)
+        self.group = kwargs.pop('group', None)
+        self.editor = self.rel.elder if self.rel else self.group.owner
         super(InviteElderForm, self).__init__(*args, **kwargs)
-        self.fields['students'].initial = [self.rel.to_profile_id]
+        if self.rel:
+            self.fields['students'].initial = [self.rel.to_profile_id]
+        if self.group:
+            self.fields['groups'].initial = [self.group.id]
 
 
     def clean_contact(self):
@@ -183,7 +198,7 @@ class InviteElderForm(ElderFormBase):
         email = self.cleaned_data.get("email")
         phone = self.cleaned_data.get("phone")
         relationship = self.cleaned_data.get("relationship", u"")
-        staff = self.cleaned_data.get("school_staff", False)
+        staff = (email is not None)
 
         # first check for an existing user match
         if email:
@@ -196,11 +211,12 @@ class InviteElderForm(ElderFormBase):
             profile = model.Profile.objects.get(**dupe_query)
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
-                school=self.rel.student.school,
+                school=self.editor.school,
                 email=email,
                 phone=phone,
                 role=relationship,
                 is_active=active,
+                school_staff=staff,
                 )
             created = True
         else:
@@ -222,8 +238,8 @@ class InviteElderForm(ElderFormBase):
                     subject_template_name='registration/invite_elder_subject.txt',
                     use_https=request.is_secure(),
                     extra_context={
-                        'inviter': self.rel.elder,
-                        'student': self.rel.student,
+                        'inviter': self.editor,
+                        'student': self.rel.student if self.rel else None,
                         'inviter_rel': self.rel,
                         'domain': request.get_host(),
                         },
@@ -233,21 +249,24 @@ class InviteElderForm(ElderFormBase):
                     profile.user,
                     template_name='registration/invite_elder_sms.txt',
                     extra_context={
-                        'inviter': self.rel.elder,
-                        'student': self.rel.student,
+                        'inviter': self.editor,
+                        'student': self.rel.student if self.rel else None,
                         'inviter_rel': self.rel,
                         },
                     )
 
-        self.update_elder_groups(profile, self.cleaned_data['groups'])
         for student in self.cleaned_data['students']:
-            model.Relationship.objects.get_or_create(
+            rel, created = model.Relationship.objects.get_or_create(
                 from_profile=profile,
                 to_profile=student,
                 defaults={
                     'description': relationship,
                     }
                 )
+            if not created and rel.from_group:
+                rel.from_group = None
+                rel.save()
+        self.update_elder_groups(profile, self.cleaned_data['groups'])
 
         return profile
 
@@ -279,7 +298,8 @@ class StudentForm(forms.ModelForm):
         self.fields['groups'].queryset = model.Group.objects.filter(
             owner=self.elder)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.elder.school, school_staff=True, deleted=False)
+            school=self.elder.school, school_staff=True, deleted=False).exclude(
+            pk=self.elder.pk)
         if self.instance.pk:
             self.fields['groups'].initial = [
                 g.pk for g in self.instance.student_in_groups.all()]
@@ -339,10 +359,13 @@ class StudentForm(forms.ModelForm):
                 ).delete()
 
         for elder in add:
-            model.Relationship.objects.get_or_create(
+            rel, created = model.Relationship.objects.get_or_create(
                 to_profile=student,
                 from_profile=elder,
                 )
+            if not created and rel.from_group:
+                rel.from_group = None
+                rel.save()
 
 
     def update_student_groups(self, student, groups):
@@ -366,6 +389,14 @@ class StudentForm(forms.ModelForm):
 
 class AddStudentForm(StudentForm):
     """Form for adding a student."""
+    def __init__(self, *args, **kwargs):
+        """Pre-check group, if in group context."""
+        self.group = kwargs.pop('group', None)
+        super(AddStudentForm, self).__init__(*args, **kwargs)
+        if self.group is not None:
+            self.fields['groups'].initial = [self.group.pk]
+
+
     def save(self):
         """
         Save and return new student.
@@ -379,14 +410,9 @@ class AddStudentForm(StudentForm):
         student = model.Profile.create_with_user(
             school=self.elder.school, name=name, invited_by=self.elder)
 
-        self.update_student_elders(student, self.cleaned_data['elders'])
+        self.update_student_elders(
+            student, list(self.cleaned_data['elders']) + [self.elder])
         self.update_student_groups(student, self.cleaned_data['groups'])
-
-        model.Relationship.objects.create(
-            from_profile=self.elder,
-            to_profile=student,
-            kind=model.Relationship.KIND.elder,
-            )
 
         return student
 
@@ -422,7 +448,8 @@ class GroupForm(forms.ModelForm):
         self.fields['students'].queryset = model.Profile.objects.filter(
             relationships_to__from_profile=self.owner, deleted=False)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.owner.school, school_staff=True, deleted=False)
+            school=self.owner.school, school_staff=True, deleted=False).exclude(
+            pk=self.owner.pk)
 
 
 

@@ -2,5 +2,9 @@
 
 {% block village %}
   {% include "village/_village_nav.html" %}
-  {% include "village/_invite_elder_content.html" %}
+  {% if student %}
+    {% include "village/_invite_elder_student_content.html" %}
+  {% elif group %}
+    {% include "village/_invite_elder_group_content.html" %}
+  {% endif %}
 {% endblock village %}

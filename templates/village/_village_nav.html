@@ -1,3 +1,3 @@
 {% load url from future %}
-<nav class="village-nav" data-is-staff="{{ request.user.profile.school_staff }}" data-groups-url="{% url 'api_dispatch_list' resource_name='group' api_name='v1' %}" data-add-group-url="{% url 'add_group' %}" data-add-student-url="{% url 'add_student' %}">
+<nav class="village-nav" data-is-staff="{{ request.user.profile.school_staff }}" data-groups-url="{% url 'api_dispatch_list' resource_name='group' api_name='v1' %}" data-add-group-url="{% url 'add_group' %}">
 </nav>

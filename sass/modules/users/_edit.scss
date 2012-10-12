@@ -15,7 +15,7 @@
 
 .school-field {
   @include trailer;
-  .radio-options { @extend %radio-options; }
+  .radio-options { @extend %check-options; }
   .zip {
     position: absolute;
     right: rhythm(.25,$input-font-size);

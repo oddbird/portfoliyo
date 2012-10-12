@@ -3,11 +3,14 @@
 <div class="village-elders">
   <h2>Village Elders</h2>
   <ul>
-    {% for nav_elder in group.elders.all %}
+    {% for nav_elder in group.all_elders %}
     <li class="elder vcard {{ nav_elder|elder_status:request.user.profile }}" title="{{ nav_elder|elder_status_description:request.user.profile }}">
         <b class="title">{{ nav_elder.role }}:</b>
         <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
     </li>
     {% endfor %}
   </ul>
+  {% if request.user.profile.school_staff and not group.is_all %}
+  <a href="{% url invite_elder_to_group group_id=group.id %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
+  {% endif %}
 </div>

@@ -11,9 +11,14 @@
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. 1st Period Math" label="Group Name" %}
 
-  {% include "forms/_field.html" with field=form.students %}
-
-  {% include "forms/_field.html" with field=form.elders %}
+  <div class="fieldset relation-fieldset">
+    <p class="fieldset-help">
+      Select existing students and staff elders to add to your new group.
+      Group elders will be added to all students in the group.
+    </p>
+    {% include "forms/_field.html" with field=form.students %}
+    {% include "forms/_field.html" with field=form.elders %}
+  </div>
 
   <div class="form-actions">
     <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>
