@@ -247,14 +247,29 @@ def all_students(request):
 
 
 @login_required
-def json_posts(request, student_id):
+def json_posts(request, student_id=None, group_id=None):
     """Get backlog of up to 100 latest posts, or POST a post."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
+    group = None
+    rel = None
+    post_model = model.BulkPost
+    if student_id is not None:
+        rel = get_relationship_or_404(student_id, request.user.profile)
+        post_model = model.Post
+        target = rel.student
+        manager = rel.student.posts_in_village
+    elif group_id is not None:
+        group = get_object_or_404(
+            model.Group.objects.filter(owner=request.user.profile), pk=group_id)
+        target = group
+        manager = group.bulk_posts
+    else:
+        target = None
+        manager = request.user.profile.authored_bulkposts
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
         sequence_id = request.POST.get('author_sequence_id')
-        limit = model.post_char_limit(rel)
+        limit = model.post_char_limit(rel or request.user.profile)
         if len(text) > limit:
             return HttpResponseBadRequest(
                 json.dumps(
@@ -265,8 +280,8 @@ def json_posts(request, student_id):
                     ),
                 content_type='application/json',
                 )
-        post = model.Post.create(
-            request.user.profile, rel.student, text, sequence_id)
+        post = post_model.create(
+            request.user.profile, target, text, sequence_id)
 
         data = {
             'success': True,
@@ -280,9 +295,7 @@ def json_posts(request, student_id):
             [
             model.post_dict(post) for post in
             reversed(
-                rel.student.posts_in_village.order_by(
-                    '-timestamp')[:BACKLOG_POSTS]
-                )
+                manager.order_by('-timestamp')[:BACKLOG_POSTS])
             ],
         }
 

@@ -298,7 +298,8 @@ class StudentForm(forms.ModelForm):
         self.fields['groups'].queryset = model.Group.objects.filter(
             owner=self.elder)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.elder.school, school_staff=True, deleted=False)
+            school=self.elder.school, school_staff=True, deleted=False).exclude(
+            pk=self.elder.pk)
         if self.instance.pk:
             self.fields['groups'].initial = [
                 g.pk for g in self.instance.student_in_groups.all()]
@@ -409,14 +410,9 @@ class AddStudentForm(StudentForm):
         student = model.Profile.create_with_user(
             school=self.elder.school, name=name, invited_by=self.elder)
 
-        self.update_student_elders(student, self.cleaned_data['elders'])
+        self.update_student_elders(
+            student, list(self.cleaned_data['elders']) + [self.elder])
         self.update_student_groups(student, self.cleaned_data['groups'])
-
-        model.Relationship.objects.create(
-            from_profile=self.elder,
-            to_profile=student,
-            kind=model.Relationship.KIND.elder,
-            )
 
         return student
 

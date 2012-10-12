@@ -434,10 +434,14 @@ class TestGroupDetail(object):
 
 class TestJsonPosts(object):
     """Tests for json_posts view."""
-    def url(self, student=None):
-        if student is None:
-            student = factories.ProfileFactory.create()
-        return reverse('json_posts', kwargs=dict(student_id=student.id))
+    def url(self, student=None, group=None):
+        if student is not None:
+            return reverse(
+                'student_json_posts', kwargs=dict(student_id=student.id))
+        elif group is not None:
+            return reverse('group_json_posts', kwargs=dict(group_id=group.id))
+        else:
+            return reverse('json_posts')
 
 
     def test_requires_relationship(self, client):
@@ -445,7 +449,15 @@ class TestJsonPosts(object):
         elder = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
 
-        client.get(self.url(student), user=elder.user, status=404)
+        client.get(self.url(student=student), user=elder.user, status=404)
+
+
+    def test_requires_group_owner(self, client):
+        """Only the owner of a group can get its posts."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        group = factories.GroupFactory.create()
+
+        client.get(self.url(group=group), user=elder.user, status=404)
 
 
     def test_create_post(self, no_csrf_client):
@@ -462,6 +474,38 @@ class TestJsonPosts(object):
         assert post['text'] == 'foo'
         assert post['author_id'] == rel.elder.id
         assert post['student_id'] == rel.student.id
+
+
+    def test_create_group_post(self, no_csrf_client):
+        """Creates a group post and returns its JSON representation."""
+        group = factories.GroupFactory.create()
+
+        response = no_csrf_client.post(
+            self.url(group=group), {'text': 'foo'}, user=group.owner.user)
+
+        assert response.json['success']
+        posts = response.json['posts']
+        assert len(posts) == 1
+        post = posts[0]
+        assert post['text'] == 'foo'
+        assert post['author_id'] == group.owner.id
+        assert post['group_id'] == group.id
+
+
+    def test_create_all_students_post(self, no_csrf_client):
+        """Creates an all-students post and returns its JSON representation."""
+        elder = factories.ProfileFactory.create()
+
+        response = no_csrf_client.post(
+            self.url(), {'text': 'foo'}, user=elder.user)
+
+        assert response.json['success']
+        posts = response.json['posts']
+        assert len(posts) == 1
+        post = posts[0]
+        assert post['text'] == 'foo'
+        assert post['author_id'] == elder.id
+        assert post['group_id'] == 'all%s' % elder.id
 
 
     def test_create_post_with_sequence_id(self, no_csrf_client):
@@ -517,6 +561,57 @@ class TestJsonPosts(object):
         factories.PostFactory()
 
         response = client.get(self.url(rel.student), user=rel.elder.user)
+
+        posts = response.json['posts']
+        assert [p['text'] for p in posts] == ['post2', 'post1']
+
+
+    def test_get_group_posts(self, client):
+        """Get backlog group posts in chronological order."""
+        group = factories.GroupFactory.create(
+            owner__name='Fred')
+
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
+            author=group.owner,
+            group=group,
+            html_text='post1',
+            )
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
+            author=group.owner,
+            group=group,
+            html_text='post2',
+            )
+        # not in same group, shouldn't be returned
+        factories.BulkPostFactory()
+
+        response = client.get(self.url(group=group), user=group.owner.user)
+
+        posts = response.json['posts']
+        assert [p['text'] for p in posts] == ['post2', 'post1']
+
+
+    def test_get_all_student_posts(self, client):
+        """Get backlog all-student posts in chronological order."""
+        elder = factories.ProfileFactory.create()
+
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
+            author=elder,
+            group=None,
+            html_text='post1',
+            )
+        factories.BulkPostFactory(
+            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
+            author=elder,
+            group=None,
+            html_text='post2',
+            )
+        # not in all-students group, shouldn't be returned
+        factories.BulkPostFactory()
+
+        response = client.get(self.url(), user=elder.user)
 
         posts = response.json['posts']
         assert [p['text'] for p in posts] == ['post2', 'post1']
