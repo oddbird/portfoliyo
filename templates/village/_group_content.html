@@ -6,7 +6,7 @@
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ user.profile.role }}" data-user-id="{{ request.user.profile.id }}"{% if group.is_all %} data-backlog-url="{% url json_posts %}" data-post-url="{% url json_posts %}"{% else %} data-backlog-url="{% url group_json_posts group_id=group.id %}" data-post-url="{% url group_json_posts group_id=group.id %}"{% endif %}>
 
     <article class="getting-started">
-      <h2>Welcome to {{ group.name }}!</h2>
+      <h2>Welcome to the {{ group.name }} Group!</h2>
 
       <p>
         <strong>Send a text message</strong> to any <i class="mobile">mobile</i> user
