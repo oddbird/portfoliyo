@@ -49,6 +49,10 @@ $village-nav-action-color : $base03;
       @include background(linear-gradient(bottom, rgba($village-nav-title-bg,.5), rgba($village-nav-title-bg,.125)));
       font-weight: bold;
       color: $back;
+      &.active {
+        background: $base1;
+        color: $base3;
+      }
     }
     .group & {
       @extend %icon;

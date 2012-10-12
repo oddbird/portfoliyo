@@ -1939,6 +1939,10 @@ button {
   font-weight: bold;
   color: #073642;
 }
+.title .listitem-select:link.active, .title .listitem-select:visited.active {
+  background: #93a1a1;
+  color: #fdf6e3;
+}
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
   background: url('../images/rgbapng/eee8d57f.png?1349281723');
   background: rgba(238, 232, 213, 0.5);
