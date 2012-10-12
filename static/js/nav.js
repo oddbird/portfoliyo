@@ -251,8 +251,13 @@ var PYO = (function (PYO, $) {
                 }
 
                 channel.bind('message_posted', function (data) {
-                    var contextId = group ? PYO.activeGroupId : PYO.activeStudentId;
-                    if (id === contextId) {
+                    var contextId;
+                    if (group) {
+                        if (!PYO.activeStudentId) { contextId = PYO.activeGroupId; }
+                    } else {
+                        contextId = PYO.activeStudentId;
+                    }
+                    if (contextId && id === contextId) {
                         var scroll = PYO.scrolledToBottom();
                         if (!PYO.replacePost(data)) {
                             PYO.addPost(data);

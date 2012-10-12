@@ -215,7 +215,7 @@ var PYO = (function (PYO, $) {
         if (response && response.posts && response.posts.length) {
             var feed = $('.village-feed');
             $.each(response.posts, function (index, value) {
-                if (this.student_id && this.student_id === PYO.activeStudentId) {
+                if ((this.student_id && this.student_id === PYO.activeStudentId) || (this.group_id && this.group_id === PYO.activeGroupId && !PYO.activeStudentId)) {
                     if (this.author_sequence_id) {
                         var oldPost = feed.find('.post.mine[data-author-sequence="' + this.author_sequence_id + '"]');
                         if (oldPost && oldPost.length) {
