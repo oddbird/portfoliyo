@@ -177,7 +177,8 @@ class GroupBase(object):
     def all_elders(self):
         """Return queryset of all elders of all students in group."""
         return Profile.objects.order_by('name').distinct().filter(
-            relationships_from__to_profile__in=self.students.all())
+            relationships_from__to_profile__in=self.students.filter(
+                deleted=False))
 
 
 
@@ -251,7 +252,8 @@ class AllStudentsGroup(GroupBase):
     @property
     def students(self):
         """Return queryset of all students in group."""
-        return Profile.objects.filter(relationships_to__from_profile=self.owner)
+        return Profile.objects.filter(
+            relationships_to__from_profile=self.owner, deleted=False)
 
 
 

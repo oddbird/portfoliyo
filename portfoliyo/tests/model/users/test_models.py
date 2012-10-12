@@ -283,9 +283,11 @@ class TestGroup(object):
 
     def test_all_elders(self):
         """Queryset of elders of students in group, ordered by name."""
-        rel = factories.RelationshipFactory(from_profile__name='B')
-        e = factories.ProfileFactory(name='A')
-        s = factories.ProfileFactory()
+        rel = factories.RelationshipFactory.create(from_profile__name='B')
+        e = factories.ProfileFactory.create(name='A')
+        factories.RelationshipFactory.create(
+            from_profile__name='C', from_profile__deleted=True)
+        s = factories.ProfileFactory.create()
         g = factories.GroupFactory(owner=rel.elder)
         g.students.add(s, rel.student)
         g.elders.add(e)
@@ -484,6 +486,8 @@ class TestAllStudentsGroup(object):
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
         factories.RelationshipFactory.create(to_profile=rel.student)
+        factories.RelationshipFactory.create(
+            from_profile=rel.elder, to_profile__deleted=True)
         g = model.AllStudentsGroup(rel.elder)
 
         assert set(g.students) == set([rel.student, rel2.student])
@@ -495,6 +499,9 @@ class TestAllStudentsGroup(object):
         factories.RelationshipFactory.create(from_profile=rel.elder)
         factories.RelationshipFactory.create(
             from_profile__name='A', to_profile=rel.student)
+        delrel = factories.RelationshipFactory.create(
+            from_profile=rel.elder, to_profile__deleted=True)
+        factories.RelationshipFactory.create(to_profile=delrel.student)
         g = model.AllStudentsGroup(rel.elder)
 
         # alphabetically ordered by name
