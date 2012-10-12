@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options :disabled + .type:before, .students-field .check-options :disabled + .type:before, .elders-field .check-options :disabled + .type:before, .groups-field .check-options :disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .elder:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options :disabled + .type:before, .students-field .check-options :disabled + .type:before, .elders-field .check-options :disabled + .type:before, .groups-field .check-options :disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .elder:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options :disabled + .type:before, .students-field .check-options :disabled + .type:before, .elders-field .check-options :disabled + .type:before, .groups-field .check-options :disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .elder:before, .message:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options :disabled + .type:before, .students-field .check-options :disabled + .type:before, .elders-field .check-options :disabled + .type:before, .groups-field .check-options :disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .elder:before, .message:before {
   margin-right: .4em;
 }
 
@@ -219,7 +219,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\25ef";
 }
 
-.select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
+.group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\265b";
 }
 
@@ -1721,99 +1721,138 @@ button {
   box-shadow: #073642 0 0 2px inset;
   content: " ";
   position: absolute;
-  right: 0.31944em;
+  right: 0.20536em;
   display: inline-block;
+  margin-top: 0.20536em;
   width: 1em;
   height: 1em;
 }
 .select-groups .label-color-1:after {
-  background: #ffc202;
+  background: #b58900;
 }
 .select-groups .label-color-2:after {
-  background: #eb7443;
+  background: #cb4b16;
 }
 .select-groups .label-color-3:after {
-  background: #e175a9;
+  background: #d33682;
 }
 .select-groups .label-color-4:after {
-  background: #a3a6da;
+  background: #6c71c4;
 }
 .select-groups .label-color-5:after {
-  background: #48cfc5;
+  background: #2aa198;
 }
 .select-groups .label-color-6:after {
-  background: #c8e600;
+  background: #859900;
 }
 .select-groups .label-color-7:after {
-  background: #f2cd5c;
+  background: #ffc202;
 }
 .select-groups .label-color-8:after {
-  background: #e8ab92;
+  background: #eb7443;
 }
 .select-groups .label-color-9:after {
-  background: #e8bad0;
+  background: #e175a9;
 }
 .select-groups .label-color-10:after {
-  background: #dddeec;
+  background: #a3a6da;
 }
 .select-groups .label-color-11:after {
-  background: #90d4cf;
+  background: #48cfc5;
 }
 .select-groups .label-color-12:after {
-  background: #d9f042;
+  background: #c8e600;
+}
+.select-groups .label-color-13:after {
+  background: #f6e8be;
+}
+.select-groups .label-color-14:after {
+  background: #f8ede8;
+}
+.select-groups .label-color-15:after {
+  background: white;
+}
+.select-groups .label-color-16:after {
+  background: white;
+}
+.select-groups .label-color-17:after {
+  background: #dceeec;
+}
+.select-groups .label-color-18:after {
+  background: #e8f2a6;
 }
 
-.select-students [class*="group-selected-"]:before, .select-elders [class*="group-selected-"]:before {
-  position: absolute;
-  right: 0.31944em;
-}
 .select-students .group-selected-1:before, .select-elders .group-selected-1:before {
   text-shadow: #073642 0 1px 0;
-  color: #ffc202;
+  color: #b58900;
 }
 .select-students .group-selected-2:before, .select-elders .group-selected-2:before {
   text-shadow: #073642 0 1px 0;
-  color: #eb7443;
+  color: #cb4b16;
 }
 .select-students .group-selected-3:before, .select-elders .group-selected-3:before {
   text-shadow: #073642 0 1px 0;
-  color: #e175a9;
+  color: #d33682;
 }
 .select-students .group-selected-4:before, .select-elders .group-selected-4:before {
   text-shadow: #073642 0 1px 0;
-  color: #a3a6da;
+  color: #6c71c4;
 }
 .select-students .group-selected-5:before, .select-elders .group-selected-5:before {
   text-shadow: #073642 0 1px 0;
-  color: #48cfc5;
+  color: #2aa198;
 }
 .select-students .group-selected-6:before, .select-elders .group-selected-6:before {
   text-shadow: #073642 0 1px 0;
-  color: #c8e600;
+  color: #859900;
 }
 .select-students .group-selected-7:before, .select-elders .group-selected-7:before {
   text-shadow: #073642 0 1px 0;
-  color: #f2cd5c;
+  color: #ffc202;
 }
 .select-students .group-selected-8:before, .select-elders .group-selected-8:before {
   text-shadow: #073642 0 1px 0;
-  color: #e8ab92;
+  color: #eb7443;
 }
 .select-students .group-selected-9:before, .select-elders .group-selected-9:before {
   text-shadow: #073642 0 1px 0;
-  color: #e8bad0;
+  color: #e175a9;
 }
 .select-students .group-selected-10:before, .select-elders .group-selected-10:before {
   text-shadow: #073642 0 1px 0;
-  color: #dddeec;
+  color: #a3a6da;
 }
 .select-students .group-selected-11:before, .select-elders .group-selected-11:before {
   text-shadow: #073642 0 1px 0;
-  color: #90d4cf;
+  color: #48cfc5;
 }
 .select-students .group-selected-12:before, .select-elders .group-selected-12:before {
   text-shadow: #073642 0 1px 0;
-  color: #d9f042;
+  color: #c8e600;
+}
+.select-students .group-selected-13:before, .select-elders .group-selected-13:before {
+  text-shadow: #073642 0 1px 0;
+  color: #f6e8be;
+}
+.select-students .group-selected-14:before, .select-elders .group-selected-14:before {
+  text-shadow: #073642 0 1px 0;
+  color: #f8ede8;
+}
+.select-students .group-selected-15:before, .select-elders .group-selected-15:before {
+  text-shadow: #073642 0 1px 0;
+  color: white;
+}
+.select-students .group-selected-16:before, .select-elders .group-selected-16:before {
+  text-shadow: #073642 0 1px 0;
+  color: white;
+}
+.select-students .group-selected-17:before, .select-elders .group-selected-17:before {
+  text-shadow: #073642 0 1px 0;
+  color: #dceeec;
+}
+.select-students .group-selected-18:before, .select-elders .group-selected-18:before {
+  text-shadow: #073642 0 1px 0;
+  color: #e8f2a6;
 }
 
 .parent-instructions h2 {

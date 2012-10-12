@@ -10,14 +10,23 @@
   @include nth-omega(last);
 }
 
-$label-colors: $yellow $orange $magenta $violet $cyan $green;
-$adjusted-colors: compact();
-@each $color in $label-colors { $adjusted-colors: join($adjusted-colors, adjust-color($color, $lightness: 15%)); }
-$label-colors: $adjusted-colors;
-@each $color in $label-colors {
-  $new-colors: adjust-color($color, $saturation: -15%, $lightness: 15%);
-  $label-colors: join($label-colors, $new-colors);
+@function lighten-color($color, $amount) {
+  @return adjust-color($color, $lightness: $amount);
 }
+
+$label-colors: $yellow $orange $magenta $violet $cyan $green
+               lighten-color($yellow, 15%)
+               lighten-color($orange, 15%)
+               lighten-color($magenta, 15%)
+               lighten-color($violet, 15%)
+               lighten-color($cyan, 15%)
+               lighten-color($green, 15%)
+               desaturate(lighten-color($yellow, 50%), 25%)
+               desaturate(lighten-color($orange, 50%), 25%)
+               desaturate(lighten-color($magenta, 50%), 25%)
+               desaturate(lighten-color($violet, 50%), 25%)
+               desaturate(lighten-color($cyan, 50%), 25%)
+               desaturate(lighten-color($green, 50%), 25%);
 
 .select-groups {
   [class*="label-color-"] {
@@ -26,8 +35,9 @@ $label-colors: $adjusted-colors;
       @include box-shadow($back 0 0 2px inset);
       content: " ";
       position: absolute;
-      right: rhythm(.25);
+      right: rhythm(.125,$input-font-size);
       display: inline-block;
+      margin-top: rhythm(.125,$input-font-size);
       width: 1em;
       height: 1em;
     }
@@ -40,14 +50,6 @@ $label-colors: $adjusted-colors;
 }
 
 .select-students, .select-elders {
-  [class*="group-selected-"] {
-    @extend %icon;
-    @extend %icon-users;
-    &:before {
-      position: absolute;
-      right: rhythm(.25);
-    }
-  }
   $i: 1;
   @each $color in $label-colors {
     .group-selected-#{$i}:before {
