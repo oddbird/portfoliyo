@@ -209,7 +209,7 @@ class Group(models.Model):
     @property
     def all_elders(self):
         """Return queryset of all elders of all students in group."""
-        return Profile.objects.filter(
+        return Profile.objects.order_by('name').distinct().filter(
             relationships_from__to_profile__in=self.students.all())
 
 

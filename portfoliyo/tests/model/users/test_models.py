@@ -282,15 +282,16 @@ class TestGroup(object):
 
 
     def test_all_elders(self):
-        """all_elders property is queryset of elders of students in group."""
-        rel = factories.RelationshipFactory()
-        e = factories.ProfileFactory()
+        """Queryset of elders of students in group, ordered by name."""
+        rel = factories.RelationshipFactory(from_profile__name='B')
+        e = factories.ProfileFactory(name='A')
         s = factories.ProfileFactory()
-        g = factories.GroupFactory()
+        g = factories.GroupFactory(owner=rel.elder)
         g.students.add(s, rel.student)
         g.elders.add(e)
 
-        assert set(g.all_elders) == set([rel.elder, e])
+        # alphabetically ordered by name
+        assert [e.name for e in g.all_elders] == ['A', 'B']
 
 
     def test_elder_relationships(self):
