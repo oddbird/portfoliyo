@@ -56,7 +56,7 @@ $label-colors: $adjusted-colors;
 // ---------------------------------------------------------------------------
 // Add/Edit Village
 
-.village-add-form, .village-edit-form { @extend %village-solo-page; }
+.add-student, .village-edit-form { @extend %village-solo-page; }
 
 .parent-instructions {
   h2 { @include trailer(.5, $largepx); }

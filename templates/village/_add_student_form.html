@@ -1,0 +1,12 @@
+{% extends "village/_student_form.html" %}
+{% load url from future %}
+
+{% block form-action %}{% url 'add_student' %}{% endblock %}
+
+{% block form-class %}village-add-form details-body{% endblock %}
+
+{% block form-id %}add-student-form{% endblock %}
+
+{% block form-header %}Add a Student by Hand{% endblock %}
+
+{% block form-button-text %}add{% endblock %}

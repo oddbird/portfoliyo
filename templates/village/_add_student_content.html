@@ -1,30 +1,27 @@
-{% extends "village/_student_form.html" %}
+{% extends "village/_village_content_main.html" %}
 {% load url from future %}
 
-{% block form-top %}
-{% if group.code or request.user.profile.code %}
-<div class="parent-instructions">
-  <img src="{{ STATIC_URL }}images/pdf.png" class="pdf-thumbnail" alt="">
-  <h2>Parent signup:</h2>
-  <p>
-    Send this PDF home with students
-    to have their parents add them to
-    {% if group %}the '{{ group.name }}' group{% else %}your account{% endif %}.
-  </p>
-  <ul class="pdf-downloads">
-    <li><a href="{% if group %}{% url 'pdf_parent_instructions_group' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="pdf-en">English</a></li>
-    <li><a href="{% if group %}{% url 'pdf_parent_instructions_group' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="pdf-es">Spanish</a></li>
-  </ul>
+{% block village-content %}
+<div class="add-student">
+  {% if group.code or request.user.profile.code %}
+  <div class="parent-instructions">
+    <img src="{{ STATIC_URL }}images/pdf.png" class="pdf-thumbnail" alt="">
+    <h2>Parent signup:</h2>
+    <p>
+      Send this PDF home with students
+      to have their parents add them to
+      {% if group %}the '{{ group.name }}' group{% else %}your account{% endif %}.
+    </p>
+    <ul class="pdf-downloads">
+      <li><a href="{% if group %}{% url 'pdf_parent_instructions_group' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="pdf-en">English</a></li>
+      <li><a href="{% if group %}{% url 'pdf_parent_instructions_group' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="pdf-es">Spanish</a></li>
+    </ul>
+  </div>
+  {% endif %}
+
+  <div class="details student-form-details">
+    <a href="#" class="summary">You can also add students by hand.</a>
+    {% include "village/_add_student_form.html" %}
+  </div>
 </div>
-{% endif %}
-{% endblock %}
-
-{% block form-action %}{% url 'add_student' %}{% endblock %}
-
-{% block form-class %}village-add-form{% endblock %}
-
-{% block form-id %}add-student-form{% endblock %}
-
-{% block form-header %}Add a Student by Hand{% endblock %}
-
-{% block form-button-text %}add{% endblock %}
+{% endblock village-content %}
