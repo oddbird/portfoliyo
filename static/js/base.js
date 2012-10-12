@@ -85,6 +85,7 @@ var PYO = (function (PYO, $) {
                     var newPage = $(response.html);
                     container.replaceWith(newPage);
                     newPage.find('.details').html5accordion();
+                    newPage.find('input[placeholder], textarea[placeholder]').placeholder();
                     PYO.initializePage();
                 }
                 container.loadingOverlay('remove');

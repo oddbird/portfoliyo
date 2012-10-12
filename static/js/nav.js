@@ -119,6 +119,7 @@ var PYO = (function (PYO, $) {
                 PYO.updateNavActiveClasses(newGroups);
                 nav.trigger('before-replace').html(newGroups);
                 newGroups.find('.details').html5accordion();
+                newGroups.find('input[placeholder], textarea[placeholder]').placeholder();
                 PYO.listenForPosts(newGroups.find('.listitem'));
                 if (!all_students_group_obj && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
@@ -177,6 +178,7 @@ var PYO = (function (PYO, $) {
                 PYO.updateNavActiveClasses(students);
                 nav.trigger('before-replace').html(students);
                 students.find('.details').html5accordion();
+                students.find('input[placeholder], textarea[placeholder]').placeholder();
                 PYO.listenForPosts(students.find('*').andSelf().filter('.listitem'));
             } else { fetchStudentsError(); }
         };
@@ -315,6 +317,7 @@ var PYO = (function (PYO, $) {
                         if (!inserted) {
                             nav.find('.itemlist').append(student);
                             student.find('.details').html5accordion();
+                            student.find('input[placeholder], textarea[placeholder]').placeholder();
                             student.slideDown();
                         }
                         PYO.listenForPosts(student);
