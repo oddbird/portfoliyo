@@ -171,6 +171,7 @@ var PYO = (function (PYO, $) {
                 data.group_resource_url = group_obj.resource_url;
                 data.group_add_student_url = group_obj.add_student_url;
                 data.staff = nav.data('is-staff');
+                if (group_obj.id.toString().indexOf('all') !== -1) { data.all_students = true; }
                 var students = ich.student_list(data);
                 PYO.updateNavActiveClasses(students);
                 nav.trigger('before-replace').html(students);
@@ -205,7 +206,7 @@ var PYO = (function (PYO, $) {
                             add_student_url: this.add_student_uri
                         };
                     }
-                    if (this.id.toString().indexOf('all') !== -1) {
+                    if (!all_students_group_obj && this.id.toString().indexOf('all') !== -1) {
                         all_students_group_obj = {
                             name: this.name,
                             url: this.group_uri,
@@ -250,7 +251,8 @@ var PYO = (function (PYO, $) {
                 }
 
                 channel.bind('message_posted', function (data) {
-                    if (id === PYO.activeStudentId || id === PYO.activeGroupId) {
+                    var contextId = group ? PYO.activeGroupId : PYO.activeStudentId;
+                    if (id === contextId) {
                         var scroll = PYO.scrolledToBottom();
                         if (!PYO.replacePost(data)) {
                             PYO.addPost(data);
@@ -288,10 +290,13 @@ var PYO = (function (PYO, $) {
             var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
 
             channel.bind('student_added', function (data) {
-                if (data && data.objects && data.objects.length && nav.find('.grouptitle .group-link[data-name="All Students"]').length) {
+                if (data && data.objects && data.objects.length && nav.find('.grouptitle .group-link').filter(function () {
+                    return $(this).data('group-id').toString().indexOf('all') !== -1;
+                }).length) {
                     $.each(data.objects, function () {
                         this.staff = nav.data('is-staff');
                         this.objects = true;
+                        this.all_students = true;
                         var student = ich.student_list_item(this);
                         var inserted = false;
                         nav.find('.student').each(function () {
@@ -351,7 +356,7 @@ var PYO = (function (PYO, $) {
                 var id;
                 if ($(this).hasClass('group-link')) {
                     id = $(this).data('group-id');
-                    return id === PYO.activeGroupId;
+                    if (!PYO.activeStudentId) { return id === PYO.activeGroupId; }
                 } else {
                     id = $(this).data('id');
                     return id === PYO.activeStudentId;

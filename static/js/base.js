@@ -110,7 +110,8 @@ var PYO = (function (PYO, $) {
                         var stateData = History.getState().data;
                         var currentUrl = stateData.url ? stateData.url : window.location.pathname;
                         if (url === currentUrl) {
-                            PYO.pageAjaxLoad(url + '?ajax=true');
+                            var query = url.toString().indexOf('?') !== -1 ? '&' : '?';
+                            PYO.pageAjaxLoad(url + query + 'ajax=true');
                         } else {
                             var title = document.title;
                             var data = { url: url };
@@ -123,7 +124,8 @@ var PYO = (function (PYO, $) {
                 $(window).bind('statechange', function () {
                     var data = History.getState().data;
                     var url = data.url ? data.url : window.location.pathname;
-                    PYO.pageAjaxLoad(url + '?ajax=true');
+                    var query = url.toString().indexOf('?') !== -1 ? '&' : '?';
+                    PYO.pageAjaxLoad(url + query + 'ajax=true');
                 });
             }
         }
