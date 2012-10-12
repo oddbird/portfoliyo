@@ -82,7 +82,9 @@ var PYO = (function (PYO, $) {
 
             pageAjax.XHR = $.get(url, function (response) {
                 if (response && response.html && pageAjax.count === count) {
-                    container.replaceWith($(response.html));
+                    var newPage = $(response.html);
+                    container.replaceWith(newPage);
+                    newPage.find('.details').html5accordion();
                     PYO.initializePage();
                 }
                 container.loadingOverlay('remove');
@@ -140,8 +142,8 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.disablePreselectedElderAssociations = function () {
-        var form = $('#invite-elders-form');
+    PYO.disablePreselectedAssociations = function (container) {
+        var form = $(container);
         var inputs = form.find('.relation-fieldset .check-options input:checked');
 
         inputs.attr('disabled', 'disabled');
@@ -164,8 +166,8 @@ var PYO = (function (PYO, $) {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
-        $('.village-content .details').html5accordion();
-        if ($('#invite-elders-form').length) { PYO.disablePreselectedElderAssociations(); }
+        if ($('#invite-elders-form').length) { PYO.disablePreselectedAssociations('#invite-elders-form'); }
+        if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
     };
 
