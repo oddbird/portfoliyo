@@ -223,7 +223,7 @@ def group(request, group_id):
         'village/group.html',
         {
             'group': group,
-            'post_char_limit': 140 # @@@,
+            'post_char_limit': model.post_char_limit(request.user.profile),
             },
         )
 
@@ -240,7 +240,7 @@ def all_students(request):
         'village/group.html',
         {
             'group': group,
-            'post_char_limit': 140, # @@@
+            'post_char_limit': model.post_char_limit(request.user.profile),
             }
         )
 
