@@ -194,12 +194,17 @@ def invite_elder(request, student_id=None, group_id=None):
 def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
+    group_id = request.GET.get('group')
+    group, = (
+        model.Group.objects.filter(students=rel.student, pk=group_id)
+        or [None]) if group_id else [None]
 
     return TemplateResponse(
         request,
         'village/village.html',
         {
             'student': rel.student,
+            'group': group,
             'relationship': rel,
             'post_char_limit': model.post_char_limit(rel),
             },
