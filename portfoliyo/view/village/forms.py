@@ -448,7 +448,8 @@ class GroupForm(forms.ModelForm):
         self.fields['students'].queryset = model.Profile.objects.filter(
             relationships_to__from_profile=self.owner, deleted=False)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.owner.school, school_staff=True, deleted=False)
+            school=self.owner.school, school_staff=True, deleted=False).exclude(
+            pk=self.owner.pk)
 
 
 

@@ -524,10 +524,19 @@ class TestStudentForms(object):
         rel = factories.RelationshipFactory.create()
         group = factories.GroupFactory.create(owner=rel.elder)
 
-        form = forms.AddStudentForm(
-            instance=rel.student, elder=rel.elder, group=group)
+        form = forms.AddStudentForm(elder=rel.elder, group=group)
 
         assert form.fields['groups'].initial == [group.pk]
+
+
+    def test_self_not_in_elder_choices(self):
+        """The user viewing the form is not in the elder choices."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        form = forms.StudentForm(instance=rel.student, elder=rel.elder)
+
+        assert rel.elder not in form.fields['elders'].queryset
 
 
     def test_add_student_with_group_and_elder(self):
@@ -777,6 +786,15 @@ class TestGroupForms(object):
 
         assert len(group.students.all()) == 0
         assert set(group.elders.all()) == {elder}
+
+
+    def test_self_not_in_elder_choices(self):
+        """The user viewing the form is not in the elder choices."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+
+        form = forms.GroupForm(instance=group)
+
+        assert group.owner not in form.fields['elders'].queryset
 
 
     def _assert_cannot_add(self, group, elder=None, student=None):
