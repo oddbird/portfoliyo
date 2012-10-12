@@ -63,6 +63,7 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 // ---------------------------------------------------------------------------
 // Add/Edit Village
 
+.group-add-form, .group-edit-form { @extend %village-solo-page; }
 .add-student, .village-edit-form { @extend %village-solo-page; }
 
 .parent-instructions {
