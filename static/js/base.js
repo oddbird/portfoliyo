@@ -164,6 +164,7 @@ var PYO = (function (PYO, $) {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
+        $('.village-content .details').html5accordion();
         if ($('#invite-elders-form').length) { PYO.disablePreselectedElderAssociations(); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
     };

@@ -118,6 +118,7 @@ var PYO = (function (PYO, $) {
                 var newGroups = ich.group_list(data);
                 PYO.updateNavActiveClasses(newGroups);
                 nav.trigger('before-replace').html(newGroups);
+                newGroups.find('.details').html5accordion();
                 PYO.listenForPosts(newGroups.find('.listitem'));
                 if (!all_students_group_obj && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
@@ -175,6 +176,7 @@ var PYO = (function (PYO, $) {
                 var students = ich.student_list(data);
                 PYO.updateNavActiveClasses(students);
                 nav.trigger('before-replace').html(students);
+                students.find('.details').html5accordion();
                 PYO.listenForPosts(students.find('*').andSelf().filter('.listitem'));
             } else { fetchStudentsError(); }
         };
@@ -312,6 +314,7 @@ var PYO = (function (PYO, $) {
                         });
                         if (!inserted) {
                             nav.find('.itemlist').append(student);
+                            student.find('.details').html5accordion();
                             student.slideDown();
                         }
                         PYO.listenForPosts(student);
