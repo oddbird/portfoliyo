@@ -487,3 +487,15 @@ class TestAllStudentsGroup(object):
         g = model.AllStudentsGroup(rel.elder)
 
         assert set(g.students) == set([rel.student, rel2.student])
+
+
+    def test_all_elders(self):
+        """Queryset of elders of students in group, ordered by name."""
+        rel = factories.RelationshipFactory.create(from_profile__name='B')
+        factories.RelationshipFactory.create(from_profile=rel.elder)
+        factories.RelationshipFactory.create(
+            from_profile__name='A', to_profile=rel.student)
+        g = model.AllStudentsGroup(rel.elder)
+
+        # alphabetically ordered by name
+        assert [e.name for e in g.all_elders] == ['A', 'B']

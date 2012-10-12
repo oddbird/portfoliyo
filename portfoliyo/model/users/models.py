@@ -167,7 +167,21 @@ class Profile(models.Model):
 
 
 
-class Group(models.Model):
+class GroupBase(object):
+    """Common methods between Group and AllStudentsGroup."""
+    def __unicode__(self):
+        return self.name
+
+
+    @property
+    def all_elders(self):
+        """Return queryset of all elders of all students in group."""
+        return Profile.objects.order_by('name').distinct().filter(
+            relationships_from__to_profile__in=self.students.all())
+
+
+
+class Group(GroupBase, models.Model):
     """A group of students and elders, set up by a particular teacher."""
     name = models.CharField(max_length=200)
     owner = models.ForeignKey(Profile, related_name='owned_groups')
@@ -178,10 +192,6 @@ class Group(models.Model):
     # code for parent-initiated signups
     code = models.CharField(max_length=20, unique=True)
     deleted = models.BooleanField(default=False)
-
-
-    def __unicode__(self):
-        return self.name
 
 
     def save(self, *args, **kwargs):
@@ -207,13 +217,6 @@ class Group(models.Model):
 
 
     @property
-    def all_elders(self):
-        """Return queryset of all elders of all students in group."""
-        return Profile.objects.order_by('name').distinct().filter(
-            relationships_from__to_profile__in=self.students.all())
-
-
-    @property
     def elder_relationships(self):
         """Return queryset of all relationships for students in group."""
         return Relationship.objects.filter(
@@ -223,7 +226,7 @@ class Group(models.Model):
 
 
 
-class AllStudentsGroup(object):
+class AllStudentsGroup(GroupBase):
     """Stand-in for a Group instance for all-students."""
     name = 'All Students'
     is_all = True
