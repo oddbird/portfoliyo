@@ -46,6 +46,17 @@ def get_relationship_or_404(student_id, profile):
         raise Http404
 
 
+def get_querystring_group(request, student):
+    """Get optional group from querystring."""
+    try:
+        group_id = int(request.GET.get('group'))
+        group = model.Group.objects.get(
+            students=student, owner=request.user.profile, pk=group_id)
+    except (ValueError, TypeError, model.Group.DoesNotExist):
+        group = None
+    return group
+
+
 
 @school_staff_required
 @ajax('village/_add_student_content.html')
@@ -78,6 +89,7 @@ def add_student(request, group_id=None):
 def edit_student(request, student_id):
     """Edit a student."""
     rel = get_relationship_or_404(student_id, request.user.profile)
+    group = get_querystring_group(request, rel.student)
 
     if request.method == 'POST':
         form = forms.StudentForm(
@@ -94,6 +106,7 @@ def edit_student(request, student_id):
         {
             'form': form,
             'student': rel.student,
+            'group': group,
             },
         )
 
@@ -159,7 +172,10 @@ def invite_elder(request, student_id=None, group_id=None):
         rel = get_relationship_or_404(student_id, request.user.profile)
         group = None
         form_kwargs = {'rel': rel}
-        template_context = {'student': rel.student}
+        template_context = {
+            'student': rel.student,
+            'group': get_querystring_group(request, rel.student),
+            }
     elif group_id:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), id=group_id)
@@ -194,10 +210,7 @@ def invite_elder(request, student_id=None, group_id=None):
 def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
-    group_id = request.GET.get('group')
-    group, = (
-        model.Group.objects.filter(students=rel.student, pk=group_id)
-        or [None]) if group_id else [None]
+    group = get_querystring_group(request, rel.student)
 
     return TemplateResponse(
         request,

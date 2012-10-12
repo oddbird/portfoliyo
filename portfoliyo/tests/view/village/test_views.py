@@ -15,6 +15,66 @@ from portfoliyo.tests import factories, utils
 
 
 
+class GroupContextTests(object):
+    """Common tests for views that maintain group context via querystring."""
+    def test_maintain_group_context(self, client):
+        """Can take ?group=id to maintain group nav context."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        response = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] == group
+
+
+    def test_group_context_student_must_be_in_group(self, client):
+        """?group=id not effective unless student is in group."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+
+        response = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] is None
+
+
+    def test_group_context_must_own_group(self, client):
+        """?group=id not effective unless active user owns group."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create()
+        group.students.add(rel.student)
+
+        response = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] is None
+
+
+    def test_group_context_bad_id(self, client):
+        """?group=id doesn't blow up with non-int id."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        response = client.get(
+            self.url(rel.student) + '?group=all23',
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] is None
+
+
+
 class TestDashboard(object):
     def test_dashboard(self, client):
         """Asks user to pick a student."""
@@ -89,7 +149,7 @@ class TestAddStudent(object):
 
 
 
-class TestEditStudent(object):
+class TestEditStudent(GroupContextTests):
     """Tests for edit_student view."""
     def url(self, student=None):
         """Shortcut to get URL of edit-student view."""
@@ -247,7 +307,7 @@ class TestEditGroup(object):
 
 
 
-class TestInviteElders(object):
+class TestInviteElders(GroupContextTests):
     """Tests for invite_elder view."""
     def url(self, student=None, group=None):
         assert student or group
@@ -338,7 +398,7 @@ class TestInviteElders(object):
 
 
 
-class TestVillage(object):
+class TestVillage(GroupContextTests):
     """Tests for village chat view."""
     def url(self, student=None):
         if student is None:
