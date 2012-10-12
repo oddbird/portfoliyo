@@ -253,10 +253,15 @@ button { @include reset-button; }
     border-color: rgba($base1,.25);
     text-align: left;
     #{$focus} { background: $base3; }
+    &:before { float: left; }
   }
 
   :checked + .type {
     @include rgba-background(rgba($blue,.125));
     font-weight: bold;
+  }
+  :disabled + .type {
+    @extend %icon;
+    @extend %icon-locked;
   }
 }

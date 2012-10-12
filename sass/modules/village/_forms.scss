@@ -21,10 +21,12 @@ $label-colors: $adjusted-colors;
 
 .select-groups {
   [class*="label-color-"] {
-    &:before {
+    &:after {
       @include border-radius(3px);
       @include box-shadow($back 0 0 2px inset);
       content: " ";
+      position: absolute;
+      right: rhythm(.25);
       display: inline-block;
       width: 1em;
       height: 1em;
@@ -32,7 +34,7 @@ $label-colors: $adjusted-colors;
   }
   $i: 1;
   @each $color in $label-colors {
-    .label-color-#{$i}:before { background: $color; }
+    .label-color-#{$i}:after { background: $color; }
     $i: $i + 1;
   }
 }
@@ -41,7 +43,10 @@ $label-colors: $adjusted-colors;
   [class*="group-selected-"] {
     @extend %icon;
     @extend %icon-users;
-    &:before { float: left; }
+    &:before {
+      position: absolute;
+      right: rhythm(.25);
+    }
   }
   $i: 1;
   @each $color in $label-colors {
