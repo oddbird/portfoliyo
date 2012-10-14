@@ -18,5 +18,9 @@
   </form>
 </div>
 
+{% if student %}
 {% include "village/_village_info.html" %}
+{% else %}
+{% include "village/_group_info.html" %}
+{% endif %}
 {% endblock village-content %}

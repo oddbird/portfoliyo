@@ -704,14 +704,20 @@ class TestJsonPosts(object):
 
 
 class TestEditElder(object):
-    def url(self, rel=None):
+    def url(self, rel=None, elder=None, group=None):
         """rel is relationship between a student and elder to be edited."""
-        if rel is None:
-            rel = factories.RelationshipFactory()
-        return reverse(
-            'edit_elder',
-            kwargs={'student_id': rel.student.id, 'elder_id': rel.elder.id},
-            )
+        assert elder or rel
+        if rel:
+            return reverse(
+                'edit_elder_in_village',
+                kwargs={'student_id': rel.student.id, 'elder_id': rel.elder.id},
+                )
+        elif group:
+            return reverse(
+                'edit_elder_in_group',
+                kwargs={'elder_id': elder.id, 'group_id': group.id},
+                )
+        return reverse('edit_elder', kwargs={'elder_id': elder.id})
 
 
     def test_success(self, client):
@@ -749,6 +755,44 @@ class TestEditElder(object):
         res = form.submit(status=200)
 
         res.mustcontain('field is required')
+
+
+    def test_in_group(self, client):
+        """Can edit an elder from a group context."""
+        elder = factories.ProfileFactory.create()
+        editor = factories.ProfileFactory.create(
+            school_staff=True, school=elder.school)
+        group = factories.GroupFactory.create(owner=editor)
+        group.elders.add(elder)
+
+        form = client.get(
+            self.url(elder=elder, group=group),
+            user=editor.user,
+            ).forms['edit-elder-form']
+        form['name'] = 'New Name'
+        form['role'] = 'New Role'
+        form.submit()
+
+        elder = utils.refresh(elder)
+        assert elder.name == 'New Name'
+        assert elder.role == 'New Role'
+
+
+    def test_in_all_students_group(self, client):
+        """Can edit an elder from the all-students group."""
+        elder = factories.ProfileFactory.create()
+        editor = factories.ProfileFactory.create(
+            school_staff=True, school=elder.school)
+
+        form = client.get(
+            self.url(elder=elder), user=editor.user).forms['edit-elder-form']
+        form['name'] = 'New Name'
+        form['role'] = 'New Role'
+        form.submit()
+
+        elder = utils.refresh(elder)
+        assert elder.name == 'New Name'
+        assert elder.role == 'New Role'
 
 
     def test_school_staff_required(self, client):

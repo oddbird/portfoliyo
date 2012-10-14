@@ -322,33 +322,47 @@ def json_posts(request, student_id=None, group_id=None):
 
 @school_staff_required
 @ajax('village/_edit_elder_content.html')
-def edit_elder(request, student_id, elder_id):
+def edit_elder(request, elder_id, student_id=None, group_id=None):
     """Edit a village elder."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
     elder = get_object_or_404(
         model.Profile.objects.select_related('user'), id=elder_id)
     # can't edit the profile of another school staff
     if elder.school_staff:
         raise Http404
-    elder_rel = get_relationship_or_404(student_id, elder)
+    if student_id is not None:
+        get_relationship_or_404(student_id, request.user.profile)
+        elder_rel = get_relationship_or_404(student_id, elder)
+        group = get_querystring_group(request, elder_rel.student)
+    else:
+        elder_rel = None
+        if group_id is not None:
+            group = get_object_or_404(model.Group.objects.filter(
+                    owner=request.user.profile, deleted=False), pk=group_id)
+        else:
+            group = model.AllStudentsGroup(request.user.profile)
 
     if request.method == 'POST':
         form = forms.EditElderForm(
-            request.POST, instance=elder, editor=rel.elder)
+            request.POST, instance=elder, editor=request.user.profile)
         if form.is_valid():
             form.save(elder_rel)
             messages.success(request, u"Changes saved!")
-            return redirect('village', student_id=student_id)
+            if elder_rel:
+                return redirect('village', student_id=student_id)
+            elif group and not group.is_all:
+                return redirect('group', group_id=group.id)
+            return redirect('all_students')
     else:
-        form = forms.EditElderForm(instance=elder, editor=rel.elder)
+        form = forms.EditElderForm(instance=elder, editor=request.user.profile)
 
     return TemplateResponse(
         request,
         'village/edit_elder.html',
         {
             'form': form,
-            'student': elder_rel.student,
-            'elder': elder_rel.elder,
+            'group': group,
+            'student': elder_rel.student if elder_rel else None,
+            'elder': elder,
             },
         )
 

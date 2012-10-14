@@ -78,7 +78,7 @@ class ElderFormBase(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ElderFormBase, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
-            owner=self.editor)
+            owner=self.editor, deleted=False)
         self.fields['students'].queryset = model.Profile.objects.filter(
             relationships_to__from_profile=self.editor, deleted=False)
         self.fields['students'].groups_attr = 'student_in_groups'
@@ -113,11 +113,12 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             s.pk for s in self.direct_students(self.instance)]
 
 
-    def save(self, rel):
-        """Save this elder in context of given village relationship."""
+    def save(self, rel=None):
+        """Save elder (optionally in context of given village relationship)."""
         self.instance.name = self.cleaned_data['name']
         old_profile_role = self.instance.role
-        old_relationship_role = rel.description_or_role
+        old_relationship_role = (
+            rel.description_or_role if rel else self.instance.role)
         new_role = self.cleaned_data['role']
         if old_profile_role == old_relationship_role:
             self.instance.role = new_role
@@ -330,7 +331,7 @@ class StudentForm(forms.ModelForm):
         self.elder = kwargs.pop('elder')
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
-            owner=self.elder)
+            owner=self.elder, deleted=False)
         self.fields['elders'].queryset = model.Profile.objects.filter(
             school=self.elder.school, school_staff=True, deleted=False).exclude(
             pk=self.elder.pk)
