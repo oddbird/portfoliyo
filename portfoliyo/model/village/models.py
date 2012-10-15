@@ -2,7 +2,9 @@
 from __future__ import absolute_import
 
 from collections import defaultdict
+import logging
 import re
+import socket
 
 from django.db import models
 from django.utils import dateformat, html, timezone
@@ -11,6 +13,9 @@ from jsonfield import JSONField
 from portfoliyo.pusher import get_pusher
 from portfoliyo import sms
 from ..users import models as user_models
+
+
+logger = logging.getLogger(__name__)
 
 
 def now():
@@ -119,10 +124,13 @@ class Post(models.Model):
         pusher = get_pusher()
         if pusher is not None:
             channel = 'student_%s' % student.id
-            pusher[channel].trigger(
-                'message_posted',
-                {'posts': [post_dict(post, author_sequence_id=sequence_id)]},
-                )
+            try:
+                pusher[channel].trigger(
+                    'message_posted',
+                    {'posts': [post_dict(post, author_sequence_id=sequence_id)]},
+                    )
+            except socket.error as e:
+                logger.error("Pusher socket error: %s" % str(e))
 
         return post
 

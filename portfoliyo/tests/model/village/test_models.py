@@ -137,6 +137,30 @@ class TestPostCreate(object):
         assert post_data['student_id'] == rel.student.id
 
 
+    def test_pusher_socket_error(self):
+        """
+        A pusher socket error is logged to Sentry and then ignored.
+
+        Pusher is not critical enough to be worth causing the post to fail.
+
+        """
+        import socket
+        rel = factories.RelationshipFactory.create()
+
+        get_pusher_location = 'portfoliyo.model.village.models.get_pusher'
+        logger_error_location = 'portfoliyo.model.village.models.logger.error'
+        with mock.patch(get_pusher_location) as mock_get_pusher:
+            channel = mock_get_pusher.return_value['student_%s' % rel.student.id]
+            channel.trigger.side_effect = socket.error('connection timed out')
+
+            with mock.patch(logger_error_location) as mock_logger_error:
+                models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
+
+        mock_logger_error.assert_called_with(
+            "Pusher socket error: connection timed out")
+
+
+
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_notifies_highlighted_mobile_users(self, mock_send_sms):
         """Sends text to highlighted active mobile users."""
