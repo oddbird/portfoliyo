@@ -100,6 +100,16 @@ class TestInviteElderForm(object):
         assert mail.outbox[0].to == [u'bar@example.com']
 
 
+    def test_sets_invited_by(self):
+        """Invited_by field is set to inviting elder."""
+        form = forms.InviteElderForm(self.data(contact='+12345678909'))
+        assert form.is_valid()
+        rel = factories.RelationshipFactory()
+        profile = form.save(mock.Mock(), rel)
+
+        assert profile.invited_by == rel.elder
+
+
     def test_email_user_inactive(self):
         """User invited by email is inactive."""
         form = forms.InviteElderForm(self.data())

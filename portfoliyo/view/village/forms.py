@@ -82,6 +82,7 @@ class InviteElderForm(forms.Form):
                 role=relationship,
                 is_active=active,
                 school_staff=staff,
+                invited_by=rel.elder,
                 )
             created = True
         else:
