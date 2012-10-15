@@ -274,7 +274,7 @@ var PYO = (function (PYO, $) {
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
-        if ($('#invite-elders-form').length) { PYO.disablePreselectedAssociations('#invite-elders-form'); }
+        if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
     };

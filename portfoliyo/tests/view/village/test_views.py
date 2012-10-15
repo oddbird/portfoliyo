@@ -340,7 +340,7 @@ class TestInviteElders(GroupContextTests):
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
-        form = response.forms['invite-elders-form']
+        form = response.forms['invite-elder-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
         response = form.submit(status=302)
@@ -366,7 +366,7 @@ class TestInviteElders(GroupContextTests):
         form = client.get(
             self.url(rel.student) + '?group=%s' % group.id,
             user=rel.elder.user,
-            ).forms['invite-elders-form']
+            ).forms['invite-elder-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
         response = form.submit().follow()
@@ -378,7 +378,7 @@ class TestInviteElders(GroupContextTests):
         """User can invite an elder to a group."""
         group = factories.GroupFactory.create(owner__school_staff=True)
         response = client.get(self.url(group=group), user=group.owner.user)
-        form = response.forms['invite-elders-form']
+        form = response.forms['invite-elder-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
         response = form.submit(status=302)
@@ -407,7 +407,7 @@ class TestInviteElders(GroupContextTests):
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
-        form = response.forms['invite-elders-form']
+        form = response.forms['invite-elder-form']
         form['contact'] = "(123)456-7890"
         form['relationship'] = ""
         response = form.submit(status=200)
