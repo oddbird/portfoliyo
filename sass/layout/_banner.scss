@@ -29,9 +29,10 @@ $banner-leading : 1 + $banner-rhythm*2;
     height: rhythm($banner-leading, $banner-size);
     display: block;
     overflow: hidden;
+    font-weight: bold;
+    white-space: nowrap;
     &:before { margin: 0; }
   }
-  b { font-weight: bold; }
 }
 
 // ---------------------------------------------------------------------------
