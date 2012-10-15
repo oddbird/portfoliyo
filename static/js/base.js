@@ -24,6 +24,16 @@ var PYO = (function (PYO, $) {
         DOWN: 40
     };
 
+    PYO.ieInputBootstrap = function () {
+        $('body').on('change', 'input[type="radio"], input[type="checkbox"]', function () {
+            if ($(this).is(':checked')) {
+                $(this).attr('checked', 'checked');
+            } else {
+                $(this).removeAttr('checked');
+            }
+        });
+    };
+
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
             var page = $(container);
