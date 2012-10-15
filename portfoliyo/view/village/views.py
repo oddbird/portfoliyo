@@ -8,7 +8,8 @@ import os
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseBadRequest, Http404
+from django.core.urlresolvers import reverse
+from django import http
 from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 
@@ -33,6 +34,15 @@ def dashboard(request):
         )
 
 
+def redirect_to_village(student, group=None):
+    """Redirect to a student village, optionally in group context."""
+    target = reverse('village', kwargs=dict(student_id=student.id))
+    if group:
+        target = '%s?group=%s' % (target, group.id)
+    return http.HttpResponseRedirect(target)
+
+
+
 def get_relationship_or_404(student_id, profile):
     """Get relationship between student_id and profile, or 404."""
     try:
@@ -43,7 +53,7 @@ def get_relationship_or_404(student_id, profile):
             kind=model.Relationship.KIND.elder,
             )
     except model.Relationship.DoesNotExist:
-        raise Http404
+        raise http.Http404
 
 
 def get_querystring_group(request, student):
@@ -69,7 +79,7 @@ def add_student(request, group_id=None):
             request.POST, elder=request.user.profile, group=group)
         if form.is_valid():
             student = form.save()
-            return redirect('village', student_id=student.id)
+            return redirect_to_village(student, group)
     else:
         form = forms.AddStudentForm(elder=request.user.profile, group=group)
 
@@ -96,7 +106,7 @@ def edit_student(request, student_id):
             request.POST, instance=rel.student, elder=rel.elder)
         if form.is_valid():
             student = form.save()
-            return redirect('village', student_id=student.id)
+            return redirect_to_village(student, group)
     else:
         form = forms.StudentForm(instance=rel.student, elder=rel.elder)
 
@@ -143,7 +153,7 @@ def edit_group(request, group_id):
     group = get_object_or_404(
         model.Group.objects.select_related('owner'), pk=group_id)
     if group.owner != request.user.profile:
-        raise Http404
+        raise http.Http404
 
     if request.method == 'POST':
         form = forms.GroupForm(request.POST, instance=group)
@@ -183,14 +193,15 @@ def invite_elder(request, student_id=None, group_id=None):
         form_kwargs = {'group': group}
         template_context = {'group': group}
     else:
-        raise Http404
+        raise http.Http404
 
     if request.method == 'POST':
         form = forms.InviteElderForm(request.POST, **form_kwargs)
         if form.is_valid():
             form.save(request)
             if rel:
-                return redirect('village', student_id=rel.student.id)
+                return redirect_to_village(
+                    rel.student, template_context.get('group'))
             return redirect('group', group_id=group.id)
     else:
         form = forms.InviteElderForm(**form_kwargs)
@@ -289,7 +300,7 @@ def json_posts(request, student_id=None, group_id=None):
         sequence_id = request.POST.get('author_sequence_id')
         limit = model.post_char_limit(rel or request.user.profile)
         if len(text) > limit:
-            return HttpResponseBadRequest(
+            return http.HttpResponseBadRequest(
                 json.dumps(
                     {
                         'error': 'Posts are limited to %s characters.' % limit,
@@ -306,7 +317,7 @@ def json_posts(request, student_id=None, group_id=None):
             'posts': [model.post_dict(post, author_sequence_id=sequence_id)],
             }
 
-        return HttpResponse(json.dumps(data), content_type='application/json')
+        return http.HttpResponse(json.dumps(data), content_type='application/json')
 
     data = {
         'posts':
@@ -317,7 +328,7 @@ def json_posts(request, student_id=None, group_id=None):
             ],
         }
 
-    return HttpResponse(json.dumps(data), content_type='application/json')
+    return http.HttpResponse(json.dumps(data), content_type='application/json')
 
 
 @school_staff_required
@@ -328,7 +339,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
         model.Profile.objects.select_related('user'), id=elder_id)
     # can't edit the profile of another school staff
     if elder.school_staff:
-        raise Http404
+        raise http.Http404
     if student_id is not None:
         get_relationship_or_404(student_id, request.user.profile)
         elder_rel = get_relationship_or_404(student_id, elder)
@@ -382,9 +393,9 @@ def pdf_parent_instructions(request, lang, group_id=None):
         )
 
     if not os.path.isfile(template_path):
-        raise Http404
+        raise http.Http404
 
-    response = HttpResponse(content_type='application/pdf')
+    response = http.HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = (
         'attachment; filename=instructions-%s.pdf' % lang)
 

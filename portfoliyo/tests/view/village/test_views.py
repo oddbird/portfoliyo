@@ -119,7 +119,8 @@ class TestAddStudent(object):
 
         assert response.status_code == 302, response.body
         assert response['Location'] == utils.location(
-            reverse('village', kwargs={'student_id': student.id}))
+            reverse('village', kwargs={'student_id': student.id}),
+            ) + "?group=" + str(group.id)
 
 
     def test_validation_error(self, client):
@@ -171,6 +172,23 @@ class TestEditStudent(GroupContextTests):
 
         assert response['Location'] == utils.location(
             reverse('village', kwargs={'student_id': rel.student.id}))
+
+
+    def test_maintain_group_context_on_redirect(self, client):
+        """The group context is passed on through the form submission."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        form = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = "Some Student"
+        response = form.submit().follow()
+
+        assert response.context['group'] == group
 
 
     def test_validation_error(self, client):
@@ -336,6 +354,24 @@ class TestInviteElders(GroupContextTests):
 
         # relationship with student is created
         assert rel.student.relationships_to.count() == 2
+
+
+    def test_maintain_group_context_on_redirect(self, client):
+        """The group context is passed on through the form submission."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        form = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            ).forms['invite-elders-form']
+        form['contact'] = "dad@example.com"
+        form['relationship'] = "Father"
+        response = form.submit().follow()
+
+        assert response.context['group'] == group
 
 
     def test_invite_elder_to_group(self, client):
