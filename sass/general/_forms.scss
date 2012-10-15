@@ -60,7 +60,6 @@ $input-rhythm: .25;
   border-color: inherit;
   vertical-align: top;
   outline: 0;
-  .lt-ie9 & { padding: 0 .5em; }
 }
 
 %button {
@@ -107,18 +106,12 @@ $input-rhythm: .25;
   }
   @if $radio-check {
     [type="checkbox"], [type="radio"] {
-      .lt-ie9 & {
-        position: relative;
-        left: space($label, $context);
-        top: rhythm(-.25);
-      }
       + .type {
         @include reset-columns;
         @include pre($label,$context);
         display: inline-block;
         padding: 0;
         text-align: left;
-        .lt-ie9 &:before { display: none; }
       }
     }
   }
@@ -140,7 +133,6 @@ $input-rhythm: .25;
 %radio-check-defaults {
   [type="checkbox"], [type="radio"] {
     display: none;
-    .lt-ie9 & { display: inline; }
     + .type {
       @extend %icon;
       display: inline-block;
@@ -149,7 +141,7 @@ $input-rhythm: .25;
         color: $base01;
       }
     }
-    &:checked + .type {
+    &[checked] + .type {
       font-weight: bold;
       &:before { color: $blue; }
     }
@@ -158,12 +150,12 @@ $input-rhythm: .25;
 
   [type="checkbox"] {
     + .type { @extend %icon-unchecked; }
-    &:checked + .type { @extend %icon-checked; }
+    &[checked] + .type { @extend %icon-checked; }
   }
 
   [type="radio"] {
     + .type { @extend %icon-radio-unchecked; }
-    &:checked + .type { @extend %icon-radio-checked; }
+    &[checked] + .type { @extend %icon-radio-checked; }
   }
 }
 
@@ -241,8 +233,8 @@ button { @include reset-button; }
 
   .value {
     display: none;
-    &:checked + .type { @extend %options-checked; }
-    &:disabled + .type { @extend %options-disabled; }
+    &[checked] + .type { @extend %options-checked; }
+    &[disabled] + .type { @extend %options-disabled; }
   }
   .type {
     @include padding-leader(.125,$input-font-size);
