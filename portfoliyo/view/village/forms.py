@@ -252,6 +252,7 @@ class InviteElderForm(ElderFormBase):
                 role=relationship,
                 is_active=active,
                 school_staff=staff,
+                invited_by=self.editor,
                 )
             created = True
         else:

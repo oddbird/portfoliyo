@@ -375,6 +375,16 @@ class TestInviteElderForm(object):
         assert form.fields['groups'].initial == [group.pk]
 
 
+    def test_sets_invited_by(self):
+        """Invited_by field is set to inviting elder."""
+        rel = factories.RelationshipFactory()
+        form = forms.InviteElderForm(self.data(contact='+12345678909'), rel=rel)
+        assert form.is_valid()
+        profile = form.save(mock.Mock())
+
+        assert profile.invited_by == rel.elder
+
+
     def test_email_user_inactive(self):
         """User invited by email is inactive."""
         rel = factories.RelationshipFactory.create()
