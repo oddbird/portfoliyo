@@ -9,8 +9,8 @@
     <h2>Parent signup:</h2>
     <p>
       Send this PDF home with students
-      to have their parents add them to
-      {% if group %}the '{{ group.name }}' group{% else %}your account{% endif %}.
+      to have their parents add themselves to
+      {% if group %}the '<strong>{{ group.name }}</strong>' group{% else %}your account{% endif %}.
     </p>
     <ul class="pdf-downloads">
       <li><a href="{% if group %}{% url 'pdf_parent_instructions_group' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="pdf-en">English</a></li>

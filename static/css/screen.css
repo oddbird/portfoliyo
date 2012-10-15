@@ -383,25 +383,25 @@ a:focus, a:hover, a:active {
   border: 1px solid #073642;
 }
 
-.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .village-landing h1, .getting-started h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .village-landing h2, .getting-started h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .village-landing h3, .getting-started h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .village-landing h4, .getting-started h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .village-landing h5, .getting-started h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .village-landing h6, .getting-started h6 {
+.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .village-landing h1, .parent-instructions h1, .getting-started h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .village-landing h2, .parent-instructions h2, .getting-started h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .village-landing h3, .parent-instructions h3, .getting-started h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .village-landing h4, .parent-instructions h4, .getting-started h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .village-landing h5, .parent-instructions h5, .getting-started h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .village-landing h6, .parent-instructions h6, .getting-started h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .village-landing p, .getting-started p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .getting-started ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .getting-started ol {
+.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .village-landing p, .parent-instructions p, .getting-started p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .parent-instructions ul, .getting-started ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .parent-instructions ol, .getting-started ol {
   margin-bottom: 1.27778em;
 }
-.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .getting-started ul {
+.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .parent-instructions ul, .getting-started ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .getting-started ol {
+.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .parent-instructions ol, .getting-started ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .village-landing em, .getting-started em {
+.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .village-landing em, .parent-instructions em, .getting-started em {
   font-style: italic;
 }
-.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .village-landing strong, .getting-started strong {
+.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .village-landing strong, .parent-instructions strong, .getting-started strong {
   font-weight: 500;
 }
 
@@ -1859,7 +1859,6 @@ button {
   margin-bottom: 0.32857em;
 }
 .parent-instructions p {
-  margin-bottom: 1.27778em;
   overflow: hidden;
 }
 .parent-instructions .pdf-thumbnail {

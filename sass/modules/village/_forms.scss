@@ -67,11 +67,9 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 .add-student, .village-edit-form { @extend %village-solo-page; }
 
 .parent-instructions {
+  @extend %type;
   h2 { @include trailer(.5, $largepx); }
-  p {
-    @include trailer;
-    overflow: hidden;
-  }
+  p { overflow: hidden; }
   .pdf-thumbnail {
     @extend %img;
     @include span-columns($left,$center);
