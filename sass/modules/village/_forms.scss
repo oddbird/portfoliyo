@@ -7,7 +7,7 @@
     height: rhythm(8,$input-font-size);
   }
   @include span-columns($center/2, $center);
-  @include nth-omega(last);
+  + .students-field, + .elders-field { @include omega; }
 }
 
 @function lighten-color($color, $amount) {
@@ -50,7 +50,7 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 }
 
 .select-students, .select-elders {
-  .value:disabled + .type { @extend %options-checked; }
+  .value[disabled] + .type { @extend %options-checked; }
 
   $i: 1;
   @each $color in $label-colors {
