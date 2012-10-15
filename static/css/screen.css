@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options :disabled + .type:before, .students-field .check-options :disabled + .type:before, .elders-field .check-options :disabled + .type:before, .groups-field .check-options :disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .vcard:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value:disabled + .type:before, .students-field .check-options .value:disabled + .type:before, .elders-field .check-options .value:disabled + .type:before, .groups-field .check-options .value:disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .vcard:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options :disabled + .type:before, .students-field .check-options :disabled + .type:before, .elders-field .check-options :disabled + .type:before, .groups-field .check-options :disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .vcard:before, .message:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value:disabled + .type:before, .students-field .check-options .value:disabled + .type:before, .elders-field .check-options .value:disabled + .type:before, .groups-field .check-options .value:disabled + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .vcard:before, .message:before {
   margin-right: .4em;
 }
 
@@ -299,7 +299,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e002";
 }
 
-.school-field .radio-options :disabled + .type:before, .students-field .check-options :disabled + .type:before, .elders-field .check-options :disabled + .type:before, .groups-field .check-options :disabled + .type:before {
+.school-field .radio-options .value:disabled + .type:before, .students-field .check-options .value:disabled + .type:before, .elders-field .check-options .value:disabled + .type:before, .groups-field .check-options .value:disabled + .type:before {
   content: "\e003";
 }
 
@@ -733,7 +733,8 @@ button {
 .school-field .radio-options .type:before, .students-field .check-options .type:before, .elders-field .check-options .type:before, .groups-field .check-options .type:before {
   float: left;
 }
-.school-field .radio-options :checked + .type, .students-field .check-options :checked + .type, .elders-field .check-options :checked + .type, .groups-field .check-options :checked + .type {
+
+.school-field .radio-options .value:checked + .type, .students-field .check-options .value:checked + .type, .elders-field .check-options .value:checked + .type, .groups-field .check-options .value:checked + .type, .select-students .value:disabled + .type, .select-elders .value:disabled + .type {
   background: url('../images/rgbapng/268bd220.png?1349993307');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
