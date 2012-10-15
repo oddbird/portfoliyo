@@ -145,18 +145,27 @@ var PYO = (function (PYO, $) {
 
     PYO.disablePreselectedAssociations = function (container) {
         var form = $(container);
-        var inputs = form.find('.relation-fieldset .check-options input:checked');
+        var inputs = form.find('.relation-fieldset .check-options input');
+        var checked = inputs.filter(':checked');
 
-        inputs.attr('disabled', 'disabled').each(function () {
-            var el = $(this);
-            var label = $(this).siblings('.type');
+        checked.attr('disabled', 'disabled').each(function () {
+            var el = $(this).data('pre-selected', true);
+            var label = el.siblings('.type');
             if (el.closest('form').hasClass('village-add-form')) {
-                label.attr('title', 'this is the group to which you are adding this student');
+                label.attr('title', 'You are adding a student to the "' + $.trim(label.text()) + '" group.');
             } else if (el.closest('form').hasClass('elder-add-form')) {
-                var type = el.attr('name').substring(0, el.attr('name').toString().length - 1);
-                label.attr('title', 'this is the ' + type + ' you are inviting this elder to join');
+                var title;
+                if (el.closest('.check-options').hasClass('select-groups')) {
+                    title = 'You are inviting an elder to join all the student villages in the "' + $.trim(label.text()) + '" group.';
+                    label.attr('title', title).data('title', title);
+                }
+                if (el.closest('.check-options').hasClass('select-students')) {
+                    title = "You are inviting an elder to join " + $.trim(label.text()) + "'s village.";
+                    label.attr('title', title).data('title', title);
+                }
             }
         });
+
         form.submit(function () { inputs.removeAttr('disabled'); });
     };
 
@@ -166,29 +175,75 @@ var PYO = (function (PYO, $) {
             var groupInputs = form.find('.check-options input[name="groups"]');
             var inputs = form.find('.check-options input').not(groupInputs);
             var count = 0;
+            var selectedIds = [];
             var updateColors = function () {
-                groupInputs.each(function () {
-                    var el = $(this);
-                    var label = el.siblings('.type');
-                    if (el.is(':checked')) {
-                        if (label.data('color')) {
-                            label.addClass(label.data('color'));
-                        } else {
-                            count = count === 18 ? 1 : count + 1;
-                            label.addClass('label-color-' + count);
-                            label.data('color', 'label-color-' + count);
+                var colorInputs = function (i) {
+                    var id = selectedIds[i];
+                    var group = groupInputs.filter('[value=' + id + ']');
+                    var groupLabel = group.siblings('.type');
+                    var groupName = $.trim(groupLabel.text());
+                    var thisCount = groupLabel.data('color-count');
+                    var relInputs = inputs.filter(function () {
+                        var groups = $(this).data('group-ids');
+                        return $.inArray(id, groups) !== -1;
+                    });
+                    relInputs.each(function () {
+                        var el = $(this);
+                        if (!el.data('colored')) {
+                            el.data('colored', true).attr('disabled', 'disabled');
+                            el.siblings('.type').addClass('group-selected-' + thisCount).attr('title', 'selected as part of "' + groupName + '" group');
                         }
-                    } else if (label.data('color')) {
-                        label.removeClass(label.data('color'));
+                    });
+                };
+
+                inputs.each(function () {
+                    var el = $(this).removeData('colored');
+                    var label = el.siblings('.type');
+                    var classes = label.attr('class').split(' ');
+                    for (var i = 0; i < classes.length; i++) {
+                        if (classes[i].indexOf('group-selected-') !== -1) { label.removeClass(classes[i]); }
+                    }
+                    if (el.data('pre-selected')) {
+                        label.attr('title', label.data('title'));
+                    } else {
+                        el.removeAttr('disabled');
+                        label.removeAttr('title');
                     }
                 });
+
+                if (selectedIds && selectedIds.length) {
+                    for (var i = 0; i < selectedIds.length; i++) {
+                        colorInputs(i);
+                    }
+                }
             };
 
             groupInputs.change(function () {
+                var el = $(this);
+                var label = el.siblings('.type');
+                var id = parseInt(el.val(), 10);
+                var thisCount;
+                if (el.is(':checked')) {
+                    if ($.inArray(id, selectedIds) === -1) { selectedIds.unshift(id); }
+                    if (label.data('color-count')) {
+                        thisCount = label.data('color-count');
+                    } else {
+                        count = count === 18 ? 1 : count + 1;
+                        thisCount = count;
+                        label.data('color-count', thisCount);
+                    }
+                    label.addClass('label-color-' + thisCount);
+                } else {
+                    if ($.inArray(id, selectedIds) !== -1) { selectedIds.splice($.inArray(id, selectedIds), 1); }
+                    if (label.data('color-count')) {
+                        thisCount = label.data('color-count');
+                        label.removeClass('label-color-' + thisCount);
+                    }
+                }
                 updateColors();
             });
 
-            updateColors();
+            groupInputs.filter(':checked').each(function () { $(this).change(); });
         }
     };
 

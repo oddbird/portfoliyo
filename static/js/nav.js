@@ -104,7 +104,7 @@ var PYO = (function (PYO, $) {
         var original = listitem.data('original');
         listitem.find('.listitem-select.removed').stop();
         listitem.html(original);
-        listitem.removeAttr('data-original');
+        listitem.removeData('original');
     };
 
     PYO.fetchGroups = function () {
