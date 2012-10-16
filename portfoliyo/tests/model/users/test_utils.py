@@ -57,3 +57,27 @@ class TestUserNetworks(object):
                 rel2.to_profile_id
                 },
             ]
+
+
+    def test_already_in_same_network(self):
+        rel1 = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(school=rel1.elder.school)
+        factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile, to_profile=rel2.to_profile)
+        factories.RelationshipFactory.create(
+            from_profile=rel2.from_profile, to_profile=rel1.to_profile)
+
+        assert model.utils.user_networks() == [
+            {
+                rel1.from_profile_id,
+                rel1.to_profile_id,
+                rel2.from_profile_id,
+                rel2.to_profile_id
+                },
+            ]
+
+
+    def test_lone_ranger(self):
+        p = factories.ProfileFactory.create()
+
+        assert model.utils.user_networks() == [{p.pk}]

@@ -16,8 +16,11 @@ def user_networks():
         fpid_net = networks_by_user.get(fpid)
         tpid_net = networks_by_user.get(tpid)
         if fpid_net and tpid_net:
+            if fpid_net is tpid_net:
+                continue
             fpid_net.update(tpid_net)
-            networks_by_user[tpid] = fpid_net
+            for userid in tpid_net:
+                networks_by_user[userid] = fpid_net
             networks.remove(tpid_net)
         elif fpid_net:
             fpid_net.add(tpid)
@@ -30,5 +33,11 @@ def user_networks():
             networks.append(net)
             networks_by_user[tpid] = net
             networks_by_user[fpid] = net
+
+    # handle lone rangers
+    for profile in models.Profile.objects.exclude(pk__in=networks_by_user):
+        net = {profile.id}
+        networks_by_user[profile.id] = net
+        networks.append(net)
 
     return networks
