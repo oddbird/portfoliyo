@@ -132,7 +132,7 @@ $input-rhythm: .25;
 
 %radio-check-defaults {
   [type="checkbox"], [type="radio"] {
-    display: none;
+    @include gone;
     + .type {
       @extend %icon;
       display: inline-block;
@@ -232,7 +232,7 @@ button { @include reset-button; }
   overflow-y: scroll;
 
   .value {
-    display: none;
+    @include gone;
     &[checked] + .type { @extend %options-checked; }
     &[disabled] + .type { @extend %options-disabled; }
   }

@@ -592,7 +592,14 @@ optgroup {
 }
 
 .school_staff-field [type="checkbox"], .school_staff-field [type="radio"] {
-  display: none;
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
 }
 .school_staff-field [type="checkbox"] + .type, .school_staff-field [type="radio"] + .type {
   display: inline-block;
@@ -704,7 +711,14 @@ button {
   margin-left: 0;
 }
 .school-field .radio-options .value, .students-field .check-options .value, .elders-field .check-options .value, .groups-field .check-options .value {
-  display: none;
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
 }
 .school-field .radio-options .type, .students-field .check-options .type, .elders-field .check-options .type, .groups-field .check-options .type {
   padding-top: 0.20536em;
