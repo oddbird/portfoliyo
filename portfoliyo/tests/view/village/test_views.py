@@ -8,6 +8,7 @@ from django.utils.timezone import utc
 import mock
 import pytest
 
+from portfoliyo.model import unread
 from portfoliyo.view.village import views
 
 from portfoliyo.tests import factories, utils
@@ -440,6 +441,23 @@ class TestVillage(GroupContextTests):
         if student is None:
             student = factories.ProfileFactory.create()
         return reverse('village', kwargs=dict(student_id=student.id))
+
+
+    def test_marks_posts_read(self, client):
+        """Loading the village view marks all posts in village as read."""
+        rel = factories.RelationshipFactory.create()
+        post = factories.PostFactory.create(student=rel.student)
+        post2 = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(post2, rel.elder)
+
+        assert not unread.is_read(post, rel.elder)
+        assert not unread.is_read(post2, rel.elder)
+
+        client.get(self.url(rel.student), user=rel.elder.user)
+
+        assert unread.is_read(post, rel.elder)
+        assert unread.is_read(post2, rel.elder)
 
 
     @pytest.mark.parametrize('link_target', ['invite_elder'])

@@ -223,6 +223,8 @@ def village(request, student_id):
     rel = get_relationship_or_404(student_id, request.user.profile)
     group = get_querystring_group(request, rel.student)
 
+    model.unread.mark_village_read(rel.student, rel.elder)
+
     return TemplateResponse(
         request,
         'village/village.html',
