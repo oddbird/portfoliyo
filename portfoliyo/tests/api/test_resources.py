@@ -475,16 +475,3 @@ class TestPostResource(object):
             self.detail_url(post), user=rel.elder.user)
 
         assert response.json['unread'] == True
-
-
-    def test_mark_read(self, no_csrf_client):
-        """Each post has an unread boolean in the API response."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
-        post = factories.PostFactory.create(student=rel.student)
-        unread.mark_unread(post, rel.elder)
-
-        response = no_csrf_client.get(
-            self.detail_url(post), user=rel.elder.user)
-
-        assert response.json['unread'] == True

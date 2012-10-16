@@ -1,5 +1,6 @@
 """Tests for village models and related functions."""
 import datetime
+from django.core.urlresolvers import reverse
 from django.utils.timezone import utc
 import mock
 import pytest
@@ -141,7 +142,7 @@ class TestPostCreate(object):
         """Triggers a pusher event if get_pusher doesn't return None."""
         rel = factories.RelationshipFactory.create()
 
-        models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
+        post = models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
 
         channel = mock_get_pusher.return_value['student_%s' % rel.student.id]
         args = channel.trigger.call_args[0]
@@ -151,6 +152,8 @@ class TestPostCreate(object):
         assert post_data['author_sequence_id'] == '33'
         assert post_data['author_id'] == rel.elder.id
         assert post_data['student_id'] == rel.student.id
+        assert post_data['mark_read_url'] == reverse(
+            'mark_post_read', kwargs={'post_id': post.id})
 
 
     def test_pusher_socket_error(self):

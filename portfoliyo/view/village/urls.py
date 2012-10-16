@@ -47,4 +47,8 @@ urlpatterns = patterns(
         views.pdf_parent_instructions,
         name='pdf_parent_instructions',
         ),
+    url(r'^_mark_read/(?P<post_id>\d+)/',
+        views.mark_post_read,
+        name='mark_post_read',
+        ),
     )

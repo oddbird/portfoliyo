@@ -6,6 +6,7 @@ import logging
 import re
 import socket
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
@@ -118,14 +119,14 @@ class BasePost(models.Model):
         return None
 
 
-    def send_event(self, channel, sequence_id=None):
+    def send_event(self, channel, **kwargs):
         """Send Pusher event for this Post, if Pusher is configured."""
         pusher = get_pusher()
         if pusher is not None:
             try:
                 pusher[channel].trigger(
                     'message_posted',
-                    {'posts': [post_dict(self, author_sequence_id=sequence_id)]},
+                    {'posts': [post_dict(self, **kwargs)]},
                     )
             except socket.error as e:
                 logger.error("Pusher socket error: %s" % str(e))
@@ -198,9 +199,14 @@ class BulkPost(BasePost):
                 meta=post.meta,
                 from_bulk=post,
                 )
-            sub.send_event('student_%s' % student.id, sequence_id=sequence_id)
+            sub.send_event(
+                'student_%s' % student.id,
+                author_sequence_id=sequence_id,
+                mark_read_url=reverse(
+                    'mark_post_read', kwargs={'post_id': sub.id}),
+                )
 
-        post.send_event('group_%s' % group.id, sequence_id=sequence_id)
+        post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
 
         return post
 
@@ -262,7 +268,13 @@ class Post(BasePost):
             if elder != author:
                 unread.mark_unread(post, elder)
 
-        post.send_event('student_%s' % student.id, sequence_id=sequence_id)
+        post.send_event(
+            'student_%s' % student.id,
+            author_sequence_id=sequence_id,
+            mark_read_url=reverse(
+                'mark_post_read', kwargs={'post_id': post.id}),
+
+            )
 
         return post
 

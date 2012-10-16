@@ -8,6 +8,11 @@ def mark_unread(post, profile):
     client.sadd(make_key(post.student, profile), post.id)
 
 
+def mark_read(post, profile):
+    """Mark given post read by given profile."""
+    client.srem(make_key(post.student, profile), post.id)
+
+
 
 def is_unread(post, profile):
     """Given post is unread by given profile (returns boolean)."""

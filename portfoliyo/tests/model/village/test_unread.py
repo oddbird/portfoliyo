@@ -25,6 +25,18 @@ def test_unread():
 
 
 
+def test_mark_read():
+    """Can mark a post as read."""
+    post = factories.PostFactory.create()
+    profile = factories.ProfileFactory.create()
+    unread.mark_unread(post, profile)
+
+    unread.mark_read(post, profile)
+
+    assert not unread.is_unread(post, profile)
+
+
+
 def test_mark_village_read():
     """Marks posts only in given village read."""
     post1 = factories.PostFactory.create()

@@ -659,17 +659,18 @@ class TestJsonPosts(object):
         rel = factories.RelationshipFactory.create(
             from_profile__name='Fred')
 
-        factories.PostFactory(
+        post2 = factories.PostFactory(
             timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
             author=rel.elder,
             student=rel.student,
-            html_text='post1',
+            html_text='post2',
             )
+        unread.mark_unread(post2, rel.elder)
         factories.PostFactory(
             timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
             author=rel.elder,
             student=rel.student,
-            html_text='post2',
+            html_text='post1',
             )
         # not in same village, shouldn't be returned
         factories.PostFactory()
@@ -677,7 +678,8 @@ class TestJsonPosts(object):
         response = client.get(self.url(rel.student), user=rel.elder.user)
 
         posts = response.json['posts']
-        assert [p['text'] for p in posts] == ['post2', 'post1']
+        assert [p['text'] for p in posts] == ['post1', 'post2']
+        assert [p['unread'] for p in posts] == [False, True]
 
 
     def test_get_group_posts(self, client):
@@ -754,6 +756,28 @@ class TestJsonPosts(object):
 
         posts = response.json['posts']
         assert [p['text'] for p in posts] == ['post1']
+
+
+
+class TestMarkPostRead(object):
+    def url(self, post):
+        """URL to mark given post read."""
+        return reverse('mark_post_read', kwargs={'post_id': post.id})
+
+
+    def test_mark_read(self, no_csrf_client):
+        """Can mark a post read with POST to dedicated URI."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        post = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+
+        no_csrf_client.post(
+            self.url(post),
+            user=rel.elder.user,
+            status=202)
+
+        assert not unread.is_unread(post, rel.elder)
 
 
 

@@ -12,6 +12,7 @@ from django.core.urlresolvers import reverse
 from django import http
 from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
+from django.views.decorators.http import require_POST
 
 from portfoliyo import model, pdf
 from ..ajax import ajax
@@ -316,21 +317,41 @@ def json_posts(request, student_id=None, group_id=None):
 
         data = {
             'success': True,
-            'posts': [model.post_dict(post, author_sequence_id=sequence_id)],
+            'posts': [
+                model.post_dict(
+                    post, author_sequence_id=sequence_id, unread=False)
+                ],
             }
 
-        return http.HttpResponse(json.dumps(data), content_type='application/json')
+        return http.HttpResponse(
+            json.dumps(data), content_type='application/json')
 
     data = {
         'posts':
             [
-            model.post_dict(post) for post in
-            reversed(
+            model.post_dict(
+                post,
+                unread=model.unread.is_unread(
+                    post,
+                    request.user.profile
+                    ) if (post_model is model.Post) else False,
+                )
+            for post in reversed(
                 manager.order_by('-timestamp')[:BACKLOG_POSTS])
             ],
         }
 
     return http.HttpResponse(json.dumps(data), content_type='application/json')
+
+
+
+@login_required
+@require_POST
+def mark_post_read(request, post_id):
+    post = get_object_or_404(model.Post, pk=post_id)
+    model.unread.mark_read(post, request.user.profile)
+    return http.HttpResponse(status=202)
+
 
 
 @school_staff_required

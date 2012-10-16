@@ -23,6 +23,13 @@ class InMemoryRedis(object):
         return ret
 
 
+    def srem(self, key, val):
+        s = self.data.setdefault(key, set())
+        ret = 1 if val in s else 0
+        s.discard(val)
+        return ret
+
+
     def delete(self, key):
         if key in self.data:
             del self.data[key]
