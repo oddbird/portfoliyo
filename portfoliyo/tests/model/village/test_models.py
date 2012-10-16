@@ -6,7 +6,7 @@ import pytest
 import re
 
 
-from portfoliyo.model.village import models
+from portfoliyo.model.village import models, unread
 
 from portfoliyo.tests import factories
 
@@ -107,6 +107,22 @@ class TestPostCreate(object):
         assert post.from_sms == False
         assert post.to_sms == False
         assert post.meta == {'highlights': []}
+
+
+    def test_new_post_unread_for_all_web_users_in_village(self):
+        """New post is marked unread for all non-author web users in village."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='foo@example.com')
+        rel2 = factories.RelationshipFactory.create(
+            from_profile__user__email='bar@example.com', to_profile=rel.student)
+        rel3 = factories.RelationshipFactory.create(
+            from_profile__user__email=None, to_profile=rel.student)
+
+        post = models.Post.create(rel.elder, rel.student, 'Foo')
+
+        assert unread.is_read(post, rel.elder)
+        assert not unread.is_read(post, rel2.elder)
+        assert not unread.is_read(post, rel3.elder)
 
 
     def test_creates_post_from_sms(self):

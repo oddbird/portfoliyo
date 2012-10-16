@@ -13,7 +13,7 @@ from jsonfield import JSONField
 from portfoliyo.pusher import get_pusher
 from portfoliyo import sms
 from ..users import models as user_models
-
+from . import unread
 
 
 logger = logging.getLogger(__name__)
@@ -255,6 +255,12 @@ class Post(BasePost):
         post.meta['highlights'] = meta_highlights
 
         post.save()
+
+        # mark the post unread by all users in village (except the author)
+        for elder in user_models.Profile.objects.filter(
+                deleted=False, relationships_from__to_profile=student):
+            if elder != author:
+                unread.mark_unread(post, elder)
 
         post.send_event('student_%s' % student.id, sequence_id=sequence_id)
 
