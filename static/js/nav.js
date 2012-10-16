@@ -6,6 +6,7 @@ var PYO = (function (PYO, $) {
 
     PYO.navHandlers = function () {
         var nav = $('.village-nav');
+        var History = window.History;
 
         nav.on('click', '.action-remove', function (e) {
             e.preventDefault();
@@ -19,20 +20,21 @@ var PYO = (function (PYO, $) {
             PYO.undoRemoveListitem($(this));
         });
 
-        nav.on('click', '.group-link', function (e) {
-            e.preventDefault();
-            var trigger = $(this).blur();
-            var group_obj = {
-                name: trigger.data('group-name'),
-                url: trigger.attr('href'),
-                students_url: trigger.data('group-students-url'),
-                id: trigger.data('group-id'),
-                edit_url: trigger.data('group-edit-url'),
-                resource_url: trigger.data('group-resource-url'),
-                add_student_url: trigger.data('group-add-student-url')
-            };
-            PYO.fetchStudents(group_obj);
-        });
+        if (History.enabled) {
+            nav.on('click', '.group-link', function (e) {
+                var trigger = $(this).blur();
+                var group_obj = {
+                    name: trigger.data('group-name'),
+                    url: trigger.attr('href'),
+                    students_url: trigger.data('group-students-url'),
+                    id: trigger.data('group-id'),
+                    edit_url: trigger.data('group-edit-url'),
+                    resource_url: trigger.data('group-resource-url'),
+                    add_student_url: trigger.data('group-add-student-url')
+                };
+                PYO.fetchStudents(group_obj);
+            });
+        }
 
         nav.on('click', '.groups.action-back', function (e) {
             e.preventDefault();
@@ -379,7 +381,7 @@ var PYO = (function (PYO, $) {
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
             PYO.navHandlers();
-            PYO.listenForStudentChanges();
+            // PYO.listenForStudentChanges();
             if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
                 PYO.fetchStudents();
             } else {

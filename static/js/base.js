@@ -114,7 +114,7 @@ var PYO = (function (PYO, $) {
             var History = window.History;
 
             if (History.enabled) {
-                $('body').on('click', 'a.ajax-link', function (e) {
+                $('body').on('click', '.ajax-link', function (e) {
                     if (e.which === 2 || e.metaKey) {
                         return true;
                     } else {
