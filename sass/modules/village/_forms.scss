@@ -2,6 +2,13 @@
 // Add/Edit forms
 
 .students-field, .elders-field, .groups-field {
+  > .type {
+    @include adjust-font-size-to($smallpx);
+    padding: rhythm(.25,$smallpx);
+    background: $base;
+    color: $base3;
+    text-transform: uppercase;
+  }
   .check-options {
     @extend %check-options;
     height: rhythm(8,$input-font-size);

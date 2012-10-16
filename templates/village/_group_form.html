@@ -13,11 +13,10 @@
 
   <div class="fieldset relation-fieldset">
     <p class="fieldset-help">
-      Select existing students and staff elders to add to your new group.
-      Group elders will be added to all students in the group.
+      Add existing students and teachers to the group.
     </p>
     {% include "forms/_field.html" with field=form.students %}
-    {% include "forms/_field.html" with field=form.elders %}
+    {% include "forms/_field.html" with field=form.elders label="Teachers" %}
   </div>
 
   <div class="form-actions">
