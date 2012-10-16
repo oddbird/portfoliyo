@@ -144,8 +144,9 @@ class TestPasswordChange(object):
 
     def test_change_password(self, client):
         """Get a confirmation message after changing password."""
-        user = factories.UserFactory.create(password='sekrit')
-        form = client.get(self.url, user=user).forms['change-password-form']
+        profile = factories.ProfileFactory.create(user__password='sekrit')
+        form = client.get(
+            self.url, user=profile.user).forms['change-password-form']
         new_password = 'sekrit123'
         form['old_password'] = 'sekrit'
         form['new_password1'] = new_password
@@ -230,12 +231,14 @@ class TestRegister(object):
 
     def test_register(self, client):
         """Get a confirmation message after registering."""
+        school = factories.SchoolFactory.create()
         form = client.get(self.url).forms['register-form']
         form['name'] = 'Some Body'
         form['email'] = 'some@example.com'
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
+        form['school'] = str(school.id)
         res = form.submit(status=302).follow()
 
         res.mustcontain("confirm your email")
@@ -246,12 +249,14 @@ class TestActivate(object):
     """Tests for activate view."""
     def url(self, client):
         """Shortcut for activate url."""
+        school = factories.SchoolFactory.create()
         form = client.get(reverse('register')).forms['register-form']
         form['name'] = 'New Body'
         form['email'] = 'new@example.com'
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'New Role'
+        form['school'] = str(school.id)
         form.submit(status=302)
 
         for line in mail.outbox[0].body.splitlines():
@@ -283,12 +288,12 @@ class TestAcceptEmailInvite(object):
         """Shortcut for accept-email-invite url."""
         rel = factories.RelationshipFactory(from_profile=profile)
         response = client.get(
-            reverse('invite_elders', kwargs=dict(student_id=rel.student.id)),
+            reverse('invite_elder', kwargs=dict(student_id=rel.student.id)),
             user=profile.user,
             )
-        form = response.forms['invite-elders-form']
-        form['elders-0-contact'] = 'new@example.com'
-        form['elders-0-relationship'] = 'teacher'
+        form = response.forms['invite-elder-form']
+        form['contact'] = 'new@example.com'
+        form['relationship'] = 'teacher'
         form.submit(status=302)
 
         for line in mail.outbox[0].body.splitlines():

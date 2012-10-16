@@ -14,7 +14,7 @@ from .forms import RegistrationForm
 
 class RegistrationBackend(DefaultBackend):
     """Custom registration backend that doesn't require username."""
-    def register(self, request, name, email, password, role, **kwargs):
+    def register(self, request, name, email, password, role, school, **kwargs):
         """
         Create inactive user and profile with given data.
 
@@ -26,11 +26,16 @@ class RegistrationBackend(DefaultBackend):
         activation.
 
         """
+        # newly-created school may not be saved yet
+        if school.id is None:
+            school.save()
+
         profile = model.Profile.create_with_user(
             name=name,
             email=email,
             password=password,
             role=role,
+            school=school,
             school_staff=True,
             )
 

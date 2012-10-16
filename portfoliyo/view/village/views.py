@@ -8,14 +8,14 @@ import os
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.http import HttpResponse, HttpResponseBadRequest, Http404
+from django.core.urlresolvers import reverse
+from django import http
 from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 
 from portfoliyo import model, pdf
-from portfoliyo.view import home
-from ..decorators import school_staff_required
 from ..ajax import ajax
+from ..decorators import school_staff_required
 from . import forms
 
 
@@ -30,31 +30,17 @@ def dashboard(request):
     return TemplateResponse(
         request,
         'village/dashboard.html',
-        {'elders_formset': forms.InviteEldersFormSet(prefix='elders')},
+        {},
         )
 
 
+def redirect_to_village(student, group=None):
+    """Redirect to a student village, optionally in group context."""
+    target = reverse('village', kwargs=dict(student_id=student.id))
+    if group:
+        target = '%s?group=%s' % (target, group.id)
+    return http.HttpResponseRedirect(target)
 
-@school_staff_required
-@ajax('village/_add_student_content.html')
-def add_student(request):
-    """Add a student and elders."""
-    if request.method == 'POST':
-        form = forms.AddStudentAndInviteEldersForm(request.POST)
-        if form.is_valid():
-            student, _ = form.save(request, added_by=request.user.profile)
-            return redirect('village', student_id=student.id)
-    else:
-        form = forms.AddStudentAndInviteEldersForm()
-
-    return TemplateResponse(
-        request,
-        'village/add_student.html',
-        {
-            'form': form,
-            'elders_formset': form.elders_formset,
-            },
-        )
 
 
 def get_relationship_or_404(student_id, profile):
@@ -67,28 +53,165 @@ def get_relationship_or_404(student_id, profile):
             kind=model.Relationship.KIND.elder,
             )
     except model.Relationship.DoesNotExist:
-        raise Http404
+        raise http.Http404
+
+
+def get_querystring_group(request, student):
+    """Get optional group from querystring."""
+    try:
+        group_id = int(request.GET.get('group'))
+        group = model.Group.objects.get(
+            students=student, owner=request.user.profile, pk=group_id)
+    except (ValueError, TypeError, model.Group.DoesNotExist):
+        group = None
+    return group
 
 
 
 @school_staff_required
-@ajax('village/_invite_elders_content.html')
-def invite_elders(request, student_id):
-    """Invite new elder(s) to a student's village."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
+@ajax('village/_add_student_content.html')
+def add_student(request, group_id=None):
+    """Add a student."""
+    group = get_object_or_404(model.Group, id=group_id) if group_id else None
 
     if request.method == 'POST':
-        formset = forms.InviteEldersFormSet(request.POST, prefix='elders')
-        if formset.is_valid():
-            formset.save(request, rel)
-            return redirect('village', student_id=rel.student.id)
+        form = forms.AddStudentForm(
+            request.POST, elder=request.user.profile, group=group)
+        if form.is_valid():
+            student = form.save()
+            return redirect_to_village(student, group)
     else:
-        formset = forms.InviteEldersFormSet(prefix='elders')
+        form = forms.AddStudentForm(elder=request.user.profile, group=group)
 
     return TemplateResponse(
         request,
-        'village/invite_elders.html',
-        {'elders_formset': formset, 'student': rel.student},
+        'village/add_student.html',
+        {
+            'form': form,
+            'group': group,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_edit_student_content.html')
+def edit_student(request, student_id):
+    """Edit a student."""
+    rel = get_relationship_or_404(student_id, request.user.profile)
+    group = get_querystring_group(request, rel.student)
+
+    if request.method == 'POST':
+        form = forms.StudentForm(
+            request.POST, instance=rel.student, elder=rel.elder)
+        if form.is_valid():
+            student = form.save()
+            return redirect_to_village(student, group)
+    else:
+        form = forms.StudentForm(instance=rel.student, elder=rel.elder)
+
+    return TemplateResponse(
+        request,
+        'village/edit_student.html',
+        {
+            'form': form,
+            'student': rel.student,
+            'group': group,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_add_group_content.html')
+def add_group(request):
+    """Add a group."""
+    if request.method == 'POST':
+        form = forms.AddGroupForm(request.POST, owner=request.user.profile)
+        if form.is_valid():
+            group = form.save()
+            if not group.students.exists():
+                return redirect('add_student_in_group', group_id=group.id)
+            return redirect('group', group_id=group.id)
+    else:
+        form = forms.AddGroupForm(owner=request.user.profile)
+
+    return TemplateResponse(
+        request,
+        'village/add_group.html',
+        {
+            'form': form,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_edit_group_content.html')
+def edit_group(request, group_id):
+    """Edit a group."""
+    group = get_object_or_404(
+        model.Group.objects.select_related('owner'), pk=group_id)
+    if group.owner != request.user.profile:
+        raise http.Http404
+
+    if request.method == 'POST':
+        form = forms.GroupForm(request.POST, instance=group)
+        if form.is_valid():
+            group = form.save()
+            return redirect('group', group_id=group.id)
+    else:
+        form = forms.GroupForm(instance=group)
+
+    return TemplateResponse(
+        request,
+        'village/edit_group.html',
+        {
+            'form': form,
+            'group': group,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_invite_elder_content.html')
+def invite_elder(request, student_id=None, group_id=None):
+    """Invite new elder to a student's village or to a group."""
+    if student_id:
+        rel = get_relationship_or_404(student_id, request.user.profile)
+        group = None
+        form_kwargs = {'rel': rel}
+        template_context = {
+            'student': rel.student,
+            'group': get_querystring_group(request, rel.student),
+            }
+    elif group_id:
+        group = get_object_or_404(
+            model.Group.objects.filter(owner=request.user.profile), id=group_id)
+        rel = None
+        form_kwargs = {'group': group}
+        template_context = {'group': group}
+    else:
+        raise http.Http404
+
+    if request.method == 'POST':
+        form = forms.InviteElderForm(request.POST, **form_kwargs)
+        if form.is_valid():
+            form.save(request)
+            if rel:
+                return redirect_to_village(
+                    rel.student, template_context.get('group'))
+            return redirect('group', group_id=group.id)
+    else:
+        form = forms.InviteElderForm(**form_kwargs)
+
+    template_context['form'] = form
+
+    return TemplateResponse(
+        request,
+        'village/invite_elder.html',
+        template_context,
         )
 
 
@@ -98,53 +221,86 @@ def invite_elders(request, student_id):
 def village(request, student_id):
     """The main chat view for a student/village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
-
-    if request.method == 'POST':
-        if not rel.elder.school_staff:
-            return redirect(request.path)
-        if 'remove' in request.POST:
-            rel.student.deleted = True
-            rel.student.save()
-            if not request.is_ajax():
-                return redirect(home.redirect_home(request.user))
-            data = {'success': True}
-        else:
-            form = forms.EditStudentForm(request.POST)
-            if form.is_valid():
-                form.save(rel.student)
-                data = {'success': True, 'name': rel.student.name}
-            else:
-                for error in form.errors['name']:
-                    messages.error(request, error)
-                data = {'success': False, 'name': rel.student.name}
-            if not request.is_ajax():
-                return redirect(request.path)
-        return HttpResponse(json.dumps(data), content_type='application/json')
+    group = get_querystring_group(request, rel.student)
 
     return TemplateResponse(
         request,
         'village/village.html',
         {
             'student': rel.student,
+            'group': group,
             'relationship': rel,
             'post_char_limit': model.post_char_limit(rel),
-            'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
             },
         )
 
 
 
 @login_required
-def json_posts(request, student_id):
+@ajax('village/_group_content.html')
+def group(request, group_id):
+    """The main chat view for a group."""
+    group = get_object_or_404(
+        model.Group.objects.filter(
+            owner=request.user.profile,
+            deleted=False,
+            ),
+        id=group_id)
+
+    return TemplateResponse(
+        request,
+        'village/group.html',
+        {
+            'group': group,
+            'post_char_limit': model.post_char_limit(request.user.profile),
+            },
+        )
+
+
+
+@login_required
+@ajax('village/_group_content.html')
+def all_students(request):
+    """Main chat view for all-students 'group'."""
+    group = model.AllStudentsGroup(request.user.profile)
+
+    return TemplateResponse(
+        request,
+        'village/group.html',
+        {
+            'group': group,
+            'post_char_limit': model.post_char_limit(request.user.profile),
+            }
+        )
+
+
+
+@login_required
+def json_posts(request, student_id=None, group_id=None):
     """Get backlog of up to 100 latest posts, or POST a post."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
+    group = None
+    rel = None
+    post_model = model.BulkPost
+    if student_id is not None:
+        rel = get_relationship_or_404(student_id, request.user.profile)
+        post_model = model.Post
+        target = rel.student
+        manager = rel.student.posts_in_village
+    elif group_id is not None:
+        group = get_object_or_404(
+            model.Group.objects.filter(owner=request.user.profile), pk=group_id)
+        target = group
+        manager = group.bulk_posts
+    else:
+        target = None
+        manager = request.user.profile.authored_bulkposts
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
         sequence_id = request.POST.get('author_sequence_id')
-        limit = model.post_char_limit(rel)
+        limit = model.post_char_limit(rel or request.user.profile)
         if len(text) > limit:
-            return HttpResponseBadRequest(
+            return http.HttpResponseBadRequest(
                 json.dumps(
                     {
                         'error': 'Posts are limited to %s characters.' % limit,
@@ -153,67 +309,83 @@ def json_posts(request, student_id):
                     ),
                 content_type='application/json',
                 )
-        post = model.Post.create(
-            request.user.profile, rel.student, text, sequence_id)
+        post = post_model.create(
+            request.user.profile, target, text, sequence_id)
 
         data = {
             'success': True,
             'posts': [model.post_dict(post, author_sequence_id=sequence_id)],
             }
 
-        return HttpResponse(json.dumps(data), content_type='application/json')
+        return http.HttpResponse(json.dumps(data), content_type='application/json')
 
     data = {
         'posts':
             [
             model.post_dict(post) for post in
             reversed(
-                rel.student.posts_in_village.order_by(
-                    '-timestamp')[:BACKLOG_POSTS]
-                )
+                manager.order_by('-timestamp')[:BACKLOG_POSTS])
             ],
         }
 
-    return HttpResponse(json.dumps(data), content_type='application/json')
+    return http.HttpResponse(json.dumps(data), content_type='application/json')
 
 
 @school_staff_required
 @ajax('village/_edit_elder_content.html')
-def edit_elder(request, student_id, elder_id):
+def edit_elder(request, elder_id, student_id=None, group_id=None):
     """Edit a village elder."""
-    get_relationship_or_404(student_id, request.user.profile)
     elder = get_object_or_404(
         model.Profile.objects.select_related('user'), id=elder_id)
     # can't edit the profile of another school staff
     if elder.school_staff:
-        raise Http404
-    elder_rel = get_relationship_or_404(student_id, elder)
+        raise http.Http404
+    if student_id is not None:
+        get_relationship_or_404(student_id, request.user.profile)
+        elder_rel = get_relationship_or_404(student_id, elder)
+        group = get_querystring_group(request, elder_rel.student)
+    else:
+        elder_rel = None
+        if group_id is not None:
+            group = get_object_or_404(model.Group.objects.filter(
+                    owner=request.user.profile, deleted=False), pk=group_id)
+        else:
+            group = model.AllStudentsGroup(request.user.profile)
 
     if request.method == 'POST':
-        form = forms.EditElderForm(request.POST, profile=elder)
+        form = forms.EditElderForm(
+            request.POST, instance=elder, editor=request.user.profile)
         if form.is_valid():
-            form.save()
+            form.save(elder_rel)
             messages.success(request, u"Changes saved!")
-            return redirect('village', student_id=student_id)
+            if elder_rel:
+                return redirect('village', student_id=student_id)
+            elif group and not group.is_all:
+                return redirect('group', group_id=group.id)
+            return redirect('all_students')
     else:
-        form = forms.EditElderForm(profile=elder)
+        form = forms.EditElderForm(instance=elder, editor=request.user.profile)
 
     return TemplateResponse(
         request,
         'village/edit_elder.html',
         {
             'form': form,
-            'student': elder_rel.student,
-            'elder': elder_rel.elder,
-            'elders_formset': forms.InviteEldersFormSet(prefix='elders'),
+            'group': group,
+            'student': elder_rel.student if elder_rel else None,
+            'elder': elder,
             },
         )
 
 
 
 @school_staff_required
-def pdf_parent_instructions(request, lang):
+def pdf_parent_instructions(request, lang, group_id=None):
     """Render a PDF for sending home with parents."""
+    group = get_object_or_404(
+        model.Group.objects.filter(
+            owner=request.user.profile, id=group_id)) if group_id else None
+
     template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
     template_path = os.path.join(
         template_dir,
@@ -221,9 +393,9 @@ def pdf_parent_instructions(request, lang):
         )
 
     if not os.path.isfile(template_path):
-        raise Http404
+        raise http.Http404
 
-    response = HttpResponse(content_type='application/pdf')
+    response = http.HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = (
         'attachment; filename=instructions-%s.pdf' % lang)
 
@@ -231,7 +403,7 @@ def pdf_parent_instructions(request, lang):
         template_path=template_path,
         stream=response,
         name=request.user.profile.name or "Your Child's Teacher",
-        code=request.user.profile.code or '',
+        code=group.code if group else request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
         )
 

@@ -1,0 +1,31 @@
+{% extends "village/_village_content_main.html" %}
+{% load widget_tweaks %}
+
+{% block village-content %}
+<div class="village-main">
+  <form method="POST" action="{% block form-action %}{% endblock %}" class="elder-add-form" id="invite-elder-form">
+    {% csrf_token %}
+    <h2>{% block form-header %}{% endblock %}</h2>
+    {{ form.non_field_errors }}
+
+    {% include "forms/_field.html" with field=form.contact|attr:"placeholder: use email address for teachers, and phone number for parents." label="Email or Phone" %}
+    {% include "forms/_field.html" with field=form.relationship|attr:"placeholder: e.g. 'Mom', 'Dad', 'Math Teacher', 'Science Teacher', etc." %}
+
+    <div class="fieldset relation-fieldset">
+      <p class="fieldset-help">
+        Select existing groups and students to associate with this elder.
+      </p>
+      {% include "forms/_field.html" with field=form.groups %}
+      {% include "forms/_field.html" with field=form.students %}
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">invite</button>
+    </div>
+
+  </form>
+</div>
+
+{% block info-bar %}{% endblock %}
+
+{% endblock village-content %}

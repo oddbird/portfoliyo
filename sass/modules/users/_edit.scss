@@ -1,14 +1,26 @@
 // ---------------------------------------------------------------------------
 // Edit Profile
 
+.register, .edit-profile { @extend %simple-form; }
+
 .initial-password {
   @extend %notice;
   @extend %simple-inline-form;
   @include at-breakpoint($break) {
     @include bleed(space($simple-side,$simple-center));
     @include padding-leader(1);
-    label { padding-left: rhythm(1); }
+    label{ padding-left: rhythm(1); }
   }
 }
 
-.register, .edit-profile { @extend %simple-form; }
+.school-field {
+  @include trailer;
+  .radio-options { @extend %check-options; }
+  .zip {
+    position: absolute;
+    right: rhythm(.25,$input-font-size);
+    color: $base1;
+  }
+}
+
+.add-school.fieldset { display: none; }

@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 
 from .. import admin
+from ..api.versions import api_v1
 from . import home as home_views
 from . import sms as sms_views
 
@@ -24,6 +25,7 @@ urlpatterns = patterns(
         ),
     url(r'^student/', include('portfoliyo.view.village.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^api/', include(api_v1.urls)),
     url(r'^', include('portfoliyo.view.users.urls')),
     )
 

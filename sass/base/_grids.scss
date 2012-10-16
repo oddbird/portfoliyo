@@ -17,11 +17,12 @@ $column-width   : 3em;
 $gutter-width   : 1em;
 $grid-padding   : 1em;
 
-$half-small     : $total-columns/2;
+$half-small     : floor($total-columns/2);
 
 $break-cols     : 20;
 $break-width    : columns-width(10);
 $break          : $break-width $break-cols lt-ie9;
+$half-break     : floor($break-cols/2);
 
 $left           : 4;
 $right          : 4;

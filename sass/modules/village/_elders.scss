@@ -4,16 +4,19 @@
 .village-elders {
   h2 { @extend %gone; }
 
-  .elder {
+  .elder:last-child .vcard { border-bottom: 0; }
+
+  .vcard {
     @extend %icon;
     @extend %icon-record;
     @include padding-leader(.25,$village-list-size);
     @include trailing-border(1px,.25,$village-list-size);
     @include bleed($village-bleed);
+    display: block;
     border-color: $base2;
     &:before {
       position: relative;
-      float: left;
+      margin-right: 0;
       color: $green;
       z-index: 2;
     }
@@ -38,18 +41,12 @@
     #{$link} {
       @extend %village-activenav;
       @include bleed($village-bleed);
-      @include bleed(rhythm(.25,$village-list-size),top bottom);
       position: relative;
       display: block;
     }
     #{$focus} { background: $base2; }
   }
 
-  .title, .fn {
-    @include ellipsis;
-    display: block;
-    margin-left: 1.5em;
-  }
   .title { font-weight: bold; }
   .fn { color: $base1; }
 }

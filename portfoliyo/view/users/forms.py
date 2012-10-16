@@ -4,12 +4,26 @@ Account-related forms.
 """
 import operator
 import random
+import time
 
 from django.contrib.auth import forms as auth_forms
 
 import floppyforms as forms
 
 from portfoliyo import model
+from ..forms import TemplateLabelModelChoiceField
+
+
+class SchoolRadioSelect(forms.RadioSelect):
+    """A RadioSelect with a custom display template."""
+    template_name = 'users/school_radio.html'
+
+
+
+class SchoolForm(forms.ModelForm):
+    class Meta:
+        model = model.School
+        fields = ['name', 'postcode']
 
 
 
@@ -28,15 +42,54 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     role = forms.CharField(max_length=200)
+    school = TemplateLabelModelChoiceField(
+        queryset=model.School.objects.filter(auto=False).order_by('name'),
+        empty_label=u"I'm not affiliated with a school",
+        required=False,
+        widget=SchoolRadioSelect,
+        initial=u'',
+        )
+    addschool = forms.BooleanField(
+        initial=False, required=False, widget=forms.HiddenInput)
+
+
+    def __init__(self, *args, **kwargs):
+        """Also instantiate a nested SchoolForm."""
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.addschool_form = SchoolForm(self.data or None, prefix='addschool')
 
 
     def clean(self):
-        """Verify that the password fields match."""
-        password = self.cleaned_data.get("password")
-        confirm = self.cleaned_data.get("password_confirm")
+        """
+        Verify password fields match and school is provided.
+
+        If addschool is True, build a new School based on data in nested
+        SchoolForm.
+
+        If not, and no school was selected, auto-construct one.
+
+        """
+        data = self.cleaned_data
+        password = data.get('password')
+        confirm = data.get('password_confirm')
         if password != confirm:
             raise forms.ValidationError("The passwords didn't match.")
-        return self.cleaned_data
+        if data.get('addschool'):
+            if self.addschool_form.is_valid():
+                data['school'] = self.addschool_form.save(commit=False)
+            else:
+                raise forms.ValidationError(
+                    "Could not add a school.")
+        else:
+            # reinstantiate unbound addschool_form to avoid spurious errors
+            self.addschool_form = SchoolForm(prefix='addschool')
+            if data.get('email') and not data.get('school'):
+                data['school'] = model.School(
+                    name=(u"%f-%s" % (time.time(), data['email']))[:200],
+                    postcode="",
+                    auto=True,
+                    )
+        return data
 
 
     def clean_email(self):
@@ -177,22 +230,22 @@ class EditProfileForm(forms.Form):
 
 
     def __init__(self, *a, **kw):
-        """Pull profile kwarg out."""
-        self.profile = kw.pop('profile')
+        """Pull instance kwarg out."""
+        self.instance = kw.pop('instance')
         initial = kw.setdefault('initial', {})
-        initial['name'] = self.profile.name
-        initial['role'] = self.profile.role
+        initial['name'] = self.instance.name
+        initial['role'] = self.instance.role
         super(EditProfileForm, self).__init__(*a, **kw)
 
 
     def save(self):
         """Save edits and return updated profile."""
-        self.profile.name = self.cleaned_data['name']
-        old_role = self.profile.role
+        self.instance.name = self.cleaned_data['name']
+        old_role = self.instance.role
         new_role = self.cleaned_data['role']
-        self.profile.role = new_role
-        self.profile.save()
-        self.profile.relationships_from.filter(description=old_role).update(
-            description=new_role)
+        self.instance.role = new_role
+        self.instance.save()
+        self.instance.relationships_from.filter(description=old_role).update(
+            description='')
 
-        return self.profile
+        return self.instance
