@@ -3,7 +3,7 @@
 
 {% block village-content %}
 <div class="village-main">
-  <form method="POST" action="{% block form-action %}{% endblock %}" class="elder-add-form" id="invite-elders-form">
+  <form method="POST" action="{% block form-action %}{% endblock %}" class="elder-add-form" id="invite-elder-form">
     {% csrf_token %}
     <h2>{% block form-header %}{% endblock %}</h2>
     {{ form.non_field_errors }}

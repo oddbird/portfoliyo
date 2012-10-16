@@ -2,47 +2,63 @@
 // Add/Edit forms
 
 .students-field, .elders-field, .groups-field {
+  > .type {
+    @include adjust-font-size-to($smallpx);
+    padding: rhythm(.25,$smallpx);
+    background: $base;
+    color: $base3;
+    text-transform: uppercase;
+  }
   .check-options {
     @extend %check-options;
     height: rhythm(8,$input-font-size);
   }
   @include span-columns($center/2, $center);
-  @include nth-omega(last);
+  + .students-field, + .elders-field { @include omega; }
 }
 
-$label-colors: $yellow $orange $magenta $violet $cyan $green;
-$adjusted-colors: compact();
-@each $color in $label-colors { $adjusted-colors: join($adjusted-colors, adjust-color($color, $lightness: 15%)); }
-$label-colors: $adjusted-colors;
-@each $color in $label-colors {
-  $new-colors: adjust-color($color, $saturation: -15%, $lightness: 15%);
-  $label-colors: join($label-colors, $new-colors);
+@function lighten-color($color, $amount) {
+  @return adjust-color($color, $lightness: $amount);
 }
+
+$label-colors: $yellow $orange $magenta $violet $cyan $green
+               lighten-color($yellow, 15%)
+               lighten-color($orange, 15%)
+               lighten-color($magenta, 15%)
+               lighten-color($violet, 15%)
+               lighten-color($cyan, 15%)
+               lighten-color($green, 15%)
+               desaturate(lighten-color($yellow, 50%), 25%)
+               desaturate(lighten-color($orange, 50%), 25%)
+               desaturate(lighten-color($magenta, 50%), 25%)
+               desaturate(lighten-color($violet, 50%), 25%)
+               desaturate(lighten-color($cyan, 50%), 25%)
+               desaturate(lighten-color($green, 50%), 25%);
 
 .select-groups {
   [class*="label-color-"] {
-    &:before {
+    &:after {
       @include border-radius(3px);
       @include box-shadow($back 0 0 2px inset);
       content: " ";
+      position: absolute;
+      right: rhythm(.125,$input-font-size);
       display: inline-block;
+      margin-top: rhythm(.125,$input-font-size);
       width: 1em;
       height: 1em;
     }
   }
   $i: 1;
   @each $color in $label-colors {
-    .label-color-#{$i}:before { background: $color; }
+    .label-color-#{$i}:after { background: $color; }
     $i: $i + 1;
   }
 }
 
 .select-students, .select-elders {
-  [class*="group-selected-"] {
-    @extend %icon;
-    @extend %icon-users;
-    &:before { float: left; }
-  }
+  .value[disabled] + .type { @extend %options-checked; }
+
   $i: 1;
   @each $color in $label-colors {
     .group-selected-#{$i}:before {
@@ -54,49 +70,50 @@ $label-colors: $adjusted-colors;
 }
 
 // ---------------------------------------------------------------------------
-// Add Village
+// Add/Edit Village
 
-.village-add-form { @extend %village-solo-page; }
-
-$village-center-bleed: gutter($center);
-
-$instruction-size : $medpx;
-$inst-icon-size   : $xxlargepx + $xlargepx;
+.group-add-form, .group-edit-form { @extend %village-solo-page; }
+.add-student, .village-edit-form { @extend %village-solo-page; }
 
 .parent-instructions {
-  @extend %icon;
-  @extend %icon-document-alt-stroke;
-  @include clearfix;
-  @include adjust-font-size-to($instruction-size);
-  @include rhythm-borders(1px, 1, $instruction-size);
-  @include trailing-border(1px, .5, $instruction-size);
-  @include bleed($village-center-bleed);
-  @include rgba-background(rgba($alt,.25));
-  @include background-image(linear-gradient(top, rgba($alt,0), rgba($alt,.25)));
-  display: block;
-  position: relative;
-  top: rhythm(-1,$instruction-size);
-  &:before {
-    @include adjust-font-size-to($inst-icon-size,$from-size: $instruction-size);
-    float: left;
-    margin: 0 rhythm(1,$inst-icon-size) 0 rhythm(.5,$inst-icon-size);
+  @extend %type;
+  h2 { @include trailer(.5, $largepx); }
+  p { overflow: hidden; }
+  .pdf-thumbnail {
+    @extend %img;
+    @include span-columns($left,$center);
+    min-width: columns-width(3);
   }
-  p, ul { overflow: hidden; }
-  p { @include trailer(1,$instruction-size); }
-  ul {
+  .pdf-downloads {
     @include inline-block-list;
+    @include rhythm(0,.5,.5,1);
+    @include bleed(rhythm(.5));
+    background: $base2;
     text-align: right;
+    overflow: visible;
+    a {
+      @extend %icon;
+      @extend %icon-file-download;
+      margin-right: 1em;
+      &:after { content: " »"; }
+    }
   }
-  [class^="pdf-"] {
-    @extend %icon;
-    @extend %icon-document-alt-stroke;
-    margin-right: 1em;
+}
+
+.student-form-details {
+  .summary {
+    display: block;
+    text-align: right;
+    font-style: italic;
     &:after { content: " »"; }
+  }
+  &.open .summary {
+    display: none;
   }
 }
 
 // ---------------------------------------------------------------------------
-// Add Elder & Edit Student
+// Add/Edit Elder
 
 .elder-add-form, .elder-edit-form { @extend %village-main-page; }
 
@@ -105,4 +122,3 @@ $inst-icon-size   : $xxlargepx + $xlargepx;
   @include leader;
 }
 
-.village-edit-form { @extend %village-solo-page; }

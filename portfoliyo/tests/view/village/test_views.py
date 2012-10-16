@@ -15,6 +15,66 @@ from portfoliyo.tests import factories, utils
 
 
 
+class GroupContextTests(object):
+    """Common tests for views that maintain group context via querystring."""
+    def test_maintain_group_context(self, client):
+        """Can take ?group=id to maintain group nav context."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        response = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] == group
+
+
+    def test_group_context_student_must_be_in_group(self, client):
+        """?group=id not effective unless student is in group."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+
+        response = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] is None
+
+
+    def test_group_context_must_own_group(self, client):
+        """?group=id not effective unless active user owns group."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create()
+        group.students.add(rel.student)
+
+        response = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] is None
+
+
+    def test_group_context_bad_id(self, client):
+        """?group=id doesn't blow up with non-int id."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        response = client.get(
+            self.url(rel.student) + '?group=all23',
+            user=rel.elder.user,
+            )
+
+        assert response.context['group'] is None
+
+
+
 class TestDashboard(object):
     def test_dashboard(self, client):
         """Asks user to pick a student."""
@@ -59,7 +119,8 @@ class TestAddStudent(object):
 
         assert response.status_code == 302, response.body
         assert response['Location'] == utils.location(
-            reverse('village', kwargs={'student_id': student.id}))
+            reverse('village', kwargs={'student_id': student.id}),
+            ) + "?group=" + str(group.id)
 
 
     def test_validation_error(self, client):
@@ -89,7 +150,7 @@ class TestAddStudent(object):
 
 
 
-class TestEditStudent(object):
+class TestEditStudent(GroupContextTests):
     """Tests for edit_student view."""
     def url(self, student=None):
         """Shortcut to get URL of edit-student view."""
@@ -111,6 +172,23 @@ class TestEditStudent(object):
 
         assert response['Location'] == utils.location(
             reverse('village', kwargs={'student_id': rel.student.id}))
+
+
+    def test_maintain_group_context_on_redirect(self, client):
+        """The group context is passed on through the form submission."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        form = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        form['name'] = "Some Student"
+        response = form.submit().follow()
+
+        assert response.context['group'] == group
 
 
     def test_validation_error(self, client):
@@ -247,7 +325,7 @@ class TestEditGroup(object):
 
 
 
-class TestInviteElders(object):
+class TestInviteElders(GroupContextTests):
     """Tests for invite_elder view."""
     def url(self, student=None, group=None):
         assert student or group
@@ -262,7 +340,7 @@ class TestInviteElders(object):
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
-        form = response.forms['invite-elders-form']
+        form = response.forms['invite-elder-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
         response = form.submit(status=302)
@@ -278,11 +356,29 @@ class TestInviteElders(object):
         assert rel.student.relationships_to.count() == 2
 
 
+    def test_maintain_group_context_on_redirect(self, client):
+        """The group context is passed on through the form submission."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        form = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            ).forms['invite-elder-form']
+        form['contact'] = "dad@example.com"
+        form['relationship'] = "Father"
+        response = form.submit().follow()
+
+        assert response.context['group'] == group
+
+
     def test_invite_elder_to_group(self, client):
         """User can invite an elder to a group."""
         group = factories.GroupFactory.create(owner__school_staff=True)
         response = client.get(self.url(group=group), user=group.owner.user)
-        form = response.forms['invite-elders-form']
+        form = response.forms['invite-elder-form']
         form['contact'] = "dad@example.com"
         form['relationship'] = "Father"
         response = form.submit(status=302)
@@ -311,7 +407,7 @@ class TestInviteElders(object):
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
-        form = response.forms['invite-elders-form']
+        form = response.forms['invite-elder-form']
         form['contact'] = "(123)456-7890"
         form['relationship'] = ""
         response = form.submit(status=200)
@@ -338,7 +434,7 @@ class TestInviteElders(object):
 
 
 
-class TestVillage(object):
+class TestVillage(GroupContextTests):
     """Tests for village chat view."""
     def url(self, student=None):
         if student is None:
@@ -644,14 +740,20 @@ class TestJsonPosts(object):
 
 
 class TestEditElder(object):
-    def url(self, rel=None):
+    def url(self, rel=None, elder=None, group=None):
         """rel is relationship between a student and elder to be edited."""
-        if rel is None:
-            rel = factories.RelationshipFactory()
-        return reverse(
-            'edit_elder',
-            kwargs={'student_id': rel.student.id, 'elder_id': rel.elder.id},
-            )
+        assert elder or rel
+        if rel:
+            return reverse(
+                'edit_elder_in_village',
+                kwargs={'student_id': rel.student.id, 'elder_id': rel.elder.id},
+                )
+        elif group:
+            return reverse(
+                'edit_elder_in_group',
+                kwargs={'elder_id': elder.id, 'group_id': group.id},
+                )
+        return reverse('edit_elder', kwargs={'elder_id': elder.id})
 
 
     def test_success(self, client):
@@ -689,6 +791,44 @@ class TestEditElder(object):
         res = form.submit(status=200)
 
         res.mustcontain('field is required')
+
+
+    def test_in_group(self, client):
+        """Can edit an elder from a group context."""
+        elder = factories.ProfileFactory.create()
+        editor = factories.ProfileFactory.create(
+            school_staff=True, school=elder.school)
+        group = factories.GroupFactory.create(owner=editor)
+        group.elders.add(elder)
+
+        form = client.get(
+            self.url(elder=elder, group=group),
+            user=editor.user,
+            ).forms['edit-elder-form']
+        form['name'] = 'New Name'
+        form['role'] = 'New Role'
+        form.submit()
+
+        elder = utils.refresh(elder)
+        assert elder.name == 'New Name'
+        assert elder.role == 'New Role'
+
+
+    def test_in_all_students_group(self, client):
+        """Can edit an elder from the all-students group."""
+        elder = factories.ProfileFactory.create()
+        editor = factories.ProfileFactory.create(
+            school_staff=True, school=elder.school)
+
+        form = client.get(
+            self.url(elder=elder), user=editor.user).forms['edit-elder-form']
+        form['name'] = 'New Name'
+        form['role'] = 'New Role'
+        form.submit()
+
+        elder = utils.refresh(elder)
+        assert elder.name == 'New Name'
+        assert elder.role == 'New Role'
 
 
     def test_school_staff_required(self, client):

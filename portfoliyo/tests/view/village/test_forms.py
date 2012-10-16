@@ -126,6 +126,28 @@ class TestEditElderForm(object):
         assert form.fields['groups'].initial == [group.pk]
 
 
+    def test_group_ids(self):
+        """group_ids attr of each choice is list of group memberships."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            school=rel.elder.school, from_profile__school_staff=True)
+        factories.RelationshipFactory.create(
+            from_profile=rel.elder, to_profile=other_rel.student)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(other_rel.student)
+
+        form = forms.EditElderForm(instance=other_rel.elder, editor=rel.elder)
+
+        # verifies that groups are prefetched, not checked per-student
+        with utils.assert_num_queries(2):
+            student_from_choice = [
+                c[1] for c in form['students'].field.choices
+                if c[0] == other_rel.student.pk
+                ][0]
+
+        assert student_from_choice.group_ids == [group.pk]
+
+
     def test_edit_elder_doesnt_remove_from_other_users_groups(self):
         """Editing an elder doesn't remove them from other users' groups."""
         rel = factories.RelationshipFactory.create()
@@ -353,6 +375,16 @@ class TestInviteElderForm(object):
         assert form.fields['groups'].initial == [group.pk]
 
 
+    def test_sets_invited_by(self):
+        """Invited_by field is set to inviting elder."""
+        rel = factories.RelationshipFactory()
+        form = forms.InviteElderForm(self.data(contact='+12345678909'), rel=rel)
+        assert form.is_valid()
+        profile = form.save(mock.Mock())
+
+        assert profile.invited_by == rel.elder
+
+
     def test_email_user_inactive(self):
         """User invited by email is inactive."""
         rel = factories.RelationshipFactory.create()
@@ -527,6 +559,29 @@ class TestStudentForms(object):
         form = forms.AddStudentForm(elder=rel.elder, group=group)
 
         assert form.fields['groups'].initial == [group.pk]
+
+
+    def test_group_ids(self):
+        """group_ids attr of each choice is list of group memberships."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        other_elder = factories.ProfileFactory.create(
+            school=rel.elder.school, school_staff=True)
+        factories.ProfileFactory.create(
+            school=rel.elder.school, school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.elders.add(other_elder)
+
+        form = forms.StudentForm(instance=other_elder, elder=rel.elder)
+
+        # verifies that groups are prefetched, not checked per-elder
+        with utils.assert_num_queries(2):
+            elder_from_choice = [
+                c[1] for c in form['elders'].field.choices
+                if c[0] == other_elder.pk
+                ][0]
+
+        assert elder_from_choice.group_ids == [group.pk]
 
 
     def test_self_not_in_elder_choices(self):

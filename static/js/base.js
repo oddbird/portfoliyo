@@ -24,6 +24,16 @@ var PYO = (function (PYO, $) {
         DOWN: 40
     };
 
+    PYO.ieInputBootstrap = function () {
+        $('body').on('change', 'input[type="radio"], input[type="checkbox"]', function () {
+            if ($(this).is(':checked')) {
+                $(this).attr('checked', 'checked');
+            } else {
+                $(this).removeAttr('checked');
+            }
+        });
+    };
+
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
             var page = $(container);
@@ -82,7 +92,10 @@ var PYO = (function (PYO, $) {
 
             pageAjax.XHR = $.get(url, function (response) {
                 if (response && response.html && pageAjax.count === count) {
-                    container.replaceWith($(response.html));
+                    var newPage = $(response.html);
+                    container.replaceWith(newPage);
+                    newPage.find('.details').html5accordion();
+                    newPage.find('input[placeholder], textarea[placeholder]').placeholder();
                     PYO.initializePage();
                 }
                 container.loadingOverlay('remove');
@@ -110,7 +123,8 @@ var PYO = (function (PYO, $) {
                         var stateData = History.getState().data;
                         var currentUrl = stateData.url ? stateData.url : window.location.pathname;
                         if (url === currentUrl) {
-                            PYO.pageAjaxLoad(url + '?ajax=true');
+                            var query = url.toString().indexOf('?') !== -1 ? '&' : '?';
+                            PYO.pageAjaxLoad(url + query + 'ajax=true');
                         } else {
                             var title = document.title;
                             var data = { url: url };
@@ -123,7 +137,8 @@ var PYO = (function (PYO, $) {
                 $(window).bind('statechange', function () {
                     var data = History.getState().data;
                     var url = data.url ? data.url : window.location.pathname;
-                    PYO.pageAjaxLoad(url + '?ajax=true');
+                    var query = url.toString().indexOf('?') !== -1 ? '&' : '?';
+                    PYO.pageAjaxLoad(url + query + 'ajax=true');
                 });
             }
         }
@@ -135,6 +150,110 @@ var PYO = (function (PYO, $) {
                 ich.flash_warning_msg().appendTo('#messages');
                 $('#messages').messages();
             }
+        }
+    };
+
+    PYO.disablePreselectedAssociations = function (container) {
+        var form = $(container);
+        var inputs = form.find('.relation-fieldset .check-options input');
+        var checked = inputs.filter(':checked');
+
+        checked.attr('disabled', 'disabled').each(function () {
+            var el = $(this).data('pre-selected', true);
+            var label = el.siblings('.type');
+            if (el.closest('form').hasClass('village-add-form')) {
+                label.attr('title', 'You are adding a student to the "' + $.trim(label.text()) + '" group.');
+            } else if (el.closest('form').hasClass('elder-add-form')) {
+                var title;
+                if (el.closest('.check-options').hasClass('select-groups')) {
+                    title = 'You are inviting an elder to join all the student villages in the "' + $.trim(label.text()) + '" group.';
+                    label.attr('title', title).data('title', title);
+                }
+                if (el.closest('.check-options').hasClass('select-students')) {
+                    title = "You are inviting an elder to join " + $.trim(label.text()) + "'s village.";
+                    label.attr('title', title).data('title', title);
+                }
+            }
+        });
+
+        form.submit(function () { inputs.removeAttr('disabled'); });
+    };
+
+    PYO.addGroupAssociationColors = function (container) {
+        if ($(container).length) {
+            var form = $(container);
+            var groupInputs = form.find('.check-options input[name="groups"]');
+            var inputs = form.find('.check-options input').not(groupInputs);
+            var count = 0;
+            var selectedIds = [];
+            var updateColors = function () {
+                var colorInputs = function (i) {
+                    var id = selectedIds[i];
+                    var group = groupInputs.filter('[value=' + id + ']');
+                    var groupLabel = group.siblings('.type');
+                    var groupName = $.trim(groupLabel.text());
+                    var thisCount = groupLabel.data('color-count');
+                    var relInputs = inputs.filter(function () {
+                        var groups = $(this).data('group-ids');
+                        return $.inArray(id, groups) !== -1;
+                    });
+                    relInputs.each(function () {
+                        var el = $(this);
+                        if (!el.data('colored')) {
+                            el.data('colored', true).attr('disabled', 'disabled');
+                            el.siblings('.type').addClass('group-selected-' + thisCount).attr('title', 'selected as part of "' + groupName + '" group');
+                        }
+                    });
+                };
+
+                inputs.each(function () {
+                    var el = $(this).removeData('colored');
+                    var label = el.siblings('.type');
+                    var classes = label.attr('class').split(' ');
+                    for (var i = 0; i < classes.length; i++) {
+                        if (classes[i].indexOf('group-selected-') !== -1) { label.removeClass(classes[i]); }
+                    }
+                    if (el.data('pre-selected')) {
+                        label.attr('title', label.data('title'));
+                    } else {
+                        el.removeAttr('disabled');
+                        label.removeAttr('title');
+                    }
+                });
+
+                if (selectedIds && selectedIds.length) {
+                    for (var i = 0; i < selectedIds.length; i++) {
+                        colorInputs(i);
+                    }
+                }
+            };
+
+            groupInputs.change(function () {
+                var el = $(this);
+                var label = el.siblings('.type');
+                var id = parseInt(el.val(), 10);
+                var thisCount;
+                if (el.is(':checked')) {
+                    if ($.inArray(id, selectedIds) === -1) { selectedIds.unshift(id); }
+                    if (label.data('color-count')) {
+                        thisCount = label.data('color-count');
+                    } else {
+                        count = count === 18 ? 1 : count + 1;
+                        thisCount = count;
+                        label.data('color-count', thisCount);
+                    }
+                    label.addClass('label-color-' + thisCount);
+                } else {
+                    if ($.inArray(id, selectedIds) !== -1) { selectedIds.splice($.inArray(id, selectedIds), 1); }
+                    if (label.data('color-count')) {
+                        thisCount = label.data('color-count');
+                        label.removeClass('label-color-' + thisCount);
+                    }
+                }
+                updateColors();
+            });
+
+            groupInputs.filter(':checked').each(function () { $(this).change(); });
         }
     };
 
@@ -154,9 +273,10 @@ var PYO = (function (PYO, $) {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
-        if ($('.village-feed').length) {
-            PYO.initializeFeed();
-        }
+        PYO.addGroupAssociationColors('.relation-fieldset');
+        if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
+        if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
+        if ($('.village-feed').length) { PYO.initializeFeed(); }
     };
 
     return PYO;

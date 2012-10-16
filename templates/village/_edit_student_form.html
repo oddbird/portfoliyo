@@ -1,0 +1,11 @@
+{% extends "village/_student_form.html" %}
+
+{% block form-action %}{% url edit_student student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}{% endblock %}
+
+{% block form-class %}village-edit-form{% endblock %}
+
+{% block form-id %}edit-student-form{% endblock %}
+
+{% block form-header %}Edit '{{ student.name }}'{% endblock %}
+
+{% block form-button-text %}save{% endblock %}

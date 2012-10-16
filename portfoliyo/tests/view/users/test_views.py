@@ -291,7 +291,7 @@ class TestAcceptEmailInvite(object):
             reverse('invite_elder', kwargs=dict(student_id=rel.student.id)),
             user=profile.user,
             )
-        form = response.forms['invite-elders-form']
+        form = response.forms['invite-elder-form']
         form['contact'] = 'new@example.com'
         form['relationship'] = 'teacher'
         form.submit(status=302)

@@ -104,7 +104,7 @@ var PYO = (function (PYO, $) {
         var original = listitem.data('original');
         listitem.find('.listitem-select.removed').stop();
         listitem.html(original);
-        listitem.removeAttr('data-original');
+        listitem.removeData('original');
     };
 
     PYO.fetchGroups = function () {
@@ -118,6 +118,8 @@ var PYO = (function (PYO, $) {
                 var newGroups = ich.group_list(data);
                 PYO.updateNavActiveClasses(newGroups);
                 nav.trigger('before-replace').html(newGroups);
+                newGroups.find('.details').html5accordion();
+                newGroups.find('input[placeholder], textarea[placeholder]').placeholder();
                 PYO.listenForPosts(newGroups.find('.listitem'));
                 if (!all_students_group_obj && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
@@ -171,9 +173,12 @@ var PYO = (function (PYO, $) {
                 data.group_resource_url = group_obj.resource_url;
                 data.group_add_student_url = group_obj.add_student_url;
                 data.staff = nav.data('is-staff');
+                if (group_obj.id.toString().indexOf('all') !== -1) { data.all_students = true; }
                 var students = ich.student_list(data);
                 PYO.updateNavActiveClasses(students);
                 nav.trigger('before-replace').html(students);
+                students.find('.details').html5accordion();
+                students.find('input[placeholder], textarea[placeholder]').placeholder();
                 PYO.listenForPosts(students.find('*').andSelf().filter('.listitem'));
             } else { fetchStudentsError(); }
         };
@@ -205,7 +210,7 @@ var PYO = (function (PYO, $) {
                             add_student_url: this.add_student_uri
                         };
                     }
-                    if (this.id.toString().indexOf('all') !== -1) {
+                    if (!all_students_group_obj && this.id.toString().indexOf('all') !== -1) {
                         all_students_group_obj = {
                             name: this.name,
                             url: this.group_uri,
@@ -250,7 +255,13 @@ var PYO = (function (PYO, $) {
                 }
 
                 channel.bind('message_posted', function (data) {
-                    if (id === PYO.activeStudentId || id === PYO.activeGroupId) {
+                    var contextId;
+                    if (group) {
+                        if (!PYO.activeStudentId) { contextId = PYO.activeGroupId; }
+                    } else {
+                        contextId = PYO.activeStudentId;
+                    }
+                    if (contextId && id === contextId) {
                         var scroll = PYO.scrolledToBottom();
                         if (!PYO.replacePost(data)) {
                             PYO.addPost(data);
@@ -288,10 +299,13 @@ var PYO = (function (PYO, $) {
             var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
 
             channel.bind('student_added', function (data) {
-                if (data && data.objects && data.objects.length && nav.find('.grouptitle .group-link[data-name="All Students"]').length) {
+                if (data && data.objects && data.objects.length && nav.find('.grouptitle .group-link').filter(function () {
+                    return $(this).data('group-id').toString().indexOf('all') !== -1;
+                }).length) {
                     $.each(data.objects, function () {
                         this.staff = nav.data('is-staff');
                         this.objects = true;
+                        this.all_students = true;
                         var student = ich.student_list_item(this);
                         var inserted = false;
                         nav.find('.student').each(function () {
@@ -302,6 +316,8 @@ var PYO = (function (PYO, $) {
                         });
                         if (!inserted) {
                             nav.find('.itemlist').append(student);
+                            student.find('.details').html5accordion();
+                            student.find('input[placeholder], textarea[placeholder]').placeholder();
                             student.slideDown();
                         }
                         PYO.listenForPosts(student);
@@ -351,7 +367,7 @@ var PYO = (function (PYO, $) {
                 var id;
                 if ($(this).hasClass('group-link')) {
                     id = $(this).data('group-id');
-                    return id === PYO.activeGroupId;
+                    if (!PYO.activeStudentId) { return id === PYO.activeGroupId; }
                 } else {
                     id = $(this).data('id');
                     return id === PYO.activeStudentId;

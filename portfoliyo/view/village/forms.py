@@ -27,6 +27,39 @@ class GroupCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
     template_name = 'village/group_checkbox_select.html'
 
 
+class GroupIdsMultipleChoiceField(TemplateLabelModelMultipleChoiceField):
+    # subclasses should override
+    groups_attr = None
+
+
+    def _set_queryset(self, queryset):
+        """Prefetch the related groups."""
+        self._queryset = queryset.prefetch_related(self.groups_attr)
+        self.widget.choices = self.choices
+
+
+    queryset = property(
+        TemplateLabelModelMultipleChoiceField._get_queryset, _set_queryset)
+
+
+    def label_from_instance(self, obj):
+        """Annotate each object with list of group IDs."""
+        obj.group_ids = [g.id for g in getattr(obj, self.groups_attr).all()]
+        return obj
+
+
+
+class StudentGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
+    """Annotates each student with a list of group IDs."""
+    groups_attr = 'student_in_groups'
+
+
+
+class ElderGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
+    """Annotates each student with a list of group IDs."""
+    groups_attr = 'elder_in_groups'
+
+
 
 class ElderFormBase(forms.Form):
     """Common elements of EditElderForm and InviteElderForm."""
@@ -35,7 +68,7 @@ class ElderFormBase(forms.Form):
         widget=GroupCheckboxSelectMultiple,
         required=False,
         )
-    students = TemplateLabelModelMultipleChoiceField(
+    students = StudentGroupIdsMultipleChoiceField(
         queryset=model.Profile.objects.none(),
         widget=StudentCheckboxSelectMultiple,
         required=False,
@@ -45,9 +78,10 @@ class ElderFormBase(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ElderFormBase, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
-            owner=self.editor)
+            owner=self.editor, deleted=False)
         self.fields['students'].queryset = model.Profile.objects.filter(
             relationships_to__from_profile=self.editor, deleted=False)
+        self.fields['students'].groups_attr = 'student_in_groups'
 
 
     def update_elder_groups(self, elder, groups):
@@ -79,11 +113,12 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             s.pk for s in self.direct_students(self.instance)]
 
 
-    def save(self, rel):
-        """Save this elder in context of given village relationship."""
+    def save(self, rel=None):
+        """Save elder (optionally in context of given village relationship)."""
         self.instance.name = self.cleaned_data['name']
         old_profile_role = self.instance.role
-        old_relationship_role = rel.description_or_role
+        old_relationship_role = (
+            rel.description_or_role if rel else self.instance.role)
         new_role = self.cleaned_data['role']
         if old_profile_role == old_relationship_role:
             self.instance.role = new_role
@@ -217,6 +252,7 @@ class InviteElderForm(ElderFormBase):
                 role=relationship,
                 is_active=active,
                 school_staff=staff,
+                invited_by=self.editor,
                 )
             created = True
         else:
@@ -279,7 +315,7 @@ class StudentForm(forms.ModelForm):
         widget=GroupCheckboxSelectMultiple,
         required=False,
         )
-    elders = TemplateLabelModelMultipleChoiceField(
+    elders = ElderGroupIdsMultipleChoiceField(
         queryset=model.Profile.objects.none(),
         widget=ElderCheckboxSelectMultiple,
         required=False,
@@ -296,10 +332,11 @@ class StudentForm(forms.ModelForm):
         self.elder = kwargs.pop('elder')
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
-            owner=self.elder)
+            owner=self.elder, deleted=False)
         self.fields['elders'].queryset = model.Profile.objects.filter(
             school=self.elder.school, school_staff=True, deleted=False).exclude(
             pk=self.elder.pk)
+        self.fields['elders'].groups_attr = 'elder_in_groups'
         if self.instance.pk:
             self.fields['groups'].initial = [
                 g.pk for g in self.instance.student_in_groups.all()]
