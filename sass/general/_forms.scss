@@ -245,7 +245,7 @@ button { @include reset-button; }
     width: auto;
     margin: auto;
     position: relative;
-    border-color: $base2;
+    border-color: $base1;
     border-color: rgba($base1,.25);
     text-align: left;
     #{$focus} { background: $base3; }
