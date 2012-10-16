@@ -109,9 +109,11 @@ $village-nav-action-color : $base03;
   text-transform: capitalize;
 
   @include opacity(0);
+  .lt-ie9 & { display: none; }
   .listitem:hover &, .removed + &, .editing + & {
     @include opacity(1);
     z-index: 100;
+    .lt-ie9 & { display: block; }
   }
 }
 
