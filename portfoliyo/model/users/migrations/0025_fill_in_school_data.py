@@ -20,9 +20,10 @@ class Migration(DataMigration):
         default_school = get_default_school(orm)
 
         actual_schools = []
-        for school_name in SCHOOLS:
+        for school_name, school_zip in SCHOOLS:
             actual_schools.append(
-                orm.School.objects.create(name=school_name, auto=False))
+                orm.School.objects.create(
+                    name=school_name, postcode=school_zip, auto=False))
 
         for network in user_networks(orm):
             school_ids = set()
@@ -192,16 +193,16 @@ def user_networks(orm):
 # proxy for "this is production"
 if os.environ.get('AWS_STORAGE_BUCKET_NAME') == 'pyo-heroku':
     SCHOOLS = [
-        'KIPP Philadelphia Charter School',
-        'PFC Omar E. Torres Charter School',
-        'KIPP West Philadelphia Charter School',
-        'The Bronx School of Young Leaders',
-        'Longfellow Middle School',
-        'Francisco Modrano Middle School',
-        'Saldivar Elementary School',
-        'Thomas Jefferson High School',
-        'KIPP Ascend Charter School',
-        'Galapagos Charter School',
+        ['KIPP Philadelphia Charter School', '19132'],
+        ['PFC Omar E. Torres Charter School', '60642'],
+        ['KIPP West Philadelphia Charter School', '19143'],
+        ['The Bronx School of Young Leaders', '10456'],
+        ['Longfellow Middle School', '75209'],
+        ['Francisco Modrano Middle School', '75220'],
+        ['Saldivar Elementary School', '75220'],
+        ['Thomas Jefferson High School', '75229'],
+        ['KIPP Ascend Middle School', '60623'],
+        ['Galapagos Charter School', '60651'],
     ]
 
     PROFILE_SCHOOLS = {
