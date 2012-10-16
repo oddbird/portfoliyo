@@ -53,3 +53,19 @@ def test_unread_count():
 
     # Only post1; the second is read, and other is wrong village
     assert unread.unread_count(post1.student, profile) == 1
+
+
+
+def test_group_unread_count():
+    post1 = factories.PostFactory.create()
+    factories.PostFactory.create(student=post1.student)
+    post2 = factories.PostFactory.create()
+    group = factories.GroupFactory.create()
+    group.students.add(post1.student, post2.student)
+    other_village_post = factories.PostFactory.create()
+    profile = factories.ProfileFactory.create()
+    unread.mark_unread(post1, profile)
+    unread.mark_unread(post2, profile)
+    unread.mark_unread(other_village_post, profile)
+
+    assert unread.group_unread_count(group, profile) == 2
