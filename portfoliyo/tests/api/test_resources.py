@@ -444,3 +444,47 @@ class TestGroupResource(object):
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
         assert response.json['objects'][1]['edit_uri'] == edit_url
+
+
+
+class TestPostResource(object):
+    def list_url(self):
+        """Get list API url."""
+        return reverse(
+            'api_dispatch_list',
+            kwargs={'resource_name': 'post', 'api_name': 'v1'},
+            )
+
+
+    def detail_url(self, post):
+        """Get detail API url for given post."""
+        return reverse(
+            'api_dispatch_detail',
+            kwargs={'resource_name': 'post', 'api_name': 'v1', 'pk': post.pk},
+            )
+
+
+    def test_unread_count(self, no_csrf_client):
+        """Each post has an unread boolean in the API response."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        post = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+
+        response = no_csrf_client.get(
+            self.detail_url(post), user=rel.elder.user)
+
+        assert response.json['unread'] == True
+
+
+    def test_mark_read(self, no_csrf_client):
+        """Each post has an unread boolean in the API response."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        post = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+
+        response = no_csrf_client.get(
+            self.detail_url(post), user=rel.elder.user)
+
+        assert response.json['unread'] == True

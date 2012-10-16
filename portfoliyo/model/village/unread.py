@@ -9,9 +9,9 @@ def mark_unread(post, profile):
 
 
 
-def is_read(post, profile):
-    """Given post is read by given profile (returns boolean)."""
-    return not client.sismember(make_key(post.student, profile), post.id)
+def is_unread(post, profile):
+    """Given post is unread by given profile (returns boolean)."""
+    return client.sismember(make_key(post.student, profile), post.id)
 
 
 

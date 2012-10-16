@@ -10,7 +10,7 @@ def test_read():
     post = factories.PostFactory.create()
     profile = factories.ProfileFactory.create()
 
-    assert unread.is_read(post, profile)
+    assert not unread.is_unread(post, profile)
 
 
 
@@ -21,7 +21,7 @@ def test_unread():
 
     unread.mark_unread(post, profile)
 
-    assert not unread.is_read(post, profile)
+    assert unread.is_unread(post, profile)
 
 
 
@@ -37,9 +37,9 @@ def test_mark_village_read():
 
     unread.mark_village_read(post1.student, profile)
 
-    assert unread.is_read(post1, profile)
-    assert unread.is_read(post2, profile)
-    assert not unread.is_read(other_village_post, profile)
+    assert not unread.is_unread(post1, profile)
+    assert not unread.is_unread(post2, profile)
+    assert unread.is_unread(other_village_post, profile)
 
 
 

@@ -451,13 +451,13 @@ class TestVillage(GroupContextTests):
         unread.mark_unread(post, rel.elder)
         unread.mark_unread(post2, rel.elder)
 
-        assert not unread.is_read(post, rel.elder)
-        assert not unread.is_read(post2, rel.elder)
+        assert unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post2, rel.elder)
 
         client.get(self.url(rel.student), user=rel.elder.user)
 
-        assert unread.is_read(post, rel.elder)
-        assert unread.is_read(post2, rel.elder)
+        assert not unread.is_unread(post, rel.elder)
+        assert not unread.is_unread(post2, rel.elder)
 
 
     @pytest.mark.parametrize('link_target', ['invite_elder'])

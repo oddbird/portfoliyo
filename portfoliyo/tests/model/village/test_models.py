@@ -120,9 +120,9 @@ class TestPostCreate(object):
 
         post = models.Post.create(rel.elder, rel.student, 'Foo')
 
-        assert unread.is_read(post, rel.elder)
-        assert not unread.is_read(post, rel2.elder)
-        assert not unread.is_read(post, rel3.elder)
+        assert not unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post, rel2.elder)
+        assert unread.is_unread(post, rel3.elder)
 
 
     def test_creates_post_from_sms(self):
