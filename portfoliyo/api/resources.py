@@ -214,6 +214,8 @@ class ProfileResource(SoftDeletedResource):
             'edit_student',
             kwargs={'student_id': bundle.obj.id},
             )
+        bundle.data['unread_count'] = model.unread.unread_count(
+            bundle.obj, bundle.request.user.profile)
 
         return bundle
 
@@ -269,7 +271,13 @@ class GroupResource(SoftDeletedResource):
                             'api_name': 'v1',
                             'pk': bundle.obj.owner.id,
                             },
-                        )
+                        ),
+                    'unread_count': sum(
+                        [
+                            model.unread.unread_count(s, bundle.obj.owner)
+                            for s in bundle.obj.owner.students
+                            ]
+                        ),
                     })
         else:
             bundle = super(GroupResource, self).full_dehydrate(bundle)
@@ -291,6 +299,8 @@ class GroupResource(SoftDeletedResource):
             )
         bundle.data['add_student_uri'] = reverse(
             'add_student_in_group', kwargs={'group_id': bundle.obj.id})
+        bundle.data['unread_count'] = model.unread.group_unread_count(
+            bundle.obj, bundle.request.user.profile)
         return bundle
 
 

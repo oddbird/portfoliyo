@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 import mock
 
 from portfoliyo.api import resources
+from portfoliyo.model import unread
 from portfoliyo.tests import factories, utils
 
 
@@ -143,6 +144,18 @@ class TestProfileResource(object):
         response = no_csrf_client.get(self.list_url(), user=s.user)
 
         assert response.json['objects'][0]['village_uri'] == village_url
+
+
+    def test_unread_count(self, no_csrf_client):
+        """Each profile has an unread_count in the API response."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        post = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+
+        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+
+        assert response.json['objects'][0]['unread_count'] == 1
 
 
     def test_edit_student_uri(self, no_csrf_client):
@@ -299,6 +312,26 @@ class TestGroupResource(object):
             'api_dispatch_detail',
             kwargs={'resource_name': 'group', 'api_name': 'v1', 'pk': group.pk},
             )
+
+
+    def test_unread_count(self, no_csrf_client):
+        """Each group has an unread_count in the API response."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        post = factories.PostFactory.create(student=rel.student)
+        other_rel = factories.RelationshipFactory.create(from_profile=rel.elder)
+        other_post = factories.PostFactory.create(student=other_rel.student)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.students.add(other_rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(other_post, rel.elder)
+
+        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+
+        assert response.json['objects'][1]['unread_count'] == 2
+        # all-students group also has unread count
+        assert response.json['objects'][0]['unread_count'] == 2
 
 
     def test_only_see_my_groups(self, no_csrf_client):
