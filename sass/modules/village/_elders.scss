@@ -4,8 +4,21 @@
 .village-elders {
   h2 { @extend %gone; }
 
-  .elder:last-child .vcard { border-bottom: 0; }
+  .edit-elder {
+    #{$link} {
+      @extend %village-activenav;
+      @include bleed($village-bleed);
+      position: relative;
+      display: block;
+    }
+    #{$focus} { background: $base2; }
+  }
 
+  .title { font-weight: bold; }
+  .fn { color: $base1; }
+}
+
+.elder {
   .vcard {
     @extend %icon;
     @extend %icon-record;
@@ -36,20 +49,11 @@
       &:before { color: $red; }
     }
   }
-
-  .edit-elder {
-    #{$link} {
-      @extend %village-activenav;
-      @include bleed($village-bleed);
-      position: relative;
-      display: block;
-    }
-    #{$focus} { background: $base2; }
+  &:last-child .vcard {
+    border-bottom: 0;
   }
-
-  .title { font-weight: bold; }
-  .fn { color: $base1; }
 }
+
 
 .addelder-link {
   @extend %village-addlink;

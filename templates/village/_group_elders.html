@@ -5,14 +5,14 @@
   <h2>Village Elders</h2>
   <ul>
     {% for nav_elder in group.all_elders %}
-    <li class="elder {{ nav_elder|elder_status:request.user.profile }}" title="{{ nav_elder|elder_status_description:request.user.profile }}">
+    <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
       {% if nav_elder.school_staff %}
-        <span class="vcard">
+        <span class="vcard {{ nav_elder|elder_status:request.user.profile }}">
           <b class="title">{{ nav_elder.role }}:</b>
           <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
         </span>
       {% else %}
-        <a href="{% if group.is_all %}{% url 'edit_elder' elder_id=nav_elder.id %}{% else %}{% url 'edit_elder_in_group' elder_id=nav_elder.id group_id=group.id %}{% endif %}" class="edit-elder vcard ajax-link{% if nav_elder == elder %} active{% endif %}">
+        <a href="{% if group.is_all %}{% url 'edit_elder' elder_id=nav_elder.id %}{% else %}{% url 'edit_elder_in_group' elder_id=nav_elder.id group_id=group.id %}{% endif %}" class="edit-elder vcard ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
           <b class="title">{{ nav_elder.role }}:</b>
           <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
         </a>
