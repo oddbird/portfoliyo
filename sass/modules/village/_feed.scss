@@ -109,6 +109,7 @@ $addnote-fontsize: $input-font-size;
     background: rgba(white,.75);
     padding-left: rhythm(.5, $addnote-fontsize);
     resize: none;
+    .lt-ie9 & { min-height: rhythm(2.5 - $input-rhythm*2, $addnote-fontsize); }
   }
   .charcount {
     @include adjust-font-size-to($xsmallpx);
