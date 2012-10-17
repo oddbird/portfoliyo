@@ -10,19 +10,21 @@
     {% csrf_token %}
 
     <div class="formfield post-textfield">
-      <textarea id="post-text" name="text"></textarea>
+      <textarea id="post-text" name="text" class="value"></textarea>
       <span class="charcount">{{ post_char_limit }} characters remaining...</span>
     </div>
 
     <div class="formfield sms-targeting">
-      <label for="sms-target">Send text message to</label>
-      <select id="sms-target" name="sms-target" multiple="multiple">
-        {% block sms-target-options %}{% endblock %}
-      </select>
+      <label for="sms-target" class="type">Send text messages to</label>
+      <div class="multiselect-dropdown">
+        <select id="sms-target" class="value" name="sms-target" multiple="multiple">
+          {% block sms-target-options %}{% endblock %}
+        </select>
+      </div class="multiselect-dropdown">
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="action-post">send</button>
+      <button type="submit" class="action-post">Send</button>
     </div>
 
   </form>

@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .ui-multiselect:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .ui-multiselect:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
@@ -289,6 +289,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .listitem-actions .undo-action-remove:before {
   content: "\21ba";
+}
+
+.ui-multiselect:before {
+  content: "\2193";
 }
 
 .action-back.groups:before {
@@ -755,6 +759,72 @@ button {
   background: url('../images/rgbapng/268bd220.png?1350500762');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
+}
+
+.multiselect-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-multiselect {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background: url('../images/rgbapng/ffffff7f.png?1350510208');
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  padding: 0 1.4em 0 .4em;
+  border: 1px solid #93a1a1;
+  color: inherit;
+}
+.ui-multiselect:before {
+  position: absolute;
+  right: 0;
+  margin: 0;
+}
+.ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
+  background: url('../images/rgbapng/ffffffbf.png?1350510610');
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.ui-multiselect-menu {
+  border-style: solid;
+  border-width: 0.05556em;
+  padding: 0.26389em;
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  position: relative;
+  background: #657b83;
+  position: absolute;
+  left: 0;
+  bottom: 100%;
+  margin-left: -50%;
+  min-width: 11em;
+  background: #fdf6e3;
+}
+.ui-multiselect-menu:after, .ui-multiselect-menu:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ui-multiselect-menu:after {
+  border-top-color: #657b83;
+  border-width: 0.5em;
+  left: 50%;
+  margin-left: -0.5em;
+}
+.ui-multiselect-menu:before {
+  border-top-color: false;
+  border-width: 0.5em;
+  left: 50%;
+  margin-left: -0.5em;
 }
 
 .initial-password, .village-landing .membership {
@@ -2186,7 +2256,7 @@ button {
 .village-feed {
   left: 0;
   right: 0;
-  bottom: 4.47222em;
+  bottom: 6.06944em;
   background: #fefbf1;
 }
 
@@ -2324,20 +2394,42 @@ button {
 .post-add-form .formfield {
   margin: 0;
 }
-.post-add-form .post-textfield {
+.post-add-form .form-actions {
+  clear: none;
+  display: inline-block;
+  margin: 0;
+}
+.post-add-form .form-actions .action-post {
+  font-size: 14px;
+  padding: 0;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1.27778em;
+  -webkit-border-radius: 0.125em;
+  -moz-border-radius: 0.125em;
+  -ms-border-radius: 0.125em;
+  -o-border-radius: 0.125em;
+  border-radius: 0.125em;
+  padding: 0.20536em 1.64286em;
+  text-transform: uppercase;
+}
+
+.post-textfield {
   text-align: left;
 }
-.post-add-form textarea {
+.post-textfield .value {
+  margin-bottom: 0.20536em;
   height: 4.10714em;
   min-height: 4.10714em;
   background: rgba(255, 255, 255, 0.75);
   padding-left: 0.82143em;
   resize: none;
 }
-.lt-ie9 .post-add-form textarea {
+.lt-ie9 .post-textfield .value {
   min-height: 3.28571em;
 }
-.post-add-form .charcount {
+.post-textfield .charcount {
   font-size: 0.66667em;
   line-height: 1.91667em;
   position: absolute;
@@ -2345,21 +2437,19 @@ button {
   bottom: 0;
   color: #93a1a1;
 }
-.post-add-form .charcount.overlimit {
+.post-textfield .charcount.overlimit {
   color: #dc322f;
 }
-.post-add-form .sms-targeting {
-  display: inline-block;
-}
-.post-add-form .sms-targeting label {
+
+.sms-targeting {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  display: inline;
-}
-.post-add-form .form-actions {
-  clear: none;
   display: inline-block;
-  margin: 0;
+}
+.sms-targeting .type {
+  display: inline;
+  font-style: italic;
+  cursor: default;
 }
 
 .nav-error, .remove-error, .post .timeout, .feed-error, .pjax-error p {

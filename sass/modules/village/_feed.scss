@@ -5,7 +5,7 @@
   @extend %overflow-y;
   left: 0;
   right: 0;
-  bottom: rhythm(3.5);
+  bottom: rhythm(4.75);
   background: lighten($base3,3);
 }
 
@@ -90,6 +90,7 @@ $post-h-padding   : gutter($center);
 // Note Add Form
 
 $addnote-fontsize: $input-font-size;
+$postaction-size: $smallpx;
 
 .post-add-form {
   @extend %formdefaults;
@@ -102,8 +103,22 @@ $addnote-fontsize: $input-font-size;
 
   .formfield { margin: 0; }
 
-  .post-textfield { text-align: left; }
-  textarea {
+  .form-actions {
+    clear: none;
+    display: inline-block;
+    margin: 0;
+    .action-post {
+      @include sassy-button-structure($font-size: $postaction-size, $padding: 0);
+      padding: rhythm(.125, $postaction-size) rhythm(1, $postaction-size);
+      text-transform: uppercase;
+    }
+  }
+}
+
+.post-textfield {
+  text-align: left;
+  .value {
+    @include trailer(.125, $addnote-fontsize);
     height: rhythm(2.5, $addnote-fontsize);
     min-height: rhythm(2.5, $addnote-fontsize);
     background: rgba(white,.75);
@@ -119,19 +134,15 @@ $addnote-fontsize: $input-font-size;
     color: $base1;
     &.overlimit { color: $red; }
   }
+}
 
-  .sms-targeting {
-    display: inline-block;
-    label {
-      @include adjust-font-size-to($addnote-fontsize);
-      display: inline;
-    }
-  }
-
-  .form-actions {
-    clear: none;
-    display: inline-block;
-    margin: 0;
+.sms-targeting {
+  @include adjust-font-size-to($postaction-size);
+  display: inline-block;
+  .type {
+    display: inline;
+    font-style: italic;
+    cursor: default;
   }
 }
 
