@@ -3,6 +3,14 @@
 
 .register, .edit-profile { @extend %simple-form; }
 
+.email_notifications-field {
+  @extend %radio-check-defaults;
+  @include inline-radio-checkbox;
+  @include adjust-font-size-to($smallpx);
+  @include leader(-.5, $smallpx);
+  font-style: italic;
+}
+
 .initial-password {
   @extend %notice;
   @extend %simple-inline-form;
