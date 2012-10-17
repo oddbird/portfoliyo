@@ -1,32 +1,40 @@
 // ---------------------------------------------------------------------------
 // Village Elders
 
-.village-elders {
-  h2 { @extend %gone; }
+%elder-listitem {
+  @include bleed($village-bleed);
+  @include padding-leader(.25,$village-list-size);
+  @include trailing-border(1px,.25,$village-list-size);
+  position: relative;
+  display: block;
+  border-color: $base2;
+}
 
-  .edit-elder {
-    #{$link} {
-      @extend %village-activenav;
-      @include bleed($village-bleed);
-      position: relative;
-      display: block;
+.elders-title {
+  @extend %elder-listitem;
+  font-weight: bold;
+  color: $base3;
+  background: mix($blue,$base);
+}
+
+.elder {
+  position: relative;
+  .listitem-actions { right: - $village-bleed; }
+  #{$focus} {
+    .listitem-actions {
+      @include opacity(1);
+      .lt-ie9 & { display: block; }
     }
-    #{$focus} { background: $base2; }
   }
 
   .title { font-weight: bold; }
   .fn { color: $base1; }
-}
 
-.elder {
   .vcard {
     @extend %icon;
     @extend %icon-record;
-    @include padding-leader(.25,$village-list-size);
-    @include trailing-border(1px,.25,$village-list-size);
-    @include bleed($village-bleed);
-    display: block;
-    border-color: $base2;
+    @extend %elder-listitem;
+    @extend %village-activenav;
     &:before {
       position: relative;
       margin-right: 0;
@@ -48,12 +56,15 @@
       @include rgba-background(rgba($red,.125));
       &:before { color: $red; }
     }
-  }
-  &:last-child .vcard {
-    border-bottom: 0;
+    &.active {
+      background: $base01;
+      color: $base3;
+      &:before, .fn { color: $base2; }
+    }
   }
 }
 
+.action-sms { @extend %icon-phone; }
 
 .addelder-link {
   @extend %village-addlink;
@@ -61,6 +72,7 @@
   @include trailer(.5,$village-list-size);
   @include rhythm-borders(1px,.25,$village-list-size);
   display: block;
-  border-color: $village-border-color;
   padding-left: $village-bleed;
+  border-color: $village-border-color;
+  border-top: 0;
 }

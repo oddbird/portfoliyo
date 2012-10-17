@@ -2,26 +2,35 @@
 {% load url from future %}
 
 <div class="village-elders">
-  <h2>Village Elders</h2>
+
+  {# @@@ IF PARENTS #}
+  <h2 class="elders-title parents">Parents</h2>
+  {# @@@ List of parents only #}
   <ul>
     {% for rel in student.elder_relationships %}
     {% with rel.elder as nav_elder %}
     <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
-      {% if nav_elder.school_staff %}
-        <span class="vcard {{ nav_elder|elder_status:request.user.profile }}">
-          <b class="title">{{ rel.description_or_role }}:</b>
-          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        </span>
-      {% else %}
-        <a href="{% url 'edit_elder_in_village' student_id=student.id elder_id=nav_elder.id %}" class="edit-elder vcard ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
-          <b class="title">{{ rel.description_or_role }}:</b>
-          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        </a>
+      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
+        <b class="title">{{ rel.description_or_role }}:</b>
+        <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
+      </span>
+      {% if not nav_elder.school_staff %}
+        <div class="listitem-actions">
+          <a href="{% url 'edit_elder_in_village' student_id=student.id elder_id=nav_elder.id %}" class="action-edit ajax-link" title="edit {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">edit</a>
+          <a href="#" class="action-sms ajax-link" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
+          {# <button class="action-remove" title="remove {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">remove</button> #}
+        </div>
       {% endif %}
     </li>
     {% endwith %}
     {% endfor %}
   </ul>
+
+  {# @@@ IF TEACHERS #}
+  <h2 class="elders-title teachers">Teachers</h2>
+  {# @@@ List of school staff only #}
+
+
   {% if request.user.profile.school_staff %}
   <a href="{% url 'invite_elder' student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
   {% endif %}
