@@ -232,6 +232,16 @@ button { @include reset-button; }
   border: 1px solid;
   overflow-y: scroll;
 
+  .option {
+    @include clearfix;
+    position: relative;
+    .type {
+      float: none;
+      width: auto;
+      margin: 0;
+      text-align: left;
+    }
+  }
   .value {
     @include gone;
     &[checked] + .type { @extend %options-checked; }
@@ -242,13 +252,9 @@ button { @include reset-button; }
     @include trailing-border(1px,.125,$input-font-size);
     padding-left: rhythm(.125,$input-font-size);
     padding-right: 1em;
-    float: none;
-    width: auto;
-    margin: auto;
     position: relative;
     border-color: $base1;
     border-color: rgba($base1,.25);
-    text-align: left;
     #{$focus} { background: $base3; }
     &:before { float: left; }
   }
