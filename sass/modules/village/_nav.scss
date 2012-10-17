@@ -36,7 +36,10 @@ $village-nav-action-color : $base03;
   z-index: 5;
 }
 
-.listitem { position: relative; }
+.listitem {
+  position: relative;
+  &.student, &.group { @include sans; }
+}
 
 .listitem-select {
   @extend %village-nav-item;

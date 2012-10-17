@@ -2003,6 +2003,9 @@ button {
 .listitem {
   position: relative;
 }
+.listitem.student, .listitem.group {
+  font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
 
 .listitem-select:link, .listitem-select:visited {
   background: url('../images/rgbapng/eee8d540.png?1350500763');
