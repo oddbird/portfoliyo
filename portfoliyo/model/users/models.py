@@ -57,6 +57,8 @@ class Profile(models.Model):
     # signup status (for text-based multi-step signup); what are we awaiting?
     STATE = Choices('kidname', 'relationship', 'done')
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
+    # does this user want to receive email notifications?
+    email_notifications = models.BooleanField(default=True)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
     # what group was this user initially invited to?
