@@ -25,11 +25,24 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.ieInputBootstrap = function () {
-        $('body').on('change', 'input[type="radio"], input[type="checkbox"]', function () {
-            if ($(this).is(':checked')) {
-                $(this).attr('checked', 'checked');
+        $('body').on('change', 'input:radio, input:checkbox', function () {
+            var el = $(this);
+            var updateAttr = function (input) {
+                if (input.is(':checked')) {
+                    input.attr('checked', 'checked');
+                } else {
+                    input.removeAttr('checked');
+                }
+            };
+
+            if (el.is(':radio')) {
+                var form = el.closest('form');
+                var name = el.attr('name');
+                form.find('input:radio[name="' + name + '"]').each(function () {
+                    updateAttr($(this));
+                });
             } else {
-                $(this).removeAttr('checked');
+                updateAttr(el);
             }
         });
     };

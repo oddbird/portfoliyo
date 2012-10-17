@@ -104,18 +104,20 @@ $input-rhythm: .25;
     text-align: right;
     + .value { @include span-columns($input omega,$context); }
   }
-  @if $radio-check {
-    [type="checkbox"], [type="radio"] {
-      + .type {
-        @include reset-columns;
-        @include pre($label,$context);
-        display: inline-block;
-        padding: 0;
-        text-align: left;
-      }
+  @if $radio-check { @include inline-radio-checkbox($label, $input, $context); }
+  .formfield-help { @include pre($label, $context); }
+}
+
+@mixin inline-radio-checkbox($label: $left, $input: $center - $label, $context: $center) {
+  [type="checkbox"], [type="radio"] {
+    + .type {
+      display: inline-block;
+      width: auto;
+      margin: 0;
+      padding: 0;
+      text-align: left;
     }
   }
-  .formfield-help { @include pre($label, $context); }
 }
 
 .iqtest {
@@ -135,14 +137,13 @@ $input-rhythm: .25;
     @include gone;
     + .type {
       @extend %icon;
-      display: inline-block;
+      display: block;
       &:before {
         margin-left: .4em;
         color: $base01;
       }
     }
     &[checked] + .type {
-      font-weight: bold;
       &:before { color: $blue; }
     }
     &:focus + .type { color: $base03; }
@@ -175,6 +176,7 @@ $input-rhythm: .25;
       @extend %input;
       margin: 0;
       min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+      .lt-ie9 & { min-height: rhythm(1, $input-font-size); }
     }
   }
 
@@ -182,6 +184,7 @@ $input-rhythm: .25;
     @extend %input;
     @include transition(200ms min-height);
     min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+    .lt-ie9 & { min-height: rhythm(1, $input-font-size); }
   }
 
   .fieldset-help {
@@ -231,6 +234,16 @@ button { @include reset-button; }
   border: 1px solid;
   overflow-y: scroll;
 
+  .option {
+    @include clearfix;
+    position: relative;
+    .type {
+      float: none;
+      width: auto;
+      margin: 0;
+      text-align: left;
+    }
+  }
   .value {
     @include gone;
     &[checked] + .type { @extend %options-checked; }
@@ -241,13 +254,9 @@ button { @include reset-button; }
     @include trailing-border(1px,.125,$input-font-size);
     padding-left: rhythm(.125,$input-font-size);
     padding-right: 1em;
-    float: none;
-    width: auto;
-    margin: auto;
     position: relative;
     border-color: $base1;
     border-color: rgba($base1,.25);
-    text-align: left;
     #{$focus} { background: $base3; }
     &:before { float: left; }
   }

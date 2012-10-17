@@ -36,12 +36,13 @@ class RegistrationForm(forms.Form):
 
     """
     name = forms.CharField(max_length=200)
-    email = forms.EmailField(max_length=255)
+    role = forms.CharField(max_length=200)
     password = forms.CharField(widget=forms.PasswordInput(render_value=False))
     password_confirm = forms.CharField(
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
-    role = forms.CharField(max_length=200)
+    email = forms.EmailField(max_length=255)
+    email_notifications = forms.BooleanField(initial=True, required=False)
     school = TemplateLabelModelChoiceField(
         queryset=model.School.objects.filter(auto=False).order_by('name'),
         empty_label=u"I'm not affiliated with a school",
@@ -227,6 +228,7 @@ class EditProfileForm(forms.Form):
     """Form for editing a users profile."""
     name = forms.CharField(max_length=200)
     role = forms.CharField(max_length=200)
+    email_notifications = forms.BooleanField(required=False)
 
 
     def __init__(self, *a, **kw):
@@ -235,12 +237,15 @@ class EditProfileForm(forms.Form):
         initial = kw.setdefault('initial', {})
         initial['name'] = self.instance.name
         initial['role'] = self.instance.role
+        initial['email_notifications'] = self.instance.email_notifications
         super(EditProfileForm, self).__init__(*a, **kw)
 
 
     def save(self):
         """Save edits and return updated profile."""
         self.instance.name = self.cleaned_data['name']
+        self.instance.email_notifications = self.cleaned_data[
+            'email_notifications']
         old_role = self.instance.role
         new_role = self.cleaned_data['role']
         self.instance.role = new_role

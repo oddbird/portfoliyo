@@ -57,6 +57,8 @@ class Profile(models.Model):
     # signup status (for text-based multi-step signup); what are we awaiting?
     STATE = Choices('kidname', 'relationship', 'done')
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
+    # does this user want to receive email notifications?
+    email_notifications = models.BooleanField(default=True)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
     # what group was this user initially invited to?
@@ -80,7 +82,8 @@ class Profile(models.Model):
     def create_with_user(cls, school,
                          name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         state=None, invited_by=None, invited_in_group=None):
+                         state=None, invited_by=None, invited_in_group=None,
+                         email_notifications=True):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -114,6 +117,7 @@ class Profile(models.Model):
             invited_by=invited_by,
             invited_in_group=invited_in_group,
             code=code,
+            email_notifications=email_notifications,
             )
 
         # try a few times to generate a unique code, if we keep failing give up
