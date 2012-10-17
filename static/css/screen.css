@@ -710,6 +710,16 @@ button {
   list-style-type: none;
   margin-left: 0;
 }
+.school-field .radio-options .option, .students-field .check-options .option, .elders-field .check-options .option, .groups-field .check-options .option {
+  overflow: hidden;
+  position: relative;
+}
+.school-field .radio-options .option .type, .students-field .check-options .option .type, .elders-field .check-options .option .type, .groups-field .check-options .option .type {
+  float: none;
+  width: auto;
+  margin: 0;
+  text-align: left;
+}
 .school-field .radio-options .value, .students-field .check-options .value, .elders-field .check-options .value, .groups-field .check-options .value {
   position: absolute;
   clip: rect(0 0 0 0);
@@ -727,13 +737,9 @@ button {
   padding-bottom: 0.13393em;
   padding-left: 0.20536em;
   padding-right: 1em;
-  float: none;
-  width: auto;
-  margin: auto;
   position: relative;
   border-color: #93a1a1;
   border-color: rgba(147, 161, 161, 0.25);
-  text-align: left;
 }
 .school-field .radio-options .type:focus, .students-field .check-options .type:focus, .elders-field .check-options .type:focus, .groups-field .check-options .type:focus, .school-field .radio-options .type:hover, .students-field .check-options .type:hover, .elders-field .check-options .type:hover, .groups-field .check-options .type:hover, .school-field .radio-options .type:active, .students-field .check-options .type:active, .elders-field .check-options .type:active, .groups-field .check-options .type:active {
   background: #fdf6e3;
@@ -804,9 +810,6 @@ button {
     float: right;
     margin-right: 0;
   }
-  .login .formfield-help, .register .formfield-help, .edit-profile .formfield-help, .reset-password .formfield-help, .change-password .formfield-help, .set-password .formfield-help, .initial-password .formfield-help {
-    margin-left: 51.28205%;
-  }
   .login .type, .register .type, .edit-profile .type, .reset-password .type, .change-password .type, .set-password .type, .initial-password .type {
     margin-left: -51.28205%;
   }
@@ -827,9 +830,6 @@ button {
   width: 100%;
   float: right;
   margin-right: 0;
-}
-.lt-ie9 .login .formfield-help, .lt-ie9 .register .formfield-help, .lt-ie9 .edit-profile .formfield-help, .lt-ie9 .reset-password .formfield-help, .lt-ie9 .change-password .formfield-help, .lt-ie9 .set-password .formfield-help, .lt-ie9 .initial-password .formfield-help {
-  margin-left: 51.28205%;
 }
 .lt-ie9 .login .type, .lt-ie9 .register .type, .lt-ie9 .edit-profile .type, .lt-ie9 .reset-password .type, .lt-ie9 .change-password .type, .lt-ie9 .set-password .type, .lt-ie9 .initial-password .type {
   margin-left: -51.28205%;
