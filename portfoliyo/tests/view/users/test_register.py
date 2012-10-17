@@ -81,6 +81,15 @@ def test_register_creates_code():
     assert user.profile.code
 
 
+def test_register_sets_email_notifications():
+    """register method sets email_notifications on profile."""
+    user1 = _register(email_notifications=False, email='foo@example.com')
+    user2 = _register(email_notifications=True, email='bar@example.com')
+
+    assert not user1.profile.email_notifications
+    assert user2.profile.email_notifications
+
+
 def test_register_creates_registration_profile():
     """register method creates RegistrationProfile."""
     user = _register()
