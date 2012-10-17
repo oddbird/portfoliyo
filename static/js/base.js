@@ -25,9 +25,15 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.ieInputBootstrap = function () {
-        $('body').on('change', 'input[type="radio"], input[type="checkbox"]', function () {
-            if ($(this).is(':checked')) {
-                $(this).attr('checked', 'checked');
+        $('body').on('change', 'input:radio, input:checkbox', function () {
+            var el = $(this);
+            if (el.is(':checked')) {
+                el.attr('checked', 'checked');
+                if (el.is(':radio')) {
+                    var form = el.closest('form');
+                    var name = el.attr('name');
+                    form.find('input:radio[name="' + name + '"]').not(el).change();
+                }
             } else {
                 $(this).removeAttr('checked');
             }
