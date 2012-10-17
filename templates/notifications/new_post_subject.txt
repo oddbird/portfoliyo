@@ -1,1 +1,1 @@
-{{ post.student }}'s {{ author_role }} sent you a message.
+{{ post.student|safe }}'s {{ author_role|safe }} sent you a message.

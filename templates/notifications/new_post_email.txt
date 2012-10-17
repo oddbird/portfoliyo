@@ -1,4 +1,4 @@
-"{{ post.original_text }}" — {{ post.author }}
+"{{ post.original_text|safe }}" — {{ post.author|safe }}
 
 
 --
