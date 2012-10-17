@@ -1,5 +1,7 @@
 """Tests for village models and related functions."""
 import datetime
+
+from django.core import mail
 from django.utils.timezone import utc
 import mock
 import pytest
@@ -118,6 +120,62 @@ class TestPostCreate(object):
 
         assert post.from_sms == True
         assert post.to_sms == False
+
+
+    def test_sends_email_notification(self):
+        """Sends email notifications to those who want them."""
+        # Will author the post, thus no email notification
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='one@example.com',
+            from_profile__email_notifications=True,
+            )
+        # Will get an email notification
+        rel2 = factories.RelationshipFactory.create(
+            from_profile__user__email='two@example.com',
+            from_profile__email_notifications=True,
+            to_profile=rel.student,
+            )
+        # Not related to student - no notification
+        factories.RelationshipFactory.create(
+            from_profile__user__email='three@example.com',
+            from_profile__email_notifications=True,
+            )
+        # Doesn't want email notifications
+        factories.RelationshipFactory.create(
+            from_profile__user__email='four@example.com',
+            from_profile__email_notifications=False,
+            to_profile=rel.student,
+            )
+        # Has no email - no notification
+        factories.RelationshipFactory.create(
+            from_profile__user__email=None,
+            from_profile__email_notifications=True,
+            to_profile=rel.student,
+            )
+        # Deleted - no notification
+        factories.RelationshipFactory.create(
+            from_profile__user__email='six@example.com',
+            from_profile__email_notifications=True,
+            from_profile__deleted=True,
+            to_profile=rel.student,
+            )
+
+        models.Post.create(rel.elder, rel.student, 'Foo')
+
+        assert [m.to for m in mail.outbox] == [[rel2.elder.user.email]]
+
+
+    def test_no_email_notification_for_system_posts(self):
+        """No email notifications for system-generated posts."""
+        # Would otherwise get an email notification
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='one@example.com',
+            from_profile__email_notifications=True,
+            )
+
+        models.Post.create(None, rel.student, 'Foo')
+
+        assert len(mail.outbox) == 0
 
 
     @mock.patch('portfoliyo.model.village.models.get_pusher')

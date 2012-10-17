@@ -33,6 +33,7 @@ def _register(**kwargs):
     kwargs.setdefault('email', 'some@example.com')
     kwargs.setdefault('password', 'sekrit')
     kwargs.setdefault('role', 'Role')
+    kwargs.setdefault('email_notifications', True)
     return backend.register(request, **kwargs)
 
 
@@ -78,6 +79,15 @@ def test_register_creates_code():
     user = _register()
 
     assert user.profile.code
+
+
+def test_register_sets_email_notifications():
+    """register method sets email_notifications on profile."""
+    user1 = _register(email_notifications=False, email='foo@example.com')
+    user2 = _register(email_notifications=True, email='bar@example.com')
+
+    assert not user1.profile.email_notifications
+    assert user2.profile.email_notifications
 
 
 def test_register_creates_registration_profile():

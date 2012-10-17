@@ -227,3 +227,5 @@ DEFAULT_FROM_EMAIL = "Portfoliyo <noreply@portfoliyo.org>"
 
 PORTFOLIYO_SMS_BACKEND = "portfoliyo.sms.backends.console.ConsoleSMSBackend"
 PORTFOLIYO_SMS_DEFAULT_FROM = "+15555555555"
+
+PORTFOLIYO_BASE_URL = 'http://localhost:8000'

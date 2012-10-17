@@ -104,18 +104,20 @@ $input-rhythm: .25;
     text-align: right;
     + .value { @include span-columns($input omega,$context); }
   }
-  @if $radio-check {
-    [type="checkbox"], [type="radio"] {
-      + .type {
-        @include reset-columns;
-        @include pre($label,$context);
-        display: inline-block;
-        padding: 0;
-        text-align: left;
-      }
+  @if $radio-check { @include inline-radio-checkbox($label, $input, $context); }
+  .formfield-help { @include pre($label, $context); }
+}
+
+@mixin inline-radio-checkbox($label: $left, $input: $center - $label, $context: $center) {
+  [type="checkbox"], [type="radio"] {
+    + .type {
+      display: inline-block;
+      width: auto;
+      margin: 0;
+      padding: 0;
+      text-align: left;
     }
   }
-  .formfield-help { @include pre($label, $context); }
 }
 
 .iqtest {
@@ -135,14 +137,13 @@ $input-rhythm: .25;
     @include gone;
     + .type {
       @extend %icon;
-      display: inline-block;
+      display: block;
       &:before {
         margin-left: .4em;
         color: $base01;
       }
     }
     &[checked] + .type {
-      font-weight: bold;
       &:before { color: $blue; }
     }
     &:focus + .type { color: $base03; }
