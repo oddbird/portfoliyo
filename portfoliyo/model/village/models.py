@@ -11,7 +11,7 @@ from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
 from portfoliyo.pusher import get_pusher
-from portfoliyo import sms
+from portfoliyo import notifications, sms
 from ..users import models as user_models
 
 
@@ -65,7 +65,7 @@ class BasePost(models.Model):
         return {}
 
 
-    def notify(self, highlights, in_reply_to=None):
+    def notify_sms(self, highlights, in_reply_to=None):
         """
         Send SMS notifications to highlighted users.
 
@@ -181,7 +181,7 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        sms_sent, meta_highlights = post.notify(highlights)
+        sms_sent, meta_highlights = post.notify_sms(highlights)
         post.to_sms = sms_sent
         post.meta['highlights'] = meta_highlights
 
@@ -198,6 +198,7 @@ class BulkPost(BasePost):
                 meta=post.meta,
                 from_bulk=post,
                 )
+            sub.notify_email()
             sub.send_event('student_%s' % student.id, sequence_id=sequence_id)
 
         post.send_event('group_%s' % group.id, sequence_id=sequence_id)
@@ -250,15 +251,31 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        sms_sent, meta_highlights = post.notify(highlights, in_reply_to)
+        sms_sent, meta_highlights = post.notify_sms(highlights, in_reply_to)
         post.to_sms = sms_sent
         post.meta['highlights'] = meta_highlights
 
         post.save()
 
+        post.notify_email()
         post.send_event('student_%s' % student.id, sequence_id=sequence_id)
 
         return post
+
+
+    def notify_email(self):
+        """Send email notifications to eligible users."""
+        # No email notifications on system-generated posts:
+        if not self.author:
+            return
+        send_to = user_models.Profile.objects.filter(
+            deleted=False,
+            relationships_from__to_profile=self.student,
+            user__email__isnull=False,
+            email_notifications=True,
+            ).exclude(pk=self.author.pk)
+        for profile in send_to:
+            notifications.send_email_notification(profile, self)
 
 
     def get_relationship(self):

@@ -1,0 +1,5 @@
+In {{ post.student }}'s village, {% firstof post.author "Portfoliyo" %} says: "{{ post.original_text }}"
+
+To reply, visit {{ post.student }}'s Portfoliyo village: {{ village_url }}
+
+Don't want email notifications? Edit your profile: {{ profile_url }}

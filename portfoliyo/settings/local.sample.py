@@ -24,6 +24,8 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 #DEBUG = False
 #TEMPLATE_DEBUG = False
 
+#PORTFOLIYO_BASE_URL = 'https://www.portfoliyo.org'
+
 # This email address will get emailed on 500 server errors.
 #ADMINS = [
 #    ("Some One", "someone@example.com"),
