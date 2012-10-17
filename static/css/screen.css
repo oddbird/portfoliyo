@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .vcard:before, .message:before, [data-icon]:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .village-elders .vcard:before, .message:before {
+.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .school_staff-field [type="checkbox"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .value[disabled] + .type:before, .students-field .check-options .value[disabled] + .type:before, .elders-field .check-options .value[disabled] + .type:before, .groups-field .check-options .value[disabled] + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
@@ -243,7 +243,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2713";
 }
 
-.listitem-select.removed:before, .village-elders .vcard.declined:before, .message.error:before {
+.listitem-select.removed:before, .elder .vcard.declined:before, .message.error:before {
   content: "\2717";
 }
 
@@ -255,7 +255,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\69";
 }
 
-.village-elders .vcard.inactive:before, .message.warning:before {
+.elder .vcard.inactive:before, .message.warning:before {
   content: "\26a0";
 }
 
@@ -267,7 +267,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2b";
 }
 
-.village-elders .vcard:before {
+.elder .vcard:before {
   content: "\25cf";
 }
 
@@ -279,7 +279,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\27f0";
 }
 
-.sms .sms-info .summary:before, .getting-started .mobile:before, .village-elders .vcard.mobile:before {
+.sms .sms-info .summary:before, .getting-started .mobile:before, .elder .vcard.mobile:before {
   content: "\e000";
 }
 
@@ -743,7 +743,7 @@ button {
 }
 
 .school-field .radio-options .value[checked] + .type, .students-field .check-options .value[checked] + .type, .elders-field .check-options .value[checked] + .type, .groups-field .check-options .value[checked] + .type, .select-students .value[disabled] + .type, .select-elders .value[disabled] + .type {
-  background: url('../images/rgbapng/268bd220.png?1350336200');
+  background: url('../images/rgbapng/268bd220.png?1350491467');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -2018,7 +2018,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1350336200');
+  background: url('../images/rgbapng/268bd27f.png?1350491467');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
@@ -2144,7 +2144,7 @@ button {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/rgbapng/0736427f.png?1350336200');
+  background: url('../images/rgbapng/0736427f.png?1350491467');
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
@@ -2389,46 +2389,6 @@ button {
   border-left: 1px solid #93a1a1;
 }
 
-.village-elders .elder:last-child .vcard {
-  border-bottom: 0;
-}
-.village-elders .vcard {
-  padding-top: 0.41071em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.07143em;
-  padding-bottom: 0.33929em;
-  margin-left: -1.28571em;
-  padding-left: 1.28571em;
-  margin-right: -1.28571em;
-  padding-right: 1.28571em;
-  display: block;
-  border-color: #eee8d5;
-}
-.village-elders .vcard:before {
-  position: relative;
-  margin-right: 0;
-  color: #859900;
-  z-index: 2;
-}
-.village-elders .vcard.offline:before {
-  color: #b58900;
-}
-.village-elders .vcard.inactive {
-  background: #ffedb5;
-}
-.village-elders .vcard.inactive:before {
-  color: #93a1a1;
-}
-.village-elders .vcard.mobile:before {
-  color: #657b83;
-}
-.village-elders .vcard.declined {
-  background: url('../images/rgbapng/dc322f20.png?1349281723');
-  background: rgba(220, 50, 47, 0.125);
-}
-.village-elders .vcard.declined:before {
-  color: #dc322f;
-}
 .village-elders .edit-elder, .village-elders .edit-elder:link, .village-elders .edit-elder:visited {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
@@ -2445,6 +2405,47 @@ button {
 }
 .village-elders .fn {
   color: #93a1a1;
+}
+
+.elder .vcard {
+  padding-top: 0.41071em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.07143em;
+  padding-bottom: 0.33929em;
+  margin-left: -1.28571em;
+  padding-left: 1.28571em;
+  margin-right: -1.28571em;
+  padding-right: 1.28571em;
+  display: block;
+  border-color: #eee8d5;
+}
+.elder .vcard:before {
+  position: relative;
+  margin-right: 0;
+  color: #859900;
+  z-index: 2;
+}
+.elder .vcard.offline:before {
+  color: #b58900;
+}
+.elder .vcard.inactive {
+  background: #ffedb5;
+}
+.elder .vcard.inactive:before {
+  color: #93a1a1;
+}
+.elder .vcard.mobile:before {
+  color: #657b83;
+}
+.elder .vcard.declined {
+  background: url('../images/rgbapng/dc322f20.png?1349281723');
+  background: rgba(220, 50, 47, 0.125);
+}
+.elder .vcard.declined:before {
+  color: #dc322f;
+}
+.elder:last-child .vcard {
+  border-bottom: 0;
 }
 
 .addelder-link {
