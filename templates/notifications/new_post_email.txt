@@ -1,0 +1,6 @@
+"{{ post.original_text|safe }}" — {{ post.author|safe }}
+
+
+--
+Log in to reply: {{ village_url }}
+Don't want email notifications? Edit your profile: {{ profile_url }}

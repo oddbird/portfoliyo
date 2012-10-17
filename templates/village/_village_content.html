@@ -1,35 +1,12 @@
-{% extends "village/_village_content_main.html" %}
+{% extends "village/_chat_content.html" %}
+{% load url from future %}
 
-{% block village-content %}
-<div class="village-main">
-  {% block village-main %}
-  <section class="village-feed" data-student-id="{{ student.id }}" data-author="{% firstof user.profile.name user.email %}" data-author-role="{{ relationship.description_or_role }}" data-user-id="{{ request.user.profile.id }}" data-backlog-url="{% url json_posts student_id=student.id %}" data-post-url="{% url json_posts student_id=student.id %}">
+{% block village-feed-attrs %}data-author-role="{{ relationship.description_or_role }}"data-backlog-url="{% url 'student_json_posts' student_id=student.id %}" data-post-url="{% url 'student_json_posts' student_id=student.id %}"{% endblock %}
 
-    <article class="getting-started">
-      <h2>Welcome to {{ student.name }}'s Village!</h2>
+{% block getting-started-header %}Welcome to {{ student.name }}'s Village!{% endblock %}
 
-      <p>
-        <strong>Send a text message</strong> to any <i class="mobile">mobile</i> user
-        by typing the <strong>@ symbol followed by their name or title</strong>
-        (with spaces removed).
-        Or text <b class="nametag">@all</b> <i class="mobile">mobile</i> users at once.
-      </p>
+{% block form-action %}{% url 'student_json_posts' student_id=student.id %}{% endblock %}
 
-      <ul>
-        <li><b class="nametag">@Mother</b> Jenny’s paper was fantastic!</li>
-        <li><b class="nametag">@Mother</b> and <b class="nametag">@Father</b>, Jenny was missing her Math homework today.</li>
-        <li>Did Jenny show you <b class="nametag">@all</b> the project she is working on?</li>
-      </ul>
-
-      <p>
-        Email notifications coming soon for non-<i class="mobile">mobile</i> users.
-      </p>
-    </article>
-
-  </section>
-  {% include "posts/_post_add_form.html" %}
-  {% endblock village-main %}
-</div>
-
+{% block info-bar %}
 {% include "village/_village_info.html" %}
-{% endblock village-content %}
+{% endblock %}

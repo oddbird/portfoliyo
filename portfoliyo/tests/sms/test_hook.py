@@ -140,6 +140,26 @@ def test_code_signup():
     assert not mock_create.call_count
 
 
+def test_group_code_signup():
+    """Parent can create account by texting group code and their name."""
+    phone = '+13216430987'
+    group = factories.GroupFactory.create(
+        owner__school_staff=True, owner__name="Teacher Jane", code="ABCDEFG")
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, "abcdefg John Doe")
+
+    assert reply == (
+        "Thanks! What is the name of your child in Teacher Jane's class?"
+        )
+    profile = model.Profile.objects.get(phone=phone)
+    assert profile.name == "John Doe"
+    assert profile.state == model.Profile.STATE.kidname
+    assert profile.invited_by == group.owner
+    assert profile.invited_in_group == group
+    assert not mock_create.call_count
+
+
 def test_code_signup_lacks_name():
     """If parent texts valid teacher code but omits name, they get help."""
     phone = '+13216430987'
@@ -179,7 +199,43 @@ def test_code_signup_student_name():
     student = parent.students[0]
     assert student.name == u"Jimmy Doe"
     assert student.invited_by == teacher
+    assert student.school == teacher.school
     assert set(student.elders) == set([teacher, parent])
+    assert parent.state == model.Profile.STATE.relationship
+    # and the name is sent on to the village chat as a post
+    mock_create.assert_any_call(parent, student, "Jimmy Doe", from_sms=True)
+    # and the automated reply is also sent on to village chat
+    mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
+
+
+def test_group_code_signup_student_name():
+    """Parent can continue group code signup by providing student name."""
+    phone = '+13216430987'
+    group = factories.GroupFactory.create(
+        owner__school_staff=True, owner__name="Teacher Jane", code="ABCDEFG")
+    factories.ProfileFactory.create(
+        name="John Doe",
+        phone=phone,
+        state=model.Profile.STATE.kidname,
+        invited_by=group.owner,
+        invited_in_group=group,
+        )
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, "Jimmy Doe")
+
+    assert reply == (
+        "Last question: what is your relationship to that child "
+        "(mother, father, ...)?"
+        )
+    parent = model.Profile.objects.get(phone=phone)
+    assert len(parent.students) == 1
+    student = parent.students[0]
+    assert set(student.student_in_groups.all()) == {group}
+    assert student.name == u"Jimmy Doe"
+    assert student.invited_by == group.owner
+    assert student.school == group.owner.school
+    assert set(student.elders) == set([group.owner, parent])
     assert parent.state == model.Profile.STATE.relationship
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(parent, student, "Jimmy Doe", from_sms=True)
@@ -278,11 +334,23 @@ def test_code_signup_role():
     mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
 
 
-def test_get_teacher_and_name():
-    """Gets teacher and parent name if text starts with teacher code."""
-    t = factories.ProfileFactory.create(school_staff=True, code="ABCDEF")
 
-    assert hook.get_teacher_and_name("abcdef foo") == (t, "foo")
-    assert hook.get_teacher_and_name("ABCDEF") == (t, '')
-    assert hook.get_teacher_and_name("ACDC bar") == (None, '')
-    assert hook.get_teacher_and_name("ABCDEF. some name") == (t, "some name")
+class TestGetTeacherGroupAndName(object):
+    def test_basic(self):
+        """Gets teacher and parent name if text starts with teacher code."""
+        t = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
+
+        f = hook.get_teacher_group_and_name
+        assert f("abcdef foo") == (t, None, "foo")
+        assert f("ABCDEF") == (t, None, "")
+        assert f("ACDC bar") == (None, None, "")
+        assert f("ABCDEF. some name") == (t, None, "some name")
+
+    def test_group_code(self):
+        """Gets teacher, group and parent name if text starts w/ group code."""
+        g = factories.GroupFactory.create(code='ABCDEFG')
+
+        f = hook.get_teacher_group_and_name
+        assert f("ABCDEFG") == (g.owner, g, "")
+        assert f("ACDC foo") == (None, None, "")
+        assert f("ABCDEFG My Name") == (g.owner, g, "My Name")

@@ -1,0 +1,22 @@
+{% load widget_tweaks %}
+
+<form method="POST" action="{% block form-action %}{% endblock %}" class="{% block form-class %}{% endblock %}" id="{% block form-id %}{% endblock %}">
+  {% csrf_token %}
+  <h2>{% block form-header %}{% endblock %}</h2>
+
+  {{ form.non_field_errors }}
+
+  {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
+
+  <div class="fieldset relation-fieldset">
+    <p class="fieldset-help">
+      Select existing groups and staff elders to associate with this student.
+    </p>
+    {% include "forms/_field.html" with field=form.groups %}
+    {% include "forms/_field.html" with field=form.elders label="Teachers" %}
+  </div>
+
+  <div class="form-actions">
+    <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>
+  </div>
+</form>

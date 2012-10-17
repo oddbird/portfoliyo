@@ -1,0 +1,10 @@
+{% extends "village/base.html" %}
+
+{% block village %}
+  {% include "village/_village_nav.html" %}
+  {% if student %}
+    {% include "village/_invite_elder_student_content.html" %}
+  {% elif group %}
+    {% include "village/_invite_elder_group_content.html" %}
+  {% endif %}
+{% endblock village %}

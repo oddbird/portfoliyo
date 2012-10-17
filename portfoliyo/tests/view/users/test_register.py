@@ -5,6 +5,7 @@ Tests for custom django-registration backend.
 from django.core import mail
 import mock
 
+from portfoliyo.tests import factories
 from portfoliyo.view.users import forms, register
 
 
@@ -26,10 +27,13 @@ def _register(**kwargs):
     backend = register.RegistrationBackend()
     request = mock.Mock()
     request.get_host.return_value = 'example.com'
+    if 'school' not in kwargs:
+        kwargs['school'] = factories.SchoolFactory.create()
     kwargs.setdefault('name', 'Some Name')
     kwargs.setdefault('email', 'some@example.com')
     kwargs.setdefault('password', 'sekrit')
     kwargs.setdefault('role', 'Role')
+    kwargs.setdefault('email_notifications', True)
     return backend.register(request, **kwargs)
 
 
@@ -77,6 +81,15 @@ def test_register_creates_code():
     assert user.profile.code
 
 
+def test_register_sets_email_notifications():
+    """register method sets email_notifications on profile."""
+    user1 = _register(email_notifications=False, email='foo@example.com')
+    user2 = _register(email_notifications=True, email='bar@example.com')
+
+    assert not user1.profile.email_notifications
+    assert user2.profile.email_notifications
+
+
 def test_register_creates_registration_profile():
     """register method creates RegistrationProfile."""
     user = _register()
@@ -90,3 +103,11 @@ def test_register_sends_email():
 
     assert len(mail.outbox) == 1
     assert mail.outbox[0].to == [u'foo@example.com']
+
+
+def test_register_saves_school():
+    """register method saves unsaved school."""
+    s = factories.SchoolFactory.build(name='Foo')
+    _register(school=s)
+
+    assert s.__class__.objects.filter(name='Foo').count() == 1

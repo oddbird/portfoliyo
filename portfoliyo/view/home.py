@@ -23,10 +23,8 @@ def redirect_home(user):
     students = user.profile.students
     if not students:
         if user.profile.school_staff:
-            return reverse('add_student')
+            return reverse('add_group')
         return reverse('no_students')
-    elif len(students) == 1:
-        return reverse('village', kwargs=dict(student_id=students[0].id))
     return reverse('dashboard')
 
 
