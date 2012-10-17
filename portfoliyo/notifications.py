@@ -7,9 +7,12 @@ from django.template import loader
 
 def send_email_notification(profile, post):
     """Notify user about post."""
+    rel = post.get_relationship()
+    role = rel.description_or_role if rel else post.author.role
     c = {
         'profile': profile,
         'post': post,
+        'author_role': role,
         'village_url': (
             settings.PORTFOLIYO_BASE_URL +
             reverse('village', kwargs={'student_id': post.student.id})
