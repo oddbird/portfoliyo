@@ -33,10 +33,7 @@
 
     {% include "forms/_field.html" with field=form.email %}
 
-    {% comment %}
-    {# @@@ checkbox (checked by default): "Email me when a text is sent to one of my villages." #}
-    {% include "forms/_field.html" with field=form.notifications %}
-    {% endcomment %}
+    {% include "forms/_field.html" with field=form.email_notifications label="Email me when a parent contacts me through Portfoliyo." %}
 
     {% include "forms/_field.html" with field=form.school helptext="Don't see your school listed? <a href='#add-school' class='add-school-link'>Add a new school</a>." %}
 

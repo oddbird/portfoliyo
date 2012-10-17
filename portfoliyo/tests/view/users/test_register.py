@@ -33,6 +33,7 @@ def _register(**kwargs):
     kwargs.setdefault('email', 'some@example.com')
     kwargs.setdefault('password', 'sekrit')
     kwargs.setdefault('role', 'Role')
+    kwargs.setdefault('email_notifications', True)
     return backend.register(request, **kwargs)
 
 

@@ -82,7 +82,8 @@ class Profile(models.Model):
     def create_with_user(cls, school,
                          name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         state=None, invited_by=None, invited_in_group=None):
+                         state=None, invited_by=None, invited_in_group=None,
+                         email_notifications=True):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -116,6 +117,7 @@ class Profile(models.Model):
             invited_by=invited_by,
             invited_in_group=invited_in_group,
             code=code,
+            email_notifications=email_notifications,
             )
 
         # try a few times to generate a unique code, if we keep failing give up
