@@ -35,11 +35,11 @@
     &:before { outline: 1px dotted; }
   }
   &:before {
-    position: absolute;
-    top: 0;
-    left: 0;
+    @include stretch;
     text-indent: 0;
     margin-right: 0;
+    padding: inherit;
+    text-align: center;
   }
 }
 
@@ -78,3 +78,9 @@
 %icon-phone:before { content: "\e000"; }
 %icon-no-phone:before { content: "\e001"; }
 %icon-undo:before { content: "\21ba"; }
+%icon-arrow-up:before { content: "\2191"; }
+%icon-arrow-down:before { content: "\2193"; }
+%icon-arrow-left:before { content: "\2190"; }
+%icon-arrow-right:before { content: "\2192"; }
+%icon-file-download:before { content: "\e002"; }
+%icon-locked:before { content: "\e003"; }

@@ -20,21 +20,12 @@ class TestHome(object):
         res.mustcontain('sign up!')
 
 
-    def test_redirect_to_single_student(self, client):
-        """Redirects to village page if user has a single student."""
-        rel = factories.RelationshipFactory.create()
-        res = client.get(self.url, user=rel.elder.user, status=302)
-
-        assert res['Location'] == location(
-            reverse('village', kwargs={'student_id': rel.student.id}))
-
-
-    def test_redirect_to_add_student(self, client):
-        """Redirects to add-student if staff user has no students."""
+    def test_redirect_to_add_group(self, client):
+        """Redirects to add-group if staff user has no students."""
         profile = factories.ProfileFactory.create(school_staff=True)
         res = client.get(self.url, user=profile.user, status=302)
 
-        assert res['Location'] == location(reverse('add_student'))
+        assert res['Location'] == location(reverse('add_group'))
 
 
     def test_redirect_to_no_students(self, client):

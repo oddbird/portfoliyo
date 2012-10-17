@@ -75,7 +75,7 @@ class Migration(SchemaMigration):
             'phone': ('django.db.models.fields.CharField', [], {'max_length': '20', 'unique': 'True', 'null': 'True', 'blank': 'True'}),
             'role': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'school_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
-            'user': ('portfoliyo.model.users.models.AutoOneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
         'village.post': {
             'Meta': {'object_name': 'Post'},

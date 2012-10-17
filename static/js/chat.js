@@ -16,6 +16,23 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.scrollToBottom = function () {
+        if ($('.village-feed').length) {
+            var feed = $('.village-feed');
+            var height = parseInt(feed.get(0).scrollHeight, 10);
+            feed.scrollTop(height);
+        }
+    };
+
+    PYO.scrolledToBottom = function () {
+        var feed = $('.village-feed');
+        var bottom = false;
+        if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
+            bottom = true;
+        }
+        return bottom;
+    };
+
     PYO.renderPost = function (data) {
         var posts;
         if (data && data.posts && data.posts.length) {
@@ -79,26 +96,33 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.replacePost = function (data) {
-        if (data && data.posts[0] && data.posts[0].author_sequence_id && data.posts[0].author_id) {
+        if (data && data.posts && data.posts.length) {
             var feed = $('.village-feed');
-            var author_sequence_id = data.posts[0].author_sequence_id;
-            var author_id = data.posts[0].author_id;
-            var oldPost = feed.find('.post[data-author-id="' + author_id + '"][data-author-sequence="' + author_sequence_id + '"]');
-            if (oldPost && oldPost.length) {
-                var newPost = PYO.renderPost(data);
-                var scroll = PYO.scrolledToBottom();
-                newPost.filter('.post[data-author-id="' + PYO.activeUserId + '"]').each(function () {
-                    $(this).find('.details').addClass('open auto');
-                });
-                newPost.find('.details').html5accordion({
-                    initialSlideSpeed: 0,
-                    openCallback: smsDetailsOpened
-                });
-                oldPost.replaceWith(newPost);
-                $.doTimeout('new-post-' + author_sequence_id);
-                if (scroll) { PYO.scrollToBottom(); }
-                return true;
-            }
+            var replaced = false;
+            $.each(data.posts, function (index, value) {
+                if (this.author_sequence_id && this.author_id) {
+                    var oldPost = feed.find('.post[data-author-id="' + this.author_id + '"][data-author-sequence="' + this.author_sequence_id + '"]');
+                    if (oldPost && oldPost.length) {
+                        var post_obj = {
+                            posts: [this]
+                        };
+                        var newPost = PYO.renderPost(post_obj);
+                        var scroll = PYO.scrolledToBottom();
+                        newPost.filter('.post[data-author-id="' + PYO.activeUserId + '"]').each(function () {
+                            $(this).find('.details').addClass('open auto');
+                        });
+                        newPost.find('.details').html5accordion({
+                            initialSlideSpeed: 0,
+                            openCallback: smsDetailsOpened
+                        });
+                        oldPost.replaceWith(newPost);
+                        $.doTimeout('new-post-' + this.author_sequence_id);
+                        if (scroll) { PYO.scrollToBottom(); }
+                        replaced = true;
+                    }
+                }
+            });
+            return replaced;
         }
     };
 
@@ -188,16 +212,19 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
-        if (response && response.posts[0] && response.posts[0].student_id && response.posts[0].student_id === PYO.activeStudentId) {
-            if (response.posts[0].author_sequence_id) {
-                var feed = $('.village-feed');
-                var author_sequence_id = response.posts[0].author_sequence_id;
-                var oldPost = feed.find('.post.mine[data-author-sequence="' + author_sequence_id + '"]');
-                if (oldPost && oldPost.length) {
-                    oldPost.loadingOverlay('remove');
+        if (response && response.posts && response.posts.length) {
+            var feed = $('.village-feed');
+            $.each(response.posts, function (index, value) {
+                if ((this.student_id && this.student_id === PYO.activeStudentId) || (this.group_id && this.group_id === PYO.activeGroupId && !PYO.activeStudentId)) {
+                    if (this.author_sequence_id) {
+                        var oldPost = feed.find('.post.mine[data-author-sequence="' + this.author_sequence_id + '"]');
+                        if (oldPost && oldPost.length) {
+                            oldPost.loadingOverlay('remove');
+                        }
+                    }
                 }
-            }
-            if (response.success && !PYO.pusherKey) {
+            });
+            if (!PYO.pusherKey) {
                 PYO.replacePost(response);
             }
         }
@@ -260,33 +287,6 @@ var PYO = (function (PYO, $) {
         PYO.addPostTimeout(post, author_sequence_id, count);
     };
 
-    PYO.listenForPosts = function (container) {
-        if ($(container).length && PYO.pusherKey) {
-            var pusher = new Pusher(PYO.pusherKey, {encrypted: true});
-            var students = $('.village-nav .student a');
-
-            students.each(function () {
-                var el = $(this);
-                var id = el.data('id');
-                var unread = el.find('.unread');
-                var channel = pusher.subscribe('student_' + id);
-
-                channel.bind('message_posted', function (data) {
-                    if (id === PYO.activeStudentId) {
-                        var scroll = PYO.scrolledToBottom();
-                        if (!PYO.replacePost(data)) {
-                            PYO.addPost(data);
-                            if (scroll) { PYO.scrollToBottom(); }
-                        }
-                    } else {
-                        var count = parseInt(unread.text(), 10);
-                        unread.removeClass('zero').text(++count);
-                    }
-                });
-            });
-        }
-    };
-
     PYO.fetchBacklog = function (container) {
         if (feedAjax.XHR) { feedAjax.XHR.abort(); }
         if ($(container).length) {
@@ -307,8 +307,11 @@ var PYO = (function (PYO, $) {
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
-                            var msg = ich.feed_error_msg();
-                            msg.find('.reload-feed').click(function (e) {
+                            var msg = ich.ajax_error_msg({
+                                error_class: 'feed-error',
+                                message: 'Unable to load prior posts in this village.'
+                            });
+                            msg.find('.try-again').click(function (e) {
                                 e.preventDefault();
                                 msg.remove();
                                 loadFeed();
@@ -338,10 +341,10 @@ var PYO = (function (PYO, $) {
                 var remain = limit - chars;
                 if (remain < 0) {
                     count.addClass('overlimit');
-                    button.attr('disabled', 'true');
+                    button.not('.disabled').attr('disabled', 'disabled');
                 } else {
                     count.removeClass('overlimit');
-                    button.removeAttr('disabled');
+                    button.not('.disabled').removeAttr('disabled');
                 }
                 count.text(remain + ' characters remaining...');
             };

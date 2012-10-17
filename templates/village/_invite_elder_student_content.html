@@ -1,0 +1,10 @@
+{% extends "village/_invite_elder_content.html" %}
+{% load url from future %}
+
+{% block form-action %}{% url 'invite_elder' student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}{% endblock %}
+
+{% block form-header %}Invite Elder for {{ student }}{% endblock %}
+
+{% block info-bar %}
+{% include "village/_village_info.html" with active="true" %}
+{% endblock %}

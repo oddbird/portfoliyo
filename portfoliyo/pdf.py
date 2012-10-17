@@ -16,7 +16,7 @@ from portfoliyo import formats
 LOCATIONS = {
     'parent-instructions-template-en.pdf': {
         'name': (408, 505),
-        'code': (358, 224),
+        'code': (356, 224),
         'phone': (342, 206),
         'example': (388, 170),
         'sample_to': (145, 470),
@@ -25,7 +25,7 @@ LOCATIONS = {
         },
     'parent-instructions-template-es.pdf': {
         'name': (424, 505),
-        'code': (371, 170),
+        'code': (370, 170),
         'phone': (345, 152),
         'example': (386, 116),
         'sample_to': (145, 470),

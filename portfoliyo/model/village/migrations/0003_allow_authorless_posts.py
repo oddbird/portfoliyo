@@ -66,7 +66,7 @@ class Migration(SchemaMigration):
             'role': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'school_staff': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'state': ('django.db.models.fields.CharField', [], {'default': "'done'", 'max_length': '20'}),
-            'user': ('portfoliyo.model.users.models.AutoOneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
+            'user': ('django.db.models.fields.related.OneToOneField', [], {'to': "orm['auth.User']", 'unique': 'True'})
         },
         'village.post': {
             'Meta': {'object_name': 'Post'},

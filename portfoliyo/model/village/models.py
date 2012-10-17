@@ -2,7 +2,9 @@
 from __future__ import absolute_import
 
 from collections import defaultdict
+import logging
 import re
+import socket
 
 from django.db import models
 from django.utils import dateformat, html, timezone
@@ -13,21 +15,25 @@ from portfoliyo import sms
 from ..users import models as user_models
 
 
+
+logger = logging.getLogger(__name__)
+
+
+
 def now():
     """Return current datetime as tz-aware UTC."""
     return timezone.now()
 
 
-class Post(models.Model):
+
+class BasePost(models.Model):
+    """Common Post fields and methods."""
     author = models.ForeignKey(
         user_models.Profile,
-        related_name='authored_posts',
+        related_name='authored_%(class)ss',
         blank=True, null=True,
         ) # null author means "automated message sent by Portfoliyo"
     timestamp = models.DateTimeField(default=now)
-    # the student in whose village this was posted
-    student = models.ForeignKey(
-        user_models.Profile, related_name='posts_in_village')
     # the original text as entered by a user
     original_text = models.TextField()
     # the parsed text as HTML, with highlights wrapped in <b>
@@ -40,6 +46,10 @@ class Post(models.Model):
     meta = JSONField(default={})
 
 
+    class Meta:
+        abstract = True
+
+
     def __unicode__(self):
         return self.original_text
 
@@ -48,6 +58,167 @@ class Post(models.Model):
     def sms(self):
         """Post was either received from or sent by SMS."""
         return self.from_sms or self.to_sms
+
+
+    def extra_data(self):
+        """Return any extra data for serialization."""
+        return {}
+
+
+    def notify(self, highlights, in_reply_to=None):
+        """
+        Send SMS notifications to highlighted users.
+
+        ``highlights`` should be a mapping of elders (or relationships) to list
+        of names that elder (or relationship) was mentioned as (such as the
+        mapping returned by ``process_text``).
+
+        Returns a tuple of (sms-sent, meta-highlights) where sms-sent is a
+        boolean that is True if any SMS notifications were sent, and
+        meta-highlights is a list of dictionaries providing details about each
+        sent notification.
+
+        """
+        meta_highlights = []
+        sms_sent = False
+        if self.author:
+            suffix = notification_suffix(self.get_relationship() or self.author)
+        else:
+            suffix = u""
+        sms_body = self.original_text + suffix
+        for elder_or_rel, mentioned_as in highlights.items():
+            elder = elder_or_rel.elder
+            role = elder_or_rel.description_or_role
+            highlight_data = {
+                'id': elder.id,
+                'mentioned_as': mentioned_as,
+                'role': role,
+                'name': elder.name,
+                'email': elder.user.email,
+                'phone': elder.phone,
+                'is_active': elder.user.is_active,
+                'declined': elder.declined,
+                'sms_sent': False,
+                }
+            if elder.user.is_active and elder.phone:
+                if elder.phone != in_reply_to:
+                    sms.send(
+                        elder.phone,
+                        strip_initial_mention(sms_body, mentioned_as),
+                        )
+                sms_sent = True
+                highlight_data['sms_sent'] = True
+
+            meta_highlights.append(highlight_data)
+
+        return (sms_sent, meta_highlights)
+
+
+    def get_relationship(self):
+        return None
+
+
+    def send_event(self, channel, sequence_id=None):
+        """Send Pusher event for this Post, if Pusher is configured."""
+        pusher = get_pusher()
+        if pusher is not None:
+            try:
+                pusher[channel].trigger(
+                    'message_posted',
+                    {'posts': [post_dict(self, author_sequence_id=sequence_id)]},
+                    )
+            except socket.error as e:
+                logger.error("Pusher socket error: %s" % str(e))
+
+
+
+class BulkPost(BasePost):
+    """A Post in multiple villages at once."""
+    # the group this was posted to (null means all-students for this author)
+    group = models.ForeignKey(
+        user_models.Group, blank=True, null=True, related_name='bulk_posts')
+
+
+    def extra_data(self):
+        """Return any extra data for serialization."""
+        return {
+            'group_id': (
+                self.group_id or user_models.AllStudentsGroup(self.author).id)
+            }
+
+
+    @classmethod
+    def create(cls, author, group, text,
+               sequence_id=None, from_sms=False):
+        """
+        Create/return a BulkPost and all associated Posts.
+
+        If ``author`` is ``None``, the post is system-originated.
+
+        If ``group`` is ``None``, the post goes to all students of ``author``.
+
+        It is currently not allowed for both to be ``None``.
+
+        ``sequence_id`` is an arbitrary ID generated on the client-side to
+        uniquely identify posts by the current user within a given browser
+        session; we just pass it through to the Pusher event(s).
+
+        """
+        if author is None and group is None:
+            raise ValueError("BulkPost must have either author or group.""")
+
+        orig_group = group
+        if group is None:
+            group = user_models.AllStudentsGroup(author)
+
+        html_text, highlights = process_text(text, group)
+
+        post = cls(
+            author=author,
+            group=orig_group,
+            original_text=text,
+            html_text=html_text,
+            from_sms=from_sms,
+            )
+
+        sms_sent, meta_highlights = post.notify(highlights)
+        post.to_sms = sms_sent
+        post.meta['highlights'] = meta_highlights
+
+        post.save()
+
+        for student in group.students.all():
+            sub = Post.objects.create(
+                author=author,
+                student=student,
+                original_text=text,
+                html_text=html_text,
+                from_sms=from_sms,
+                to_sms=sms_sent,
+                meta=post.meta,
+                from_bulk=post,
+                )
+            sub.send_event('student_%s' % student.id, sequence_id=sequence_id)
+
+        post.send_event('group_%s' % group.id, sequence_id=sequence_id)
+
+        return post
+
+
+
+class Post(BasePost):
+    """A Post in a single student's village."""
+    # the student in whose village this was posted
+    student = models.ForeignKey(
+        user_models.Profile, related_name='posts_in_village')
+    # (optional) the bulk-post that triggered this post
+    from_bulk = models.ForeignKey(
+        BulkPost, blank=True, null=True, related_name='triggered')
+
+
+    def extra_data(self):
+        """Return any extra data for serialization."""
+        return {'student_id': self.student_id}
 
 
     @classmethod
@@ -77,55 +248,21 @@ class Post(models.Model):
             original_text=text,
             html_text=html_text,
             from_sms=from_sms,
-            to_sms=False,
             )
 
-        # notify highlighted SMS users
-        meta_highlights = []
-        sender_rel = post.get_relationship()
-        suffix = text_notification_suffix(sender_rel)
-        sms_body = post.original_text + suffix
-        for rel, mentioned_as in highlights.items():
-            highlight_data = {
-                'id': rel.elder.id,
-                'mentioned_as': mentioned_as,
-                'role': rel.description_or_role,
-                'name': rel.elder.name,
-                'email': rel.elder.user.email,
-                'phone': rel.elder.phone,
-                'is_active': rel.elder.user.is_active,
-                'declined': rel.elder.declined,
-                'sms_sent': False,
-                }
-            if rel.elder.user.is_active and rel.elder.phone:
-                if rel.elder.phone != in_reply_to:
-                    sms.send(
-                        rel.elder.phone,
-                        strip_initial_mention(sms_body, mentioned_as),
-                        )
-                post.to_sms = True
-                highlight_data['sms_sent'] = True
-
-            meta_highlights.append(highlight_data)
-
+        sms_sent, meta_highlights = post.notify(highlights, in_reply_to)
+        post.to_sms = sms_sent
         post.meta['highlights'] = meta_highlights
 
         post.save()
 
-        # trigger Pusher event, if configured
-        pusher = get_pusher()
-        if pusher is not None:
-            channel = 'student_%s' % student.id
-            pusher[channel].trigger(
-                'message_posted',
-                {'posts': [post_dict(post, author_sequence_id=sequence_id)]},
-                )
+        post.send_event('student_%s' % student.id, sequence_id=sequence_id)
 
         return post
 
 
     def get_relationship(self):
-        """The Relationship object between the author and the student."""
+        """Return Relationship between author and student, or None."""
         try:
             return self._rel
         except AttributeError:
@@ -142,17 +279,17 @@ class Post(models.Model):
 
 
 
-def process_text(text, student):
+def process_text(text, student_or_group):
     """
-    Process given post text in given student's village.
+    Process given post text in given student or group's village.
 
-    Escapes HTML, replaces newlines with <br>, replaces highlights.
+    Escape HTML, replace newlines with <br>, replace highlights.
 
-    Returns tuple of (rendered-text,
+    Return tuple of (rendered-text,
     dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
 
     """
-    name_map = get_highlight_names(student)
+    name_map = get_highlight_names(student_or_group)
     html_text, highlights = replace_highlights(html.escape(text), name_map)
     html_text = html_text.replace('\n', '<br>')
     return html_text, highlights
@@ -218,15 +355,15 @@ def replace_highlights(text, name_map):
 
 
 
-def get_highlight_names(student):
+def get_highlight_names(student_or_group):
     """
-    Get highlightable names in given student's village.
+    Get highlightable names in given student or group's village.
 
     Returns dictionary mapping names to sets of relationships.
 
     """
     name_map = defaultdict(set)
-    for elder_rel in student.elder_relationships:
+    for elder_rel in student_or_group.elder_relationships:
         elder = elder_rel.elder
         possible_names = []
         if elder.name:
@@ -250,15 +387,14 @@ def normalize_name(name):
     return name.lower().replace(' ', '')
 
 
-def text_notification_suffix(relationship):
-    """The prefix for texts sent out from this elder/student relationship."""
-    return u' --%s' % (
-        relationship.elder.name or relationship.description_or_role,)
+def notification_suffix(elder_or_rel):
+    """The suffix for texts sent out from this elder or relationship."""
+    return u' --%s' % elder_or_rel.name_or_role
 
 
-def post_char_limit(relationship):
-    """Max length for posts from this profile/student relationship."""
-    return 160 - len(text_notification_suffix(relationship))
+def post_char_limit(elder_or_rel):
+    """Max length for posts from this elder or relationship."""
+    return 160 - len(notification_suffix(elder_or_rel))
 
 
 def strip_initial_mention(sms_body, mentioned_as):
@@ -291,7 +427,6 @@ def post_dict(post, **extra):
     data = {
         'post_id': post.id,
         'author_id': post.author_id if post.author else 0,
-        'student_id': post.student_id,
         'author': author_name,
         'role': role,
         'timestamp': timestamp.isoformat(),
@@ -304,6 +439,7 @@ def post_dict(post, **extra):
         'meta': post.meta,
         }
 
+    data.update(post.extra_data())
     data.update(extra)
 
     return data

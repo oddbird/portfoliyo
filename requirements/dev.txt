@@ -16,6 +16,6 @@ pytest-django==1.4
 pytest-cov==1.6
 cov-core==1.6
 
-factory_boy==1.0.4.moz2
+factory_boy==1.2.0
 
 selenium==2.25.0

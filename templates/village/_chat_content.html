@@ -1,0 +1,37 @@
+{% extends "village/_village_content_main.html" %}
+
+{% block village-content %}
+<div class="village-main">
+  {% block village-main %}
+  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-user-id="{{ request.user.profile.id }}" {% block village-feed-attrs %}{% endblock %}>
+
+  </section>
+  <form method="POST" class="post-add-form" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
+    {% csrf_token %}
+
+    <div class="formfield post-textfield">
+      <textarea id="post-text" name="text"></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+    </div>
+
+    <div class="formfield sms-targeting">
+      <label for="sms-target">Send text message to</label>
+      <select id="sms-target" name="sms-target" multiple="multiple">
+        <option value="1" selected>@@@ Elder 1</option>
+        <option value="2" selected>@@@ Elder 2</option>
+        <option value="3" selected>@@@ Elder 3</option>
+        <option value="4" selected>@@@ Elder 4</option>
+        <option value="5" selected>@@@ Elder 5</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">send</button>
+    </div>
+
+  </form>
+  {% endblock village-main %}
+</div>
+
+{% block info-bar %}{% endblock %}
+{% endblock village-content %}

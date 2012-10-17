@@ -3,7 +3,8 @@
     'use strict';
 
     $.ajaxSetup({
-        timeout: 30000
+        timeout: 30000,
+        dataType: 'json'
     });
 
     $(document).ajaxError(function (event, request, settings, error) {

@@ -9,11 +9,23 @@
     {% include "forms/_field.html" with field=form.name %}
     {% include "forms/_field.html" with field=form.role label="Relation to student(s)" %}
 
+    <div class="fieldset relation-fieldset">
+      <p class="fieldset-help">
+        Select existing groups and students to associate with this elder.
+      </p>
+      {% include "forms/_field.html" with field=form.groups %}
+      {% include "forms/_field.html" with field=form.students %}
+    </div>
+
     <div class="form-actions">
       <button type="submit">Save changes</button>
     </div>
   </form>
 </div>
 
+{% if student %}
 {% include "village/_village_info.html" %}
+{% else %}
+{% include "village/_group_info.html" %}
+{% endif %}
 {% endblock village-content %}

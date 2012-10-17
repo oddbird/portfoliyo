@@ -24,6 +24,22 @@ var PYO = (function (PYO, $) {
         DOWN: 40
     };
 
+    PYO.ieInputBootstrap = function () {
+        $('body').on('change', 'input:radio, input:checkbox', function () {
+            var el = $(this);
+            if (el.is(':checked')) {
+                el.attr('checked', 'checked');
+                if (el.is(':radio')) {
+                    var form = el.closest('form');
+                    var name = el.attr('name');
+                    form.find('input:radio[name="' + name + '"]').not(el).change();
+                }
+            } else {
+                $(this).removeAttr('checked');
+            }
+        });
+    };
+
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
             var page = $(container);
@@ -55,27 +71,13 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.scrollToBottom = function () {
-        if ($('.village-feed').length) {
-            var feed = $('.village-feed');
-            var height = parseInt(feed.get(0).scrollHeight, 10);
-            feed.scrollTop(height);
-        }
-    };
-
-    PYO.scrolledToBottom = function () {
-        var feed = $('.village-feed');
-        var bottom = false;
-        if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
-            bottom = true;
-        }
-        return bottom;
-    };
-
     PYO.pageAjaxError = function (url) {
         var container = $('.village-content');
-        var msg = ich.pjax_error_msg();
-        msg.find('.reload-pjax').click(function (e) {
+        var msg = ich.ajax_error_msg({
+            error_class: 'pjax-error',
+            message: 'Unable to load the requested page.'
+        });
+        msg.find('.try-again').click(function (e) {
             e.preventDefault();
             msg.remove();
             PYO.pageAjaxLoad(url);
@@ -96,7 +98,10 @@ var PYO = (function (PYO, $) {
 
             pageAjax.XHR = $.get(url, function (response) {
                 if (response && response.html && pageAjax.count === count) {
-                    container.replaceWith($(response.html));
+                    var newPage = $(response.html);
+                    container.replaceWith(newPage);
+                    newPage.find('.details').html5accordion();
+                    newPage.find('input[placeholder], textarea[placeholder]').placeholder();
                     PYO.initializePage();
                 }
                 container.loadingOverlay('remove');
@@ -112,11 +117,10 @@ var PYO = (function (PYO, $) {
 
     PYO.ajaxifyVillages = function (container) {
         if ($(container).length) {
-            var context = $(container);
             var History = window.History;
 
             if (History.enabled) {
-                $('body').on('click', 'a.ajax-link', function (e) {
+                $('body').on('click', '.ajax-link', function (e) {
                     if (e.which === 2 || e.metaKey) {
                         return true;
                     } else {
@@ -125,13 +129,11 @@ var PYO = (function (PYO, $) {
                         var stateData = History.getState().data;
                         var currentUrl = stateData.url ? stateData.url : window.location.pathname;
                         if (url === currentUrl) {
-                            PYO.pageAjaxLoad(url + '?ajax=true');
+                            var query = url.toString().indexOf('?') !== -1 ? '&' : '?';
+                            PYO.pageAjaxLoad(url + query + 'ajax=true');
                         } else {
                             var title = document.title;
                             var data = { url: url };
-                            if ($(this).hasClass('addelder-link') || $(this).hasClass('edit-elder')) {
-                                data.remainActive = true;
-                            }
                             History.pushState(data, title, url);
                         }
                         $(this).blur();
@@ -139,14 +141,10 @@ var PYO = (function (PYO, $) {
                 });
 
                 $(window).bind('statechange', function () {
-                    context.trigger('pjax-load');
                     var data = History.getState().data;
                     var url = data.url ? data.url : window.location.pathname;
-                    if (!data.remainActive) {
-                        context.find('.village-nav .ajax-link').removeClass('active');
-                    }
-                    context.find('a.ajax-link[href="' + url + '"]').addClass('active');
-                    PYO.pageAjaxLoad(url + '?ajax=true');
+                    var query = url.toString().indexOf('?') !== -1 ? '&' : '?';
+                    PYO.pageAjaxLoad(url + query + 'ajax=true');
                 });
             }
         }
@@ -161,25 +159,111 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeEldersForm = function () {
-        $('.formset.elders').formset({
-            prefix: $('.formset.elders').data('prefix'),
-            formTemplate: '#empty-elder-form',
-            formSelector: '.fieldset.elder',
-            addLink: '<a class="add-row" href="javascript:void(0)" title="more elders">more elders</a>',
-            addAnimationSpeed: 'normal',
-            removeAnimationSpeed: 'fast',
-            optionalIfEmpty: true
+    PYO.disablePreselectedAssociations = function (container) {
+        var form = $(container);
+        var inputs = form.find('.relation-fieldset .check-options input');
+        var checked = inputs.filter(':checked');
+
+        checked.attr('disabled', 'disabled').each(function () {
+            var el = $(this).data('pre-selected', true);
+            var label = el.siblings('.type');
+            if (el.closest('form').hasClass('village-add-form')) {
+                label.attr('title', 'You are adding a student to the "' + $.trim(label.text()) + '" group.');
+            } else if (el.closest('form').hasClass('elder-add-form')) {
+                var title;
+                if (el.closest('.check-options').hasClass('select-groups')) {
+                    title = 'You are inviting an elder to join all the student villages in the "' + $.trim(label.text()) + '" group.';
+                    label.attr('title', title).data('title', title);
+                }
+                if (el.closest('.check-options').hasClass('select-students')) {
+                    title = "You are inviting an elder to join " + $.trim(label.text()) + "'s village.";
+                    label.attr('title', title).data('title', title);
+                }
+            }
         });
-        if ($('#id_name').length) {
-            $('#id_name').focus();
-        } else {
-            $('#id_elders-0-contact').focus();
+
+        form.submit(function () { inputs.removeAttr('disabled'); });
+    };
+
+    PYO.addGroupAssociationColors = function (container) {
+        if ($(container).length) {
+            var form = $(container);
+            var groupInputs = form.find('.check-options input[name="groups"]');
+            var inputs = form.find('.check-options input').not(groupInputs);
+            var count = 0;
+            var selectedIds = [];
+            var updateColors = function () {
+                var colorInputs = function (i) {
+                    var id = selectedIds[i];
+                    var group = groupInputs.filter('[value=' + id + ']');
+                    var groupLabel = group.siblings('.type');
+                    var groupName = $.trim(groupLabel.text());
+                    var thisCount = groupLabel.data('color-count');
+                    var relInputs = inputs.filter(function () {
+                        var groups = $(this).data('group-ids');
+                        return $.inArray(id, groups) !== -1;
+                    });
+                    relInputs.each(function () {
+                        var el = $(this);
+                        if (!el.data('colored')) {
+                            el.data('colored', true).attr('disabled', 'disabled');
+                            el.siblings('.type').addClass('group-selected-' + thisCount).attr('title', 'selected as part of "' + groupName + '" group');
+                        }
+                    });
+                };
+
+                inputs.each(function () {
+                    var el = $(this).removeData('colored');
+                    var label = el.siblings('.type');
+                    var classes = label.attr('class').split(' ');
+                    for (var i = 0; i < classes.length; i++) {
+                        if (classes[i].indexOf('group-selected-') !== -1) { label.removeClass(classes[i]); }
+                    }
+                    if (el.data('pre-selected')) {
+                        label.attr('title', label.data('title'));
+                    } else {
+                        el.removeAttr('disabled');
+                        label.removeAttr('title');
+                    }
+                });
+
+                if (selectedIds && selectedIds.length) {
+                    for (var i = 0; i < selectedIds.length; i++) {
+                        colorInputs(i);
+                    }
+                }
+            };
+
+            groupInputs.change(function () {
+                var el = $(this);
+                var label = el.siblings('.type');
+                var id = parseInt(el.val(), 10);
+                var thisCount;
+                if (el.is(':checked')) {
+                    if ($.inArray(id, selectedIds) === -1) { selectedIds.unshift(id); }
+                    if (label.data('color-count')) {
+                        thisCount = label.data('color-count');
+                    } else {
+                        count = count === 18 ? 1 : count + 1;
+                        thisCount = count;
+                        label.data('color-count', thisCount);
+                    }
+                    label.addClass('label-color-' + thisCount);
+                } else {
+                    if ($.inArray(id, selectedIds) !== -1) { selectedIds.splice($.inArray(id, selectedIds), 1); }
+                    if (label.data('color-count')) {
+                        thisCount = label.data('color-count');
+                        label.removeClass('label-color-' + thisCount);
+                    }
+                }
+                updateColors();
+            });
+
+            groupInputs.filter(':checked').each(function () { $(this).change(); });
         }
     };
 
     PYO.initializeFeed = function () {
-        PYO.activeStudentId = $('.village-feed').data('student-id');
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
@@ -187,13 +271,19 @@ var PYO = (function (PYO, $) {
         PYO.initializeMultiselect();
     };
 
+    PYO.initializePusher = function () {
+        PYO.pusherKey = $('.village').data('pusher-key');
+        if (PYO.pusherKey) { PYO.pusher = new Pusher(PYO.pusherKey, {encrypted: true}); }
+    };
+
     PYO.initializePage = function () {
-        if ($('.village-feed').length) {
-            PYO.initializeFeed();
-        }
-        if ($('.formset.elders').length) {
-            PYO.initializeEldersForm();
-        }
+        PYO.activeStudentId = $('.village-content').data('student-id');
+        PYO.activeGroupId = $('.village-content').data('group-id');
+        PYO.updateNavActiveClasses();
+        PYO.addGroupAssociationColors('.relation-fieldset');
+        if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
+        if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
+        if ($('.village-feed').length) { PYO.initializeFeed(); }
     };
 
     return PYO;
