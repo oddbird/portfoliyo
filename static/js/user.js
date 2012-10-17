@@ -17,7 +17,8 @@ var PYO = (function (PYO, $) {
                     addSchool.find('input').attr('required', 'required').removeAttr('disabled');
                     hiddenInput.val('True');
                     addSchool.fadeIn('fast');
-                }).find('input').attr('disabled', 'disabled');
+                    selectSchool.find('input').attr('disabled', 'disabled');
+                });
             });
 
             selectSchoolLink.click(function (e) {
@@ -25,7 +26,8 @@ var PYO = (function (PYO, $) {
                 addSchool.fadeOut('fast', function () {
                     selectSchool.find('input').removeAttr('disabled');
                     selectSchool.fadeIn('fast');
-                }).find('input').attr('disabled', 'disabled').removeAttr('required');
+                    addSchool.find('input').attr('disabled', 'disabled').removeAttr('required');
+                });
                 hiddenInput.val('False');
             });
 
