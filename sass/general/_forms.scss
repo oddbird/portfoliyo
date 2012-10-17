@@ -176,6 +176,7 @@ $input-rhythm: .25;
       @extend %input;
       margin: 0;
       min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+      .lt-ie9 & { min-height: rhythm(1, $input-font-size); }
     }
   }
 
@@ -183,6 +184,7 @@ $input-rhythm: .25;
     @extend %input;
     @include transition(200ms min-height);
     min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
+    .lt-ie9 & { min-height: rhythm(1, $input-font-size); }
   }
 
   .fieldset-help {
