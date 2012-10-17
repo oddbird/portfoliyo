@@ -380,6 +380,8 @@ def get_highlight_names(student_or_group):
 
     """
     name_map = defaultdict(set)
+    # @@@ to be consistent with how elders are displayed on group pages (not in
+    # relationship context), this should really use group.all_elders for groups
     for elder_rel in student_or_group.elder_relationships:
         elder = elder_rel.elder
         possible_names = []

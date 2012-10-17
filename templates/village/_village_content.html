@@ -7,6 +7,12 @@
 
 {% block form-action %}{% url 'student_json_posts' student_id=student.id %}{% endblock %}
 
+{% block sms-target-options %}
+  {% for rel in sms_elder_rels %}
+    <option value="{{ rel.elder.id }}" selected>{% firstof rel.elder.name rel.description_or_role rel.elder.phone %}</option>
+  {% endfor %}
+{% endblock %}
+
 {% block info-bar %}
 {% include "village/_village_info.html" %}
 {% endblock %}

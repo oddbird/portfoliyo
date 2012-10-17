@@ -230,6 +230,11 @@ def village(request, student_id):
             'student': rel.student,
             'group': group,
             'relationship': rel,
+            'sms_elder_rels': rel.student.elder_relationships.filter(
+                from_profile__phone__isnull=False,
+                from_profile__declined=False,
+                from_profile__user__is_active=True,
+                ),
             'post_char_limit': model.post_char_limit(rel),
             },
         )
@@ -252,6 +257,11 @@ def group(request, group_id):
         'village/group.html',
         {
             'group': group,
+            'sms_elders': group.all_elders.filter(
+                phone__isnull=False,
+                declined=False,
+                user__is_active=True,
+                ),
             'post_char_limit': model.post_char_limit(request.user.profile),
             },
         )
@@ -269,6 +279,11 @@ def all_students(request):
         'village/group.html',
         {
             'group': group,
+            'sms_elders': group.all_elders.filter(
+                phone__isnull=False,
+                declined=False,
+                user__is_active=True,
+                ),
             'post_char_limit': model.post_char_limit(request.user.profile),
             }
         )
