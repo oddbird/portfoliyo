@@ -39,7 +39,7 @@ var PYO = (function (PYO, $) {
             $.each(data.posts, function (i, val) {
                 this.plural_sms = '';
                 this.sms_recipients = false;
-                if (this.meta && this.meta.sms.length) {
+                if (this.meta && this.meta.sms && this.meta.sms.length) {
                     var recipients = [];
 
                     $.each(this.meta.sms, function (i, val) {
