@@ -11,5 +11,7 @@ and then reference any model class as e.g. model.User, model.Profile...
 from django.contrib.auth.models import User
 from .users import utils
 from .users.models import (
-    School, Profile, Relationship, Group, AllStudentsGroup)
-from .village.models import BulkPost, Post, post_char_limit, post_dict
+    School, Profile, Relationship, Group, AllStudentsGroup,
+    contextualized_elders)
+from .village.models import (
+    BulkPost, Post, post_char_limit, post_dict, sms_eligible)

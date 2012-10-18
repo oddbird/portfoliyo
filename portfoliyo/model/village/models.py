@@ -26,6 +26,17 @@ def now():
 
 
 
+def sms_eligible(elders):
+    """Given queryset of elders, return queryset of SMS-eligible elders."""
+    return elders.filter(
+        declined=False,
+        deleted=False,
+        user__is_active=True,
+        phone__isnull=False,
+        )
+
+
+
 class BasePost(models.Model):
     """Common Post fields and methods."""
     author = models.ForeignKey(
@@ -65,53 +76,47 @@ class BasePost(models.Model):
         return {}
 
 
-    def notify_sms(self, highlights, in_reply_to=None):
+    def notify_sms(self, profile_ids, in_reply_to=None):
         """
-        Send SMS notifications to highlighted users.
+        Send SMS notifications about this post.
 
-        ``highlights`` should be a mapping of elders (or relationships) to list
-        of names that elder (or relationship) was mentioned as (such as the
-        mapping returned by ``process_text``).
+        ``profile_ids`` is a list of Profile IDs who should receive
+        notifications. Only profiles in this list who also are active, have
+        phone numbers, and have not declined sms notifications, will receive
+        texts.
 
-        Returns a tuple of (sms-sent, meta-highlights) where sms-sent is a
-        boolean that is True if any SMS notifications were sent, and
-        meta-highlights is a list of dictionaries providing details about each
-        sent notification.
+        Sets self.to_sms to True if any texts were sent, False otherwise, and
+        self.meta['sms'] to a list of dictionaries containing basic metadata
+        about each SMS sent.
 
         """
-        meta_highlights = []
+        meta_sms = []
         sms_sent = False
         if self.author:
             suffix = notification_suffix(self.get_relationship() or self.author)
         else:
             suffix = u""
         sms_body = self.original_text + suffix
-        for elder_or_rel, mentioned_as in highlights.items():
-            elder = elder_or_rel.elder
-            role = elder_or_rel.description_or_role
-            highlight_data = {
+
+        to_notify = sms_eligible(self.elders_in_context).filter(
+            pk__in=profile_ids)
+
+        for elder in to_notify:
+            sms_data = {
                 'id': elder.id,
-                'mentioned_as': mentioned_as,
-                'role': role,
+                'role': elder.role_in_context,
                 'name': elder.name,
-                'email': elder.user.email,
                 'phone': elder.phone,
-                'is_active': elder.user.is_active,
-                'declined': elder.declined,
-                'sms_sent': False,
                 }
-            if elder.user.is_active and elder.phone:
-                if elder.phone != in_reply_to:
-                    sms.send(
-                        elder.phone,
-                        strip_initial_mention(sms_body, mentioned_as),
-                        )
-                sms_sent = True
-                highlight_data['sms_sent'] = True
+            # with in_reply_to we assume caller sent SMS
+            if elder.phone != in_reply_to:
+                sms.send(elder.phone, sms_body)
+            sms_sent = True
 
-            meta_highlights.append(highlight_data)
+            meta_sms.append(sms_data)
 
-        return (sms_sent, meta_highlights)
+        self.to_sms = sms_sent
+        self.meta['sms'] = meta_sms
 
 
     def get_relationship(self):
@@ -147,9 +152,21 @@ class BulkPost(BasePost):
             }
 
 
+    @property
+    def safe_group(self):
+        """Return self.group or AllStudentsGroup."""
+        return self.group or user_models.AllStudentsGroup(self.author)
+
+
+    @property
+    def elders_in_context(self):
+        """Queryset of elders in context."""
+        return user_models.contextualized_elders(self.safe_group.all_elders)
+
+
     @classmethod
     def create(cls, author, group, text,
-               sequence_id=None, from_sms=False):
+               sms_profile_ids=None, sequence_id=None, from_sms=False):
         """
         Create/return a BulkPost and all associated Posts.
 
@@ -158,6 +175,9 @@ class BulkPost(BasePost):
         If ``group`` is ``None``, the post goes to all students of ``author``.
 
         It is currently not allowed for both to be ``None``.
+
+        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
+        notification of this post.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -171,7 +191,7 @@ class BulkPost(BasePost):
         if group is None:
             group = user_models.AllStudentsGroup(author)
 
-        html_text, highlights = process_text(text, group)
+        html_text, _ = process_text(text, group)
 
         post = cls(
             author=author,
@@ -181,9 +201,7 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        sms_sent, meta_highlights = post.notify_sms(highlights)
-        post.to_sms = sms_sent
-        post.meta['highlights'] = meta_highlights
+        post.notify_sms(sms_profile_ids or [])
 
         post.save()
 
@@ -194,7 +212,7 @@ class BulkPost(BasePost):
                 original_text=text,
                 html_text=html_text,
                 from_sms=from_sms,
-                to_sms=sms_sent,
+                to_sms=post.to_sms,
                 meta=post.meta,
                 from_bulk=post,
                 )
@@ -222,26 +240,32 @@ class Post(BasePost):
         return {'student_id': self.student_id}
 
 
+    @property
+    def elders_in_context(self):
+        """Queryset of elders."""
+        return user_models.contextualized_elders(
+            self.student.elder_relationships)
+
+
     @classmethod
     def create(cls, author, student, text,
-               sequence_id=None, from_sms=False, in_reply_to=None):
+               sms_profile_ids=None, sequence_id=None, from_sms=False,
+               in_reply_to=None):
         """
         Create/return a Post, triggering a Pusher event and SMS notifications.
+
+        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
+        notification of this post.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
         session; we just pass it through to the Pusher event.
 
-        ``in_reply_to`` can be set to a phone number, in which case a mention
-        of that phone number will be prepended to the post body, and it will be
-        assumed that an SMS was already sent to that number (thus no additional
-        notification will be sent).
+        ``in_reply_to`` can be set to a phone number, in which case it will be
+        assumed that an SMS was already sent to that number.
 
         """
-        if in_reply_to:
-            text = u"@%s %s" % (in_reply_to, text)
-
-        html_text, highlights = process_text(text, student)
+        html_text, _ = process_text(text, student)
 
         post = cls(
             author=author,
@@ -251,9 +275,7 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        sms_sent, meta_highlights = post.notify_sms(highlights, in_reply_to)
-        post.to_sms = sms_sent
-        post.meta['highlights'] = meta_highlights
+        post.notify_sms(sms_profile_ids or [], in_reply_to)
 
         post.save()
 
@@ -414,14 +436,6 @@ def notification_suffix(elder_or_rel):
 def post_char_limit(elder_or_rel):
     """Max length for posts from this elder or relationship."""
     return 160 - len(notification_suffix(elder_or_rel))
-
-
-def strip_initial_mention(sms_body, mentioned_as):
-    """Given an SMS and a list of highlight names, strip initial mention."""
-    initial_mention_re = re.compile(
-        '^\s*@(%s)\s*' % '|'.join(mentioned_as), re.I)
-    return initial_mention_re.sub(u"", sms_body)
-
 
 
 def post_dict(post, **extra):

@@ -18,7 +18,9 @@
       <label for="sms-target" class="type">Send text messages to</label>
       <div class="multiselect-dropdown">
         <select id="sms-target" class="value" name="sms-target" multiple="multiple">
-          {% block sms-target-options %}{% endblock %}
+          {% for elder in sms_elders %}
+            <option value="{{ elder.id }}" selected>{{ elder }}</option>
+          {% endfor %}
         </select>
       </div class="multiselect-dropdown">
     </div>

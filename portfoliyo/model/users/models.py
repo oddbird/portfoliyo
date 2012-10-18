@@ -68,7 +68,14 @@ class Profile(models.Model):
 
 
     def __unicode__(self):
-        return self.name or self.phone or self.user.email or u'<unknown>'
+        return (
+            self.name or
+            getattr(self, 'role_in_context', None) or
+            self.role or
+            self.phone or
+            self.user.email or
+            u'<unknown>'
+            )
 
 
     def save(self, *a, **kw):
@@ -227,7 +234,7 @@ class Group(GroupBase, models.Model):
         """Return queryset of all relationships for students in group."""
         return Relationship.objects.filter(
             kind=Relationship.KIND.elder,
-            to_profile__in=self.students.all(),
+            to_profile__in=self.students.filter(deleted=False),
             ).select_related('from_profile')
 
 
@@ -257,9 +264,9 @@ class AllStudentsGroup(GroupBase):
     @property
     def students(self):
         """Return queryset of all students in group."""
+        # No deleted=False because we want to mimic group.students.all()
         return Profile.objects.filter(
             relationships_to__from_profile=self.owner,
-            deleted=False,
             ).distinct()
 
 
@@ -378,6 +385,69 @@ class Relationship(models.Model):
     @property
     def student(self):
         return self.to_profile
+
+
+
+def contextualized_elders(queryset):
+    """
+    Given QS of elders/relationships, return contextualized elder queryset.
+
+    A contextualized elder has an added ``role_in_context`` attribute, which is
+    the relationship description if in context of a relationship, or simply the
+    elder's profile role otherwise.
+
+    """
+    if queryset.model is Relationship:
+        return EldersForRelationships(queryset)
+    elif queryset.model is Profile:
+        return EldersInContext(queryset)
+    else:
+        raise ValueError(
+            "Only Profile or Relationship querysets can be contextualized.")
+
+
+class QuerySetWrapper(object):
+    """Simple QuerySet wrapper that can pass-through filter/exclude."""
+    def __init__(self, queryset):
+        self.queryset = queryset
+
+
+    def filter(self, *args, **kwargs):
+        return self._filter_or_exclude(False, *args, **kwargs)
+
+
+    def exclude(self, *args, **kwargs):
+        return self._filter_or_exclude(True, *args, **kwargs)
+
+
+    def _filter_or_exclude(self, negate, *args, **kwargs):
+        return self.__class__(
+            self.queryset._filter_or_exclude(negate, *args, **kwargs))
+
+
+
+
+class EldersInContext(QuerySetWrapper):
+    """Elders queryset that tacks on ``role_in_context`` attr when iterated."""
+    def __iter__(self):
+        for elder in self.queryset:
+            elder.role_in_context = elder.role
+            yield elder
+
+
+
+class EldersForRelationships(QuerySetWrapper):
+    """Relationship queryset wrapper; emulates QS of contextualized elders."""
+    def __iter__(self):
+        for rel in self.queryset.select_related('from_profile'):
+            rel.elder.role_in_context = rel.description_or_role
+            yield rel.elder
+
+
+    def _filter_or_exclude(self, negate, *args, **kwargs):
+        kwargs = {'from_profile__%s' % k: v for k, v in kwargs.items()}
+        return super(EldersForRelationships, self)._filter_or_exclude(
+            negate, *args, **kwargs)
 
 
 

@@ -108,7 +108,7 @@ class TestPostCreate(object):
         assert post.html_text == 'Foo<br>'
         assert post.from_sms == False
         assert post.to_sms == False
-        assert post.meta == {'highlights': []}
+        assert post.meta == {'sms': []}
 
 
     def test_creates_post_from_sms(self):
@@ -183,7 +183,7 @@ class TestPostCreate(object):
         """Triggers a pusher event if get_pusher doesn't return None."""
         rel = factories.RelationshipFactory.create()
 
-        models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
+        models.Post.create(rel.elder, rel.student, 'Foo\n', sequence_id='33')
 
         channel = mock_get_pusher.return_value['student_%s' % rel.student.id]
         args = channel.trigger.call_args[0]
@@ -220,8 +220,8 @@ class TestPostCreate(object):
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_notifies_highlighted_mobile_users(self, mock_send_sms):
-        """Sends text to highlighted active mobile users."""
+    def test_notifies_selected_mobile_users(self, mock_send_sms):
+        """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
             from_profile__phone=None,
@@ -230,25 +230,26 @@ class TestPostCreate(object):
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
+            from_profile__name="Jim Smith",
             description="Father",
             )
 
-        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "Hey @father --John Doe")
+            "+13216540987", "Hey dad --John Doe")
         assert post.to_sms == True
-        assert post.meta['highlights'] == [
+        assert post.meta['sms'] == [
             {
                 'id': rel2.elder.id,
-                'mentioned_as': ['father'],
-                'role': 'Father',
-                'name': '',
+                'role': "Father",
+                'name': "Jim Smith",
                 'phone': "+13216540987",
-                'email': None,
-                'is_active': True,
-                'declined': False,
-                'sms_sent': True,
                 }
             ]
 
@@ -259,18 +260,22 @@ class TestPostCreate(object):
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None,
             )
-        factories.RelationshipFactory.create(
+        rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=False,
-            description="Father",
             )
 
-        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
 
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False
-        assert post.meta['highlights'][0]['sms_sent'] == False
+        assert post.meta['sms'] == []
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -278,58 +283,27 @@ class TestPostCreate(object):
         """Sends text only to users with phone numbers."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None)
-        factories.RelationshipFactory.create(
-            to_profile=rel1.to_profile,
-            from_profile__phone=None,
-            from_profile__user__is_active=True,
-            description="Father",
-            )
-
-        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
-
-        assert mock_send_sms.call_count == 0
-        assert post.to_sms == False
-        assert post.meta['highlights'][0]['sms_sent'] == False
-
-
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_elides_initial_mention(self, mock_send_sms):
-        """Initial mention of user elided in text notification to that user."""
-        rel1 = factories.RelationshipFactory.create(
-            from_profile__name="John Doe",
-            from_profile__phone=None,
-            )
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__phone="+13216540987",
+            from_profile__phone=None,
             from_profile__user__is_active=True,
-            description="Father",
             )
 
         post = models.Post.create(
-            rel1.elder, rel1.student, '@father are you there?')
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
 
-        mock_send_sms.assert_called_with(
-            "+13216540987", "are you there? --John Doe")
-        assert post.to_sms == True
-        assert post.meta['highlights'] == [
-            {
-                'id': rel2.elder.id,
-                'mentioned_as': ['father'],
-                'role': 'Father',
-                'name': '',
-                'phone': "+13216540987",
-                'email': None,
-                'is_active': True,
-                'declined': False,
-                'sms_sent': True,
-                }
-            ]
+        assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
+        assert post.meta['sms'] == []
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_can_create_autoreply_post(self, mock_send_sms):
-        """Auto-reply prepends phone mention, sends no text to that phone."""
+        """Auto-reply sends no notification to that phone."""
         rel = factories.RelationshipFactory.create(
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
@@ -337,13 +311,17 @@ class TestPostCreate(object):
             )
 
         post = models.Post.create(
-            None, rel.student, 'Thank you!', in_reply_to="+13216540987")
+            None,
+            rel.student,
+            'Thank you!',
+            in_reply_to="+13216540987",
+            sms_profile_ids=[rel.elder.id],
+            )
 
         assert mock_send_sms.call_count == 0
-        assert post.original_text == "@+13216540987 Thank you!"
+        assert post.original_text == "Thank you!"
         # With in_reply_to we assume that an SMS was sent by the caller
-        assert post.meta['highlights'][0]['id'] == rel.elder.id
-        assert post.meta['highlights'][0]['sms_sent'] == True
+        assert post.meta['sms'][0]['id'] == rel.elder.id
         assert post.to_sms == True
 
 
@@ -380,7 +358,7 @@ class TestBulkPost(object):
             }
         mock_get_pusher.return_value = pusher
 
-        models.BulkPost.create(rel.elder, None, 'Foo\n', '33')
+        models.BulkPost.create(rel.elder, None, 'Foo\n', sequence_id='33')
 
         student_args = student_channel.trigger.call_args[0]
         student_post_data = student_args[1]['posts'][0]
@@ -417,8 +395,8 @@ class TestBulkPost(object):
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_notifies_highlighted_mobile_users(self, mock_send_sms):
-        """Sends text to highlighted active mobile users."""
+    def test_notifies_selected_mobile_users(self, mock_send_sms):
+        """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
             from_profile__phone=None,
@@ -427,27 +405,24 @@ class TestBulkPost(object):
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
-            description="Father",
+            from_profile__role="Father",
+            from_profile__name="Jim Smith",
             )
         group = factories.GroupFactory.create()
         group.students.add(rel1.student)
 
-        post = models.BulkPost.create(rel1.elder, group, 'Hey @father')
+        post = models.BulkPost.create(
+            rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "Hey @father --John Doe")
+            "+13216540987", "Hey dad --John Doe")
         assert post.to_sms == True
-        assert post.meta['highlights'] == [
+        assert post.meta['sms'] == [
             {
                 'id': rel2.elder.id,
-                'mentioned_as': ['father'],
+                'name': 'Jim Smith',
                 'role': 'Father',
-                'name': '',
                 'phone': "+13216540987",
-                'email': None,
-                'is_active': True,
-                'declined': False,
-                'sms_sent': True,
                 }
             ]
 
@@ -667,18 +642,3 @@ def test_post_char_limit(mock_notification_suffix):
     rel = mock.Mock()
 
     assert models.post_char_limit(rel) == 150
-
-
-def test_strip_initial_mention_case():
-    """strip_initial_mention is case-insensitive."""
-    assert models.strip_initial_mention('@Father foo', ['father']) == 'foo'
-
-
-def test_strip_initial_mention_only_initial():
-    """strip_initial_mention only strips initial mentions."""
-    assert models.strip_initial_mention('hi @dad', ['dad']) == 'hi @dad'
-
-
-def test_strip_initial_mention_only_given():
-    """strip_initial_mention only strips given names."""
-    assert models.strip_initial_mention('@dad hey', ['mom']) == '@dad hey'

@@ -38,7 +38,7 @@ urlpatterns = patterns(
     url(r'^$', views.dashboard, name='dashboard'),
     url(r'^add/$', views.add_student, name='add_student'),
     url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
-    url(r'^all/$', views.all_students, name='all_students'),
+    url(r'^all/$', views.group, name='all_students'),
     url(r'^all/_posts/$', views.json_posts, name='json_posts'),
     url(r'^elder/(?P<elder_id>\d+)/$', views.edit_elder, name='edit_elder'),
     url(r'^group/add/$', views.add_group, name='add_group'),
