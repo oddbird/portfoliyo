@@ -205,6 +205,7 @@ class BulkPost(BasePost):
                 author_sequence_id=sequence_id,
                 mark_read_url=reverse(
                     'mark_post_read', kwargs={'post_id': sub.id}),
+                unread=True,
                 )
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
@@ -275,7 +276,7 @@ class Post(BasePost):
             author_sequence_id=sequence_id,
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
-
+            unread=True,
             )
 
         return post
