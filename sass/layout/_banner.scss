@@ -74,16 +74,12 @@ $banner-leading : 1 + $banner-rhythm*2;
   .settingslink { @extend %ellipsis; }
   .helplink {
     @extend %icon-help;
-    @include sassy-button-structure($font-size: $banner-size, $padding: $banner-leading);
-    @include sassy-button-gradient(matte, $orange);
+    @extend %button;
+    @include button-color($orange);
+    @include small-button;
     @include leader($banner-rhythm/2, $banner-size);
     float: right;
-    line-height: 1em;
     margin-left: 1em;
-    padding-left: rhythm(.5,$banner-size);
-    padding-right: rhythm(.5,$banner-size);
-    text-align: left;
-    #{$link} { color: $base3; }
   }
   [href*="edit"] { @extend %icon-settings; }
   [href*="password"] { @extend %icon-key; }

@@ -108,8 +108,8 @@ $postaction-size: $smallpx;
     display: inline-block;
     margin: 0;
     .action-post {
-      @include sassy-button-structure($font-size: $postaction-size, $padding: 0);
-      padding: rhythm(.125, $postaction-size) rhythm(1, $postaction-size);
+      @extend %button;
+      @include small-button($addnote-fontsize);
       text-transform: uppercase;
     }
   }

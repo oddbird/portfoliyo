@@ -62,12 +62,43 @@ $input-rhythm: .25;
   outline: 0;
 }
 
-%button {
-  margin: 0;
-  background-color: $green;
-  text-align: center;
-  @include sassy-button;
+@mixin button-color($color: $green) {
+  $light  : adjust-color($color, $lightness: 5%);
+  $dark   : adjust-color($color, $lightness: -15%);
+  @include background(linear-gradient(top, rgba($light,.25), rgba($color,0), rgba($dark,.25)));
+  background-color: $color;
+  border-color: mix($color,$back);
+  &:hover, &:focus { background-color: $light; }
+  &:active { background-color: $color; }
 }
+
+@mixin small-button($fontsize: false) {
+  $size: $smallpx;
+  @if $fontsize {
+    @include adjust-font-size-to($fontsize);
+    $size: $fontsize;
+  }
+  @include h-borders(1px,.125);
+}
+
+@mixin button($color: $green) {
+  @include border-radius(.25em);
+  @include rhythm-borders(1px,.25);
+  @include button-color($green);
+  @include box-shadow(rgba(white,.5) 0 1px 1px inset);
+  @include text-shadow(rgba($back,.5) 0 -1px 0);
+  display: inline-block;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: $base3;
+  text-align: center;
+  text-transform: capitalize;
+  #{$link}, #{$focus} { color: $base3; }
+  &:active { @include box-shadow(rgba($back,.5) 0 0 .25em inset); }
+}
+
+%button { @include button; }
 
 @mixin reset-button {
   @include reset-box-model;

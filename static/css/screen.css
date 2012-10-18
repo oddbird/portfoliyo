@@ -477,7 +477,7 @@ optgroup {
   border-style: solid;
   border-width: 0.07143em;
   padding: 0.33929em;
-  background: url('../images/rgbapng/ffffff40.png?1347747790');
+  background: url('../images/rgbapng/ffffff40.png?1350500762');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -486,63 +486,48 @@ optgroup {
   outline: 0;
 }
 
-.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .main-login .form-actions button, .village-landing .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .village-landing .formfield .action-betasignup {
-  margin: 0;
+.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .main-login .form-actions button, .village-landing .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .meta .helplink, .village-landing .formfield .action-betasignup, .post-add-form .form-actions .action-post {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -ms-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  border-style: solid;
+  border-width: 0.05556em;
+  padding: 0.26389em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -ms-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background-color: #859900;
-  text-align: center;
-  font-size: 18px;
-  padding: 0.31944em 1.27778em;
+  border-color: #466721;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
   display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1.27778em;
-  -webkit-border-radius: 0.125em;
-  -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
-  border-radius: 0.125em;
-  background-color: #859900;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #859900), color-stop(100%, #596600));
-  background: -webkit-linear-gradient(#859900, #596600);
-  background: -moz-linear-gradient(#859900, #596600);
-  background: -o-linear-gradient(#859900, #596600);
-  background: -ms-linear-gradient(#859900, #596600);
-  background: linear-gradient(#859900, #596600);
-  -webkit-box-shadow: #c8e600 0 1px 0 inset;
-  -moz-box-shadow: #c8e600 0 1px 0 inset;
-  box-shadow: #c8e600 0 1px 0 inset;
-  border: 1px solid #424d00;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
   color: #fdf6e3;
-  text-shadow: #121400 0 -1px 0;
+  text-align: center;
+  text-transform: capitalize;
 }
-.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
-  text-decoration: none;
+.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus {
+  background-color: #9bb300;
 }
-.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
-  background-color: #424d00;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
-  background: -webkit-linear-gradient(#6f8000, #424d00);
-  background: -moz-linear-gradient(#6f8000, #424d00);
-  background: -o-linear-gradient(#6f8000, #424d00);
-  background: -ms-linear-gradient(#6f8000, #424d00);
-  background: linear-gradient(#6f8000, #424d00);
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+  background-color: #859900;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .village-landing .formfield .action-betasignup:active {
-  -webkit-box-shadow: #353d00 0 1px 2px inset;
-  -moz-box-shadow: #353d00 0 1px 2px inset;
-  box-shadow: #353d00 0 1px 2px inset;
+.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .no-students form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .main-login .form-actions button:link, .village-landing .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .add-student .form-actions button:link, .village-edit-form .form-actions button:link, .dashboard .form-actions button:link, .pjax-error .form-actions button:link, .elder-add-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .meta .helplink:link, .village-landing .formfield .action-betasignup:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .no-students form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .main-login .form-actions button:visited, .village-landing .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .add-student .form-actions button:visited, .village-edit-form .form-actions button:visited, .dashboard .form-actions button:visited, .pjax-error .form-actions button:visited, .elder-add-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .meta .helplink:visited, .village-landing .formfield .action-betasignup:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+  color: #fdf6e3;
 }
-.disabled.linkaction, .login form .form-actions button.disabled, .register form .form-actions button.disabled, .edit-profile form .form-actions button.disabled, .reset-password form .form-actions button.disabled, .change-password form .form-actions button.disabled, .set-password form .form-actions button.disabled, .activationfailed form .form-actions button.disabled, .awaiting-activation form .form-actions button.disabled, .no-students form .form-actions button.disabled, [class^="errorpage-"] form .form-actions button.disabled, .main-login .form-actions button.disabled, .village-landing .form-actions button.disabled, .group-add-form .form-actions button.disabled, .group-edit-form .form-actions button.disabled, .add-student .form-actions button.disabled, .village-edit-form .form-actions button.disabled, .dashboard .form-actions button.disabled, .pjax-error .form-actions button.disabled, .elder-add-form .form-actions button.disabled, .elder-edit-form .form-actions button.disabled, .post-add-form .form-actions button.disabled, .village-landing .formfield .disabled.action-betasignup, [disabled].linkaction, .login form .form-actions button[disabled], .register form .form-actions button[disabled], .edit-profile form .form-actions button[disabled], .reset-password form .form-actions button[disabled], .change-password form .form-actions button[disabled], .set-password form .form-actions button[disabled], .activationfailed form .form-actions button[disabled], .awaiting-activation form .form-actions button[disabled], .no-students form .form-actions button[disabled], [class^="errorpage-"] form .form-actions button[disabled], .main-login .form-actions button[disabled], .village-landing .form-actions button[disabled], .group-add-form .form-actions button[disabled], .group-edit-form .form-actions button[disabled], .add-student .form-actions button[disabled], .village-edit-form .form-actions button[disabled], .dashboard .form-actions button[disabled], .pjax-error .form-actions button[disabled], .elder-add-form .form-actions button[disabled], .elder-edit-form .form-actions button[disabled], .post-add-form .form-actions button[disabled], .village-landing .formfield [disabled].action-betasignup {
-  opacity: 0.6;
-  background: #596600;
-  cursor: default;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-.linkaction::-moz-focus-inner, .login form .form-actions button::-moz-focus-inner, .register form .form-actions button::-moz-focus-inner, .edit-profile form .form-actions button::-moz-focus-inner, .reset-password form .form-actions button::-moz-focus-inner, .change-password form .form-actions button::-moz-focus-inner, .set-password form .form-actions button::-moz-focus-inner, .activationfailed form .form-actions button::-moz-focus-inner, .awaiting-activation form .form-actions button::-moz-focus-inner, .no-students form .form-actions button::-moz-focus-inner, [class^="errorpage-"] form .form-actions button::-moz-focus-inner, .main-login .form-actions button::-moz-focus-inner, .village-landing .form-actions button::-moz-focus-inner, .group-add-form .form-actions button::-moz-focus-inner, .group-edit-form .form-actions button::-moz-focus-inner, .add-student .form-actions button::-moz-focus-inner, .village-edit-form .form-actions button::-moz-focus-inner, .dashboard .form-actions button::-moz-focus-inner, .pjax-error .form-actions button::-moz-focus-inner, .elder-add-form .form-actions button::-moz-focus-inner, .elder-edit-form .form-actions button::-moz-focus-inner, .post-add-form .form-actions button::-moz-focus-inner, .village-landing .formfield .action-betasignup::-moz-focus-inner {
-  padding: 0 !important;
-  margin: -1px !important;
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
 }
 
 .meta button {
@@ -744,7 +729,7 @@ button {
 .school-field .radio-options, .students-field .check-options, .elders-field .check-options, .groups-field .check-options {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  background: url('../images/rgbapng/ffffff40.png?1347747790');
+  background: url('../images/rgbapng/ffffff40.png?1350500762');
   background: rgba(255, 255, 255, 0.25);
   max-height: 13.14286em;
   border: 1px solid;
@@ -765,7 +750,7 @@ button {
 }
 
 .school-field .radio-options [aria-selected="true"].value + .type, .students-field .check-options [aria-selected="true"].value + .type, .elders-field .check-options [aria-selected="true"].value + .type, .groups-field .check-options [aria-selected="true"].value + .type, .ui-multiselect-checkboxes input[aria-selected="true"] + .type, .select-students .value[disabled] + .type, .select-elders .value[disabled] + .type {
-  background: url('../images/rgbapng/268bd220.png?1350069573');
+  background: url('../images/rgbapng/268bd220.png?1350500762');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -781,7 +766,7 @@ button {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1350586648');
+  background: url('../images/rgbapng/ffffff7f.png?1350510208');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -795,7 +780,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1350586648');
+  background: url('../images/rgbapng/ffffffbf.png?1350510610');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -1119,65 +1104,29 @@ button {
   display: block;
 }
 .meta .helplink {
-  font-size: 14px;
-  padding: 1.5;
-  display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1.27778em;
-  -webkit-border-radius: 0.125em;
-  -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
-  border-radius: 0.125em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(226, 84, 24, 0.25)), color-stop(50%, rgba(203, 75, 22, 0)), color-stop(100%, rgba(134, 50, 15, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: -moz-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: -o-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: -ms-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background-color: #cb4b16;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eb7443), color-stop(70%, #cb4b16));
-  background: -webkit-linear-gradient(#eb7443, #cb4b16 70%);
-  background: -moz-linear-gradient(#eb7443, #cb4b16 70%);
-  background: -o-linear-gradient(#eb7443, #cb4b16 70%);
-  background: -ms-linear-gradient(#eb7443, #cb4b16 70%);
-  background: linear-gradient(#eb7443, #cb4b16 70%);
-  -webkit-box-shadow: #f2a788 0 1px 0 inset;
-  -moz-box-shadow: #f2a788 0 1px 0 inset;
-  box-shadow: #f2a788 0 1px 0 inset;
-  border: 1px solid #b44214;
-  color: #fdf6e3;
-  text-shadow: #963710 0 -1px 0;
+  border-color: #69402c;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.10417em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.10417em;
   margin-top: 0.20536em;
   float: right;
-  line-height: 1em;
   margin-left: 1em;
-  padding-left: 0.82143em;
-  padding-right: 0.82143em;
-  text-align: left;
 }
-.meta .helplink:hover {
-  text-decoration: none;
-}
-.meta .helplink:hover {
-  background-color: #b44214;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(3%, #e8632c), color-stop(75%, #b44214));
-  background: -webkit-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: -moz-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: -o-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: -ms-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: linear-gradient(#e8632c 3%, #b44214 75%);
+.meta .helplink:hover, .meta .helplink:focus {
+  background-color: #e25418;
 }
 .meta .helplink:active {
-  -webkit-box-shadow: #a63d12 0 1px 2px inset;
-  -moz-box-shadow: #a63d12 0 1px 2px inset;
-  box-shadow: #a63d12 0 1px 2px inset;
-}
-.meta .helplink.disabled, .meta .helplink[disabled] {
-  opacity: 0.6;
-  background: #cb4b16;
-  cursor: default;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-.meta .helplink:link, .meta .helplink:visited {
-  color: #fdf6e3;
+  background-color: #cb4b16;
 }
 .meta button {
   width: 100%;
@@ -1322,60 +1271,74 @@ button {
 }
 .main-login .login-link {
   margin-top: 0.20536em;
-  font-size: 14px;
-  padding: 0.41071em;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -ms-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  border-style: solid;
+  border-width: 0.05556em;
+  padding: 0.26389em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -ms-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background-color: #859900;
+  border-color: #466721;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
   display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1.27778em;
-  -webkit-border-radius: 0.125em;
-  -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
-  border-radius: 0.125em;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: #fdf6e3;
+  text-align: center;
+  text-transform: capitalize;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(112, 136, 145, 0.25)), color-stop(50%, rgba(101, 123, 131, 0)), color-stop(100%, rgba(68, 82, 88, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: -moz-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: -o-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: -ms-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
   background-color: #657b83;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #657b83), color-stop(100%, #4f6066));
-  background: -webkit-linear-gradient(#657b83, #4f6066);
-  background: -moz-linear-gradient(#657b83, #4f6066);
-  background: -o-linear-gradient(#657b83, #4f6066);
-  background: -ms-linear-gradient(#657b83, #4f6066);
-  background: linear-gradient(#657b83, #4f6066);
-  -webkit-box-shadow: #8da0a7 0 1px 0 inset;
-  -moz-box-shadow: #8da0a7 0 1px 0 inset;
-  box-shadow: #8da0a7 0 1px 0 inset;
-  border: 1px solid #445258;
+  border-color: #365862;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.10417em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.10417em;
   color: #eee8d5;
-  text-shadow: #2b3538 0 -1px 0;
-  line-height: 1em;
   float: right;
   max-width: 35.48387%;
   padding-left: 1em;
   padding-right: 1em;
 }
-.main-login .login-link:hover {
-  text-decoration: none;
-}
-.main-login .login-link:hover {
-  background-color: #445258;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a6d75), color-stop(100%, #445258));
-  background: -webkit-linear-gradient(#5a6d75, #445258);
-  background: -moz-linear-gradient(#5a6d75, #445258);
-  background: -o-linear-gradient(#5a6d75, #445258);
-  background: -ms-linear-gradient(#5a6d75, #445258);
-  background: linear-gradient(#5a6d75, #445258);
+.main-login .login-link:hover, .main-login .login-link:focus {
+  background-color: #9bb300;
 }
 .main-login .login-link:active {
-  -webkit-box-shadow: #3d4a4f 0 1px 2px inset;
-  -moz-box-shadow: #3d4a4f 0 1px 2px inset;
-  box-shadow: #3d4a4f 0 1px 2px inset;
+  background-color: #859900;
 }
-.main-login .login-link.disabled, .main-login .login-link[disabled] {
-  opacity: 0.6;
-  background: #4f6066;
-  cursor: default;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+.main-login .login-link:link, .main-login .login-link:visited, .main-login .login-link:focus, .main-login .login-link:hover, .main-login .login-link:active {
+  color: #fdf6e3;
+}
+.main-login .login-link:active {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+}
+.main-login .login-link:hover, .main-login .login-link:focus {
+  background-color: #708891;
+}
+.main-login .login-link:active {
+  background-color: #657b83;
 }
 .main-login .reset-link {
   width: 1em;
@@ -1418,58 +1381,85 @@ button {
     line-height: 1em;
   }
   .main-login .login-form button {
-    font-size: 14px;
-    padding: 0.41071em;
+    -webkit-border-radius: 0.25em;
+    -moz-border-radius: 0.25em;
+    -ms-border-radius: 0.25em;
+    -o-border-radius: 0.25em;
+    border-radius: 0.25em;
+    border-style: solid;
+    border-width: 0.05556em;
+    padding: 0.26389em;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
+    background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: -ms-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background-color: #859900;
+    border-color: #466721;
+    -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+    -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+    box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+    text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
     display: inline-block;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: 1.27778em;
-    -webkit-border-radius: 0.125em;
-    -moz-border-radius: 0.125em;
-    -ms-border-radius: 0.125em;
-    -o-border-radius: 0.125em;
-    border-radius: 0.125em;
+    margin: 0;
+    padding-left: 1em;
+    padding-right: 1em;
+    color: #fdf6e3;
+    text-align: center;
+    text-transform: capitalize;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(112, 136, 145, 0.25)), color-stop(50%, rgba(101, 123, 131, 0)), color-stop(100%, rgba(68, 82, 88, 0.25)));
+    background: -webkit-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: -moz-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: -o-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: -ms-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
     background-color: #657b83;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #657b83), color-stop(100%, #4f6066));
-    background: -webkit-linear-gradient(#657b83, #4f6066);
-    background: -moz-linear-gradient(#657b83, #4f6066);
-    background: -o-linear-gradient(#657b83, #4f6066);
-    background: -ms-linear-gradient(#657b83, #4f6066);
-    background: linear-gradient(#657b83, #4f6066);
-    -webkit-box-shadow: #8da0a7 0 1px 0 inset;
-    -moz-box-shadow: #8da0a7 0 1px 0 inset;
-    box-shadow: #8da0a7 0 1px 0 inset;
-    border: 1px solid #445258;
+    border-color: #365862;
+    font-size: 0.77778em;
+    line-height: 1.64286em;
+    border-top-style: solid;
+    border-top-width: 0.05556em;
+    padding-top: 0.10417em;
+    border-bottom-style: solid;
+    border-bottom-width: 0.05556em;
+    padding-bottom: 0.10417em;
     color: #eee8d5;
-    text-shadow: #2b3538 0 -1px 0;
-    line-height: 1em;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
+    background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
     background-color: #268bd2;
+    border-color: #16608a;
     width: 100%;
   }
-  .main-login .login-form button:hover {
-    text-decoration: none;
-  }
-  .main-login .login-form button:hover {
-    background-color: #445258;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a6d75), color-stop(100%, #445258));
-    background: -webkit-linear-gradient(#5a6d75, #445258);
-    background: -moz-linear-gradient(#5a6d75, #445258);
-    background: -o-linear-gradient(#5a6d75, #445258);
-    background: -ms-linear-gradient(#5a6d75, #445258);
-    background: linear-gradient(#5a6d75, #445258);
+  .main-login .login-form button:hover, .main-login .login-form button:focus {
+    background-color: #9bb300;
   }
   .main-login .login-form button:active {
-    -webkit-box-shadow: #3d4a4f 0 1px 2px inset;
-    -moz-box-shadow: #3d4a4f 0 1px 2px inset;
-    box-shadow: #3d4a4f 0 1px 2px inset;
+    background-color: #859900;
   }
-  .main-login .login-form button.disabled, .main-login .login-form button[disabled] {
-    opacity: 0.6;
-    background: #4f6066;
-    cursor: default;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+  .main-login .login-form button:link, .main-login .login-form button:visited, .main-login .login-form button:focus, .main-login .login-form button:hover, .main-login .login-form button:active {
+    color: #fdf6e3;
+  }
+  .main-login .login-form button:active {
+    -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+    -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+    box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  }
+  .main-login .login-form button:hover, .main-login .login-form button:focus {
+    background-color: #708891;
+  }
+  .main-login .login-form button:active {
+    background-color: #657b83;
+  }
+  .main-login .login-form button:hover, .main-login .login-form button:focus {
+    background-color: #3797db;
+  }
+  .main-login .login-form button:active {
+    background-color: #268bd2;
   }
 }
 
@@ -1620,13 +1610,13 @@ button {
 
 .team {
   padding-top: 2.55556em;
-  background: #002b36 url('../images/landing/space.png?1345825226');
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1345825226');
-  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1345825226');
-  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1345825226');
-  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1345825226');
-  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1345825226');
-  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1345825226');
+  background: #002b36 url('../images/landing/space.png?1342738619');
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1342738619');
+  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
+  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1342738619');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1672,7 +1662,7 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1347747790');
+  background: url('../images/rgbapng/586e7540.png?1350500763');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1875,7 +1865,7 @@ button {
 }
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/85990060.png?1347824537');
+  background: url('../images/rgbapng/85990060.png?1350500763');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -2123,7 +2113,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('../images/start-arrow.png?1347747790') no-repeat left bottom;
+  background: url('../images/start-arrow.png?1347746559') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -2167,7 +2157,7 @@ button {
 }
 
 .listitem-select:link, .listitem-select:visited {
-  background: url('../images/rgbapng/eee8d540.png?1347824537');
+  background: url('../images/rgbapng/eee8d540.png?1350500763');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -2177,7 +2167,7 @@ button {
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
 }
 .title .listitem-select:link, .title .listitem-select:visited {
-  background: url('../images/rgbapng/268bd240.png?1348257701');
+  background: url('../images/rgbapng/268bd240.png?1350500763');
   background: rgba(38, 139, 210, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(38, 139, 210, 0.5)), color-stop(100%, rgba(38, 139, 210, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
@@ -2193,7 +2183,7 @@ button {
   color: #fdf6e3;
 }
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
-  background: url('../images/rgbapng/eee8d57f.png?1347824537');
+  background: url('../images/rgbapng/eee8d57f.png?1350500763');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -2203,7 +2193,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1350069573');
+  background: url('../images/rgbapng/268bd27f.png?1350500763');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
@@ -2329,7 +2319,7 @@ button {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/rgbapng/0736427f.png?1350069573');
+  background: url('../images/rgbapng/0736427f.png?1350500763');
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
@@ -2459,7 +2449,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('../images/rgbapng/93a1a140.png?1348287305');
+  background: url('../images/rgbapng/93a1a140.png?1350500763');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2489,18 +2479,14 @@ button {
   margin: 0;
 }
 .post-add-form .form-actions .action-post {
-  font-size: 14px;
-  padding: 0;
-  display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1.27778em;
-  -webkit-border-radius: 0.125em;
-  -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
-  border-radius: 0.125em;
-  padding: 0.20536em 1.64286em;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.10417em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.10417em;
   text-transform: uppercase;
 }
 
@@ -2626,7 +2612,7 @@ button {
   color: #657b83;
 }
 .elder .vcard.declined {
-  background: url('../images/rgbapng/dc322f20.png?1348340674');
+  background: url('../images/rgbapng/dc322f20.png?1350500763');
   background: rgba(220, 50, 47, 0.125);
 }
 .elder .vcard.declined:before {
@@ -2724,7 +2710,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1347747790');
+  background: url('../images/rgbapng/002b3640.png?1350500763');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
