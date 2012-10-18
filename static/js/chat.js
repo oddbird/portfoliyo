@@ -37,31 +37,19 @@ var PYO = (function (PYO, $) {
         var posts;
         if (data && data.posts && data.posts.length) {
             $.each(data.posts, function (i, val) {
-                if (this.meta && this.meta.highlights) {
-                    if (this.meta.highlights.length) {
-                        var notified = [];
-                        var inactive = [];
+                this.plural_sms = '';
+                this.sms_recipients = false;
+                if (this.meta && this.meta.sms.length) {
+                    var recipients = [];
 
-                        $.each(this.meta.highlights, function (i, val) {
-                            if (this.sms_sent) {
-                                if ($.inArray(this.role, notified) === -1) {
-                                    notified.push(this.role);
-                                }
-                            } else {
-                                if ($.inArray(this.role, inactive) === -1) {
-                                    inactive.push(this.role);
-                                }
-                            }
-                        });
+                    $.each(this.meta.sms, function (i, val) {
+                        if ($.inArray(this.role, recipients) === -1) {
+                            recipients.push(this.role);
+                        }
+                    });
 
-                        if (notified.length) { this.sms_notified = notified.join(', '); }
-                        if (inactive.length) { this.sms_inactive = inactive.join(', '); }
-                        this.highlighted = true;
-                    } else {
-                        this.highlighted = false;
-                    }
-                } else {
-                    this.no_highlights = true;
+                    this.sms_recipients = recipients.join(', ');
+                    if (recipients.length > 1) { this.plural_sms = 's'; }
                 }
             });
             posts = ich.post(data);
