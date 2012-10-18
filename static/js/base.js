@@ -29,9 +29,9 @@ var PYO = (function (PYO, $) {
             var el = $(this);
             var updateAttr = function (input) {
                 if (input.is(':checked')) {
-                    input.attr('checked', 'checked');
+                    input.attr('aria-selected', true);
                 } else {
-                    input.removeAttr('checked');
+                    input.removeAttr('aria-selected');
                 }
             };
 
