@@ -108,7 +108,31 @@ class TestPostCreate(object):
         assert post.html_text == 'Foo<br>'
         assert post.from_sms == False
         assert post.to_sms == False
-        assert post.meta == {'sms': []}
+        assert post.meta == {'sms': [], 'highlights': []}
+
+
+    def test_highlights(self):
+        """Highlight info is stored in meta['highlights']."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(
+            description="Father",
+            from_profile__name="John Doe",
+            from_profile__user__email="john@example.com",
+            to_profile=rel.student,
+            )
+
+        post = models.Post.create(rel.elder, rel.student, 'Hello @father')
+
+        assert post.meta['highlights'] == [
+            {
+                'id': rel2.elder.id,
+                'mentioned_as': ['father'],
+                'role': "Father",
+                'name': "John Doe",
+                'email': "john@example.com",
+                'phone': None,
+                },
+            ]
 
 
     def test_creates_post_from_sms(self):

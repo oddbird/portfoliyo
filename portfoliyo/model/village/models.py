@@ -119,6 +119,30 @@ class BasePost(models.Model):
         self.meta['sms'] = meta_sms
 
 
+    def store_highlights(self, highlights):
+        """
+        Store info from given highlights dict to self.meta['highlights'].
+
+        ``highlights`` should be dictionary mapping highlighted relationships
+        to list of names highlighted as (i.e. as returned by ``process_text``).
+
+        """
+        meta_highlights = []
+        for rel, mentioned_as in highlights.items():
+            meta_highlights.append(
+                {
+                    'id': rel.elder.id,
+                    'mentioned_as': mentioned_as,
+                    'role': rel.description_or_role,
+                    'name': rel.elder.name,
+                    'email': rel.elder.user.email,
+                    'phone': rel.elder.phone,
+                    }
+                )
+
+        self.meta['highlights'] = meta_highlights
+
+
     def get_relationship(self):
         return None
 
@@ -191,7 +215,7 @@ class BulkPost(BasePost):
         if group is None:
             group = user_models.AllStudentsGroup(author)
 
-        html_text, _ = process_text(text, group)
+        html_text, highlights = process_text(text, group)
 
         post = cls(
             author=author,
@@ -202,6 +226,8 @@ class BulkPost(BasePost):
             )
 
         post.notify_sms(sms_profile_ids or [])
+
+        post.store_highlights(highlights)
 
         post.save()
 
@@ -265,7 +291,7 @@ class Post(BasePost):
         assumed that an SMS was already sent to that number.
 
         """
-        html_text, _ = process_text(text, student)
+        html_text, highlights = process_text(text, student)
 
         post = cls(
             author=author,
@@ -276,7 +302,7 @@ class Post(BasePost):
             )
 
         post.notify_sms(sms_profile_ids or [], in_reply_to)
-
+        post.store_highlights(highlights)
         post.save()
 
         post.notify_email()
