@@ -143,7 +143,7 @@ $input-rhythm: .25;
         color: $base01;
       }
     }
-    &[checked] + .type {
+    &[aria-selected="true"] + .type {
       &:before { color: $blue; }
     }
     &:focus + .type { color: $base03; }
@@ -151,12 +151,12 @@ $input-rhythm: .25;
 
   [type="checkbox"] {
     + .type { @extend %icon-unchecked; }
-    &[checked] + .type { @extend %icon-checked; }
+    &[aria-selected="true"] + .type { @extend %icon-checked; }
   }
 
   [type="radio"] {
     + .type { @extend %icon-radio-unchecked; }
-    &[checked] + .type { @extend %icon-radio-checked; }
+    &[aria-selected="true"] + .type { @extend %icon-radio-checked; }
   }
 }
 
@@ -225,40 +225,54 @@ button { @include reset-button; }
 // ---------------------------------------------------------------------------
 // Radio/Checkbox Options
 
-%check-options {
-  @include adjust-font-size-to($input-font-size);
+%check-option {
+  @include clearfix;
+  position: relative;
+}
+
+%check-value {
+  @include gone;
+  &[aria-selected="true"] + .type { @extend %options-checked; }
+  &[disabled] + .type { @extend %options-disabled; }
+}
+
+%check-type {
+  display: block;
+  position: relative;
+  padding-right: 1em;
+  text-align: left;
+  #{$focus} { background: $base3; }
+  &:before { float: left; }
+}
+
+%check-options-base {
   @include reset-box-model;
   @include no-style-list;
+  overflow-y: scroll;
+}
+
+%check-options {
+  @extend %check-options-base;
+  @include adjust-font-size-to($input-font-size);
   @include rgba-background(rgba(white,.25));
   max-height: rhythm(8,$input-font-size);
   border: 1px solid;
-  overflow-y: scroll;
-
   .option {
-    @include clearfix;
-    position: relative;
+    @extend %check-option;
     .type {
       float: none;
       width: auto;
       margin: 0;
-      text-align: left;
     }
   }
-  .value {
-    @include gone;
-    &[checked] + .type { @extend %options-checked; }
-    &[disabled] + .type { @extend %options-disabled; }
-  }
+  .value { @extend %check-value; }
   .type {
+    @extend %check-type;
     @include padding-leader(.125,$input-font-size);
     @include trailing-border(1px,.125,$input-font-size);
     padding-left: rhythm(.125,$input-font-size);
-    padding-right: 1em;
-    position: relative;
     border-color: $base1;
     border-color: rgba($base1,.25);
-    #{$focus} { background: $base3; }
-    &:before { float: left; }
   }
 }
 
@@ -287,6 +301,7 @@ button { @include reset-button; }
   @include rgba-background(rgba(white,.5));
   position: relative;
   padding: 0 1.4em 0 .4em;
+  min-width: columns-width(3);
   border: 1px solid $base1;
   color: inherit;
   &:before {
@@ -304,9 +319,80 @@ button { @include reset-button; }
   @include box-shadow;
   @include css-arrow(bottom, .5em, $base);
   position: absolute;
-  left: 0;
+  right: 0;
   bottom: 100%;
-  margin-left: -50%;
   min-width: columns-width(3);
   background: $base3;
+  z-index: 900;
 }
+
+.ui-multiselect-checkboxes {
+  li { @extend %check-option; }
+  input { @extend %check-value; }
+  span { @extend %check-type; }
+
+  [type="checkbox"], [type="radio"] {
+    + span {
+      @extend %icon;
+      display: block;
+      &:before {
+        margin-left: .4em;
+        color: $base01;
+      }
+    }
+    &[aria-selected="true"] + span {
+      &:before { color: $blue; }
+    }
+    &:focus + span { color: $base03; }
+  }
+
+  [type="checkbox"] {
+    + span { @extend %icon-unchecked; }
+    &[aria-selected="true"] + span { @extend %icon-checked; }
+  }
+
+  [type="radio"] {
+    + span { @extend %icon-radio-unchecked; }
+    &[aria-selected="true"] + span { @extend %icon-radio-checked; }
+  }
+}
+
+.ui-multiselect-header {
+  position: relative;
+  text-align: left;
+  li {
+    display: inline;
+    &.ui-multiselect-close {
+      @include adjust-font-size-to($smallpx);
+      @include border-radius(3px);
+      position: absolute;
+      top: -1em;
+      right: -1em;
+      background: $base;
+      padding: 0 .25em;
+      a { @include link(light); }
+    }
+  }
+  .ui-icon-check {
+    &:after { content: "All"; }
+    + span { @include gone; }
+  }
+  .ui-icon-closethick {
+    &:after { content: "None"; }
+    + span { @include gone; }
+  }
+}
+
+.ui-multiselect-all, .ui-multiselect-none {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.ui-icon { @extend %icon; }
+.ui-icon-circle-close {
+  @extend %icon-x-alt;
+  &:before { margin-right: 0; }
+}
+.ui-icon-check { @extend %icon-checkmark; }
+.ui-icon-closethick { @extend %icon-x; }
