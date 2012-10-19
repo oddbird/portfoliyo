@@ -62,12 +62,43 @@ $input-rhythm: .25;
   outline: 0;
 }
 
-%button {
-  margin: 0;
-  background-color: $green;
-  text-align: center;
-  @include sassy-button;
+@mixin button-color($color: $green) {
+  $light  : adjust-color($color, $lightness: 5%);
+  $dark   : adjust-color($color, $lightness: -15%);
+  @include background(linear-gradient(top, rgba($light,.25), rgba($color,0), rgba($dark,.25)));
+  background-color: $color;
+  border-color: mix($color,$back);
+  &:hover, &:focus { background-color: $light; }
+  &:active { background-color: $color; }
 }
+
+@mixin small-button($fontsize: false) {
+  $size: $smallpx;
+  @if $fontsize {
+    @include adjust-font-size-to($fontsize);
+    $size: $fontsize;
+  }
+  @include h-borders(1px,.125);
+}
+
+@mixin button($color: $green) {
+  @include border-radius(.25em);
+  @include rhythm-borders(1px,.25);
+  @include button-color($green);
+  @include box-shadow(rgba(white,.5) 0 1px 1px inset);
+  @include text-shadow(rgba($back,.5) 0 -1px 0);
+  display: inline-block;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: $base3;
+  text-align: center;
+  text-transform: capitalize;
+  #{$link}, #{$focus} { color: $base3; }
+  &:active { @include box-shadow(rgba($back,.5) 0 0 .25em inset); }
+}
+
+%button { @include button; }
 
 @mixin reset-button {
   @include reset-box-model;
@@ -285,3 +316,114 @@ button { @include reset-button; }
   @extend %icon;
   @extend %icon-locked;
 }
+
+// ---------------------------------------------------------------------------
+// ui multiselect
+
+.multiselect-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-multiselect {
+  @extend %icon;
+  @extend %icon-arrow-down;
+  @include border-radius(3px);
+  @include rgba-background(rgba(white,.5));
+  position: relative;
+  padding: 0 1.4em 0 .4em;
+  min-width: columns-width(3);
+  border: 1px solid $base1;
+  color: inherit;
+  &:before {
+    position: absolute;
+    right: 0;
+    margin: 0;
+  }
+  #{$focus} {
+    @include rgba-background(rgba(white,.75));
+  }
+}
+
+.ui-multiselect-menu {
+  @include rhythm-borders(1px,.25);
+  @include box-shadow;
+  @include css-arrow(bottom, .5em, $base);
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  min-width: columns-width(3);
+  background: $base3;
+  z-index: 900;
+}
+
+.ui-multiselect-checkboxes {
+  li { @extend %check-option; }
+  input { @extend %check-value; }
+  span { @extend %check-type; }
+
+  [type="checkbox"], [type="radio"] {
+    + span {
+      @extend %icon;
+      display: block;
+      &:before {
+        margin-left: .4em;
+        color: $base01;
+      }
+    }
+    &[aria-selected="true"] + span {
+      &:before { color: $blue; }
+    }
+    &:focus + span { color: $base03; }
+  }
+
+  [type="checkbox"] {
+    + span { @extend %icon-unchecked; }
+    &[aria-selected="true"] + span { @extend %icon-checked; }
+  }
+
+  [type="radio"] {
+    + span { @extend %icon-radio-unchecked; }
+    &[aria-selected="true"] + span { @extend %icon-radio-checked; }
+  }
+}
+
+.ui-multiselect-header {
+  position: relative;
+  text-align: left;
+  li {
+    display: inline;
+    &.ui-multiselect-close {
+      @include adjust-font-size-to($smallpx);
+      @include border-radius(3px);
+      position: absolute;
+      top: -1em;
+      right: -1em;
+      background: $base;
+      padding: 0 .25em;
+      a { @include link(light); }
+    }
+  }
+  .ui-icon-check {
+    &:after { content: "All"; }
+    + span { @include gone; }
+  }
+  .ui-icon-closethick {
+    &:after { content: "None"; }
+    + span { @include gone; }
+  }
+}
+
+.ui-multiselect-all, .ui-multiselect-none {
+  display: inline-block;
+  width: 50%;
+  text-align: center;
+}
+
+.ui-icon { @extend %icon; }
+.ui-icon-circle-close {
+  @extend %icon-x-alt;
+  &:before { margin-right: 0; }
+}
+.ui-icon-check { @extend %icon-checkmark; }
+.ui-icon-closethick { @extend %icon-x; }

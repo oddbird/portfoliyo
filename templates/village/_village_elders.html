@@ -1,28 +1,7 @@
-{% load elders %}
+{% extends "village/_elders_list.html" %}
+
 {% load url from future %}
 
-<div class="village-elders">
-  <h2>Village Elders</h2>
-  <ul>
-    {% for rel in student.elder_relationships %}
-    {% with rel.elder as nav_elder %}
-    <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
-      {% if nav_elder.school_staff %}
-        <span class="vcard {{ nav_elder|elder_status:request.user.profile }}">
-          <b class="title">{{ rel.description_or_role }}:</b>
-          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        </span>
-      {% else %}
-        <a href="{% url 'edit_elder_in_village' student_id=student.id elder_id=nav_elder.id %}" class="edit-elder vcard ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
-          <b class="title">{{ rel.description_or_role }}:</b>
-          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        </a>
-      {% endif %}
-    </li>
-    {% endwith %}
-    {% endfor %}
-  </ul>
-  {% if request.user.profile.school_staff %}
-  <a href="{% url 'invite_elder' student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
-  {% endif %}
-</div>
+{% block edit-elder-url %}{% url 'edit_elder_in_village' student_id=student.id elder_id=nav_elder.id %}{% endblock %}
+
+{% block invite-elder-url %}{% url 'invite_elder' student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}{% endblock %}

@@ -1,4 +1,5 @@
 """Sending invites to prospective users by email or SMS."""
+from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.template import loader
@@ -11,7 +12,6 @@ from portfoliyo import sms
 def send_invite_email(user,
                       subject_template_name,
                       email_template_name,
-                      use_https=False,
                       token_generator=default_token_generator,
                       from_email=None,
                       extra_context=None,
@@ -21,7 +21,7 @@ def send_invite_email(user,
         'uid': int_to_base36(user.id),
         'user': user,
         'token': token_generator.make_token(user),
-        'protocol': use_https and 'https' or 'http',
+        'base_url': settings.PORTFOLIYO_BASE_URL,
     }
     c.update(extra_context or {})
 

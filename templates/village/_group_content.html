@@ -8,5 +8,5 @@
 {% block form-action %}{% if group.is_all %}{% url 'json_posts' %}{% else %}{% url 'group_json_posts' group_id=group.id %}{% endif %}{% endblock %}
 
 {% block info-bar %}
-{% include "village/_group_info.html" %}
+  {% include "village/_group_info.html" %}
 {% endblock %}

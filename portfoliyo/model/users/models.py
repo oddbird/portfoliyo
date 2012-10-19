@@ -68,7 +68,14 @@ class Profile(models.Model):
 
 
     def __unicode__(self):
-        return self.name or self.phone or self.user.email or u'<unknown>'
+        return (
+            self.name or
+            self.user.email or
+            getattr(self, 'role_in_context', None) or
+            self.role or
+            self.phone or
+            u'<unknown>'
+            )
 
 
     def save(self, *a, **kw):
@@ -150,12 +157,12 @@ class Profile(models.Model):
     def elder_relationships(self):
         return self.relationships_to.filter(
             kind=Relationship.KIND.elder, from_profile__deleted=False).order_by(
-            'description').select_related("from_profile")
+            'from_profile__name').select_related("from_profile")
 
 
     @property
     def elders(self):
-        return [rel.from_profile for rel in self.elder_relationships]
+        return contextualized_elders(self.elder_relationships)
 
 
     @property
@@ -182,7 +189,8 @@ class GroupBase(object):
         """Return queryset of all elders of all students in group."""
         return Profile.objects.order_by('name').distinct().filter(
             relationships_from__to_profile__in=self.students.filter(
-                deleted=False))
+                deleted=False),
+            ).select_related('user')
 
 
 
@@ -226,8 +234,8 @@ class Group(GroupBase, models.Model):
         """Return queryset of all relationships for students in group."""
         return Relationship.objects.filter(
             kind=Relationship.KIND.elder,
-            to_profile__in=self.students.all(),
-            )
+            to_profile__in=self.students.filter(deleted=False),
+            ).select_related('from_profile')
 
 
 
@@ -249,15 +257,17 @@ class AllStudentsGroup(GroupBase):
     @property
     def elder_relationships(self):
         """Return queryset of all relationships for students in group."""
-        return Relationship.objects.filter(
+        return Relationship.objects.select_related('from_profile').filter(
             kind=Relationship.KIND.elder, to_profile__in=self.owner.students)
 
 
     @property
     def students(self):
         """Return queryset of all students in group."""
+        # No deleted=False because we want to mimic group.students.all()
         return Profile.objects.filter(
-            relationships_to__from_profile=self.owner, deleted=False)
+            relationships_to__from_profile=self.owner,
+            ).distinct()
 
 
 
@@ -375,6 +385,81 @@ class Relationship(models.Model):
     @property
     def student(self):
         return self.to_profile
+
+
+
+def contextualized_elders(queryset):
+    """
+    Given QS of elders/relationships, return contextualized elder queryset.
+
+    A contextualized elder has an added ``role_in_context`` attribute, which is
+    the relationship description if in context of a relationship, or simply the
+    elder's profile role otherwise.
+
+    """
+    if queryset.model is Relationship:
+        return EldersForRelationships(queryset)
+    elif queryset.model is Profile:
+        return EldersInContext(queryset)
+    else:
+        raise ValueError(
+            "Only Profile or Relationship querysets can be contextualized.")
+
+
+class QuerySetWrapper(object):
+    """Simple QuerySet wrapper that can pass-through filter/exclude/order_by."""
+    def __init__(self, queryset):
+        self.queryset = queryset
+
+
+    def _mangle_fieldname(self, name):
+        return name
+
+
+    def _mangle_fieldname_kwargs(self, kwargs):
+        return {self._mangle_fieldname(k): v for k, v in kwargs.items()}
+
+
+    def filter(self, *args, **kwargs):
+        return self._filter_or_exclude(False, *args, **kwargs)
+
+
+    def exclude(self, *args, **kwargs):
+        return self._filter_or_exclude(True, *args, **kwargs)
+
+
+    def _filter_or_exclude(self, negate, *args, **kwargs):
+        kwargs = self._mangle_fieldname_kwargs(kwargs)
+        return self.__class__(
+            self.queryset._filter_or_exclude(negate, *args, **kwargs))
+
+
+    def order_by(self, *args):
+        args = [self._mangle_fieldname(fn) for fn in args]
+        return self.__class__(self.queryset.order_by(*args))
+
+
+
+
+class EldersInContext(QuerySetWrapper):
+    """Elders queryset that tacks on ``role_in_context`` attr when iterated."""
+    def __iter__(self):
+        for elder in self.queryset:
+            elder.role_in_context = elder.role
+            yield elder
+
+
+
+class EldersForRelationships(QuerySetWrapper):
+    """Relationship queryset wrapper; emulates QS of contextualized elders."""
+    def __iter__(self):
+        for rel in self.queryset.select_related('from_profile'):
+            rel.elder.role_in_context = rel.description_or_role
+            yield rel.elder
+
+
+    def _mangle_fieldname(self, name):
+        return 'from_profile__%s' % name
 
 
 

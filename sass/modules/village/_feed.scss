@@ -5,7 +5,8 @@
   @extend %overflow-y;
   left: 0;
   right: 0;
-  bottom: rhythm(3.5);
+  bottom: rhythm(4.75);
+  background: lighten($base3,3);
 }
 
 $post-byline-cols : 2;
@@ -85,31 +86,11 @@ $post-h-padding   : gutter($center);
   }
 }
 
-.getting-started {
-  @extend %type;
-  @include padding-leader;
-  @include trailing-border(1px, 1);
-  padding-left: $post-h-padding;
-  padding-right: $post-h-padding;
-  border-color: $base1;
-  background: lighten($base3,10);
-  h2 {
-    @include adjust-font-size-to($largepx);
-    @include trailer(1,$largepx);
-  }
-  li { @include padding-trailer(.25); }
-  :last-child { margin-bottom: 0; }
-  .mobile {
-    @extend %icon-replace;
-    @extend %icon-phone;
-    display: inline-block;
-  }
-}
-
 // ---------------------------------------------------------------------------
 // Note Add Form
 
 $addnote-fontsize: $input-font-size;
+$postaction-size: $smallpx;
 
 .post-add-form {
   @extend %formdefaults;
@@ -117,14 +98,27 @@ $addnote-fontsize: $input-font-size;
   bottom: 0;
   padding: rhythm(.5) gutter();
   border-top: 1px solid $base;
-  background: $base1;
+  background: $base2;
+  text-align: right;
 
-  .formfield {
-    float: left;
-    width: columns($center - 2, $center);
+  .formfield { margin: 0; }
+
+  .form-actions {
+    clear: none;
+    display: inline-block;
     margin: 0;
+    .action-post {
+      @extend %button;
+      @include small-button($addnote-fontsize);
+      text-transform: uppercase;
+    }
   }
-  textarea {
+}
+
+.post-textfield {
+  text-align: left;
+  .value {
+    @include trailer(.125, $addnote-fontsize);
     height: rhythm(2.5, $addnote-fontsize);
     min-height: rhythm(2.5, $addnote-fontsize);
     background: rgba(white,.75);
@@ -140,21 +134,15 @@ $addnote-fontsize: $input-font-size;
     color: $base1;
     &.overlimit { color: $red; }
   }
+}
 
-  .form-actions {
-    clear: none;
-    float: right;
-    margin: 0;
-    width: space(2,$center);
-  }
-  button {
-    @include border-left-radius(0);
-    position: relative;
-    top: 1px;
-    padding: 0;
-    height: rhythm(2.5);
-    width: 100%;
-    text-transform: uppercase;
+.sms-targeting {
+  @include adjust-font-size-to($postaction-size);
+  display: inline-block;
+  .type {
+    display: inline;
+    font-style: italic;
+    cursor: default;
   }
 }
 

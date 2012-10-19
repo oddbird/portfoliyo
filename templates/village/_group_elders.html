@@ -1,26 +1,9 @@
-{% load elders %}
+{% extends "village/_elders_list.html" %}
+
 {% load url from future %}
 
-<div class="village-elders">
-  <h2>Village Elders</h2>
-  <ul>
-    {% for nav_elder in group.all_elders %}
-    <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
-      {% if nav_elder.school_staff %}
-        <span class="vcard {{ nav_elder|elder_status:request.user.profile }}">
-          <b class="title">{{ nav_elder.role }}:</b>
-          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        </span>
-      {% else %}
-        <a href="{% if group.is_all %}{% url 'edit_elder' elder_id=nav_elder.id %}{% else %}{% url 'edit_elder_in_group' elder_id=nav_elder.id group_id=group.id %}{% endif %}" class="edit-elder vcard ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
-          <b class="title">{{ nav_elder.role }}:</b>
-          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        </a>
-      {% endif %}
-    </li>
-    {% endfor %}
-  </ul>
-  {% if request.user.profile.school_staff and not group.is_all %}
-  <a href="{% url 'invite_elder_to_group' group_id=group.id %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
-  {% endif %}
-</div>
+{% block edit-elder-url %}{% if group.is_all %}{% url 'edit_elder' elder_id=nav_elder.id %}{% else %}{% url 'edit_elder_in_group' elder_id=nav_elder.id group_id=group.id %}{% endif %}{% endblock %}
+
+{% block invite-elder %}{% if not group.is_all %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block invite-elder-url %}{% url 'invite_elder_to_group' group_id=group.id %}{% endblock %}
