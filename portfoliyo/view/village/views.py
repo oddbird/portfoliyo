@@ -224,8 +224,6 @@ def village(request, student_id):
     rel = get_relationship_or_404(student_id, request.user.profile)
     group = get_querystring_group(request, rel.student)
 
-    model.unread.mark_village_read(rel.student, rel.elder)
-
     return TemplateResponse(
         request,
         'village/village.html',
@@ -340,6 +338,9 @@ def json_posts(request, student_id=None, group_id=None):
                 manager.order_by('-timestamp')[:BACKLOG_POSTS])
             ],
         }
+
+    if rel:
+        model.unread.mark_village_read(rel.student, rel.elder)
 
     return http.HttpResponse(json.dumps(data), content_type='application/json')
 

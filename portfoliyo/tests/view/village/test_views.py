@@ -443,23 +443,6 @@ class TestVillage(GroupContextTests):
         return reverse('village', kwargs=dict(student_id=student.id))
 
 
-    def test_marks_posts_read(self, client):
-        """Loading the village view marks all posts in village as read."""
-        rel = factories.RelationshipFactory.create()
-        post = factories.PostFactory.create(student=rel.student)
-        post2 = factories.PostFactory.create(student=rel.student)
-        unread.mark_unread(post, rel.elder)
-        unread.mark_unread(post2, rel.elder)
-
-        assert unread.is_unread(post, rel.elder)
-        assert unread.is_unread(post2, rel.elder)
-
-        client.get(self.url(rel.student), user=rel.elder.user)
-
-        assert not unread.is_unread(post, rel.elder)
-        assert not unread.is_unread(post2, rel.elder)
-
-
     @pytest.mark.parametrize('link_target', ['invite_elder'])
     def test_link_only_if_staff(self, client, link_target):
         """Link with given target is only present for school staff."""
@@ -556,6 +539,23 @@ class TestJsonPosts(object):
             return reverse('group_json_posts', kwargs=dict(group_id=group.id))
         else:
             return reverse('json_posts')
+
+
+    def test_marks_posts_read(self, client):
+        """Loading the backlog marks all posts in village as read."""
+        rel = factories.RelationshipFactory.create()
+        post = factories.PostFactory.create(student=rel.student)
+        post2 = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(post2, rel.elder)
+
+        assert unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post2, rel.elder)
+
+        client.get(self.url(rel.student), user=rel.elder.user)
+
+        assert not unread.is_unread(post, rel.elder)
+        assert not unread.is_unread(post2, rel.elder)
 
 
     def test_requires_relationship(self, client):
