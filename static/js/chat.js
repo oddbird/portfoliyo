@@ -342,15 +342,17 @@ var PYO = (function (PYO, $) {
 
         nav.find('.student .listitem-select[data-id="' + PYO.activeStudentId + '"] .unread').addClass('zero').text('0');
 
-        posts.each(function () {
-            var thisPost = $(this);
-            var url = thisPost.data('mark-read-url');
-            if (url) {
-                $.post(url, function () {
-                    thisPost.removeClass('unread');
-                });
-            }
-        });
+        if (posts.length) {
+            posts.each(function () {
+                var thisPost = $(this);
+                var url = thisPost.data('mark-read-url');
+                if (url) {
+                    $.post(url, function () {
+                        thisPost.removeClass('unread');
+                    });
+                }
+            });
+        }
     };
 
     PYO.watchForReadPosts = function () {
