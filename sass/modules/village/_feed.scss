@@ -22,8 +22,26 @@ $post-h-padding   : gutter($center);
   padding-right: $post-h-padding;
   border-color: $base1;
 
+  .old + &:before {
+    @include bleed($post-h-padding);
+    @include padding-leader(.25,$post-size);
+    @include padding-trailer(.25,$post-size);
+    @include text-shadow($back 0 -1px 0);
+    content: "new posts ▼";
+    display: block;
+    background: $base;
+    color: $base3;
+    text-align: center;
+    text-transform: uppercase;
+  }
   &.mine { background: lighten($blue,45); }
   &.not-posted { background: lighten($red,45); }
+
+  &.old {
+    .title, .summary, .post-text { color: $base1; }
+    &.mine { @include rgba-background(rgba(lighten($blue,45),.5)); }
+    .old + &:before { display: none; }
+  }
 
   .timeout {
     @extend %error;
@@ -46,7 +64,8 @@ $post-h-padding   : gutter($center);
     font-weight: bold;
   }
   .pubdate {
-   @include adjust-font-size-to($post-time-size, 1, $post-size);
+    @include adjust-font-size-to($post-time-size, 1, $post-size);
+    @include cond;
     float: right;
     text-align: right;
   }
