@@ -53,7 +53,7 @@ class BasePost(models.Model):
     from_sms = models.BooleanField(default=False)
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
-    # arbitrary additional metadata, currently just highlights
+    # arbitrary additional metadata, currently just highlights and SMSes
     meta = JSONField(default={})
 
 
@@ -128,15 +128,15 @@ class BasePost(models.Model):
 
         """
         meta_highlights = []
-        for rel, mentioned_as in highlights.items():
+        for elder, mentioned_as in highlights.items():
             meta_highlights.append(
                 {
-                    'id': rel.elder.id,
+                    'id': elder.id,
                     'mentioned_as': mentioned_as,
-                    'role': rel.description_or_role,
-                    'name': rel.elder.name,
-                    'email': rel.elder.user.email,
-                    'phone': rel.elder.phone,
+                    'role': elder.role_in_context,
+                    'name': elder.name,
+                    'email': elder.user.email,
+                    'phone': elder.phone,
                     }
                 )
 
@@ -215,7 +215,8 @@ class BulkPost(BasePost):
         if group is None:
             group = user_models.AllStudentsGroup(author)
 
-        html_text, highlights = process_text(text, group)
+        html_text, highlights = process_text(
+            text, user_models.contextualized_elders(group.all_elders))
 
         post = cls(
             author=author,
@@ -291,7 +292,8 @@ class Post(BasePost):
         assumed that an SMS was already sent to that number.
 
         """
-        html_text, highlights = process_text(text, student)
+        html_text, highlights = process_text(
+            text, user_models.contextualized_elders(student.elder_relationships))
 
         post = cls(
             author=author,
@@ -344,9 +346,9 @@ class Post(BasePost):
 
 
 
-def process_text(text, student_or_group):
+def process_text(text, elders_in_context):
     """
-    Process given post text in given student or group's village.
+    Process given post text in context of given (contextualized) elders.
 
     Escape HTML, replace newlines with <br>, replace highlights.
 
@@ -354,7 +356,7 @@ def process_text(text, student_or_group):
     dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
 
     """
-    name_map = get_highlight_names(student_or_group)
+    name_map = get_highlight_names(elders_in_context)
     html_text, highlights = replace_highlights(html.escape(text), name_map)
     html_text = html_text.replace('\n', '<br>')
     return html_text, highlights
@@ -383,11 +385,10 @@ def replace_highlights(text, name_map):
     Detect highlights and wrap with HTML element.
 
     Returns a tuple of (rendered-text,
-    dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
+    dict-mapping-highlighted-elders-to-list-of-names-highlighted-as).
 
-    ``name_map`` should be a mapping of highlightable names to the Relationship
-    with the elder who has that name (such as the map returned by
-    ``get_highlight_names``).
+    ``name_map`` should be a mapping of highlightable names to contextualized
+    elders (such as the map returned by ``get_highlight_names``).
 
     """
     highlighted = {}
@@ -403,35 +404,33 @@ def replace_highlights(text, name_map):
             highlight_name = highlight_name[:-1]
             full_highlight = full_highlight[:-1]
             stripped += 1
-        highlight_rels = name_map.get(normalize_name(highlight_name))
-        if highlight_rels:
+        highlight_elders = name_map.get(normalize_name(highlight_name))
+        if highlight_elders:
             replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
                 u' all me' if highlight_name == 'all' else u'',
-                u','.join([unicode(r.elder.id) for r in highlight_rels]),
+                u','.join([unicode(e.id) for e in highlight_elders]),
                 full_highlight,
                 )
             start, end = match.span(2)
             end -= stripped
             text = text[:start+offset] + replace_with + text[end+offset:]
             offset += len(replace_with) - (end - start)
-            for rel in highlight_rels:
-                highlighted.setdefault(rel, []).append(highlight_name)
+            for elder in highlight_elders:
+                highlighted.setdefault(elder, []).append(highlight_name)
     return text, highlighted
 
 
 
-def get_highlight_names(student_or_group):
+def get_highlight_names(elders_in_context):
     """
-    Get highlightable names in given student or group's village.
+    Get highlightable names in context of given contextualized elders.
 
-    Returns dictionary mapping names to sets of relationships.
+    Returns dictionary mapping names to sets of elders.
 
     """
     name_map = defaultdict(set)
-    # @@@ to be consistent with how elders are displayed on group pages (not in
-    # relationship context), this should really use group.all_elders for groups
-    for elder_rel in student_or_group.elder_relationships:
-        elder = elder_rel.elder
+
+    for elder in elders_in_context:
         possible_names = []
         if elder.name:
             possible_names.append(normalize_name(elder.name))
@@ -441,10 +440,10 @@ def get_highlight_names(student_or_group):
                 normalize_name(elder.phone.lstrip('+').lstrip('1')))
         if elder.user.email:
             possible_names.append(normalize_name(elder.user.email))
-        possible_names.append(normalize_name(elder_rel.description_or_role))
+        possible_names.append(normalize_name(elder.role_in_context))
         for name in possible_names:
-            name_map[name].add(elder_rel)
-        name_map['all'].add(elder_rel)
+            name_map[name].add(elder)
+        name_map['all'].add(elder)
     return name_map
 
 

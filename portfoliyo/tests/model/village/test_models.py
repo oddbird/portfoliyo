@@ -8,6 +8,7 @@ import pytest
 import re
 
 
+from portfoliyo.model.users.models import contextualized_elders
 from portfoliyo.model.village import models
 
 from portfoliyo.tests import factories
@@ -493,7 +494,8 @@ class TestProcessText(object):
             description="Father")
 
         html, highlights = models.process_text(
-            "<b>Hi</b> there @johndoe, @father\nHow's it?", rel1.to_profile)
+            "<b>Hi</b> there @johndoe, @father\nHow's it?",
+            contextualized_elders(rel1.to_profile.elder_relationships))
 
         assert html == (
             '&lt;b&gt;Hi&lt;/b&gt; there '
@@ -502,26 +504,25 @@ class TestProcessText(object):
             "How&#39;s it?" % (rel1.elder.id, rel2.elder.id)
             )
 
-        assert highlights == {rel1: ['johndoe'], rel2: ['father']}
+        assert highlights == {rel1.elder: ['johndoe'], rel2.elder: ['father']}
 
 
 
 class TestReplaceHighlights(object):
-    class MockRel(object):
-        """A mock Relationship."""
-        def __init__(self, elder_id):
-            self.elder = mock.Mock()
-            self.elder.id = elder_id
+    class MockElder(object):
+        """A mock elder."""
+        def __init__(self, id):
+            self.id = id
 
 
-    rel1 = MockRel(1)
-    rel2 = MockRel(2)
-    rel3 = MockRel(3)
+    elder1 = MockElder(1)
+    elder2 = MockElder(2)
+    elder3 = MockElder(3)
     name_map = {
-        'one': set([rel1]),
-        'two': set([rel2]),
-        'foo@example.com': set([rel3]),
-        'all': set([rel1, rel2]),
+        'one': set([elder1]),
+        'two': set([elder2]),
+        'foo@example.com': set([elder3]),
+        'all': set([elder1, elder2]),
         }
 
 
@@ -535,7 +536,7 @@ class TestReplaceHighlights(object):
         html, highlights = self.call("Hello @one")
 
         assert html == 'Hello <b class="nametag" data-user-id="1">@one</b>'
-        assert highlights == {self.rel1: ["one"]}
+        assert highlights == {self.elder1: ["one"]}
 
 
     def test_all(self):
@@ -545,14 +546,14 @@ class TestReplaceHighlights(object):
         assert re.match(
             'Hello <b class="nametag all me" data-user-id="(1,2|2,1)">@all</b>',
             html)
-        assert highlights == {self.rel1: ["all"], self.rel2: ["all"]}
+        assert highlights == {self.elder1: ["all"], self.elder2: ["all"]}
 
 
     def test_email(self):
         """Can highlight a user by email address."""
         _, highlights = self.call("Hello @foo@example.com")
 
-        assert highlights == {self.rel3: ["foo@example.com"]}
+        assert highlights == {self.elder3: ["foo@example.com"]}
 
 
     def test_false_alarm(self):
@@ -596,7 +597,7 @@ class TestReplaceHighlights(object):
         """Assert that 'one' is found as highlight in text."""
         _, highlights = self.call(text)
 
-        assert self.rel1 in highlights
+        assert self.elder1 in highlights
 
 
     @pytest.mark.parametrize(
@@ -616,7 +617,7 @@ class TestReplaceHighlights(object):
 
 
 def test_get_highlight_names():
-    """Returns dict mapping highlightable names to relationship."""
+    """Returns dict mapping highlightable names to elders-in-context."""
     rel1 = factories.RelationshipFactory.create(
         from_profile__name="John Doe",
         from_profile__user__email="john@example.com",
@@ -635,19 +636,20 @@ def test_get_highlight_names():
         from_profile__phone="+15671234567",
         description="Father")
 
-    name_map = models.get_highlight_names(rel1.to_profile)
+    name_map = models.get_highlight_names(
+        contextualized_elders(rel1.to_profile.elder_relationships))
 
     assert len(name_map) == 10
-    assert name_map['johndoe'] == set([rel1])
-    assert name_map['john@example.com'] == set([rel1])
-    assert name_map['mathteacher'] == set([rel1])
-    assert name_map['maxdad'] == set([rel2])
-    assert name_map['+13216540987'] == set([rel2])
-    assert name_map['3216540987'] == set([rel2])
-    assert name_map['father'] == set([rel2, rel3])
-    assert name_map['+15671234567'] == set([rel3])
-    assert name_map['5671234567'] == set([rel3])
-    assert name_map['all'] == set([rel1, rel2, rel3])
+    assert name_map['johndoe'] == set([rel1.elder])
+    assert name_map['john@example.com'] == set([rel1.elder])
+    assert name_map['mathteacher'] == set([rel1.elder])
+    assert name_map['maxdad'] == set([rel2.elder])
+    assert name_map['+13216540987'] == set([rel2.elder])
+    assert name_map['3216540987'] == set([rel2.elder])
+    assert name_map['father'] == set([rel2.elder, rel3.elder])
+    assert name_map['+15671234567'] == set([rel3.elder])
+    assert name_map['5671234567'] == set([rel3.elder])
+    assert name_map['all'] == set([rel1.elder, rel2.elder, rel3.elder])
 
 
 
