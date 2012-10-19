@@ -15,3 +15,4 @@ from .users.models import (
     contextualized_elders)
 from .village.models import (
     BulkPost, Post, post_char_limit, post_dict, sms_eligible)
+from .village import unread

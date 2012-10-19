@@ -9,6 +9,10 @@ other Python projects on your system, create a virtualenv and activate
 it.  Then run ``bin/install-reqs`` to install the dependencies for this
 project into your Python environment.
 
+In order to run Portfoliyo (or its tests), you'll need a PostgreSQL
+database. By default, Portfoliyo will look for a PostgreSQL database named
+"portfoliyo" on localhost.
+
 You may need to create a ``portfoliyo/settings/local.py`` file with some
 details of your local configuration.  See
 ``portfoliyo/settings/local.sample.py`` for a sample that can be copied to

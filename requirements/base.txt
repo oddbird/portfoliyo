@@ -47,3 +47,5 @@ pusher==0.6
 
 reportlab==2.5
 pyPdf==1.13
+
+redis==2.6.2

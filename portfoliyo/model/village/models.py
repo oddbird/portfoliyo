@@ -6,6 +6,7 @@ import logging
 import re
 import socket
 
+from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
@@ -13,7 +14,7 @@ from jsonfield import JSONField
 from portfoliyo.pusher import get_pusher
 from portfoliyo import notifications, sms
 from ..users import models as user_models
-
+from . import unread
 
 
 logger = logging.getLogger(__name__)
@@ -147,14 +148,14 @@ class BasePost(models.Model):
         return None
 
 
-    def send_event(self, channel, sequence_id=None):
+    def send_event(self, channel, **kwargs):
         """Send Pusher event for this Post, if Pusher is configured."""
         pusher = get_pusher()
         if pusher is not None:
             try:
                 pusher[channel].trigger(
                     'message_posted',
-                    {'posts': [post_dict(self, author_sequence_id=sequence_id)]},
+                    {'posts': [post_dict(self, **kwargs)]},
                     )
             except socket.error as e:
                 logger.error("Pusher socket error: %s" % str(e))
@@ -244,9 +245,18 @@ class BulkPost(BasePost):
                 from_bulk=post,
                 )
             sub.notify_email()
-            sub.send_event('student_%s' % student.id, sequence_id=sequence_id)
+            sub.send_event(
+                'student_%s' % student.id,
+                author_sequence_id=sequence_id,
+                mark_read_url=reverse(
+                    'mark_post_read', kwargs={'post_id': sub.id}),
+                )
+            # mark the sub0-ost unread by all web users in village
+            for elder in student.elders:
+                if elder.user.email:
+                    unread.mark_unread(sub, elder)
 
-        post.send_event('group_%s' % group.id, sequence_id=sequence_id)
+        post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
 
         return post
 
@@ -307,8 +317,18 @@ class Post(BasePost):
         post.store_highlights(highlights)
         post.save()
 
+        # mark the post unread by all web users in village (except the author)
+        for elder in student.elders:
+            if elder.user.email and elder != author:
+                unread.mark_unread(post, elder)
+
         post.notify_email()
-        post.send_event('student_%s' % student.id, sequence_id=sequence_id)
+        post.send_event(
+            'student_%s' % student.id,
+            author_sequence_id=sequence_id,
+            mark_read_url=reverse(
+                'mark_post_read', kwargs={'post_id': post.id}),
+            )
 
         return post
 
