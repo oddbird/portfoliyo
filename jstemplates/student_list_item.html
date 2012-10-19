@@ -2,7 +2,7 @@
 <li class="listitem student">
   <a href="{{ village_uri }}{{^ all_students }}?group={{ group_id }}{{/ all_students }}" class="ajax-link listitem-select" data-id="{{ id }}" data-name="{{ name }}" data-resource-url="{{ resource_uri }}">
     <span class="listitem-name">{{ name }}</span>
-    <span class="unread">0</span>
+    <span class="unread{{^ unread_count }} zero{{/ unread_count }}">{{ unread_count }}</span>
   </a>
 
   {{# staff }}

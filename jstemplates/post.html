@@ -1,5 +1,5 @@
 {{# posts }}
-<article class="post {{^ local }}{{# sms }} sms{{/ sms }}{{^ sms }} no-sms{{/ sms }}{{/ local }}" data-author-id="{{ author_id }}"{{# author_sequence_id }} data-author-sequence="{{ author_sequence_id }}"{{/ author_sequence_id }}{{# xhr_count }} data-xhr-count="{{ xhr_count }}"{{/ xhr_count }}>
+<article class="post {{^ local }}{{# sms }} sms{{/ sms }}{{^ sms }} no-sms{{/ sms }}{{^ unread }} old{{/ unread }}{{/ local }}{{# unread }} unread{{/ unread }}{{# local }} local{{/ local }}" data-author-id="{{ author_id }}"{{# post_id }} data-post-id="{{ post_id }}"{{/ post_id }}{{# author_sequence_id }} data-author-sequence="{{ author_sequence_id }}"{{/ author_sequence_id }}{{# xhr_count }} data-xhr-count="{{ xhr_count }}"{{/ xhr_count }}{{# mark_read_url }} data-mark-read-url="{{ mark_read_url }}"{{/ mark_read_url }}>
 
   <header class="post-meta">
     {{^ local }}

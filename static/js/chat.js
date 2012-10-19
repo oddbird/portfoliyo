@@ -20,7 +20,7 @@ var PYO = (function (PYO, $) {
         if ($('.village-feed').length) {
             var feed = $('.village-feed');
             var height = parseInt(feed.get(0).scrollHeight, 10);
-            feed.scrollTop(height);
+            feed.scrollTop(height).scroll();
         }
     };
 
@@ -36,13 +36,13 @@ var PYO = (function (PYO, $) {
     PYO.renderPost = function (data) {
         var posts;
         if (data && data.posts && data.posts.length) {
-            $.each(data.posts, function (i, val) {
+            $.each(data.posts, function () {
                 if (this.meta && this.meta.highlights) {
                     if (this.meta.highlights.length) {
                         var notified = [];
                         var inactive = [];
 
-                        $.each(this.meta.highlights, function (i, val) {
+                        $.each(this.meta.highlights, function () {
                             if (this.sms_sent) {
                                 if ($.inArray(this.role, notified) === -1) {
                                     notified.push(this.role);
@@ -78,7 +78,7 @@ var PYO = (function (PYO, $) {
                     }
                 }
             });
-            posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
+            posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine').removeClass('unread');
             return posts;
         }
     };
@@ -95,34 +95,22 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.replacePost = function (data) {
-        if (data && data.posts && data.posts.length) {
-            var feed = $('.village-feed');
-            var replaced = false;
-            $.each(data.posts, function (index, value) {
-                if (this.author_sequence_id && this.author_id) {
-                    var oldPost = feed.find('.post[data-author-id="' + this.author_id + '"][data-author-sequence="' + this.author_sequence_id + '"]');
-                    if (oldPost && oldPost.length) {
-                        var post_obj = {
-                            posts: [this]
-                        };
-                        var newPost = PYO.renderPost(post_obj);
-                        var scroll = PYO.scrolledToBottom();
-                        newPost.filter('.post[data-author-id="' + PYO.activeUserId + '"]').each(function () {
-                            $(this).find('.details').addClass('open auto');
-                        });
-                        newPost.find('.details').html5accordion({
-                            initialSlideSpeed: 0,
-                            openCallback: smsDetailsOpened
-                        });
-                        oldPost.replaceWith(newPost);
-                        $.doTimeout('new-post-' + this.author_sequence_id);
-                        if (scroll) { PYO.scrollToBottom(); }
-                        replaced = true;
-                    }
-                }
+    PYO.replacePost = function (newPostData, oldPost) {
+        if (newPostData && oldPost && oldPost.length) {
+            var post_obj = { posts: [newPostData] };
+            var newPost = PYO.renderPost(post_obj);
+            var scroll = PYO.scrolledToBottom();
+            newPost.filter('.post.mine').removeClass('old').each(function () {
+                $(this).find('.details').addClass('open auto');
             });
-            return replaced;
+            newPost.find('.details').html5accordion({
+                initialSlideSpeed: 0,
+                openCallback: smsDetailsOpened
+            });
+            oldPost.loadingOverlay('remove');
+            oldPost.replaceWith(newPost);
+            $.doTimeout('new-post-' + newPostData.author_sequence_id);
+            if (scroll) { PYO.scrollToBottom(); }
         }
     };
 
@@ -214,19 +202,12 @@ var PYO = (function (PYO, $) {
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
         if (response && response.posts && response.posts.length) {
             var feed = $('.village-feed');
-            $.each(response.posts, function (index, value) {
-                if ((this.student_id && this.student_id === PYO.activeStudentId) || (this.group_id && this.group_id === PYO.activeGroupId && !PYO.activeStudentId)) {
-                    if (this.author_sequence_id) {
-                        var oldPost = feed.find('.post.mine[data-author-sequence="' + this.author_sequence_id + '"]');
-                        if (oldPost && oldPost.length) {
-                            oldPost.loadingOverlay('remove');
-                        }
-                    }
+            $.each(response.posts, function () {
+                if (this.author_sequence_id) {
+                    var oldPost = feed.find('.post.mine.local[data-author-sequence="' + this.author_sequence_id + '"]');
+                    if (oldPost.length) { PYO.replacePost(this, oldPost); }
                 }
             });
-            if (!PYO.pusherKey) {
-                PYO.replacePost(response);
-            }
         }
         PYO.removePostTimeout(old_author_sequence);
         postAjax.XHR[xhr_count] = null;
@@ -301,6 +282,7 @@ var PYO = (function (PYO, $) {
                         context.loadingOverlay('remove');
                         if (response && response.posts && response.posts.length && feedAjax.count === count) {
                             PYO.addPost(response);
+                            feed.find('.post.unread').removeClass('unread');
                             PYO.scrollToBottom();
                         }
                         PYO.authorPosts = feed.find('.post.mine').length;
@@ -351,6 +333,34 @@ var PYO = (function (PYO, $) {
 
             textarea.keyup(updateCount).change(updateCount);
         }
+    };
+
+    PYO.markPostsRead = function () {
+        var feed = $('.village-feed');
+        var nav = $('.village-nav');
+        var posts = feed.find('.post.unread');
+
+        nav.find('.student .listitem-select[data-id="' + PYO.activeStudentId + '"] .unread').addClass('zero').text('0');
+
+        posts.each(function () {
+            var thisPost = $(this);
+            var url = thisPost.data('mark-read-url');
+            if (url) {
+                $.post(url, function () {
+                    thisPost.removeClass('unread');
+                });
+            }
+        });
+    };
+
+    PYO.watchForReadPosts = function () {
+        $('.village-feed').scroll(function () {
+            $.doTimeout('scroll', 150, function () {
+                if (PYO.scrolledToBottom()) {
+                    PYO.markPostsRead();
+                }
+            });
+        });
     };
 
     return PYO;

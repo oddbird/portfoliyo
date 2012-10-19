@@ -21,7 +21,7 @@ var PYO = (function (PYO, $) {
         });
 
         if (History.enabled) {
-            nav.on('click', '.group-link', function (e) {
+            nav.on('click', '.group-link', function () {
                 var trigger = $(this).blur();
                 var group_obj = {
                     name: trigger.data('group-name'),
@@ -258,19 +258,39 @@ var PYO = (function (PYO, $) {
 
                 channel.bind('message_posted', function (data) {
                     var contextId;
+                    var count = parseInt($.trim(unread.text()), 10);
                     if (group) {
                         if (!PYO.activeStudentId) { contextId = PYO.activeGroupId; }
                     } else {
                         contextId = PYO.activeStudentId;
                     }
-                    if (contextId && id === contextId) {
+                    if (contextId && id === contextId && data && data.posts && data.posts.length) {
                         var scroll = PYO.scrolledToBottom();
-                        if (!PYO.replacePost(data)) {
-                            PYO.addPost(data);
-                            if (scroll) { PYO.scrollToBottom(); }
-                        }
+                        var feed = $('.village-feed');
+                        var addNewPost = function (newPostData) {
+                            var post_obj = { posts: [newPostData] };
+                            PYO.addPost(post_obj);
+                            if (scroll) {
+                                PYO.scrollToBottom();
+                            } else {
+                                unread.removeClass('zero').text(++count);
+                            }
+                        };
+                        $.each(data.posts, function () {
+                            if (this.author_sequence_id) {
+                                var oldPost = feed.find('.post.mine[data-author-sequence="' + this.author_sequence_id + '"]');
+                                if (oldPost.length) {
+                                    if (oldPost.hasClass('local')) {
+                                        PYO.replacePost(this, oldPost);
+                                    } else if (oldPost.data('post-id') !== this.post_id) {
+                                        addNewPost(this);
+                                    }
+                                } else {
+                                    addNewPost(this);
+                                }
+                            }
+                        });
                     } else {
-                        var count = parseInt(unread.text(), 10);
                         unread.removeClass('zero').text(++count);
                     }
                 });
