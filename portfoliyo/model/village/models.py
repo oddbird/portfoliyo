@@ -207,6 +207,10 @@ class BulkPost(BasePost):
                     'mark_post_read', kwargs={'post_id': sub.id}),
                 unread=True,
                 )
+            # mark the sub0-ost unread by all web users in village
+            for elder in student.elders:
+                if elder.user.email:
+                    unread.mark_unread(sub, elder)
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
 
@@ -264,10 +268,9 @@ class Post(BasePost):
 
         post.save()
 
-        # mark the post unread by all users in village (except the author)
-        for elder in user_models.Profile.objects.filter(
-                deleted=False, relationships_from__to_profile=student):
-            if elder != author:
+        # mark the post unread by all web users in village (except the author)
+        for elder in student.elders:
+            if elder.user.email and elder != author:
                 unread.mark_unread(post, elder)
 
         post.notify_email()

@@ -125,7 +125,8 @@ class TestPostCreate(object):
 
         assert not unread.is_unread(post, rel.elder)
         assert unread.is_unread(post, rel2.elder)
-        assert unread.is_unread(post, rel3.elder)
+        # web users only
+        assert not unread.is_unread(post, rel3.elder)
 
 
     def test_creates_post_from_sms(self):
@@ -414,6 +415,27 @@ class TestBulkPost(object):
         assert group_post_data['author_id'] == rel.elder.id
         assert student_post_data['student_id'] == rel.student.id
         assert group_post_data['group_id'] == 'all%s' % rel.elder.id
+
+
+    def test_new_post_unread_for_all_web_users_in_village(self):
+        """Sub-post of bulk post marked unread for all web users in village."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='foo@example.com')
+        rel2 = factories.RelationshipFactory.create(
+            from_profile__user__email='bar@example.com', to_profile=rel.student)
+        rel3 = factories.RelationshipFactory.create(
+            from_profile__user__email=None, to_profile=rel.student)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        models.BulkPost.create(rel.elder, group, 'Foo')
+        sub = rel.student.posts_in_village.get()
+
+        # also unread for author
+        assert unread.is_unread(sub, rel.elder)
+        assert unread.is_unread(sub, rel2.elder)
+        # web users only
+        assert not unread.is_unread(sub, rel3.elder)
 
 
     def test_all_students(self):
