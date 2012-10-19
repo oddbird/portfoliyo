@@ -292,7 +292,7 @@ var PYO = (function (PYO, $) {
         if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
-        $('.village').find('input:radio, input:checkbox').each(function () {
+        $('body').find('input:radio, input:checkbox').each(function () {
             PYO.ieInputBootstrap($(this));
         });
     };
