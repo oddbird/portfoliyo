@@ -176,7 +176,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .main-login .reset-link, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, .getting-started .mobile, #messages .close {
   display: inline-block;
   position: relative;
-  min-width: 1em;
+  width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
