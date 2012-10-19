@@ -8,6 +8,12 @@
     @extend %banner-item;
     display: inline-block;
   }
+
+  .login-link {
+    @extend %button;
+    @include small-button;
+    @include button-color($blue);
+  }
 }
 
 .landing { @extend %simple-page; }

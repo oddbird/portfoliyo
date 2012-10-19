@@ -13,7 +13,10 @@ $banner-leading : 1 + $banner-rhythm*2;
 // ---------------------------------------------------------------------------
 // Banner
 
-[role="banner"] { @extend %boilerplate; }
+[role="banner"] {
+  @extend %boilerplate;
+  color: mix($base1,$base2);
+}
 
 // ---------------------------------------------------------------------------
 // Brand
@@ -22,6 +25,7 @@ $banner-leading : 1 + $banner-rhythm*2;
   @include adjust-font-size-to($banner-size);
   @include span-columns($half-small);
   @include at-breakpoint($break) { @include span-columns($left + 2); }
+  color: $base3;
   .wordmark {
     @extend %icon;
     @extend %icon-fire;

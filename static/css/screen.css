@@ -83,80 +83,80 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
  */
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round-webfont.eot');
-  src: url('/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round-webfont.eot');
+  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_semibold-webfont.eot');
-  src: url('/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_bold-webfont.eot');
-  src: url('/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_bold-webfont.eot');
+  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_it-webfont.eot');
-  src: url('/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_it-webfont.eot');
+  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "CambridgeRoundCond";
-  src: url('/cambridge_round_cond-webfont.eot');
-  src: url('/cambridge_round_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_cond-webfont.eot');
+  src: url('../fonts/cambridge_round_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRoundCond";
-  src: url('/cambridge_round_bold_cond-webfont.eot');
-  src: url('/cambridge_round_bold_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold_cond-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_bold_cond-webfont.eot');
+  src: url('../fonts/cambridge_round_bold_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold_cond-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRoundCond";
-  src: url('/cambridge_round_cond_it-webfont.eot');
-  src: url('/cambridge_round_cond_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond_it-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_cond_it-webfont.eot');
+  src: url('../fonts/cambridge_round_cond_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('/SquareSerif-Book-webfont.eot');
-  src: url('/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  src: url('../fonts/SquareSerif-Book-webfont.eot');
+  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('/SquareSerif-Bold-webfont.eot');
-  src: url('/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "pyo";
-  src: url('/pyo.eot');
-  src: url('/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('../fonts/pyo.eot');
+  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -466,7 +466,7 @@ optgroup {
   border-style: solid;
   border-width: 0.07143em;
   padding: 0.33929em;
-  background: url('rgbapng/ffffff40.png?1350666569');
+  background: url('../images/rgbapng/ffffff40.png?1350666569');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -475,7 +475,7 @@ optgroup {
   outline: 0;
 }
 
-.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .landing form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .meta .helplink, .post-add-form .form-actions .action-post {
+.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .landing form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .meta .helplink, .login-nav .login-link, .post-add-form .form-actions .action-post {
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
   -ms-border-radius: 0.25em;
@@ -504,16 +504,16 @@ optgroup {
   text-align: center;
   text-transform: capitalize;
 }
-.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .landing form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .landing form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .post-add-form .form-actions .action-post:focus {
+.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .landing form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .login-nav .login-link:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .landing form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .login-nav .login-link:focus, .post-add-form .form-actions .action-post:focus {
   background-color: #9bb300;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .landing form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .post-add-form .form-actions .action-post:active {
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .landing form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .login-nav .login-link:active, .post-add-form .form-actions .action-post:active {
   background-color: #859900;
 }
-.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .landing form .form-actions button:link, .no-students form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .add-student .form-actions button:link, .village-edit-form .form-actions button:link, .dashboard .form-actions button:link, .pjax-error .form-actions button:link, .elder-add-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .meta .helplink:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .landing form .form-actions button:visited, .no-students form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .add-student .form-actions button:visited, .village-edit-form .form-actions button:visited, .dashboard .form-actions button:visited, .pjax-error .form-actions button:visited, .elder-add-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .meta .helplink:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .landing form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .landing form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .landing form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .post-add-form .form-actions .action-post:active {
+.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .landing form .form-actions button:link, .no-students form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .add-student .form-actions button:link, .village-edit-form .form-actions button:link, .dashboard .form-actions button:link, .pjax-error .form-actions button:link, .elder-add-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .meta .helplink:link, .login-nav .login-link:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .landing form .form-actions button:visited, .no-students form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .add-student .form-actions button:visited, .village-edit-form .form-actions button:visited, .dashboard .form-actions button:visited, .pjax-error .form-actions button:visited, .elder-add-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .meta .helplink:visited, .login-nav .login-link:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .landing form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .login-nav .login-link:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .landing form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .login-nav .login-link:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .landing form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .login-nav .login-link:active, .post-add-form .form-actions .action-post:active {
   color: #fdf6e3;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .landing form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .post-add-form .form-actions .action-post:active {
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .landing form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .login-nav .login-link:active, .post-add-form .form-actions .action-post:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
@@ -718,7 +718,7 @@ button {
 .school-field .radio-options, .students-field .check-options, .elders-field .check-options, .groups-field .check-options {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  background: url('rgbapng/ffffff40.png?1350666569');
+  background: url('../images/rgbapng/ffffff40.png?1350666569');
   background: rgba(255, 255, 255, 0.25);
   max-height: 13.14286em;
   border: 1px solid;
@@ -739,7 +739,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .value[disabled] + .type, .select-elders .value[disabled] + .type {
-  background: url('rgbapng/268bd220.png?1350666568');
+  background: url('../images/rgbapng/268bd220.png?1350666568');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -755,7 +755,7 @@ button {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  background: url('rgbapng/ffffff7f.png?1350670976');
+  background: url('../images/rgbapng/ffffff7f.png?1350670976');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -769,7 +769,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('rgbapng/ffffffbf.png?1350670976');
+  background: url('../images/rgbapng/ffffffbf.png?1350670976');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -1037,12 +1037,17 @@ button {
   padding-bottom: 0.31944em;
 }
 
+[role="banner"] {
+  color: #c0c4bb;
+}
+
 .brand {
   font-size: 0.77778em;
   line-height: 1.64286em;
   width: 48.3871%;
   float: left;
   margin-right: 3.22581%;
+  color: #fdf6e3;
 }
 @media (min-width: 43.875em) {
   .brand {
@@ -1256,6 +1261,28 @@ button {
 .login-nav a {
   display: inline-block;
 }
+.login-nav .login-link {
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.10417em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.10417em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background-color: #268bd2;
+  border-color: #16608a;
+}
+.login-nav .login-link:hover, .login-nav .login-link:focus {
+  background-color: #3797db;
+}
+.login-nav .login-link:active {
+  background-color: #268bd2;
+}
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
   max-width: 81em;
@@ -1372,7 +1399,7 @@ button {
 }
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
-  background: url('rgbapng/85990060.png?1350666569');
+  background: url('../images/rgbapng/85990060.png?1350666569');
   background: rgba(133, 153, 0, 0.375);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(133, 153, 0, 0.5)), color-stop(100%, rgba(133, 153, 0, 0.25)));
   background: -webkit-linear-gradient(bottom, rgba(133, 153, 0, 0.5), rgba(133, 153, 0, 0.25));
@@ -1620,7 +1647,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('start-arrow.png?1350666569') no-repeat left bottom;
+  background: url('../images/start-arrow.png?1350666569') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -1664,7 +1691,7 @@ button {
 }
 
 .listitem-select:link, .listitem-select:visited {
-  background: url('rgbapng/eee8d540.png?1350666569');
+  background: url('../images/rgbapng/eee8d540.png?1350666569');
   background: rgba(238, 232, 213, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(238, 232, 213, 0.5)), color-stop(100%, rgba(238, 232, 213, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
@@ -1674,7 +1701,7 @@ button {
   background: linear-gradient(bottom, rgba(238, 232, 213, 0.5), rgba(238, 232, 213, 0.125));
 }
 .title .listitem-select:link, .title .listitem-select:visited {
-  background: url('rgbapng/268bd240.png?1350666568');
+  background: url('../images/rgbapng/268bd240.png?1350666568');
   background: rgba(38, 139, 210, 0.25);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, rgba(38, 139, 210, 0.5)), color-stop(100%, rgba(38, 139, 210, 0.125)));
   background: -webkit-linear-gradient(bottom, rgba(38, 139, 210, 0.5), rgba(38, 139, 210, 0.125));
@@ -1690,7 +1717,7 @@ button {
   color: #fdf6e3;
 }
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
-  background: url('rgbapng/eee8d57f.png?1350666569');
+  background: url('../images/rgbapng/eee8d57f.png?1350666569');
   background: rgba(238, 232, 213, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #eee8d5), color-stop(100%, rgba(238, 232, 213, 0.25)));
   background: -webkit-linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
@@ -1700,7 +1727,7 @@ button {
   background: linear-gradient(bottom, #eee8d5, rgba(238, 232, 213, 0.25));
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('rgbapng/268bd27f.png?1350666568');
+  background: url('../images/rgbapng/268bd27f.png?1350666568');
   background: rgba(38, 139, 210, 0.5);
   background: -webkit-gradient(linear, 50% 100%, 50% 0%, color-stop(0%, #268bd2), color-stop(100%, rgba(38, 139, 210, 0.25)));
   background: -webkit-linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
@@ -1826,7 +1853,7 @@ button {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('rgbapng/0736427f.png?1350666568');
+  background: url('../images/rgbapng/0736427f.png?1350666568');
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
@@ -1956,7 +1983,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('rgbapng/93a1a140.png?1350666569');
+  background: url('../images/rgbapng/93a1a140.png?1350666569');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2119,7 +2146,7 @@ button {
   color: #657b83;
 }
 .elder .vcard.declined {
-  background: url('rgbapng/dc322f20.png?1350666569');
+  background: url('../images/rgbapng/dc322f20.png?1350666569');
   background: rgba(220, 50, 47, 0.125);
 }
 .elder .vcard.declined:before {
@@ -2217,7 +2244,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('rgbapng/002b3640.png?1350666568');
+  background: url('../images/rgbapng/002b3640.png?1350666568');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
