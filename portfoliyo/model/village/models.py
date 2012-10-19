@@ -205,7 +205,6 @@ class BulkPost(BasePost):
                 author_sequence_id=sequence_id,
                 mark_read_url=reverse(
                     'mark_post_read', kwargs={'post_id': sub.id}),
-                unread=True,
                 )
             # mark the sub0-ost unread by all web users in village
             for elder in student.elders:
@@ -279,7 +278,6 @@ class Post(BasePost):
             author_sequence_id=sequence_id,
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
-            unread=True,
             )
 
         return post

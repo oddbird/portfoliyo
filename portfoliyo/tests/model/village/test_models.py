@@ -213,7 +213,6 @@ class TestPostCreate(object):
         assert post_data['student_id'] == rel.student.id
         assert post_data['mark_read_url'] == reverse(
             'mark_post_read', kwargs={'post_id': post.id})
-        assert post_data['unread'] == True
 
 
     def test_pusher_socket_error(self):
