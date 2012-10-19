@@ -46,10 +46,8 @@ $village-nav-action-color : $base03;
   #{$link} {
     @extend %village-activenav;
     @include rgba-background(rgba($village-nav-bg,.25));
-    @include background(linear-gradient(bottom, rgba($village-nav-bg,.5), rgba($village-nav-bg,.125)));
     .title & {
       @include rgba-background(rgba($village-nav-title-bg,.25));
-      @include background(linear-gradient(bottom, rgba($village-nav-title-bg,.5), rgba($village-nav-title-bg,.125)));
       font-weight: bold;
       color: $back;
       &.active {
@@ -64,10 +62,8 @@ $village-nav-action-color : $base03;
   }
   #{$focus} {
     @include rgba-background(rgba($village-nav-bg,.5));
-    @include background(linear-gradient(bottom, rgba($village-nav-bg,1), rgba($village-nav-bg,.25)));
     .title & {
       @include rgba-background(rgba($village-nav-title-bg,.5));
-      @include background(linear-gradient(bottom, rgba($village-nav-title-bg,1), rgba($village-nav-title-bg,.25)));
     }
   }
 
