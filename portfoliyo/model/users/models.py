@@ -407,9 +407,17 @@ def contextualized_elders(queryset):
 
 
 class QuerySetWrapper(object):
-    """Simple QuerySet wrapper that can pass-through filter/exclude."""
+    """Simple QuerySet wrapper that can pass-through filter/exclude/order_by."""
     def __init__(self, queryset):
         self.queryset = queryset
+
+
+    def _mangle_fieldname(self, name):
+        return name
+
+
+    def _mangle_fieldname_kwargs(self, kwargs):
+        return {self._mangle_fieldname(k): v for k, v in kwargs.items()}
 
 
     def filter(self, *args, **kwargs):
@@ -421,8 +429,14 @@ class QuerySetWrapper(object):
 
 
     def _filter_or_exclude(self, negate, *args, **kwargs):
+        kwargs = self._mangle_fieldname_kwargs(kwargs)
         return self.__class__(
             self.queryset._filter_or_exclude(negate, *args, **kwargs))
+
+
+    def order_by(self, *args):
+        args = [self._mangle_fieldname(fn) for fn in args]
+        return self.__class__(self.queryset.order_by(*args))
 
 
 
@@ -444,10 +458,8 @@ class EldersForRelationships(QuerySetWrapper):
             yield rel.elder
 
 
-    def _filter_or_exclude(self, negate, *args, **kwargs):
-        kwargs = {'from_profile__%s' % k: v for k, v in kwargs.items()}
-        return super(EldersForRelationships, self)._filter_or_exclude(
-            negate, *args, **kwargs)
+    def _mangle_fieldname(self, name):
+        return 'from_profile__%s' % name
 
 
 

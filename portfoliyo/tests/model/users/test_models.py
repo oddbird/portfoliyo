@@ -554,7 +554,7 @@ class TestContextualizedElders(object):
 
 
     def test_can_filter_exclude(self):
-        """Can filter/exclude a contextualized queryset of relationships.."""
+        """Can filter/exclude a contextualized queryset of relationships."""
         rel1 = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create()
         factories.RelationshipFactory.create()
@@ -565,3 +565,14 @@ class TestContextualizedElders(object):
             ).exclude(pk=rel2.elder.pk)
 
         assert set(qs) == {rel1.elder}
+
+
+    def test_can_order(self):
+        """Can order a contextualized queryset of relationships."""
+        rel1 = factories.RelationshipFactory.create(from_profile__name='B')
+        rel2 = factories.RelationshipFactory.create(from_profile__name='A')
+        qs = model.contextualized_elders(model.Relationship.objects.all())
+
+        qs = qs.order_by('name')
+
+        assert list(qs) == [rel2.elder, rel1.elder]
