@@ -143,7 +143,7 @@ $input-rhythm: .25;
         color: $base01;
       }
     }
-    &[aria-selected="true"] + .type {
+    &[aria-checked="true"] + .type {
       &:before { color: $blue; }
     }
     &:focus + .type { color: $base03; }
@@ -151,12 +151,12 @@ $input-rhythm: .25;
 
   [type="checkbox"] {
     + .type { @extend %icon-unchecked; }
-    &[aria-selected="true"] + .type { @extend %icon-checked; }
+    &[aria-checked="true"] + .type { @extend %icon-checked; }
   }
 
   [type="radio"] {
     + .type { @extend %icon-radio-unchecked; }
-    &[aria-selected="true"] + .type { @extend %icon-radio-checked; }
+    &[aria-checked="true"] + .type { @extend %icon-radio-checked; }
   }
 }
 
@@ -232,7 +232,7 @@ button { @include reset-button; }
 
 %check-value {
   @include gone;
-  &[aria-selected="true"] + .type { @extend %options-checked; }
+  &[aria-checked="true"] + .type { @extend %options-checked; }
   &[disabled] + .type { @extend %options-disabled; }
 }
 
