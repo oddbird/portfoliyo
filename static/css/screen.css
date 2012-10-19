@@ -2063,7 +2063,6 @@ button {
   background: linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
 }
 .listitem-select .unread {
-  display: none;
   font-size: 1em;
   line-height: 1.23214em;
   -webkit-border-radius: 0.25em;

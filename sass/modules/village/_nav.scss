@@ -72,7 +72,6 @@ $village-nav-action-color : $base03;
   }
 
   .unread {
-    display: none; // @@@ TEMPORARY DISABLING
     @include adjust-font-size-to($smallpx,.75,$village-list-size);
     @include border-radius(.25em);
     @include box-shadow(rgba($back,.5) 0 0 3px inset);
