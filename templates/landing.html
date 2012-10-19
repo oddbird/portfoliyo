@@ -1,72 +1,65 @@
 {% extends "base_site.html" %}
-{% load compress %}
 
 {% block brand %}
 <span class="wordmark">Portfoliyo</span>
 {% endblock brand %}
 
 {% block metanav %}
-<nav class="main-login">
-  <a href="{% url login %}" class="login-link">Login</a>
-  {% include "users/_login_form.html" with form=login_form %}
+<nav class="login-nav">
+  <ul>
+    <li><a href="{% url register %}" class="register-link">Get Started</a> or</li>
+    <li><a href="{% url login %}" class="login-link">Login</a></li>
+  </ul>
 </nav>
 {% endblock metanav %}
 
-{% block content %}
-<article class="village-landing">
-
+{% block maincontent %}
+<article class="landing">
   <section class="intro">
-    <h2 class="tagline">
-      It takes a village to raise a child. <b>Keep the village connected.</b>
-    </h2>
+    <h2>All your parent-teacher communication in one place.</h2>
+    <p>
+      Unite parents and teachers
+      around the education of every child,
+      through frequent and streamlined contact.
+    </p>
+  </section>
 
-    <ul class="summary">
-      <li>Built <strong>for teachers</strong>, <strong>by teachers</strong>.</li>
-      <li>Use your computer to <strong>text parents</strong> in seconds.</li>
-      <li><strong>Parents respond</strong> using any phone or computer.</li>
-      <li><strong>Keep a record</strong> of parent communication.</li>
-    </ul>
+  <section class="call-to-action">
+    <h3><a href="{% url register %}" class="register-link">Get Started Now</a> or login:</h3>
+    <form><p>Login Form</p></form>
+  </section>
 
-    <figure class="screenshot">
-      <img src="{{ STATIC_URL }}images/screenshot.png" alt="Portfoliyo Village Screenshot">
-      <figcaption>
-        Contact Harsh Patel at
-        <span class="email">harsh(put the 'at' sign here)portfoliyo.org</span>
-        or  314-537-1024
-        for more information.
-      </figcaption>
-    </figure>
-
-    <section class="membership">
-      <h3 class="offer">Start your Portfoliyo village.</h3>
-      <p class="offernote">Free during beta!</p>
-      {% include "landing/_form.html" %}
-      <ul class="benefits">
-        <li>Immediate updates as we launch.</li>
-        <li>24/7 on-call help.</li>
-        <li>Discounted lifetime membership.</li>
-        <li>Help shape the future of the project.</li>
-      </ul>
-    </section>
+  <section class="features">
+    <article class="feature-two-way">
+      <h3>2-way communication</h3>
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=post/text">
+      <p>
+        Use your computer to text parents in seconds.
+        Parents respond using any phone.
+      </p>
+    </article>
+    <article class="feature-elders">
+      <h3>Invite other teachers to join the conversation.</h3>
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=elders">
+      <p>
+        Keep the entire faculty in the loop about every student.
+        Add multiple family members to the conversation.
+        Mom, Dad, Grandma, Grandpa...
+      </p>
+    </article>
+    <article class="feature-backlog">
+      <h3>Keep a secure record of parent communication.</h3>
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=backlog">
+      <p>
+        Print logs for RTI binders.
+      </p>
+    </article>
   </section>
 
   <section class="team">
-  <div class="container">
-
-    <article class="vcard pyo">
-      <h3><b class="fn org">Portfoliyo</b> is a tax-exempt 501(c)(3) nonprofit.</h3>
-      <p>
-        We're not trying to become millionaires,
-        we just want to make awesome products
-        for teachers, students, and parents.
-        Your donations are tax-deductible as allowed by law
-        (tax&nbsp;ID&nbsp;46-5167493).
-      </p>
-    </article>
-
     <article id="harsh" class="vcard dev">
       <h3 class="fn">Harsh Patel</h3>
-      <img src="{{ STATIC_URL }}images/landing/harsh.png" alt="" class="photo" />
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=pic" class="photo">
       <p class="bio">
         Harsh is a former 5th and 8th grade teacher who loves inspiring kids to be
         creative, confident, and productive.
@@ -77,7 +70,7 @@
 
     <article id="carl" class="vcard dev">
       <h3 class="fn">Carl Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/carl.png" alt="" class="photo" />
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=pic" class="photo">
       <p class="bio">
         Carl is a coder, Pythonista, and Django core developer.
         When he’s not chasing a more elegant algorithm,
@@ -87,7 +80,7 @@
 
     <article id="peter" class="vcard dev">
       <h3 class="fn">Peter Kuperman</h3>
-      <img src="{{ STATIC_URL }}images/landing/peter.png" alt="" class="photo" />
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=pic" class="photo">
       <p class="bio">
         Peter has a background in money management
         and loves to inspire the people around him to greater heights.
@@ -98,7 +91,7 @@
 
     <article id="jonny" class="vcard dev">
       <h3 class="fn">Jonny Gerig Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/jonny.png" alt="" class="photo" />
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=pic" class="photo">
       <p class="bio">
         Jonny
         is a web developer
@@ -111,7 +104,7 @@
 
     <article id="eric" class="vcard dev">
       <h3 class="fn">Eric Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/eric.png" alt="" class="photo" />
+      <img src="http://fakeimg.pl/350x200/93a1a1/fdf6e3/?text=pic" class="photo">
       <p class="bio">
         Eric
         is a multimedia artist,
@@ -122,8 +115,18 @@
       </p>
     </article>
 
-  </div>
+    {% comment %}
+    <article class="vcard pyo">
+      <h3><b class="fn org">Portfoliyo</b> is a tax-exempt 501(c)(3) nonprofit.</h3>
+      <p>
+        We're not trying to become millionaires,
+        we just want to make awesome products
+        for teachers, students, and parents.
+        Your donations are tax-deductible as allowed by law
+        (tax&nbsp;ID&nbsp;46-5167493).
+      </p>
+    </article>
+    {% endcomment %}
   </section>
-
 </article>
-{% endblock content %}
+{% endblock maincontent %}

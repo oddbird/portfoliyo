@@ -56,13 +56,16 @@ $banner-leading : 1 + $banner-rhythm*2;
 
 // ---------------------------------------------------------------------------
 // Meta
-
-.meta {
+%metanav-base {
   @include adjust-font-size-to($banner-size);
   @include span-columns($half-small omega);
   @include at-breakpoint($break) { @include span-columns($right + 1 omega); }
   position: relative;
   text-align: right;
+}
+
+.meta {
+  @extend %metanav-base;
 
   span, a {
     @extend %icon;
