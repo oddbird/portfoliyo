@@ -176,7 +176,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 .main-login .reset-link, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, #messages .close {
   display: inline-block;
   position: relative;
-  min-width: 1em;
+  width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
@@ -766,7 +766,7 @@ button {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1350609384');
+  background: url('../images/rgbapng/ffffff7f.png?1350682682');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -780,7 +780,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1350609384');
+  background: url('../images/rgbapng/ffffffbf.png?1350682682');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -2203,7 +2203,6 @@ button {
   background: linear-gradient(bottom, #268bd2, rgba(38, 139, 210, 0.25));
 }
 .listitem-select .unread {
-  display: none;
   font-size: 1em;
   line-height: 1.23214em;
   -webkit-border-radius: 0.25em;
@@ -2348,6 +2347,7 @@ button {
   padding-left: 2.12766%;
   padding-right: 2.12766%;
   border-color: #93a1a1;
+  background: #fdf6e3;
 }
 .post:after {
   content: "";
@@ -2359,6 +2359,13 @@ button {
 }
 .post.not-posted {
   background: #fdf4f3;
+}
+.post.old {
+  color: #93a1a1;
+  background: none;
+}
+.post.old .title, .post.old .summary {
+  color: #93a1a1;
 }
 .post .timeout {
   margin-left: -2.12766%;
@@ -2394,6 +2401,7 @@ button {
 .post-meta .pubdate {
   font-size: 0.85714em;
   line-height: 1.91667em;
+  font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
   float: right;
   text-align: right;
 }

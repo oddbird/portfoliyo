@@ -147,17 +147,15 @@ class SimpleToManyField(fields.ToManyField):
 
 
 
-
-class ProfileResource(SoftDeletedResource):
+class SlimProfileResource(SoftDeletedResource):
     invited_by = fields.ForeignKey('self', 'invited_by', blank=True, null=True)
-    elders = SimpleToManyField('self', 'elders')
-    students = SimpleToManyField('self', 'students')
     email = fields.CharField()
 
 
     class Meta(SoftDeletedResource.Meta):
         queryset = model.Profile.objects.filter(
-                deleted=False).select_related('user').order_by('name')
+            deleted=False).select_related(
+            'user').order_by('name')
         resource_name = 'user'
         fields = [
             'id',
@@ -169,8 +167,6 @@ class ProfileResource(SoftDeletedResource):
             'code',
             'invited_by',
             'declined',
-            'elders',
-            'students',
             ]
         filtering = {
             'school_staff': constants.ALL,
@@ -191,7 +187,7 @@ class ProfileResource(SoftDeletedResource):
         student_in_groups = filters.pop('student_in_groups', None)
         elder_in_groups = filters.pop('elder_in_groups', None)
 
-        orm_filters = super(ProfileResource, self).build_filters(filters)
+        orm_filters = super(SlimProfileResource, self).build_filters(filters)
 
         if elders:
             orm_filters['relationships_to__from_profile__in'] = elders
@@ -214,8 +210,21 @@ class ProfileResource(SoftDeletedResource):
             'edit_student',
             kwargs={'student_id': bundle.obj.id},
             )
+        bundle.data['unread_count'] = model.unread.unread_count(
+            bundle.obj, bundle.request.user.profile)
 
         return bundle
+
+
+
+class ProfileResource(SlimProfileResource):
+    elders = SimpleToManyField('self', 'elders')
+    students = SimpleToManyField('self', 'students')
+
+
+    class Meta(SlimProfileResource.Meta):
+        queryset = SlimProfileResource.Meta.queryset.prefetch_related(
+            'relationships_from', 'relationships_to')
 
 
 
@@ -240,12 +249,14 @@ class ElderRelationshipResource(PortfoliyoResource):
 
 class GroupResource(SoftDeletedResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
+    students = fields.ToManyField(SlimProfileResource, 'students', full=True)
 
 
     class Meta(SoftDeletedResource.Meta):
-        queryset = model.Group.objects.filter(deleted=False).order_by('name')
+        queryset = model.Group.objects.filter(
+            deleted=False).order_by('name').prefetch_related('students')
         resource_name = 'group'
-        fields = ['id', 'name', 'owner']
+        fields = ['id', 'name', 'owner', 'students']
         authorization = GroupAuthorization()
         detail_allowed_methods = ['get', 'delete']
 
@@ -253,6 +264,11 @@ class GroupResource(SoftDeletedResource):
     def full_dehydrate(self, bundle):
         """Special handling for all-students group."""
         if bundle.obj.is_all:
+            profile_resource = SlimProfileResource()
+            def dehydrate_student(student):
+                b = profile_resource.build_bundle(
+                    obj=student, request=bundle.request)
+                return profile_resource.full_dehydrate(b)
             bundle.data.update({
                     'id': bundle.obj.id,
                     'name': bundle.obj.name,
@@ -269,7 +285,16 @@ class GroupResource(SoftDeletedResource):
                             'api_name': 'v1',
                             'pk': bundle.obj.owner.id,
                             },
-                        )
+                        ),
+                    'unread_count': sum(
+                        [
+                            model.unread.unread_count(s, bundle.obj.owner)
+                            for s in bundle.obj.owner.students
+                            ]
+                        ),
+                    'students': [
+                        dehydrate_student(s) for s in bundle.obj.owner.students
+                        ],
                     })
         else:
             bundle = super(GroupResource, self).full_dehydrate(bundle)
@@ -291,6 +316,8 @@ class GroupResource(SoftDeletedResource):
             )
         bundle.data['add_student_uri'] = reverse(
             'add_student_in_group', kwargs={'group_id': bundle.obj.id})
+        bundle.data['unread_count'] = model.unread.group_unread_count(
+            bundle.obj, bundle.request.user.profile)
         return bundle
 
 
@@ -325,3 +352,9 @@ class PostResource(PortfoliyoResource):
             'author': ['exact'],
             'student': ['exact'],
             }
+
+
+    def dehydrate(self, bundle):
+        bundle.data['unread'] = model.unread.is_unread(
+            bundle.obj, bundle.request.user.profile)
+        return bundle

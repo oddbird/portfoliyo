@@ -2,6 +2,7 @@
 import datetime
 
 from django.core import mail
+from django.core.urlresolvers import reverse
 from django.utils.timezone import utc
 import mock
 import pytest
@@ -9,7 +10,7 @@ import re
 
 
 from portfoliyo.model.users.models import contextualized_elders
-from portfoliyo.model.village import models
+from portfoliyo.model.village import models, unread
 
 from portfoliyo.tests import factories
 
@@ -136,6 +137,23 @@ class TestPostCreate(object):
             ]
 
 
+    def test_new_post_unread_for_all_web_users_in_village(self):
+        """New post is marked unread for all non-author web users in village."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='foo@example.com')
+        rel2 = factories.RelationshipFactory.create(
+            from_profile__user__email='bar@example.com', to_profile=rel.student)
+        rel3 = factories.RelationshipFactory.create(
+            from_profile__user__email=None, to_profile=rel.student)
+
+        post = models.Post.create(rel.elder, rel.student, 'Foo')
+
+        assert not unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post, rel2.elder)
+        # web users only
+        assert not unread.is_unread(post, rel3.elder)
+
+
     def test_creates_post_from_sms(self):
         """Post object can have from_sms set to True."""
         rel = factories.RelationshipFactory.create()
@@ -208,7 +226,8 @@ class TestPostCreate(object):
         """Triggers a pusher event if get_pusher doesn't return None."""
         rel = factories.RelationshipFactory.create()
 
-        models.Post.create(rel.elder, rel.student, 'Foo\n', sequence_id='33')
+        post = models.Post.create(
+            rel.elder, rel.student, 'Foo\n', sequence_id='33')
 
         channel = mock_get_pusher.return_value['student_%s' % rel.student.id]
         args = channel.trigger.call_args[0]
@@ -218,6 +237,8 @@ class TestPostCreate(object):
         assert post_data['author_sequence_id'] == '33'
         assert post_data['author_id'] == rel.elder.id
         assert post_data['student_id'] == rel.student.id
+        assert post_data['mark_read_url'] == reverse(
+            'mark_post_read', kwargs={'post_id': post.id})
 
 
     def test_pusher_socket_error(self):
@@ -397,6 +418,27 @@ class TestBulkPost(object):
         assert group_post_data['author_id'] == rel.elder.id
         assert student_post_data['student_id'] == rel.student.id
         assert group_post_data['group_id'] == 'all%s' % rel.elder.id
+
+
+    def test_new_post_unread_for_all_web_users_in_village(self):
+        """Sub-post of bulk post marked unread for all web users in village."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='foo@example.com')
+        rel2 = factories.RelationshipFactory.create(
+            from_profile__user__email='bar@example.com', to_profile=rel.student)
+        rel3 = factories.RelationshipFactory.create(
+            from_profile__user__email=None, to_profile=rel.student)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        models.BulkPost.create(rel.elder, group, 'Foo')
+        sub = rel.student.posts_in_village.get()
+
+        # also unread for author
+        assert unread.is_unread(sub, rel.elder)
+        assert unread.is_unread(sub, rel2.elder)
+        # web users only
+        assert not unread.is_unread(sub, rel3.elder)
 
 
     def test_all_students(self):

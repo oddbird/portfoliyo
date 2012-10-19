@@ -8,6 +8,7 @@ from django.utils.timezone import utc
 import mock
 import pytest
 
+from portfoliyo.model import unread
 from portfoliyo.view.village import views
 
 from portfoliyo.tests import factories, utils
@@ -540,6 +541,23 @@ class TestJsonPosts(object):
             return reverse('json_posts')
 
 
+    def test_marks_posts_read(self, client):
+        """Loading the backlog marks all posts in village as read."""
+        rel = factories.RelationshipFactory.create()
+        post = factories.PostFactory.create(student=rel.student)
+        post2 = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(post2, rel.elder)
+
+        assert unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post2, rel.elder)
+
+        client.get(self.url(rel.student), user=rel.elder.user)
+
+        assert not unread.is_unread(post, rel.elder)
+        assert not unread.is_unread(post2, rel.elder)
+
+
     def test_requires_relationship(self, client):
         """Only an elder of that student can get posts."""
         elder = factories.ProfileFactory.create(school_staff=True)
@@ -664,17 +682,18 @@ class TestJsonPosts(object):
         rel = factories.RelationshipFactory.create(
             from_profile__name='Fred')
 
-        factories.PostFactory(
+        post2 = factories.PostFactory(
             timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
             author=rel.elder,
             student=rel.student,
-            html_text='post1',
+            html_text='post2',
             )
+        unread.mark_unread(post2, rel.elder)
         factories.PostFactory(
             timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
             author=rel.elder,
             student=rel.student,
-            html_text='post2',
+            html_text='post1',
             )
         # not in same village, shouldn't be returned
         factories.PostFactory()
@@ -682,7 +701,8 @@ class TestJsonPosts(object):
         response = client.get(self.url(rel.student), user=rel.elder.user)
 
         posts = response.json['posts']
-        assert [p['text'] for p in posts] == ['post2', 'post1']
+        assert [p['text'] for p in posts] == ['post1', 'post2']
+        assert [p['unread'] for p in posts] == [False, True]
 
 
     def test_get_group_posts(self, client):
@@ -759,6 +779,28 @@ class TestJsonPosts(object):
 
         posts = response.json['posts']
         assert [p['text'] for p in posts] == ['post1']
+
+
+
+class TestMarkPostRead(object):
+    def url(self, post):
+        """URL to mark given post read."""
+        return reverse('mark_post_read', kwargs={'post_id': post.id})
+
+
+    def test_mark_read(self, no_csrf_client):
+        """Can mark a post read with POST to dedicated URI."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        post = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+
+        no_csrf_client.post(
+            self.url(post),
+            user=rel.elder.user,
+            status=202)
+
+        assert not unread.is_unread(post, rel.elder)
 
 
 
