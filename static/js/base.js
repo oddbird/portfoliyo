@@ -24,25 +24,26 @@ var PYO = (function (PYO, $) {
         DOWN: 40
     };
 
-    PYO.ieInputBootstrap = function () {
+    PYO.ieInputBootstrap = function (input) {
+        if (input.is(':checked')) {
+            input.attr('aria-checked', true);
+        } else {
+            input.removeAttr('aria-checked');
+        }
+    };
+
+    PYO.ieInputBootstrapHandler = function () {
         $('body').on('change', 'input:radio, input:checkbox', function () {
             var el = $(this);
-            var updateAttr = function (input) {
-                if (input.is(':checked')) {
-                    input.attr('aria-selected', true);
-                } else {
-                    input.removeAttr('aria-selected');
-                }
-            };
 
             if (el.is(':radio')) {
                 var form = el.closest('form');
                 var name = el.attr('name');
                 form.find('input:radio[name="' + name + '"]').each(function () {
-                    updateAttr($(this));
+                    PYO.ieInputBootstrap($(this));
                 });
             } else {
-                updateAttr(el);
+                PYO.ieInputBootstrap(el);
             }
         });
     };
@@ -291,6 +292,9 @@ var PYO = (function (PYO, $) {
         if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
+        $('body').find('input:radio, input:checkbox').each(function () {
+            PYO.ieInputBootstrap($(this));
+        });
     };
 
     return PYO;
