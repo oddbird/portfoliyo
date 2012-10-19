@@ -2195,6 +2195,7 @@ button {
   left: 0;
   right: 0;
   bottom: 4.47222em;
+  background: #fefbf1;
 }
 
 .post {
@@ -2206,26 +2207,12 @@ button {
   padding-left: 2.12766%;
   padding-right: 2.12766%;
   border-color: #93a1a1;
+  background: #fdf6e3;
 }
 .post:after {
   content: "";
   display: table;
   clear: both;
-}
-.old + .post:before {
-  margin-left: -2.12766%;
-  padding-left: 2.12766%;
-  margin-right: -2.12766%;
-  padding-right: 2.12766%;
-  padding-top: 0.41071em;
-  padding-bottom: 0.41071em;
-  text-shadow: #073642 0 -1px 0;
-  content: "new posts ▼";
-  display: block;
-  background: #657b83;
-  color: #fdf6e3;
-  text-align: center;
-  text-transform: uppercase;
 }
 .post.mine {
   background: #e3f1fa;
@@ -2234,15 +2221,11 @@ button {
   background: #fdf4f3;
 }
 .post.old {
-  background: url('../images/rgbapng/fffefb7f.png?1350678690');
-  background: rgba(255, 254, 251, 0.5);
+  color: #93a1a1;
+  background: none;
 }
-.post.old.mine {
-  background: url('../images/rgbapng/e3f1fa7f.png?1350678337');
-  background: rgba(227, 241, 250, 0.5);
-}
-.old + .post.old:before {
-  display: none;
+.post.old .title, .post.old .summary {
+  color: #93a1a1;
 }
 .post .timeout {
   margin-left: -2.12766%;

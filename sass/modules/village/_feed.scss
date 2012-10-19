@@ -6,6 +6,7 @@
   left: 0;
   right: 0;
   bottom: rhythm(3.5);
+  background: lighten($base3,3);
 }
 
 $post-byline-cols : 2;
@@ -21,26 +22,14 @@ $post-h-padding   : gutter($center);
   padding-left: $post-h-padding;
   padding-right: $post-h-padding;
   border-color: $base1;
+  background: $base3;
 
-  .old + &:before {
-    @include bleed($post-h-padding);
-    @include padding-leader(.25,$post-size);
-    @include padding-trailer(.25,$post-size);
-    @include text-shadow($back 0 -1px 0);
-    content: "new posts ▼";
-    display: block;
-    background: $base;
-    color: $base3;
-    text-align: center;
-    text-transform: uppercase;
-  }
   &.mine { background: lighten($blue,45); }
   &.not-posted { background: lighten($red,45); }
-
   &.old {
-    @include rgba-background(rgba(lighten($base3,5),.5));
-    &.mine { @include rgba-background(rgba(lighten($blue,45),.5)); }
-    .old + &:before { display: none; }
+    color: $base1;
+    background: none;
+    .title, .summary { color: $base1; }
   }
 
   .timeout {
