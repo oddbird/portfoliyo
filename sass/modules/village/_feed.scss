@@ -72,9 +72,10 @@ $post-h-padding   : gutter($center);
   .details-body {
     @include bleed($post-h-padding);
     @include trailer($post-v-padding);
-    @include css-arrow(bottom, .375em, $back);
+    @include css-arrow(bottom, .375em, $base1);
     display: none;
-    background: $back;
+    background: $base1;
+    color: $base3;
     &:after { left: $post-h-padding; margin-left: 0; }
   }
 }
