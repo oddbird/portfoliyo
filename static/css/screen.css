@@ -2417,9 +2417,10 @@ button {
   padding-right: 2.12766%;
   margin-bottom: 0.31944em;
   position: relative;
-  background: #073642;
+  background: #93a1a1;
   display: none;
-  background: #073642;
+  background: #93a1a1;
+  color: #fdf6e3;
 }
 .sms-info .details-body:after, .sms-info .details-body:before {
   top: 100%;
@@ -2431,7 +2432,7 @@ button {
   pointer-events: none;
 }
 .sms-info .details-body:after {
-  border-top-color: #073642;
+  border-top-color: #93a1a1;
   border-width: 0.375em;
   left: 50%;
   margin-left: -0.375em;
