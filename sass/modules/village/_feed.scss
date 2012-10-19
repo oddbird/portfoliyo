@@ -38,7 +38,7 @@ $post-h-padding   : gutter($center);
   &.not-posted { background: lighten($red,45); }
 
   &.old {
-    .title, .summary, .post-text { color: $base1; }
+    @include rgba-background(rgba(lighten($base3,5),.5));
     &.mine { @include rgba-background(rgba(lighten($blue,45),.5)); }
     .old + &:before { display: none; }
   }

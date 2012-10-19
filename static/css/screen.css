@@ -2233,8 +2233,9 @@ button {
 .post.not-posted {
   background: #fdf4f3;
 }
-.post.old .title, .post.old .summary, .post.old .post-text {
-  color: #93a1a1;
+.post.old {
+  background: url('../images/rgbapng/fffefb7f.png?1350678690');
+  background: rgba(255, 254, 251, 0.5);
 }
 .post.old.mine {
   background: url('../images/rgbapng/e3f1fa7f.png?1350678337');
