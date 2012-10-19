@@ -42,3 +42,8 @@ def elder_status_description(elder, current):
 @register.filter
 def contextualized_elders(queryset):
     return model.contextualized_elders(queryset)
+
+
+@register.filter
+def order(qs, order_by):
+    return qs.order_by(*order_by.split(','))
