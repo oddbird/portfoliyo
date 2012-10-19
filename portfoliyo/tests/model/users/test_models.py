@@ -177,7 +177,7 @@ class TestProfile(object):
         """elders property is list of profiles."""
         rel = factories.RelationshipFactory.create()
 
-        assert rel.student.elders == [rel.elder]
+        assert list(rel.student.elders) == [rel.elder]
 
 
     def test_students(self):

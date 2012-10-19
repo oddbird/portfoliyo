@@ -541,7 +541,7 @@ class TestStudentForms(object):
 
         assert profile.name == u"Some Student"
         assert profile.invited_by == elder
-        assert profile.elders == [elder]
+        assert list(profile.elders) == [elder]
         assert rel.elder == elder
         assert rel.student == profile
 

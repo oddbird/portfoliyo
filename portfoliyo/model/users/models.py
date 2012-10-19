@@ -162,7 +162,7 @@ class Profile(models.Model):
 
     @property
     def elders(self):
-        return [rel.from_profile for rel in self.elder_relationships]
+        return contextualized_elders(self.elder_relationships)
 
 
     @property
