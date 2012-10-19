@@ -70,10 +70,10 @@ class Profile(models.Model):
     def __unicode__(self):
         return (
             self.name or
+            self.user.email or
             getattr(self, 'role_in_context', None) or
             self.role or
             self.phone or
-            self.user.email or
             u'<unknown>'
             )
 
@@ -157,7 +157,7 @@ class Profile(models.Model):
     def elder_relationships(self):
         return self.relationships_to.filter(
             kind=Relationship.KIND.elder, from_profile__deleted=False).order_by(
-            'description').select_related("from_profile")
+            'from_profile__name').select_related("from_profile")
 
 
     @property

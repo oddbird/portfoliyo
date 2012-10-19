@@ -83,8 +83,15 @@ class TestProfile(object):
         assert unicode(profile) == u"Some Name"
 
 
+    def test_unicode_email(self):
+        """If no name, unicode of a Profile is email."""
+        profile = factories.ProfileFactory.create(user__email="foo@example.com")
+
+        assert unicode(profile) == u"foo@example.com"
+
+
     def test_unicode_role_in_context(self):
-        """If no name, unicode of a Profile is its role_in_context."""
+        """If no name/email, unicode of a Profile is its role_in_context."""
         profile = factories.ProfileFactory.build()
         profile.role_in_context = u"Foo"
 
@@ -92,24 +99,17 @@ class TestProfile(object):
 
 
     def test_unicode_role(self):
-        """If no name/role_in_context, unicode Profile is its role."""
+        """If no name/email/role_in_context, unicode Profile is its role."""
         profile = factories.ProfileFactory.build(role="Foo")
 
         assert unicode(profile) == u"Foo"
 
 
     def test_unicode_phone(self):
-        """If no name/role, unicode representation of a Profile is its phone."""
+        """If no name/email/role, unicode of a Profile is its phone."""
         profile = factories.ProfileFactory.build(phone="+13216540987")
 
         assert unicode(profile) == u"+13216540987"
-
-
-    def test_unicode_email(self):
-        """If no name/role/phone, unicode of a Profile is email."""
-        profile = factories.ProfileFactory.create(user__email="foo@example.com")
-
-        assert unicode(profile) == u"foo@example.com"
 
 
     def test_unicode_unknown(self):
