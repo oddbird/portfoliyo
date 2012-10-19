@@ -27,7 +27,7 @@
   @extend %icon;
   display: inline-block;
   position: relative;
-  min-width: 1em;
+  width: 1em;
   text-indent: -9999px;
   text-align: left;
   &:focus {
