@@ -1,6 +1,5 @@
 """Tests for village forms."""
 from django.core import mail
-import mock
 
 from portfoliyo.view.village import forms
 
@@ -247,8 +246,7 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(
             self.data(contact='(321)456-7890', relationship='father'), rel=rel)
         assert form.is_valid(), dict(form.errors)
-        request = mock.Mock()
-        profile = form.save(request)
+        profile = form.save()
 
         assert profile.phone == u'+13214567890'
         assert not profile.school_staff
@@ -267,10 +265,7 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(
             self.data(contact='bar@EXAMPLE.com'), rel=rel)
         assert form.is_valid(), dict(form.errors)
-        request = mock.Mock()
-        request.get_host.return_value = 'portfoliyo.org'
-        request.is_secure.return_value = False
-        profile = form.save(request)
+        profile = form.save()
 
         assert profile.user.email == u'bar@example.com'
         assert profile.school_staff
@@ -289,7 +284,7 @@ class TestInviteElderForm(object):
             rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(mock.Mock())
+        profile = form.save()
 
         assert set(profile.elder_in_groups.all()) == {group}
         assert set(profile.students) == {rel.student, rel2.student}
@@ -318,7 +313,7 @@ class TestInviteElderForm(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        form.save(mock.Mock())
+        form.save()
 
         assert utils.refresh(group_rel).from_group is None
 
@@ -337,7 +332,7 @@ class TestInviteElderForm(object):
             rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(mock.Mock())
+        profile = form.save()
 
         assert set(profile.students) == {rel.student, rel2.student}
 
@@ -352,7 +347,7 @@ class TestInviteElderForm(object):
         form = forms.InviteElderForm(
             self.data(contact='foo@example.com', groups=[]), rel=rel)
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(mock.Mock())
+        profile = form.save()
 
         assert set(profile.elder_in_groups.all()) == {group}
 
@@ -380,7 +375,7 @@ class TestInviteElderForm(object):
         rel = factories.RelationshipFactory()
         form = forms.InviteElderForm(self.data(contact='+12345678909'), rel=rel)
         assert form.is_valid()
-        profile = form.save(mock.Mock())
+        profile = form.save()
 
         assert profile.invited_by == rel.elder
 
@@ -390,7 +385,7 @@ class TestInviteElderForm(object):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteElderForm(self.data(), rel=rel)
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(mock.Mock())
+        profile = form.save()
 
         assert not profile.user.is_active
 
@@ -400,7 +395,7 @@ class TestInviteElderForm(object):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteElderForm(self.data(contact='+13216540987'), rel=rel)
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(mock.Mock())
+        profile = form.save()
 
         assert profile.user.is_active
 
@@ -425,7 +420,7 @@ class TestInviteElderForm(object):
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(None)
+        profile = form.save()
 
         assert elder == profile
 
@@ -444,7 +439,7 @@ class TestInviteElderForm(object):
             rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        p = form.save(None)
+        p = form.save()
 
         assert p.role == u"math teacher"
         assert p.student_relationships[0].description == u"science teacher"
@@ -458,7 +453,7 @@ class TestInviteElderForm(object):
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(None)
+        profile = form.save()
 
         assert elder == profile
 
@@ -472,7 +467,7 @@ class TestInviteElderForm(object):
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(None)
+        profile = form.save()
 
         assert elder == profile
         assert profile.school_staff
@@ -486,7 +481,7 @@ class TestInviteElderForm(object):
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(None)
+        profile = form.save()
 
         assert elder == profile
         assert profile.role == u'foo'
@@ -502,7 +497,7 @@ class TestInviteElderForm(object):
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(None)
+        profile = form.save()
 
         assert elder == profile
         assert profile.role == u'something'
@@ -516,7 +511,7 @@ class TestInviteElderForm(object):
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(None)
+        profile = form.save()
 
         assert elder == profile
         assert not profile.school_staff
@@ -528,7 +523,7 @@ class TestInviteElderForm(object):
         rel = factories.RelationshipFactory(from_profile__phone='+13214567890')
         form = forms.InviteElderForm(self.data(contact=rel.elder.phone), rel=rel)
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(None)
+        profile = form.save()
 
         assert rel.elder == profile
         assert len(profile.students) == 1

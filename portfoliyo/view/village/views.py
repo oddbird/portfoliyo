@@ -198,7 +198,7 @@ def invite_elder(request, student_id=None, group_id=None):
     if request.method == 'POST':
         form = forms.InviteElderForm(request.POST, **form_kwargs)
         if form.is_valid():
-            form.save(request)
+            form.save()
             if rel:
                 return redirect_to_village(
                     rel.student, template_context.get('group'))

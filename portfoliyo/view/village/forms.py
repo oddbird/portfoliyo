@@ -27,6 +27,7 @@ class GroupCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
     template_name = 'village/group_checkbox_select.html'
 
 
+
 class GroupIdsMultipleChoiceField(TemplateLabelModelMultipleChoiceField):
     # subclasses should override
     groups_attr = None
@@ -223,13 +224,8 @@ class InviteElderForm(ElderFormBase):
                 "Please supply a valid email address or US mobile number.")
 
 
-    def save(self, request):
-        """
-        Save/return new elder profile and send invites, or return existing.
-
-        Takes request (for details needed for email invite).
-
-        """
+    def save(self):
+        """Save/return new elder profile & send invites, or return existing."""
         email = self.cleaned_data.get("email")
         phone = self.cleaned_data.get("phone")
         relationship = self.cleaned_data.get("relationship", u"")
@@ -272,12 +268,10 @@ class InviteElderForm(ElderFormBase):
                     profile.user,
                     email_template_name='registration/invite_elder_email.txt',
                     subject_template_name='registration/invite_elder_subject.txt',
-                    use_https=request.is_secure(),
                     extra_context={
                         'inviter': self.editor,
                         'student': self.rel.student if self.rel else None,
                         'inviter_rel': self.rel,
-                        'domain': request.get_host(),
                         },
                     )
             else:
