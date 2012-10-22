@@ -351,6 +351,27 @@ var PYO = (function (PYO, $) {
         });
     };
 
+    PYO.initializeSmsDirectLinks = function () {
+        var context = $('.village-main');
+        var textarea = context.find('#post-text');
+
+        $('body').on('click', '.village-elders .elder .action-sms', function (e) {
+            e.preventDefault();
+            var el = $(this);
+            var name = el.data('name');
+
+            if (textarea.length) {
+                textarea.focus();
+                var form = context.find('.post-add-form');
+                var select = form.find('#sms-target');
+                select.multiselect('uncheckAll');
+                select.multiselect('widget').find('input[title="' + name + '"]').each(function () {
+                    this.click();
+                });
+            }
+        });
+    };
+
     PYO.markPostsRead = function () {
         var feed = $('.village-feed');
         var nav = $('.village-nav');
