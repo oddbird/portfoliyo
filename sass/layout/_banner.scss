@@ -73,6 +73,7 @@ $banner-leading : 1 + $banner-rhythm*2;
 
   .settingslink { @extend %ellipsis; }
   .helplink {
+    @extend %icon-replace;
     @extend %icon-help;
     @extend %button;
     @include button-color($orange);
@@ -80,6 +81,21 @@ $banner-leading : 1 + $banner-rhythm*2;
     @include leader($banner-rhythm/2, $banner-size);
     float: right;
     margin-left: 1em;
+
+    @include box-sizing(content-box);
+    padding-left: .4em;
+    padding-right: .4em;
+    @include at-breakpoint($break) {
+      text-indent: 0;
+      width: auto;
+      padding-left: 1em;
+      padding-right: 1em;
+      &:before {
+        position: static;
+        padding: 0;
+        margin-right: .4em;
+      }
+    }
   }
   [href*="edit"] { @extend %icon-settings; }
   [href*="password"] { @extend %icon-key; }
