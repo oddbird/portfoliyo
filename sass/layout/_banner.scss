@@ -158,3 +158,20 @@ $useraction-background    : $base01;
   .meta:hover & { display: block; }
 }
 
+// ---------------------------------------------------------------------------
+// Login
+
+.login-nav {
+  @extend %metanav-base;
+  ul { @include inline-list; }
+  a {
+    @extend %banner-item;
+    display: inline-block;
+  }
+
+  .login-link {
+    @extend %button;
+    @include small-button;
+    @include button-color($blue);
+  }
+}

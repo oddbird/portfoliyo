@@ -1239,6 +1239,40 @@ button {
   display: block;
 }
 
+.login-nav ul {
+  list-style-type: none;
+}
+.login-nav ul, .login-nav ul li {
+  margin: 0px;
+  padding: 0px;
+  display: inline;
+}
+.login-nav a {
+  display: inline-block;
+}
+.login-nav .login-link {
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.10417em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.10417em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background-color: #268bd2;
+  border-color: #16608a;
+}
+.login-nav .login-link:hover, .login-nav .login-link:focus {
+  background-color: #3797db;
+}
+.login-nav .login-link:active {
+  background-color: #268bd2;
+}
+
 [role="main"] {
   color: #657b83;
   background: #fdf6e3;
@@ -1308,40 +1342,6 @@ button {
 
 .add-school.fieldset {
   display: none;
-}
-
-.login-nav ul {
-  list-style-type: none;
-}
-.login-nav ul, .login-nav ul li {
-  margin: 0px;
-  padding: 0px;
-  display: inline;
-}
-.login-nav a {
-  display: inline-block;
-}
-.login-nav .login-link {
-  border-top-style: solid;
-  border-top-width: 0.05556em;
-  padding-top: 0.10417em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.05556em;
-  padding-bottom: 0.10417em;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
-  background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background-color: #268bd2;
-  border-color: #16608a;
-}
-.login-nav .login-link:hover, .login-nav .login-link:focus {
-  background-color: #3797db;
-}
-.login-nav .login-link:active {
-  background-color: #268bd2;
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
