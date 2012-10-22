@@ -212,7 +212,7 @@ class BulkPost(BasePost):
                 mark_read_url=reverse(
                     'mark_post_read', kwargs={'post_id': sub.id}),
                 )
-            # mark the sub0-ost unread by all web users in village
+            # mark the subpost unread by all web users in village
             for elder in student.elders:
                 if elder.user.email:
                     unread.mark_unread(sub, elder)
@@ -479,7 +479,12 @@ def post_dict(post, **extra):
         'sms': post.sms,
         'to_sms': post.to_sms,
         'from_sms': post.from_sms,
-        'meta': post.meta,
+        'meta': {
+            'highlights': [
+                {'sms_sent': h.get('sms_sent', False), 'role': h['role']}
+                for h in post.meta.get('highlights', [])
+                ]
+            },
         }
 
     data.update(post.extra_data())
