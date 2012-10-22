@@ -27,18 +27,15 @@ $announce-width: $break-cols - $brand-width - $meta-width;
 
 .brand {
   @include adjust-font-size-to($banner-size);
-  @include span-columns($half-small);
+  @include span-columns(3);
   color: $base3;
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
-    @include adjust-leading-to($banner-leading, $banner-size);
-    height: rhythm($banner-leading, $banner-size);
-    display: block;
-    overflow: hidden;
+    @extend %banner-item;
+    display: inline-block;
     font-weight: bold;
-    white-space: nowrap;
-    &:before { margin: 0; }
+    &:before { line-height: 1; }
   }
 
   @include at-breakpoint($break) { @include span-columns($brand-width); }
@@ -86,7 +83,7 @@ $announce-width: $break-cols - $brand-width - $meta-width;
 // Meta
 %metanav-base {
   @include adjust-font-size-to($banner-size);
-  @include span-columns($half-small omega);
+  @include span-columns(5 omega);
   @include at-breakpoint($break) { @include span-columns($meta-width omega); }
   .village-app & { @include span-columns($meta-width omega, $break-cols); }
   position: relative;
