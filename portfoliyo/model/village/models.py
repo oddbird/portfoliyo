@@ -120,7 +120,13 @@ class BasePost(models.Model):
 
 
     def send_event(self, channel, **kwargs):
-        """Send Pusher event for this Post, if Pusher is configured."""
+        """
+        Send Pusher event for this Post, if Pusher is configured.
+
+        Catch all exceptions from Pusher and log them to Sentry, but proceed -
+        a Pusher failure is never worth aborting the post over.
+
+        """
         pusher = get_pusher()
         if pusher is not None:
             try:
@@ -128,8 +134,8 @@ class BasePost(models.Model):
                     'message_posted',
                     {'posts': [post_dict(self, **kwargs)]},
                     )
-            except socket.error as e:
-                logger.error("Pusher socket error: %s" % str(e))
+            except Exception as e:
+                logger.error("Pusher exception: %s" % str(e))
 
 
 
