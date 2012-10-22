@@ -58,7 +58,7 @@ def test_post_dict():
         'sms': False,
         'to_sms': False,
         'from_sms': False,
-        'meta': {},
+        'meta': {'sms': []},
         }
 
 
@@ -261,7 +261,31 @@ class TestPostCreate(object):
                 models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
 
         mock_logger_error.assert_called_with(
-            "Pusher socket error: connection timed out")
+            "Pusher exception: connection timed out")
+
+
+    def test_pusher_bad_response(self):
+        """
+        Any exception from Pusher is ignored and logged to Sentry.
+
+        Pusher is not critical enough to be worth causing the post to fail.
+
+        """
+        rel = factories.RelationshipFactory.create()
+
+        get_pusher_location = 'portfoliyo.model.village.models.get_pusher'
+        logger_error_location = 'portfoliyo.model.village.models.logger.error'
+        with mock.patch(get_pusher_location) as mock_get_pusher:
+            channel = mock_get_pusher.return_value[
+                'student_%s' % rel.student.id]
+            channel.trigger.side_effect = Exception(
+                'Unexpected return status 413')
+
+            with mock.patch(logger_error_location) as mock_logger_error:
+                models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
+
+        mock_logger_error.assert_called_with(
+            "Pusher exception: Unexpected return status 413")
 
 
 

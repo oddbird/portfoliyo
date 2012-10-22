@@ -25,6 +25,15 @@
     </nav>
     {% endif %}
     {% endblock metanav %}
+
+    {% block announce %}
+      <div class="announcements">
+        <p class="announce">
+          New features! <a href="#">Read more...</a>
+          <a href="#" class="close">close</a>
+        </p>
+      </div>
+    {% endblock announce %}
   </div>
 
   {% block content %}
