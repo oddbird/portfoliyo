@@ -557,7 +557,8 @@ $.widget("ech.multiselect", {
 		}
 
 		// set the scroll of the checkbox container
-		$container.scrollTop(0).height(o.height);
+		// $container.scrollTop(0).height(o.height);
+		$container.scrollTop(0);
 
 		// position and show menu
 		if( $.ui.position && !$.isEmptyObject(o.position) ){
