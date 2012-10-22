@@ -15,13 +15,18 @@ $banner-leading : 1 + $banner-rhythm*2;
 
 [role="banner"] { @extend %boilerplate; }
 
+$brand-width: $left;
+$meta-width: $right + 1;
+$announce-width: $break-cols - $brand-width - $meta-width;
+
 // ---------------------------------------------------------------------------
 // Brand
 
 .brand {
   @include adjust-font-size-to($banner-size);
   @include span-columns($half-small);
-  @include at-breakpoint($break) { @include span-columns($left + 2); }
+  @include at-breakpoint($break) { @include span-columns($brand-width); }
+  .village-app & { @include span-columns($brand-width, $break-cols); }
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
@@ -36,23 +41,41 @@ $banner-leading : 1 + $banner-rhythm*2;
 }
 
 // ---------------------------------------------------------------------------
-// Navigation
+// Announcements
 
-// $nav-span: $center;
+.announcements {
+  @extend %banner-item;
+  @include adjust-font-size-to($banner-size);
+  clear: both;
+  color: inherit;
+  .announce {
+    @extend %icon;
+    @extend %icon-warning;
+    @extend %button;
+    @include button-color($blue);
+    display: inline-block;
+    padding: 0 .5em;
+  }
+  a {
+    #{$link} { color: adjust-color($accent, $lightness: 35%); }
+    #{$focus} { color: adjust-color($accent, $lightness: 45%); }
+  }
 
-// [role="navigation"] {
-//   @include span-columns($nav-span);
-//   ul { @include no-style-list; }
-//   li {
-//     float: left;
-//     width: auto;
-//     margin-right: gutter($nav-span);
-//     min-width: columns(1,$nav-span);
-//   }
-//   .me { @extend %icon; @extend %icon-comments; }
-//   .net { @extend %icon; @extend %icon-users; }
-//   .myvillage { @extend %icon; @extend %icon-fire; }
-// }
+  .close {
+    @extend %icon-replace;
+    @extend %icon-x-alt;
+    margin-left: 1em;
+  }
+
+  @include at-breakpoint($break) {
+    @include span-columns($announce-width);
+    clear: none;
+  }
+  .village-app & {
+    @include span-columns($announce-width,$break-cols);
+    clear: none;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Meta
@@ -60,7 +83,8 @@ $banner-leading : 1 + $banner-rhythm*2;
 .meta {
   @include adjust-font-size-to($banner-size);
   @include span-columns($half-small omega);
-  @include at-breakpoint($break) { @include span-columns($right + 1 omega); }
+  @include at-breakpoint($break) { @include span-columns($meta-width omega); }
+  .village-app & { @include span-columns($meta-width omega, $break-cols); }
   position: relative;
   text-align: right;
 
@@ -77,19 +101,15 @@ $banner-leading : 1 + $banner-rhythm*2;
     @extend %icon-help;
     @extend %button;
     @include button-color($orange);
-    @include small-button;
     @include leader($banner-rhythm/2, $banner-size);
     float: right;
     margin-left: 1em;
+    padding: 0 .5em;
 
     @include box-sizing(content-box);
-    padding-left: .4em;
-    padding-right: .4em;
     @include at-breakpoint($break) {
       text-indent: 0;
       width: auto;
-      padding-left: 1em;
-      padding-right: 1em;
       &:before {
         position: static;
         padding: 0;

@@ -162,31 +162,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.announcements .close:before, .meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
+.announcements .close:before, .meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
-.meta .helplink, .main-login .reset-link, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, #messages .close {
+.announcements .close, .meta .helplink, .main-login .reset-link, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, #messages .close {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.meta .helplink:focus, .main-login .reset-link:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus, #messages .close:focus {
+.announcements .close:focus, .meta .helplink:focus, .main-login .reset-link:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus, #messages .close:focus {
   outline: 0;
 }
-.meta .helplink:focus:before, .main-login .reset-link:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, #messages .close:focus:before {
+.announcements .close:focus:before, .meta .helplink:focus:before, .main-login .reset-link:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before {
+.announcements .close:before, .meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -247,7 +247,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2717";
 }
 
-.ui-icon-circle-close:before, #messages .close:before {
+.ui-icon-circle-close:before, .announcements .close:before, #messages .close:before {
   content: "\2718";
 }
 
@@ -255,7 +255,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\69";
 }
 
-.elder .vcard.inactive:before, .message.warning:before {
+.announcements .announce:before, .elder .vcard.inactive:before, .message.warning:before {
   content: "\26a0";
 }
 
@@ -486,7 +486,7 @@ optgroup {
   outline: 0;
 }
 
-.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .main-login .form-actions button, .village-landing .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .meta .helplink, .village-landing .formfield .action-betasignup, .post-add-form .form-actions .action-post {
+.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .main-login .form-actions button, .village-landing .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .announcements .announce, .meta .helplink, .village-landing .formfield .action-betasignup, .post-add-form .form-actions .action-post {
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
   -ms-border-radius: 0.25em;
@@ -515,16 +515,16 @@ optgroup {
   text-align: center;
   text-transform: capitalize;
 }
-.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus {
+.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .announcements .announce:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .announcements .announce:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus {
   background-color: #9bb300;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .announcements .announce:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
   background-color: #859900;
 }
-.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .no-students form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .main-login .form-actions button:link, .village-landing .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .add-student .form-actions button:link, .village-edit-form .form-actions button:link, .dashboard .form-actions button:link, .pjax-error .form-actions button:link, .elder-add-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .meta .helplink:link, .village-landing .formfield .action-betasignup:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .no-students form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .main-login .form-actions button:visited, .village-landing .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .add-student .form-actions button:visited, .village-edit-form .form-actions button:visited, .dashboard .form-actions button:visited, .pjax-error .form-actions button:visited, .elder-add-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .meta .helplink:visited, .village-landing .formfield .action-betasignup:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .no-students form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .main-login .form-actions button:link, .village-landing .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .add-student .form-actions button:link, .village-edit-form .form-actions button:link, .dashboard .form-actions button:link, .pjax-error .form-actions button:link, .elder-add-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .announcements .announce:link, .meta .helplink:link, .village-landing .formfield .action-betasignup:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .no-students form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .main-login .form-actions button:visited, .village-landing .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .add-student .form-actions button:visited, .village-edit-form .form-actions button:visited, .dashboard .form-actions button:visited, .pjax-error .form-actions button:visited, .elder-add-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .announcements .announce:visited, .meta .helplink:visited, .village-landing .formfield .action-betasignup:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .announcements .announce:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .announcements .announce:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .announcements .announce:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
   color: #fdf6e3;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .announcements .announce:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
@@ -1025,7 +1025,7 @@ button {
   color: rgba(238, 232, 213, 0.75);
 }
 
-.meta span, .meta a, .meta button {
+.announcements, .meta span, .meta a, .meta button {
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
 }
@@ -1039,13 +1039,18 @@ button {
 }
 @media (min-width: 43.875em) {
   .brand {
-    width: 29.11392%;
+    width: 18.98734%;
     float: left;
     margin-right: 1.26582%;
   }
 }
 .lt-ie9 .brand {
-  width: 29.11392%;
+  width: 18.98734%;
+  float: left;
+  margin-right: 1.26582%;
+}
+.village-app .brand {
+  width: 18.98734%;
   float: left;
   margin-right: 1.26582%;
 }
@@ -1059,6 +1064,60 @@ button {
 }
 .brand .wordmark:before {
   margin: 0;
+}
+
+.announcements {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  clear: both;
+  color: inherit;
+}
+.announcements .announce {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background-color: #268bd2;
+  border-color: #16608a;
+  display: inline-block;
+  padding: 0 .5em;
+}
+.announcements .announce:hover, .announcements .announce:focus {
+  background-color: #3797db;
+}
+.announcements .announce:active {
+  background-color: #268bd2;
+}
+.announcements a:link, .announcements a:visited {
+  color: #f3c8dd;
+}
+.announcements a:focus, .announcements a:hover, .announcements a:active {
+  color: #fcf2f7;
+}
+.announcements .close {
+  margin-left: 1em;
+}
+@media (min-width: 43.875em) {
+  .announcements {
+    width: 54.43038%;
+    float: left;
+    margin-right: 1.26582%;
+    clear: none;
+  }
+}
+.lt-ie9 .announcements {
+  width: 54.43038%;
+  float: left;
+  margin-right: 1.26582%;
+  clear: none;
+}
+.village-app .announcements {
+  width: 54.43038%;
+  float: left;
+  margin-right: 1.26582%;
+  clear: none;
 }
 
 .meta {
@@ -1082,6 +1141,11 @@ button {
   float: right;
   margin-right: 0;
 }
+.village-app .meta {
+  width: 24.05063%;
+  float: right;
+  margin-right: 0;
+}
 .meta span, .meta a {
   display: block;
 }
@@ -1094,20 +1158,13 @@ button {
   background: linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background-color: #cb4b16;
   border-color: #69402c;
-  border-top-style: solid;
-  border-top-width: 0.05556em;
-  padding-top: 0.10417em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.05556em;
-  padding-bottom: 0.10417em;
   margin-top: 0.20536em;
   float: right;
   margin-left: 1em;
+  padding: 0 .5em;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  padding-left: .4em;
-  padding-right: .4em;
 }
 .meta .helplink:hover, .meta .helplink:focus {
   background-color: #e25418;
@@ -1119,8 +1176,6 @@ button {
   .meta .helplink {
     text-indent: 0;
     width: auto;
-    padding-left: 1em;
-    padding-right: 1em;
   }
   .meta .helplink:before {
     position: static;
@@ -1131,8 +1186,6 @@ button {
 .lt-ie9 .meta .helplink {
   text-indent: 0;
   width: auto;
-  padding-left: 1em;
-  padding-right: 1em;
 }
 .lt-ie9 .meta .helplink:before {
   position: static;
