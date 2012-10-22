@@ -1,4 +1,13 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
-.landing { @extend %simple-page; }
+.landing {
+  @include padding-leader;
+  @include padding-trailer;
+}
+
+.tagline {
+  @include serif;
+  @include adjust-font-size-to($medpx);
+  img { @extend %img; }
+}
