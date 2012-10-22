@@ -154,10 +154,16 @@ var PYO = (function (PYO, $) {
                     var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
                     var post = PYO.addPost(postObj);
-                    var postData = {
-                        text: text,
-                        author_sequence_id: author_sequence_id
-                    };
+                    var postData = [
+                        { name: 'text', value: text },
+                        { name: 'author_sequence_id', value: author_sequence_id }
+                    ];
+                    var smsInputName = $('#sms-target').attr('name');
+
+                    form.find('.sms-targeting .ui-multiselect-checkboxes input:checked').each(function () {
+                        var obj = { name: smsInputName, value: $(this).val() };
+                        postData.push(obj);
+                    });
 
                     if (url) {
                         postAjax.XHR[count] = $.post(url, postData, function (response) {
