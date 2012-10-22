@@ -58,7 +58,7 @@ def test_post_dict():
         'sms': False,
         'to_sms': False,
         'from_sms': False,
-        'meta': {'highlights': []},
+        'meta': {'sms': []},
         }
 
 

@@ -520,10 +520,11 @@ def post_dict(post, **extra):
         'sms': post.sms,
         'to_sms': post.to_sms,
         'from_sms': post.from_sms,
+        # strip SMS metadata down to minimal size
         'meta': {
-            'highlights': [
-                {'sms_sent': h.get('sms_sent', False), 'role': h['role']}
-                for h in post.meta.get('highlights', [])
+            'sms': [
+                {'id': s['id'], 'display': s['name'] or s['role']}
+                for s in post.meta.get('sms', [])
                 ]
             },
         }

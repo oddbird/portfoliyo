@@ -43,8 +43,8 @@ var PYO = (function (PYO, $) {
                     var recipients = [];
 
                     $.each(this.meta.sms, function () {
-                        if ($.inArray(this.role, recipients) === -1) {
-                            recipients.push(this.role);
+                        if ($.inArray(this.display, recipients) === -1) {
+                            recipients.push(this.display);
                         }
                     });
 
