@@ -338,13 +338,13 @@ var PYO = (function (PYO, $) {
             uncheckAllText: 'select none',
             noneSelectedText: 'no one',
             selectedText: function (checked, total, arr) {
-                if (checked === total) {
-                    return 'all <i class="mobile">mobile</i> users';
+                if (checked < 4) {
+                    return $(arr).map(function () { return $(this).next().text(); }).get().join(', ');
                 } else {
-                    if (checked <= 3) {
-                        return $(arr).map(function () { return $(this).next().text(); }).get().join(', ');
+                    if (checked === total) {
+                        return 'all family members';
                     } else {
-                        return checked + ' <i class="mobile">mobile</i> users';
+                        return checked + ' family members';
                     }
                 }
             }
