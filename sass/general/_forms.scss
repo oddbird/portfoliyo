@@ -393,16 +393,7 @@ button { @include reset-button; }
   text-align: left;
   li {
     display: inline;
-    &.ui-multiselect-close {
-      @include adjust-font-size-to($smallpx);
-      @include border-radius(3px);
-      position: absolute;
-      top: -1em;
-      right: -1em;
-      background: $base;
-      padding: 0 .25em;
-      a { @include link(light); }
-    }
+    &.ui-multiselect-close { display: none; }
   }
   .ui-icon-check {
     &:after { content: "All"; }
