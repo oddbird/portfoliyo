@@ -332,7 +332,7 @@ button { @include reset-button; }
   @include rgba-background(rgba(white,.5));
   position: relative;
   padding: 0 1.4em 0 .4em;
-  min-width: columns-width(3);
+  min-width: columns-width(4);
   border: 1px solid $base1;
   color: inherit;
   &:before {
@@ -352,15 +352,23 @@ button { @include reset-button; }
   position: absolute;
   right: 0;
   bottom: 100%;
-  min-width: columns-width(3);
+  min-width: 100%;
   background: $base3;
   z-index: 900;
 }
 
 .ui-multiselect-checkboxes {
+  @include cond;
+  @include padding-leader(.5);
+  @include padding-trailer(.5);
+  border-color: $base1;
+
   li { @extend %check-option; }
   input { @extend %check-value; }
-  span { @extend %check-type; }
+  span {
+    @extend %ellipsis;
+    @extend %check-type;
+  }
 
   [type="checkbox"], [type="radio"] {
     + span {
@@ -389,11 +397,13 @@ button { @include reset-button; }
 }
 
 .ui-multiselect-header {
+  @include clearfix;
   position: relative;
   text-align: left;
   li {
-    display: inline;
+    @include span-columns(2,4);
     &.ui-multiselect-close { display: none; }
+    + li { @include omega; }
   }
   .ui-icon-check {
     &:after { content: "All"; }
@@ -406,10 +416,13 @@ button { @include reset-button; }
 }
 
 .ui-multiselect-all, .ui-multiselect-none {
-  display: inline-block;
-  width: 50%;
+  @extend %button;
+  width: 100%;
+  padding: 0 .5em;
+  font-weight: bold;
   text-align: center;
 }
+.ui-multiselect-none { @include button-color($red); }
 
 .ui-icon { @extend %icon; }
 .ui-icon-circle-close {
