@@ -114,6 +114,33 @@ class TestEditElderForm(object):
         assert not group_rel.groups.exists()
 
 
+    def test_edit_elder_transforms_direct_relationship_to_group(self):
+        """Can transform a direct student relationship to a group one."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile=rel.student)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        form = forms.EditElderForm(
+            {
+                'name': 'New',
+                'role': 'teacher',
+                'groups': [group.pk],
+                'students': [],
+                },
+            instance=other_rel.elder,
+            editor=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        form.save(other_rel)
+
+        rel = other_rel.elder.student_relationships.get()
+        assert not rel.direct
+        assert set(rel.groups.all()) == {group}
+
+
     def test_initial_groups_and_students(self):
         """Initial groups and students set."""
         rel = factories.RelationshipFactory.create()
