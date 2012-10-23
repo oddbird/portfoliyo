@@ -358,6 +358,7 @@ button { @include reset-button; }
 }
 
 .ui-multiselect-checkboxes {
+  @extend %radio-check-defaults;
   @include cond;
   @include padding-leader(.5);
   @include padding-trailer(.5);
@@ -365,35 +366,11 @@ button { @include reset-button; }
 
   li { @extend %check-option; }
   input { @extend %check-value; }
-  span {
+  label {
     @extend %ellipsis;
     @extend %check-type;
   }
-
-  [type="checkbox"], [type="radio"] {
-    + span {
-      @extend %icon;
-      display: block;
-      &:before {
-        margin-left: .4em;
-        color: $base01;
-      }
-    }
-    &[aria-selected="true"] + span {
-      &:before { color: $blue; }
-    }
-    &:focus + span { color: $base03; }
-  }
-
-  [type="checkbox"] {
-    + span { @extend %icon-unchecked; }
-    &[aria-selected="true"] + span { @extend %icon-checked; }
-  }
-
-  [type="radio"] {
-    + span { @extend %icon-radio-unchecked; }
-    &[aria-selected="true"] + span { @extend %icon-radio-checked; }
-  }
+  b { font-weight: bold; }
 }
 
 .ui-multiselect-header {
@@ -405,29 +382,18 @@ button { @include reset-button; }
     &.ui-multiselect-close { display: none; }
     + li { @include omega; }
   }
-  .ui-icon-check {
-    &:after { content: "All"; }
-    + span { @include gone; }
-  }
-  .ui-icon-closethick {
-    &:after { content: "None"; }
-    + span { @include gone; }
-  }
 }
 
 .ui-multiselect-all, .ui-multiselect-none {
+  @extend %icon;
+  @extend %icon-checkmark;
   @extend %button;
   width: 100%;
   padding: 0 .5em;
   font-weight: bold;
   text-align: center;
 }
-.ui-multiselect-none { @include button-color($red); }
-
-.ui-icon { @extend %icon; }
-.ui-icon-circle-close {
-  @extend %icon-x-alt;
-  &:before { margin-right: 0; }
+.ui-multiselect-none {
+  @extend %icon-x;
+  @include button-color($red);
 }
-.ui-icon-check { @extend %icon-checkmark; }
-.ui-icon-closethick { @extend %icon-x; }

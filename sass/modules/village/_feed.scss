@@ -186,7 +186,7 @@ $postaction-size: $smallpx;
 .sms-targeting {
   @include adjust-font-size-to($postaction-size);
   display: inline-block;
-  .type {
+  > .type {
     display: inline;
     font-style: italic;
     cursor: default;
