@@ -154,10 +154,16 @@ var PYO = (function (PYO, $) {
                     var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
                     var post = PYO.addPost(postObj);
-                    var postData = {
-                        text: text,
-                        author_sequence_id: author_sequence_id
-                    };
+                    var postData = [
+                        { name: 'text', value: text },
+                        { name: 'author_sequence_id', value: author_sequence_id }
+                    ];
+                    var smsInputName = $('#sms-target').attr('name');
+
+                    form.find('.sms-targeting .ui-multiselect-checkboxes input:checked').each(function () {
+                        var obj = { name: smsInputName, value: $(this).val() };
+                        postData.push(obj);
+                    });
 
                     if (url) {
                         postAjax.XHR[count] = $.post(url, postData, function (response) {
@@ -332,15 +338,43 @@ var PYO = (function (PYO, $) {
             uncheckAllText: 'select none',
             noneSelectedText: 'no one',
             selectedText: function (checked, total, arr) {
-                if (checked === total) {
-                    return 'all <i class="mobile">mobile</i> users';
+                if (checked < 4) {
+                    return $(arr).map(function () { return $(this).data('role'); }).get().join(', ');
                 } else {
-                    if (checked <= 3) {
-                        return $(arr).map(function () { return $(this).next().text(); }).get().join(', ');
+                    if (checked === total) {
+                        return 'all family members';
                     } else {
-                        return checked + ' <i class="mobile">mobile</i> users';
+                        return checked + ' family members';
                     }
                 }
+            }
+        });
+
+        if (PYO.directSmsName) {
+            $('.village-elders .elder .action-sms[data-name="' + PYO.directSmsName + '"]').click();
+            PYO.directSmsName = '';
+        }
+    };
+
+    PYO.initializeSmsDirectLinks = function () {
+        $('body').on('click', '.village-elders .elder .action-sms', function (e) {
+            e.preventDefault();
+            var context = $('.village-main');
+            var el = $(this);
+            var name = el.data('name');
+            var textarea = context.find('#post-text');
+
+            if (textarea.length) {
+                textarea.focus();
+                var form = context.find('.post-add-form');
+                var select = form.find('#sms-target');
+                select.multiselect('uncheckAll');
+                select.multiselect('widget').find('input[data-name="' + name + '"]').each(function () {
+                    this.click();
+                });
+            } else {
+                PYO.directSmsName = name;
+                $('.village-nav .listitem-select.ajax-link.active').click();
             }
         });
     };

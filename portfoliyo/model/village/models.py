@@ -4,7 +4,6 @@ from __future__ import absolute_import
 from collections import defaultdict
 import logging
 import re
-import socket
 
 from django.core.urlresolvers import reverse
 from django.db import models
@@ -77,9 +76,9 @@ class BasePost(models.Model):
         return {}
 
 
-    def notify_sms(self, profile_ids, in_reply_to=None):
+    def prepare_sms(self, profile_ids, in_reply_to=None):
         """
-        Send SMS notifications about this post.
+        Prepare and return SMS notifications for this post.
 
         ``profile_ids`` is a list of Profile IDs who should receive
         notifications. Only profiles in this list who also are active, have
@@ -89,6 +88,8 @@ class BasePost(models.Model):
         Sets self.to_sms to True if any texts were sent, False otherwise, and
         self.meta['sms'] to a list of dictionaries containing basic metadata
         about each SMS sent.
+
+        Return a list of (phone, sms-body) tuples to be sent.
 
         """
         meta_sms = []
@@ -102,6 +103,8 @@ class BasePost(models.Model):
         to_notify = sms_eligible(self.elders_in_context).filter(
             pk__in=profile_ids)
 
+        to_send = []
+
         for elder in to_notify:
             sms_data = {
                 'id': elder.id,
@@ -111,13 +114,15 @@ class BasePost(models.Model):
                 }
             # with in_reply_to we assume caller sent SMS
             if elder.phone != in_reply_to:
-                sms.send(elder.phone, sms_body)
+                to_send.append((elder.phone, sms_body))
             sms_sent = True
 
             meta_sms.append(sms_data)
 
         self.to_sms = sms_sent
         self.meta['sms'] = meta_sms
+
+        return to_send
 
 
     def store_highlights(self, highlights):
@@ -233,13 +238,13 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        post.notify_sms(sms_profile_ids or [])
+        sms_to_send = post.prepare_sms(sms_profile_ids or [])
 
         post.store_highlights(highlights)
 
         post.save()
 
-        for student in group.students.all():
+        for student in group.students.filter(deleted=False):
             sub = Post.objects.create(
                 author=author,
                 student=student,
@@ -263,6 +268,9 @@ class BulkPost(BasePost):
                     unread.mark_unread(sub, elder)
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
+
+        for number, body in sms_to_send:
+            sms.send(number, body)
 
         return post
 
@@ -319,7 +327,7 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        post.notify_sms(sms_profile_ids or [], in_reply_to)
+        sms_to_send = post.prepare_sms(sms_profile_ids or [], in_reply_to)
         post.store_highlights(highlights)
         post.save()
 
@@ -335,6 +343,9 @@ class Post(BasePost):
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
             )
+
+        for number, body in sms_to_send:
+            sms.send(number, body)
 
         return post
 

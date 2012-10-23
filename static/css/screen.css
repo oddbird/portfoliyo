@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-checkboxes [type="checkbox"] + span:before, .ui-multiselect-checkboxes [type="radio"] + span:before, .ui-icon:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
@@ -219,7 +219,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\25ef";
 }
 
-.group .listitem-select:link:before, .group .listitem-select:visited:before {
+.title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\265b";
 }
 
@@ -1913,6 +1913,23 @@ button {
   background: #fefbf1;
 }
 
+.getting-started {
+  padding: 1.27778em 2.12766%;
+  background: #fdf6e3;
+}
+.getting-started .starthead {
+  font-size: 2.44444em;
+  line-height: 1.30682em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin-bottom: -1px;
+}
+.getting-started:last-child {
+  background: none;
+}
+.getting-started + .post {
+  border-top: 1px solid;
+}
+
 .post {
   font-size: 0.77778em;
   line-height: 1.64286em;
@@ -2053,6 +2070,9 @@ button {
   border-top: 1px solid #657b83;
   background: #eee8d5;
   text-align: right;
+}
+.post-add-form.group-posts {
+  background: #bcd0d4;
 }
 .post-add-form .formfield {
   margin: 0;

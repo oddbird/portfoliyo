@@ -129,6 +129,8 @@ $.widget("ech.multiselect", {
 			var $this = $(this),
 				parent = this.parentNode,
 				title = this.innerHTML,
+				name = $this.data('name'),
+				role = $this.data('role'),
 				description = this.title,
 				value = this.value,
 				inputID = 'ui-multiselect-' + (this.id || id + '-option-' + i),
@@ -163,7 +165,7 @@ $.widget("ech.multiselect", {
 
 			// create the label
 			html += '<label for="' + inputID + '" title="' + description + '" class="' + labelClasses.join(' ') + '">';
-			html += '<input id="' + inputID + '" name="multiselect_' + id + '" type="' + (o.multiple ? "checkbox" : "radio") + '" value="' + value + '" title="' + title + '"';
+			html += '<input id="' + inputID + '" name="multiselect_' + id + '" type="' + (o.multiple ? "checkbox" : "radio") + '" value="' + value + '" title="' + title + '" data-role="' + role + '" data-name="' + name + '"';
 
 			// pre-selected?
 			if( isSelected ){
@@ -557,7 +559,8 @@ $.widget("ech.multiselect", {
 		}
 
 		// set the scroll of the checkbox container
-		$container.scrollTop(0).height(o.height);
+		// $container.scrollTop(0).height(o.height);
+		$container.scrollTop(0);
 
 		// position and show menu
 		if( $.ui.position && !$.isEmptyObject(o.position) ){

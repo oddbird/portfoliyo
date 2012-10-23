@@ -47,6 +47,8 @@ $village-nav-action-color : $base03;
     @extend %village-activenav;
     @include rgba-background(rgba($village-nav-bg,.25));
     .title & {
+      @extend %icon;
+      @extend %icon-users;
       @include rgba-background(rgba($village-nav-title-bg,.25));
       font-weight: bold;
       color: $back;

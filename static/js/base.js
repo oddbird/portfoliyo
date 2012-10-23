@@ -189,15 +189,14 @@ var PYO = (function (PYO, $) {
                 }
             }
         });
-
-        form.submit(function () { inputs.removeAttr('disabled'); });
     };
 
     PYO.addGroupAssociationColors = function (container) {
         if ($(container).length) {
-            var form = $(container);
-            var groupInputs = form.find('.check-options input[name="groups"]');
-            var inputs = form.find('.check-options input').not(groupInputs);
+            var context = $(container);
+            var form = context.closest('form');
+            var groupInputs = context.find('.check-options input[name="groups"]');
+            var inputs = context.find('.check-options input').not(groupInputs);
             var count = 0;
             var selectedIds = [];
             var updateColors = function () {
@@ -268,6 +267,7 @@ var PYO = (function (PYO, $) {
             });
 
             groupInputs.filter(':checked').each(function () { $(this).change(); });
+            form.submit(function () { inputs.removeAttr('disabled'); });
         }
     };
 
@@ -290,8 +290,20 @@ var PYO = (function (PYO, $) {
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
-        if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
-        if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
+        if ($('#invite-elder-form').length) {
+            PYO.disablePreselectedAssociations('#invite-elder-form');
+            $('#id_contact').focus();
+        }
+        if ($('#add-student-form').length) {
+            PYO.disablePreselectedAssociations('#add-student-form');
+            $('#id_name').focus();
+            $('.add-student .student-form-details a.summary').click(function () {
+                $('#id_name').focus();
+            });
+        }
+        if ($('#add-group-form').length) {
+            $('#id_name').focus();
+        }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         $('body').find('input:radio, input:checkbox').each(function () {
             PYO.ieInputBootstrap($(this));
