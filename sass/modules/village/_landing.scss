@@ -9,5 +9,4 @@
 .tagline {
   @include serif;
   @include adjust-font-size-to($medpx);
-  img { @extend %img; }
 }

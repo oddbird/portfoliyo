@@ -368,7 +368,7 @@ a:focus, a:hover, a:active {
   text-overflow: ellipsis;
 }
 
-.tagline img, .parent-instructions .pdf-thumbnail {
+.parent-instructions .pdf-thumbnail {
   -webkit-box-shadow: #073642 0 0 0.125em;
   -moz-box-shadow: #073642 0 0 0.125em;
   box-shadow: #073642 0 0 0.125em;
