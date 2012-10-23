@@ -12,6 +12,7 @@ def test_redis_sets():
     assert c.scard('foo') == 1
     assert c.sismember('foo', 'bar')
     assert not c.sismember('foo', 'baz')
+    assert c.smembers('foo') == {'bar'}
 
 
 def test_redis_delete():

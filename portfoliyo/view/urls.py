@@ -24,6 +24,7 @@ urlpatterns = patterns(
         name='no_students',
         ),
     url(r'^student/', include('portfoliyo.view.village.urls')),
+    url(r'^announce/', include('portfoliyo.announce.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(api_v1.urls)),
     url(r'^', include('portfoliyo.view.users.urls')),
