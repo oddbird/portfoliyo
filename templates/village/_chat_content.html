@@ -19,7 +19,7 @@
       <div class="multiselect-dropdown">
         <select id="sms-target" class="value" name="sms-target" multiple="multiple">
           {% for elder in sms_elders %}
-            <option value="{{ elder.id }}" selected>{{ elder }}</option>
+            <option value="{{ elder.id }}" data-role="{{ elder.role_in_context }}" data-name="{{ elder }}" selected>{{ elder.role_in_context }}: {{ elder }}</option>
           {% endfor %}
         </select>
       </div class="multiselect-dropdown">

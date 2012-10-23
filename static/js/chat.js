@@ -339,7 +339,7 @@ var PYO = (function (PYO, $) {
             noneSelectedText: 'no one',
             selectedText: function (checked, total, arr) {
                 if (checked < 4) {
-                    return $(arr).map(function () { return $(this).next().text(); }).get().join(', ');
+                    return $(arr).map(function () { return $(this).data('role'); }).get().join(', ');
                 } else {
                     if (checked === total) {
                         return 'all family members';
@@ -357,7 +357,6 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializeSmsDirectLinks = function () {
-
         $('body').on('click', '.village-elders .elder .action-sms', function (e) {
             e.preventDefault();
             var context = $('.village-main');
@@ -370,7 +369,7 @@ var PYO = (function (PYO, $) {
                 var form = context.find('.post-add-form');
                 var select = form.find('#sms-target');
                 select.multiselect('uncheckAll');
-                select.multiselect('widget').find('input[title="' + name + '"]').each(function () {
+                select.multiselect('widget').find('input[data-name="' + name + '"]').each(function () {
                     this.click();
                 });
             } else {
