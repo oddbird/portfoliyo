@@ -11,8 +11,8 @@ def forbidden(method):
 class PortfoliyoAuthorization(authorization.Authorization):
     """Implements Portfoliyo API authorization."""
     def is_authorized(self, request, object=None):
-        # GET requests permitted for any staff users
-        if request.method == 'GET' and request.user.profile.school_staff:
+        # GET requests permitted for any user
+        if request.method == 'GET':
             return True
         return forbidden(request.method)
 
@@ -38,8 +38,7 @@ class ProfileAuthorization(PortfoliyoAuthorization):
 class GroupAuthorization(PortfoliyoAuthorization):
     def is_authorized(self, request, object=None):
         """Allow changes only if you own the Group."""
-        if (object and object.owner_id == request.user.profile.id and
-                request.user.profile.school_staff):
+        if (object and object.owner_id == request.user.profile.id):
             return True
         return super(GroupAuthorization, self).is_authorized(request, object)
 
