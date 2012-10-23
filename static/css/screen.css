@@ -2416,8 +2416,30 @@ button {
 .getting-started:last-child {
   background: none;
 }
+.getting-started:last-child .howto {
+  display: block;
+}
 .getting-started + .post {
   border-top: 1px solid;
+}
+
+.howto {
+  display: none;
+}
+
+[class^="howto-"] {
+  position: absolute;
+  bottom: 1.27778em;
+  width: 40.42553%;
+  color: #cb4b16;
+}
+
+.howto-post {
+  left: 2.12766%;
+}
+
+.howto-sms {
+  right: 2.12766%;
 }
 
 .post {

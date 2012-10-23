@@ -1,4 +1,13 @@
 // ---------------------------------------------------------------------------
+// Settings
+
+$post-byline-cols : 2;
+$post-size        : $smallpx;
+$post-time-size   : $xsmallpx;
+$post-v-padding   : .25;
+$post-h-padding   : gutter($center);
+
+// ---------------------------------------------------------------------------
 // Village Feed
 
 .village-feed {
@@ -9,11 +18,8 @@
   background: lighten($base3,3);
 }
 
-$post-byline-cols : 2;
-$post-size        : $smallpx;
-$post-time-size   : $xsmallpx;
-$post-v-padding   : .25;
-$post-h-padding   : gutter($center);
+// ---------------------------------------------------------------------------
+// Getting Started
 
 .getting-started {
   padding: rhythm(1) $post-h-padding;
@@ -23,9 +29,29 @@ $post-h-padding   : gutter($center);
     @include serif;
     margin-bottom: -1px;
   }
-  &:last-child { background: none; }
+  &:last-child {
+    background: none;
+    .howto { display: block; }
+  }
   + .post { border-top: 1px solid; }
 }
+
+.howto { display: none; }
+[class^="howto-"] {
+  position: absolute;
+  bottom: rhythm(1);
+  width: columns(5,$center);
+  color: $orange;
+}
+.howto-post {
+  left: $post-h-padding;
+}
+.howto-sms {
+  right: $post-h-padding;
+}
+
+// ---------------------------------------------------------------------------
+// Posts
 
 .post {
   @include pie-clearfix;
@@ -107,7 +133,7 @@ $post-h-padding   : gutter($center);
 }
 
 // ---------------------------------------------------------------------------
-// Note Add Form
+// Post Add Form
 
 $addnote-fontsize: $input-font-size;
 $postaction-size: $smallpx;
