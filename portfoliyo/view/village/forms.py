@@ -147,21 +147,22 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             model.Relationship.objects.filter(
                 from_profile=elder,
                 to_profile__in=remove,
-                ).delete()
+                ).update(direct=False)
+            model.Relationship.objects.delete_orphans()
 
         for student in add:
             rel, created = model.Relationship.objects.get_or_create(
                 to_profile=student,
                 from_profile=elder,
                 )
-            if not created and rel.from_group:
-                rel.from_group = None
+            if not created and not rel.direct:
+                rel.direct = True
                 rel.save()
 
 
     def direct_students(self, elder):
         """
-        Get all direct (non-group) students of an elder.
+        Get all direct students of an elder.
 
         Memoized by elder id.
 
@@ -173,7 +174,7 @@ class EditElderForm(ElderFormBase, EditProfileForm):
                 r.student for r in
                 model.Relationship.objects.filter(
                     from_profile=elder,
-                    from_group=None,
+                    direct=True,
                     to_profile__deleted=False,
                     ).select_related('to_profile')
                 ]
@@ -299,8 +300,8 @@ class InviteElderForm(ElderFormBase):
                     'description': relationship,
                     }
                 )
-            if not created and rel.from_group:
-                rel.from_group = None
+            if not created and not rel.direct:
+                rel.direct = True
                 rel.save()
         self.update_elder_groups(profile, self.cleaned_data['groups'])
 
@@ -368,7 +369,7 @@ class StudentForm(forms.ModelForm):
                 r.elder for r in
                 model.Relationship.objects.filter(
                     to_profile=self.instance,
-                    from_group=None,
+                    direct=True,
                     from_profile__deleted=False,
                     ).exclude(
                     from_profile=self.elder).select_related('from_profile')
@@ -393,15 +394,16 @@ class StudentForm(forms.ModelForm):
             model.Relationship.objects.filter(
                 to_profile=student,
                 from_profile__in=remove,
-                ).delete()
+                ).update(direct=False)
+            model.Relationship.objects.delete_orphans()
 
         for elder in add:
             rel, created = model.Relationship.objects.get_or_create(
                 to_profile=student,
                 from_profile=elder,
                 )
-            if not created and rel.from_group:
-                rel.from_group = None
+            if not created and not rel.direct:
+                rel.direct = True
                 rel.save()
 
 

@@ -331,13 +331,20 @@ def update_group_relationships(
             check_for_orphan_relationships = True
 
     if check_for_orphan_relationships:
-        Relationship.objects.annotate(
-            group_count=models.Count('groups')
-            ).filter(direct=False, group_count=0).delete()
+        Relationship.objects.delete_orphans()
 
 
 m2m_changed.connect(update_group_relationships, sender=Group.students.through)
 m2m_changed.connect(update_group_relationships, sender=Group.elders.through)
+
+
+
+class RelationshipManager(models.Manager):
+    def delete_orphans(self):
+        """Delete all relationships that are not direct and have no groups."""
+        self.get_query_set().annotate(
+            group_count=models.Count('groups')
+            ).filter(direct=False, group_count=0).delete()
 
 
 
@@ -356,6 +363,9 @@ class Relationship(models.Model):
     # what groups would cause this relationship to exist?
     groups = models.ManyToManyField(
         Group, blank=True, related_name='relationships')
+
+
+    objects = RelationshipManager()
 
 
     def __unicode__(self):

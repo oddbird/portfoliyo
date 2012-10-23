@@ -109,7 +109,9 @@ class TestEditElderForm(object):
         assert form.is_valid(), dict(form.errors)
         form.save(other_rel)
 
-        assert utils.refresh(group_rel).from_group is None
+        group_rel = utils.refresh(group_rel)
+        assert group_rel.direct
+        assert not group_rel.groups.exists()
 
 
     def test_initial_groups_and_students(self):
@@ -320,7 +322,9 @@ class TestInviteElderForm(object):
         assert form.is_valid(), dict(form.errors)
         form.save(mock.Mock())
 
-        assert utils.refresh(group_rel).from_group is None
+        group_rel = utils.refresh(group_rel)
+        assert group_rel.direct
+        assert not group_rel.groups.exists()
 
 
     def test_invite_elder_never_removes_student_relationships(self):
@@ -661,7 +665,7 @@ class TestStudentForms(object):
 
 
     def test_edit_student_transforms_group_rel_to_direct(self):
-        """Can add a direct relationship where there was a from_group one."""
+        """Can add a direct relationship where there was a group one."""
         rel = factories.RelationshipFactory.create()
         other_elder = factories.ProfileFactory.create(
             school=rel.elder.school, school_staff=True)
@@ -683,7 +687,8 @@ class TestStudentForms(object):
         form.save()
 
         rel = other_elder.student_relationships[0]
-        assert not rel.from_group
+        assert rel.direct
+        assert not rel.groups.exists()
 
 
     def test_edit_form_group_and_elder_initial(self):
