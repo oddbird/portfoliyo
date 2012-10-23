@@ -36,12 +36,45 @@ $post-h-padding   : gutter($center);
   + .post { border-top: 1px solid; }
 }
 
-.howto { display: none; }
+.howto {
+  display: none;
+  counter-reset: howto;
+}
 [class^="howto-"] {
+  @extend %icon;
+  @extend %icon-arrow-down;
+  @include rhythm-borders(1px,.75);
+  @include border-radius(.25em);
+  @include box-shadow($back 0 0 .25em);
   position: absolute;
   bottom: rhythm(1);
   width: columns(5,$center);
+  background: $base3;
   color: $orange;
+  border-color: $back;
+  font-style: italic;
+  counter-increment: howto;
+  &:before {
+    @include adjust-font-size-to($largepx,1);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-top: -.175em;
+    margin-left: -.5em;
+    color: $back;
+  }
+  &:after {
+    @include border-radius(8em);
+    content: counter(howto,decimal) ".";
+    position: absolute;
+    top: rhythm(-.75);
+    left: rhythm(-.5);
+    padding: rhythm(.25) rhythm(.375);
+    background: $orange;
+    color: $base3;
+    font-style: normal;
+    font-weight: bold;
+  }
 }
 .howto-post {
   left: $post-h-padding;
