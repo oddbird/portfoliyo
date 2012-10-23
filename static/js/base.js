@@ -189,15 +189,14 @@ var PYO = (function (PYO, $) {
                 }
             }
         });
-
-        form.submit(function () { inputs.removeAttr('disabled'); });
     };
 
     PYO.addGroupAssociationColors = function (container) {
         if ($(container).length) {
-            var form = $(container);
-            var groupInputs = form.find('.check-options input[name="groups"]');
-            var inputs = form.find('.check-options input').not(groupInputs);
+            var context = $(container);
+            var form = context.closest('form');
+            var groupInputs = context.find('.check-options input[name="groups"]');
+            var inputs = context.find('.check-options input').not(groupInputs);
             var count = 0;
             var selectedIds = [];
             var updateColors = function () {
@@ -268,6 +267,7 @@ var PYO = (function (PYO, $) {
             });
 
             groupInputs.filter(':checked').each(function () { $(this).change(); });
+            form.submit(function () { inputs.removeAttr('disabled'); });
         }
     };
 
