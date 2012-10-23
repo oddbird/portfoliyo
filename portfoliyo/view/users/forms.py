@@ -11,7 +11,7 @@ from django.contrib.auth import forms as auth_forms
 import floppyforms as forms
 
 from portfoliyo import model
-from ..forms import TemplateLabelModelChoiceField
+from .. import forms as pyoforms
 
 
 class SchoolRadioSelect(forms.RadioSelect):
@@ -43,7 +43,7 @@ class RegistrationForm(forms.Form):
         widget=forms.PasswordInput(render_value=False))
     email = forms.EmailField(max_length=255)
     email_notifications = forms.BooleanField(initial=True, required=False)
-    school = TemplateLabelModelChoiceField(
+    school = pyoforms.ModelChoiceField(
         queryset=model.School.objects.filter(auto=False).order_by('name'),
         empty_label=u"I'm not affiliated with a school",
         required=False,
