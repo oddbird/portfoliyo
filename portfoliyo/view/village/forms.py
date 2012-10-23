@@ -5,29 +5,27 @@ Student/elder forms.
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
-from ..forms import TemplateLabelModelMultipleChoiceField
+from .. import forms as pyoforms
 from ..users.forms import EditProfileForm
 
 
 
-class StudentCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
-    """A CheckboxSelectMultiple widget with a custom template."""
+class StudentCheckboxSelectMultiple(pyoforms.CheckboxSelectMultiple):
     template_name = 'village/student_checkbox_select.html'
 
 
 
-class ElderCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
-    """A CheckboxSelectMultiple widget with a custom template."""
+class ElderCheckboxSelectMultiple(pyoforms.CheckboxSelectMultiple):
     template_name = 'village/elder_checkbox_select.html'
 
 
 
-class GroupCheckboxSelectMultiple(forms.CheckboxSelectMultiple):
-    """A CheckboxSelectMultiple widget with a custom template."""
+class GroupCheckboxSelectMultiple(pyoforms.CheckboxSelectMultiple):
     template_name = 'village/group_checkbox_select.html'
 
 
-class GroupIdsMultipleChoiceField(TemplateLabelModelMultipleChoiceField):
+
+class GroupIdsMultipleChoiceField(pyoforms.ModelMultipleChoiceField):
     # subclasses should override
     groups_attr = None
 
@@ -39,7 +37,7 @@ class GroupIdsMultipleChoiceField(TemplateLabelModelMultipleChoiceField):
 
 
     queryset = property(
-        TemplateLabelModelMultipleChoiceField._get_queryset, _set_queryset)
+        pyoforms.ModelMultipleChoiceField._get_queryset, _set_queryset)
 
 
     def label_from_instance(self, obj):
@@ -63,7 +61,7 @@ class ElderGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
 
 class ElderFormBase(forms.Form):
     """Common elements of EditElderForm and InviteElderForm."""
-    groups = TemplateLabelModelMultipleChoiceField(
+    groups = pyoforms.ModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
         required=False,
@@ -311,7 +309,7 @@ class InviteElderForm(ElderFormBase):
 
 class StudentForm(forms.ModelForm):
     """Form for editing a student."""
-    groups = TemplateLabelModelMultipleChoiceField(
+    groups = pyoforms.ModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
         required=False,
@@ -459,12 +457,12 @@ class AddStudentForm(StudentForm):
 
 class GroupForm(forms.ModelForm):
     """Form for editing Groups."""
-    students = TemplateLabelModelMultipleChoiceField(
+    students = pyoforms.ModelMultipleChoiceField(
         queryset=model.Profile.objects.none(),
         widget=StudentCheckboxSelectMultiple,
         required=False,
         )
-    elders = TemplateLabelModelMultipleChoiceField(
+    elders = pyoforms.ModelMultipleChoiceField(
         queryset=model.Profile.objects.none(),
         widget=ElderCheckboxSelectMultiple,
         required=False,
