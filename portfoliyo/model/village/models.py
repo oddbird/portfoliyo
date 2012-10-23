@@ -193,7 +193,7 @@ class BulkPost(BasePost):
 
         post.save()
 
-        for student in group.students.all():
+        for student in group.students.filter(deleted=False):
             sub = Post.objects.create(
                 author=author,
                 student=student,

@@ -397,9 +397,11 @@ class TestBulkPost(object):
         """Creates a bulk post and posts in individual villages."""
         rel = factories.RelationshipFactory()
         rel2 = factories.RelationshipFactory(from_profile=rel.elder)
+        deleted_rel = factories.RelationshipFactory(
+            from_profile=rel.elder, to_profile__deleted=True)
         factories.RelationshipFactory(from_profile=rel.elder)
         g = factories.GroupFactory()
-        g.students.add(rel.student, rel2.student)
+        g.students.add(rel.student, rel2.student, deleted_rel.student)
         post = models.BulkPost.create(rel.elder, g, "Hallo")
 
         exp = set([
