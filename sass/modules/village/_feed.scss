@@ -15,6 +15,18 @@ $post-time-size   : $xsmallpx;
 $post-v-padding   : .25;
 $post-h-padding   : gutter($center);
 
+.getting-started {
+  padding: rhythm(1) $post-h-padding;
+  background: $base3;
+  .starthead {
+    @include adjust-font-size-to($xlargepx);
+    @include serif;
+    margin-bottom: -1px;
+  }
+  &:last-child { background: none; }
+  + .post { border-top: 1px solid; }
+}
+
 .post {
   @include pie-clearfix;
   @include adjust-font-size-to($post-size);
@@ -108,6 +120,7 @@ $postaction-size: $smallpx;
   border-top: 1px solid $base;
   background: $base2;
   text-align: right;
+  &.group-posts { background: mix($blue,$base2,25%); }
 
   .formfield { margin: 0; }
 

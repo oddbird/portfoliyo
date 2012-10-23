@@ -2372,6 +2372,23 @@ button {
   background: #fefbf1;
 }
 
+.getting-started {
+  padding: 1.27778em 2.12766%;
+  background: #fdf6e3;
+}
+.getting-started .starthead {
+  font-size: 2.44444em;
+  line-height: 1.30682em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin-bottom: -1px;
+}
+.getting-started:last-child {
+  background: none;
+}
+.getting-started + .post {
+  border-top: 1px solid;
+}
+
 .post {
   font-size: 0.77778em;
   line-height: 1.64286em;
@@ -2512,6 +2529,9 @@ button {
   border-top: 1px solid #657b83;
   background: #eee8d5;
   text-align: right;
+}
+.post-add-form.group-posts {
+  background: #bcd0d4;
 }
 .post-add-form .formfield {
   margin: 0;

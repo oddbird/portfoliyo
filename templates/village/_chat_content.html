@@ -4,9 +4,12 @@
 <div class="village-main">
   {% block village-main %}
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-user-id="{{ request.user.profile.id }}" {% block village-feed-attrs %}{% endblock %}>
-
+    <article class="getting-started">
+        <h2 class="starthead">{% block getting-started-header %}Welcome!{% endblock %}</h2>
+        <p class="startbody">{% block getting-started-body %}Post here to converse with the elders listed on the right.{% endblock %}</p>
+    </article>
   </section>
-  <form method="POST" class="post-add-form" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
+  <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
     <div class="formfield post-textfield">

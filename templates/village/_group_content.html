@@ -3,8 +3,10 @@
 
 {% block village-feed-attrs %}data-author-role="{{ user.profile.role }}" {% if group.is_all %} data-backlog-url="{% url 'json_posts' %}" data-post-url="{% url 'json_posts' %}"{% else %} data-backlog-url="{% url 'group_json_posts' group_id=group.id %}" data-post-url="{% url 'group_json_posts' group_id=group.id %}"{% endif %}{% endblock %}
 
-{% block getting-started-header %}Welcome to the {{ group.name }} Group!</h2>{% endblock %}
+{% block getting-started-header %}Welcome to the {{ group.name }} group!{% endblock %}
+{% block getting-started-body %}Post messages for all the {{ group.name }} group elders, and see their replys below.{% endblock %}
 
+{% block addpost-classes %}group-posts{% endblock %}
 {% block form-action %}{% if group.is_all %}{% url 'json_posts' %}{% else %}{% url 'group_json_posts' group_id=group.id %}{% endif %}{% endblock %}
 
 {% block info-bar %}
