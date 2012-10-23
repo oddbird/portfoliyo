@@ -74,14 +74,14 @@ $.widget("ech.multiselect", {
 				.addClass('ui-helper-reset')
 				.html(function(){
 					if( o.header === true ){
-						return '<li><a class="ui-multiselect-all" href="#"><span class="ui-icon ui-icon-check"></span><span>' + o.checkAllText + '</span></a></li><li><a class="ui-multiselect-none" href="#"><span class="ui-icon ui-icon-closethick"></span><span>' + o.uncheckAllText + '</span></a></li>';
+						return '<li><a class="ui-multiselect-all" href="#">' + o.checkAllText + '</a></li><li><a class="ui-multiselect-none" href="#">' + o.uncheckAllText + '</a></li>';
 					} else if(typeof o.header === "string"){
 						return '<li>' + o.header + '</li>';
 					} else {
 						return '';
 					}
 				})
-				.append('<li class="ui-multiselect-close"><a href="#" class="ui-multiselect-close"><span class="ui-icon ui-icon-circle-close"></span></a></li>')
+				// .append('<li class="ui-multiselect-close"><a href="#" class="ui-multiselect-close"><span class="ui-icon ui-icon-circle-close"></span></a></li>')
 				.appendTo( header ),
 
 			checkboxContainer = (this.checkboxContainer = $('<ul />'))
@@ -163,8 +163,7 @@ $.widget("ech.multiselect", {
 
 			html += '<li class="' + liClasses + '">';
 
-			// create the label
-			html += '<label for="' + inputID + '" title="' + description + '" class="' + labelClasses.join(' ') + '">';
+			// create the input
 			html += '<input id="' + inputID + '" name="multiselect_' + id + '" type="' + (o.multiple ? "checkbox" : "radio") + '" value="' + value + '" title="' + title + '" data-role="' + role + '" data-name="' + name + '"';
 
 			// pre-selected?
@@ -179,8 +178,10 @@ $.widget("ech.multiselect", {
 				html += ' aria-disabled="true"';
 			}
 
-			// add the title and close everything off
-			html += ' /><span>' + title + '</span></label></li>';
+			html += ' />';
+
+			// add the label and close everything off
+			html += '<label for="' + inputID + '" title="' + description + '" class="' + labelClasses.join(' ') + '"><b>' + role + ':</b> ' + name + '</label></li>';
 		});
 
 		// insert into the DOM
@@ -188,7 +189,7 @@ $.widget("ech.multiselect", {
 
 		// cache some moar useful elements
 		this.labels = menu.find('label');
-		this.inputs = this.labels.children('input');
+		this.inputs = this.labels.siblings('input');
 
 		// set widths
 		// this._setButtonWidth();
@@ -320,7 +321,7 @@ $.widget("ech.multiselect", {
 			.delegate('label', 'mouseenter.multiselect', function(){
 				if( !$(this).hasClass('ui-state-disabled') ){
 					self.labels.removeClass('ui-state-hover');
-					$(this).addClass('ui-state-hover').find('input').focus();
+					$(this).addClass('ui-state-hover').siblings('input').focus();
 				}
 			})
 			.delegate('label', 'keydown.multiselect', function( e ){
@@ -338,7 +339,7 @@ $.widget("ech.multiselect", {
 						self._traverse(e.which, this);
 						break;
 					case 13: // enter
-						$(this).find('input')[0].click();
+						$(this).siblings('input')[0].click();
 						break;
 				}
 			})
@@ -373,7 +374,7 @@ $.widget("ech.multiselect", {
 				// some additional single select-specific logic
 				if( !self.options.multiple ){
 					self.labels.removeClass('ui-state-active');
-					$this.closest('label').toggleClass('ui-state-active', checked );
+					$this.siblings('label').toggleClass('ui-state-active', checked );
 
 					// close menu
 					self.close();
@@ -522,7 +523,7 @@ $.widget("ech.multiselect", {
 
 		inputs
 			.attr({ 'disabled':flag, 'arial-disabled':flag })
-			.parent()[ flag ? 'addClass' : 'removeClass' ]('ui-state-disabled');
+			.siblings('label')[ flag ? 'addClass' : 'removeClass' ]('ui-state-disabled');
 
 		this.element
 			.attr({ 'disabled':flag, 'aria-disabled':flag });
@@ -585,7 +586,7 @@ $.widget("ech.multiselect", {
 		// select the first option
 		// triggering both mouseover and mouseover because 1.4.2+ has a bug where triggering mouseover
 		// will actually trigger mouseenter.  the mouseenter trigger is there for when it's eventually fixed
-		this.labels.eq(0).trigger('mouseover').trigger('mouseenter').find('input').trigger('focus');
+		this.labels.eq(0).trigger('mouseover').trigger('mouseenter').siblings('input').trigger('focus');
 
 		button.addClass('ui-state-active');
 		this._isOpen = true;
@@ -673,10 +674,10 @@ $.widget("ech.multiselect", {
 				menu.find('div.ui-multiselect-header')[ value ? 'show' : 'hide' ]();
 				break;
 			case 'checkAllText':
-				menu.find('a.ui-multiselect-all span').eq(-1).text(value);
+				menu.find('a.ui-multiselect-all').eq(-1).text(value);
 				break;
 			case 'uncheckAllText':
-				menu.find('a.ui-multiselect-none span').eq(-1).text(value);
+				menu.find('a.ui-multiselect-none').eq(-1).text(value);
 				break;
 			case 'height':
 				menu.find('ul').last().height( parseInt(value,10) );
