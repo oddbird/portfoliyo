@@ -316,8 +316,7 @@ class TestGroupResource(object):
 
     def test_unread_count(self, no_csrf_client):
         """Each group has an unread_count in the API response."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
+        rel = factories.RelationshipFactory.create()
         post = factories.PostFactory.create(student=rel.student)
         other_rel = factories.RelationshipFactory.create(from_profile=rel.elder)
         other_post = factories.PostFactory.create(student=other_rel.student)
@@ -336,7 +335,7 @@ class TestGroupResource(object):
 
     def test_only_see_my_groups(self, no_csrf_client):
         """User can only see their own groups in API, not even same-school."""
-        g1 = factories.GroupFactory.create(owner__school_staff=True)
+        g1 = factories.GroupFactory.create()
         factories.GroupFactory.create(owner__school=g1.owner.school)
 
         response = no_csrf_client.get(self.list_url(), user=g1.owner.user)
@@ -348,8 +347,7 @@ class TestGroupResource(object):
 
     def test_all_students_group(self, no_csrf_client):
         """All-students group always included in groups list."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
+        rel = factories.RelationshipFactory.create()
 
         response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
         g = response.json['objects'][0]
@@ -371,7 +369,7 @@ class TestGroupResource(object):
 
     def test_group_ordering(self, no_csrf_client):
         """Groups ordered alphabetically, with All Students first."""
-        g = factories.GroupFactory.create(name='B', owner__school_staff=True)
+        g = factories.GroupFactory.create(name='B')
         factories.GroupFactory.create(name='A', owner=g.owner)
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
@@ -382,7 +380,7 @@ class TestGroupResource(object):
 
     def test_delete_group(self, no_csrf_client):
         """Owner of a group can delete it."""
-        group = factories.GroupFactory.create(owner__school_staff=True)
+        group = factories.GroupFactory.create()
 
         no_csrf_client.delete(
             self.detail_url(group), user=group.owner.user, status=204)
@@ -393,8 +391,7 @@ class TestGroupResource(object):
     def test_delete_group_requires_owner(self, no_csrf_client):
         """Non-owner cannot delete a group, even if school staff."""
         group = factories.GroupFactory.create()
-        profile = factories.ProfileFactory.create(
-            school_staff=True, school=group.owner.school)
+        profile = factories.ProfileFactory.create(school=group.owner.school)
 
         no_csrf_client.delete(
             self.detail_url(group), user=profile.user, status=404)
@@ -404,7 +401,7 @@ class TestGroupResource(object):
 
     def test_group_uri(self, no_csrf_client):
         """Each group has a group_uri for use in the web UI."""
-        g = factories.GroupFactory.create(owner__school_staff=True)
+        g = factories.GroupFactory.create()
         group_url = reverse('group', kwargs={'group_id': g.id})
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
@@ -414,7 +411,7 @@ class TestGroupResource(object):
 
     def test_add_student_uri(self, no_csrf_client):
         """Each group has an add_student_uri for use in the web UI."""
-        g = factories.GroupFactory.create(owner__school_staff=True)
+        g = factories.GroupFactory.create()
         add_student_url = reverse(
             'add_student_in_group', kwargs={'group_id': g.id})
 
@@ -425,7 +422,7 @@ class TestGroupResource(object):
 
     def test_students_uri(self, no_csrf_client):
         """Each group has a students_uri for fetching its student list."""
-        g = factories.GroupFactory.create(owner__school_staff=True)
+        g = factories.GroupFactory.create()
         students_url = reverse(
             'api_dispatch_list',
             kwargs={'resource_name': 'user', 'api_name': 'v1'},
@@ -438,7 +435,7 @@ class TestGroupResource(object):
 
     def test_edit_uri(self, no_csrf_client):
         """Each group has an edit_uri in the API response."""
-        g = factories.GroupFactory.create(owner__school_staff=True)
+        g = factories.GroupFactory.create()
         edit_url = reverse('edit_group', kwargs={'group_id': g.id})
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
@@ -466,8 +463,7 @@ class TestPostResource(object):
 
     def test_unread_count(self, no_csrf_client):
         """Each post has an unread boolean in the API response."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
+        rel = factories.RelationshipFactory.create()
         post = factories.PostFactory.create(student=rel.student)
         unread.mark_unread(post, rel.elder)
 
