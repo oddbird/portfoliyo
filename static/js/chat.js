@@ -349,16 +349,21 @@ var PYO = (function (PYO, $) {
                 }
             }
         });
+
+        if (PYO.directSmsName) {
+            $('.village-elders .elder .action-sms[data-name="' + PYO.directSmsName + '"]').click();
+            PYO.directSmsName = '';
+        }
     };
 
     PYO.initializeSmsDirectLinks = function () {
-        var context = $('.village-main');
-        var textarea = context.find('#post-text');
 
         $('body').on('click', '.village-elders .elder .action-sms', function (e) {
             e.preventDefault();
+            var context = $('.village-main');
             var el = $(this);
             var name = el.data('name');
+            var textarea = context.find('#post-text');
 
             if (textarea.length) {
                 textarea.focus();
@@ -368,6 +373,9 @@ var PYO = (function (PYO, $) {
                 select.multiselect('widget').find('input[title="' + name + '"]').each(function () {
                     this.click();
                 });
+            } else {
+                PYO.directSmsName = name;
+                $('.village-nav .listitem-select.ajax-link.active').click();
             }
         });
     };
