@@ -324,6 +324,7 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = model.Profile
         fields = ['name', 'groups', 'elders']
+        widgets = {'name': forms.TextInput}
 
 
     def __init__(self, *args, **kwargs):
@@ -472,6 +473,7 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = model.Group
         fields = ['name', 'students', 'elders']
+        widgets = {'name': forms.TextInput}
 
 
     def __init__(self, *args, **kwargs):
