@@ -136,7 +136,7 @@ $.widget("ech.multiselect", {
 				inputID = 'ui-multiselect-' + (this.id || id + '-option-' + i),
 				isDisabled = this.disabled,
 				isSelected = this.selected,
-				labelClasses = [ 'ui-corner-all' ],
+				labelClasses = [ 'ui-corner-all', 'type' ],
 				liClasses = (isDisabled ? 'ui-multiselect-disabled ' : ' ') + this.className,
 				optLabel;
 
@@ -164,7 +164,7 @@ $.widget("ech.multiselect", {
 			html += '<li class="' + liClasses + '">';
 
 			// create the input
-			html += '<input id="' + inputID + '" name="multiselect_' + id + '" type="' + (o.multiple ? "checkbox" : "radio") + '" value="' + value + '" title="' + title + '" data-role="' + role + '" data-name="' + name + '"';
+			html += '<input id="' + inputID + '" class="value" name="multiselect_' + id + '" type="' + (o.multiple ? "checkbox" : "radio") + '" value="' + value + '" title="' + title + '" data-role="' + role + '" data-name="' + name + '"';
 
 			// pre-selected?
 			if( isSelected ){
