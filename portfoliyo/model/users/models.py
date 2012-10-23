@@ -272,54 +272,68 @@ def update_group_relationships(
         other_attr = 'to_profile'
         for_each = 'students'
 
+    check_for_orphan_relationships = False
+
     if reverse:
         if action == 'post_clear':
             Relationship.objects.filter(
                 **{
                     sender_attr: instance,
-                    'from_group__isnull': False,
+                    'direct': False,
                     }
                   ).delete()
         elif action == 'post_add':
             for group in Group.objects.filter(pk__in=pk_set):
                 for profile in getattr(group, for_each).all():
-                    Relationship.objects.get_or_create(
+                    rel, created = Relationship.objects.get_or_create(
                         **{
                             other_attr: profile,
                             sender_attr: instance,
                             'defaults': {
-                                'from_group': group,
+                                'direct': False,
                                 }
                             }
                           )
+                    rel.groups.add(group)
         elif action == 'post_remove':
-            Relationship.objects.filter(
+            Relationship.groups.through.objects.filter(
                 **{
-                    sender_attr: instance,
-                    'from_group__in': pk_set,
+                    'relationship__%s' % sender_attr: instance,
+                    'group__in': pk_set,
                     }
                   ).delete()
+            check_for_orphan_relationships = True
 
     else:
         if action == 'post_clear':
-            Relationship.objects.filter(from_group=instance).delete()
+            Relationship.groups.through.objects.filter(group=instance).delete()
+            check_for_orphan_relationships = True
         elif action == 'post_add':
             for pk in pk_set:
                 for profile in getattr(instance, for_each).all():
-                    Relationship.objects.get_or_create(
+                    rel, created = Relationship.objects.get_or_create(
                         **{
                             other_attr: profile,
                             '%s_id' % sender_attr: pk,
                             'defaults': {
-                                'from_group': instance,
+                                'direct': False,
                                 }
                             }
                           )
+                    rel.groups.add(instance)
         elif action == 'post_remove':
-            Relationship.objects.filter(
-                **{'%s__in' % sender_attr: pk_set, 'from_group': instance}
+            Relationship.groups.through.objects.filter(
+                **{
+                    'relationship__%s__in' % sender_attr: pk_set,
+                    'group': instance,
+                    }
                   ).delete()
+            check_for_orphan_relationships = True
 
+    if check_for_orphan_relationships:
+        Relationship.objects.annotate(
+            group_count=models.Count('groups')
+            ).filter(direct=False, group_count=0).delete()
 
 
 m2m_changed.connect(update_group_relationships, sender=Group.students.through)
@@ -337,8 +351,11 @@ class Relationship(models.Model):
         Profile, related_name="relationships_to")
     kind = models.CharField(max_length=20, choices=KIND, default=KIND.elder)
     description = models.CharField(max_length=200, blank=True)
-    from_group = models.ForeignKey(
-        Group, blank=True, null=True, related_name='relationships')
+    # is this a direct relationship (not a result of group membership)?
+    direct = models.BooleanField(default=True)
+    # what groups would cause this relationship to exist?
+    groups = models.ManyToManyField(
+        Group, blank=True, related_name='relationships')
 
 
     def __unicode__(self):

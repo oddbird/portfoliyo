@@ -321,7 +321,8 @@ class TestGroup(object):
 
         assert rel.elder == e
         assert rel.student == s
-        assert rel.from_group == g
+        assert not rel.direct
+        assert set(rel.groups.all()) == {g}
 
 
     def test_no_create_dupe_relationship(self):
@@ -333,7 +334,8 @@ class TestGroup(object):
 
         rel = utils.refresh(rel)
 
-        assert rel.from_group is None
+        assert rel.direct
+        assert set(rel.groups.all()) == {g}
 
 
     def test_group_removes_relationships(self):
@@ -370,6 +372,25 @@ class TestGroup(object):
         assert rel.elder.relationships_from.get() == rel
 
 
+    def test_double_group_relationships(self):
+        """
+        If student+elder in two groups, removing one doesn't remove relationship
+
+        """
+        e = factories.ProfileFactory.create()
+        s = factories.ProfileFactory.create(school=e.school)
+        g1 = factories.GroupFactory.create()
+        g2 = factories.GroupFactory.create()
+        g1.students.add(s)
+        g1.elders.add(e)
+        g2.students.add(s)
+        g2.elders.add(e)
+        g1.elders.clear()
+
+
+        assert e.relationships_from.get().student == s
+
+
     def test_reverse_add_creates_relationship(self):
         """Adding a group to a student creates relationship."""
         s = factories.ProfileFactory.create()
@@ -382,7 +403,8 @@ class TestGroup(object):
 
         assert rel.elder == e
         assert rel.student == s
-        assert rel.from_group == g
+        assert not rel.direct
+        assert set(rel.groups.all()) == {g}
 
 
     def test_reverse_add_no_dupe_relationship(self):
@@ -394,7 +416,8 @@ class TestGroup(object):
 
         rel = utils.refresh(rel)
 
-        assert rel.from_group is None
+        assert rel.direct
+        assert set(rel.groups.all()) == {g}
 
 
     def test_reverse_remove_removes_relationship(self):
