@@ -265,7 +265,7 @@ button { @include reset-button; }
 %check-value {
   @include gone;
   &[aria-checked="true"] + .type { @extend %options-checked; }
-  &[disabled] + .type { @extend %options-disabled; }
+  &.disabled + .type { @extend %options-disabled; }
 }
 
 %check-type {
