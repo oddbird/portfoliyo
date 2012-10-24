@@ -8,15 +8,18 @@ from django.db import models
 def process_post(post):
     if 'sms' not in post.meta:
         meta_sms = []
+        seen_ids = set()
         for highlight in post.meta.get('highlights', []):
-            meta_sms.append(
-                {
-                    'id': highlight['id'],
-                    'name': highlight['name'],
-                    'role': highlight['role'],
-                    'phone': highlight['phone'],
-                    }
-                )
+            if highlight['sms_sent'] and (highlight['id'] not in seen_ids):
+                meta_sms.append(
+                    {
+                        'id': highlight['id'],
+                        'name': highlight['name'],
+                        'role': highlight['role'],
+                        'phone': highlight['phone'],
+                        }
+                    )
+                seen_ids.add(highlight['id'])
         post.meta['sms'] = meta_sms
         post.save()
 

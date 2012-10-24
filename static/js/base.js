@@ -129,11 +129,12 @@ var PYO = (function (PYO, $) {
 
             if (History.enabled) {
                 $('body').on('click', '.ajax-link', function (e) {
+                    var el = $(this);
                     if (e.which === 2 || e.metaKey) {
                         return true;
                     } else {
                         e.preventDefault();
-                        var url = $(this).attr('href');
+                        var url = el.attr('href');
                         var stateData = History.getState().data;
                         var currentUrl = stateData.url ? stateData.url : window.location.pathname;
                         if (url === currentUrl) {
@@ -143,8 +144,19 @@ var PYO = (function (PYO, $) {
                             var title = document.title;
                             var data = { url: url };
                             History.pushState(data, title, url);
+                            if (!el.hasClass('active') && (!el.hasClass('group-link') || el.closest('.listitem').hasClass('grouptitle'))) {
+                                if (el.parents('.village-nav').length) {
+                                    $('.village-nav .ajax-link.listitem-select').removeClass('active');
+                                    el.closest('.listitem').find('.ajax-link.listitem-select').addClass('active');
+                                } else {
+                                    el.addClass('active');
+                                }
+                            }
                         }
-                        $(this).blur();
+                        if (el.parent().hasClass('student')) {
+                            el.find('.unread').addClass('zero').text('0');
+                        }
+                        el.blur();
                     }
                 });
 
@@ -172,7 +184,7 @@ var PYO = (function (PYO, $) {
         var inputs = form.find('.relation-fieldset .check-options input');
         var checked = inputs.filter('.initial');
 
-        checked.attr('disabled', 'disabled').each(function () {
+        checked.attr('disabled', 'disabled').addClass('disabled').each(function () {
             var el = $(this);
             var label = el.siblings('.type');
             if (el.closest('form').hasClass('village-add-form')) {
@@ -213,7 +225,7 @@ var PYO = (function (PYO, $) {
                     relInputs.each(function () {
                         var el = $(this);
                         if (!el.data('colored')) {
-                            el.data('colored', true).attr('disabled', 'disabled');
+                            el.data('colored', true).attr('disabled', 'disabled').addClass('disabled');
                             el.siblings('.type').addClass('group-selected-' + thisCount).attr('title', 'selected as part of "' + groupName + '" group');
                         }
                     });
@@ -229,7 +241,7 @@ var PYO = (function (PYO, $) {
                     if (el.hasClass('initial')) {
                         label.attr('title', label.data('title'));
                     } else {
-                        el.removeAttr('disabled');
+                        el.removeAttr('disabled').removeClass('disabled');
                         label.removeAttr('title');
                     }
                 });
