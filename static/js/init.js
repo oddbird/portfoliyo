@@ -15,6 +15,7 @@ var PYO = (function (PYO, $) {
         // base.js
         PYO.activeUserId = $('.village').data('user-id');
         PYO.ieInputBootstrapHandler();
+        PYO.announcements('.announcements');
         PYO.initializePusher();
         PYO.updatePageHeight('.village');
         PYO.ajaxifyVillages('.village');
