@@ -341,7 +341,7 @@ class StudentForm(forms.ModelForm):
             self.fields['groups'].initial = [
                 g.pk for g in self.instance.student_in_groups.all()]
             self.fields['elders'].initial = [
-                e.pk for e in self.direct_other_elders(self.instance)]
+                e.pk for e in self.direct_other_teachers(self.instance)]
 
 
     def save(self):
@@ -354,26 +354,27 @@ class StudentForm(forms.ModelForm):
         return student
 
 
-    def direct_other_elders(self, student):
+    def direct_other_teachers(self, student):
         """
-        Get all direct (non-group) other-than-me elders of a student.
+        Get all direct (non-group) other-than-me teachers of a student.
 
         Memoized by student id.
 
         """
-        if not hasattr(self, '_direct_other_elders'):
-            self._direct_other_elders = {}
-        if self._direct_other_elders.get(student.pk) is None:
-            self._direct_other_elders[student.pk] = [
+        if not hasattr(self, '_direct_other_teachers'):
+            self._direct_other_teachers = {}
+        if self._direct_other_teachers.get(student.pk) is None:
+            self._direct_other_teachers[student.pk] = [
                 r.elder for r in
                 model.Relationship.objects.filter(
                     to_profile=self.instance,
                     direct=True,
                     from_profile__deleted=False,
+                    from_profile__school_staff=True,
                     ).exclude(
                     from_profile=self.elder).select_related('from_profile')
                 ]
-        return self._direct_other_elders[student.pk]
+        return self._direct_other_teachers[student.pk]
 
 
     def update_student_elders(self, student, elders):
@@ -384,7 +385,7 @@ class StudentForm(forms.ModelForm):
         elder editing the student.
 
         """
-        current = set(self.direct_other_elders(student))
+        current = set(self.direct_other_teachers(student))
         target = set(elders)
         remove = current.difference(target)
         add = target.difference(current)

@@ -647,10 +647,33 @@ class TestStudentForms(object):
         assert profile.student_in_groups.get() == group
 
 
+    def test_edit_student_does_not_remove_parent(self):
+        """Editing student doesn't remove parent relationships."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student, from_profile__school_staff=False)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert set(profile.elders) == {rel.elder, parent_rel.elder}
+
+
     def test_edit_student_with_group_and_elder(self):
         """Can (de/)associate a student with a group/elder while editing."""
         rel = factories.RelationshipFactory.create()
-        factories.RelationshipFactory.create(to_profile=rel.student)
+        factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile=rel.student)
         group = factories.GroupFactory.create(owner=rel.elder)
         form = forms.StudentForm(
             {
