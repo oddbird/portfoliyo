@@ -6,7 +6,7 @@
   <ul>
     {% for nav_elder in group.all_elders %}
     <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
-      {% if nav_elder.school_staff %}
+      {% if nav_elder.school_staff or not request.user.profile.school_staff %}
         <span class="vcard {{ nav_elder|elder_status:request.user.profile }}">
           <b class="title">{{ nav_elder.role }}:</b>
           <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>

@@ -7,7 +7,7 @@
     {% for rel in student.elder_relationships %}
     {% with rel.elder as nav_elder %}
     <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
-      {% if nav_elder.school_staff %}
+      {% if nav_elder.school_staff or not request.user.profile.school_staff %}
         <span class="vcard {{ nav_elder|elder_status:request.user.profile }}">
           <b class="title">{{ rel.description_or_role }}:</b>
           <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
