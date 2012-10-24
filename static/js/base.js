@@ -129,11 +129,12 @@ var PYO = (function (PYO, $) {
 
             if (History.enabled) {
                 $('body').on('click', '.ajax-link', function (e) {
+                    var el = $(this);
                     if (e.which === 2 || e.metaKey) {
                         return true;
                     } else {
                         e.preventDefault();
-                        var url = $(this).attr('href');
+                        var url = el.attr('href');
                         var stateData = History.getState().data;
                         var currentUrl = stateData.url ? stateData.url : window.location.pathname;
                         if (url === currentUrl) {
@@ -143,16 +144,19 @@ var PYO = (function (PYO, $) {
                             var title = document.title;
                             var data = { url: url };
                             History.pushState(data, title, url);
-                            if (!$(this).hasClass('active') && (!$(this).hasClass('group-link') || $(this).closest('.listitem').hasClass('grouptitle'))) {
-                                if ($(this).parents('.village-nav').length) {
+                            if (!el.hasClass('active') && (!el.hasClass('group-link') || el.closest('.listitem').hasClass('grouptitle'))) {
+                                if (el.parents('.village-nav').length) {
                                     $('.village-nav .ajax-link.listitem-select').removeClass('active');
-                                    $(this).closest('.listitem').find('.ajax-link.listitem-select').addClass('active');
+                                    el.closest('.listitem').find('.ajax-link.listitem-select').addClass('active');
                                 } else {
-                                    $(this).addClass('active');
+                                    el.addClass('active');
                                 }
                             }
                         }
-                        $(this).blur();
+                        if (el.parent().hasClass('student')) {
+                            el.find('.unread').addClass('zero').text('0');
+                        }
+                        el.blur();
                     }
                 });
 
