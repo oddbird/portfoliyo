@@ -612,14 +612,15 @@ $.widget("ech.multiselect", {
 			speed = o.hide[1] || this.speed;
 		}
 
-    if( effect ) {
-      args = [ effect, speed ];
-    }
+	    if( effect ) {
+	      args = [ effect, speed ];
+	    }
 
-    $.fn.hide.apply(this.menu, args);
+	    $.fn.hide.apply(this.menu, args);
 		this.button.removeClass('ui-state-active').trigger('blur').trigger('mouseleave');
 		this._isOpen = false;
 		this._trigger('close');
+		$('#post-text').focus();
 	},
 
 	enable: function(){

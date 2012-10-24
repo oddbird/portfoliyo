@@ -179,6 +179,7 @@ var PYO = (function (PYO, $) {
                     feed.find('.post .details.auto').removeClass('auto');
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
+                    $('#sms-target').multiselect('checkAll');
                 }
             });
 
