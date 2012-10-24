@@ -170,10 +170,10 @@ var PYO = (function (PYO, $) {
     PYO.disablePreselectedAssociations = function (container) {
         var form = $(container);
         var inputs = form.find('.relation-fieldset .check-options input');
-        var checked = inputs.filter(':checked');
+        var checked = inputs.filter('.initial');
 
         checked.attr('disabled', 'disabled').each(function () {
-            var el = $(this).data('pre-selected', true);
+            var el = $(this);
             var label = el.siblings('.type');
             if (el.closest('form').hasClass('village-add-form')) {
                 label.attr('title', 'You are adding a student to the "' + $.trim(label.text()) + '" group.');
@@ -226,7 +226,7 @@ var PYO = (function (PYO, $) {
                     for (var i = 0; i < classes.length; i++) {
                         if (classes[i].indexOf('group-selected-') !== -1) { label.removeClass(classes[i]); }
                     }
-                    if (el.data('pre-selected')) {
+                    if (el.hasClass('initial')) {
                         label.attr('title', label.data('title'));
                     } else {
                         el.removeAttr('disabled');
@@ -267,7 +267,36 @@ var PYO = (function (PYO, $) {
             });
 
             groupInputs.filter(':checked').each(function () { $(this).change(); });
-            form.submit(function () { inputs.removeAttr('disabled'); });
+            form.submit(function () { inputs.add(groupInputs).removeAttr('disabled'); });
+        }
+    };
+
+    PYO.formFocus = function () {
+        if ($('#invite-elder-form').length) {
+            $('#id_contact').focus();
+        }
+        if ($('#add-student-form').length) {
+            $('#id_name').focus();
+            $('.add-student .student-form-details a.summary').click(function () {
+                $('#id_name').focus();
+            });
+        }
+        if ($('#add-group-form').length) {
+            $('#id_name').focus();
+        }
+    };
+
+    PYO.announcements = function (container) {
+        if ($(container).length) {
+            var context = $(container);
+            context.on('click', '.close', function (e) {
+                e.preventDefault();
+                var msg = $(this).closest('.announce');
+                var url = msg.data('mark-read-url');
+
+                msg.fadeOut(function () { $(this).remove(); });
+                if (url) { $.post(url); }
+            });
         }
     };
 
@@ -290,21 +319,10 @@ var PYO = (function (PYO, $) {
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
-        if ($('#invite-elder-form').length) {
-            PYO.disablePreselectedAssociations('#invite-elder-form');
-            $('#id_contact').focus();
-        }
-        if ($('#add-student-form').length) {
-            PYO.disablePreselectedAssociations('#add-student-form');
-            $('#id_name').focus();
-            $('.add-student .student-form-details a.summary').click(function () {
-                $('#id_name').focus();
-            });
-        }
-        if ($('#add-group-form').length) {
-            $('#id_name').focus();
-        }
+        if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
+        if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
+        PYO.formFocus();
         $('body').find('input:radio, input:checkbox').each(function () {
             PYO.ieInputBootstrap($(this));
         });

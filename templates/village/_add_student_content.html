@@ -19,7 +19,7 @@
   </div>
   {% endif %}
 
-  <div class="details student-form-details{% if not group.code and not request.user.profile.code %} open{% endif %}">
+  <div class="details student-form-details{% if not group.code and not request.user.profile.code or form.errors %} open{% endif %}">
     <a href="#" class="summary">You can also add students by hand.</a>
     {% include "village/_add_student_form.html" %}
   </div>

@@ -16,6 +16,10 @@ class InMemoryRedis(object):
         self.data = {}
 
 
+    def smembers(self, key):
+        return self.data.get(key, set())
+
+
     def sadd(self, key, val):
         s = self.data.setdefault(key, set())
         ret = 1 if val in s else 0

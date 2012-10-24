@@ -116,7 +116,7 @@ var PYO = (function (PYO, $) {
         var replaceNav = function (data) {
             nav.loadingOverlay('remove');
             if (data) {
-                data.staff = nav.data('is-staff');
+                if (nav.data('is-staff') === 'True') { data.staff = true; }
                 data.add_group_url = nav.data('add-group-url');
                 var newGroups = ich.group_list(data);
                 PYO.updateNavActiveClasses(newGroups);
@@ -175,7 +175,7 @@ var PYO = (function (PYO, $) {
                 data.group_edit_url = group_obj.edit_url;
                 data.group_resource_url = group_obj.resource_url;
                 data.group_add_student_url = group_obj.add_student_url;
-                data.staff = nav.data('is-staff');
+                if (nav.data('is-staff') === 'True') { data.staff = true; }
                 if (group_obj.id.toString().indexOf('all') !== -1) { data.all_students = true; }
                 var students = ich.student_list(data);
                 PYO.updateNavActiveClasses(students);
@@ -383,7 +383,7 @@ var PYO = (function (PYO, $) {
                     return $(this).data('group-id').toString().indexOf('all') !== -1;
                 }).length) {
                     $.each(data.objects, function () {
-                        this.staff = nav.data('is-staff');
+                        if (nav.data('is-staff') === 'True') { this.staff = true; }
                         this.objects = true;
                         this.all_students = true;
                         var student = ich.student_list_item(this);

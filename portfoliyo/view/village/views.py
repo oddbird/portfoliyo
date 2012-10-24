@@ -176,7 +176,6 @@ def edit_group(request, group_id):
 
 
 @school_staff_required
-@ajax('village/_invite_elder_content.html')
 def invite_elder(request, student_id=None, group_id=None):
     """Invite new elder to a student's village or to a group."""
     if student_id:
@@ -187,12 +186,14 @@ def invite_elder(request, student_id=None, group_id=None):
             'student': rel.student,
             'group': get_querystring_group(request, rel.student),
             }
+        ajax_template = 'village/_invite_elder_student_content.html'
     elif group_id:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), id=group_id)
         rel = None
         form_kwargs = {'group': group}
         template_context = {'group': group}
+        ajax_template = 'village/_invite_elder_group_content.html'
     else:
         raise http.Http404
 
@@ -211,7 +212,7 @@ def invite_elder(request, student_id=None, group_id=None):
 
     return TemplateResponse(
         request,
-        'village/invite_elder.html',
+        ajax_template if request.is_ajax() else 'village/invite_elder.html',
         template_context,
         )
 

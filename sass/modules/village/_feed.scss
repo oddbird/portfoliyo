@@ -1,4 +1,13 @@
 // ---------------------------------------------------------------------------
+// Settings
+
+$post-byline-cols : 2;
+$post-size        : $smallpx;
+$post-time-size   : $xsmallpx;
+$post-v-padding   : .25;
+$post-h-padding   : gutter($center);
+
+// ---------------------------------------------------------------------------
 // Village Feed
 
 .village-feed {
@@ -9,11 +18,8 @@
   background: lighten($base3,3);
 }
 
-$post-byline-cols : 2;
-$post-size        : $smallpx;
-$post-time-size   : $xsmallpx;
-$post-v-padding   : .25;
-$post-h-padding   : gutter($center);
+// ---------------------------------------------------------------------------
+// Getting Started
 
 .getting-started {
   padding: rhythm(1) $post-h-padding;
@@ -23,9 +29,62 @@ $post-h-padding   : gutter($center);
     @include serif;
     margin-bottom: -1px;
   }
-  &:last-child { background: none; }
+  &:last-child {
+    background: none;
+    .howto { display: block; }
+  }
   + .post { border-top: 1px solid; }
 }
+
+.howto {
+  display: none;
+  counter-reset: howto;
+}
+[class^="howto-"] {
+  @extend %icon;
+  @extend %icon-arrow-down;
+  @include rhythm-borders(1px,.75);
+  @include border-radius(.25em);
+  @include box-shadow($back 0 0 .25em);
+  position: absolute;
+  bottom: rhythm(1);
+  width: columns(5,$center);
+  background: $base3;
+  color: $orange;
+  border-color: $back;
+  font-style: italic;
+  counter-increment: howto;
+  &:before {
+    @include adjust-font-size-to($largepx,1);
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-top: -.175em;
+    margin-left: -.5em;
+    color: $back;
+  }
+  &:after {
+    @include border-radius(8em);
+    content: counter(howto,decimal) ".";
+    position: absolute;
+    top: rhythm(-.75);
+    left: rhythm(-.5);
+    padding: rhythm(.25) rhythm(.375);
+    background: $orange;
+    color: $base3;
+    font-style: normal;
+    font-weight: bold;
+  }
+}
+.howto-post {
+  left: $post-h-padding;
+}
+.howto-sms {
+  right: $post-h-padding;
+}
+
+// ---------------------------------------------------------------------------
+// Posts
 
 .post {
   @include pie-clearfix;
@@ -107,7 +166,7 @@ $post-h-padding   : gutter($center);
 }
 
 // ---------------------------------------------------------------------------
-// Note Add Form
+// Post Add Form
 
 $addnote-fontsize: $input-font-size;
 $postaction-size: $smallpx;
@@ -160,7 +219,7 @@ $postaction-size: $smallpx;
 .sms-targeting {
   @include adjust-font-size-to($postaction-size);
   display: inline-block;
-  .type {
+  > .type {
     display: inline;
     font-style: italic;
     cursor: default;

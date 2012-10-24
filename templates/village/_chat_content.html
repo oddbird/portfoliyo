@@ -6,7 +6,12 @@
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-user-id="{{ request.user.profile.id }}" {% block village-feed-attrs %}{% endblock %}>
     <article class="getting-started">
         <h2 class="starthead">{% block getting-started-header %}Welcome!{% endblock %}</h2>
-        <p class="startbody">{% block getting-started-body %}Post here to converse with the elders listed on the right.{% endblock %}</p>
+        <p class="startbody">{% block getting-started-body %}Post messages for teachers and family members.{% endblock %}</p>
+
+        <ol class="howto">
+          <li class="howto-post">Write a message for teachers and family members.</li>
+          <li class="howto-sms">Select family members who should receive a text. Then hit send!</li>
+        </ol>
     </article>
   </section>
   <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
@@ -22,7 +27,7 @@
       <div class="multiselect-dropdown">
         <select id="sms-target" class="value" name="sms-target" multiple="multiple">
           {% for elder in sms_elders %}
-            <option value="{{ elder.id }}" data-role="{{ elder.role_in_context }}" data-name="{{ elder }}" selected>{{ elder.role_in_context }}: {{ elder }}</option>
+            <option value="{{ elder.id }}" data-role="{{ elder.role_in_context }}" data-name="{% firstof elder.name elder.user.email elder.phone %}" selected>{{ elder.role_in_context }}: {% firstof elder.name elder.user.email elder.phone %}</option>
           {% endfor %}
         </select>
       </div class="multiselect-dropdown">

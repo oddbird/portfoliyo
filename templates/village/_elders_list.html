@@ -6,9 +6,8 @@
   {% regroup nav_elders|contextualized_elders|order:'school_staff,name' by school_staff as elder_types %}
   {% for elder_type in elder_types %}
 
-    {# @@@ IF PARENTS #}
     <h2 class="elders-title">{% if elder_type.grouper %}Teachers{% else %}Family Members{% endif %}</h2>
-    {# @@@ List of parents only #}
+
     <ul>
       {% for nav_elder in elder_type.list %}
       <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
@@ -18,9 +17,11 @@
         </span>
         {% if not nav_elder.school_staff %}
           <div class="listitem-actions">
+            {% if request.user.profile.school_staff %}
             <a href="{% block edit-elder-url %}{% endblock %}" class="action-edit ajax-link" title="edit {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">edit</a>
-            <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
             {# <button class="action-remove" title="remove {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">remove</button> #}
+            {% endif %}
+            <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
           </div>
         {% endif %}
       </li>

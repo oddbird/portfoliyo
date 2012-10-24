@@ -334,8 +334,8 @@ var PYO = (function (PYO, $) {
         var form = context.find('.post-add-form');
         var select = form.find('#sms-target');
         select.multiselect({
-            checkAllText: 'select all',
-            uncheckAllText: 'select none',
+            checkAllText: 'all',
+            uncheckAllText: 'none',
             noneSelectedText: 'no one',
             selectedText: function (checked, total, arr) {
                 if (checked < 4) {

@@ -128,6 +128,7 @@ INSTALLED_APPS = [
     "form_utils",
     "south",
     "tastypie",
+    "portfoliyo.announce",
     "portfoliyo.landing",
     "portfoliyo.model.users",
     "portfoliyo.model.village",
