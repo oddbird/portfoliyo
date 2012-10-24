@@ -162,31 +162,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.announcements .close:before, .meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
+.announcements .close:before, .meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .summary li:before, .benefits li:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
-.main-login .reset-link, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, .getting-started .mobile, #messages .close {
+.announcements .close, .meta .helplink, .main-login .reset-link, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, #messages .close {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.main-login .reset-link:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus, .getting-started .mobile:focus, #messages .close:focus {
+.announcements .close:focus, .meta .helplink:focus, .main-login .reset-link:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus, #messages .close:focus {
   outline: 0;
 }
-.main-login .reset-link:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, .getting-started .mobile:focus:before, #messages .close:focus:before {
+.announcements .close:focus:before, .meta .helplink:focus:before, .main-login .reset-link:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .getting-started .mobile:before, #messages .close:before {
+.announcements .close:before, .meta .helplink:before, .main-login .reset-link:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -203,23 +203,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-.email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
   content: "\2610";
 }
 
-.email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
   content: "\2611";
 }
 
-.email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
   content: "\25c9";
 }
 
-.email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
+.ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
   content: "\25ef";
 }
 
-.group .listitem-select:link:before, .group .listitem-select:visited:before {
+.title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\265b";
 }
 
@@ -239,15 +239,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\270e";
 }
 
-.summary li:before, .benefits li:before, .listitem-actions .action-save:before, .message.success:before {
+.ui-multiselect-all:before, .ui-multiselect-none:before, .summary li:before, .benefits li:before, .listitem-actions .action-save:before, .message.success:before {
   content: "\2713";
 }
 
-.listitem-select.removed:before, .elder .vcard.declined:before, .message.error:before {
+.ui-multiselect-none:before, .listitem-select.removed:before, .elder .vcard.declined:before, .message.error:before {
   content: "\2717";
 }
 
-#messages .close:before {
+.announcements .close:before, #messages .close:before {
   content: "\2718";
 }
 
@@ -255,7 +255,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\69";
 }
 
-.elder .vcard.inactive:before, .message.warning:before {
+.announcements .announce:before, .elder .vcard.inactive:before, .message.warning:before {
   content: "\26a0";
 }
 
@@ -279,7 +279,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\27f0";
 }
 
-.sms .sms-info .summary:before, .getting-started .mobile:before, .elder .vcard.mobile:before {
+.sms .sms-info .summary:before, .elder .vcard.mobile:before, .action-sms:before {
   content: "\e000";
 }
 
@@ -291,6 +291,10 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\21ba";
 }
 
+.ui-multiselect:before, [class^="howto-"]:before {
+  content: "\2193";
+}
+
 .action-back.groups:before {
   content: "\2190";
 }
@@ -299,7 +303,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e002";
 }
 
-.school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before {
+.school-field .radio-options [disabled].value + .type:before, .students-field .check-options [disabled].value + .type:before, .elders-field .check-options [disabled].value + .type:before, .groups-field .check-options [disabled].value + .type:before, .ui-multiselect-checkboxes input[disabled] + .type:before {
   content: "\e003";
 }
 
@@ -356,7 +360,7 @@ a:focus, a:hover, a:active {
   color: #d33682;
 }
 
-.meta .settingslink, .useractions a, .useractions button, .village-landing .formfield .action-betasignup {
+.ui-multiselect-checkboxes label, .meta .settingslink, .useractions a, .useractions button, .village-landing .formfield .action-betasignup {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -364,7 +368,7 @@ a:focus, a:hover, a:active {
   text-overflow: ellipsis;
 }
 
-.village-landing .formfield label, .village-elders h2 {
+.village-landing .formfield label {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -383,25 +387,25 @@ a:focus, a:hover, a:active {
   border: 1px solid #073642;
 }
 
-.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .village-landing h1, .parent-instructions h1, .getting-started h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .village-landing h2, .parent-instructions h2, .getting-started h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .village-landing h3, .parent-instructions h3, .getting-started h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .village-landing h4, .parent-instructions h4, .getting-started h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .village-landing h5, .parent-instructions h5, .getting-started h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .village-landing h6, .parent-instructions h6, .getting-started h6 {
+.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .village-landing h1, .parent-instructions h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .village-landing h2, .parent-instructions h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .village-landing h3, .parent-instructions h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .village-landing h4, .parent-instructions h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .village-landing h5, .parent-instructions h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .village-landing h6, .parent-instructions h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-weight: bold;
 }
-.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .village-landing p, .parent-instructions p, .getting-started p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .parent-instructions ul, .getting-started ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .parent-instructions ol, .getting-started ol {
+.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .village-landing p, .parent-instructions p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .parent-instructions ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .parent-instructions ol {
   margin-bottom: 1.27778em;
 }
-.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .parent-instructions ul, .getting-started ul {
+.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .village-landing ul, .parent-instructions ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .parent-instructions ol, .getting-started ol {
+.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .village-landing ol, .parent-instructions ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .village-landing em, .parent-instructions em, .getting-started em {
+.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .village-landing em, .parent-instructions em {
   font-style: italic;
 }
-.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .village-landing strong, .parent-instructions strong, .getting-started strong {
+.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .village-landing strong, .parent-instructions strong {
   font-weight: 500;
 }
 
@@ -473,7 +477,7 @@ optgroup {
   border-style: solid;
   border-width: 0.07143em;
   padding: 0.33929em;
-  background: url('../images/rgbapng/ffffff40.png?1350684014');
+  background: url('../images/rgbapng/ffffff40.png?1350940260');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -482,63 +486,48 @@ optgroup {
   outline: 0;
 }
 
-.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .main-login .form-actions button, .village-landing .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .village-landing .formfield .action-betasignup {
-  margin: 0;
+.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .main-login .form-actions button, .village-landing .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .ui-multiselect-all, .ui-multiselect-none, .announcements .announce, .meta .helplink, .village-landing .formfield .action-betasignup, .post-add-form .form-actions .action-post {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -ms-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  border-style: solid;
+  border-width: 0.05556em;
+  padding: 0.26389em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -ms-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background-color: #859900;
-  text-align: center;
-  font-size: 18px;
-  padding: 0.31944em 1.27778em;
+  border-color: #466721;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
   display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1.27778em;
-  -webkit-border-radius: 0.125em;
-  -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
-  border-radius: 0.125em;
-  background-color: #859900;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #859900), color-stop(100%, #596600));
-  background: -webkit-linear-gradient(#859900, #596600);
-  background: -moz-linear-gradient(#859900, #596600);
-  background: -o-linear-gradient(#859900, #596600);
-  background: -ms-linear-gradient(#859900, #596600);
-  background: linear-gradient(#859900, #596600);
-  -webkit-box-shadow: #c8e600 0 1px 0 inset;
-  -moz-box-shadow: #c8e600 0 1px 0 inset;
-  box-shadow: #c8e600 0 1px 0 inset;
-  border: 1px solid #424d00;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
   color: #fdf6e3;
-  text-shadow: #121400 0 -1px 0;
+  text-align: center;
+  text-transform: capitalize;
 }
-.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
-  text-decoration: none;
+.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .announcements .announce:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .announcements .announce:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus {
+  background-color: #9bb300;
 }
-.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .village-landing .formfield .action-betasignup:hover {
-  background-color: #424d00;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #6f8000), color-stop(100%, #424d00));
-  background: -webkit-linear-gradient(#6f8000, #424d00);
-  background: -moz-linear-gradient(#6f8000, #424d00);
-  background: -o-linear-gradient(#6f8000, #424d00);
-  background: -ms-linear-gradient(#6f8000, #424d00);
-  background: linear-gradient(#6f8000, #424d00);
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .announcements .announce:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+  background-color: #859900;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .village-landing .formfield .action-betasignup:active {
-  -webkit-box-shadow: #353d00 0 1px 2px inset;
-  -moz-box-shadow: #353d00 0 1px 2px inset;
-  box-shadow: #353d00 0 1px 2px inset;
+.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .no-students form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .main-login .form-actions button:link, .village-landing .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .add-student .form-actions button:link, .village-edit-form .form-actions button:link, .dashboard .form-actions button:link, .pjax-error .form-actions button:link, .elder-add-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .ui-multiselect-all:link, .ui-multiselect-none:link, .announcements .announce:link, .meta .helplink:link, .village-landing .formfield .action-betasignup:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .no-students form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .main-login .form-actions button:visited, .village-landing .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .add-student .form-actions button:visited, .village-edit-form .form-actions button:visited, .dashboard .form-actions button:visited, .pjax-error .form-actions button:visited, .elder-add-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .ui-multiselect-all:visited, .ui-multiselect-none:visited, .announcements .announce:visited, .meta .helplink:visited, .village-landing .formfield .action-betasignup:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .main-login .form-actions button:focus, .village-landing .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .add-student .form-actions button:focus, .village-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-add-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .announcements .announce:focus, .meta .helplink:focus, .village-landing .formfield .action-betasignup:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .main-login .form-actions button:hover, .village-landing .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .add-student .form-actions button:hover, .village-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-add-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .announcements .announce:hover, .meta .helplink:hover, .village-landing .formfield .action-betasignup:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .announcements .announce:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+  color: #fdf6e3;
 }
-.disabled.linkaction, .login form .form-actions button.disabled, .register form .form-actions button.disabled, .edit-profile form .form-actions button.disabled, .reset-password form .form-actions button.disabled, .change-password form .form-actions button.disabled, .set-password form .form-actions button.disabled, .activationfailed form .form-actions button.disabled, .awaiting-activation form .form-actions button.disabled, .no-students form .form-actions button.disabled, [class^="errorpage-"] form .form-actions button.disabled, .main-login .form-actions button.disabled, .village-landing .form-actions button.disabled, .group-add-form .form-actions button.disabled, .group-edit-form .form-actions button.disabled, .add-student .form-actions button.disabled, .village-edit-form .form-actions button.disabled, .dashboard .form-actions button.disabled, .pjax-error .form-actions button.disabled, .elder-add-form .form-actions button.disabled, .elder-edit-form .form-actions button.disabled, .post-add-form .form-actions button.disabled, .village-landing .formfield .disabled.action-betasignup, [disabled].linkaction, .login form .form-actions button[disabled], .register form .form-actions button[disabled], .edit-profile form .form-actions button[disabled], .reset-password form .form-actions button[disabled], .change-password form .form-actions button[disabled], .set-password form .form-actions button[disabled], .activationfailed form .form-actions button[disabled], .awaiting-activation form .form-actions button[disabled], .no-students form .form-actions button[disabled], [class^="errorpage-"] form .form-actions button[disabled], .main-login .form-actions button[disabled], .village-landing .form-actions button[disabled], .group-add-form .form-actions button[disabled], .group-edit-form .form-actions button[disabled], .add-student .form-actions button[disabled], .village-edit-form .form-actions button[disabled], .dashboard .form-actions button[disabled], .pjax-error .form-actions button[disabled], .elder-add-form .form-actions button[disabled], .elder-edit-form .form-actions button[disabled], .post-add-form .form-actions button[disabled], .village-landing .formfield [disabled].action-betasignup {
-  opacity: 0.6;
-  background: #596600;
-  cursor: default;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
-.linkaction::-moz-focus-inner, .login form .form-actions button::-moz-focus-inner, .register form .form-actions button::-moz-focus-inner, .edit-profile form .form-actions button::-moz-focus-inner, .reset-password form .form-actions button::-moz-focus-inner, .change-password form .form-actions button::-moz-focus-inner, .set-password form .form-actions button::-moz-focus-inner, .activationfailed form .form-actions button::-moz-focus-inner, .awaiting-activation form .form-actions button::-moz-focus-inner, .no-students form .form-actions button::-moz-focus-inner, [class^="errorpage-"] form .form-actions button::-moz-focus-inner, .main-login .form-actions button::-moz-focus-inner, .village-landing .form-actions button::-moz-focus-inner, .group-add-form .form-actions button::-moz-focus-inner, .group-edit-form .form-actions button::-moz-focus-inner, .add-student .form-actions button::-moz-focus-inner, .village-edit-form .form-actions button::-moz-focus-inner, .dashboard .form-actions button::-moz-focus-inner, .pjax-error .form-actions button::-moz-focus-inner, .elder-add-form .form-actions button::-moz-focus-inner, .elder-edit-form .form-actions button::-moz-focus-inner, .post-add-form .form-actions button::-moz-focus-inner, .village-landing .formfield .action-betasignup::-moz-focus-inner {
-  padding: 0 !important;
-  margin: -1px !important;
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .main-login .form-actions button:active, .village-landing .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .add-student .form-actions button:active, .village-edit-form .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-add-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .announcements .announce:active, .meta .helplink:active, .village-landing .formfield .action-betasignup:active, .post-add-form .form-actions .action-post:active {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
 }
 
 .meta button {
@@ -591,7 +580,7 @@ optgroup {
   font-style: italic;
 }
 
-.email_notifications-field [type="checkbox"], .school_staff-field [type="checkbox"], .email_notifications-field [type="radio"], .school_staff-field [type="radio"] {
+.ui-multiselect-checkboxes [type="checkbox"], .email_notifications-field [type="checkbox"], .school_staff-field [type="checkbox"], .ui-multiselect-checkboxes [type="radio"], .email_notifications-field [type="radio"], .school_staff-field [type="radio"] {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -601,17 +590,17 @@ optgroup {
   width: 1px;
   border: 0;
 }
-.email_notifications-field [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .email_notifications-field [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
+.ui-multiselect-checkboxes [type="checkbox"] + .type, .email_notifications-field [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .ui-multiselect-checkboxes [type="radio"] + .type, .email_notifications-field [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
   display: block;
 }
-.email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
   margin-left: .4em;
   color: #586e75;
 }
-.email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before, .ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
   color: #268bd2;
 }
-.email_notifications-field [type="checkbox"]:focus + .type, .school_staff-field [type="checkbox"]:focus + .type, .email_notifications-field [type="radio"]:focus + .type, .school_staff-field [type="radio"]:focus + .type {
+.ui-multiselect-checkboxes [type="checkbox"]:focus + .type, .email_notifications-field [type="checkbox"]:focus + .type, .school_staff-field [type="checkbox"]:focus + .type, .ui-multiselect-checkboxes [type="radio"]:focus + .type, .email_notifications-field [type="radio"]:focus + .type, .school_staff-field [type="radio"]:focus + .type {
   color: #002b36;
 }
 
@@ -692,12 +681,12 @@ button {
   text-align: left;
 }
 
-.school-field .radio-options .option, .students-field .check-options .option, .elders-field .check-options .option, .groups-field .check-options .option {
+.school-field .radio-options .option, .students-field .check-options .option, .elders-field .check-options .option, .groups-field .check-options .option, .ui-multiselect-checkboxes li {
   overflow: hidden;
   position: relative;
 }
 
-.school-field .radio-options .value, .students-field .check-options .value, .elders-field .check-options .value, .groups-field .check-options .value {
+.school-field .radio-options .value, .students-field .check-options .value, .elders-field .check-options .value, .groups-field .check-options .value, .ui-multiselect-checkboxes input {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -708,16 +697,16 @@ button {
   border: 0;
 }
 
-.school-field .radio-options .type, .students-field .check-options .type, .elders-field .check-options .type, .groups-field .check-options .type {
+.school-field .radio-options .type, .students-field .check-options .type, .elders-field .check-options .type, .groups-field .check-options .type, .ui-multiselect-checkboxes label {
   display: block;
   position: relative;
   padding-right: 1em;
   text-align: left;
 }
-.school-field .radio-options .type:focus, .students-field .check-options .type:focus, .elders-field .check-options .type:focus, .groups-field .check-options .type:focus, .school-field .radio-options .type:hover, .students-field .check-options .type:hover, .elders-field .check-options .type:hover, .groups-field .check-options .type:hover, .school-field .radio-options .type:active, .students-field .check-options .type:active, .elders-field .check-options .type:active, .groups-field .check-options .type:active {
+.school-field .radio-options .type:focus, .students-field .check-options .type:focus, .elders-field .check-options .type:focus, .groups-field .check-options .type:focus, .ui-multiselect-checkboxes label:focus, .school-field .radio-options .type:hover, .students-field .check-options .type:hover, .elders-field .check-options .type:hover, .groups-field .check-options .type:hover, .ui-multiselect-checkboxes label:hover, .school-field .radio-options .type:active, .students-field .check-options .type:active, .elders-field .check-options .type:active, .groups-field .check-options .type:active, .ui-multiselect-checkboxes label:active {
   background: #fdf6e3;
 }
-.school-field .radio-options .type:before, .students-field .check-options .type:before, .elders-field .check-options .type:before, .groups-field .check-options .type:before {
+.school-field .radio-options .type:before, .students-field .check-options .type:before, .elders-field .check-options .type:before, .groups-field .check-options .type:before, .ui-multiselect-checkboxes label:before {
   float: left;
 }
 
@@ -740,7 +729,7 @@ button {
 .school-field .radio-options, .students-field .check-options, .elders-field .check-options, .groups-field .check-options {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  background: url('../images/rgbapng/ffffff40.png?1350684014');
+  background: url('../images/rgbapng/ffffff40.png?1350940260');
   background: rgba(255, 255, 255, 0.25);
   max-height: 13.14286em;
   border: 1px solid;
@@ -760,10 +749,129 @@ button {
   border-color: rgba(147, 161, 161, 0.25);
 }
 
-.school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .select-students .value[disabled] + .type, .select-elders .value[disabled] + .type {
-  background: url('../images/rgbapng/268bd220.png?1350684014');
+.school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .value[disabled] + .type, .select-elders .value[disabled] + .type {
+  background: url('../images/rgbapng/268bd220.png?1350940259');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
+}
+
+.multiselect-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-multiselect {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  background: url('../images/rgbapng/ffffff7f.png?1350940260');
+  background: rgba(255, 255, 255, 0.5);
+  position: relative;
+  padding: 0 1.4em 0 .4em;
+  min-width: 15em;
+  border: 1px solid #93a1a1;
+  color: inherit;
+}
+.ui-multiselect:before {
+  position: absolute;
+  right: 0;
+  margin: 0;
+}
+.ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
+  background: url('../images/rgbapng/ffffffbf.png?1350940260');
+  background: rgba(255, 255, 255, 0.75);
+}
+
+.ui-multiselect-menu {
+  border-style: solid;
+  border-width: 0.05556em;
+  padding: 0.26389em;
+  -webkit-box-shadow: 0px 0px 5px #333333;
+  -moz-box-shadow: 0px 0px 5px #333333;
+  box-shadow: 0px 0px 5px #333333;
+  position: relative;
+  background: #657b83;
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  min-width: 100%;
+  background: #fdf6e3;
+  z-index: 900;
+}
+.ui-multiselect-menu:after, .ui-multiselect-menu:before {
+  top: 100%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.ui-multiselect-menu:after {
+  border-top-color: #657b83;
+  border-width: 0.5em;
+  left: 50%;
+  margin-left: -0.5em;
+}
+.ui-multiselect-menu:before {
+  border-top-color: false;
+  border-width: 0.5em;
+  left: 50%;
+  margin-left: -0.5em;
+}
+
+.ui-multiselect-checkboxes {
+  font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  padding-top: 0.63889em;
+  padding-bottom: 0.63889em;
+  border-color: #93a1a1;
+}
+.ui-multiselect-checkboxes b {
+  font-weight: bold;
+}
+
+.ui-multiselect-header {
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+}
+.ui-multiselect-header li {
+  width: 46.66667%;
+  float: left;
+  margin-right: 6.66667%;
+}
+.ui-multiselect-header li.ui-multiselect-close {
+  display: none;
+}
+.ui-multiselect-header li + li {
+  float: right;
+  margin-right: 0;
+}
+
+.ui-multiselect-all, .ui-multiselect-none {
+  width: 100%;
+  padding: 0 .5em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.ui-multiselect-none {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(224, 72, 69, 0.25)), color-stop(50%, rgba(220, 50, 47, 0)), color-stop(100%, rgba(163, 30, 27, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
+  background: -moz-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
+  background: -o-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
+  background: -ms-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
+  background: linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
+  background-color: #dc322f;
+  border-color: #713438;
+}
+.ui-multiselect-none:hover, .ui-multiselect-none:focus {
+  background-color: #e04845;
+}
+.ui-multiselect-none:active {
+  background-color: #dc322f;
 }
 
 .initial-password, .village-landing .membership {
@@ -908,7 +1016,7 @@ button {
   color: rgba(238, 232, 213, 0.75);
 }
 
-.meta span, .meta a, .meta button {
+.announcements, .meta span, .meta a, .meta button {
   padding-top: 0.31944em;
   padding-bottom: 0.31944em;
 }
@@ -922,13 +1030,18 @@ button {
 }
 @media (min-width: 43.875em) {
   .brand {
-    width: 29.11392%;
+    width: 18.98734%;
     float: left;
     margin-right: 1.26582%;
   }
 }
 .lt-ie9 .brand {
-  width: 29.11392%;
+  width: 18.98734%;
+  float: left;
+  margin-right: 1.26582%;
+}
+.village-app .brand {
+  width: 18.98734%;
   float: left;
   margin-right: 1.26582%;
 }
@@ -942,6 +1055,60 @@ button {
 }
 .brand .wordmark:before {
   margin: 0;
+}
+
+.announcements {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  clear: both;
+  color: inherit;
+}
+.announcements .announce {
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background-color: #268bd2;
+  border-color: #16608a;
+  display: inline-block;
+  padding: 0 .5em;
+}
+.announcements .announce:hover, .announcements .announce:focus {
+  background-color: #3797db;
+}
+.announcements .announce:active {
+  background-color: #268bd2;
+}
+.announcements a:link, .announcements a:visited {
+  color: #f3c8dd;
+}
+.announcements a:focus, .announcements a:hover, .announcements a:active {
+  color: #fcf2f7;
+}
+.announcements .close {
+  margin-left: 1em;
+}
+@media (min-width: 43.875em) {
+  .announcements {
+    width: 54.43038%;
+    float: left;
+    margin-right: 1.26582%;
+    clear: none;
+  }
+}
+.lt-ie9 .announcements {
+  width: 54.43038%;
+  float: left;
+  margin-right: 1.26582%;
+  clear: none;
+}
+.village-app .announcements {
+  width: 54.43038%;
+  float: left;
+  margin-right: 1.26582%;
+  clear: none;
 }
 
 .meta {
@@ -965,69 +1132,56 @@ button {
   float: right;
   margin-right: 0;
 }
+.village-app .meta {
+  width: 24.05063%;
+  float: right;
+  margin-right: 0;
+}
 .meta span, .meta a {
   display: block;
 }
 .meta .helplink {
-  font-size: 14px;
-  padding: 1.5;
-  display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1.27778em;
-  -webkit-border-radius: 0.125em;
-  -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
-  border-radius: 0.125em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(226, 84, 24, 0.25)), color-stop(50%, rgba(203, 75, 22, 0)), color-stop(100%, rgba(134, 50, 15, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: -moz-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: -o-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: -ms-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
+  background: linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background-color: #cb4b16;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eb7443), color-stop(70%, #cb4b16));
-  background: -webkit-linear-gradient(#eb7443, #cb4b16 70%);
-  background: -moz-linear-gradient(#eb7443, #cb4b16 70%);
-  background: -o-linear-gradient(#eb7443, #cb4b16 70%);
-  background: -ms-linear-gradient(#eb7443, #cb4b16 70%);
-  background: linear-gradient(#eb7443, #cb4b16 70%);
-  -webkit-box-shadow: #f2a788 0 1px 0 inset;
-  -moz-box-shadow: #f2a788 0 1px 0 inset;
-  box-shadow: #f2a788 0 1px 0 inset;
-  border: 1px solid #b44214;
-  color: #fdf6e3;
-  text-shadow: #963710 0 -1px 0;
+  border-color: #69402c;
   margin-top: 0.20536em;
   float: right;
-  line-height: 1em;
   margin-left: 1em;
-  padding-left: 0.82143em;
-  padding-right: 0.82143em;
-  text-align: left;
+  padding: 0 .5em;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
 }
-.meta .helplink:hover {
-  text-decoration: none;
-}
-.meta .helplink:hover {
-  background-color: #b44214;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(3%, #e8632c), color-stop(75%, #b44214));
-  background: -webkit-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: -moz-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: -o-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: -ms-linear-gradient(#e8632c 3%, #b44214 75%);
-  background: linear-gradient(#e8632c 3%, #b44214 75%);
+.meta .helplink:hover, .meta .helplink:focus {
+  background-color: #e25418;
 }
 .meta .helplink:active {
-  -webkit-box-shadow: #a63d12 0 1px 2px inset;
-  -moz-box-shadow: #a63d12 0 1px 2px inset;
-  box-shadow: #a63d12 0 1px 2px inset;
+  background-color: #cb4b16;
 }
-.meta .helplink.disabled, .meta .helplink[disabled] {
-  opacity: 0.6;
-  background: #cb4b16;
-  cursor: default;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+@media (min-width: 43.875em) {
+  .meta .helplink {
+    text-indent: 0;
+    width: auto;
+  }
+  .meta .helplink:before {
+    position: static;
+    padding: 0;
+    margin-right: .4em;
+  }
 }
-.meta .helplink:link, .meta .helplink:visited {
-  color: #fdf6e3;
+.lt-ie9 .meta .helplink {
+  text-indent: 0;
+  width: auto;
+}
+.lt-ie9 .meta .helplink:before {
+  position: static;
+  padding: 0;
+  margin-right: .4em;
 }
 .meta button {
   width: 100%;
@@ -1172,60 +1326,74 @@ button {
 }
 .main-login .login-link {
   margin-top: 0.20536em;
-  font-size: 14px;
-  padding: 0.41071em;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -ms-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  border-style: solid;
+  border-width: 0.05556em;
+  padding: 0.26389em;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: -ms-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background: linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+  background-color: #859900;
+  border-color: #466721;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
   display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  line-height: 1.27778em;
-  -webkit-border-radius: 0.125em;
-  -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
-  border-radius: 0.125em;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: #fdf6e3;
+  text-align: center;
+  text-transform: capitalize;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(112, 136, 145, 0.25)), color-stop(50%, rgba(101, 123, 131, 0)), color-stop(100%, rgba(68, 82, 88, 0.25)));
+  background: -webkit-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: -moz-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: -o-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: -ms-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+  background: linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
   background-color: #657b83;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #657b83), color-stop(100%, #4f6066));
-  background: -webkit-linear-gradient(#657b83, #4f6066);
-  background: -moz-linear-gradient(#657b83, #4f6066);
-  background: -o-linear-gradient(#657b83, #4f6066);
-  background: -ms-linear-gradient(#657b83, #4f6066);
-  background: linear-gradient(#657b83, #4f6066);
-  -webkit-box-shadow: #8da0a7 0 1px 0 inset;
-  -moz-box-shadow: #8da0a7 0 1px 0 inset;
-  box-shadow: #8da0a7 0 1px 0 inset;
-  border: 1px solid #445258;
+  border-color: #365862;
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.10417em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.10417em;
   color: #eee8d5;
-  text-shadow: #2b3538 0 -1px 0;
-  line-height: 1em;
   float: right;
   max-width: 35.48387%;
   padding-left: 1em;
   padding-right: 1em;
 }
-.main-login .login-link:hover {
-  text-decoration: none;
-}
-.main-login .login-link:hover {
-  background-color: #445258;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a6d75), color-stop(100%, #445258));
-  background: -webkit-linear-gradient(#5a6d75, #445258);
-  background: -moz-linear-gradient(#5a6d75, #445258);
-  background: -o-linear-gradient(#5a6d75, #445258);
-  background: -ms-linear-gradient(#5a6d75, #445258);
-  background: linear-gradient(#5a6d75, #445258);
+.main-login .login-link:hover, .main-login .login-link:focus {
+  background-color: #9bb300;
 }
 .main-login .login-link:active {
-  -webkit-box-shadow: #3d4a4f 0 1px 2px inset;
-  -moz-box-shadow: #3d4a4f 0 1px 2px inset;
-  box-shadow: #3d4a4f 0 1px 2px inset;
+  background-color: #859900;
 }
-.main-login .login-link.disabled, .main-login .login-link[disabled] {
-  opacity: 0.6;
-  background: #4f6066;
-  cursor: default;
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
+.main-login .login-link:link, .main-login .login-link:visited, .main-login .login-link:focus, .main-login .login-link:hover, .main-login .login-link:active {
+  color: #fdf6e3;
+}
+.main-login .login-link:active {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+}
+.main-login .login-link:hover, .main-login .login-link:focus {
+  background-color: #708891;
+}
+.main-login .login-link:active {
+  background-color: #657b83;
 }
 .main-login .reset-link {
   width: 1em;
@@ -1268,58 +1436,85 @@ button {
     line-height: 1em;
   }
   .main-login .login-form button {
-    font-size: 14px;
-    padding: 0.41071em;
+    -webkit-border-radius: 0.25em;
+    -moz-border-radius: 0.25em;
+    -ms-border-radius: 0.25em;
+    -o-border-radius: 0.25em;
+    border-radius: 0.25em;
+    border-style: solid;
+    border-width: 0.05556em;
+    padding: 0.26389em;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
+    background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: -ms-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background: linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
+    background-color: #859900;
+    border-color: #466721;
+    -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+    -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+    box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+    text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
     display: inline-block;
-    cursor: pointer;
-    text-decoration: none;
-    line-height: 1.27778em;
-    -webkit-border-radius: 0.125em;
-    -moz-border-radius: 0.125em;
-    -ms-border-radius: 0.125em;
-    -o-border-radius: 0.125em;
-    border-radius: 0.125em;
+    margin: 0;
+    padding-left: 1em;
+    padding-right: 1em;
+    color: #fdf6e3;
+    text-align: center;
+    text-transform: capitalize;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(112, 136, 145, 0.25)), color-stop(50%, rgba(101, 123, 131, 0)), color-stop(100%, rgba(68, 82, 88, 0.25)));
+    background: -webkit-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: -moz-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: -o-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: -ms-linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
+    background: linear-gradient(top, rgba(112, 136, 145, 0.25), rgba(101, 123, 131, 0), rgba(68, 82, 88, 0.25));
     background-color: #657b83;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #657b83), color-stop(100%, #4f6066));
-    background: -webkit-linear-gradient(#657b83, #4f6066);
-    background: -moz-linear-gradient(#657b83, #4f6066);
-    background: -o-linear-gradient(#657b83, #4f6066);
-    background: -ms-linear-gradient(#657b83, #4f6066);
-    background: linear-gradient(#657b83, #4f6066);
-    -webkit-box-shadow: #8da0a7 0 1px 0 inset;
-    -moz-box-shadow: #8da0a7 0 1px 0 inset;
-    box-shadow: #8da0a7 0 1px 0 inset;
-    border: 1px solid #445258;
+    border-color: #365862;
+    font-size: 0.77778em;
+    line-height: 1.64286em;
+    border-top-style: solid;
+    border-top-width: 0.05556em;
+    padding-top: 0.10417em;
+    border-bottom-style: solid;
+    border-bottom-width: 0.05556em;
+    padding-bottom: 0.10417em;
     color: #eee8d5;
-    text-shadow: #2b3538 0 -1px 0;
-    line-height: 1em;
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
+    background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+    background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
     background-color: #268bd2;
+    border-color: #16608a;
     width: 100%;
   }
-  .main-login .login-form button:hover {
-    text-decoration: none;
-  }
-  .main-login .login-form button:hover {
-    background-color: #445258;
-    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5a6d75), color-stop(100%, #445258));
-    background: -webkit-linear-gradient(#5a6d75, #445258);
-    background: -moz-linear-gradient(#5a6d75, #445258);
-    background: -o-linear-gradient(#5a6d75, #445258);
-    background: -ms-linear-gradient(#5a6d75, #445258);
-    background: linear-gradient(#5a6d75, #445258);
+  .main-login .login-form button:hover, .main-login .login-form button:focus {
+    background-color: #9bb300;
   }
   .main-login .login-form button:active {
-    -webkit-box-shadow: #3d4a4f 0 1px 2px inset;
-    -moz-box-shadow: #3d4a4f 0 1px 2px inset;
-    box-shadow: #3d4a4f 0 1px 2px inset;
+    background-color: #859900;
   }
-  .main-login .login-form button.disabled, .main-login .login-form button[disabled] {
-    opacity: 0.6;
-    background: #4f6066;
-    cursor: default;
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+  .main-login .login-form button:link, .main-login .login-form button:visited, .main-login .login-form button:focus, .main-login .login-form button:hover, .main-login .login-form button:active {
+    color: #fdf6e3;
+  }
+  .main-login .login-form button:active {
+    -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+    -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+    box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  }
+  .main-login .login-form button:hover, .main-login .login-form button:focus {
+    background-color: #708891;
+  }
+  .main-login .login-form button:active {
+    background-color: #657b83;
+  }
+  .main-login .login-form button:hover, .main-login .login-form button:focus {
+    background-color: #3797db;
+  }
+  .main-login .login-form button:active {
+    background-color: #268bd2;
   }
 }
 
@@ -1522,7 +1717,7 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('../images/rgbapng/586e7540.png?1350684015');
+  background: url('../images/rgbapng/586e7540.png?1350940259');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1716,7 +1911,7 @@ button {
   margin-left: 0;
 }
 
-.active.additem-link:link, .active.addelder-link:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:link, .active.listitem-select:visited, .village-elders .active.edit-elder, .village-elders .active.edit-elder:link, .village-elders .active.edit-elder:visited {
+.active.additem-link:link, .active.addelder-link:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:link, .active.listitem-select:visited, .elder .active.vcard {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -1725,7 +1920,7 @@ button {
 }
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/8599007f.png?1350684015');
+  background: url('../images/rgbapng/8599007f.png?1350940259');
   background: rgba(133, 153, 0, 0.5);
   color: #657b83;
   font-weight: bold;
@@ -1967,7 +2162,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('../images/start-arrow.png?1350666569') no-repeat left bottom;
+  background: url('../images/start-arrow.png?1350940260') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -2011,11 +2206,11 @@ button {
 }
 
 .listitem-select:link, .listitem-select:visited {
-  background: url('../images/rgbapng/eee8d540.png?1350684015');
+  background: url('../images/rgbapng/eee8d540.png?1350940260');
   background: rgba(238, 232, 213, 0.25);
 }
 .title .listitem-select:link, .title .listitem-select:visited {
-  background: url('../images/rgbapng/268bd240.png?1350684015');
+  background: url('../images/rgbapng/268bd240.png?1350940259');
   background: rgba(38, 139, 210, 0.25);
   font-weight: bold;
   color: #073642;
@@ -2025,11 +2220,11 @@ button {
   color: #fdf6e3;
 }
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
-  background: url('../images/rgbapng/eee8d57f.png?1350684015');
+  background: url('../images/rgbapng/eee8d57f.png?1350940260');
   background: rgba(238, 232, 213, 0.5);
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1350684015');
+  background: url('../images/rgbapng/268bd27f.png?1350940259');
   background: rgba(38, 139, 210, 0.5);
 }
 .listitem-select .unread {
@@ -2148,7 +2343,7 @@ button {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/rgbapng/0736427f.png?1350684015');
+  background: url('../images/rgbapng/0736427f.png?1350940259');
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
@@ -2164,8 +2359,89 @@ button {
 .village-feed {
   left: 0;
   right: 0;
-  bottom: 4.47222em;
+  bottom: 6.06944em;
   background: #fefbf1;
+}
+
+.getting-started {
+  padding: 1.27778em 2.12766%;
+  background: #fdf6e3;
+}
+.getting-started .starthead {
+  font-size: 2.44444em;
+  line-height: 1.30682em;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin-bottom: -1px;
+}
+.getting-started:last-child {
+  background: none;
+}
+.getting-started:last-child .howto {
+  display: block;
+}
+.getting-started + .post {
+  border-top: 1px solid;
+}
+
+.howto {
+  display: none;
+  counter-reset: howto;
+}
+
+[class^="howto-"] {
+  border-style: solid;
+  border-width: 0.05556em;
+  padding: 0.90278em;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  -ms-border-radius: 0.25em;
+  -o-border-radius: 0.25em;
+  border-radius: 0.25em;
+  -webkit-box-shadow: #073642 0 0 0.25em;
+  -moz-box-shadow: #073642 0 0 0.25em;
+  box-shadow: #073642 0 0 0.25em;
+  position: absolute;
+  bottom: 1.27778em;
+  width: 40.42553%;
+  background: #fdf6e3;
+  color: #cb4b16;
+  border-color: #073642;
+  font-style: italic;
+  counter-increment: howto;
+}
+[class^="howto-"]:before {
+  font-size: 1.94444em;
+  line-height: 0.65714em;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-top: -0.175em;
+  margin-left: -0.5em;
+  color: #073642;
+}
+[class^="howto-"]:after {
+  -webkit-border-radius: 8em;
+  -moz-border-radius: 8em;
+  -ms-border-radius: 8em;
+  -o-border-radius: 8em;
+  border-radius: 8em;
+  content: counter(howto, decimal) ".";
+  position: absolute;
+  top: -0.95833em;
+  left: -0.63889em;
+  padding: 0.31944em 0.47917em;
+  background: #cb4b16;
+  color: #fdf6e3;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.howto-post {
+  left: 2.12766%;
+}
+
+.howto-sms {
+  right: 2.12766%;
 }
 
 .post {
@@ -2288,7 +2564,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('../images/rgbapng/93a1a140.png?1350684015');
+  background: url('../images/rgbapng/93a1a140.png?1350940259');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2299,31 +2575,6 @@ button {
   color: #fdf6e3;
 }
 
-.getting-started {
-  padding-top: 1.27778em;
-  border-bottom-style: solid;
-  border-bottom-width: 0.05556em;
-  padding-bottom: 1.22222em;
-  padding-left: 2.12766%;
-  padding-right: 2.12766%;
-  border-color: #93a1a1;
-  background: white;
-}
-.getting-started h2 {
-  font-size: 1.94444em;
-  line-height: 1.31429em;
-  margin-bottom: 0.65714em;
-}
-.getting-started li {
-  padding-bottom: 0.31944em;
-}
-.getting-started :last-child {
-  margin-bottom: 0;
-}
-.getting-started .mobile {
-  display: inline-block;
-}
-
 .post-add-form {
   position: absolute;
   left: 0;
@@ -2331,24 +2582,47 @@ button {
   bottom: 0;
   padding: 0.63889em 1.26582%;
   border-top: 1px solid #657b83;
-  background: #93a1a1;
+  background: #eee8d5;
+  text-align: right;
+}
+.post-add-form.group-posts {
+  background: #bcd0d4;
 }
 .post-add-form .formfield {
-  float: left;
-  width: 82.97872%;
   margin: 0;
 }
-.post-add-form textarea {
+.post-add-form .form-actions {
+  clear: none;
+  display: inline-block;
+  margin: 0;
+}
+.post-add-form .form-actions .action-post {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 0.10417em;
+  border-bottom-style: solid;
+  border-bottom-width: 0.05556em;
+  padding-bottom: 0.10417em;
+  text-transform: uppercase;
+}
+
+.post-textfield {
+  text-align: left;
+}
+.post-textfield .value {
+  margin-bottom: 0.20536em;
   height: 4.10714em;
   min-height: 4.10714em;
   background: rgba(255, 255, 255, 0.75);
   padding-left: 0.82143em;
   resize: none;
 }
-.lt-ie9 .post-add-form textarea {
+.lt-ie9 .post-textfield .value {
   min-height: 3.28571em;
 }
-.post-add-form .charcount {
+.post-textfield .charcount {
   font-size: 0.66667em;
   line-height: 1.91667em;
   position: absolute;
@@ -2356,28 +2630,19 @@ button {
   bottom: 0;
   color: #93a1a1;
 }
-.post-add-form .charcount.overlimit {
+.post-textfield .charcount.overlimit {
   color: #dc322f;
 }
-.post-add-form .form-actions {
-  clear: none;
-  float: right;
-  margin: 0;
-  width: 17.02128%;
+
+.sms-targeting {
+  font-size: 0.77778em;
+  line-height: 1.64286em;
+  display: inline-block;
 }
-.post-add-form button {
-  -moz-border-radius-topleft: 0;
-  -webkit-border-top-left-radius: 0;
-  border-top-left-radius: 0;
-  -moz-border-radius-bottomleft: 0;
-  -webkit-border-bottom-left-radius: 0;
-  border-bottom-left-radius: 0;
-  position: relative;
-  top: 1px;
-  padding: 0;
-  height: 3.19444em;
-  width: 100%;
-  text-transform: uppercase;
+.sms-targeting > .type {
+  display: inline;
+  font-style: italic;
+  cursor: default;
 }
 
 .nav-error, .remove-error, .post .timeout, .feed-error, .pjax-error p {
@@ -2407,35 +2672,44 @@ button {
   border-left: 1px solid #93a1a1;
 }
 
-.village-elders .edit-elder, .village-elders .edit-elder:link, .village-elders .edit-elder:visited {
+.elders-title, .elder .vcard {
   margin-left: -1.28571em;
   padding-left: 1.28571em;
   margin-right: -1.28571em;
   padding-right: 1.28571em;
-  position: relative;
-  display: block;
-}
-.village-elders .edit-elder:focus, .village-elders .edit-elder:hover, .village-elders .edit-elder:active {
-  background: #eee8d5;
-}
-.village-elders .title {
-  font-weight: bold;
-}
-.village-elders .fn {
-  color: #93a1a1;
-}
-
-.elder .vcard {
   padding-top: 0.41071em;
   border-bottom-style: solid;
   border-bottom-width: 0.07143em;
   padding-bottom: 0.33929em;
-  margin-left: -1.28571em;
-  padding-left: 1.28571em;
-  margin-right: -1.28571em;
-  padding-right: 1.28571em;
+  position: relative;
   display: block;
   border-color: #eee8d5;
+}
+
+.elders-title {
+  font-weight: bold;
+  color: #fdf6e3;
+  background: #4583aa;
+}
+
+.elder {
+  position: relative;
+}
+.elder .listitem-actions {
+  right: -1.28571em;
+}
+.elder:focus .listitem-actions, .elder:hover .listitem-actions, .elder:active .listitem-actions {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+.lt-ie9 .elder:focus .listitem-actions, .lt-ie9 .elder:hover .listitem-actions, .lt-ie9 .elder:active .listitem-actions {
+  display: block;
+}
+.elder .title {
+  font-weight: bold;
+}
+.elder .fn {
+  color: #93a1a1;
 }
 .elder .vcard:before {
   position: relative;
@@ -2456,14 +2730,18 @@ button {
   color: #657b83;
 }
 .elder .vcard.declined {
-  background: url('../images/rgbapng/dc322f20.png?1350684015');
+  background: url('../images/rgbapng/dc322f20.png?1350940260');
   background: rgba(220, 50, 47, 0.125);
 }
 .elder .vcard.declined:before {
   color: #dc322f;
 }
-.elder:last-child .vcard {
-  border-bottom: 0;
+.elder .vcard.active {
+  background: #586e75;
+  color: #fdf6e3;
+}
+.elder .vcard.active:before, .elder .vcard.active .fn {
+  color: #eee8d5;
 }
 
 .addelder-link {
@@ -2476,8 +2754,9 @@ button {
   border-width: 0.07143em;
   padding: 0.33929em;
   display: block;
-  border-color: #93a1a1;
   padding-left: 1.28571em;
+  border-color: #93a1a1;
+  border-top: 0;
 }
 
 .pjax-error p {
@@ -2549,7 +2828,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1350684015');
+  background: url('../images/rgbapng/002b3640.png?1350940259');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;

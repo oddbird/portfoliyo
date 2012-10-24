@@ -62,12 +62,43 @@ $input-rhythm: .25;
   outline: 0;
 }
 
-%button {
-  margin: 0;
-  background-color: $green;
-  text-align: center;
-  @include sassy-button;
+@mixin button-color($color: $green) {
+  $light  : adjust-color($color, $lightness: 5%);
+  $dark   : adjust-color($color, $lightness: -15%);
+  @include background(linear-gradient(top, rgba($light,.25), rgba($color,0), rgba($dark,.25)));
+  background-color: $color;
+  border-color: mix($color,$back);
+  &:hover, &:focus { background-color: $light; }
+  &:active { background-color: $color; }
 }
+
+@mixin small-button($fontsize: false) {
+  $size: $smallpx;
+  @if $fontsize {
+    @include adjust-font-size-to($fontsize);
+    $size: $fontsize;
+  }
+  @include h-borders(1px,.125);
+}
+
+@mixin button($color: $green) {
+  @include border-radius(.25em);
+  @include rhythm-borders(1px,.25);
+  @include button-color($green);
+  @include box-shadow(rgba(white,.5) 0 1px 1px inset);
+  @include text-shadow(rgba($back,.5) 0 -1px 0);
+  display: inline-block;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: $base3;
+  text-align: center;
+  text-transform: capitalize;
+  #{$link}, #{$focus} { color: $base3; }
+  &:active { @include box-shadow(rgba($back,.5) 0 0 .25em inset); }
+}
+
+%button { @include button; }
 
 @mixin reset-button {
   @include reset-box-model;
@@ -284,4 +315,85 @@ button { @include reset-button; }
 %options-disabled {
   @extend %icon;
   @extend %icon-locked;
+}
+
+// ---------------------------------------------------------------------------
+// ui multiselect
+
+.multiselect-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.ui-multiselect {
+  @extend %icon;
+  @extend %icon-arrow-down;
+  @include border-radius(3px);
+  @include rgba-background(rgba(white,.5));
+  position: relative;
+  padding: 0 1.4em 0 .4em;
+  min-width: columns-width(4);
+  border: 1px solid $base1;
+  color: inherit;
+  &:before {
+    position: absolute;
+    right: 0;
+    margin: 0;
+  }
+  #{$focus} {
+    @include rgba-background(rgba(white,.75));
+  }
+}
+
+.ui-multiselect-menu {
+  @include rhythm-borders(1px,.25);
+  @include box-shadow;
+  @include css-arrow(bottom, .5em, $base);
+  position: absolute;
+  right: 0;
+  bottom: 100%;
+  min-width: 100%;
+  background: $base3;
+  z-index: 900;
+}
+
+.ui-multiselect-checkboxes {
+  @extend %radio-check-defaults;
+  @include cond;
+  @include padding-leader(.5);
+  @include padding-trailer(.5);
+  border-color: $base1;
+
+  li { @extend %check-option; }
+  input { @extend %check-value; }
+  label {
+    @extend %ellipsis;
+    @extend %check-type;
+  }
+  b { font-weight: bold; }
+}
+
+.ui-multiselect-header {
+  @include clearfix;
+  position: relative;
+  text-align: left;
+  li {
+    @include span-columns(2,4);
+    &.ui-multiselect-close { display: none; }
+    + li { @include omega; }
+  }
+}
+
+.ui-multiselect-all, .ui-multiselect-none {
+  @extend %icon;
+  @extend %icon-checkmark;
+  @extend %button;
+  width: 100%;
+  padding: 0 .5em;
+  font-weight: bold;
+  text-align: center;
+}
+.ui-multiselect-none {
+  @extend %icon-x;
+  @include button-color($red);
 }

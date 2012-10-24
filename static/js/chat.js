@@ -37,31 +37,19 @@ var PYO = (function (PYO, $) {
         var posts;
         if (data && data.posts && data.posts.length) {
             $.each(data.posts, function () {
-                if (this.meta && this.meta.highlights) {
-                    if (this.meta.highlights.length) {
-                        var notified = [];
-                        var inactive = [];
+                this.plural_sms = '';
+                this.sms_recipients = false;
+                if (this.meta && this.meta.sms && this.meta.sms.length) {
+                    var recipients = [];
 
-                        $.each(this.meta.highlights, function () {
-                            if (this.sms_sent) {
-                                if ($.inArray(this.role, notified) === -1) {
-                                    notified.push(this.role);
-                                }
-                            } else {
-                                if ($.inArray(this.role, inactive) === -1) {
-                                    inactive.push(this.role);
-                                }
-                            }
-                        });
+                    $.each(this.meta.sms, function () {
+                        if ($.inArray(this.display, recipients) === -1) {
+                            recipients.push(this.display);
+                        }
+                    });
 
-                        if (notified.length) { this.sms_notified = notified.join(', '); }
-                        if (inactive.length) { this.sms_inactive = inactive.join(', '); }
-                        this.highlighted = true;
-                    } else {
-                        this.highlighted = false;
-                    }
-                } else {
-                    this.no_highlights = true;
+                    this.sms_recipients = recipients.join(', ');
+                    if (recipients.length > 1) { this.plural_sms = 's'; }
                 }
             });
             posts = ich.post(data);
@@ -166,10 +154,16 @@ var PYO = (function (PYO, $) {
                     var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
                     var post = PYO.addPost(postObj);
-                    var postData = {
-                        text: text,
-                        author_sequence_id: author_sequence_id
-                    };
+                    var postData = [
+                        { name: 'text', value: text },
+                        { name: 'author_sequence_id', value: author_sequence_id }
+                    ];
+                    var smsInputName = $('#sms-target').attr('name');
+
+                    form.find('.sms-targeting .ui-multiselect-checkboxes input:checked').each(function () {
+                        var obj = { name: smsInputName, value: $(this).val() };
+                        postData.push(obj);
+                    });
 
                     if (url) {
                         postAjax.XHR[count] = $.post(url, postData, function (response) {
@@ -333,6 +327,56 @@ var PYO = (function (PYO, $) {
 
             textarea.keyup(updateCount).change(updateCount);
         }
+    };
+
+    PYO.initializeMultiselect = function () {
+        var context = $('.village-main');
+        var form = context.find('.post-add-form');
+        var select = form.find('#sms-target');
+        select.multiselect({
+            checkAllText: 'all',
+            uncheckAllText: 'none',
+            noneSelectedText: 'no one',
+            selectedText: function (checked, total, arr) {
+                if (checked < 4) {
+                    return $(arr).map(function () { return $(this).data('role'); }).get().join(', ');
+                } else {
+                    if (checked === total) {
+                        return 'all family members';
+                    } else {
+                        return checked + ' family members';
+                    }
+                }
+            }
+        });
+
+        if (PYO.directSmsName) {
+            $('.village-elders .elder .action-sms[data-name="' + PYO.directSmsName + '"]').click();
+            PYO.directSmsName = '';
+        }
+    };
+
+    PYO.initializeSmsDirectLinks = function () {
+        $('body').on('click', '.village-elders .elder .action-sms', function (e) {
+            e.preventDefault();
+            var context = $('.village-main');
+            var el = $(this);
+            var name = el.data('name');
+            var textarea = context.find('#post-text');
+
+            if (textarea.length) {
+                textarea.focus();
+                var form = context.find('.post-add-form');
+                var select = form.find('#sms-target');
+                select.multiselect('uncheckAll');
+                select.multiselect('widget').find('input[data-name="' + name + '"]').each(function () {
+                    this.click();
+                });
+            } else {
+                PYO.directSmsName = name;
+                $('.village-nav .listitem-select.ajax-link.active').click();
+            }
+        });
     };
 
     PYO.markPostsRead = function () {

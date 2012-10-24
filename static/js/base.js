@@ -298,12 +298,27 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.announcements = function (container) {
+        if ($(container).length) {
+            var context = $(container);
+            context.on('click', '.close', function (e) {
+                e.preventDefault();
+                var msg = $(this).closest('.announce');
+                var url = msg.data('mark-read-url');
+
+                msg.fadeOut(function () { $(this).remove(); });
+                if (url) { $.post(url); }
+            });
+        }
+    };
+
     PYO.initializeFeed = function () {
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.watchForReadPosts();
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
+        PYO.initializeMultiselect();
     };
 
     PYO.initializePusher = function () {

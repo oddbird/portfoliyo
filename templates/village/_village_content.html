@@ -4,6 +4,7 @@
 {% block village-feed-attrs %}data-author-role="{{ relationship.description_or_role }}"data-backlog-url="{% url 'student_json_posts' student_id=student.id %}" data-post-url="{% url 'student_json_posts' student_id=student.id %}"{% endblock %}
 
 {% block getting-started-header %}Welcome to {{ student.name }}'s Village!{% endblock %}
+{% block getting-started-body %}Post messages for {{ student.name }}'s family members and teachers, and see their replies below.{% endblock %}
 
 {% block form-action %}{% url 'student_json_posts' student_id=student.id %}{% endblock %}
 

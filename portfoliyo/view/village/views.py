@@ -200,7 +200,7 @@ def invite_elder(request, student_id=None, group_id=None):
     if request.method == 'POST':
         form = forms.InviteElderForm(request.POST, **form_kwargs)
         if form.is_valid():
-            form.save(request)
+            form.save()
             if rel:
                 return redirect_to_village(
                     rel.student, template_context.get('group'))
@@ -232,6 +232,8 @@ def village(request, student_id):
             'student': rel.student,
             'group': group,
             'relationship': rel,
+            'sms_elders': model.sms_eligible(
+                model.contextualized_elders(rel.student.elder_relationships)),
             'post_char_limit': model.post_char_limit(rel),
             },
         )
@@ -240,39 +242,27 @@ def village(request, student_id):
 
 @login_required
 @ajax('village/_group_content.html')
-def group(request, group_id):
+def group(request, group_id=None):
     """The main chat view for a group."""
-    group = get_object_or_404(
-        model.Group.objects.filter(
-            owner=request.user.profile,
-            deleted=False,
-            ),
-        id=group_id)
+    if group_id is None:
+        group = model.AllStudentsGroup(request.user.profile)
+    else:
+        group = get_object_or_404(
+            model.Group.objects.filter(
+                owner=request.user.profile,
+                deleted=False,
+                ),
+            id=group_id)
 
     return TemplateResponse(
         request,
         'village/group.html',
         {
             'group': group,
+            'sms_elders': model.sms_eligible(
+                model.contextualized_elders(group.all_elders)),
             'post_char_limit': model.post_char_limit(request.user.profile),
             },
-        )
-
-
-
-@login_required
-@ajax('village/_group_content.html')
-def all_students(request):
-    """Main chat view for all-students 'group'."""
-    group = model.AllStudentsGroup(request.user.profile)
-
-    return TemplateResponse(
-        request,
-        'village/group.html',
-        {
-            'group': group,
-            'post_char_limit': model.post_char_limit(request.user.profile),
-            }
         )
 
 
@@ -299,6 +289,7 @@ def json_posts(request, student_id=None, group_id=None):
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
+        sms_profile_ids = request.POST.getlist('sms-target')
         sequence_id = request.POST.get('author_sequence_id')
         limit = model.post_char_limit(rel or request.user.profile)
         if len(text) > limit:
@@ -312,7 +303,12 @@ def json_posts(request, student_id=None, group_id=None):
                 content_type='application/json',
                 )
         post = post_model.create(
-            request.user.profile, target, text, sequence_id)
+            request.user.profile,
+            target,
+            text,
+            sms_profile_ids=sms_profile_ids,
+            sequence_id=sequence_id,
+            )
 
         data = {
             'success': True,

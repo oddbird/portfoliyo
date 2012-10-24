@@ -1,6 +1,9 @@
 """Template tags for the list of village elders."""
 from django import template
 
+from portfoliyo import model
+
+
 register = template.Library()
 
 
@@ -34,3 +37,13 @@ def elder_status_description(elder, current):
     else:
         desc = '%s will receive SMS notifications if mentioned in a post.' % elder
     return desc
+
+
+@register.filter
+def contextualized_elders(queryset):
+    return model.contextualized_elders(queryset)
+
+
+@register.filter
+def order(qs, order_by):
+    return qs.order_by(*order_by.split(','))

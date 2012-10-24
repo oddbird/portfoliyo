@@ -1,6 +1,7 @@
 """Model factories."""
 import factory
 
+from portfoliyo.announce import models as announce
 from portfoliyo import model
 
 
@@ -29,6 +30,7 @@ class UserFactory(factory.Factory):
             if create:
                 user.save()
         return user
+
 
 
 class ProfileFactory(factory.Factory):
@@ -71,11 +73,13 @@ class RelationshipFactory(factory.Factory):
         return rel
 
 
+
 class GroupFactory(factory.Factory):
     FACTORY_FOR = model.Group
 
     name = "Test Group"
     owner = factory.SubFactory(ProfileFactory)
+
 
 
 class PostFactory(factory.Factory):
@@ -87,6 +91,7 @@ class PostFactory(factory.Factory):
     html_text = 'foo'
 
 
+
 class BulkPostFactory(factory.Factory):
     FACTORY_FOR = model.BulkPost
 
@@ -94,3 +99,10 @@ class BulkPostFactory(factory.Factory):
     group = factory.SubFactory(GroupFactory)
     original_text = 'foo'
     html_text = 'foo'
+
+
+
+class AnnouncementFactory(factory.Factory):
+    FACTORY_FOR = announce.Announcement
+
+    text = "Test announcement."

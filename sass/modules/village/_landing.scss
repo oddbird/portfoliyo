@@ -1,16 +1,11 @@
 // ---------------------------------------------------------------------------
 // Main Login
 
-$login-button-color     : $base00;
-$login-text-color       : $base2;
-$login-button-style     : simple;
-$login-button-size      : $smallpx;
-$login-button-padding   : rhythm(.25,$login-button-size);
-
 @mixin login-button {
-  @include sassy-button-structure($font-size: $login-button-size, $padding: $login-button-padding);
-  @include sassy-button-gradient($login-button-style, $login-button-color, $text-color: $login-text-color);
-  line-height: 1em;
+  @include button;
+  @include button-color($base00);
+  @include small-button($banner-size);
+  color: $base2;
 }
 
 .main-login {
@@ -23,7 +18,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
   label { @include gone; }
 
   .login-link {
-    @include leader($banner-rhythm/2, $login-button-size);
+    @include leader($banner-rhythm/2, $banner-size);
     @include login-button;
     float: right;
     max-width: columns(3);
@@ -67,7 +62,7 @@ $login-button-padding   : rhythm(.25,$login-button-size);
       }
       button {
         @include login-button;
-        background-color: $blue;
+        @include button-color($blue);
         width: 100%;
       }
     }

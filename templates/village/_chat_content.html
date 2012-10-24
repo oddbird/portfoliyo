@@ -4,39 +4,37 @@
 <div class="village-main">
   {% block village-main %}
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-user-id="{{ request.user.profile.id }}" {% block village-feed-attrs %}{% endblock %}>
-
     <article class="getting-started">
-      <h2>{% block getting-started-header %}{% endblock %}</h2>
+        <h2 class="starthead">{% block getting-started-header %}Welcome!{% endblock %}</h2>
+        <p class="startbody">{% block getting-started-body %}Post messages for teachers and family members.{% endblock %}</p>
 
-      <p>
-        <strong>Send a text message</strong> to any <i class="mobile">mobile</i> user
-        by typing the <strong>@ symbol followed by their name or title</strong>
-        (with spaces removed).
-        Or text <b class="nametag">@all</b> <i class="mobile">mobile</i> users at once.
-      </p>
-
-      <ul>
-        <li><b class="nametag">@Mother</b> Jenny’s paper was fantastic!</li>
-        <li><b class="nametag">@Mother</b> and <b class="nametag">@Father</b>, Jenny was missing her Math homework today.</li>
-        <li>Did Jenny show you <b class="nametag">@all</b> the project she is working on?</li>
-      </ul>
-
-      <p>
-        Email notifications coming soon for non-<i class="mobile">mobile</i> users.
-      </p>
+        <ol class="howto">
+          <li class="howto-post">Write a message for teachers and family members.</li>
+          <li class="howto-sms">Select family members who should receive a text. Then hit send!</li>
+        </ol>
     </article>
-
   </section>
-  <form method="POST" class="post-add-form" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
+  <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
     <div class="formfield post-textfield">
-      <textarea id="post-text" name="text" placeholder="Text mobile users with @role (no spaces, e.g. @mathteacher)."></textarea>
+      <textarea id="post-text" name="text" class="value"></textarea>
       <span class="charcount">{{ post_char_limit }} characters remaining...</span>
     </div>
 
+    <div class="formfield sms-targeting">
+      <label for="sms-target" class="type">Send text messages to</label>
+      <div class="multiselect-dropdown">
+        <select id="sms-target" class="value" name="sms-target" multiple="multiple">
+          {% for elder in sms_elders %}
+            <option value="{{ elder.id }}" data-role="{{ elder.role_in_context }}" data-name="{% firstof elder.name elder.user.email elder.phone %}" selected>{{ elder.role_in_context }}: {% firstof elder.name elder.user.email elder.phone %}</option>
+          {% endfor %}
+        </select>
+      </div class="multiselect-dropdown">
+    </div>
+
     <div class="form-actions">
-      <button type="submit" class="action-post">send</button>
+      <button type="submit" class="action-post">Send</button>
     </div>
 
   </form>

@@ -26,6 +26,17 @@ def now():
 
 
 
+def sms_eligible(elders):
+    """Given queryset of elders, return queryset of SMS-eligible elders."""
+    return elders.filter(
+        declined=False,
+        deleted=False,
+        user__is_active=True,
+        phone__isnull=False,
+        )
+
+
+
 class BasePost(models.Model):
     """Common Post fields and methods."""
     author = models.ForeignKey(
@@ -42,7 +53,7 @@ class BasePost(models.Model):
     from_sms = models.BooleanField(default=False)
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
-    # arbitrary additional metadata, currently just highlights
+    # arbitrary additional metadata, currently just highlights and SMSes
     meta = JSONField(default={})
 
 
@@ -65,53 +76,77 @@ class BasePost(models.Model):
         return {}
 
 
-    def notify_sms(self, highlights, in_reply_to=None):
+    def prepare_sms(self, profile_ids, in_reply_to=None):
         """
-        Send SMS notifications to highlighted users.
+        Prepare and return SMS notifications for this post.
 
-        ``highlights`` should be a mapping of elders (or relationships) to list
-        of names that elder (or relationship) was mentioned as (such as the
-        mapping returned by ``process_text``).
+        ``profile_ids`` is a list of Profile IDs who should receive
+        notifications. Only profiles in this list who also are active, have
+        phone numbers, and have not declined sms notifications, will receive
+        texts.
 
-        Returns a tuple of (sms-sent, meta-highlights) where sms-sent is a
-        boolean that is True if any SMS notifications were sent, and
-        meta-highlights is a list of dictionaries providing details about each
-        sent notification.
+        Sets self.to_sms to True if any texts were sent, False otherwise, and
+        self.meta['sms'] to a list of dictionaries containing basic metadata
+        about each SMS sent.
+
+        Return a list of (phone, sms-body) tuples to be sent.
 
         """
-        meta_highlights = []
+        meta_sms = []
         sms_sent = False
         if self.author:
             suffix = notification_suffix(self.get_relationship() or self.author)
         else:
             suffix = u""
         sms_body = self.original_text + suffix
-        for elder_or_rel, mentioned_as in highlights.items():
-            elder = elder_or_rel.elder
-            role = elder_or_rel.description_or_role
-            highlight_data = {
+
+        to_notify = sms_eligible(self.elders_in_context).filter(
+            pk__in=profile_ids)
+
+        to_send = []
+
+        for elder in to_notify:
+            sms_data = {
                 'id': elder.id,
-                'mentioned_as': mentioned_as,
-                'role': role,
+                'role': elder.role_in_context,
                 'name': elder.name,
-                'email': elder.user.email,
                 'phone': elder.phone,
-                'is_active': elder.user.is_active,
-                'declined': elder.declined,
-                'sms_sent': False,
                 }
-            if elder.user.is_active and elder.phone:
-                if elder.phone != in_reply_to:
-                    sms.send(
-                        elder.phone,
-                        strip_initial_mention(sms_body, mentioned_as),
-                        )
-                sms_sent = True
-                highlight_data['sms_sent'] = True
+            # with in_reply_to we assume caller sent SMS
+            if elder.phone != in_reply_to:
+                to_send.append((elder.phone, sms_body))
+            sms_sent = True
 
-            meta_highlights.append(highlight_data)
+            meta_sms.append(sms_data)
 
-        return (sms_sent, meta_highlights)
+        self.to_sms = sms_sent
+        self.meta['sms'] = meta_sms
+
+        return to_send
+
+
+    def store_highlights(self, highlights):
+        """
+        Store info from given highlights dict to self.meta['highlights'].
+
+        ``highlights`` should be dictionary mapping highlighted relationships
+        to list of names highlighted as (i.e. as returned by ``process_text``).
+
+        """
+        meta_highlights = []
+        for elder, mentioned_as in highlights.items():
+            meta_highlights.append(
+                {
+                    'id': elder.id,
+                    'mentioned_as': mentioned_as,
+                    'role': elder.role_in_context,
+                    'name': elder.name,
+                    'email': elder.user.email,
+                    'phone': elder.phone,
+                    }
+                )
+
+        self.meta['highlights'] = meta_highlights
 
 
     def get_relationship(self):
@@ -153,9 +188,21 @@ class BulkPost(BasePost):
             }
 
 
+    @property
+    def safe_group(self):
+        """Return self.group or AllStudentsGroup."""
+        return self.group or user_models.AllStudentsGroup(self.author)
+
+
+    @property
+    def elders_in_context(self):
+        """Queryset of elders in context."""
+        return user_models.contextualized_elders(self.safe_group.all_elders)
+
+
     @classmethod
     def create(cls, author, group, text,
-               sequence_id=None, from_sms=False):
+               sms_profile_ids=None, sequence_id=None, from_sms=False):
         """
         Create/return a BulkPost and all associated Posts.
 
@@ -164,6 +211,9 @@ class BulkPost(BasePost):
         If ``group`` is ``None``, the post goes to all students of ``author``.
 
         It is currently not allowed for both to be ``None``.
+
+        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
+        notification of this post.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -177,7 +227,8 @@ class BulkPost(BasePost):
         if group is None:
             group = user_models.AllStudentsGroup(author)
 
-        html_text, highlights = process_text(text, group)
+        html_text, highlights = process_text(
+            text, user_models.contextualized_elders(group.all_elders))
 
         post = cls(
             author=author,
@@ -187,9 +238,9 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        sms_sent, meta_highlights = post.notify_sms(highlights)
-        post.to_sms = sms_sent
-        post.meta['highlights'] = meta_highlights
+        sms_to_send = post.prepare_sms(sms_profile_ids or [])
+
+        post.store_highlights(highlights)
 
         post.save()
 
@@ -200,7 +251,7 @@ class BulkPost(BasePost):
                 original_text=text,
                 html_text=html_text,
                 from_sms=from_sms,
-                to_sms=sms_sent,
+                to_sms=post.to_sms,
                 meta=post.meta,
                 from_bulk=post,
                 )
@@ -217,6 +268,9 @@ class BulkPost(BasePost):
                     unread.mark_unread(sub, elder)
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
+
+        for number, body in sms_to_send:
+            sms.send(number, body)
 
         return post
 
@@ -237,26 +291,33 @@ class Post(BasePost):
         return {'student_id': self.student_id}
 
 
+    @property
+    def elders_in_context(self):
+        """Queryset of elders."""
+        return user_models.contextualized_elders(
+            self.student.elder_relationships)
+
+
     @classmethod
     def create(cls, author, student, text,
-               sequence_id=None, from_sms=False, in_reply_to=None):
+               sms_profile_ids=None, sequence_id=None, from_sms=False,
+               in_reply_to=None):
         """
         Create/return a Post, triggering a Pusher event and SMS notifications.
+
+        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
+        notification of this post.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
         session; we just pass it through to the Pusher event.
 
-        ``in_reply_to`` can be set to a phone number, in which case a mention
-        of that phone number will be prepended to the post body, and it will be
-        assumed that an SMS was already sent to that number (thus no additional
-        notification will be sent).
+        ``in_reply_to`` can be set to a phone number, in which case it will be
+        assumed that an SMS was already sent to that number.
 
         """
-        if in_reply_to:
-            text = u"@%s %s" % (in_reply_to, text)
-
-        html_text, highlights = process_text(text, student)
+        html_text, highlights = process_text(
+            text, user_models.contextualized_elders(student.elder_relationships))
 
         post = cls(
             author=author,
@@ -266,10 +327,8 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        sms_sent, meta_highlights = post.notify_sms(highlights, in_reply_to)
-        post.to_sms = sms_sent
-        post.meta['highlights'] = meta_highlights
-
+        sms_to_send = post.prepare_sms(sms_profile_ids or [], in_reply_to)
+        post.store_highlights(highlights)
         post.save()
 
         # mark the post unread by all web users in village (except the author)
@@ -284,6 +343,9 @@ class Post(BasePost):
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
             )
+
+        for number, body in sms_to_send:
+            sms.send(number, body)
 
         return post
 
@@ -321,9 +383,9 @@ class Post(BasePost):
 
 
 
-def process_text(text, student_or_group):
+def process_text(text, elders_in_context):
     """
-    Process given post text in given student or group's village.
+    Process given post text in context of given (contextualized) elders.
 
     Escape HTML, replace newlines with <br>, replace highlights.
 
@@ -331,7 +393,7 @@ def process_text(text, student_or_group):
     dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
 
     """
-    name_map = get_highlight_names(student_or_group)
+    name_map = get_highlight_names(elders_in_context)
     html_text, highlights = replace_highlights(html.escape(text), name_map)
     html_text = html_text.replace('\n', '<br>')
     return html_text, highlights
@@ -360,11 +422,10 @@ def replace_highlights(text, name_map):
     Detect highlights and wrap with HTML element.
 
     Returns a tuple of (rendered-text,
-    dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
+    dict-mapping-highlighted-elders-to-list-of-names-highlighted-as).
 
-    ``name_map`` should be a mapping of highlightable names to the Relationship
-    with the elder who has that name (such as the map returned by
-    ``get_highlight_names``).
+    ``name_map`` should be a mapping of highlightable names to contextualized
+    elders (such as the map returned by ``get_highlight_names``).
 
     """
     highlighted = {}
@@ -380,33 +441,33 @@ def replace_highlights(text, name_map):
             highlight_name = highlight_name[:-1]
             full_highlight = full_highlight[:-1]
             stripped += 1
-        highlight_rels = name_map.get(normalize_name(highlight_name))
-        if highlight_rels:
+        highlight_elders = name_map.get(normalize_name(highlight_name))
+        if highlight_elders:
             replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
                 u' all me' if highlight_name == 'all' else u'',
-                u','.join([unicode(r.elder.id) for r in highlight_rels]),
+                u','.join([unicode(e.id) for e in highlight_elders]),
                 full_highlight,
                 )
             start, end = match.span(2)
             end -= stripped
             text = text[:start+offset] + replace_with + text[end+offset:]
             offset += len(replace_with) - (end - start)
-            for rel in highlight_rels:
-                highlighted.setdefault(rel, []).append(highlight_name)
+            for elder in highlight_elders:
+                highlighted.setdefault(elder, []).append(highlight_name)
     return text, highlighted
 
 
 
-def get_highlight_names(student_or_group):
+def get_highlight_names(elders_in_context):
     """
-    Get highlightable names in given student or group's village.
+    Get highlightable names in context of given contextualized elders.
 
-    Returns dictionary mapping names to sets of relationships.
+    Returns dictionary mapping names to sets of elders.
 
     """
     name_map = defaultdict(set)
-    for elder_rel in student_or_group.elder_relationships:
-        elder = elder_rel.elder
+
+    for elder in elders_in_context:
         possible_names = []
         if elder.name:
             possible_names.append(normalize_name(elder.name))
@@ -416,10 +477,10 @@ def get_highlight_names(student_or_group):
                 normalize_name(elder.phone.lstrip('+').lstrip('1')))
         if elder.user.email:
             possible_names.append(normalize_name(elder.user.email))
-        possible_names.append(normalize_name(elder_rel.description_or_role))
+        possible_names.append(normalize_name(elder.role_in_context))
         for name in possible_names:
-            name_map[name].add(elder_rel)
-        name_map['all'].add(elder_rel)
+            name_map[name].add(elder)
+        name_map['all'].add(elder)
     return name_map
 
 
@@ -437,14 +498,6 @@ def notification_suffix(elder_or_rel):
 def post_char_limit(elder_or_rel):
     """Max length for posts from this elder or relationship."""
     return 160 - len(notification_suffix(elder_or_rel))
-
-
-def strip_initial_mention(sms_body, mentioned_as):
-    """Given an SMS and a list of highlight names, strip initial mention."""
-    initial_mention_re = re.compile(
-        '^\s*@(%s)\s*' % '|'.join(mentioned_as), re.I)
-    return initial_mention_re.sub(u"", sms_body)
-
 
 
 def post_dict(post, **extra):
@@ -478,10 +531,11 @@ def post_dict(post, **extra):
         'sms': post.sms,
         'to_sms': post.to_sms,
         'from_sms': post.from_sms,
+        # strip SMS metadata down to minimal size
         'meta': {
-            'highlights': [
-                {'sms_sent': h.get('sms_sent', False), 'role': h['role']}
-                for h in post.meta.get('highlights', [])
+            'sms': [
+                {'id': s['id'], 'display': s['name'] or s['role']}
+                for s in post.meta.get('sms', [])
                 ]
             },
         }

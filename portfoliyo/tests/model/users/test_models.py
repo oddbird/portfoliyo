@@ -83,22 +83,37 @@ class TestProfile(object):
         assert unicode(profile) == u"Some Name"
 
 
-    def test_unicode_phone(self):
-        """If no name, unicode representation of a Profile is its phone."""
-        profile = factories.ProfileFactory.build(phone="+13216540987")
-
-        assert unicode(profile) == u"+13216540987"
-
-
     def test_unicode_email(self):
-        """If no name or phone, unicode representation of a Profile is email."""
+        """If no name, unicode of a Profile is email."""
         profile = factories.ProfileFactory.create(user__email="foo@example.com")
 
         assert unicode(profile) == u"foo@example.com"
 
 
+    def test_unicode_role_in_context(self):
+        """If no name/email, unicode of a Profile is its role_in_context."""
+        profile = factories.ProfileFactory.build()
+        profile.role_in_context = u"Foo"
+
+        assert unicode(profile) == u"Foo"
+
+
+    def test_unicode_role(self):
+        """If no name/email/role_in_context, unicode Profile is its role."""
+        profile = factories.ProfileFactory.build(role="Foo")
+
+        assert unicode(profile) == u"Foo"
+
+
+    def test_unicode_phone(self):
+        """If no name/email/role, unicode of a Profile is its phone."""
+        profile = factories.ProfileFactory.build(phone="+13216540987")
+
+        assert unicode(profile) == u"+13216540987"
+
+
     def test_unicode_unknown(self):
-        """If no name/phone/email, unicode rep of a Profile is <unknown>."""
+        """If no name/role/phone/email, unicode of a Profile is <unknown>."""
         profile = factories.ProfileFactory.build()
 
         assert unicode(profile) == u"<unknown>"
@@ -162,7 +177,7 @@ class TestProfile(object):
         """elders property is list of profiles."""
         rel = factories.RelationshipFactory.create()
 
-        assert rel.student.elders == [rel.elder]
+        assert list(rel.student.elders) == [rel.elder]
 
 
     def test_students(self):
@@ -509,11 +524,11 @@ class TestAllStudentsGroup(object):
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
         factories.RelationshipFactory.create(to_profile=rel.student)
-        factories.RelationshipFactory.create(
+        rel3 = factories.RelationshipFactory.create(
             from_profile=rel.elder, to_profile__deleted=True)
         g = model.AllStudentsGroup(rel.elder)
 
-        assert set(g.students) == set([rel.student, rel2.student])
+        assert set(g.students) == set([rel.student, rel2.student, rel3.student])
 
 
     def test_all_elders(self):
@@ -529,3 +544,58 @@ class TestAllStudentsGroup(object):
 
         # alphabetically ordered by name
         assert [e.name for e in g.all_elders] == ['A', 'B']
+
+
+
+class TestContextualizedElders(object):
+    def test_relationships(self):
+        """Given relationships, yields elders with role_in_context."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__role='foo')
+        rel2 = factories.RelationshipFactory.create(
+            description='bar')
+        qs = model.contextualized_elders(model.Relationship.objects.all())
+
+        assert set(qs) == {rel1.elder, rel2.elder}
+        assert set([e.role_in_context for e in qs]) == {'foo', 'bar'}
+
+
+    def test_profiles(self):
+        """Given profiles, yields them with role_in_context."""
+        elder1 = factories.ProfileFactory.create(role='foo')
+        elder2 = factories.ProfileFactory.create(role='bar')
+        qs = model.contextualized_elders(model.Profile.objects.all())
+
+        assert set(qs) == {elder1, elder2}
+        assert set([e.role_in_context for e in qs]) == {'foo', 'bar'}
+
+
+    def test_must_be_profiles_or_relationships(self):
+        """Raises ValueError if given unrecognized queryset."""
+        with pytest.raises(ValueError):
+            model.contextualized_elders(model.Group.objects.all())
+
+
+    def test_can_filter_exclude(self):
+        """Can filter/exclude a contextualized queryset of relationships."""
+        rel1 = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create()
+        qs = model.contextualized_elders(model.Relationship.objects.all())
+
+        qs = qs.filter(
+            pk__in=[rel1.elder.pk, rel2.elder.pk]
+            ).exclude(pk=rel2.elder.pk)
+
+        assert set(qs) == {rel1.elder}
+
+
+    def test_can_order(self):
+        """Can order a contextualized queryset of relationships."""
+        rel1 = factories.RelationshipFactory.create(from_profile__name='B')
+        rel2 = factories.RelationshipFactory.create(from_profile__name='A')
+        qs = model.contextualized_elders(model.Relationship.objects.all())
+
+        qs = qs.order_by('name')
+
+        assert list(qs) == [rel2.elder, rel1.elder]

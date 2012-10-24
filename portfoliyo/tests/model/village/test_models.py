@@ -9,6 +9,7 @@ import pytest
 import re
 
 
+from portfoliyo.model.users.models import contextualized_elders
 from portfoliyo.model.village import models, unread
 
 from portfoliyo.tests import factories
@@ -57,7 +58,7 @@ def test_post_dict():
         'sms': False,
         'to_sms': False,
         'from_sms': False,
-        'meta': {'highlights': []},
+        'meta': {'sms': []},
         }
 
 
@@ -109,7 +110,31 @@ class TestPostCreate(object):
         assert post.html_text == 'Foo<br>'
         assert post.from_sms == False
         assert post.to_sms == False
-        assert post.meta == {'highlights': []}
+        assert post.meta == {'sms': [], 'highlights': []}
+
+
+    def test_highlights(self):
+        """Highlight info is stored in meta['highlights']."""
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(
+            description="Father",
+            from_profile__name="John Doe",
+            from_profile__user__email="john@example.com",
+            to_profile=rel.student,
+            )
+
+        post = models.Post.create(rel.elder, rel.student, 'Hello @father')
+
+        assert post.meta['highlights'] == [
+            {
+                'id': rel2.elder.id,
+                'mentioned_as': ['father'],
+                'role': "Father",
+                'name': "John Doe",
+                'email': "john@example.com",
+                'phone': None,
+                },
+            ]
 
 
     def test_new_post_unread_for_all_web_users_in_village(self):
@@ -201,7 +226,8 @@ class TestPostCreate(object):
         """Triggers a pusher event if get_pusher doesn't return None."""
         rel = factories.RelationshipFactory.create()
 
-        post = models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
+        post = models.Post.create(
+            rel.elder, rel.student, 'Foo\n', sequence_id='33')
 
         channel = mock_get_pusher.return_value['student_%s' % rel.student.id]
         args = channel.trigger.call_args[0]
@@ -264,8 +290,8 @@ class TestPostCreate(object):
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_notifies_highlighted_mobile_users(self, mock_send_sms):
-        """Sends text to highlighted active mobile users."""
+    def test_notifies_selected_mobile_users(self, mock_send_sms):
+        """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
             from_profile__phone=None,
@@ -274,25 +300,26 @@ class TestPostCreate(object):
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
+            from_profile__name="Jim Smith",
             description="Father",
             )
 
-        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "Hey @father --John Doe")
+            "+13216540987", "Hey dad --John Doe")
         assert post.to_sms == True
-        assert post.meta['highlights'] == [
+        assert post.meta['sms'] == [
             {
                 'id': rel2.elder.id,
-                'mentioned_as': ['father'],
-                'role': 'Father',
-                'name': '',
+                'role': "Father",
+                'name': "Jim Smith",
                 'phone': "+13216540987",
-                'email': None,
-                'is_active': True,
-                'declined': False,
-                'sms_sent': True,
                 }
             ]
 
@@ -303,18 +330,22 @@ class TestPostCreate(object):
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None,
             )
-        factories.RelationshipFactory.create(
+        rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=False,
-            description="Father",
             )
 
-        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
+        post = models.Post.create(
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
 
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False
-        assert post.meta['highlights'][0]['sms_sent'] == False
+        assert post.meta['sms'] == []
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -322,58 +353,27 @@ class TestPostCreate(object):
         """Sends text only to users with phone numbers."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None)
-        factories.RelationshipFactory.create(
-            to_profile=rel1.to_profile,
-            from_profile__phone=None,
-            from_profile__user__is_active=True,
-            description="Father",
-            )
-
-        post = models.Post.create(rel1.elder, rel1.student, 'Hey @father')
-
-        assert mock_send_sms.call_count == 0
-        assert post.to_sms == False
-        assert post.meta['highlights'][0]['sms_sent'] == False
-
-
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_elides_initial_mention(self, mock_send_sms):
-        """Initial mention of user elided in text notification to that user."""
-        rel1 = factories.RelationshipFactory.create(
-            from_profile__name="John Doe",
-            from_profile__phone=None,
-            )
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
-            from_profile__phone="+13216540987",
+            from_profile__phone=None,
             from_profile__user__is_active=True,
-            description="Father",
             )
 
         post = models.Post.create(
-            rel1.elder, rel1.student, '@father are you there?')
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
 
-        mock_send_sms.assert_called_with(
-            "+13216540987", "are you there? --John Doe")
-        assert post.to_sms == True
-        assert post.meta['highlights'] == [
-            {
-                'id': rel2.elder.id,
-                'mentioned_as': ['father'],
-                'role': 'Father',
-                'name': '',
-                'phone': "+13216540987",
-                'email': None,
-                'is_active': True,
-                'declined': False,
-                'sms_sent': True,
-                }
-            ]
+        assert mock_send_sms.call_count == 0
+        assert post.to_sms == False
+        assert post.meta['sms'] == []
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_can_create_autoreply_post(self, mock_send_sms):
-        """Auto-reply prepends phone mention, sends no text to that phone."""
+        """Auto-reply sends no notification to that phone."""
         rel = factories.RelationshipFactory.create(
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
@@ -381,13 +381,17 @@ class TestPostCreate(object):
             )
 
         post = models.Post.create(
-            None, rel.student, 'Thank you!', in_reply_to="+13216540987")
+            None,
+            rel.student,
+            'Thank you!',
+            in_reply_to="+13216540987",
+            sms_profile_ids=[rel.elder.id],
+            )
 
         assert mock_send_sms.call_count == 0
-        assert post.original_text == "@+13216540987 Thank you!"
+        assert post.original_text == "Thank you!"
         # With in_reply_to we assume that an SMS was sent by the caller
-        assert post.meta['highlights'][0]['id'] == rel.elder.id
-        assert post.meta['highlights'][0]['sms_sent'] == True
+        assert post.meta['sms'][0]['id'] == rel.elder.id
         assert post.to_sms == True
 
 
@@ -426,7 +430,7 @@ class TestBulkPost(object):
             }
         mock_get_pusher.return_value = pusher
 
-        models.BulkPost.create(rel.elder, None, 'Foo\n', '33')
+        models.BulkPost.create(rel.elder, None, 'Foo\n', sequence_id='33')
 
         student_args = student_channel.trigger.call_args[0]
         student_post_data = student_args[1]['posts'][0]
@@ -484,8 +488,8 @@ class TestBulkPost(object):
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_notifies_highlighted_mobile_users(self, mock_send_sms):
-        """Sends text to highlighted active mobile users."""
+    def test_notifies_selected_mobile_users(self, mock_send_sms):
+        """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
             from_profile__phone=None,
@@ -494,27 +498,24 @@ class TestBulkPost(object):
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
-            description="Father",
+            from_profile__role="Father",
+            from_profile__name="Jim Smith",
             )
         group = factories.GroupFactory.create()
         group.students.add(rel1.student)
 
-        post = models.BulkPost.create(rel1.elder, group, 'Hey @father')
+        post = models.BulkPost.create(
+            rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "Hey @father --John Doe")
+            "+13216540987", "Hey dad --John Doe")
         assert post.to_sms == True
-        assert post.meta['highlights'] == [
+        assert post.meta['sms'] == [
             {
                 'id': rel2.elder.id,
-                'mentioned_as': ['father'],
+                'name': 'Jim Smith',
                 'role': 'Father',
-                'name': '',
                 'phone': "+13216540987",
-                'email': None,
-                'is_active': True,
-                'declined': False,
-                'sms_sent': True,
                 }
             ]
 
@@ -561,7 +562,8 @@ class TestProcessText(object):
             description="Father")
 
         html, highlights = models.process_text(
-            "<b>Hi</b> there @johndoe, @father\nHow's it?", rel1.to_profile)
+            "<b>Hi</b> there @johndoe, @father\nHow's it?",
+            contextualized_elders(rel1.to_profile.elder_relationships))
 
         assert html == (
             '&lt;b&gt;Hi&lt;/b&gt; there '
@@ -570,26 +572,25 @@ class TestProcessText(object):
             "How&#39;s it?" % (rel1.elder.id, rel2.elder.id)
             )
 
-        assert highlights == {rel1: ['johndoe'], rel2: ['father']}
+        assert highlights == {rel1.elder: ['johndoe'], rel2.elder: ['father']}
 
 
 
 class TestReplaceHighlights(object):
-    class MockRel(object):
-        """A mock Relationship."""
-        def __init__(self, elder_id):
-            self.elder = mock.Mock()
-            self.elder.id = elder_id
+    class MockElder(object):
+        """A mock elder."""
+        def __init__(self, id):
+            self.id = id
 
 
-    rel1 = MockRel(1)
-    rel2 = MockRel(2)
-    rel3 = MockRel(3)
+    elder1 = MockElder(1)
+    elder2 = MockElder(2)
+    elder3 = MockElder(3)
     name_map = {
-        'one': set([rel1]),
-        'two': set([rel2]),
-        'foo@example.com': set([rel3]),
-        'all': set([rel1, rel2]),
+        'one': set([elder1]),
+        'two': set([elder2]),
+        'foo@example.com': set([elder3]),
+        'all': set([elder1, elder2]),
         }
 
 
@@ -603,7 +604,7 @@ class TestReplaceHighlights(object):
         html, highlights = self.call("Hello @one")
 
         assert html == 'Hello <b class="nametag" data-user-id="1">@one</b>'
-        assert highlights == {self.rel1: ["one"]}
+        assert highlights == {self.elder1: ["one"]}
 
 
     def test_all(self):
@@ -613,14 +614,14 @@ class TestReplaceHighlights(object):
         assert re.match(
             'Hello <b class="nametag all me" data-user-id="(1,2|2,1)">@all</b>',
             html)
-        assert highlights == {self.rel1: ["all"], self.rel2: ["all"]}
+        assert highlights == {self.elder1: ["all"], self.elder2: ["all"]}
 
 
     def test_email(self):
         """Can highlight a user by email address."""
         _, highlights = self.call("Hello @foo@example.com")
 
-        assert highlights == {self.rel3: ["foo@example.com"]}
+        assert highlights == {self.elder3: ["foo@example.com"]}
 
 
     def test_false_alarm(self):
@@ -664,7 +665,7 @@ class TestReplaceHighlights(object):
         """Assert that 'one' is found as highlight in text."""
         _, highlights = self.call(text)
 
-        assert self.rel1 in highlights
+        assert self.elder1 in highlights
 
 
     @pytest.mark.parametrize(
@@ -684,7 +685,7 @@ class TestReplaceHighlights(object):
 
 
 def test_get_highlight_names():
-    """Returns dict mapping highlightable names to relationship."""
+    """Returns dict mapping highlightable names to elders-in-context."""
     rel1 = factories.RelationshipFactory.create(
         from_profile__name="John Doe",
         from_profile__user__email="john@example.com",
@@ -703,19 +704,20 @@ def test_get_highlight_names():
         from_profile__phone="+15671234567",
         description="Father")
 
-    name_map = models.get_highlight_names(rel1.to_profile)
+    name_map = models.get_highlight_names(
+        contextualized_elders(rel1.to_profile.elder_relationships))
 
     assert len(name_map) == 10
-    assert name_map['johndoe'] == set([rel1])
-    assert name_map['john@example.com'] == set([rel1])
-    assert name_map['mathteacher'] == set([rel1])
-    assert name_map['maxdad'] == set([rel2])
-    assert name_map['+13216540987'] == set([rel2])
-    assert name_map['3216540987'] == set([rel2])
-    assert name_map['father'] == set([rel2, rel3])
-    assert name_map['+15671234567'] == set([rel3])
-    assert name_map['5671234567'] == set([rel3])
-    assert name_map['all'] == set([rel1, rel2, rel3])
+    assert name_map['johndoe'] == set([rel1.elder])
+    assert name_map['john@example.com'] == set([rel1.elder])
+    assert name_map['mathteacher'] == set([rel1.elder])
+    assert name_map['maxdad'] == set([rel2.elder])
+    assert name_map['+13216540987'] == set([rel2.elder])
+    assert name_map['3216540987'] == set([rel2.elder])
+    assert name_map['father'] == set([rel2.elder, rel3.elder])
+    assert name_map['+15671234567'] == set([rel3.elder])
+    assert name_map['5671234567'] == set([rel3.elder])
+    assert name_map['all'] == set([rel1.elder, rel2.elder, rel3.elder])
 
 
 
@@ -734,18 +736,3 @@ def test_post_char_limit(mock_notification_suffix):
     rel = mock.Mock()
 
     assert models.post_char_limit(rel) == 150
-
-
-def test_strip_initial_mention_case():
-    """strip_initial_mention is case-insensitive."""
-    assert models.strip_initial_mention('@Father foo', ['father']) == 'foo'
-
-
-def test_strip_initial_mention_only_initial():
-    """strip_initial_mention only strips initial mentions."""
-    assert models.strip_initial_mention('hi @dad', ['dad']) == 'hi @dad'
-
-
-def test_strip_initial_mention_only_given():
-    """strip_initial_mention only strips given names."""
-    assert models.strip_initial_mention('@dad hey', ['mom']) == '@dad hey'

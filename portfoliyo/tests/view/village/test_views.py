@@ -590,6 +590,29 @@ class TestJsonPosts(object):
         assert post['student_id'] == rel.student.id
 
 
+    def test_create_post_with_sms_notifications(self, no_csrf_client):
+        """Creates a post and sends SMSes."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Mr. Doe")
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student,
+            from_profile__phone='+13216540987',
+            from_profile__user__is_active=True,
+            )
+
+        target = 'portfoliyo.model.village.models.sms.send'
+        with mock.patch(target) as mock_send_sms:
+            response = no_csrf_client.post(
+                self.url(rel.student),
+                {'text': 'foo', 'sms-target': [other_rel.elder.id]},
+                user=rel.elder.user,
+                )
+
+        post = response.json['posts'][0]
+        assert post['meta']['sms'][0]['id'] == other_rel.elder.id
+        mock_send_sms.assert_called_with("+13216540987", "foo --Mr. Doe")
+
+
     def test_create_group_post(self, no_csrf_client):
         """Creates a group post and returns its JSON representation."""
         group = factories.GroupFactory.create()
