@@ -172,7 +172,7 @@ var PYO = (function (PYO, $) {
         var inputs = form.find('.relation-fieldset .check-options input');
         var checked = inputs.filter('.initial');
 
-        checked.attr('disabled', 'disabled').each(function () {
+        checked.attr('disabled', 'disabled').addClass('disabled').each(function () {
             var el = $(this);
             var label = el.siblings('.type');
             if (el.closest('form').hasClass('village-add-form')) {
@@ -213,7 +213,7 @@ var PYO = (function (PYO, $) {
                     relInputs.each(function () {
                         var el = $(this);
                         if (!el.data('colored')) {
-                            el.data('colored', true).attr('disabled', 'disabled');
+                            el.data('colored', true).attr('disabled', 'disabled').addClass('disabled');
                             el.siblings('.type').addClass('group-selected-' + thisCount).attr('title', 'selected as part of "' + groupName + '" group');
                         }
                     });
@@ -229,7 +229,7 @@ var PYO = (function (PYO, $) {
                     if (el.hasClass('initial')) {
                         label.attr('title', label.data('title'));
                     } else {
-                        el.removeAttr('disabled');
+                        el.removeAttr('disabled').removeClass('disabled');
                         label.removeAttr('title');
                     }
                 });
