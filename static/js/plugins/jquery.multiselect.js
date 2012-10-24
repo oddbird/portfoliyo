@@ -464,8 +464,10 @@ $.widget("ech.multiselect", {
 
 			if( flag ){
 				this.setAttribute('aria-selected', true);
+				$(this).change();
 			} else {
 				this.removeAttribute('aria-selected');
+				$(this).change();
 			}
 		};
 	},
