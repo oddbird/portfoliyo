@@ -143,6 +143,14 @@ var PYO = (function (PYO, $) {
                             var title = document.title;
                             var data = { url: url };
                             History.pushState(data, title, url);
+                            if (!$(this).hasClass('active') && (!$(this).hasClass('group-link') || $(this).closest('.listitem').hasClass('grouptitle'))) {
+                                if ($(this).parents('.village-nav').length) {
+                                    $('.village-nav .ajax-link.listitem-select').removeClass('active');
+                                    $(this).closest('.listitem').find('.ajax-link.listitem-select').addClass('active');
+                                } else {
+                                    $(this).addClass('active');
+                                }
+                            }
                         }
                         $(this).blur();
                     }
