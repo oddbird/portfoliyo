@@ -106,7 +106,6 @@ $village-nav-action-color : $base03;
   padding-right: rhythm(.5,$village-list-size);
   background: $village-nav-action-color;
   color: $back;
-  text-transform: capitalize;
 
   @include opacity(0);
   .lt-ie9 & { display: none; }

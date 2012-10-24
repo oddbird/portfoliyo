@@ -93,7 +93,6 @@ $input-rhythm: .25;
   padding-right: 1em;
   color: $base3;
   text-align: center;
-  text-transform: capitalize;
   #{$link}, #{$focus} { color: $base3; }
   &:active { @include box-shadow(rgba($back,.5) 0 0 .25em inset); }
 }
@@ -195,7 +194,6 @@ $input-rhythm: .25;
   .type {
     display: block;
     color: $base01;
-    &:first-letter { text-transform: uppercase; }
   }
 
   input {
@@ -247,7 +245,10 @@ $input-rhythm: .25;
       display: inline-block;
       margin: 0 .4em rhythm(.5,$form-action-note-size) 0;
     }
-    button { @extend %button; }
+    button {
+      @extend %button;
+      text-transform: capitalize;
+    }
   }
 }
 
