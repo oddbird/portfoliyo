@@ -170,10 +170,10 @@ var PYO = (function (PYO, $) {
     PYO.disablePreselectedAssociations = function (container) {
         var form = $(container);
         var inputs = form.find('.relation-fieldset .check-options input');
-        var checked = inputs.filter(':checked');
+        var checked = inputs.filter('.initial');
 
         checked.attr('disabled', 'disabled').each(function () {
-            var el = $(this).data('pre-selected', true);
+            var el = $(this);
             var label = el.siblings('.type');
             if (el.closest('form').hasClass('village-add-form')) {
                 label.attr('title', 'You are adding a student to the "' + $.trim(label.text()) + '" group.');
@@ -226,7 +226,7 @@ var PYO = (function (PYO, $) {
                     for (var i = 0; i < classes.length; i++) {
                         if (classes[i].indexOf('group-selected-') !== -1) { label.removeClass(classes[i]); }
                     }
-                    if (el.data('pre-selected')) {
+                    if (el.hasClass('initial')) {
                         label.attr('title', label.data('title'));
                     } else {
                         el.removeAttr('disabled');
@@ -267,7 +267,7 @@ var PYO = (function (PYO, $) {
             });
 
             groupInputs.filter(':checked').each(function () { $(this).change(); });
-            form.submit(function () { inputs.removeAttr('disabled'); });
+            form.submit(function () { inputs.add(groupInputs).removeAttr('disabled'); });
         }
     };
 
