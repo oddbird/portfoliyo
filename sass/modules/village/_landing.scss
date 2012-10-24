@@ -1,12 +1,88 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
-.landing {
-  @include padding-leader;
-  @include padding-trailer;
+.landing { @include padding-trailer; }
+
+.main-image { max-width: 100%; }
+.intro {
+  @include clearfix;
+  @include trailer;
+  text-align: center;
 }
+
+.tagline, .description { text-align: left; }
 
 .tagline {
   @include serif;
-  @include adjust-font-size-to($medpx);
+  @include adjust-font-size-to($largepx);
 }
+.description {
+  @include trailer;
+  font-style: italic;
+}
+.action { @include trailer; }
+
+.main-register-link {
+  @extend %button;
+  @include serif;
+  @include adjust-font-size-to($largepx);
+  @include rhythm-borders(1px,.25,$largepx);
+  width: 100%;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+@include at-breakpoint(45em $break-cols) {
+  .main-image { @include span-columns(11); }
+  .tagline, .description, .action { @include span-columns(9 omega); }
+  .action { clear: right; }
+  .tagline { @include padding-leader(4.5,$largepx); }
+}
+
+%landing-section {
+  @include clearfix;
+  @include leading-border(12px,3);
+  @include border-image(image-url('landing/line.png') 100% 0 repeat);
+  @include padding-trailer(3);
+  min-height: rhythm(12);
+  clear: both;
+}
+
+// ---------------------------------------------------------------------------
+// Features
+
+.feature {
+  @extend %landing-section;
+  @include at-breakpoint($break) {
+    @include pad(2,9);
+    &:nth-child(even) { @include pad(9,2); }
+  }
+}
+
+.feature-title {
+  @include serif;
+  @include adjust-font-size-to($largepx);
+}
+
+// ---------------------------------------------------------------------------
+// Team
+
+.team { @extend %landing-section; }
+
+.dev {
+  @include trailer(2);
+  @include prefix(3);
+  .fn {
+    @include serif;
+    @include adjust-font-size-to($medpx);
+  }
+
+  @include at-breakpoint($break) {
+    @include prefix(3);
+    @include span-columns(10);
+    @include nth-omega(2n);
+    &:nth-child(2n+1) { clear: both; }
+  }
+
+}
+

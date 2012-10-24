@@ -18,37 +18,34 @@
 {% block maincontent %}
 <article class="landing">
   <section class="intro">
+    <img src="{{ STATIC_URL }}images/landing/girl.png" alt="" class="main-image">
     <h2 class="tagline">All your parent-teacher communication in one&nbsp;place.</h2>
     <p class="description">
       Unite parents and teachers
       around the education of every child,
       through frequent and streamlined&nbsp;contact.
     </p>
-
-    <section class="call-to-action">
-      <h3><a href="{% url register %}" class="register-link">Get Started Now</a> or login:</h3>
-      <form><p>Login Form</p></form>
-    </section>
+    <p class="action"><a href="{% url register %}" class="main-register-link">Get Started&nbsp;»</a></p>
   </section>
 
   <section class="features">
-    <article class="feature-two-way">
-      <h3>2-way communication</h3>
+    <article class="feature two-way-feature">
+      <h3 class="feature-title">2-way&nbsp;communication</h3>
       <p>
         Use your computer to text parents in seconds.
         Parents respond using any phone.
       </p>
     </article>
-    <article class="feature-elders">
-      <h3>Invite other teachers to join the conversation.</h3>
+    <article class="feature elders-feature">
+      <h3 class="feature-title">Invite other teachers to join the&nbsp;conversation.</h3>
       <p>
         Keep the entire faculty in the loop about every student.
         Add multiple family members to the conversation.
         Mom, Dad, Grandma, Grandpa...
       </p>
     </article>
-    <article class="feature-backlog">
-      <h3>Keep a secure record of parent communication.</h3>
+    <article class="feature backlog-feature">
+      <h3 class="feature-title">Keep a secure record of parent&nbsp;communication.</h3>
       <p>
         Print logs for RTI binders.
       </p>
