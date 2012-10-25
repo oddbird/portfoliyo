@@ -5,7 +5,6 @@ Student/elder forms.
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
-from portfoliyo.model import events
 from .. import forms as pyoforms
 from ..users.forms import EditProfileForm
 
@@ -446,8 +445,6 @@ class AddStudentForm(StudentForm):
         self.update_student_elders(
             student, list(self.cleaned_data['elders']) + [self.elder])
         self.update_student_groups(student, self.cleaned_data['groups'])
-
-        events.student_added(student)
 
         return student
 

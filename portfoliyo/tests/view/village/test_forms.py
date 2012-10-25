@@ -582,31 +582,13 @@ class TestStudentForms(object):
     def test_add_student_sends_pusher_event(self):
         """Adding a student sends a Pusher event."""
         elder = factories.ProfileFactory.create()
-        g = factories.GroupFactory.create(owner=elder)
-        form = forms.AddStudentForm(
-            {'name': "Some Student", 'groups': [g.pk]}, elder=elder)
+        form = forms.AddStudentForm({'name': "Some Student"}, elder=elder)
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.model.events.get_pusher'
-        with mock.patch(target) as mock_get_pusher:
-            channel = mock_get_pusher.return_value['students_of_%s' % elder.id]
+        target = 'portfoliyo.model.events.student_added'
+        with mock.patch(target) as mock_student_added:
             profile = form.save()
 
-        args = channel.trigger.call_args[0]
-        assert args[0] == 'student_added'
-        assert len(args[1]['objects']) == 1
-        data = args[1]['objects'][0]
-        assert data['name'] == "Some Student"
-        assert data['id'] == profile.id
-        assert data['groups'] == [g.pk]
-        assert data['resource_uri'] == reverse(
-            'api_dispatch_detail',
-            kwargs={
-                'api_name': 'v1', 'resource_name': 'user', 'pk': profile.pk},
-            )
-        assert data['village_uri'] == reverse(
-            'village', kwargs={'student_id': profile.pk})
-        assert data['edit_student_uri'] == reverse(
-            'edit_student', kwargs={'student_id': profile.pk})
+        mock_student_added.assert_called_with(profile, elder)
 
 
     def test_add_student_in_group_context(self):
