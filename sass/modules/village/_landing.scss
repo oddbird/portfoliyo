@@ -41,15 +41,26 @@
 
 %landing-section {
   @include clearfix;
-  @include leading-border(12px,3);
+  @include leading-border(12px,1);
   @include border-image(image-url('landing/line.png') 100% 0 repeat);
-  @include padding-trailer(3);
-  min-height: rhythm(12);
+  @include padding-trailer(1);
   clear: both;
+  @include at-breakpoint($break) {
+    @include leading-border(12px,3);
+    // @include border-image(image-url('landing/line.png') 100% 0 repeat);
+    @include padding-trailer(3);
+    min-height: rhythm(12);
+  }
 }
 
 // ---------------------------------------------------------------------------
 // Features
+
+@mixin feature-background($img, $h: right, $v: null) {
+  @include background(image-url($img) no-repeat scroll $h $v);
+  @include background-clip(padding-box);
+  @include background-size(columns(9) auto);
+}
 
 .feature {
   @extend %landing-section;
@@ -61,7 +72,16 @@
 
 .feature-title {
   @include serif;
-  @include adjust-font-size-to($largepx);
+  @include adjust-font-size-to($medpx);
+  @include at-breakpoint($break) {
+    @include adjust-font-size-to($largepx);
+  }
+}
+
+@include at-breakpoint($break) {
+  .two-way-feature { @include feature-background('landing/twoway.png', right, 55%); }
+  // .elders-feature { @include feature-background('http://fakeimg.pl/648x648/eee8d5/586e75', left); }
+  // .backlog-feature { @include feature-background('http://fakeimg.pl/648x648/eee8d5/586e75'); }
 }
 
 // ---------------------------------------------------------------------------
