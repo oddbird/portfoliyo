@@ -146,6 +146,23 @@ class TestProfileResource(object):
         assert response.json['objects'][0]['village_uri'] == village_url
 
 
+    def test_relationship_uri(self, no_csrf_client):
+        """relationship_uri is relationship of querying elder with student."""
+        rel = factories.RelationshipFactory.create()
+        rel_url = reverse(
+            'api_dispatch_detail',
+            kwargs={
+                'api_name': 'v1',
+                'resource_name': 'relationship',
+                'pk': rel.id,
+                },
+            )
+
+        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+
+        assert response.json['objects'][0]['relationship_uri'] == rel_url
+
+
     def test_unread_count(self, no_csrf_client):
         """Each profile has an unread_count in the API response."""
         rel = factories.RelationshipFactory.create(
