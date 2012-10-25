@@ -424,7 +424,12 @@ def relationship_saved(sender, instance, created, **kwargs):
         events.student_added(instance.student, instance.elder)
 
 
+def relationship_deleted(sender, instance, **kwargs):
+    events.student_removed(instance.student, instance.elder)
+
+
 signals.post_save.connect(relationship_saved, sender=Relationship)
+signals.pre_delete.connect(relationship_deleted, sender=Relationship)
 
 
 
