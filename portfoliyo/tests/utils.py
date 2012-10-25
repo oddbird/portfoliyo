@@ -31,6 +31,12 @@ def refresh(obj):
 
 
 
+def deleted(obj):
+    """Return True if given obj has been deleted."""
+    return not obj.__class__._base_manager.filter(pk=obj.pk).exists()
+
+
+
 class FakeTestCase(object):
     """
     Fake TestCase class with an assertEqual implementation.

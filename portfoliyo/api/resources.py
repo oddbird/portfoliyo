@@ -9,7 +9,7 @@ from tastypie.resources import ModelResource
 
 from portfoliyo.api.authentication import SessionAuthentication
 from portfoliyo.api.authorization import (
-    ProfileAuthorization, GroupAuthorization)
+    ProfileAuthorization, RelationshipAuthorization, GroupAuthorization)
 from portfoliyo import model
 
 
@@ -172,7 +172,6 @@ class SlimProfileResource(SoftDeletedResource):
             'school_staff': constants.ALL,
             }
         authorization = ProfileAuthorization()
-        detail_allowed_methods = ['get', 'delete']
 
 
     def dehydrate_email(self, bundle):
@@ -241,11 +240,13 @@ class ElderRelationshipResource(PortfoliyoResource):
             kind=model.Relationship.KIND.elder).select_related(
             'from_profile', 'to_profile')
         resource_name = 'relationship'
-        fields = ['elder', 'student', 'relationship']
+        fields = ['id', 'elder', 'student', 'relationship']
         filtering = {
             'elder': ['exact'],
             'student': ['exact'],
             }
+        authorization = RelationshipAuthorization()
+        detail_allowed_methods = ['get', 'delete']
 
 
 
