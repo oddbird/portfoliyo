@@ -109,7 +109,6 @@ def handle_new_student(parent, teacher, student_name):
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
         relationships_to__from_profile=teacher,
-        deleted=False,
         )
     if possible_dupes:
         dupe_found = True

@@ -65,7 +65,6 @@ class Profile(models.Model):
     invited_by = models.ForeignKey('self', blank=True, null=True)
     # what group was this user initially invited to?
     invited_in_group = models.ForeignKey('Group', blank=True, null=True)
-    deleted = models.BooleanField(default=False)
     declined = models.BooleanField(default=False)
 
 
@@ -158,7 +157,7 @@ class Profile(models.Model):
     @property
     def elder_relationships(self):
         return self.relationships_to.filter(
-            kind=Relationship.KIND.elder, from_profile__deleted=False).order_by(
+            kind=Relationship.KIND.elder).order_by(
             'from_profile__name').select_related("from_profile")
 
 
@@ -170,7 +169,7 @@ class Profile(models.Model):
     @property
     def student_relationships(self):
         return self.relationships_from.filter(
-            kind=Relationship.KIND.elder, to_profile__deleted=False).order_by(
+            kind=Relationship.KIND.elder).order_by(
             'to_profile__name').select_related("to_profile")
 
 
@@ -190,8 +189,7 @@ class GroupBase(object):
     def all_elders(self):
         """Return queryset of all elders of all students in group."""
         return Profile.objects.order_by('name').distinct().filter(
-            relationships_from__to_profile__in=self.students.filter(
-                deleted=False),
+            relationships_from__to_profile__in=self.students.all(),
             ).select_related('user')
 
 
@@ -206,7 +204,6 @@ class Group(GroupBase, models.Model):
         Profile, related_name='elder_in_groups', blank=True)
     # code for parent-initiated signups
     code = models.CharField(max_length=20, unique=True)
-    deleted = models.BooleanField(default=False)
 
 
     def save(self, *args, **kwargs):
@@ -236,7 +233,7 @@ class Group(GroupBase, models.Model):
         """Return queryset of all relationships for students in group."""
         return Relationship.objects.filter(
             kind=Relationship.KIND.elder,
-            to_profile__in=self.students.filter(deleted=False),
+            to_profile__in=self.students.all(),
             ).select_related('from_profile')
 
 
@@ -266,7 +263,6 @@ class AllStudentsGroup(GroupBase):
     @property
     def students(self):
         """Return queryset of all students in group."""
-        # No deleted=False because we want to mimic group.students.all()
         return Profile.objects.filter(
             relationships_to__from_profile=self.owner,
             ).distinct()

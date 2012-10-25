@@ -50,7 +50,6 @@ def get_relationship_or_404(student_id, profile):
         return model.Relationship.objects.select_related().get(
             from_profile=profile,
             to_profile_id=student_id,
-            to_profile__deleted=False,
             kind=model.Relationship.KIND.elder,
             )
     except model.Relationship.DoesNotExist:
@@ -248,11 +247,9 @@ def group(request, group_id=None):
         group = model.AllStudentsGroup(request.user.profile)
     else:
         group = get_object_or_404(
-            model.Group.objects.filter(
-                owner=request.user.profile,
-                deleted=False,
-                ),
-            id=group_id)
+            model.Group.objects.filter(owner=request.user.profile),
+            id=group_id,
+            )
 
     return TemplateResponse(
         request,
@@ -369,7 +366,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
         elder_rel = None
         if group_id is not None:
             group = get_object_or_404(model.Group.objects.filter(
-                    owner=request.user.profile, deleted=False), pk=group_id)
+                    owner=request.user.profile), pk=group_id)
         else:
             group = model.AllStudentsGroup(request.user.profile)
 

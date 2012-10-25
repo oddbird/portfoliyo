@@ -1,6 +1,5 @@
 """Tests for village forms."""
 from django.core import mail
-from django.core.urlresolvers import reverse
 import mock
 
 from portfoliyo.view.village import forms
@@ -235,15 +234,6 @@ class TestEditElderForm(object):
         group = factories.GroupFactory.create()
 
         self._assert_cannot_add(elder, group=group)
-
-
-    def test_cannot_add_deleted_student(self):
-        """Cannot add a deleted student."""
-        rel = factories.RelationshipFactory.create()
-        rel2 = factories.RelationshipFactory.create(
-            from_profile=rel.elder, to_profile__deleted=True)
-
-        self._assert_cannot_add(rel2.elder, rel.elder, student=rel2.student)
 
 
     def test_cannot_add_unrelated_student(self):
@@ -849,15 +839,6 @@ class TestStudentForms(object):
         self._assert_cannot_add(rel, elder)
 
 
-    def test_cannot_associate_deleted_elder(self):
-        """Cannot associate student with a deleted elder."""
-        rel = factories.RelationshipFactory.create()
-        elder = factories.ProfileFactory.create(
-            school_staff=True, school=rel.elder.school, deleted=True)
-
-        self._assert_cannot_add(rel, elder)
-
-
     def test_cannot_associate_group_from_other_owner(self):
         """Cannot associate student with a group that isn't yours."""
         rel = factories.RelationshipFactory.create()
@@ -985,21 +966,3 @@ class TestGroupForms(object):
         student = factories.ProfileFactory.create()
 
         self._assert_cannot_add(group, student=student)
-
-
-    def test_cannot_add_deleted_elder(self):
-        """Cannot add a deleted elder."""
-        group = factories.GroupFactory.create()
-        elder = factories.ProfileFactory.create(
-            school_staff=True, school=group.owner.school, deleted=True)
-
-        self._assert_cannot_add(group, elder=elder)
-
-
-    def test_cannot_add_deleted_student(self):
-        """Cannot add a deleted student."""
-        group = factories.GroupFactory.create()
-        rel = factories.RelationshipFactory.create(
-            from_profile=group.owner, to_profile__deleted=True)
-
-        self._assert_cannot_add(group, student=rel.student)

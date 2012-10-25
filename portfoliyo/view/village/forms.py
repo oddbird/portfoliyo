@@ -76,9 +76,9 @@ class ElderFormBase(forms.Form):
     def __init__(self, *args, **kwargs):
         super(ElderFormBase, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
-            owner=self.editor, deleted=False)
+            owner=self.editor)
         self.fields['students'].queryset = model.Profile.objects.filter(
-            relationships_to__from_profile=self.editor, deleted=False)
+            relationships_to__from_profile=self.editor)
         self.fields['students'].groups_attr = 'student_in_groups'
 
 
@@ -173,7 +173,6 @@ class EditElderForm(ElderFormBase, EditProfileForm):
                 model.Relationship.objects.filter(
                     from_profile=elder,
                     direct=True,
-                    to_profile__deleted=False,
                     ).select_related('to_profile')
                 ]
         return self._direct_students[elder.pk]
@@ -325,9 +324,9 @@ class StudentForm(forms.ModelForm):
         self.elder = kwargs.pop('elder')
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
-            owner=self.elder, deleted=False)
+            owner=self.elder)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.elder.school, school_staff=True, deleted=False).exclude(
+            school=self.elder.school, school_staff=True).exclude(
             pk=self.elder.pk)
         self.fields['elders'].groups_attr = 'elder_in_groups'
         if self.instance.pk:
@@ -362,7 +361,6 @@ class StudentForm(forms.ModelForm):
                 model.Relationship.objects.filter(
                     to_profile=self.instance,
                     direct=True,
-                    from_profile__deleted=False,
                     from_profile__school_staff=True,
                     ).exclude(
                     from_profile=self.elder).select_related('from_profile')
@@ -479,9 +477,9 @@ class GroupForm(forms.ModelForm):
             self.owner = kwargs.pop('owner')
         super(GroupForm, self).__init__(*args, **kwargs)
         self.fields['students'].queryset = model.Profile.objects.filter(
-            relationships_to__from_profile=self.owner, deleted=False)
+            relationships_to__from_profile=self.owner)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.owner.school, school_staff=True, deleted=False).exclude(
+            school=self.owner.school, school_staff=True).exclude(
             pk=self.owner.pk)
 
 

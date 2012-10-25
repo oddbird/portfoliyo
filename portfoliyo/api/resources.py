@@ -113,9 +113,7 @@ class SlimProfileResource(PortfoliyoResource):
 
 
     class Meta(PortfoliyoResource.Meta):
-        queryset = model.Profile.objects.filter(
-            deleted=False).select_related(
-            'user').order_by('name')
+        queryset = model.Profile.objects.select_related('user').order_by('name')
         resource_name = 'user'
         fields = [
             'id',
@@ -250,8 +248,8 @@ class GroupResource(PortfoliyoResource):
 
 
     class Meta(PortfoliyoResource.Meta):
-        queryset = model.Group.objects.filter(
-            deleted=False).order_by('name').prefetch_related('students')
+        queryset = model.Group.objects.order_by(
+            'name').prefetch_related('students')
         resource_name = 'group'
         fields = ['id', 'name', 'owner', 'students']
         authorization = GroupAuthorization()

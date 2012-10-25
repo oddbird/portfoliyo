@@ -195,13 +195,6 @@ class TestPostCreate(object):
             from_profile__email_notifications=True,
             to_profile=rel.student,
             )
-        # Deleted - no notification
-        factories.RelationshipFactory.create(
-            from_profile__user__email='six@example.com',
-            from_profile__email_notifications=True,
-            from_profile__deleted=True,
-            to_profile=rel.student,
-            )
 
         models.Post.create(rel.elder, rel.student, 'Foo')
 
@@ -401,11 +394,9 @@ class TestBulkPost(object):
         """Creates a bulk post and posts in individual villages."""
         rel = factories.RelationshipFactory()
         rel2 = factories.RelationshipFactory(from_profile=rel.elder)
-        deleted_rel = factories.RelationshipFactory(
-            from_profile=rel.elder, to_profile__deleted=True)
         factories.RelationshipFactory(from_profile=rel.elder)
         g = factories.GroupFactory()
-        g.students.add(rel.student, rel2.student, deleted_rel.student)
+        g.students.add(rel.student, rel2.student)
         post = models.BulkPost.create(rel.elder, g, "Hallo")
 
         exp = set([
