@@ -44,40 +44,6 @@ class TestYAGNI(object):
         mock_super.assert_called_with(request, foo='bar')
 
 
-    def test_obj_delete_list(self):
-        r = resources.SoftDeletedResource()
-        request = mock.Mock()
-        with mock.patch.object(r, 'get_object_list') as mock_get_object_list:
-            with mock.patch.object(
-                    r, 'apply_authorization_limits') as mock_apply_auth_limits:
-                r.obj_delete_list(request, foo='bar')
-
-        mock_get_object_list.assert_called_with(request)
-        mock_get_object_list.return_value.filter.assert_called_with(foo='bar')
-        mock_apply_auth_limits.assert_called_with(
-            request, mock_get_object_list.return_value.filter.return_value)
-        mock_apply_auth_limits.return_value.update.assert_called_with(
-            deleted=True)
-
-
-    def test_obj_delete_list_not_queryset(self):
-        r = resources.SoftDeletedResource()
-        request = mock.Mock()
-        with mock.patch.object(r, 'get_object_list') as mock_get_object_list:
-            with mock.patch.object(
-                    r, 'apply_authorization_limits') as mock_apply_auth_limits:
-                obj = mock.Mock()
-                mock_apply_auth_limits.return_value = [obj]
-                r.obj_delete_list(request, foo='bar')
-
-        mock_get_object_list.assert_called_with(request)
-        mock_get_object_list.return_value.filter.assert_called_with(foo='bar')
-        mock_apply_auth_limits.assert_called_with(
-            request, mock_get_object_list.return_value.filter.return_value)
-        assert obj.deleted == True
-        obj.save.assert_called_with()
-
-
 
 class TestProfileResource(object):
     def test_dehydrate_email(self):
@@ -422,7 +388,7 @@ class TestGroupResource(object):
         no_csrf_client.delete(
             self.detail_url(group), user=group.owner.user, status=204)
 
-        assert utils.refresh(group).deleted
+        assert utils.deleted(group)
 
 
     def test_delete_group_requires_owner(self, no_csrf_client):
@@ -433,7 +399,7 @@ class TestGroupResource(object):
         no_csrf_client.delete(
             self.detail_url(group), user=profile.user, status=404)
 
-        assert not utils.refresh(group).deleted
+        assert not utils.deleted(group)
 
 
     def test_group_uri(self, no_csrf_client):

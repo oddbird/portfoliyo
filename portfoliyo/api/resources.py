@@ -91,46 +91,6 @@ class PortfoliyoResource(ModelResource):
 
 
 
-
-class SoftDeletedResource(PortfoliyoResource):
-    """Base Resource class for soft-deletes (sets deleted flag)."""
-    def obj_delete_list(self, request=None, **kwargs):
-        """Soft-delete a list of objects."""
-        base_object_list = self.get_object_list(request).filter(**kwargs)
-        authed_object_list = self.apply_authorization_limits(
-            request, base_object_list)
-
-        if hasattr(authed_object_list, 'delete'):
-            # It's likely a ``QuerySet``. Call ``.update()`` for efficiency.
-            authed_object_list.update(deleted=True)
-        else:
-            for authed_obj in authed_object_list:
-                authed_obj.deleted = True
-                authed_obj.save()
-
-    def obj_delete(self, request=None, **kwargs):
-        """Soft-delete a single object."""
-        obj = kwargs.pop('_obj', None)
-
-        if not hasattr(obj, 'save'): # pragma: no cover
-            try:
-                obj = self.obj_get(request, **kwargs)
-            except ObjectDoesNotExist:
-                raise NotFound(
-                    "A model instance matching the provided arguments "
-                    "could not be found."
-                    )
-
-        obj.deleted = True
-        obj.save()
-
-
-    class Meta(PortfoliyoResource.Meta):
-        pass
-
-
-
-
 class SimpleToManyField(fields.ToManyField):
     """A to-many field that operates off a simple list-returning property."""
     def dehydrate(self, bundle):
@@ -147,12 +107,12 @@ class SimpleToManyField(fields.ToManyField):
 
 
 
-class SlimProfileResource(SoftDeletedResource):
+class SlimProfileResource(PortfoliyoResource):
     invited_by = fields.ForeignKey('self', 'invited_by', blank=True, null=True)
     email = fields.CharField()
 
 
-    class Meta(SoftDeletedResource.Meta):
+    class Meta(PortfoliyoResource.Meta):
         queryset = model.Profile.objects.filter(
             deleted=False).select_related(
             'user').order_by('name')
@@ -284,12 +244,12 @@ class ElderRelationshipResource(PortfoliyoResource):
 
 
 
-class GroupResource(SoftDeletedResource):
+class GroupResource(PortfoliyoResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
     students = fields.ToManyField(SlimProfileResource, 'students', full=True)
 
 
-    class Meta(SoftDeletedResource.Meta):
+    class Meta(PortfoliyoResource.Meta):
         queryset = model.Group.objects.filter(
             deleted=False).order_by('name').prefetch_related('students')
         resource_name = 'group'
