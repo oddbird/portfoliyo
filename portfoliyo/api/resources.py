@@ -210,8 +210,10 @@ class SlimProfileResource(SoftDeletedResource):
             'edit_student',
             kwargs={'student_id': bundle.obj.id},
             )
-        bundle.data['unread_count'] = model.unread.unread_count(
-            bundle.obj, bundle.request.user.profile)
+        user = getattr(bundle.request, 'user', None)
+        if user is not None:
+            bundle.data['unread_count'] = model.unread.unread_count(
+                bundle.obj, user.profile)
 
         return bundle
 
