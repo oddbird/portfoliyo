@@ -714,6 +714,29 @@ class TestStudentForms(object):
         mock_student_removed.assert_called_with(profile, other_rel.elder)
 
 
+    def test_edit_student_sends_pusher_event(self):
+        """Editing a student sends a pusher event to all their elders."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(to_profile=rel.student)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.student_edited'
+        with mock.patch(target) as mock_student_edited:
+            profile = form.save()
+
+        mock_student_edited.assert_called_with(
+            profile, other_rel.elder, rel.elder)
+
+
     def test_edit_student_never_removes_from_others_groups(self):
         """Editing a student never removes them from others' groups."""
         rel = factories.RelationshipFactory.create()
