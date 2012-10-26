@@ -93,8 +93,33 @@ class Migration(DataMigration):
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '200'}),
             'postcode': ('django.db.models.fields.CharField', [], {'max_length': '20'})
+        },
+        'village.bulkpost': {
+            'Meta': {'object_name': 'BulkPost'},
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'authored_bulkposts'", 'null': 'True', 'to': "orm['users.Profile']"}),
+            'from_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'group': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'bulk_posts'", 'null': 'True', 'to': "orm['users.Group']"}),
+            'html_text': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'meta': ('jsonfield.fields.JSONField', [], {'default': '{}'}),
+            'original_text': ('django.db.models.fields.TextField', [], {}),
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 26, 0, 0)'}),
+            'to_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
+        },
+        'village.post': {
+            'Meta': {'object_name': 'Post'},
+            'author': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'authored_posts'", 'null': 'True', 'to': "orm['users.Profile']"}),
+            'from_bulk': ('django.db.models.fields.related.ForeignKey', [], {'blank': 'True', 'related_name': "'triggered'", 'null': 'True', 'to': "orm['village.BulkPost']"}),
+            'from_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
+            'html_text': ('django.db.models.fields.TextField', [], {}),
+            'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'meta': ('jsonfield.fields.JSONField', [], {'default': '{}'}),
+            'original_text': ('django.db.models.fields.TextField', [], {}),
+            'student': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'posts_in_village'", 'to': "orm['users.Profile']"}),
+            'timestamp': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime(2012, 10, 26, 0, 0)'}),
+            'to_sms': ('django.db.models.fields.BooleanField', [], {'default': 'False'})
         }
     }
 
-    complete_apps = ['users']
+    complete_apps = ['village', 'users']
     symmetrical = True
