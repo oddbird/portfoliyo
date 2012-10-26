@@ -512,6 +512,20 @@ class TestGroup(object):
         mock_group_added.assert_called_with(g)
 
 
+    def test_delete_relationship_removes_from_groups(self):
+        """Deleting a relationship removes student from elder's groups."""
+        rel = factories.RelationshipFactory.create()
+        other_elder = factories.ProfileFactory.create()
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.elders.add(other_elder)
+
+        rel.delete()
+
+        assert not group.students.count()
+        assert not other_elder.students
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self):

@@ -439,6 +439,8 @@ def relationship_saved(sender, instance, created, **kwargs):
 
 def relationship_deleted(sender, instance, **kwargs):
     events.student_removed(instance.student, instance.elder)
+    for group in instance.elder.owned_groups.all():
+        group.students.remove(instance.student)
 
 
 signals.post_save.connect(relationship_saved, sender=Relationship)
