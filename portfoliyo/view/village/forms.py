@@ -348,6 +348,7 @@ class StudentForm(forms.ModelForm):
                 g.pk for g in self.instance.student_in_groups.all()]
             self.fields['elders'].initial = [
                 e.pk for e in self.direct_other_teachers(self.instance)]
+        self._old_name = self.instance.name
 
 
     def save(self):
@@ -360,7 +361,14 @@ class StudentForm(forms.ModelForm):
         if check_for_orphans:
             model.Relationship.objects.delete_orphans()
 
-        events.student_edited(student, *student.elders)
+        # if the name is unchanged, only send the event to the editing elder
+        # (in case they are logged in in two places - changes to groups may be
+        # relevant to them). If name is changed, send to all elders so nav can
+        # be updated.
+        if self._old_name == self.instance.name:
+            events.student_edited(student, self.elder)
+        else:
+            events.student_edited(student, *student.elders)
 
         return student
 

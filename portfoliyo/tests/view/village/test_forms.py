@@ -745,6 +745,30 @@ class TestStudentForms(object):
             profile, other_rel.elder, rel.elder)
 
 
+    def test_edit_student_only_sends_to_other_elders_if_name_changed(self):
+        """Sends pusher event only to editing elder if name unchanged."""
+        rel = factories.RelationshipFactory.create(
+            to_profile__name="Some Student")
+        factories.RelationshipFactory.create(to_profile=rel.student)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.student_edited'
+        with mock.patch(target) as mock_student_edited:
+            profile = form.save()
+
+        mock_student_edited.assert_called_with(
+            profile, rel.elder)
+
+
     def test_edit_student_never_removes_from_others_groups(self):
         """Editing a student never removes them from others' groups."""
         rel = factories.RelationshipFactory.create()
