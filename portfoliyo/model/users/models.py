@@ -271,6 +271,7 @@ class AllStudentsGroup(GroupBase):
 
 def update_group_relationships(
         sender, instance, action, reverse, pk_set, **kwargs):
+    """Create/remove relationships based on group membership changes."""
     if sender is Group.students.through:
         sender_attr = 'to_profile'
         other_attr = 'from_profile'

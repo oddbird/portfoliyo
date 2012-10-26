@@ -438,15 +438,21 @@ class TestGroup(object):
 
         (And does not remove non-group-originated relationships).
 
+        (And calls events.student_removed for each cleared relationship.)
+
         """
         rel = factories.RelationshipFactory.create()
         e = factories.ProfileFactory.create()
         g = factories.GroupFactory.create()
         g.students.add(rel.student)
         g.elders.add(e)
-        rel.student.student_in_groups.clear()
+
+        target = 'portfoliyo.model.events.student_removed'
+        with mock.patch(target) as mock_student_removed:
+            rel.student.student_in_groups.clear()
 
         assert rel.student.relationships_to.get() == rel
+        mock_student_removed.assert_called_with(rel.student, e)
 
 
     def test_create_dupe_code(self):

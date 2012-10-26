@@ -129,25 +129,36 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             rel.save()
         self.instance.save()
 
-        self.update_elder_students(self.instance, self.cleaned_data['students'])
+        check_for_orphans = self.update_elder_students(
+            self.instance, self.cleaned_data['students'])
         self.update_elder_groups(self.instance, self.cleaned_data['groups'])
+        if check_for_orphans:
+            model.Relationship.objects.delete_orphans()
 
         return self.instance
 
 
     def update_elder_students(self, elder, students):
-        """Update elder to have exactly given direct (non-group) students."""
+        """
+        Update elder to have exactly given direct (non-group) students.
+
+        Return boolean indicating whether it's necessary to check for orphan
+        relationships.
+
+        """
         current = set(self.direct_students(elder))
         target = set(students)
         remove = current.difference(target)
         add = target.difference(current)
+
+        check_for_orphans = False
 
         if remove:
             model.Relationship.objects.filter(
                 from_profile=elder,
                 to_profile__in=remove,
                 ).update(direct=False)
-            model.Relationship.objects.delete_orphans()
+            check_for_orphans = True
 
         for student in add:
             rel, created = model.Relationship.objects.get_or_create(
@@ -157,6 +168,8 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             if not created and not rel.direct:
                 rel.direct = True
                 rel.save()
+
+        return check_for_orphans
 
 
     def direct_students(self, elder):
@@ -341,8 +354,11 @@ class StudentForm(forms.ModelForm):
         """Save and return student."""
         student = super(StudentForm, self).save()
 
-        self.update_student_elders(student, self.cleaned_data['elders'])
+        check_for_orphans = self.update_student_elders(
+            student, self.cleaned_data['elders'])
         self.update_student_groups(student, self.cleaned_data['groups'])
+        if check_for_orphans:
+            model.Relationship.objects.delete_orphans()
 
         events.student_edited(student, *student.elders)
 
@@ -375,8 +391,11 @@ class StudentForm(forms.ModelForm):
         """
         Update student to have exactly given direct other-than-me elders.
 
-        Excludes elder relationships due to group membership, and excludes the
+        Exclude elder relationships due to group membership, and exclude the
         elder editing the student.
+
+        Return boolean indicating whether we need to check for orphan
+        relationships after updating group relationships.
 
         """
         current = set(self.direct_other_teachers(student))
@@ -384,12 +403,14 @@ class StudentForm(forms.ModelForm):
         remove = current.difference(target)
         add = target.difference(current)
 
+        check_for_orphans = False
+
         if remove:
             model.Relationship.objects.filter(
                 to_profile=student,
                 from_profile__in=remove,
                 ).update(direct=False)
-            model.Relationship.objects.delete_orphans()
+            check_for_orphans = True
 
         for elder in add:
             rel, created = model.Relationship.objects.get_or_create(
@@ -399,6 +420,8 @@ class StudentForm(forms.ModelForm):
             if not created and not rel.direct:
                 rel.direct = True
                 rel.save()
+
+        return check_for_orphans
 
 
     def update_student_groups(self, student, groups):
@@ -484,6 +507,53 @@ class GroupForm(forms.ModelForm):
         self.fields['elders'].queryset = model.Profile.objects.filter(
             school=self.owner.school, school_staff=True).exclude(
             pk=self.owner.pk)
+
+
+    def save(self, commit=True):
+        """
+        Implement saving ourselves to avoid inefficient M2M handling.
+
+        """
+        self.instance.name = self.cleaned_data['name']
+        if commit:
+            self.instance.save()
+            self.save_m2m()
+        return self.instance
+
+
+    def save_m2m(self):
+        """
+        Save students and elders efficiently.
+
+        By default ModelForm just assigns a list to an m2m attribute, which the
+        ORM implements by first clearing the M2M and then adding all the
+        submitted items back to it. We want a smarter diffing approach to avoid
+        spurious delete/create signals.
+
+        """
+        # handle students
+        selected = set(self.cleaned_data['students'])
+        current = set(self.instance.students.all())
+
+        remove = current.difference(selected)
+        add = selected.difference(current)
+
+        if remove:
+            self.instance.students.remove(*remove)
+        if add:
+            self.instance.students.add(*add)
+
+        # handle elders
+        selected = set(self.cleaned_data['elders'])
+        current = set(self.instance.elders.all())
+
+        remove = current.difference(selected)
+        add = selected.difference(current)
+
+        if remove:
+            self.instance.elders.remove(*remove)
+        if add:
+            self.instance.elders.add(*add)
 
 
 

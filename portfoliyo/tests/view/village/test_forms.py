@@ -115,7 +115,14 @@ class TestEditElderForm(object):
 
 
     def test_edit_elder_transforms_direct_relationship_to_group(self):
-        """Can transform a direct student relationship to a group one."""
+        """
+        Can transform a direct student relationship to a group one.
+
+        (And we don't delete and recreate the relationship to do so, which
+        would cause student_removed then student_added events to fire in quick
+        succession.)
+
+        """
         rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True, to_profile=rel.student)
@@ -136,9 +143,10 @@ class TestEditElderForm(object):
         assert form.is_valid(), dict(form.errors)
         form.save(other_rel)
 
-        rel = other_rel.elder.student_relationships.get()
-        assert not rel.direct
-        assert set(rel.groups.all()) == {group}
+        # if we'd deleted and recreated the relationship, this would fail
+        other_rel = utils.refresh(other_rel)
+        assert not other_rel.direct
+        assert set(other_rel.groups.all()) == {group}
 
 
     def test_initial_groups_and_students(self):
@@ -786,6 +794,42 @@ class TestStudentForms(object):
         assert not rel.groups.exists()
 
 
+    def test_edit_student_transforms_direct_rel_to_group(self):
+        """
+        Can add a group relationship where there was a direct one.
+
+        (Without deleting and recreating a new relationship, which would cause
+        clients to get student_removed then student_added events in quick
+        succession.)
+
+        """
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            to_profile=rel.student,
+            )
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.elders.add(other_rel.elder)
+
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'elders': [],
+                'groups': [group.pk],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        form.save()
+
+        # If we deleted and created a new relationship, this would fail
+        other_rel = utils.refresh(other_rel)
+        assert not other_rel.direct
+        assert set(other_rel.groups.all()) == {group}
+
+
     def test_edit_form_group_and_elder_initial(self):
         """Group and elder initial values set correctly when editing student."""
         rel = factories.RelationshipFactory.create()
@@ -913,10 +957,13 @@ class TestGroupForms(object):
     def test_edit_group_with_students_and_elders(self):
         """Can add/remove students and elders from group when editing."""
         group = factories.GroupFactory.create()
+        prev_elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
         elder = factories.ProfileFactory.create(
             school_staff=True, school=group.owner.school)
         rel = factories.RelationshipFactory.create(from_profile=group.owner)
         group.students.add(rel.student)
+        group.elders.add(prev_elder)
 
         form = forms.GroupForm(
             {
@@ -932,6 +979,31 @@ class TestGroupForms(object):
 
         assert len(group.students.all()) == 0
         assert set(group.elders.all()) == {elder}
+
+
+    def test_edit_group_does_not_delete_and_recreate_relationships(self):
+        group = factories.GroupFactory.create()
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+        rel = factories.RelationshipFactory.create(from_profile=group.owner)
+        group.elders.add(elder.pk)
+        group.students.add(rel.student)
+        group_rel = group.relationships.get()
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [rel.student.pk],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        group = form.save()
+
+        # this will fail if the group relationship was deleted/recreated
+        utils.refresh(group_rel)
 
 
     def test_self_not_in_elder_choices(self):
