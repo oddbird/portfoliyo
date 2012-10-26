@@ -18,17 +18,23 @@ class PortfoliyoAuthorization(authorization.Authorization):
 
 
 
-class ProfileAuthorization(PortfoliyoAuthorization):
+class RelationshipAuthorization(PortfoliyoAuthorization):
     def is_authorized(self, request, object=None):
-        """Allow changes by same-school staff."""
-        if (object and object.school_id == request.user.profile.school_id and
-                request.user.profile.school_staff and
-                (not object.school_staff or object == request.user.profile)
-                ):
+        """Allow changes by the elder of the relationship."""
+        if (object and object.from_profile_id == request.user.profile.id):
             return True
-        return super(ProfileAuthorization, self).is_authorized(request, object)
+        return super(RelationshipAuthorization, self).is_authorized(
+            request, object)
 
 
+    def apply_limits(self, request, object_list):
+        """Only allow users to see their own relationships."""
+        return object_list.filter(from_profile=request.user.profile)
+
+
+
+class ProfileAuthorization(PortfoliyoAuthorization):
+    """Only allow users to see same-school profiles."""
     def apply_limits(self, request, object_list):
         """Only allow users to see same-school profiles."""
         return object_list.filter(school=request.user.profile.school_id)
@@ -44,5 +50,5 @@ class GroupAuthorization(PortfoliyoAuthorization):
 
 
     def apply_limits(self, request, object_list):
-        """Only allow users to see same-school profiles."""
+        """Only allow users to see their own groups."""
         return object_list.filter(owner=request.user.profile)

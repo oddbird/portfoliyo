@@ -32,10 +32,9 @@ admin.site.register(
         'code',
         'state',
         'invited_by',
-        'deleted',
         'declined',
         ],
-    list_filter=['school', 'school_staff', 'state', 'deleted', 'declined'],
+    list_filter=['school', 'school_staff', 'state', 'declined'],
     )
 admin.site.register(models.Group)
 admin.site.register(models.School)

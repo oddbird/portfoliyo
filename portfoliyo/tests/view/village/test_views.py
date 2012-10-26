@@ -472,16 +472,6 @@ class TestVillage(GroupContextTests):
         client.get(self.url(student), user=elder.user, status=404)
 
 
-    def test_404_deleted_student(self, client):
-        """Can't view village of a deleted student."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True,
-            to_profile__deleted=True,
-            )
-
-        client.get(self.url(rel.student), user=rel.elder.user, status=404)
-
-
 
 class TestAllStudents(object):
     def url(self):
@@ -518,14 +508,6 @@ class TestGroupDetail(object):
             school_staff=True, school=group.owner.school)
 
         client.get(self.url(group), user=someone.user, status=404)
-
-
-    def test_404_deleted_group(self, client):
-        """Can't view a deleted group."""
-        group = factories.GroupFactory.create(
-            owner__school_staff=True, deleted=True)
-
-        client.get(self.url(group), user=group.owner.user, status=404)
 
 
 

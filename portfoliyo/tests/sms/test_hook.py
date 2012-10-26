@@ -278,36 +278,6 @@ def test_code_signup_student_name_dupe_detection():
     assert student == rel.student
 
 
-def test_code_signup_student_name_dupe_detection_excludes_deleted():
-    """Go ahead and create a dupe student if the other is deleted."""
-    phone = '+13216430987'
-    rel = factories.RelationshipFactory.create(
-        from_profile__school_staff=True,
-        to_profile__name="Jimmy Doe",
-        to_profile__deleted=True,
-        )
-    factories.ProfileFactory.create(
-        name="John Doe",
-        phone=phone,
-        state=model.Profile.STATE.kidname,
-        invited_by=rel.elder,
-        )
-
-    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        reply = hook.receive_sms(phone, "Jimmy Doe")
-
-    assert reply == (
-        "Last question: what is your relationship to that child "
-        "(mother, father, ...)?"
-        )
-    parent = model.Profile.objects.get(phone=phone)
-    assert len(parent.students) == 1
-    student = parent.students[0]
-    assert student != rel.student
-    # teacher, parent, deleted student, new student
-    assert model.Profile.objects.count() == 4
-
-
 def test_code_signup_role():
     """Parent can finish code signup by providing their role."""
     phone = '+13216430987'

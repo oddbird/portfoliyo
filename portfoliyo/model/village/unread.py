@@ -28,12 +28,7 @@ def unread_count(student, profile):
 
 def group_unread_count(group, profile):
     """Return count of profile's unread posts in all villages in group."""
-    return sum(
-        [
-            unread_count(s, profile) for s in
-            group.students.filter(deleted=False)
-            ]
-        )
+    return sum([unread_count(s, profile) for s in group.students.all()])
 
 
 def mark_village_read(student, profile):

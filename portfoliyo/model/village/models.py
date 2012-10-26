@@ -30,7 +30,6 @@ def sms_eligible(elders):
     """Given queryset of elders, return queryset of SMS-eligible elders."""
     return elders.filter(
         declined=False,
-        deleted=False,
         user__is_active=True,
         phone__isnull=False,
         )
@@ -244,7 +243,7 @@ class BulkPost(BasePost):
 
         post.save()
 
-        for student in group.students.filter(deleted=False):
+        for student in group.students.all():
             sub = Post.objects.create(
                 author=author,
                 student=student,
@@ -356,7 +355,6 @@ class Post(BasePost):
         if not self.author:
             return
         send_to = user_models.Profile.objects.filter(
-            deleted=False,
             relationships_from__to_profile=self.student,
             user__email__isnull=False,
             email_notifications=True,

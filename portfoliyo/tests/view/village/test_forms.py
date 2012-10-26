@@ -1,6 +1,5 @@
 """Tests for village forms."""
 from django.core import mail
-from django.core.urlresolvers import reverse
 import mock
 
 from portfoliyo.view.village import forms
@@ -116,7 +115,14 @@ class TestEditElderForm(object):
 
 
     def test_edit_elder_transforms_direct_relationship_to_group(self):
-        """Can transform a direct student relationship to a group one."""
+        """
+        Can transform a direct student relationship to a group one.
+
+        (And we don't delete and recreate the relationship to do so, which
+        would cause student_removed then student_added events to fire in quick
+        succession.)
+
+        """
         rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True, to_profile=rel.student)
@@ -137,9 +143,10 @@ class TestEditElderForm(object):
         assert form.is_valid(), dict(form.errors)
         form.save(other_rel)
 
-        rel = other_rel.elder.student_relationships.get()
-        assert not rel.direct
-        assert set(rel.groups.all()) == {group}
+        # if we'd deleted and recreated the relationship, this would fail
+        other_rel = utils.refresh(other_rel)
+        assert not other_rel.direct
+        assert set(other_rel.groups.all()) == {group}
 
 
     def test_initial_groups_and_students(self):
@@ -235,15 +242,6 @@ class TestEditElderForm(object):
         group = factories.GroupFactory.create()
 
         self._assert_cannot_add(elder, group=group)
-
-
-    def test_cannot_add_deleted_student(self):
-        """Cannot add a deleted student."""
-        rel = factories.RelationshipFactory.create()
-        rel2 = factories.RelationshipFactory.create(
-            from_profile=rel.elder, to_profile__deleted=True)
-
-        self._assert_cannot_add(rel2.elder, rel.elder, student=rel2.student)
 
 
     def test_cannot_add_unrelated_student(self):
@@ -724,6 +722,53 @@ class TestStudentForms(object):
         mock_student_removed.assert_called_with(profile, other_rel.elder)
 
 
+    def test_edit_student_sends_pusher_event(self):
+        """Editing a student sends a pusher event to all their elders."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(to_profile=rel.student)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.student_edited'
+        with mock.patch(target) as mock_student_edited:
+            profile = form.save()
+
+        mock_student_edited.assert_called_with(
+            profile, other_rel.elder, rel.elder)
+
+
+    def test_edit_student_only_sends_to_other_elders_if_name_changed(self):
+        """Sends pusher event only to editing elder if name unchanged."""
+        rel = factories.RelationshipFactory.create(
+            to_profile__name="Some Student")
+        factories.RelationshipFactory.create(to_profile=rel.student)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.student_edited'
+        with mock.patch(target) as mock_student_edited:
+            profile = form.save()
+
+        mock_student_edited.assert_called_with(
+            profile, rel.elder)
+
+
     def test_edit_student_never_removes_from_others_groups(self):
         """Editing a student never removes them from others' groups."""
         rel = factories.RelationshipFactory.create()
@@ -771,6 +816,42 @@ class TestStudentForms(object):
         rel = other_elder.student_relationships[0]
         assert rel.direct
         assert not rel.groups.exists()
+
+
+    def test_edit_student_transforms_direct_rel_to_group(self):
+        """
+        Can add a group relationship where there was a direct one.
+
+        (Without deleting and recreating a new relationship, which would cause
+        clients to get student_removed then student_added events in quick
+        succession.)
+
+        """
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            to_profile=rel.student,
+            )
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.elders.add(other_rel.elder)
+
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'elders': [],
+                'groups': [group.pk],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        form.save()
+
+        # If we deleted and created a new relationship, this would fail
+        other_rel = utils.refresh(other_rel)
+        assert not other_rel.direct
+        assert set(other_rel.groups.all()) == {group}
 
 
     def test_edit_form_group_and_elder_initial(self):
@@ -849,15 +930,6 @@ class TestStudentForms(object):
         self._assert_cannot_add(rel, elder)
 
 
-    def test_cannot_associate_deleted_elder(self):
-        """Cannot associate student with a deleted elder."""
-        rel = factories.RelationshipFactory.create()
-        elder = factories.ProfileFactory.create(
-            school_staff=True, school=rel.elder.school, deleted=True)
-
-        self._assert_cannot_add(rel, elder)
-
-
     def test_cannot_associate_group_from_other_owner(self):
         """Cannot associate student with a group that isn't yours."""
         rel = factories.RelationshipFactory.create()
@@ -909,10 +981,13 @@ class TestGroupForms(object):
     def test_edit_group_with_students_and_elders(self):
         """Can add/remove students and elders from group when editing."""
         group = factories.GroupFactory.create()
+        prev_elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
         elder = factories.ProfileFactory.create(
             school_staff=True, school=group.owner.school)
         rel = factories.RelationshipFactory.create(from_profile=group.owner)
         group.students.add(rel.student)
+        group.elders.add(prev_elder)
 
         form = forms.GroupForm(
             {
@@ -928,6 +1003,73 @@ class TestGroupForms(object):
 
         assert len(group.students.all()) == 0
         assert set(group.elders.all()) == {elder}
+
+
+    def test_edit_group_does_not_delete_and_recreate_relationships(self):
+        group = factories.GroupFactory.create()
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+        rel = factories.RelationshipFactory.create(from_profile=group.owner)
+        group.elders.add(elder.pk)
+        group.students.add(rel.student)
+        group_rel = group.relationships.get()
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [rel.student.pk],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        group = form.save()
+
+        # this will fail if the group relationship was deleted/recreated
+        utils.refresh(group_rel)
+
+
+    def test_edit_group_fires_event(self):
+        """Editing a group's name fires a Pusher event."""
+        group = factories.GroupFactory.create(name='Old name')
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.group_edited'
+        with mock.patch(target) as mock_group_edited:
+            group = form.save()
+
+        mock_group_edited.assert_called_with(group)
+
+
+    def test_edit_group_fires_event_only_if_name_changed(self):
+        """Editing a group without changing name does not fire event."""
+        group = factories.GroupFactory.create(name='A name')
+
+        form = forms.GroupForm(
+            {
+                'name': group.name,
+                'elders': [],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.group_edited'
+        with mock.patch(target) as mock_group_edited:
+            group = form.save()
+
+        assert not mock_group_edited.call_count
 
 
     def test_self_not_in_elder_choices(self):
@@ -985,21 +1127,3 @@ class TestGroupForms(object):
         student = factories.ProfileFactory.create()
 
         self._assert_cannot_add(group, student=student)
-
-
-    def test_cannot_add_deleted_elder(self):
-        """Cannot add a deleted elder."""
-        group = factories.GroupFactory.create()
-        elder = factories.ProfileFactory.create(
-            school_staff=True, school=group.owner.school, deleted=True)
-
-        self._assert_cannot_add(group, elder=elder)
-
-
-    def test_cannot_add_deleted_student(self):
-        """Cannot add a deleted student."""
-        group = factories.GroupFactory.create()
-        rel = factories.RelationshipFactory.create(
-            from_profile=group.owner, to_profile__deleted=True)
-
-        self._assert_cannot_add(group, student=rel.student)

@@ -7,8 +7,8 @@ from portfoliyo.tests import factories
 
 
 
-def test_student_added():
-    """Pusher event for adding a student."""
+def test_student_event():
+    """Pusher event for adding/editing/removing a student."""
     rel = factories.RelationshipFactory.create()
     g = factories.GroupFactory.create(owner=rel.elder)
     g.students.add(rel.student)
@@ -17,10 +17,10 @@ def test_student_added():
         mock_get_pusher.return_value = {
             'students_of_%s' % rel.elder.id: channel,
             }
-        events.student_added(rel.student, rel.elder)
+        events.student_event('some_event', rel.student, rel.elder)
 
     args = channel.trigger.call_args[0]
-    assert args[0] == 'student_added'
+    assert args[0] == 'some_event'
     assert len(args[1]['objects']) == 1
     data = args[1]['objects'][0]
     assert data['name'] == rel.student.name
@@ -35,3 +35,27 @@ def test_student_added():
         'village', kwargs={'student_id': rel.student.pk})
     assert data['edit_student_uri'] == reverse(
         'edit_student', kwargs={'student_id': rel.student.pk})
+
+
+
+def test_group_event():
+    """Pusher event for adding/editing/removing a group."""
+    group = factories.GroupFactory.create()
+    with mock.patch('portfoliyo.model.events.get_pusher') as mock_get_pusher:
+        channel = mock.Mock()
+        mock_get_pusher.return_value = {
+            'groups_of_%s' % group.owner.id: channel,
+            }
+        events.group_event('some_event', group)
+
+    args = channel.trigger.call_args[0]
+    assert args[0] == 'some_event'
+    assert len(args[1]['objects']) == 1
+    data = args[1]['objects'][0]
+    assert data['name'] == group.name
+    assert data['id'] == group.id
+    assert data['resource_uri'] == reverse(
+        'api_dispatch_detail',
+        kwargs={
+            'api_name': 'v1', 'resource_name': 'group', 'pk': group.pk},
+        )

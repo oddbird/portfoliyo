@@ -44,40 +44,6 @@ class TestYAGNI(object):
         mock_super.assert_called_with(request, foo='bar')
 
 
-    def test_obj_delete_list(self):
-        r = resources.SoftDeletedResource()
-        request = mock.Mock()
-        with mock.patch.object(r, 'get_object_list') as mock_get_object_list:
-            with mock.patch.object(
-                    r, 'apply_authorization_limits') as mock_apply_auth_limits:
-                r.obj_delete_list(request, foo='bar')
-
-        mock_get_object_list.assert_called_with(request)
-        mock_get_object_list.return_value.filter.assert_called_with(foo='bar')
-        mock_apply_auth_limits.assert_called_with(
-            request, mock_get_object_list.return_value.filter.return_value)
-        mock_apply_auth_limits.return_value.update.assert_called_with(
-            deleted=True)
-
-
-    def test_obj_delete_list_not_queryset(self):
-        r = resources.SoftDeletedResource()
-        request = mock.Mock()
-        with mock.patch.object(r, 'get_object_list') as mock_get_object_list:
-            with mock.patch.object(
-                    r, 'apply_authorization_limits') as mock_apply_auth_limits:
-                obj = mock.Mock()
-                mock_apply_auth_limits.return_value = [obj]
-                r.obj_delete_list(request, foo='bar')
-
-        mock_get_object_list.assert_called_with(request)
-        mock_get_object_list.return_value.filter.assert_called_with(foo='bar')
-        mock_apply_auth_limits.assert_called_with(
-            request, mock_get_object_list.return_value.filter.return_value)
-        assert obj.deleted == True
-        obj.save.assert_called_with()
-
-
 
 class TestProfileResource(object):
     def test_dehydrate_email(self):
@@ -144,6 +110,23 @@ class TestProfileResource(object):
         response = no_csrf_client.get(self.list_url(), user=s.user)
 
         assert response.json['objects'][0]['village_uri'] == village_url
+
+
+    def test_relationship_uri(self, no_csrf_client):
+        """relationship_uri is relationship of querying elder with student."""
+        rel = factories.RelationshipFactory.create()
+        rel_url = reverse(
+            'api_dispatch_detail',
+            kwargs={
+                'api_name': 'v1',
+                'resource_name': 'relationship',
+                'pk': rel.id,
+                },
+            )
+
+        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+
+        assert response.json['objects'][0]['relationship_uri'] == rel_url
 
 
     def test_unread_count(self, no_csrf_client):
@@ -238,62 +221,82 @@ class TestProfileResource(object):
         assert objects[0]['id'] == s1.pk
 
 
-    def test_delete_profile(self, no_csrf_client):
-        """A staff user from same school may delete a non-staff profile."""
-        p = factories.ProfileFactory.create(school_staff=False)
-        p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
 
-        no_csrf_client.delete(self.detail_url(p), user=p2.user, status=204)
-
-        assert utils.refresh(p).deleted
-
-
-    def test_cannot_delete_school_staff_profile(self, no_csrf_client):
-        """Another user may not delete a school-staff user's profile."""
-        p = factories.ProfileFactory.create(school_staff=True)
-        p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
-
-        no_csrf_client.delete(self.detail_url(p), user=p2.user, status=403)
-
-        assert not utils.refresh(p).deleted
+class TestElderRelationshipResource(object):
+    def list_url(self):
+        """Get relationship list API url."""
+        return reverse(
+            'api_dispatch_list',
+            kwargs={
+                'resource_name': 'relationship',
+                'api_name': 'v1',
+                },
+            )
 
 
-    def test_can_delete_own_profile(self, no_csrf_client):
-        """A staff user may delete their own profile."""
-        p = factories.ProfileFactory.create(school_staff=True)
+    def detail_url(self, rel):
+        """Get detail API url for given relationship."""
+        return reverse(
+            'api_dispatch_detail',
+            kwargs={
+                'resource_name': 'relationship',
+                'api_name': 'v1',
+                'pk': rel.pk,
+                },
+            )
 
-        no_csrf_client.delete(self.detail_url(p), user=p.user, status=204)
 
-        assert utils.refresh(p).deleted
+    def test_only_see_own_relationships(self, no_csrf_client):
+        """Users can only see their own relationships."""
+        rel = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create()
+
+        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+        objects = response.json['objects']
+
+        assert len(objects) == 1
+        assert set([r['id'] for r in objects]) == {rel.pk}
 
 
-    def test_delete_profile_csrf_protected(self, client):
+    def test_delete_relationship(self, no_csrf_client):
+        """A user may delete their own relationship."""
+        rel = factories.RelationshipFactory.create()
+
+        no_csrf_client.delete(
+            self.detail_url(rel), user=rel.elder.user, status=204)
+
+        assert utils.deleted(rel)
+
+
+    def test_delete_relationship_removes_from_groups(self, no_csrf_client):
+        """Deleting relationship removes students from my groups, too."""
+        rel = factories.RelationshipFactory.create()
+        g = factories.GroupFactory.create(owner=rel.elder)
+        g2 = factories.GroupFactory.create(owner__school=rel.elder.school)
+        rel.student.student_in_groups.add(g, g2)
+
+        no_csrf_client.delete(
+            self.detail_url(rel), user=rel.elder.user, status=204)
+
+        assert set(rel.student.student_in_groups.all()) == {g2}
+
+
+    def test_cannot_delete_other_rel(self, no_csrf_client):
+        """Another user may not delete a relationship that is not theirs."""
+        rel = factories.RelationshipFactory.create()
+        other = factories.ProfileFactory.create()
+
+        no_csrf_client.delete(self.detail_url(rel), user=other.user, status=404)
+
+        assert not utils.deleted(rel)
+
+
+    def test_delete_rel_csrf_protected(self, client):
         """Deletion is CSRF-protected."""
-        p = factories.ProfileFactory.create()
-        p2 = factories.ProfileFactory.create(school_staff=True, school=p.school)
+        rel = factories.RelationshipFactory.create()
 
-        client.delete(self.detail_url(p), user=p2.user, status=403)
+        client.delete(self.detail_url(rel), user=rel.elder.user, status=403)
 
-
-    def test_delete_profile_requires_school_staff(self, no_csrf_client):
-        """A non-school-staff user may not delete a profile."""
-        p = factories.ProfileFactory.create()
-        p2 = factories.ProfileFactory.create(
-            school_staff=False, school=p.school)
-
-        no_csrf_client.delete(self.detail_url(p), user=p2.user, status=403)
-
-        assert not utils.refresh(p).deleted
-
-
-    def test_delete_profile_requires_same_school(self, no_csrf_client):
-        """A school-staff user from another school may not delete a profile."""
-        p = factories.ProfileFactory.create()
-        p2 = factories.ProfileFactory.create(school_staff=True)
-
-        no_csrf_client.delete(self.detail_url(p), user=p2.user, status=404)
-
-        assert not utils.refresh(p).deleted
 
 
 
@@ -385,7 +388,7 @@ class TestGroupResource(object):
         no_csrf_client.delete(
             self.detail_url(group), user=group.owner.user, status=204)
 
-        assert utils.refresh(group).deleted
+        assert utils.deleted(group)
 
 
     def test_delete_group_requires_owner(self, no_csrf_client):
@@ -396,7 +399,7 @@ class TestGroupResource(object):
         no_csrf_client.delete(
             self.detail_url(group), user=profile.user, status=404)
 
-        assert not utils.refresh(group).deleted
+        assert not utils.deleted(group)
 
 
     def test_group_uri(self, no_csrf_client):

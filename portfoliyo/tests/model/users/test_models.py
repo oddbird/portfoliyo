@@ -148,29 +148,11 @@ class TestProfile(object):
         assert list(rel.student.elder_relationships) == [rel]
 
 
-    def test_elder_relationships_no_deleted(self):
-        """elder_relationships property does not include deleted elders."""
-        rel1 = factories.RelationshipFactory.create()
-        factories.RelationshipFactory.create(
-            to_profile=rel1.to_profile, from_profile__deleted=True)
-
-        assert list(rel1.student.elder_relationships) == [rel1]
-
-
     def test_student_relationships(self):
         """student_relationships property is QS of Relationship objects."""
         rel = factories.RelationshipFactory.create()
 
         assert list(rel.elder.student_relationships) == [rel]
-
-
-    def test_student_relationships_no_deleted(self):
-        """student_relationships property does not include deleted students."""
-        rel1 = factories.RelationshipFactory.create()
-        factories.RelationshipFactory.create(
-            from_profile=rel1.from_profile, to_profile__deleted=True)
-
-        assert list(rel1.elder.student_relationships) == [rel1]
 
 
     def test_elders(self):
@@ -300,8 +282,6 @@ class TestGroup(object):
         """Queryset of elders of students in group, ordered by name."""
         rel = factories.RelationshipFactory.create(from_profile__name='B')
         e = factories.ProfileFactory.create(name='A')
-        factories.RelationshipFactory.create(
-            from_profile__name='C', from_profile__deleted=True)
         s = factories.ProfileFactory.create()
         g = factories.GroupFactory(owner=rel.elder)
         g.students.add(s, rel.student)
@@ -458,15 +438,21 @@ class TestGroup(object):
 
         (And does not remove non-group-originated relationships).
 
+        (And calls events.student_removed for each cleared relationship.)
+
         """
         rel = factories.RelationshipFactory.create()
         e = factories.ProfileFactory.create()
         g = factories.GroupFactory.create()
         g.students.add(rel.student)
         g.elders.add(e)
-        rel.student.student_in_groups.clear()
+
+        target = 'portfoliyo.model.events.student_removed'
+        with mock.patch(target) as mock_student_removed:
+            rel.student.student_in_groups.clear()
 
         assert rel.student.relationships_to.get() == rel
+        mock_student_removed.assert_called_with(rel.student, e)
 
 
     def test_create_dupe_code(self):
@@ -507,6 +493,39 @@ class TestGroup(object):
                 factories.GroupFactory.create()
 
 
+    def test_delete_group_fires_event(self):
+        """Pusher event is fired when group is deleted."""
+        g = factories.GroupFactory.create()
+        target = 'portfoliyo.model.events.group_removed'
+        with mock.patch(target) as mock_group_removed:
+            g.delete()
+
+        mock_group_removed.assert_called_with(g)
+
+
+    def test_create_group_fires_event(self):
+        """Pusher event is fired when group is created."""
+        target = 'portfoliyo.model.events.group_added'
+        with mock.patch(target) as mock_group_added:
+            g = factories.GroupFactory.create()
+
+        mock_group_added.assert_called_with(g)
+
+
+    def test_delete_relationship_removes_from_groups(self):
+        """Deleting a relationship removes student from elder's groups."""
+        rel = factories.RelationshipFactory.create()
+        other_elder = factories.ProfileFactory.create()
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.elders.add(other_elder)
+
+        rel.delete()
+
+        assert not group.students.count()
+        assert not other_elder.students
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self):
@@ -524,11 +543,9 @@ class TestAllStudentsGroup(object):
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
         factories.RelationshipFactory.create(to_profile=rel.student)
-        rel3 = factories.RelationshipFactory.create(
-            from_profile=rel.elder, to_profile__deleted=True)
         g = model.AllStudentsGroup(rel.elder)
 
-        assert set(g.students) == set([rel.student, rel2.student, rel3.student])
+        assert set(g.students) == set([rel.student, rel2.student])
 
 
     def test_all_elders(self):
@@ -537,9 +554,6 @@ class TestAllStudentsGroup(object):
         factories.RelationshipFactory.create(from_profile=rel.elder)
         factories.RelationshipFactory.create(
             from_profile__name='A', to_profile=rel.student)
-        delrel = factories.RelationshipFactory.create(
-            from_profile=rel.elder, to_profile__deleted=True)
-        factories.RelationshipFactory.create(to_profile=delrel.student)
         g = model.AllStudentsGroup(rel.elder)
 
         # alphabetically ordered by name

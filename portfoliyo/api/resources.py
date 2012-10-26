@@ -9,7 +9,7 @@ from tastypie.resources import ModelResource
 
 from portfoliyo.api.authentication import SessionAuthentication
 from portfoliyo.api.authorization import (
-    ProfileAuthorization, GroupAuthorization)
+    ProfileAuthorization, RelationshipAuthorization, GroupAuthorization)
 from portfoliyo import model
 
 
@@ -91,46 +91,6 @@ class PortfoliyoResource(ModelResource):
 
 
 
-
-class SoftDeletedResource(PortfoliyoResource):
-    """Base Resource class for soft-deletes (sets deleted flag)."""
-    def obj_delete_list(self, request=None, **kwargs):
-        """Soft-delete a list of objects."""
-        base_object_list = self.get_object_list(request).filter(**kwargs)
-        authed_object_list = self.apply_authorization_limits(
-            request, base_object_list)
-
-        if hasattr(authed_object_list, 'delete'):
-            # It's likely a ``QuerySet``. Call ``.update()`` for efficiency.
-            authed_object_list.update(deleted=True)
-        else:
-            for authed_obj in authed_object_list:
-                authed_obj.deleted = True
-                authed_obj.save()
-
-    def obj_delete(self, request=None, **kwargs):
-        """Soft-delete a single object."""
-        obj = kwargs.pop('_obj', None)
-
-        if not hasattr(obj, 'save'): # pragma: no cover
-            try:
-                obj = self.obj_get(request, **kwargs)
-            except ObjectDoesNotExist:
-                raise NotFound(
-                    "A model instance matching the provided arguments "
-                    "could not be found."
-                    )
-
-        obj.deleted = True
-        obj.save()
-
-
-    class Meta(PortfoliyoResource.Meta):
-        pass
-
-
-
-
 class SimpleToManyField(fields.ToManyField):
     """A to-many field that operates off a simple list-returning property."""
     def dehydrate(self, bundle):
@@ -147,15 +107,13 @@ class SimpleToManyField(fields.ToManyField):
 
 
 
-class SlimProfileResource(SoftDeletedResource):
+class SlimProfileResource(PortfoliyoResource):
     invited_by = fields.ForeignKey('self', 'invited_by', blank=True, null=True)
     email = fields.CharField()
 
 
-    class Meta(SoftDeletedResource.Meta):
-        queryset = model.Profile.objects.filter(
-            deleted=False).select_related(
-            'user').order_by('name')
+    class Meta(PortfoliyoResource.Meta):
+        queryset = model.Profile.objects.select_related('user').order_by('name')
         resource_name = 'user'
         fields = [
             'id',
@@ -172,7 +130,6 @@ class SlimProfileResource(SoftDeletedResource):
             'school_staff': constants.ALL,
             }
         authorization = ProfileAuthorization()
-        detail_allowed_methods = ['get', 'delete']
 
 
     def dehydrate_email(self, bundle):
@@ -214,6 +171,20 @@ class SlimProfileResource(SoftDeletedResource):
         if user is not None:
             bundle.data['unread_count'] = model.unread.unread_count(
                 bundle.obj, user.profile)
+            try:
+                rel = model.Relationship.objects.get(
+                    from_profile=user.profile, to_profile=bundle.obj)
+            except model.Relationship.DoesNotExist:
+                pass
+            else:
+                bundle.data['relationship_uri'] = reverse(
+                    'api_dispatch_detail',
+                    kwargs={
+                        'api_name': 'v1',
+                        'resource_name': 'relationship',
+                        'pk': rel.pk,
+                        },
+                    )
 
         return bundle
 
@@ -241,22 +212,44 @@ class ElderRelationshipResource(PortfoliyoResource):
             kind=model.Relationship.KIND.elder).select_related(
             'from_profile', 'to_profile')
         resource_name = 'relationship'
-        fields = ['elder', 'student', 'relationship']
+        fields = ['id', 'elder', 'student', 'relationship']
         filtering = {
             'elder': ['exact'],
             'student': ['exact'],
             }
+        authorization = RelationshipAuthorization()
+        detail_allowed_methods = ['get', 'delete']
+
+
+    def obj_delete(self, request=None, **kwargs):
+        """Deleting relationship also removes that student from your groups."""
+        obj = kwargs.pop('_obj', None)
+
+        if not hasattr(obj, 'save'): # pragma: no cover
+            try:
+                obj = self.obj_get(request, **kwargs)
+            except ObjectDoesNotExist:
+                raise NotFound(
+                    "A model instance matching the provided arguments "
+                    "could not be found."
+                    )
+
+        model.Group.students.through.objects.filter(
+            group__owner=obj.elder, profile=obj.student).delete()
+
+        obj.delete()
 
 
 
-class GroupResource(SoftDeletedResource):
+
+class GroupResource(PortfoliyoResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
     students = fields.ToManyField(SlimProfileResource, 'students', full=True)
 
 
-    class Meta(SoftDeletedResource.Meta):
-        queryset = model.Group.objects.filter(
-            deleted=False).order_by('name').prefetch_related('students')
+    class Meta(PortfoliyoResource.Meta):
+        queryset = model.Group.objects.order_by(
+            'name').prefetch_related('students')
         resource_name = 'group'
         fields = ['id', 'name', 'owner', 'students']
         authorization = GroupAuthorization()
@@ -318,8 +311,10 @@ class GroupResource(SoftDeletedResource):
             )
         bundle.data['add_student_uri'] = reverse(
             'add_student_in_group', kwargs={'group_id': bundle.obj.id})
-        bundle.data['unread_count'] = model.unread.group_unread_count(
-            bundle.obj, bundle.request.user.profile)
+        user = getattr(bundle.request, 'user', None)
+        if user is not None:
+            bundle.data['unread_count'] = model.unread.group_unread_count(
+                bundle.obj, bundle.request.user.profile)
         return bundle
 
 
