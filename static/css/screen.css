@@ -1538,7 +1538,15 @@ button {
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351289269');
+  background-image: url('../images/landing/carl.png?1351289836');
+}
+
+#eric:before {
+  background-image: url('../images/landing/eric.png?1351293487');
+}
+
+#jonny:before {
+  background-image: url('../images/landing/jonny.png?1351292374');
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {

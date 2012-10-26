@@ -131,5 +131,5 @@
   }
 }
 
-#peter:before { background-image: image-url('landing/peter.png'); }
-#carl:before { background-image: image-url('landing/carl.png'); }
+$names: peter carl eric jonny;
+@each $name in $names { ##{$name}:before { background-image: image-url('landing/#{$name}.png'); } }
