@@ -1,8 +1,8 @@
 """Ajax view for marking an announcement as read by current user."""
-from django.contrib.auth.decorators import login_required
 from django import http
 from django.views.decorators.http import require_POST
 
+from portfoliyo.view.decorators import login_required
 from . import models as announce
 
 

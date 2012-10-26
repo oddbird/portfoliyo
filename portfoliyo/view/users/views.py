@@ -5,7 +5,6 @@ Account-related views.
 from functools import partial
 
 from django.contrib.auth import views as auth_views, forms as auth_forms
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
@@ -18,6 +17,7 @@ from registration import views as registration_views
 from session_csrf import anonymous_csrf
 
 from portfoliyo import model
+from ..decorators import login_required
 from ..home import redirect_home
 from . import forms
 

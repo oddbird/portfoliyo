@@ -140,14 +140,14 @@ class TestAddStudent(object):
         response = client.get(
             reverse('add_student'), user=someone.user, status=302).follow()
 
-        response.mustcontain("account doesn't have access"), response.html
+        response.mustcontain("don't have access"), response.html
 
 
     def test_anonymous_user_doesnt_blow_up(self, client):
         """Anonymous user on school-staff-required redirects gracefully."""
         response = client.get(reverse('add_student'), status=302).follow()
 
-        assert not "account doesn't have access" in response.content
+        assert "don't have access" in response.content
 
 
 
@@ -219,7 +219,7 @@ class TestEditStudent(GroupContextTests):
         response = client.get(
             self.url(rel.student), user=rel.elder.user, status=302).follow()
 
-        response.mustcontain("account doesn't have access"), response.html
+        response.mustcontain("don't have access"), response.html
 
 
 
@@ -273,7 +273,7 @@ class TestAddGroup(object):
         response = client.get(
             reverse('add_group'), user=someone.user, status=302).follow()
 
-        response.mustcontain("account doesn't have access"), response.html
+        response.mustcontain("don't have access"), response.html
 
 
 
@@ -423,7 +423,14 @@ class TestInviteElders(GroupContextTests):
         response = client.get(
             self.url(rel.student), user=rel.elder.user, status=302).follow()
 
-        response.mustcontain("account doesn't have access"), response.html
+        response.mustcontain("don't have access"), response.html
+
+
+    def test_requires_school_staff_ajax(self, client):
+        """An unauthenticated ajax request gets 403 not redirect."""
+        rel = factories.RelationshipFactory.create()
+        client.get(
+            self.url(rel.student), user=rel.elder.user, ajax=True, status=403)
 
 
     def test_requires_relationship(self, client):
@@ -470,6 +477,11 @@ class TestVillage(GroupContextTests):
         student = factories.ProfileFactory.create()
 
         client.get(self.url(student), user=elder.user, status=404)
+
+
+    def test_login_required_ajax(self, client):
+        """An unauthenticated ajax request gets 403 not redirect."""
+        client.get(self.url(), ajax=True, status=403)
 
 
 
@@ -889,7 +901,7 @@ class TestEditElder(object):
         res = client.get(
             url, user=editor_rel.elder.user, status=302).follow()
 
-        res.mustcontain("account doesn't have access")
+        res.mustcontain("don't have access")
 
 
     def test_cannot_edit_school_staff(self, client):
