@@ -69,10 +69,9 @@
 .addelder-link {
   @extend %village-addlink;
   @include bleed($village-bleed);
-  @include trailer(.5,$village-list-size);
   @include rhythm-borders(1px,.25,$village-list-size);
   display: block;
   padding-left: $village-bleed;
   border-color: $village-border-color;
-  border-top: 0;
+  border-width: 1px 0;
 }

@@ -28,11 +28,12 @@
       {% endfor %}
     </ul>
 
+    {% block invite-elder %}
+    {% if request.user.profile.school_staff %}
+    <a href="{% block invite-elder-url %}{% endblock %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite {% if elder_type.grouper %}Teachers{% else %}Family Members{% endif %}</a>
+    {% endif %}
+    {% endblock invite-elder %}
+
   {% endfor %}
 
-  {% block invite-elder %}
-  {% if request.user.profile.school_staff %}
-  <a href="{% block invite-elder-url %}{% endblock %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
-  {% endif %}
-  {% endblock invite-elder %}
 </div>

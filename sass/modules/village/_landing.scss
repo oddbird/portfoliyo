@@ -1,8 +1,6 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
-.landing { @include padding-trailer; }
-
 .main-image { max-width: 100%; }
 .intro {
   @include clearfix;
@@ -78,10 +76,26 @@
   }
 }
 
+.backlog-feature {
+  @extend %icon;
+  @extend %icon-locked;
+}
+
 @include at-breakpoint($break) {
-  .two-way-feature { @include feature-background('landing/twoway.png', right, 55%); }
-  // .elders-feature { @include feature-background('http://fakeimg.pl/648x648/eee8d5/586e75', left); }
-  // .backlog-feature { @include feature-background('http://fakeimg.pl/648x648/eee8d5/586e75'); }
+  .two-way-feature { @include feature-background('landing/twoway.png', right, 85%); }
+  .elders-feature { @include feature-background('landing/elders.png', left, 85%); }
+  .backlog-feature {
+    @include feature-background('landing/backlog.png', right);
+    position: relative;
+    &:before {
+      @include stretch($offset-left: space(11));
+      @include adjust-font-size-to($largepx,12);
+      @include text-shadow($red 0 0 3px);
+      margin: 0;
+      text-align: center;
+      color: $back;
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -92,9 +106,20 @@
 .dev {
   @include trailer(2);
   @include prefix(3);
+  position: relative;
+  min-height: rhythm(6);
   .fn {
     @include serif;
     @include adjust-font-size-to($medpx);
+  }
+
+  &:before {
+    @include stretch-y;
+    @include background(image-url('landing/harsh.png') no-repeat scroll center top);
+    @include background-size(contain);
+    content: " ";
+    left: 0;
+    width: columns(3);
   }
 
   @include at-breakpoint($break) {
@@ -102,7 +127,10 @@
     @include span-columns(10);
     @include nth-omega(2n);
     &:nth-child(2n+1) { clear: both; }
+    &:before { width: columns(3,10); }
   }
+}
 
+#harsh:before {
 }
 
