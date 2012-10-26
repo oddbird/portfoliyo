@@ -32,6 +32,7 @@ $post-h-padding   : gutter($center);
   &:last-child {
     background: none;
     .howto { display: block; }
+    .loading & .howto { display: none; }
   }
   + .post { border-top: 1px solid; }
 }
