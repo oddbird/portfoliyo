@@ -565,22 +565,22 @@ $.widget("ech.multiselect", {
 		// $container.scrollTop(0).height(o.height);
 		$container.scrollTop(0);
 
-		// position and show menu
-		if( $.ui.position && !$.isEmptyObject(o.position) ){
-			o.position.of = o.position.of || button;
+		// // position and show menu
+		// if( $.ui && $.ui.position && !$.isEmptyObject(o.position) ){
+		// 	o.position.of = o.position.of || button;
 
-			menu
-				.show()
-				.position( o.position )
-				.hide();
+		// 	menu
+		// 		.show()
+		// 		.position( o.position )
+		// 		.hide();
 
-		// if position utility is not available...
-		} else {
-			// menu.css({
-			// 	top: pos.top + button.outerHeight(),
-			// 	left: pos.left
-			// });
-		}
+		// // if position utility is not available...
+		// } else {
+		// 	menu.css({
+		// 		top: pos.top + button.outerHeight(),
+		// 		left: pos.left
+		// 	});
+		// }
 
 		// show the menu, maybe with a speed/effect combo
 		$.fn.show.apply(menu, args);

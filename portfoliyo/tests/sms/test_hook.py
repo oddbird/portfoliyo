@@ -180,7 +180,7 @@ def test_code_signup_student_name():
     phone = '+13216430987'
     teacher = factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF")
-    factories.ProfileFactory.create(
+    parent = factories.ProfileFactory.create(
         name="John Doe",
         phone=phone,
         state=model.Profile.STATE.kidname,
@@ -188,7 +188,9 @@ def test_code_signup_student_name():
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "Jimmy Doe")
+        with mock.patch(
+                'portfoliyo.model.events.student_added') as mock_student_added:
+            reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
         "Last question: what is your relationship to that child "
@@ -197,6 +199,8 @@ def test_code_signup_student_name():
     parent = model.Profile.objects.get(phone=phone)
     assert len(parent.students) == 1
     student = parent.students[0]
+    mock_student_added.assert_any_call(student, teacher)
+    mock_student_added.assert_any_call(student, parent)
     assert student.name == u"Jimmy Doe"
     assert student.invited_by == teacher
     assert student.school == teacher.school
@@ -208,12 +212,13 @@ def test_code_signup_student_name():
     mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
 
 
+
 def test_group_code_signup_student_name():
     """Parent can continue group code signup by providing student name."""
     phone = '+13216430987'
     group = factories.GroupFactory.create(
         owner__school_staff=True, owner__name="Teacher Jane", code="ABCDEFG")
-    factories.ProfileFactory.create(
+    parent = factories.ProfileFactory.create(
         name="John Doe",
         phone=phone,
         state=model.Profile.STATE.kidname,
@@ -222,7 +227,9 @@ def test_group_code_signup_student_name():
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "Jimmy Doe")
+        with mock.patch(
+                'portfoliyo.model.events.student_added') as mock_student_added:
+            reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
         "Last question: what is your relationship to that child "
@@ -231,6 +238,8 @@ def test_group_code_signup_student_name():
     parent = model.Profile.objects.get(phone=phone)
     assert len(parent.students) == 1
     student = parent.students[0]
+    mock_student_added.assert_any_call(student, group.owner)
+    mock_student_added.assert_any_call(student, parent)
     assert set(student.student_in_groups.all()) == {group}
     assert student.name == u"Jimmy Doe"
     assert student.invited_by == group.owner

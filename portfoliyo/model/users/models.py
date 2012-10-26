@@ -7,10 +7,12 @@ import time
 from hashlib import sha1
 from django.contrib.auth import models as auth_models
 from django.db import models, transaction, IntegrityError
-from django.db.models.signals import m2m_changed
+from django.db.models import signals
 from django.utils import timezone
 
 from model_utils import Choices
+
+from .. import events
 
 
 # monkeypatch Django's User.email to be sufficiently long and unique/nullable
@@ -344,8 +346,10 @@ def update_group_relationships(
         Relationship.objects.delete_orphans()
 
 
-m2m_changed.connect(update_group_relationships, sender=Group.students.through)
-m2m_changed.connect(update_group_relationships, sender=Group.elders.through)
+signals.m2m_changed.connect(
+    update_group_relationships, sender=Group.students.through)
+signals.m2m_changed.connect(
+    update_group_relationships, sender=Group.elders.through)
 
 
 
@@ -412,6 +416,20 @@ class Relationship(models.Model):
     @property
     def student(self):
         return self.to_profile
+
+
+
+def relationship_saved(sender, instance, created, **kwargs):
+    if created:
+        events.student_added(instance.student, instance.elder)
+
+
+def relationship_deleted(sender, instance, **kwargs):
+    events.student_removed(instance.student, instance.elder)
+
+
+signals.post_save.connect(relationship_saved, sender=Relationship)
+signals.pre_delete.connect(relationship_deleted, sender=Relationship)
 
 
 

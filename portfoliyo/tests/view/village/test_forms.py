@@ -1,5 +1,7 @@
 """Tests for village forms."""
 from django.core import mail
+from django.core.urlresolvers import reverse
+import mock
 
 from portfoliyo.view.village import forms
 
@@ -577,6 +579,18 @@ class TestStudentForms(object):
         assert rel.student == profile
 
 
+    def test_add_student_sends_pusher_event(self):
+        """Adding a student sends a Pusher event."""
+        elder = factories.ProfileFactory.create()
+        form = forms.AddStudentForm({'name': "Some Student"}, elder=elder)
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.student_added'
+        with mock.patch(target) as mock_student_added:
+            profile = form.save()
+
+        mock_student_added.assert_called_with(profile, elder)
+
+
     def test_add_student_in_group_context(self):
         """If group is passed in, prepopulate its checkbox."""
         rel = factories.RelationshipFactory.create()
@@ -685,6 +699,29 @@ class TestStudentForms(object):
 
         assert set(profile.elders) == {rel.elder}
         assert profile.student_in_groups.get() == group
+
+
+    def test_remove_elder_sends_pusher_event(self):
+        """Removing an elder from a student sends a pusher event."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile=rel.student)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.student_removed'
+        with mock.patch(target) as mock_student_removed:
+            profile = form.save()
+
+        mock_student_removed.assert_called_with(profile, other_rel.elder)
 
 
     def test_edit_student_never_removes_from_others_groups(self):
