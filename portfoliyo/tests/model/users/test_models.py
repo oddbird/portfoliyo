@@ -493,6 +493,25 @@ class TestGroup(object):
                 factories.GroupFactory.create()
 
 
+    def test_delete_group_fires_event(self):
+        """Pusher event is fired when group is deleted."""
+        g = factories.GroupFactory.create()
+        target = 'portfoliyo.model.events.group_removed'
+        with mock.patch(target) as mock_group_removed:
+            g.delete()
+
+        mock_group_removed.assert_called_with(g)
+
+
+    def test_create_group_fires_event(self):
+        """Pusher event is fired when group is created."""
+        target = 'portfoliyo.model.events.group_added'
+        with mock.patch(target) as mock_group_added:
+            g = factories.GroupFactory.create()
+
+        mock_group_added.assert_called_with(g)
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self):

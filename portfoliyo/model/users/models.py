@@ -269,6 +269,22 @@ class AllStudentsGroup(GroupBase):
 
 
 
+def group_deleted(sender, instance, **kwargs):
+    events.group_removed(instance)
+
+
+
+def group_saved(sender, instance, created, **kwargs):
+    if created:
+        events.group_added(instance)
+
+
+
+signals.post_save.connect(group_saved, sender=Group)
+signals.pre_delete.connect(group_deleted, sender=Group)
+
+
+
 def update_group_relationships(
         sender, instance, action, reverse, pk_set, **kwargs):
     """Create/remove relationships based on group membership changes."""

@@ -1006,6 +1006,48 @@ class TestGroupForms(object):
         utils.refresh(group_rel)
 
 
+    def test_edit_group_fires_event(self):
+        """Editing a group's name fires a Pusher event."""
+        group = factories.GroupFactory.create(name='Old name')
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.group_edited'
+        with mock.patch(target) as mock_group_edited:
+            group = form.save()
+
+        mock_group_edited.assert_called_with(group)
+
+
+    def test_edit_group_fires_event_only_if_name_changed(self):
+        """Editing a group without changing name does not fire event."""
+        group = factories.GroupFactory.create(name='A name')
+
+        form = forms.GroupForm(
+            {
+                'name': group.name,
+                'elders': [],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.model.events.group_edited'
+        with mock.patch(target) as mock_group_edited:
+            group = form.save()
+
+        assert not mock_group_edited.call_count
+
+
     def test_self_not_in_elder_choices(self):
         """The user viewing the form is not in the elder choices."""
         group = factories.GroupFactory.create(owner__school_staff=True)

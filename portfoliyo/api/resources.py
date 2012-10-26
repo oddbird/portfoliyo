@@ -311,8 +311,10 @@ class GroupResource(PortfoliyoResource):
             )
         bundle.data['add_student_uri'] = reverse(
             'add_student_in_group', kwargs={'group_id': bundle.obj.id})
-        bundle.data['unread_count'] = model.unread.group_unread_count(
-            bundle.obj, bundle.request.user.profile)
+        user = getattr(bundle.request, 'user', None)
+        if user is not None:
+            bundle.data['unread_count'] = model.unread.group_unread_count(
+                bundle.obj, bundle.request.user.profile)
         return bundle
 
 

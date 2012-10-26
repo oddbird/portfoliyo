@@ -507,6 +507,7 @@ class GroupForm(forms.ModelForm):
         self.fields['elders'].queryset = model.Profile.objects.filter(
             school=self.owner.school, school_staff=True).exclude(
             pk=self.owner.pk)
+        self._old_name = self.instance.name
 
 
     def save(self, commit=True):
@@ -518,6 +519,8 @@ class GroupForm(forms.ModelForm):
         if commit:
             self.instance.save()
             self.save_m2m()
+            if self._old_name != self.instance.name:
+                events.group_edited(self.instance)
         return self.instance
 
 
