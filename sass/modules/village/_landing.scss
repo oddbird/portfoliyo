@@ -1,6 +1,12 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
+%landing-title {
+  @include serif;
+  @include adjust-font-size-to($medpx);
+  color: $base02;
+}
+
 .main-image { max-width: 100%; }
 .intro {
   @include clearfix;
@@ -9,9 +15,8 @@
 }
 
 .tagline, .description { text-align: left; }
-
 .tagline {
-  @include serif;
+  @extend %landing-title;
   @include adjust-font-size-to($largepx);
 }
 .description {
@@ -69,11 +74,8 @@
 }
 
 .feature-title {
-  @include serif;
-  @include adjust-font-size-to($medpx);
-  @include at-breakpoint($break) {
-    @include adjust-font-size-to($largepx);
-  }
+  @extend %landing-title;
+  @include at-breakpoint($break) { @include adjust-font-size-to($largepx); }
 }
 
 @include at-breakpoint($break) {
@@ -92,10 +94,7 @@
   @include prefix(3);
   position: relative;
   min-height: rhythm(6);
-  .fn {
-    @include serif;
-    @include adjust-font-size-to($medpx);
-  }
+  .fn { @extend %landing-title; }
 
   &:before {
     @include stretch-y;

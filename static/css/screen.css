@@ -1334,6 +1334,13 @@ button {
   display: none;
 }
 
+.tagline, .feature-title, .dev .fn {
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 1.27778em;
+  line-height: 1.5em;
+  color: #073642;
+}
+
 .main-image {
   max-width: 100%;
 }
@@ -1349,7 +1356,6 @@ button {
 }
 
 .tagline {
-  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 1.94444em;
   line-height: 1.31429em;
 }
@@ -1430,11 +1436,6 @@ button {
   }
 }
 
-.feature-title {
-  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-size: 1.27778em;
-  line-height: 1.5em;
-}
 @media (min-width: 43.875em) {
   .feature-title {
     font-size: 1.94444em;
@@ -1481,11 +1482,6 @@ button {
   padding-left: 38.70968%;
   position: relative;
   min-height: 7.66667em;
-}
-.dev .fn {
-  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-size: 1.27778em;
-  line-height: 1.5em;
 }
 .dev:before {
   position: absolute;
