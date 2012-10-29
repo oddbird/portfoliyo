@@ -177,6 +177,7 @@ var PYO = (function (PYO, $) {
                     textarea.val('').change();
                     feed.find('.post.mine .details.open.auto').removeClass('open').prop('open', false).find('.details-body').hide();
                     feed.find('.post .details.auto').removeClass('auto');
+                    feed.removeClass('show-instructions');
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                     $('#sms-target').multiselect('checkAll');
@@ -281,6 +282,7 @@ var PYO = (function (PYO, $) {
                             PYO.scrollToBottom();
                         }
                         PYO.authorPosts = feed.find('.post.mine').length;
+                        if (PYO.authorPosts) { feed.removeClass('show-instructions'); } else { feed.addClass('show-instructions'); }
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
