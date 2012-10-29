@@ -1,10 +1,10 @@
 from django.conf import settings
 from django.conf.urls.defaults import patterns, url, include
-from django.contrib.auth.decorators import login_required
 from django.views.generic.simple import direct_to_template
 
 from .. import admin
 from ..api.versions import api_v1
+from .decorators import login_required
 from . import home as home_views
 from . import sms as sms_views
 

@@ -6,7 +6,6 @@ import json
 import os
 
 from django.conf import settings
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django import http
@@ -16,7 +15,7 @@ from django.views.decorators.http import require_POST
 
 from portfoliyo import model, pdf
 from ..ajax import ajax
-from ..decorators import school_staff_required
+from ..decorators import school_staff_required, login_required
 from . import forms
 
 
