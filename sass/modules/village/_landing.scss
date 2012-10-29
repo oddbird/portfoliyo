@@ -76,26 +76,10 @@
   }
 }
 
-.backlog-feature {
-  @extend %icon;
-  @extend %icon-locked;
-}
-
 @include at-breakpoint($break) {
   .two-way-feature { @include feature-background('landing/twoway.png', right, 85%); }
   .elders-feature { @include feature-background('landing/elders.png', left, 85%); }
-  .backlog-feature {
-    @include feature-background('landing/backlog.png', right);
-    position: relative;
-    &:before {
-      @include stretch($offset-left: space(11));
-      @include adjust-font-size-to($largepx,12);
-      @include text-shadow($red 0 0 3px);
-      margin: 0;
-      text-align: center;
-      color: $back;
-    }
-  }
+  .signup-feature { @include feature-background('landing/signup.png', right); }
 }
 
 // ---------------------------------------------------------------------------

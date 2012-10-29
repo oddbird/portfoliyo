@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .backlog-feature:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .backlog-feature:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
@@ -303,7 +303,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e002";
 }
 
-.school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .backlog-feature:before {
+.school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before {
   content: "\e003";
 }
 
@@ -1401,11 +1401,11 @@ button {
   border-top-style: solid;
   border-top-width: 0.66667em;
   padding-top: 0.61111em;
-  -moz-border-image: url('../images/landing/line.png?1351288602') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351288602') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351288602') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351288602') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351288602') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
   padding-bottom: 1.27778em;
   clear: both;
 }
@@ -1444,7 +1444,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351288602') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351542999') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1455,7 +1455,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351288602') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351542999') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1465,8 +1465,8 @@ button {
     background-size: 44.3038% auto;
   }
 
-  .backlog-feature {
-    background: url('../images/landing/backlog.png?1351288602') no-repeat scroll right;
+  .signup-feature {
+    background: url('../images/landing/signup.png?1351544621') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1474,20 +1474,6 @@ button {
     -moz-background-size: 44.3038% auto;
     -o-background-size: 44.3038% auto;
     background-size: 44.3038% auto;
-    position: relative;
-  }
-  .backlog-feature:before {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 55.6962%;
-    right: 0;
-    font-size: 1.94444em;
-    line-height: 7.88571em;
-    text-shadow: #dc322f 0 0 3px;
-    margin: 0;
-    text-align: center;
-    color: #073642;
   }
 }
 .dev {
@@ -1505,7 +1491,7 @@ button {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: url('../images/landing/harsh.png?1351288602') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351542999') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1534,19 +1520,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351288602');
+  background-image: url('../images/landing/peter.png?1351542999');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351289836');
+  background-image: url('../images/landing/carl.png?1351542999');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351293487');
+  background-image: url('../images/landing/eric.png?1351542999');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351292374');
+  background-image: url('../images/landing/jonny.png?1351542999');
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
