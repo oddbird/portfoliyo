@@ -184,7 +184,7 @@ var PYO = (function (PYO, $) {
         var inputs = form.find('.relation-fieldset .check-options input');
         var checked = inputs.filter('.initial');
 
-        checked.attr('disabled', 'disabled').addClass('disabled').each(function () {
+        checked.attr('disabled', 'disabled').addClass('disabled locked').each(function () {
             var el = $(this);
             var label = el.siblings('.type');
             if (el.closest('form').hasClass('village-add-form')) {
@@ -238,7 +238,7 @@ var PYO = (function (PYO, $) {
                     for (var i = 0; i < classes.length; i++) {
                         if (classes[i].indexOf('group-selected-') !== -1) { label.removeClass(classes[i]); }
                     }
-                    if (el.hasClass('initial')) {
+                    if (el.hasClass('locked')) {
                         label.attr('title', label.data('title'));
                     } else {
                         el.removeAttr('disabled').removeClass('disabled');
