@@ -268,6 +268,22 @@ class TestElderRelationshipResource(object):
         assert utils.deleted(rel)
 
 
+    def test_delete_relationships_from_list(self, no_csrf_client):
+        """A user may delete their own relationship via list URL."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            from_profile=rel.elder)
+
+        no_csrf_client.delete(
+            self.list_url() + "?student=%s" % rel.student.pk,
+            user=rel.elder.user,
+            status=204,
+            )
+
+        assert utils.deleted(rel)
+        assert not utils.deleted(other_rel)
+
+
     def test_delete_relationship_removes_from_groups(self, no_csrf_client):
         """Deleting relationship removes students from my groups, too."""
         rel = factories.RelationshipFactory.create()

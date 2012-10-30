@@ -90,6 +90,30 @@ class PortfoliyoResource(ModelResource):
         return obj
 
 
+    def obj_delete_list(self, request, **kwargs):
+        """
+        Add filtering support to TastyPie's delete_list.
+
+        Parent implementation has request optional; making it required until I
+        hit a case where it needs to be optional.
+
+        """
+        filters = request.GET.copy()
+
+        # Update with the provided kwargs.
+        filters.update(kwargs)
+        applicable_filters = self.build_filters(filters=filters)
+
+        base_object_list = self.get_object_list(request).filter(
+            **applicable_filters)
+        authed_object_list = self.apply_authorization_limits(
+            request, base_object_list)
+
+        # parent impl has support here for iterables that aren't querysets;
+        # leaving that out here until I know why I'd need it.
+        authed_object_list.delete()
+
+
 
 class SimpleToManyField(fields.ToManyField):
     """A to-many field that operates off a simple list-returning property."""
@@ -202,8 +226,8 @@ class ProfileResource(SlimProfileResource):
 
 
 class ElderRelationshipResource(PortfoliyoResource):
-    elder = fields.ForeignKey(ProfileResource, 'from_profile', full=True)
-    student = fields.ForeignKey(ProfileResource, 'to_profile', full=True)
+    elder = fields.ForeignKey(SlimProfileResource, 'from_profile', full=True)
+    student = fields.ForeignKey(SlimProfileResource, 'to_profile', full=True)
     relationship = fields.CharField('description_or_role')
 
 
@@ -218,7 +242,7 @@ class ElderRelationshipResource(PortfoliyoResource):
             'student': ['exact'],
             }
         authorization = RelationshipAuthorization()
-        detail_allowed_methods = ['get', 'delete']
+        allowed_methods = ['get', 'delete']
 
 
     def obj_delete(self, request=None, **kwargs):
