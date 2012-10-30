@@ -369,7 +369,7 @@ class Post(BasePost):
             email_notifications=True,
             ).exclude(pk=self.author.pk)
         for profile in send_to:
-            notifications.send_email_notification(profile, self)
+            notifications.send_post_email_notification(profile, self)
 
 
     def get_relationship(self):

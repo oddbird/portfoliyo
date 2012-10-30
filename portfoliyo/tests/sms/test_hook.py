@@ -1,4 +1,5 @@
 """Tests for Village SMS code."""
+from django.core import mail
 import mock
 
 from portfoliyo import model
@@ -294,6 +295,8 @@ def test_code_signup_role():
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
+        from_profile__email_notifications=True,
+        from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
     parent_rel = factories.RelationshipFactory.create(
         from_profile__name="John Doe",
@@ -324,6 +327,33 @@ def test_code_signup_role():
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
         None, student, reply, in_reply_to=phone, email_notifications=False)
+    # email notification of the signup is sent
+    assert len(mail.outbox) == 1
+    assert mail.outbox[0].to == ['teacher@example.com']
+
+
+def test_code_signup_role_no_notification():
+    """Finish signup sends no notification if teacher doesn't want them."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__email_notifications=False,
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe")
+    factories.RelationshipFactory.create(
+        from_profile__name="John Doe",
+        from_profile__role="",
+        from_profile__phone=phone,
+        from_profile__state=model.Profile.STATE.relationship,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        )
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        hook.receive_sms(phone, "father")
+
+    # no email notification of the signup is sent
+    assert not len(mail.outbox)
 
 
 

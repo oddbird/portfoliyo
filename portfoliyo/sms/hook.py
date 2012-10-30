@@ -1,7 +1,7 @@
 """Village SMS-handling."""
 import logging
 
-from portfoliyo import model
+from portfoliyo import model, notifications
 
 
 logger = logging.getLogger(__name__)
@@ -150,15 +150,18 @@ def handle_role_update(parent, role):
     parent.role = role
     parent.state = model.Profile.STATE.done
     parent.save()
-    students = parent.students
-    for student in students:
+    teacher = parent.invited_by
+    student_rels = parent.student_relationships
+    for rel in student_rels:
         model.Post.create(
-            parent, student, role, from_sms=True, email_notifications=False)
+            parent, rel.student, role, from_sms=True, email_notifications=False)
+        if teacher and teacher.email_notifications and teacher.user.email:
+            notifications.send_signup_email_notification(teacher, rel)
     return reply(
         parent.phone,
         parent.students,
         "All done, thank you! You can text this number any time "
-        "to talk with %s's teachers." % students[0].name
+        "to talk with %s's teachers." % rel.student.name
         )
 
 
