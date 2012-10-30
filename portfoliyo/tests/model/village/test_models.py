@@ -214,6 +214,22 @@ class TestPostCreate(object):
         assert len(mail.outbox) == 0
 
 
+    def test_create_post_without_email_notification(self):
+        """Can pass a flag to avoid email notifications."""
+        # Would otherwise get an email notification
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='one@example.com',
+            from_profile__email_notifications=True,
+            )
+        author_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student)
+
+        models.Post.create(
+            author_rel.elder, rel.student, 'Foo', email_notifications=False)
+
+        assert len(mail.outbox) == 0
+
+
     @mock.patch('portfoliyo.model.village.models.get_pusher')
     def test_triggers_pusher_event(self, mock_get_pusher):
         """Triggers a pusher event if get_pusher doesn't return None."""

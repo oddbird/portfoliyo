@@ -218,6 +218,8 @@ class BulkPost(BasePost):
         uniquely identify posts by the current user within a given browser
         session; we just pass it through to the Pusher event(s).
 
+        ``from_sms`` indicates whether this post was received over SMS.
+
         """
         if author is None and group is None:
             raise ValueError("BulkPost must have either author or group.""")
@@ -300,7 +302,7 @@ class Post(BasePost):
     @classmethod
     def create(cls, author, student, text,
                sms_profile_ids=None, sequence_id=None, from_sms=False,
-               in_reply_to=None):
+               in_reply_to=None, email_notifications=True):
         """
         Create/return a Post, triggering a Pusher event and SMS notifications.
 
@@ -311,8 +313,13 @@ class Post(BasePost):
         uniquely identify posts by the current user within a given browser
         session; we just pass it through to the Pusher event.
 
+        ``from_sms`` indicates whether this post was received over SMS.
+
         ``in_reply_to`` can be set to a phone number, in which case it will be
         assumed that an SMS was already sent to that number.
+
+        If ``email_notifications`` is ``False``, no email notifications of this
+        post will be sent.
 
         """
         html_text, highlights = process_text(
@@ -335,7 +342,9 @@ class Post(BasePost):
             if elder.user.email and elder != author:
                 unread.mark_unread(post, elder)
 
-        post.notify_email()
+        if email_notifications:
+            post.notify_email()
+
         post.send_event(
             'student_%s' % student.id,
             author_sequence_id=sequence_id,
