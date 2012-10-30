@@ -50,10 +50,11 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.removeListitem = function (trigger) {
+        var relationshipsUrl = $('.village').data('relationships-url');
         var remove = trigger;
         var listitem = remove.closest('.listitem');
         var link = listitem.find('.listitem-select');
-        var url = listitem.hasClass('student') ? link.data('relationship-url') : link.data('group-resource-url');
+        var url = listitem.hasClass('student') ? relationshipsUrl + '?student=' + link.data('id') : link.data('group-resource-url');
         var name = listitem.hasClass('student') ? link.data('name') : link.data('group-name');
         var removed = ich.remove_listitem({name: name});
         var removeItem = function () {
@@ -396,20 +397,19 @@ var PYO = (function (PYO, $) {
                             if (nav.data('is-staff') === 'True') { this.staff = true; }
                             this.objects = true;
                             this.all_students = true;
-                            var student = ich.student_list_item(this);
+                            var student = ich.student_list_item(this).hide();
                             var inserted = false;
                             nav.find('.student').each(function () {
                                 if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
-                                    student.insertBefore($(this)).slideDown();
+                                    student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
                                     inserted = true;
                                 }
                             });
                             if (!inserted) {
-                                nav.find('.itemlist').append(student);
-                                student.find('.details').html5accordion();
-                                student.find('input[placeholder], textarea[placeholder]').placeholder();
-                                student.slideDown();
+                                student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
                             }
+                            student.find('.details').html5accordion();
+                            student.find('input[placeholder], textarea[placeholder]').placeholder();
                             PYO.listenForPosts(student);
                         }
                         if (all_students_group.length) {

@@ -526,6 +526,21 @@ class TestGroup(object):
         assert not other_elder.students
 
 
+    def test_delete_relationship_does_not_cause_infinite_recursion(self):
+        """Deleting rel doesn't cause infinite recursion if elder has groups."""
+        rel = factories.RelationshipFactory.create()
+        other_elder = factories.ProfileFactory.create()
+        factories.GroupFactory.create(owner=other_elder)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.elders.add(other_elder)
+
+        rel.delete()
+
+        assert not group.students.count()
+        assert not other_elder.students
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self):

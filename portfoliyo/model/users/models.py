@@ -281,7 +281,7 @@ def group_saved(sender, instance, created, **kwargs):
 
 
 signals.post_save.connect(group_saved, sender=Group)
-signals.pre_delete.connect(group_deleted, sender=Group)
+signals.post_delete.connect(group_deleted, sender=Group)
 
 
 
@@ -446,7 +446,7 @@ def relationship_deleted(sender, instance, **kwargs):
 
 
 signals.post_save.connect(relationship_saved, sender=Relationship)
-signals.pre_delete.connect(relationship_deleted, sender=Relationship)
+signals.post_delete.connect(relationship_deleted, sender=Relationship)
 
 
 

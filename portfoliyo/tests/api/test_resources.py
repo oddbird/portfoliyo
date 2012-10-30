@@ -112,23 +112,6 @@ class TestProfileResource(object):
         assert response.json['objects'][0]['village_uri'] == village_url
 
 
-    def test_relationship_uri(self, no_csrf_client):
-        """relationship_uri is relationship of querying elder with student."""
-        rel = factories.RelationshipFactory.create()
-        rel_url = reverse(
-            'api_dispatch_detail',
-            kwargs={
-                'api_name': 'v1',
-                'resource_name': 'relationship',
-                'pk': rel.id,
-                },
-            )
-
-        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
-
-        assert response.json['objects'][0]['relationship_uri'] == rel_url
-
-
     def test_unread_count(self, no_csrf_client):
         """Each profile has an unread_count in the API response."""
         rel = factories.RelationshipFactory.create(
@@ -266,6 +249,22 @@ class TestElderRelationshipResource(object):
             self.detail_url(rel), user=rel.elder.user, status=204)
 
         assert utils.deleted(rel)
+
+
+    def test_delete_relationships_from_list(self, no_csrf_client):
+        """A user may delete their own relationship via list URL."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            from_profile=rel.elder)
+
+        no_csrf_client.delete(
+            self.list_url() + "?student=%s" % rel.student.pk,
+            user=rel.elder.user,
+            status=204,
+            )
+
+        assert utils.deleted(rel)
+        assert not utils.deleted(other_rel)
 
 
     def test_delete_relationship_removes_from_groups(self, no_csrf_client):
