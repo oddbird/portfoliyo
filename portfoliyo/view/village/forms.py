@@ -351,7 +351,7 @@ class StudentForm(forms.ModelForm):
             self.owners = set([e for e in initial_elders if e.owner])
             self.fields['elders'].initial = [e.pk for e in initial_elders]
             self.fields['elders'].widget.context_data['owners'] = set(
-                [e.pk for e in self.owners])
+                [str(e.pk) for e in self.owners])
         self._old_name = self.instance.name
 
 
