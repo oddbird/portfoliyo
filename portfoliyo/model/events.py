@@ -31,7 +31,8 @@ def student_event(event, student, *elders):
     # allows resource_uri to be generated
     profile_resource._meta.api_name = 'v1'
     b = profile_resource.build_bundle(obj=student)
-    data = profile_resource.full_dehydrate(b).data
+    b = profile_resource.full_dehydrate(b)
+    data = profile_resource._meta.serializer.to_simple(b, None)
     data['groups'] = list(
         student.student_in_groups.values_list('pk', flat=True))
     for elder in elders:
@@ -63,6 +64,7 @@ def group_event(event, group):
     from portfoliyo.api.resources import GroupResource
     group_resource = GroupResource()
     b = group_resource.build_bundle(obj=group)
-    data = group_resource.full_dehydrate(b).data
+    b = group_resource.full_dehydrate(b)
+    data = group_resource._meta.serializer.to_simple(b, None)
     channel = pusher['groups_of_%s' % group.owner.id]
     channel.trigger(event, {'objects': [data]})
