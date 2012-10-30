@@ -575,6 +575,7 @@ class TestStudentForms(object):
         assert list(profile.elders) == [elder]
         assert rel.elder == elder
         assert rel.student == profile
+        assert rel.level == 'owner'
 
 
     def test_add_student_sends_pusher_event(self):

@@ -482,8 +482,12 @@ class AddStudentForm(StudentForm):
         student = model.Profile.create_with_user(
             school=self.elder.school, name=name, invited_by=self.elder)
 
-        self.update_student_elders(
-            student, list(self.cleaned_data['elders']) + [self.elder])
+        model.Relationship.objects.create(
+                to_profile=student,
+                from_profile=self.elder,
+                level=model.Relationship.LEVEL.owner,
+                )
+        self.update_student_elders(student, self.cleaned_data['elders'])
         self.update_student_groups(student, self.cleaned_data['groups'])
 
         return student
