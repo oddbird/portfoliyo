@@ -343,11 +343,15 @@ class StudentForm(forms.ModelForm):
             school=self.elder.school, school_staff=True).exclude(
             pk=self.elder.pk)
         self.fields['elders'].groups_attr = 'elder_in_groups'
+        self.owners = set()
         if self.instance.pk:
             self.fields['groups'].initial = [
                 g.pk for g in self.instance.student_in_groups.all()]
-            self.fields['elders'].initial = [
-                e.pk for e in self.direct_other_teachers(self.instance)]
+            initial_elders = self.direct_other_teachers(self.instance)
+            self.owners = set([e for e in initial_elders if e.owner])
+            self.fields['elders'].initial = [e.pk for e in initial_elders]
+            self.fields['elders'].widget.context_data['owners'] = set(
+                [str(e.pk) for e in self.owners])
         self._old_name = self.instance.name
 
 
@@ -377,21 +381,25 @@ class StudentForm(forms.ModelForm):
         """
         Get all direct (non-group) other-than-me teachers of a student.
 
+        Each teacher has an additional 'owner' boolean attribute; True if that
+        teacher has an owner-level relationship with that student.
+
         Memoized by student id.
 
         """
         if not hasattr(self, '_direct_other_teachers'):
             self._direct_other_teachers = {}
         if self._direct_other_teachers.get(student.pk) is None:
-            self._direct_other_teachers[student.pk] = [
-                r.elder for r in
-                model.Relationship.objects.filter(
-                    to_profile=self.instance,
-                    direct=True,
-                    from_profile__school_staff=True,
-                    ).exclude(
-                    from_profile=self.elder).select_related('from_profile')
-                ]
+            qs = model.Relationship.objects.filter(
+                to_profile=self.instance,
+                direct=True,
+                from_profile__school_staff=True,
+                ).exclude(
+                from_profile=self.elder).select_related('from_profile')
+            self._direct_other_teachers[student.pk] = []
+            for rel in qs:
+                rel.elder.owner = (rel.level == model.Relationship.LEVEL.owner)
+                self._direct_other_teachers[student.pk].append(rel.elder)
         return self._direct_other_teachers[student.pk]
 
 
@@ -408,7 +416,7 @@ class StudentForm(forms.ModelForm):
         """
         current = set(self.direct_other_teachers(student))
         target = set(elders)
-        remove = current.difference(target)
+        remove = current.difference(target).difference(self.owners)
         add = target.difference(current)
 
         check_for_orphans = False
@@ -474,8 +482,12 @@ class AddStudentForm(StudentForm):
         student = model.Profile.create_with_user(
             school=self.elder.school, name=name, invited_by=self.elder)
 
-        self.update_student_elders(
-            student, list(self.cleaned_data['elders']) + [self.elder])
+        model.Relationship.objects.create(
+                to_profile=student,
+                from_profile=self.elder,
+                level=model.Relationship.LEVEL.owner,
+                )
+        self.update_student_elders(student, self.cleaned_data['elders'])
         self.update_student_groups(student, self.cleaned_data['groups'])
 
         return student

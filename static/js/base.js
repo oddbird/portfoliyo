@@ -181,16 +181,16 @@ var PYO = (function (PYO, $) {
 
     PYO.disablePreselectedAssociations = function (container) {
         var form = $(container);
-        var inputs = form.find('.relation-fieldset .check-options input');
-        var checked = inputs.filter('.initial');
+        var checked = form.find('.relation-fieldset .check-options input.initial');
 
         checked.attr('disabled', 'disabled').addClass('disabled locked').each(function () {
             var el = $(this);
             var label = el.siblings('.type');
+            var title;
             if (el.closest('form').hasClass('village-add-form')) {
-                label.attr('title', 'You are adding a student to the "' + $.trim(label.text()) + '" group.');
+                title = 'You are adding a student to the "' + $.trim(label.text()) + '" group.';
+                label.attr('title', title).data('title', title);
             } else if (el.closest('form').hasClass('elder-add-form')) {
-                var title;
                 if (el.closest('.check-options').hasClass('select-groups')) {
                     title = 'You are inviting an elder to join all the student villages in the "' + $.trim(label.text()) + '" group.';
                     label.attr('title', title).data('title', title);
@@ -200,6 +200,18 @@ var PYO = (function (PYO, $) {
                     label.attr('title', title).data('title', title);
                 }
             }
+        });
+    };
+
+    PYO.disableElderOwnerRemoval = function (container) {
+        var form = $(container);
+        var inputs = form.find('.relation-fieldset .check-options input.owner');
+
+        inputs.attr('disabled', 'disabled').addClass('disabled locked').each(function () {
+            var el = $(this);
+            var label = el.siblings('label.type');
+            var title = 'You cannot remove the teacher who invited this student.';
+            label.attr('title', title).data('title', title);
         });
     };
 
@@ -333,6 +345,7 @@ var PYO = (function (PYO, $) {
         PYO.addGroupAssociationColors('.relation-fieldset');
         if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
+        if ($('#edit-student-form').length) { PYO.disableElderOwnerRemoval('#edit-student-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
         $('body').find('input:radio, input:checkbox').each(function () {

@@ -1,3 +1,5 @@
 {% extends "village/checkbox_select.html" %}
 
 {% block checkbox-select-class %}select-elders{% endblock checkbox-select-class %}
+
+{% block choice-extra-classes %}{% if choice.0 in owners %} owner{% endif %}{% endblock %}

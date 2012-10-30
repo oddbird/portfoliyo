@@ -378,12 +378,14 @@ class RelationshipManager(models.Manager):
 class Relationship(models.Model):
     """A relationship between two Portfoliyo users."""
     KIND = Choices("elder")
+    LEVEL = Choices("normal", "owner")
 
     from_profile = models.ForeignKey(
         Profile, related_name="relationships_from")
     to_profile = models.ForeignKey(
         Profile, related_name="relationships_to")
     kind = models.CharField(max_length=20, choices=KIND, default=KIND.elder)
+    level = models.CharField(max_length=20, choices=LEVEL, default=LEVEL.normal)
     description = models.CharField(max_length=200, blank=True)
     # is this a direct relationship (not a result of group membership)?
     direct = models.BooleanField(default=True)

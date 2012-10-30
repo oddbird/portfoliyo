@@ -34,6 +34,18 @@ class ModelMultipleChoiceField(TemplateRenderedMixin,
 
 
 class CheckboxSelectMultiple(forms.CheckboxSelectMultiple):
-    """Provides initial data, if available, in the template context."""
+    """
+    Has ``context_data`` attribute which will be added to template context.
+
+    Also provides initial data, if available, in the template context.
+
+    """
+    def __init__(self, *a, **kw):
+        super(CheckboxSelectMultiple, self).__init__(*a, **kw)
+        self.context_data = {}
+
+
     def get_context_data(self):
-        return {'initial': set(map(str, getattr(self, 'initial', None) or []))}
+        data = self.context_data.copy()
+        data['initial'] = set(map(str, getattr(self, 'initial', None) or []))
+        return data

@@ -127,6 +127,7 @@ def handle_new_student(parent, teacher, student_name):
             from_profile=teacher,
             to_profile=student,
             kind=model.Relationship.KIND.elder,
+            level=model.Relationship.LEVEL.owner,
             )
     if parent.invited_in_group:
         student.student_in_groups.add(parent.invited_in_group)

@@ -197,6 +197,8 @@ def test_code_signup_student_name():
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
+    assert len(teacher.students) == 1
+    assert teacher.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
     student = parent.students[0]
     mock_student_added.assert_any_call(student, teacher)
@@ -236,6 +238,8 @@ def test_group_code_signup_student_name():
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
+    assert len(group.owner.students) == 1
+    assert group.owner.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
     student = parent.students[0]
     mock_student_added.assert_any_call(student, group.owner)
