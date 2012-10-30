@@ -1,0 +1,5 @@
+{{ rel.elder|safe }} ({{ rel.elder.phone|safe }}) just signed up as {{ rel.student|safe }}'s {{ rel.description_or_role|safe }}. Start a conversation: {{ village_url }}
+
+
+--
+Don't want email notifications? Edit your profile: {{ profile_url }}

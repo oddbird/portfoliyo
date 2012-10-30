@@ -14,7 +14,7 @@ def test_no_html_encoding_in_emails():
         from_profile__user__email='foo@example.com',
         ).elder
 
-    notifications.send_email_notification(to_notify, post)
+    notifications.send_post_email_notification(to_notify, post)
 
     email_body = mail.outbox[0].body
     assert "What's up?" in email_body, email_body
