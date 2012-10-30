@@ -676,6 +676,31 @@ class TestStudentForms(object):
         assert set(profile.elders) == {rel.elder, parent_rel.elder}
 
 
+    def test_edit_student_cannot_remove_owner(self):
+        """Editing student cannot remove owners."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        owner_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student,
+            from_profile__school_staff=True,
+            level='owner',
+            )
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert set(profile.elders) == {rel.elder, owner_rel.elder}
+
+
     def test_edit_student_with_group_and_elder(self):
         """Can (de/)associate a student with a group/elder while editing."""
         rel = factories.RelationshipFactory.create()
