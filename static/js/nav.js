@@ -396,20 +396,19 @@ var PYO = (function (PYO, $) {
                             if (nav.data('is-staff') === 'True') { this.staff = true; }
                             this.objects = true;
                             this.all_students = true;
-                            var student = ich.student_list_item(this);
+                            var student = ich.student_list_item(this).hide();
                             var inserted = false;
                             nav.find('.student').each(function () {
                                 if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
-                                    student.insertBefore($(this)).slideDown();
+                                    student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
                                     inserted = true;
                                 }
                             });
                             if (!inserted) {
-                                nav.find('.itemlist').append(student);
-                                student.find('.details').html5accordion();
-                                student.find('input[placeholder], textarea[placeholder]').placeholder();
-                                student.slideDown();
+                                student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
                             }
+                            student.find('.details').html5accordion();
+                            student.find('input[placeholder], textarea[placeholder]').placeholder();
                             PYO.listenForPosts(student);
                         }
                         if (all_students_group.length) {
