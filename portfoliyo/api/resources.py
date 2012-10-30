@@ -195,21 +195,6 @@ class SlimProfileResource(PortfoliyoResource):
         if user is not None:
             bundle.data['unread_count'] = model.unread.unread_count(
                 bundle.obj, user.profile)
-            try:
-                rel = model.Relationship.objects.get(
-                    from_profile=user.profile, to_profile=bundle.obj)
-            except model.Relationship.DoesNotExist:
-                pass
-            else:
-                bundle.data['relationship_uri'] = reverse(
-                    'api_dispatch_detail',
-                    kwargs={
-                        'api_name': 'v1',
-                        'resource_name': 'relationship',
-                        'pk': rel.pk,
-                        },
-                    )
-
         return bundle
 
 
