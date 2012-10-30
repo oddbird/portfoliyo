@@ -18,14 +18,20 @@
 {% block maincontent %}
 <article class="landing">
   <section class="intro">
-    <img src="{{ STATIC_URL }}images/landing/girl.png" alt="" class="main-image">
-    <h2 class="tagline">All your parent-teacher communication in one&nbsp;place.</h2>
-    <p class="description">
-      Unite parents and teachers
-      around the education of every child,
-      through frequent and streamlined&nbsp;contact.
-    </p>
-    <p class="action"><a href="{% url register %}" class="main-register-link">Get Started&nbsp;»</a></p>
+    <figure class="main-image"><img src="{{ STATIC_URL }}images/landing/girl.png" alt=""></figure>
+    <div class="intro-copy">
+      <h2 class="tagline">All your parent-teacher communication in one&nbsp;place.</h2>
+      <p class="description">
+        Unite parents and teachers
+        around the education of every child,
+        through frequent and streamlined contact.
+        Compliment a student's work,
+        send updates about assignments & conferences,
+        intervene quickly to change behavior,
+        or just stay availbale for parent&nbsp;questions.
+      </p>
+      <p class="action"><a href="{% url register %}" class="main-register-link">Get Started&nbsp;»</a></p>
+    </div>
   </section>
 
   <section class="features">

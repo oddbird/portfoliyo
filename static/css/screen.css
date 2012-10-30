@@ -1351,8 +1351,11 @@ button {
   text-align: center;
 }
 
-.tagline, .description {
+.intro-copy {
   text-align: left;
+}
+.intro-copy p {
+  margin-bottom: 1.27778em;
 }
 
 .tagline {
@@ -1361,12 +1364,7 @@ button {
 }
 
 .description {
-  margin-bottom: 1.27778em;
   font-style: italic;
-}
-
-.action {
-  margin-bottom: 1.27778em;
 }
 
 .main-register-link {
@@ -1388,14 +1386,10 @@ button {
     margin-right: 1.26582%;
   }
 
-  .tagline, .description, .action {
+  .intro-copy {
     width: 44.3038%;
     float: right;
     margin-right: 0;
-  }
-
-  .action {
-    clear: right;
   }
 
   .tagline {
@@ -1407,11 +1401,11 @@ button {
   border-top-style: solid;
   border-top-width: 0.66667em;
   padding-top: 0.61111em;
-  -moz-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351542999') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351617346') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351617346') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351617346') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351617346') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351617346') 100% 0 repeat;
   padding-bottom: 1.27778em;
   clear: both;
 }
@@ -1445,7 +1439,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351542999') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351617346') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1456,7 +1450,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351542999') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351617346') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1467,7 +1461,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1351544621') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1351617346') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1487,7 +1481,7 @@ button {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: url('../images/landing/harsh.png?1351542999') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351617346') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1516,19 +1510,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351542999');
+  background-image: url('../images/landing/peter.png?1351617346');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351542999');
+  background-image: url('../images/landing/carl.png?1351617346');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351542999');
+  background-image: url('../images/landing/eric.png?1351617346');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351542999');
+  background-image: url('../images/landing/jonny.png?1351617346');
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {

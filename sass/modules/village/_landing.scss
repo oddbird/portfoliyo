@@ -14,16 +14,17 @@
   text-align: center;
 }
 
-.tagline, .description { text-align: left; }
+.intro-copy {
+  text-align: left;
+  p { @include trailer; }
+}
+
 .tagline {
   @extend %landing-title;
   @include adjust-font-size-to($largepx);
 }
-.description {
-  @include trailer;
-  font-style: italic;
-}
-.action { @include trailer; }
+
+.description { font-style: italic; }
 
 .main-register-link {
   @extend %button;
@@ -37,8 +38,7 @@
 
 @include at-breakpoint(45em $break-cols) {
   .main-image { @include span-columns(11); }
-  .tagline, .description, .action { @include span-columns(9 omega); }
-  .action { clear: right; }
+  .intro-copy { @include span-columns(9 omega); }
   .tagline { @include padding-leader(4.5,$largepx); }
 }
 
