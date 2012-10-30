@@ -34,7 +34,8 @@ def test_activate_user():
         reply = hook.receive_sms(phone, 'foo')
 
     assert utils.refresh(profile.user).is_active
-    mock_create.assert_any_call(None, rel.student, reply, in_reply_to=phone)
+    mock_create.assert_any_call(
+        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
     assert reply == (
         "Thank you! You can text this number any time "
         "to talk with Jimmy Doe's teachers."
@@ -58,7 +59,8 @@ def test_decline():
         "No problem! Sorry to have bothered you."
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
-    mock_create.assert_any_call(None, rel.student, reply, in_reply_to=phone)
+    mock_create.assert_any_call(
+        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
 
 
 
@@ -78,7 +80,8 @@ def test_active_user_decline():
         "No problem! Sorry to have bothered you."
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
-    mock_create.assert_any_call(None, rel.student, reply, in_reply_to=phone)
+    mock_create.assert_any_call(
+        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
 
 
 
@@ -209,9 +212,11 @@ def test_code_signup_student_name():
     assert set(student.elders) == set([teacher, parent])
     assert parent.state == model.Profile.STATE.relationship
     # and the name is sent on to the village chat as a post
-    mock_create.assert_any_call(parent, student, "Jimmy Doe", from_sms=True)
+    mock_create.assert_any_call(
+        parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
     # and the automated reply is also sent on to village chat
-    mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
+    mock_create.assert_any_call(
+        None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
 
@@ -251,9 +256,11 @@ def test_group_code_signup_student_name():
     assert set(student.elders) == set([group.owner, parent])
     assert parent.state == model.Profile.STATE.relationship
     # and the name is sent on to the village chat as a post
-    mock_create.assert_any_call(parent, student, "Jimmy Doe", from_sms=True)
+    mock_create.assert_any_call(
+        parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
     # and the automated reply is also sent on to village chat
-    mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
+    mock_create.assert_any_call(
+        None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
 def test_code_signup_student_name_dupe_detection():
@@ -312,9 +319,11 @@ def test_code_signup_role():
     assert parent_rel.description == "father"
     student = teacher_rel.student
     # and the role is sent on to the village chat as a post
-    mock_create.assert_any_call(parent, student, "father", from_sms=True)
+    mock_create.assert_any_call(
+        parent, student, "father", from_sms=True, email_notifications=False)
     # and the automated reply is also sent on to village chat
-    mock_create.assert_any_call(None, student, reply, in_reply_to=phone)
+    mock_create.assert_any_call(
+        None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
 

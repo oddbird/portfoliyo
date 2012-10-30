@@ -133,7 +133,8 @@ def handle_new_student(parent, teacher, student_name):
         student.student_in_groups.add(parent.invited_in_group)
     parent.state = model.Profile.STATE.relationship
     parent.save()
-    model.Post.create(parent, student, student_name, from_sms=True)
+    model.Post.create(
+        parent, student, student_name, from_sms=True, email_notifications=False)
     return reply(
         parent.phone,
         [student],
@@ -151,7 +152,8 @@ def handle_role_update(parent, role):
     parent.save()
     students = parent.students
     for student in students:
-        model.Post.create(parent, student, role, from_sms=True)
+        model.Post.create(
+            parent, student, role, from_sms=True, email_notifications=False)
     return reply(
         parent.phone,
         parent.students,
@@ -197,5 +199,6 @@ def get_teacher_group_and_name(body):
 def reply(phone, students, body):
     """Save given reply to given students' villages before returning it."""
     for student in students:
-        model.Post.create(None, student, body, in_reply_to=phone)
+        model.Post.create(
+            None, student, body, in_reply_to=phone, email_notifications=False)
     return body
