@@ -50,10 +50,11 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.removeListitem = function (trigger) {
+        var relationshipsUrl = $('.village').data('relationships-url');
         var remove = trigger;
         var listitem = remove.closest('.listitem');
         var link = listitem.find('.listitem-select');
-        var url = listitem.hasClass('student') ? link.data('relationship-url') : link.data('group-resource-url');
+        var url = listitem.hasClass('student') ? relationshipsUrl + '?student=' + link.data('id') : link.data('group-resource-url');
         var name = listitem.hasClass('student') ? link.data('name') : link.data('group-name');
         var removed = ich.remove_listitem({name: name});
         var removeItem = function () {
