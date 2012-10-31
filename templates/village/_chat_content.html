@@ -7,11 +7,12 @@
     <article class="getting-started">
         <h2 class="starthead">{% block getting-started-header %}Welcome!{% endblock %}</h2>
         <p class="startbody">{% block getting-started-body %}Post messages for teachers and family members.{% endblock %}</p>
-
-        <ol class="howto">
-          <li class="howto-post">Write a message for teachers and family members.</li>
-          <li class="howto-sms">Select family members who should receive a text. Then hit send!</li>
-        </ol>
+    </article>
+    <article class="instructions">
+      <ol class="howto">
+        <li class="howto-post">Write a message for teachers and family members.</li>
+        <li class="howto-sms">Select family members who should receive a text. Then hit send!</li>
+      </ol>
     </article>
   </section>
   <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
