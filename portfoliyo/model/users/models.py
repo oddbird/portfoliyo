@@ -289,10 +289,12 @@ def update_group_relationships(
         sender, instance, action, reverse, pk_set, **kwargs):
     """Create/remove relationships based on group membership changes."""
     if sender is Group.students.through:
+        # group-elder memberships being modified
         sender_attr = 'to_profile'
         other_attr = 'from_profile'
         for_each = 'elders'
     else:
+        # group-student memberships being modified
         sender_attr = 'from_profile'
         other_attr = 'to_profile'
         for_each = 'students'
@@ -300,6 +302,7 @@ def update_group_relationships(
     check_for_orphan_relationships = False
 
     if reverse:
+        # instance is a student/elder; pk_set are group PKs
         if action == 'post_clear':
             Relationship.objects.filter(
                 **{
@@ -330,6 +333,7 @@ def update_group_relationships(
             check_for_orphan_relationships = True
 
     else:
+        # instance is a group, pk_set are student/elder PKs
         if action == 'post_clear':
             Relationship.groups.through.objects.filter(group=instance).delete()
             check_for_orphan_relationships = True
@@ -363,6 +367,44 @@ signals.m2m_changed.connect(
     update_group_relationships, sender=Group.students.through)
 signals.m2m_changed.connect(
     update_group_relationships, sender=Group.elders.through)
+
+
+def send_student_group_event(
+        sender, instance, action, reverse, pk_set, **kwargs):
+    """Fire events based on group student membership changes."""
+    # don't do unnecessary work
+    if action not in {'pre_clear', 'pre_add', 'pre_remove'}:
+        return
+    if reverse:
+        # instance is a student, pk_set are group PKs
+        if action == 'pre_clear':
+            groups = instance.student_in_groups.all()
+        else:
+            groups = Group.objects.filter(pk__in=pk_set)
+        student_ids = [instance.pk]
+    else:
+        # instance is a group, pk_set are student PKs
+        groups = [instance]
+        if action == 'pre_clear':
+            student_ids = instance.students.values_list('pk', flat=True)
+        else:
+            student_ids = pk_set
+
+    if action in {'pre_clear', 'pre_remove'}:
+        event = events.student_removed_from_group
+    else:
+        event = events.student_added_to_group
+
+    # this looks like a nasty nested loop, but in practice either student_ids
+    # or groups is always length 1
+    for student_id in student_ids:
+        for group in groups:
+            event(student_id, group)
+
+
+
+signals.m2m_changed.connect(
+    send_student_group_event, sender=Group.students.through)
 
 
 

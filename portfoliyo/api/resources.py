@@ -275,6 +275,10 @@ class SlimGroupResource(PortfoliyoResource):
             )
         bundle.data['add_student_uri'] = reverse(
             'add_student_in_group', kwargs={'group_id': bundle.obj.id})
+        user = getattr(bundle.request, 'user', None)
+        if user is not None:
+            bundle.data['unread_count'] = model.unread.group_unread_count(
+                bundle.obj, bundle.request.user.profile)
         return bundle
 
 
@@ -327,15 +331,6 @@ class GroupResource(SlimGroupResource):
                     })
         else:
             bundle = super(GroupResource, self).full_dehydrate(bundle)
-        return bundle
-
-
-    def dehydrate(self, bundle):
-        bundle = SlimGroupResource.dehydrate(self, bundle)
-        user = getattr(bundle.request, 'user', None)
-        if user is not None:
-            bundle.data['unread_count'] = model.unread.group_unread_count(
-                bundle.obj, bundle.request.user.profile)
         return bundle
 
 

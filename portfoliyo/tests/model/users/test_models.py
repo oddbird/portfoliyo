@@ -541,6 +541,82 @@ class TestGroup(object):
         assert not other_elder.students
 
 
+    def test_add_student_to_group_event(self):
+        """Adding a student to a group fires an event."""
+        g = factories.GroupFactory.create()
+        s = factories.ProfileFactory.create()
+
+        target = 'portfoliyo.model.events.student_added_to_group'
+        with mock.patch(target) as mock_student_added_to_group:
+            g.students.add(s)
+
+        mock_student_added_to_group.assert_called_with(s.id, g)
+
+
+    def test_add_student_to_group_reverse_event(self):
+        """Adding a student to a group from the student fires an event."""
+        g = factories.GroupFactory.create()
+        s = factories.ProfileFactory.create()
+
+        target = 'portfoliyo.model.events.student_added_to_group'
+        with mock.patch(target) as mock_student_added_to_group:
+            s.student_in_groups.add(g)
+
+        mock_student_added_to_group.assert_called_with(s.id, g)
+
+
+    def test_remove_student_from_group_event(self):
+        """Removing a student from a group fires an event."""
+        g = factories.GroupFactory.create()
+        s = factories.ProfileFactory.create()
+        g.students.add(s)
+
+        target = 'portfoliyo.model.events.student_removed_from_group'
+        with mock.patch(target) as mock_student_removed_from_group:
+            g.students.remove(s)
+
+        mock_student_removed_from_group.assert_called_with(s.id, g)
+
+
+    def test_remove_student_from_group_reverse_event(self):
+        """Removing a student from a group, via the student, fires an event."""
+        g = factories.GroupFactory.create()
+        s = factories.ProfileFactory.create()
+        g.students.add(s)
+
+        target = 'portfoliyo.model.events.student_removed_from_group'
+        with mock.patch(target) as mock_student_removed_from_group:
+            s.student_in_groups.remove(g)
+
+        mock_student_removed_from_group.assert_called_with(s.id, g)
+
+
+    def test_clear_student_from_group_event(self):
+        """Clearing students from a group fires events."""
+        g = factories.GroupFactory.create()
+        s = factories.ProfileFactory.create()
+        g.students.add(s)
+
+        target = 'portfoliyo.model.events.student_removed_from_group'
+        with mock.patch(target) as mock_student_removed_from_group:
+            g.students.clear()
+
+        mock_student_removed_from_group.assert_called_with(s.id, g)
+
+
+    def test_clear_student_from_group_reverse_event(self):
+        """Clearing groups from a student fires events."""
+        g = factories.GroupFactory.create()
+        s = factories.ProfileFactory.create()
+        g.students.add(s)
+
+        target = 'portfoliyo.model.events.student_removed_from_group'
+        with mock.patch(target) as mock_student_removed_from_group:
+            s.student_in_groups.clear()
+
+        mock_student_removed_from_group.assert_called_with(s.id, g)
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self):

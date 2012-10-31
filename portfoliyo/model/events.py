@@ -23,9 +23,6 @@ def student_edited(student, *elders):
 
 def student_event(event, student, *elders):
     """Send Pusher ``event`` regarding ``student`` to ``elders``."""
-    pusher = get_pusher()
-    if pusher is None:
-        return
     from portfoliyo.api.resources import SlimProfileResource
     profile_resource = SlimProfileResource()
     # allows resource_uri to be generated
@@ -34,8 +31,7 @@ def student_event(event, student, *elders):
     b = profile_resource.full_dehydrate(b)
     data = profile_resource._meta.serializer.to_simple(b, None)
     for elder in elders:
-        channel = pusher['students_of_%s' % elder.id]
-        channel.trigger(event, {'objects': [data]})
+        trigger('students_of_%s' % elder.id, event, {'objects': [data]})
 
 
 
@@ -56,9 +52,6 @@ def group_edited(group):
 
 def group_event(event, group):
     """Send Pusher ``event`` regarding ``group`` to its owner."""
-    pusher = get_pusher()
-    if pusher is None:
-        return
     from portfoliyo.api.resources import SlimGroupResource
     group_resource = SlimGroupResource()
     # allows resource_uri to be generated
@@ -66,5 +59,31 @@ def group_event(event, group):
     b = group_resource.build_bundle(obj=group)
     b = group_resource.full_dehydrate(b)
     data = group_resource._meta.serializer.to_simple(b, None)
-    channel = pusher['groups_of_%s' % group.owner.id]
-    channel.trigger(event, {'objects': [data]})
+    trigger('groups_of_%s' % group.owner.id, event, {'objects': [data]})
+
+
+
+def student_added_to_group(student_id, group):
+    trigger(
+        'groups_of_%s' % group.owner.id,
+        'student_added_to_group',
+        {'student_id': student_id, 'groups': [group.id]},
+        )
+
+
+
+def student_removed_from_group(student_id, group):
+    trigger(
+        'groups_of_%s' % group.owner.id,
+        'student_removed_from_group',
+        {'student_id': student_id, 'groups': [group.id]},
+        )
+
+
+
+def trigger(channel, event, data):
+    """Fire ``event`` on ``channel`` with ``data`` if Pusher is configured."""
+    pusher = get_pusher()
+    if pusher is None:
+        return
+    pusher[channel].trigger(event, data)
