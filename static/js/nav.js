@@ -571,11 +571,11 @@ var PYO = (function (PYO, $) {
                 // If viewing the groups-list
                 if (data && data.objects && data.objects.length && nav.find('.group').length) {
                     $.each(data.objects, function () {
-                        if (nav.data('is-staff') === 'True') { data.staff = true; }
-                        data.objects = true;
-                        var group = ich.group_list_item(data).hide();
+                        if (nav.data('is-staff') === 'True') { this.staff = true; }
+                        this.objects = true;
+                        var group = ich.group_list_item(this).hide();
                         var inserted = false;
-                        nav.find('.group').each(function () {
+                        nav.find('.group').not(':first').each(function () {
                             if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
                                 group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
                                 inserted = true;
