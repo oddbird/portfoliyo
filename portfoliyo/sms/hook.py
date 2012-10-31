@@ -15,6 +15,13 @@ def receive_sms(source, body):
     Return None if no reply should be sent, or text of reply.
 
     """
+    # handle landing page easter egg
+    if body.strip().lower().startswith('xjgdlw'):
+        return (
+            "Woah! You actually tried it out? A cookie for you! "
+            "Email sneaky@portfoliyo.org and we'll send you a cookie."
+            )
+
     try:
         profile = model.Profile.objects.select_related(
             'user').get(phone=source)

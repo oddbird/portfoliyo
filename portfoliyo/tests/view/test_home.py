@@ -15,9 +15,11 @@ class TestHome(object):
 
     def test_login_required(self, client):
         """Shows landing page if user is unauthenticated."""
+        register_url = reverse('register')
+
         res = client.get(self.url, status=200)
 
-        res.mustcontain('sign up!')
+        res.mustcontain('href="%s"' % register_url)
 
 
     def test_redirect_to_add_group(self, client):
