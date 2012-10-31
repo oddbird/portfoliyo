@@ -67,7 +67,10 @@ def student_added_to_group(owner_id, student_ids, group_ids):
     trigger(
         'groups_of_%s' % owner_id,
         'student_added_to_group',
-        {'objects': [{'id': sid, 'groups': group_ids} for sid in student_ids]},
+        {
+            'objects': [
+                {'student_id': sid, 'groups': group_ids} for sid in student_ids]
+            },
         )
 
 
