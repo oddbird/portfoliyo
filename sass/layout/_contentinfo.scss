@@ -4,10 +4,15 @@
 [role="contentinfo"] {
   @extend %boilerplate;
   @include rhythm(0,.25,.25,0);
-  .author {
-    @include adjust-font-size-to($xxsmallpx);
-    @include trailer(0);
-    text-transform: uppercase;
-  }
+  .wrap { @include adjust-font-size-to($xxsmallpx); }
+  .author { text-transform: uppercase; }
   strong { font-weight: bold; }
+
+  @include at-breakpoint($break) {
+    .author { @include span-columns($left); }
+    .nonprofit {
+      @include span-columns($center + $right omega);
+      text-align: right;
+    }
+  }
 }

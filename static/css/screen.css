@@ -1274,14 +1274,39 @@ button {
   padding-bottom: 0.31944em;
   margin-bottom: 0em;
 }
-[role="contentinfo"] .author {
+[role="contentinfo"] .wrap {
   font-size: 0.66667em;
   line-height: 1.91667em;
-  margin-bottom: 0em;
+}
+[role="contentinfo"] .author {
   text-transform: uppercase;
 }
 [role="contentinfo"] strong {
   font-weight: bold;
+}
+@media (min-width: 43.875em) {
+  [role="contentinfo"] .author {
+    width: 18.98734%;
+    float: left;
+    margin-right: 1.26582%;
+  }
+  [role="contentinfo"] .nonprofit {
+    width: 79.74684%;
+    float: right;
+    margin-right: 0;
+    text-align: right;
+  }
+}
+.lt-ie9 [role="contentinfo"] .author {
+  width: 18.98734%;
+  float: left;
+  margin-right: 1.26582%;
+}
+.lt-ie9 [role="contentinfo"] .nonprofit {
+  width: 79.74684%;
+  float: right;
+  margin-right: 0;
+  text-align: right;
 }
 
 .email_notifications-field {
@@ -1401,11 +1426,11 @@ button {
   border-top-style: solid;
   border-top-width: 0.66667em;
   padding-top: 0.61111em;
-  -moz-border-image: url('../images/landing/line.png?1351714757') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351714757') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351714757') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351714757') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351714757') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
   padding-bottom: 1.27778em;
   clear: both;
 }
@@ -1439,7 +1464,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351714757') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351719867') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1450,7 +1475,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351714757') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351719867') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1461,7 +1486,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1351714757') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1351719867') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1481,7 +1506,7 @@ button {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: url('../images/landing/harsh.png?1351714757') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351719867') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1510,19 +1535,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351714757');
+  background-image: url('../images/landing/peter.png?1351719867');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351714757');
+  background-image: url('../images/landing/carl.png?1351719867');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351714757');
+  background-image: url('../images/landing/eric.png?1351719867');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351714757');
+  background-image: url('../images/landing/jonny.png?1351719867');
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {

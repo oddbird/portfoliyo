@@ -54,10 +54,13 @@
   {% endblock content %}
 
   <footer role="contentinfo">
-    <p class="author vcard">
-      copyright &copy; 2012
-      <strong class="fn org">Portfoliyo</strong>
-    </p>
+    <div class="wrap">
+      <p class="author vcard">
+        copyright &copy; 2012
+        <strong class="fn org">Portfoliyo</strong>
+      </p>
+      {% block extrafooter %}{% endblock extrafooter %}
+    </div>
   </footer>
 
   {% block last %}{% endblock last %}
