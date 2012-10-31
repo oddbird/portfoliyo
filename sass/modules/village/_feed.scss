@@ -17,7 +17,7 @@ $background       : lighten($base3,3);
   left: 0;
   right: 0;
   bottom: rhythm(4.75);
-  background: $background;
+  background: $base3;
 }
 
 // ---------------------------------------------------------------------------
@@ -28,15 +28,16 @@ $background       : lighten($base3,3);
   @include trailing-border(1px,1);
   padding-left: $post-h-padding;
   padding-right: $post-h-padding;
-  background: $base3;
-  border-color: $base1;
+  border: 0;
   .starthead {
     @include adjust-font-size-to($xlargepx);
     @include serif;
   }
+  + .post { border-top: 1px solid; }
 }
 
 .instructions {
+  @include stretch-x;
   @include box-shadow($base 0 0 3px inset);
   @include background($base2
     linear-gradient(
@@ -51,6 +52,7 @@ $background       : lighten($base3,3);
   );
   @include background-size(4em 4em);
   display: none;
+  bottom: 0;
   padding: rhythm(1) $post-h-padding;
   .show-instructions & { display: block; }
 }
@@ -110,7 +112,7 @@ $background       : lighten($base3,3);
   &.not-posted { background: lighten($red,45); }
   &.old {
     color: $base1;
-    background: none;
+    background: $background;
     .title, .summary { color: $base1; }
   }
 
