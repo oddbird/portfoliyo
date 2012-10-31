@@ -384,6 +384,12 @@ var PYO = (function (PYO, $) {
         if (PYO.pusherKey && PYO.activeUserId) {
             var nav = $('.village-nav');
             var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
+            var showActiveStudentRemovedMsg = function () {
+                var msg = ich.active_student_removed_msg();
+                msg.appendTo($('#messages'));
+                $('#messages').messages();
+                $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
+            };
             var addStudentToList = function (data, all_students) {
                 if (nav.data('is-staff') === 'True') { data.staff = true; }
                 data.objects = true;
@@ -403,6 +409,13 @@ var PYO = (function (PYO, $) {
                 student.find('input[placeholder], textarea[placeholder]').placeholder();
                 PYO.listenForPosts(student);
             };
+            var removeStudentFromList = function (id) {
+                if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
+                    var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
+                    student.slideUp(function () { $(this).remove(); });
+                    if (id === PYO.activeStudentId) { showActiveStudentRemovedMsg(); }
+                }
+            };
 
             channel.bind('student_added', function (data) {
                 if (data && data.objects && data.objects.length) {
@@ -421,7 +434,7 @@ var PYO = (function (PYO, $) {
                             addStudentToList(this, true);
                         }
                         // If viewing the groups-list (and the all-students group is visible)
-                        if (all_students_group.length) {
+                        if (all_students_group.length && id) {
                             var students = $.trim(all_students_group.data('students')) + ' ';
                             students = students + id.toString() + ' ';
                             all_students_group.data('students', students);
@@ -444,8 +457,8 @@ var PYO = (function (PYO, $) {
                         var added_to_groups = all_groups.filter(function () {
                             return $.inArray($(this).data('group-id'), added_to_groups_arr) !== -1;
                         });
-                        // If viewing the groups-list (and relevant groups are visible)
-                        if (added_to_groups.length) {
+                        // If viewing the groups-list (and relevant groups exist)
+                        if (added_to_groups.length && id) {
                             added_to_groups.each(function () {
                                 var thisGroup = $(this);
                                 var students = $.trim(thisGroup.data('students')) + ' ';
@@ -461,6 +474,64 @@ var PYO = (function (PYO, $) {
                 }
             });
 
+            channel.bind('student_removed', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id) {
+                            var id = this.id;
+                            var all_groups = nav.find('.group .group-link');
+                            var group_titles = nav.find('.grouptitle .group-link');
+                            var all_students_group = all_groups.filter(function () {
+                                return $(this).data('group-id').toString().indexOf('all') !== -1;
+                            });
+                            var all_students_dashboard = group_titles.filter(function () {
+                                return $(this).data('group-id').toString().indexOf('all') !== -1;
+                            });
+                            // If viewing the all-students group
+                            if (all_students_dashboard.length) {
+                                removeStudentFromList(id);
+                            }
+                            // If viewing the groups-list (and the all-students group is visible)
+                            if (all_students_group.length) {
+                                var students_arr = $.trim(all_students_group.data('students')).split(' ');
+                                if ($.inArray(id.toString(), students_arr) !== -1) {
+                                    students_arr.splice($.inArray(id.toString(), students_arr), 1);
+                                    all_students_group.data('students', students_arr.join(' '));
+                                }
+                                PYO.pusher.unsubscribe('student_' + id);
+                            }
+                        }
+                    });
+                }
+            });
+
+            channel.bind('student_removed_from_group', function (data) {
+                // var groups = nav.find('.group .group-link').filter(function () {
+                //     var students_arr = $.trim($(this).data('students')).split(' ');
+                //     return $.inArray(id.toString(), students_arr) !== -1;
+                // });
+                // if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
+                //     var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
+                //     student.slideUp(function () { $(this).remove(); });
+                //     if (id === PYO.activeStudentId) {
+                //         var msg = ich.active_student_removed_msg();
+                //         msg.appendTo($('#messages'));
+                //         $('#messages').messages();
+                //         $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
+                //     }
+                // }
+                // if (groups.length) {
+                //     groups.each(function () {
+                //         var students_arr = $.trim($(this).data('students')).split(' ');
+                //         if ($.inArray(id.toString(), students_arr) !== -1) {
+                //             students_arr.splice($.inArray(id.toString(), students_arr), 1);
+                //             $(this).data('students', students_arr.join(' '));
+                //         }
+                //     });
+                // }
+                // PYO.pusher.unsubscribe('student_' + id);
+            });
+
             channel.bind('student_edited', function (data) {
                 if (data && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
@@ -473,44 +544,6 @@ var PYO = (function (PYO, $) {
                         }
                     });
                 }
-            });
-
-            channel.bind('student_removed', function (data) {
-                if (data && data.objects && data.objects.length) {
-                    $.each(data.objects, function () {
-                        if (this.id) {
-                            var id = this.id;
-                            var groups = nav.find('.group .group-link').filter(function () {
-                                var students_arr = $.trim($(this).data('students')).split(' ');
-                                return $.inArray(id.toString(), students_arr) !== -1;
-                            });
-                            if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
-                                var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
-                                student.slideUp(function () { $(this).remove(); });
-                                if (id === PYO.activeStudentId) {
-                                    var msg = ich.active_student_removed_msg();
-                                    msg.appendTo($('#messages'));
-                                    $('#messages').messages();
-                                    $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
-                                }
-                            }
-                            if (groups.length) {
-                                groups.each(function () {
-                                    var students_arr = $.trim($(this).data('students')).split(' ');
-                                    if ($.inArray(id.toString(), students_arr) !== -1) {
-                                        students_arr.splice($.inArray(id.toString(), students_arr), 1);
-                                        $(this).data('students', students_arr.join(' '));
-                                    }
-                                });
-                            }
-                            PYO.pusher.unsubscribe('student_' + id);
-                        }
-                    });
-                }
-            });
-
-            channel.bind('student_removed_from_group', function (data) {
-
             });
         }
     };
