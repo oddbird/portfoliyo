@@ -1481,7 +1481,7 @@ button {
   position: absolute;
   top: 0;
   bottom: 0;
-  background: url('../images/landing/harsh.png?1351617346') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351708264') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1510,19 +1510,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351617346');
+  background-image: url('../images/landing/peter.png?1351708557');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351617346');
+  background-image: url('../images/landing/carl.png?1351708273');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351617346');
+  background-image: url('../images/landing/eric.png?1351708613');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351617346');
+  background-image: url('../images/landing/jonny.png?1351708551');
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
