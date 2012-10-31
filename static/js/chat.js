@@ -78,7 +78,7 @@ var PYO = (function (PYO, $) {
                 initialSlideSpeed: 0,
                 openCallback: smsDetailsOpened
             });
-            $('.village-feed').append(posts);
+            $('.village-feed .instructions').before(posts);
             return posts;
         }
     };
