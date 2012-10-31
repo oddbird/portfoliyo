@@ -552,6 +552,29 @@ var PYO = (function (PYO, $) {
                     });
                 }
             });
+
+            channel.bind('group_added', function (data) {
+                // If viewing the groups-list
+                if (data && data.objects && data.objects.length && nav.find('.group').length) {
+                    $.each(data.objects, function () {
+                        if (nav.data('is-staff') === 'True') { data.staff = true; }
+                        data.objects = true;
+                        var group = ich.group_list_item(data).hide();
+                        var inserted = false;
+                        nav.find('.group').each(function () {
+                            if (!inserted && $(this).find('.listitem-select').data('group-name').toLowerCase() > group.find('.listitem-select').data('group-name').toLowerCase()) {
+                                group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
+                                inserted = true;
+                            }
+                        });
+                        if (!inserted) {
+                            group.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+                        }
+                        group.find('.details').html5accordion();
+                        group.find('input[placeholder], textarea[placeholder]').placeholder();
+                    });
+                }
+            });
         }
     };
 
