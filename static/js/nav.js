@@ -385,7 +385,7 @@ var PYO = (function (PYO, $) {
             var nav = $('.village-nav');
             var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
             var showActiveStudentRemovedMsg = function () {
-                var msg = ich.active_student_removed_msg();
+                var msg = ich.active_item_removed_msg({item: 'student'});
                 msg.appendTo($('#messages'));
                 $('#messages').messages();
                 $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
@@ -574,6 +574,39 @@ var PYO = (function (PYO, $) {
                         }
                         group.find('.details').html5accordion();
                         group.find('input[placeholder], textarea[placeholder]').placeholder();
+                    });
+                }
+            });
+
+            channel.bind('group_removed', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id) {
+                            var id = this.id;
+                            var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
+                            var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
+                            var msg;
+                            // If viewing the groups-list
+                            if (group.length) {
+                                var group_container = group.closest('.group');
+                                group_container.slideUp(function () { $(this).remove(); });
+                                if (group.hasClass('active')) {
+                                    msg = ich.active_item_removed_msg({item: 'group'});
+                                    msg.appendTo($('#messages'));
+                                    $('#messages').messages();
+                                    $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
+                                }
+                            }
+                            // If viewing the removed group
+                            if (grouptitle.length) {
+                                msg = ich.active_item_removed_msg({item: 'group'});
+                                msg.appendTo($('#messages'));
+                                $('#messages').messages();
+                                if (grouptitle.hasClass('active')) {
+                                    $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
+                                }
+                            }
+                        }
                     });
                 }
             });
