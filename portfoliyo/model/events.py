@@ -63,20 +63,23 @@ def group_event(event, group):
 
 
 
-def student_added_to_group(student_id, group):
+def student_added_to_group(owner_id, student_ids, group_ids):
     trigger(
-        'groups_of_%s' % group.owner.id,
+        'groups_of_%s' % owner_id,
         'student_added_to_group',
-        {'student_id': student_id, 'groups': [group.id]},
+        {'objects': [{'id': sid, 'groups': group_ids} for sid in student_ids]},
         )
 
 
 
-def student_removed_from_group(student_id, group):
+def student_removed_from_group(owner_id, student_ids, group_ids):
     trigger(
-        'groups_of_%s' % group.owner.id,
+        'groups_of_%s' % owner_id,
         'student_removed_from_group',
-        {'student_id': student_id, 'groups': [group.id]},
+        {
+            'objects': [
+                {'student_id': sid, 'groups': group_ids} for sid in student_ids]
+            },
         )
 
 

@@ -378,13 +378,17 @@ def send_student_group_event(
     if reverse:
         # instance is a student, pk_set are group PKs
         if action == 'pre_clear':
-            groups = instance.student_in_groups.all()
+            groups = instance.student_in_groups.order_by('owner')
         else:
-            groups = Group.objects.filter(pk__in=pk_set)
+            groups = Group.objects.filter(pk__in=pk_set).order_by('owner')
+        group_ids_by_owner_id = {}
+        for group in groups:
+            group_ids_by_owner_id.setdefault(
+                group.owner_id, []).append(group.id)
         student_ids = [instance.pk]
     else:
         # instance is a group, pk_set are student PKs
-        groups = [instance]
+        group_ids_by_owner_id = {instance.owner_id: [instance.id]}
         if action == 'pre_clear':
             student_ids = instance.students.values_list('pk', flat=True)
         else:
@@ -395,11 +399,8 @@ def send_student_group_event(
     else:
         event = events.student_added_to_group
 
-    # this looks like a nasty nested loop, but in practice either student_ids
-    # or groups is always length 1
-    for student_id in student_ids:
-        for group in groups:
-            event(student_id, group)
+    for owner_id, group_ids in group_ids_by_owner_id.items():
+        event(owner_id, list(student_ids), list(group_ids))
 
 
 

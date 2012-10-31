@@ -506,7 +506,7 @@ var PYO = (function (PYO, $) {
             channel.bind('student_added_to_group', function (data) {
                 if (data && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
-                        var id = this.student_id;
+                        var id = this.id;
                         var added_to_groups_arr = this.groups;
                         var group_titles = nav.find('.grouptitle .group-link');
                         var all_groups = nav.find('.group .group-link');
@@ -536,8 +536,8 @@ var PYO = (function (PYO, $) {
             channel.bind('student_removed_from_group', function (data) {
                 if (data && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
-                        if (this.student_id) {
-                            var id = this.student_id;
+                        if (this.id) {
+                            var id = this.id;
                             var removed_from_groups_arr = this.groups;
                             var group_titles = nav.find('.grouptitle .group-link');
                             var all_groups = nav.find('.group .group-link');
