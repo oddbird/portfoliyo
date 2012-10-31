@@ -1,6 +1,8 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
+.lt-ie9 .village-landing .container { @include set-container-width; }
+
 %landing-title {
   @include serif;
   @include adjust-font-size-to($medpx);
@@ -50,6 +52,8 @@
   @include border-image(image-url('landing/line.png') 100% 0 repeat);
   @include padding-trailer(1);
   clear: both;
+
+  .no-borderimage & { @include leading-border(1px,1); }
   @include at-breakpoint($break) {
     @include leading-border(12px,3);
     @include padding-trailer(3);
@@ -99,6 +103,7 @@
   position: relative;
   min-height: rhythm(6);
   .fn { @extend %landing-title; }
+  .no-backgroundsize & { border: 1px solid $base2; }
 
   &:before {
     @include background(image-url('landing/harsh.png') no-repeat scroll center top);
@@ -108,6 +113,7 @@
     width: columns(3);
     left: 0;
     content: " ";
+    .no-backgroundsize & { background-position: center; }
   }
 
   @include breakpoint(max-width 25em) {

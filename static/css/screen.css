@@ -1359,6 +1359,10 @@ button {
   display: none;
 }
 
+.lt-ie9 .village-landing .container {
+  max-width: 33em;
+}
+
 .tagline, .feature-title, .dev .fn {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 1.27778em;
@@ -1426,13 +1430,18 @@ button {
   border-top-style: solid;
   border-top-width: 0.66667em;
   padding-top: 0.61111em;
-  -moz-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351719867') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351723367') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351723367') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351723367') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351723367') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351723367') 100% 0 repeat;
   padding-bottom: 1.27778em;
   clear: both;
+}
+.no-borderimage .feature, .no-borderimage .team {
+  border-top-style: solid;
+  border-top-width: 0.05556em;
+  padding-top: 1.22222em;
 }
 @media (min-width: 43.875em) {
   .feature, .team {
@@ -1464,7 +1473,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351719867') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351723367') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1475,7 +1484,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351719867') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351723367') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1486,7 +1495,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1351719867') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1351723367') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1508,8 +1517,11 @@ button {
   position: relative;
   min-height: 7.66667em;
 }
+.no-backgroundsize .dev {
+  border: 1px solid #eee8d5;
+}
 .dev:before {
-  background: url('../images/landing/harsh.png?1351719867') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351723367') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1521,6 +1533,9 @@ button {
   width: 35.48387%;
   left: 0;
   content: " ";
+}
+.no-backgroundsize .dev:before {
+  background-position: center;
 }
 @media (max-width: 25em) {
   .dev {
@@ -1563,19 +1578,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351721659');
+  background-image: url('../images/landing/peter.png?1351723367');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351719867');
+  background-image: url('../images/landing/carl.png?1351723367');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351719867');
+  background-image: url('../images/landing/eric.png?1351723367');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351721671');
+  background-image: url('../images/landing/jonny.png?1351723367');
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
