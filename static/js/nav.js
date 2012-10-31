@@ -380,42 +380,47 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.addStudentToList = function (data, all_students) {
+        var nav = $('.village-nav');
+        if (nav.data('is-staff') === 'True') { data.staff = true; }
+        data.objects = true;
+        data.all_students = all_students;
+        var student = ich.student_list_item(data).hide();
+        var inserted = false;
+        nav.find('.student').each(function () {
+            if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
+                inserted = true;
+            }
+        });
+        if (!inserted) {
+            student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+        }
+        student.find('.details').html5accordion();
+        student.find('input[placeholder], textarea[placeholder]').placeholder();
+        PYO.listenForPosts(student);
+    };
+
+    PYO.removeStudentFromList = function (id) {
+        var nav = $('.village-nav');
+        if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
+            var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
+            student.slideUp(function () { $(this).remove(); });
+            if (id === PYO.activeStudentId) { PYO.showActiveItemRemovedMsg('student', true); }
+        }
+    };
+
+    PYO.showActiveItemRemovedMsg = function (item, disable_form) {
+        var msg = ich.active_item_removed_msg({item: item});
+        msg.appendTo($('#messages'));
+        $('#messages').messages();
+        if (disable_form) { $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled'); }
+    };
+
     PYO.listenForStudentChanges = function () {
         if (PYO.pusherKey && PYO.activeUserId) {
             var nav = $('.village-nav');
             var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
-            var showActiveStudentRemovedMsg = function () {
-                var msg = ich.active_item_removed_msg({item: 'student'});
-                msg.appendTo($('#messages'));
-                $('#messages').messages();
-                $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
-            };
-            var addStudentToList = function (data, all_students) {
-                if (nav.data('is-staff') === 'True') { data.staff = true; }
-                data.objects = true;
-                data.all_students = all_students;
-                var student = ich.student_list_item(data).hide();
-                var inserted = false;
-                nav.find('.student').each(function () {
-                    if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
-                        student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
-                        inserted = true;
-                    }
-                });
-                if (!inserted) {
-                    student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
-                }
-                student.find('.details').html5accordion();
-                student.find('input[placeholder], textarea[placeholder]').placeholder();
-                PYO.listenForPosts(student);
-            };
-            var removeStudentFromList = function (id) {
-                if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
-                    var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
-                    student.slideUp(function () { $(this).remove(); });
-                    if (id === PYO.activeStudentId) { showActiveStudentRemovedMsg(); }
-                }
-            };
 
             channel.bind('student_added', function (data) {
                 if (data && data.objects && data.objects.length) {
@@ -431,7 +436,7 @@ var PYO = (function (PYO, $) {
                         });
                         // If viewing the all-students group
                         if (all_students_dashboard.length) {
-                            addStudentToList(this, true);
+                            PYO.addStudentToList(this, true);
                         }
                         // If viewing the groups-list (and the all-students group is visible)
                         if (all_students_group.length && id) {
@@ -443,6 +448,60 @@ var PYO = (function (PYO, $) {
                     });
                 }
             });
+
+            channel.bind('student_removed', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id) {
+                            var id = this.id;
+                            var all_groups = nav.find('.group .group-link');
+                            var group_titles = nav.find('.grouptitle .group-link');
+                            var all_students_group = all_groups.filter(function () {
+                                return $(this).data('group-id').toString().indexOf('all') !== -1;
+                            });
+                            var all_students_dashboard = group_titles.filter(function () {
+                                return $(this).data('group-id').toString().indexOf('all') !== -1;
+                            });
+                            // If viewing the all-students group
+                            if (all_students_dashboard.length) {
+                                PYO.removeStudentFromList(id);
+                            }
+                            // If viewing the groups-list (and the all-students group is visible)
+                            if (all_students_group.length) {
+                                var students_arr = $.trim(all_students_group.data('students')).split(' ');
+                                if ($.inArray(id.toString(), students_arr) !== -1) {
+                                    students_arr.splice($.inArray(id.toString(), students_arr), 1);
+                                    all_students_group.data('students', students_arr.join(' '));
+                                }
+                                PYO.pusher.unsubscribe('student_' + id);
+                            }
+                        }
+                    });
+                }
+            });
+
+            channel.bind('student_edited', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var id = this.id;
+                            var name = this.name;
+                            var student = nav.find('.student .listitem-select[data-id="' + id + '"]');
+                            if (student.data('name') !== name) {
+                                student.find('.listitem-name').text(name);
+                                student.data('name', name).attr('data-name', name);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    };
+
+    PYO.listenForGroupChanges = function () {
+        if (PYO.pusherKey && PYO.activeUserId) {
+            var nav = $('.village-nav');
+            var channel = PYO.pusher.subscribe('groups_of_' + PYO.activeUserId);
 
             channel.bind('student_added_to_group', function (data) {
                 if (data && data.objects && data.objects.length) {
@@ -468,38 +527,7 @@ var PYO = (function (PYO, $) {
                         }
                         // If viewing the group that includes the new student
                         if (group_dashboard.length) {
-                            addStudentToList(this);
-                        }
-                    });
-                }
-            });
-
-            channel.bind('student_removed', function (data) {
-                if (data && data.objects && data.objects.length) {
-                    $.each(data.objects, function () {
-                        if (this.id) {
-                            var id = this.id;
-                            var all_groups = nav.find('.group .group-link');
-                            var group_titles = nav.find('.grouptitle .group-link');
-                            var all_students_group = all_groups.filter(function () {
-                                return $(this).data('group-id').toString().indexOf('all') !== -1;
-                            });
-                            var all_students_dashboard = group_titles.filter(function () {
-                                return $(this).data('group-id').toString().indexOf('all') !== -1;
-                            });
-                            // If viewing the all-students group
-                            if (all_students_dashboard.length) {
-                                removeStudentFromList(id);
-                            }
-                            // If viewing the groups-list (and the all-students group is visible)
-                            if (all_students_group.length) {
-                                var students_arr = $.trim(all_students_group.data('students')).split(' ');
-                                if ($.inArray(id.toString(), students_arr) !== -1) {
-                                    students_arr.splice($.inArray(id.toString(), students_arr), 1);
-                                    all_students_group.data('students', students_arr.join(' '));
-                                }
-                                PYO.pusher.unsubscribe('student_' + id);
-                            }
+                            PYO.addStudentToList(this);
                         }
                     });
                 }
@@ -532,23 +560,7 @@ var PYO = (function (PYO, $) {
                             }
                             // If viewing the group that includes the removed student
                             if (group_dashboard.length) {
-                                removeStudentFromList(id);
-                            }
-                        }
-                    });
-                }
-            });
-
-            channel.bind('student_edited', function (data) {
-                if (data && data.objects && data.objects.length) {
-                    $.each(data.objects, function () {
-                        if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
-                            var id = this.id;
-                            var name = this.name;
-                            var student = nav.find('.student .listitem-select[data-id="' + id + '"]');
-                            if (student.data('name') !== name) {
-                                student.find('.listitem-name').text(name);
-                                student.data('name', name).attr('data-name', name);
+                                PYO.removeStudentFromList(id);
                             }
                         }
                     });
@@ -585,26 +597,15 @@ var PYO = (function (PYO, $) {
                             var id = this.id;
                             var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
                             var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
-                            var msg;
                             // If viewing the groups-list
                             if (group.length) {
                                 var group_container = group.closest('.group');
                                 group_container.slideUp(function () { $(this).remove(); });
-                                if (group.hasClass('active')) {
-                                    msg = ich.active_item_removed_msg({item: 'group'});
-                                    msg.appendTo($('#messages'));
-                                    $('#messages').messages();
-                                    $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
-                                }
+                                if (group.hasClass('active')) { PYO.showActiveItemRemovedMsg('group', true); }
                             }
                             // If viewing the removed group
                             if (grouptitle.length) {
-                                msg = ich.active_item_removed_msg({item: 'group'});
-                                msg.appendTo($('#messages'));
-                                $('#messages').messages();
-                                if (grouptitle.hasClass('active')) {
-                                    $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
-                                }
+                                PYO.showActiveItemRemovedMsg('group', grouptitle.hasClass('active'));
                             }
                         }
                     });
@@ -660,6 +661,7 @@ var PYO = (function (PYO, $) {
         if ($('.village-nav').length) {
             PYO.navHandlers();
             PYO.listenForStudentChanges();
+            PYO.listenForGroupChanges();
             if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
                 PYO.fetchStudents();
             } else {
