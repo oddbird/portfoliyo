@@ -506,30 +506,37 @@ var PYO = (function (PYO, $) {
             });
 
             channel.bind('student_removed_from_group', function (data) {
-                // var groups = nav.find('.group .group-link').filter(function () {
-                //     var students_arr = $.trim($(this).data('students')).split(' ');
-                //     return $.inArray(id.toString(), students_arr) !== -1;
-                // });
-                // if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
-                //     var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
-                //     student.slideUp(function () { $(this).remove(); });
-                //     if (id === PYO.activeStudentId) {
-                //         var msg = ich.active_student_removed_msg();
-                //         msg.appendTo($('#messages'));
-                //         $('#messages').messages();
-                //         $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
-                //     }
-                // }
-                // if (groups.length) {
-                //     groups.each(function () {
-                //         var students_arr = $.trim($(this).data('students')).split(' ');
-                //         if ($.inArray(id.toString(), students_arr) !== -1) {
-                //             students_arr.splice($.inArray(id.toString(), students_arr), 1);
-                //             $(this).data('students', students_arr.join(' '));
-                //         }
-                //     });
-                // }
-                // PYO.pusher.unsubscribe('student_' + id);
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id) {
+                            var id = this.id;
+                            var removed_from_groups_arr = this.groups;
+                            var group_titles = nav.find('.grouptitle .group-link');
+                            var all_groups = nav.find('.group .group-link');
+                            var group_dashboard = group_titles.filter(function () {
+                                return $.inArray($(this).data('group-id'), removed_from_groups_arr) !== -1;
+                            });
+                            var removed_from_groups = all_groups.filter(function () {
+                                return $.inArray($(this).data('group-id'), removed_from_groups_arr) !== -1;
+                            });
+                            // If viewing the groups-list (and relevant groups exist)
+                            if (removed_from_groups.length) {
+                                removed_from_groups.each(function () {
+                                    var thisGroup = $(this);
+                                    var students_arr = $.trim(thisGroup.data('students')).split(' ');
+                                    if ($.inArray(id.toString(), students_arr) !== -1) {
+                                        students_arr.splice($.inArray(id.toString(), students_arr), 1);
+                                        thisGroup.data('students', students_arr.join(' '));
+                                    }
+                                });
+                            }
+                            // If viewing the group that includes the removed student
+                            if (group_dashboard.length) {
+                                removeStudentFromList(id);
+                            }
+                        }
+                    });
+                }
             });
 
             channel.bind('student_edited', function (data) {
