@@ -88,7 +88,10 @@
 // ---------------------------------------------------------------------------
 // Team
 
-.team { @extend %landing-section; }
+.team {
+  @extend %landing-section;
+  @include at-breakpoint($break) { @include padding-trailer(0); }
+}
 
 .dev {
   @include trailer(2);
@@ -98,19 +101,36 @@
   .fn { @extend %landing-title; }
 
   &:before {
-    @include stretch-y;
     @include background(image-url('landing/harsh.png') no-repeat scroll center top);
     @include background-size(contain);
-    content: " ";
-    left: 0;
+    @include stretch-y;
+    display: block;
     width: columns(3);
+    left: 0;
+    content: " ";
+  }
+
+  @include breakpoint(max-width 25em) {
+    padding-left: 0;
+    .fn {
+      @include trailing-border(1px,.25);
+      @include trailer(.25);
+      border-color: $base2;
+      text-align: center;
+    }
+    &:before {
+      position: static;
+      width: 100%;
+      height: rhythm(6);
+    }
   }
 
   @include at-breakpoint($break) {
     @include prefix(3);
     @include span-columns(10);
-    @include nth-omega(2n);
-    &:nth-child(2n+1) { clear: both; }
+    &:nth-child(2), &:last-child { @include omega; }
+    &:nth-child(3), &:nth-child(4) { clear: both; }
+    &:nth-child(3) { @include pre(5); }
     &:before { width: columns(3,10); }
   }
 }

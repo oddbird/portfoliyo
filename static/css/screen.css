@@ -1496,6 +1496,12 @@ button {
     background-size: 44.3038% auto;
   }
 }
+@media (min-width: 43.875em) {
+  .team {
+    padding-bottom: 0em;
+  }
+}
+
 .dev {
   margin-bottom: 2.55556em;
   padding-left: 38.70968%;
@@ -1503,17 +1509,36 @@ button {
   min-height: 7.66667em;
 }
 .dev:before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
   background: url('../images/landing/harsh.png?1351719867') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
   background-size: contain;
-  content: " ";
-  left: 0;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  display: block;
   width: 35.48387%;
+  left: 0;
+  content: " ";
+}
+@media (max-width: 25em) {
+  .dev {
+    padding-left: 0;
+  }
+  .dev .fn {
+    border-bottom-style: solid;
+    border-bottom-width: 0.05556em;
+    padding-bottom: 0.26389em;
+    margin-bottom: 0.31944em;
+    border-color: #eee8d5;
+    text-align: center;
+  }
+  .dev:before {
+    position: static;
+    width: 100%;
+    height: 7.66667em;
+  }
 }
 @media (min-width: 43.875em) {
   .dev {
@@ -1522,12 +1547,15 @@ button {
     float: left;
     margin-right: 1.26582%;
   }
-  .dev:nth-child(2n) {
+  .dev:nth-child(2), .dev:last-child {
     float: right;
     margin-right: 0;
   }
-  .dev:nth-child(2n+1) {
+  .dev:nth-child(3), .dev:nth-child(4) {
     clear: both;
+  }
+  .dev:nth-child(3) {
+    margin-left: 25.31646%;
   }
   .dev:before {
     width: 28.20513%;
@@ -1535,7 +1563,7 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351719867');
+  background-image: url('../images/landing/peter.png?1351721659');
 }
 
 #carl:before {
@@ -1547,7 +1575,7 @@ button {
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351719867');
+  background-image: url('../images/landing/jonny.png?1351721671');
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
