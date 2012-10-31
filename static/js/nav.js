@@ -543,10 +543,12 @@ var PYO = (function (PYO, $) {
                 if (data && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
                         if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
-                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]');
-                            if (student.data('name') !== this.name) {
-                                student.find('.listitem-name').text(this.name);
-                                student.data('name', this.name).attr('data-name', this.name);
+                            var id = this.id;
+                            var name = this.name;
+                            var student = nav.find('.student .listitem-select[data-id="' + id + '"]');
+                            if (student.data('name') !== name) {
+                                student.find('.listitem-name').text(name);
+                                student.data('name', name).attr('data-name', name);
                             }
                         }
                     });
@@ -562,7 +564,7 @@ var PYO = (function (PYO, $) {
                         var group = ich.group_list_item(data).hide();
                         var inserted = false;
                         nav.find('.group').each(function () {
-                            if (!inserted && $(this).find('.listitem-select').data('group-name').toLowerCase() > group.find('.listitem-select').data('group-name').toLowerCase()) {
+                            if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
                                 group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
                                 inserted = true;
                             }
@@ -572,6 +574,29 @@ var PYO = (function (PYO, $) {
                         }
                         group.find('.details').html5accordion();
                         group.find('input[placeholder], textarea[placeholder]').placeholder();
+                    });
+                }
+            });
+
+            channel.bind('group_edited', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && this.name) {
+                            var id = this.id;
+                            var name = this.name;
+                            var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
+                            var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
+                            // If viewing the groups-list
+                            if (group.length && group.data('group-name') !== name) {
+                                group.find('.listitem-name').text(name);
+                                group.data('group-name', name).attr('data-group-name', name);
+                            }
+                            // If viewing the edited group
+                            if (grouptitle.length && grouptitle.data('group-name') !== name) {
+                                grouptitle.find('.listitem-name').text(name);
+                                grouptitle.data('group-name', name).attr('data-group-name', name);
+                            }
+                        }
                     });
                 }
             });
