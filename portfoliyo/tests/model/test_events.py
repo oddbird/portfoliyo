@@ -10,8 +10,6 @@ from portfoliyo.tests import factories
 def test_student_event():
     """Pusher event for adding/editing/removing a student."""
     rel = factories.RelationshipFactory.create()
-    g = factories.GroupFactory.create(owner=rel.elder)
-    g.students.add(rel.student)
     with mock.patch('portfoliyo.model.events.get_pusher') as mock_get_pusher:
         channel = mock.Mock()
         mock_get_pusher.return_value = {
@@ -25,7 +23,6 @@ def test_student_event():
     data = args[1]['objects'][0]
     assert data['name'] == rel.student.name
     assert data['id'] == rel.student.id
-    assert data['groups'] == [g.pk]
     assert data['resource_uri'] == reverse(
         'api_dispatch_detail',
         kwargs={
@@ -41,7 +38,6 @@ def test_student_event():
 def test_group_event():
     """Pusher event for adding/editing/removing a group."""
     group = factories.GroupFactory.create()
-    group.students.add(factories.ProfileFactory.create(name="A Student"))
     with mock.patch('portfoliyo.model.events.get_pusher') as mock_get_pusher:
         channel = mock.Mock()
         mock_get_pusher.return_value = {
@@ -55,7 +51,6 @@ def test_group_event():
     data = args[1]['objects'][0]
     assert data['name'] == group.name
     assert data['id'] == group.id
-    assert data['students'][0]['name'] == "A Student"
     assert data['resource_uri'] == reverse(
         'api_dispatch_detail',
         kwargs={

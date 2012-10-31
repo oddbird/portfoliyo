@@ -83,80 +83,80 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
  */
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round-webfont.eot');
-  src: url('/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round-webfont.eot');
+  src: url('../fonts/cambridge_round-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round-webfont.woff') format('woff'), url('../fonts/cambridge_round-webfont.ttf') format('truetype'), url('../fonts/cambridge_round-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_semibold-webfont.eot');
-  src: url('/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot');
+  src: url('../fonts/cambridge_round_semibold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_semibold-webfont.woff') format('woff'), url('../fonts/cambridge_round_semibold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_semibold-webfont.svg#webfont') format('svg');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_bold-webfont.eot');
-  src: url('/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_bold-webfont.eot');
+  src: url('../fonts/cambridge_round_bold-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRound";
-  src: url('/cambridge_round_it-webfont.eot');
-  src: url('/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_it-webfont.eot');
+  src: url('../fonts/cambridge_round_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "CambridgeRoundCond";
-  src: url('/cambridge_round_cond-webfont.eot');
-  src: url('/cambridge_round_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_cond-webfont.eot');
+  src: url('../fonts/cambridge_round_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRoundCond";
-  src: url('/cambridge_round_bold_cond-webfont.eot');
-  src: url('/cambridge_round_bold_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold_cond-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_bold_cond-webfont.eot');
+  src: url('../fonts/cambridge_round_bold_cond-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_bold_cond-webfont.woff') format('woff'), url('../fonts/cambridge_round_bold_cond-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_bold_cond-webfont.svg#webfont') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "CambridgeRoundCond";
-  src: url('/cambridge_round_cond_it-webfont.eot');
-  src: url('/cambridge_round_cond_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond_it-webfont.svg#webfont') format('svg');
+  src: url('../fonts/cambridge_round_cond_it-webfont.eot');
+  src: url('../fonts/cambridge_round_cond_it-webfont.eot?#iefix') format('eot'), url('../fonts/cambridge_round_cond_it-webfont.woff') format('woff'), url('../fonts/cambridge_round_cond_it-webfont.ttf') format('truetype'), url('../fonts/cambridge_round_cond_it-webfont.svg#webfont') format('svg');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('/SquareSerif-Book-webfont.eot');
-  src: url('/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
+  src: url('../fonts/SquareSerif-Book-webfont.eot');
+  src: url('../fonts/SquareSerif-Book-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Book-webfont.woff') format('woff'), url('../fonts/SquareSerif-Book-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Book-webfont.svg#SquareSerifBook') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "SquareSerif";
-  src: url('/SquareSerif-Bold-webfont.eot');
-  src: url('/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot');
+  src: url('../fonts/SquareSerif-Bold-webfont.eot?#iefix') format('eot'), url('../fonts/SquareSerif-Bold-webfont.woff') format('woff'), url('../fonts/SquareSerif-Bold-webfont.ttf') format('truetype'), url('../fonts/SquareSerif-Bold-webfont.svg#SquareSerifBold') format('svg');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
   font-family: "pyo";
-  src: url('/pyo.eot');
-  src: url('/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('../fonts/pyo.eot');
+  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
@@ -477,7 +477,7 @@ optgroup {
   border-style: solid;
   border-width: 0.07143em;
   padding: 0.33929em;
-  background: url('rgbapng/ffffff40.png?1351118125');
+  background: url('../images/rgbapng/ffffff40.png?1351714702');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -728,7 +728,7 @@ button {
 .school-field .radio-options, .students-field .check-options, .elders-field .check-options, .groups-field .check-options {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  background: url('rgbapng/ffffff40.png?1351118125');
+  background: url('../images/rgbapng/ffffff40.png?1351714702');
   background: rgba(255, 255, 255, 0.25);
   max-height: 13.14286em;
   border: 1px solid;
@@ -749,7 +749,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('rgbapng/268bd220.png?1351118125');
+  background: url('../images/rgbapng/268bd220.png?1351714702');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -765,7 +765,7 @@ button {
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  background: url('rgbapng/ffffff7f.png?1351118125');
+  background: url('../images/rgbapng/ffffff7f.png?1351714702');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -779,7 +779,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('rgbapng/ffffffbf.png?1351118125');
+  background: url('../images/rgbapng/ffffffbf.png?1351714702');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -1662,13 +1662,13 @@ button {
 
 .team {
   padding-top: 2.55556em;
-  background: #002b36 url('landing/space.png?1351285447');
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('landing/space.png?1351285447');
-  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1351285447');
-  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1351285447');
-  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1351285447');
-  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1351285447');
-  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('landing/space.png?1351285447');
+  background: #002b36 url('../images/landing/space.png?1351714696');
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #002b36), color-stop(33.33333%, rgba(0, 43, 54, 0)), color-stop(66.66667%, rgba(0, 43, 54, 0)), color-stop(100%, #002b36)), -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(88, 110, 117, 0.75)), color-stop(33.33333%, rgba(0, 43, 54, 0.75)), color-stop(66.66667%, rgba(0, 43, 54, 0.75)), color-stop(100%, rgba(88, 110, 117, 0.75))), url('../images/landing/space.png?1351714696');
+  background-image: -webkit-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -webkit-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1351714696');
+  background-image: -moz-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -moz-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1351714696');
+  background-image: -o-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -o-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1351714696');
+  background-image: -ms-linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), -ms-linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1351714696');
+  background-image: linear-gradient(top, #002b36, rgba(0, 43, 54, 0), rgba(0, 43, 54, 0), #002b36), linear-gradient(left, rgba(88, 110, 117, 0.75), rgba(0, 43, 54, 0.75), rgba(0, 43, 54, 0.75), rgba(88, 110, 117, 0.75)), url('../images/landing/space.png?1351714696');
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -1714,7 +1714,7 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.63889em;
   box-shadow: #002b36 0 0 0.63889em;
-  background: url('rgbapng/586e7540.png?1350940259');
+  background: url('../images/rgbapng/586e7540.png?1351714703');
   background: rgba(88, 110, 117, 0.25);
   clear: both;
   padding: 1.27778em;
@@ -1917,7 +1917,7 @@ button {
 }
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
-  background: url('rgbapng/8599007f.png?1351118125');
+  background: url('../images/rgbapng/8599007f.png?1351714703');
   background: rgba(133, 153, 0, 0.5);
   color: #657b83;
   font-weight: bold;
@@ -2159,7 +2159,7 @@ button {
   margin-left: -2.55556em;
   padding-left: 2.55556em;
   padding-bottom: 5.11111em;
-  background: url('start-arrow.png?1350940260') no-repeat left bottom;
+  background: url('../images/start-arrow.png?1351286140') no-repeat left bottom;
   font-weight: bold;
 }
 
@@ -2203,11 +2203,11 @@ button {
 }
 
 .listitem-select:link, .listitem-select:visited {
-  background: url('rgbapng/eee8d540.png?1351118125');
+  background: url('../images/rgbapng/eee8d540.png?1351714703');
   background: rgba(238, 232, 213, 0.25);
 }
 .title .listitem-select:link, .title .listitem-select:visited {
-  background: url('rgbapng/268bd240.png?1351118125');
+  background: url('../images/rgbapng/268bd240.png?1351714703');
   background: rgba(38, 139, 210, 0.25);
   font-weight: bold;
   color: #073642;
@@ -2217,11 +2217,11 @@ button {
   color: #fdf6e3;
 }
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
-  background: url('rgbapng/eee8d57f.png?1351118125');
+  background: url('../images/rgbapng/eee8d57f.png?1351714703');
   background: rgba(238, 232, 213, 0.5);
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('rgbapng/268bd27f.png?1351118125');
+  background: url('../images/rgbapng/268bd27f.png?1351714703');
   background: rgba(38, 139, 210, 0.5);
 }
 .listitem-select .unread {
@@ -2339,7 +2339,7 @@ button {
   -ms-border-radius: 0.125em;
   -o-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('rgbapng/0736427f.png?1351118125');
+  background: url('../images/rgbapng/0736427f.png?1351714703');
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
@@ -2372,12 +2372,6 @@ button {
 .getting-started:last-child {
   background: none;
 }
-.getting-started:last-child .howto {
-  display: block;
-}
-.loading .getting-started:last-child .howto {
-  display: none;
-}
 .getting-started + .post {
   border-top: 1px solid;
 }
@@ -2385,6 +2379,9 @@ button {
 .howto {
   display: none;
   counter-reset: howto;
+}
+.show-instructions .howto {
+  display: block;
 }
 
 [class^="howto-"] {
@@ -2563,7 +2560,7 @@ button {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-  background: url('rgbapng/93a1a140.png?1351118125');
+  background: url('../images/rgbapng/93a1a140.png?1351714703');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2729,7 +2726,7 @@ button {
   color: #657b83;
 }
 .elder .vcard.declined {
-  background: url('rgbapng/dc322f20.png?1351118126');
+  background: url('../images/rgbapng/dc322f20.png?1351714703');
   background: rgba(220, 50, 47, 0.125);
 }
 .elder .vcard.declined:before {
@@ -2827,7 +2824,7 @@ button {
   -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('rgbapng/002b3640.png?1351118126');
+  background: url('../images/rgbapng/002b3640.png?1351714703');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
