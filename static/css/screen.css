@@ -2388,6 +2388,9 @@ button {
 .show-instructions .instructions {
   display: block;
 }
+.post + .instructions {
+  position: static;
+}
 
 .howto {
   counter-reset: howto;

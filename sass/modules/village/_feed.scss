@@ -55,6 +55,7 @@ $background       : lighten($base3,3);
   bottom: 0;
   padding: rhythm(1) $post-h-padding;
   .show-instructions & { display: block; }
+  .post + & { position: static; }
 }
 .howto {
   @include pie-clearfix;
