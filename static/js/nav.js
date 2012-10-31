@@ -546,7 +546,7 @@ var PYO = (function (PYO, $) {
                             var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]');
                             if (student.data('name') !== this.name) {
                                 student.find('.listitem-name').text(this.name);
-                                student.data('name', this.name);
+                                student.data('name', this.name).attr('data-name', this.name);
                             }
                         }
                     });
