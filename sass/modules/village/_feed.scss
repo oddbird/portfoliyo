@@ -29,17 +29,14 @@ $post-h-padding   : gutter($center);
     @include serif;
     margin-bottom: -1px;
   }
-  &:last-child {
-    background: none;
-    .howto { display: block; }
-    .loading & .howto { display: none; }
-  }
+  &:last-child { background: none; }
   + .post { border-top: 1px solid; }
 }
 
 .howto {
   display: none;
   counter-reset: howto;
+  .show-instructions & { display: block; }
 }
 [class^="howto-"] {
   @extend %icon;
