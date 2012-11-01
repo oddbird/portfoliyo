@@ -20,3 +20,16 @@
   margin: 0;
   width: auto;
 }
+
+// ----------------------------------------------------------------------------
+// images
+
+@function image-rhythm($image, $font-size: $base-font-size) {
+  @return rhythm(ceil(image-height($image) / $base-line-height), $font-size);
+}
+
+@mixin rhythm-image($image, $font-size) {
+  background-image: image-url($image);
+  height: image-rhythm($image, $font-size);
+  width: image-width($image);
+}

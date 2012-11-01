@@ -1,11 +1,9 @@
 """Core/home views."""
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
+from django.template.response import TemplateResponse
 
 from session_csrf import anonymous_csrf
-
-from portfoliyo.landing.views import landing
-
 
 
 
@@ -34,4 +32,4 @@ def home(request):
     if request.user.is_authenticated():
         return redirect(redirect_home(request.user))
     else:
-        return landing(request)
+        return TemplateResponse(request, 'landing.html')

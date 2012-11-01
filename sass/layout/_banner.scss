@@ -13,7 +13,10 @@ $banner-leading : 1 + $banner-rhythm*2;
 // ---------------------------------------------------------------------------
 // Banner
 
-[role="banner"] { @extend %boilerplate; }
+[role="banner"] {
+  @extend %boilerplate;
+  color: mix($base1,$base2);
+}
 
 $brand-width: $left;
 $meta-width: $right + 1;
@@ -24,20 +27,19 @@ $announce-width: $break-cols - $brand-width - $meta-width;
 
 .brand {
   @include adjust-font-size-to($banner-size);
-  @include span-columns($half-small);
-  @include at-breakpoint($break) { @include span-columns($brand-width); }
-  .village-app & { @include span-columns($brand-width, $break-cols); }
+  @include span-columns(3);
+  color: $base3;
   .wordmark {
     @extend %icon;
     @extend %icon-fire;
-    @include adjust-leading-to($banner-leading, $banner-size);
-    height: rhythm($banner-leading, $banner-size);
-    display: block;
-    overflow: hidden;
+    @extend %banner-item;
+    display: inline-block;
     font-weight: bold;
-    white-space: nowrap;
-    &:before { margin: 0; }
+    &:before { line-height: 1; }
   }
+
+  @include at-breakpoint($break) { @include span-columns($brand-width); }
+  .village-app & { @include span-columns($brand-width, $break-cols); }
 }
 
 // ---------------------------------------------------------------------------
@@ -79,14 +81,17 @@ $announce-width: $break-cols - $brand-width - $meta-width;
 
 // ---------------------------------------------------------------------------
 // Meta
-
-.meta {
+%metanav-base {
   @include adjust-font-size-to($banner-size);
-  @include span-columns($half-small omega);
+  @include span-columns(5 omega);
   @include at-breakpoint($break) { @include span-columns($meta-width omega); }
   .village-app & { @include span-columns($meta-width omega, $break-cols); }
   position: relative;
   text-align: right;
+}
+
+.meta {
+  @extend %metanav-base;
 
   span, a {
     @extend %icon;
@@ -153,3 +158,20 @@ $useraction-background    : $base01;
   .meta:hover & { display: block; }
 }
 
+// ---------------------------------------------------------------------------
+// Login
+
+.login-nav {
+  @extend %metanav-base;
+  ul { @include inline-list; }
+  a {
+    @extend %banner-item;
+    display: inline-block;
+  }
+
+  .login-link {
+    @extend %button;
+    @include small-button;
+    @include button-color($blue);
+  }
+}
