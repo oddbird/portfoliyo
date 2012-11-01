@@ -257,6 +257,19 @@ button { @include reset-button; }
 // ---------------------------------------------------------------------------
 // Radio/Checkbox Options
 
+.options-header {
+  @include clearfix;
+  padding: rhythm(.25);
+  background: $base;
+  color: $base3;
+  font-weight: bold;
+  ul { @include no-style-list; }
+  li {
+    @include span-columns(4,$center);
+    @include adjust-font-size-to($smallpx);
+  }
+}
+
 %check-option {
   @include clearfix;
   position: relative;
