@@ -57,7 +57,7 @@ class Profile(models.Model):
     # code for parent-initiated signups
     code = models.CharField(max_length=20, blank=True, null=True, unique=True)
     # signup status (for text-based multi-step signup); what are we awaiting?
-    STATE = Choices('kidname', 'relationship', 'done')
+    STATE = Choices('kidname', 'relationship', 'name', 'done')
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
     # does this user want to receive email notifications?
     email_notifications = models.BooleanField(default=True)
