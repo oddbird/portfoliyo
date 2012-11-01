@@ -23,6 +23,11 @@
 
 .school-field {
   @include trailer;
+  .school-name { @include span-columns(8,$center); }
+  .school-zip {
+    @include span-columns(4 omega,$center);
+    text-align: right;
+  }
   .radio-options { @extend %check-options; }
   .zip {
     position: absolute;
