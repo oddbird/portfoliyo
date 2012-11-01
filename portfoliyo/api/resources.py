@@ -251,18 +251,47 @@ class ElderRelationshipResource(PortfoliyoResource):
 
 
 
-class GroupResource(PortfoliyoResource):
+class SlimGroupResource(PortfoliyoResource):
+    class Meta(PortfoliyoResource.Meta):
+        queryset = model.Group.objects.order_by('name')
+        resource_name = 'group'
+        fields = ['id', 'name']
+        authorization = GroupAuthorization()
+        detail_allowed_methods = ['get', 'delete']
+
+
+    def dehydrate(self, bundle):
+        bundle.data['students_uri'] = reverse(
+            'api_dispatch_list',
+            kwargs={'resource_name': 'user', 'api_name': 'v1'},
+            ) + '?student_in_groups=' + str(bundle.obj.id)
+        bundle.data['group_uri'] = reverse(
+            'group',
+            kwargs={'group_id': bundle.obj.id},
+            )
+        bundle.data['edit_uri'] = reverse(
+            'edit_group',
+            kwargs={'group_id': bundle.obj.id},
+            )
+        bundle.data['add_student_uri'] = reverse(
+            'add_student_in_group', kwargs={'group_id': bundle.obj.id})
+        user = getattr(bundle.request, 'user', None)
+        if user is not None:
+            bundle.data['unread_count'] = model.unread.group_unread_count(
+                bundle.obj, bundle.request.user.profile)
+        return bundle
+
+
+
+
+class GroupResource(SlimGroupResource):
     owner = fields.ForeignKey(ProfileResource, 'owner')
     students = fields.ToManyField(SlimProfileResource, 'students', full=True)
 
 
-    class Meta(PortfoliyoResource.Meta):
-        queryset = model.Group.objects.order_by(
-            'name').prefetch_related('students')
-        resource_name = 'group'
-        fields = ['id', 'name', 'owner', 'students']
-        authorization = GroupAuthorization()
-        detail_allowed_methods = ['get', 'delete']
+    class Meta(SlimGroupResource.Meta):
+        queryset = SlimGroupResource.Meta.queryset.prefetch_related('students')
+        fields = SlimGroupResource.Meta.fields + ['owner', 'students']
 
 
     def full_dehydrate(self, bundle):
@@ -302,28 +331,6 @@ class GroupResource(PortfoliyoResource):
                     })
         else:
             bundle = super(GroupResource, self).full_dehydrate(bundle)
-        return bundle
-
-
-    def dehydrate(self, bundle):
-        bundle.data['students_uri'] = reverse(
-            'api_dispatch_list',
-            kwargs={'resource_name': 'user', 'api_name': 'v1'},
-            ) + '?student_in_groups=' + str(bundle.obj.id)
-        bundle.data['group_uri'] = reverse(
-            'group',
-            kwargs={'group_id': bundle.obj.id},
-            )
-        bundle.data['edit_uri'] = reverse(
-            'edit_group',
-            kwargs={'group_id': bundle.obj.id},
-            )
-        bundle.data['add_student_uri'] = reverse(
-            'add_student_in_group', kwargs={'group_id': bundle.obj.id})
-        user = getattr(bundle.request, 'user', None)
-        if user is not None:
-            bundle.data['unread_count'] = model.unread.group_unread_count(
-                bundle.obj, bundle.request.user.profile)
         return bundle
 
 

@@ -115,13 +115,13 @@ $instruction-height: rhythm(5.5);
   border-color: $base1;
   background: $base3;
 
-  &.mine { background: lighten($blue,45); }
-  &.not-posted { background: lighten($red,45); }
   &.old {
     color: $base1;
     background: $background;
     .title, .summary { color: $base1; }
   }
+  &.mine { background: lighten($blue,45); }
+  &.not-posted { background: lighten($red,45); }
 
   .timeout {
     @extend %error;

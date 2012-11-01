@@ -369,9 +369,7 @@ class StudentForm(forms.ModelForm):
         # (in case they are logged in in two places - changes to groups may be
         # relevant to them). If name is changed, send to all elders so nav can
         # be updated.
-        if self._old_name == self.instance.name:
-            events.student_edited(student, self.elder)
-        else:
+        if self._old_name != self.instance.name:
             events.student_edited(student, *student.elders)
 
         return student

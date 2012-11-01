@@ -8,11 +8,13 @@
   .author { text-transform: uppercase; }
   strong { font-weight: bold; }
 
-  @include at-breakpoint($break) {
-    .author { @include span-columns($left); }
-    .nonprofit {
-      @include span-columns($center + $right omega);
-      text-align: right;
+  .village-landing & {
+    @include at-breakpoint($break) {
+      .author { @include span-columns($left + $right); }
+      .nonprofit {
+        @include span-columns($center omega);
+        text-align: right;
+      }
     }
   }
 }
