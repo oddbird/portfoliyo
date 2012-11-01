@@ -2144,6 +2144,11 @@ button {
   background: #fdf6e3;
 }
 
+.feed-posts {
+  min-height: 100%;
+  padding-bottom: 7.02778em;
+}
+
 .getting-started {
   padding-top: 1.27778em;
   border-bottom-style: solid;
@@ -2163,9 +2168,6 @@ button {
 }
 
 .instructions {
-  position: absolute;
-  left: 0;
-  right: 0;
   -webkit-box-shadow: #657b83 0 0 3px inset;
   -moz-box-shadow: #657b83 0 0 3px inset;
   box-shadow: #657b83 0 0 3px inset;
@@ -2179,14 +2181,12 @@ button {
   -o-background-size: 4em 4em;
   background-size: 4em 4em;
   display: none;
-  bottom: 0;
+  margin-top: -7.02778em;
+  min-height: 7.02778em;
   padding: 1.27778em 2.12766%;
 }
 .show-instructions .instructions {
   display: block;
-}
-.post + .instructions {
-  position: static;
 }
 
 .howto {

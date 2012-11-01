@@ -20,6 +20,13 @@ $background       : lighten($base3,3);
   background: $base3;
 }
 
+$instruction-height: rhythm(5.5);
+
+.feed-posts {
+  min-height: 100%;
+  padding-bottom: $instruction-height;
+}
+
 // ---------------------------------------------------------------------------
 // Getting Started
 
@@ -37,7 +44,6 @@ $background       : lighten($base3,3);
 }
 
 .instructions {
-  @include stretch-x;
   @include box-shadow($base 0 0 3px inset);
   @include background($base2
     linear-gradient(
@@ -52,10 +58,10 @@ $background       : lighten($base3,3);
   );
   @include background-size(4em 4em);
   display: none;
-  bottom: 0;
+  margin-top: - $instruction-height;
+  min-height: $instruction-height;
   padding: rhythm(1) $post-h-padding;
   .show-instructions & { display: block; }
-  .post + & { position: static; }
 }
 .howto {
   @include pie-clearfix;
