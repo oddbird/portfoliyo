@@ -2284,18 +2284,18 @@ button {
   display: table;
   clear: both;
 }
-.post.mine {
-  background: #e3f1fa;
-}
-.post.not-posted {
-  background: #fdf4f3;
-}
 .post.old {
   color: #93a1a1;
   background: none;
 }
 .post.old .title, .post.old .summary {
   color: #93a1a1;
+}
+.post.mine {
+  background: #e3f1fa;
+}
+.post.not-posted {
+  background: #fdf4f3;
 }
 .post .timeout {
   margin-left: -2.12766%;

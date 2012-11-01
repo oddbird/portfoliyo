@@ -23,9 +23,6 @@ def student_edited(student, *elders):
 
 def student_event(event, student, *elders):
     """Send Pusher ``event`` regarding ``student`` to ``elders``."""
-    pusher = get_pusher()
-    if pusher is None:
-        return
     from portfoliyo.api.resources import SlimProfileResource
     profile_resource = SlimProfileResource()
     # allows resource_uri to be generated
@@ -33,11 +30,8 @@ def student_event(event, student, *elders):
     b = profile_resource.build_bundle(obj=student)
     b = profile_resource.full_dehydrate(b)
     data = profile_resource._meta.serializer.to_simple(b, None)
-    data['groups'] = list(
-        student.student_in_groups.values_list('pk', flat=True))
     for elder in elders:
-        channel = pusher['students_of_%s' % elder.id]
-        channel.trigger(event, {'objects': [data]})
+        trigger('students_of_%s' % elder.id, event, {'objects': [data]})
 
 
 
@@ -58,13 +52,58 @@ def group_edited(group):
 
 def group_event(event, group):
     """Send Pusher ``event`` regarding ``group`` to its owner."""
-    pusher = get_pusher()
-    if pusher is None:
-        return
-    from portfoliyo.api.resources import GroupResource
-    group_resource = GroupResource()
+    from portfoliyo.api.resources import SlimGroupResource
+    group_resource = SlimGroupResource()
+    # allows resource_uri to be generated
+    group_resource._meta.api_name = 'v1'
     b = group_resource.build_bundle(obj=group)
     b = group_resource.full_dehydrate(b)
     data = group_resource._meta.serializer.to_simple(b, None)
-    channel = pusher['groups_of_%s' % group.owner.id]
-    channel.trigger(event, {'objects': [data]})
+    trigger('groups_of_%s' % group.owner.id, event, {'objects': [data]})
+
+
+
+def student_added_to_group(owner, students, groups):
+    """Added event needs full student data."""
+    from portfoliyo.api.resources import SlimProfileResource
+    profile_resource = SlimProfileResource()
+    # allows resource_uri to be generated
+    profile_resource._meta.api_name = 'v1'
+    group_ids = [g.id for g in groups]
+    objects = []
+    for student in students:
+        b = profile_resource.build_bundle(obj=student)
+        b = profile_resource.full_dehydrate(b)
+        data = profile_resource._meta.serializer.to_simple(b, None)
+        data['groups'] = group_ids
+        objects.append(data)
+    trigger(
+        'groups_of_%s' % owner.id,
+        'student_added_to_group',
+        {
+            'objects': objects
+            },
+        )
+
+
+
+def student_removed_from_group(owner, students, groups):
+    """Removed event only needs student ID."""
+    group_ids = [g.id for g in groups]
+    trigger(
+        'groups_of_%s' % owner.id,
+        'student_removed_from_group',
+        {
+            'objects': [
+                {'id': s.id, 'groups': group_ids} for s in students]
+            },
+        )
+
+
+
+def trigger(channel, event, data):
+    """Fire ``event`` on ``channel`` with ``data`` if Pusher is configured."""
+    pusher = get_pusher()
+    if pusher is None:
+        return
+    pusher[channel].trigger(event, data)

@@ -380,6 +380,43 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.addStudentToList = function (data, all_students) {
+        var nav = $('.village-nav');
+        if (nav.data('is-staff') === 'True') { data.staff = true; }
+        data.objects = true;
+        data.all_students = all_students;
+        var student = ich.student_list_item(data).hide();
+        var inserted = false;
+        nav.find('.student').each(function () {
+            if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
+                inserted = true;
+            }
+        });
+        if (!inserted) {
+            student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+        }
+        student.find('.details').html5accordion();
+        student.find('input[placeholder], textarea[placeholder]').placeholder();
+        PYO.listenForPosts(student);
+    };
+
+    PYO.removeStudentFromList = function (id) {
+        var nav = $('.village-nav');
+        if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
+            var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
+            student.slideUp(function () { $(this).remove(); });
+            if (id === PYO.activeStudentId) { PYO.showActiveItemRemovedMsg('student', true); }
+        }
+    };
+
+    PYO.showActiveItemRemovedMsg = function (item, disable_form) {
+        var msg = ich.active_item_removed_msg({item: item});
+        msg.appendTo($('#messages'));
+        $('#messages').messages();
+        if (disable_form) { $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled'); }
+    };
+
     PYO.listenForStudentChanges = function () {
         if (PYO.pusherKey && PYO.activeUserId) {
             var nav = $('.village-nav');
@@ -388,49 +425,25 @@ var PYO = (function (PYO, $) {
             channel.bind('student_added', function (data) {
                 if (data && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
-                        var all_students_group = nav.find('.group .group-link').filter(function () {
+                        var id = this.id;
+                        var all_groups = nav.find('.group .group-link');
+                        var group_titles = nav.find('.grouptitle .group-link');
+                        var all_students_group = all_groups.filter(function () {
                             return $(this).data('group-id').toString().indexOf('all') !== -1;
                         });
-                        if (nav.find('.grouptitle .group-link').filter(function () {
+                        var all_students_dashboard = group_titles.filter(function () {
                             return $(this).data('group-id').toString().indexOf('all') !== -1;
-                        }).length) {
-                            if (nav.data('is-staff') === 'True') { this.staff = true; }
-                            this.objects = true;
-                            this.all_students = true;
-                            var student = ich.student_list_item(this).hide();
-                            var inserted = false;
-                            nav.find('.student').each(function () {
-                                if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
-                                    student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
-                                    inserted = true;
-                                }
-                            });
-                            if (!inserted) {
-                                student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
-                            }
-                            student.find('.details').html5accordion();
-                            student.find('input[placeholder], textarea[placeholder]').placeholder();
-                            PYO.listenForPosts(student);
+                        });
+                        // If viewing the all-students group
+                        if (all_students_dashboard.length) {
+                            PYO.addStudentToList(this, true);
                         }
-                        if (all_students_group.length) {
+                        // If viewing the groups-list (and the all-students group is visible)
+                        if (all_students_group.length && id) {
                             var students = $.trim(all_students_group.data('students')) + ' ';
-                            students = students + this.id.toString() + ' ';
+                            students = students + id.toString() + ' ';
                             all_students_group.data('students', students);
-                            PYO.subscribeToGroupChannel(this.id);
-                        }
-                    });
-                }
-            });
-
-            channel.bind('student_edited', function (data) {
-                if (data && data.objects && data.objects.length) {
-                    $.each(data.objects, function () {
-                        if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
-                            var student = nav.find('.student .listitem-select[data-id="' + this.id + '"]');
-                            if (student.data('name') !== this.name) {
-                                student.find('.listitem-name').text(this.name);
-                                student.data('name', this.name);
-                            }
+                            PYO.subscribeToGroupChannel(id);
                         }
                     });
                 }
@@ -441,30 +454,182 @@ var PYO = (function (PYO, $) {
                     $.each(data.objects, function () {
                         if (this.id) {
                             var id = this.id;
-                            var groups = nav.find('.group .group-link').filter(function () {
-                                var students_arr = $.trim($(this).data('students')).split(' ');
-                                return $.inArray(id.toString(), students_arr) !== -1;
+                            var all_groups = nav.find('.group .group-link');
+                            var group_titles = nav.find('.grouptitle .group-link');
+                            var all_students_group = all_groups.filter(function () {
+                                return $(this).data('group-id').toString().indexOf('all') !== -1;
                             });
-                            if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
-                                var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
-                                student.slideUp(function () { $(this).remove(); });
-                                if (id === PYO.activeStudentId) {
-                                    var msg = ich.active_student_removed_msg();
-                                    msg.appendTo($('#messages'));
-                                    $('#messages').messages();
-                                    $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled');
-                                }
+                            var all_students_dashboard = group_titles.filter(function () {
+                                return $(this).data('group-id').toString().indexOf('all') !== -1;
+                            });
+                            // If viewing the all-students group
+                            if (all_students_dashboard.length) {
+                                PYO.removeStudentFromList(id);
                             }
-                            if (groups.length) {
-                                groups.each(function () {
-                                    var students_arr = $.trim($(this).data('students')).split(' ');
+                            // If viewing the groups-list (and the all-students group is visible)
+                            if (all_students_group.length) {
+                                var students_arr = $.trim(all_students_group.data('students')).split(' ');
+                                if ($.inArray(id.toString(), students_arr) !== -1) {
+                                    students_arr.splice($.inArray(id.toString(), students_arr), 1);
+                                    all_students_group.data('students', students_arr.join(' '));
+                                }
+                                PYO.pusher.unsubscribe('student_' + id);
+                            }
+                        }
+                    });
+                }
+            });
+
+            channel.bind('student_edited', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && this.name && nav.find('.student .listitem-select[data-id="' + this.id + '"]').length) {
+                            var id = this.id;
+                            var name = this.name;
+                            var student = nav.find('.student .listitem-select[data-id="' + id + '"]');
+                            if (student.data('name') !== name) {
+                                student.find('.listitem-name').text(name);
+                                student.data('name', name).attr('data-name', name);
+                            }
+                        }
+                    });
+                }
+            });
+        }
+    };
+
+    PYO.listenForGroupChanges = function () {
+        if (PYO.pusherKey && PYO.activeUserId) {
+            var nav = $('.village-nav');
+            var channel = PYO.pusher.subscribe('groups_of_' + PYO.activeUserId);
+
+            channel.bind('student_added_to_group', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        var id = this.id;
+                        var added_to_groups_arr = this.groups;
+                        var group_titles = nav.find('.grouptitle .group-link');
+                        var all_groups = nav.find('.group .group-link');
+                        var group_dashboard = group_titles.filter(function () {
+                            return $.inArray($(this).data('group-id'), added_to_groups_arr) !== -1;
+                        });
+                        var added_to_groups = all_groups.filter(function () {
+                            return $.inArray($(this).data('group-id'), added_to_groups_arr) !== -1;
+                        });
+                        // If viewing the groups-list (and relevant groups exist)
+                        if (added_to_groups.length && id) {
+                            added_to_groups.each(function () {
+                                var thisGroup = $(this);
+                                var students = $.trim(thisGroup.data('students')) + ' ';
+                                students = students + id.toString() + ' ';
+                                thisGroup.data('students', students);
+                            });
+                        }
+                        // If viewing the group that includes the new student
+                        if (group_dashboard.length) {
+                            PYO.addStudentToList(this);
+                        }
+                    });
+                }
+            });
+
+            channel.bind('student_removed_from_group', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id) {
+                            var id = this.id;
+                            var removed_from_groups_arr = this.groups;
+                            var group_titles = nav.find('.grouptitle .group-link');
+                            var all_groups = nav.find('.group .group-link');
+                            var group_dashboard = group_titles.filter(function () {
+                                return $.inArray($(this).data('group-id'), removed_from_groups_arr) !== -1;
+                            });
+                            var removed_from_groups = all_groups.filter(function () {
+                                return $.inArray($(this).data('group-id'), removed_from_groups_arr) !== -1;
+                            });
+                            // If viewing the groups-list (and relevant groups exist)
+                            if (removed_from_groups.length) {
+                                removed_from_groups.each(function () {
+                                    var thisGroup = $(this);
+                                    var students_arr = $.trim(thisGroup.data('students')).split(' ');
                                     if ($.inArray(id.toString(), students_arr) !== -1) {
                                         students_arr.splice($.inArray(id.toString(), students_arr), 1);
-                                        $(this).data('students', students_arr.join(' '));
+                                        thisGroup.data('students', students_arr.join(' '));
                                     }
                                 });
                             }
-                            PYO.pusher.unsubscribe('student_' + id);
+                            // If viewing the group that includes the removed student
+                            if (group_dashboard.length) {
+                                PYO.removeStudentFromList(id);
+                            }
+                        }
+                    });
+                }
+            });
+
+            channel.bind('group_added', function (data) {
+                // If viewing the groups-list
+                if (data && data.objects && data.objects.length && nav.find('.group').length) {
+                    $.each(data.objects, function () {
+                        if (nav.data('is-staff') === 'True') { this.staff = true; }
+                        this.objects = true;
+                        var group = ich.group_list_item(this).hide();
+                        var inserted = false;
+                        nav.find('.group').not(':first').each(function () {
+                            if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
+                                group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
+                                inserted = true;
+                            }
+                        });
+                        if (!inserted) {
+                            group.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+                        }
+                        group.find('.details').html5accordion();
+                        group.find('input[placeholder], textarea[placeholder]').placeholder();
+                    });
+                }
+            });
+
+            channel.bind('group_removed', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id) {
+                            var id = this.id;
+                            var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
+                            var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
+                            // If viewing the groups-list
+                            if (group.length) {
+                                var group_container = group.closest('.group');
+                                group_container.slideUp(function () { $(this).remove(); });
+                                if (group.hasClass('active')) { PYO.showActiveItemRemovedMsg('group', true); }
+                            }
+                            // If viewing the removed group
+                            if (grouptitle.length) {
+                                PYO.showActiveItemRemovedMsg('group', grouptitle.hasClass('active'));
+                            }
+                        }
+                    });
+                }
+            });
+
+            channel.bind('group_edited', function (data) {
+                if (data && data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        if (this.id && this.name) {
+                            var id = this.id;
+                            var name = this.name;
+                            var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
+                            var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
+                            // If viewing the groups-list
+                            if (group.length && group.data('group-name') !== name) {
+                                group.find('.listitem-name').text(name);
+                                group.data('group-name', name).attr('data-group-name', name);
+                            }
+                            // If viewing the edited group
+                            if (grouptitle.length && grouptitle.data('group-name') !== name) {
+                                grouptitle.find('.listitem-name').text(name);
+                                grouptitle.data('group-name', name).attr('data-group-name', name);
+                            }
                         }
                     });
                 }
@@ -496,6 +661,7 @@ var PYO = (function (PYO, $) {
         if ($('.village-nav').length) {
             PYO.navHandlers();
             PYO.listenForStudentChanges();
+            PYO.listenForGroupChanges();
             if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
                 PYO.fetchStudents();
             } else {
