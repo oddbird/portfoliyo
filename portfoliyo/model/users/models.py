@@ -381,26 +381,25 @@ def send_student_group_event(
             groups = instance.student_in_groups.order_by('owner')
         else:
             groups = Group.objects.filter(pk__in=pk_set).order_by('owner')
-        group_ids_by_owner_id = {}
+        groups_by_owner = {}
         for group in groups:
-            group_ids_by_owner_id.setdefault(
-                group.owner_id, []).append(group.id)
-        student_ids = [instance.pk]
+            groups_by_owner.setdefault(group.owner, []).append(group)
+        students = [instance]
     else:
         # instance is a group, pk_set are student PKs
-        group_ids_by_owner_id = {instance.owner_id: [instance.id]}
+        groups_by_owner = {instance.owner: [instance]}
         if action == 'pre_clear':
-            student_ids = instance.students.values_list('pk', flat=True)
+            students = instance.students.all()
         else:
-            student_ids = pk_set
+            students = Profile.objects.filter(pk__in=pk_set)
 
     if action in {'pre_clear', 'pre_remove'}:
         event = events.student_removed_from_group
     else:
         event = events.student_added_to_group
 
-    for owner_id, group_ids in group_ids_by_owner_id.items():
-        event(owner_id, list(student_ids), list(group_ids))
+    for owner, groups in groups_by_owner.items():
+        event(owner, list(students), list(groups))
 
 
 

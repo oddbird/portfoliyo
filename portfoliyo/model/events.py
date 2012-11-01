@@ -63,25 +63,39 @@ def group_event(event, group):
 
 
 
-def student_added_to_group(owner_id, student_ids, group_ids):
+def student_added_to_group(owner, students, groups):
+    """Added event needs full student data."""
+    from portfoliyo.api.resources import SlimProfileResource
+    profile_resource = SlimProfileResource()
+    # allows resource_uri to be generated
+    profile_resource._meta.api_name = 'v1'
+    group_ids = [g.id for g in groups]
+    objects = []
+    for student in students:
+        b = profile_resource.build_bundle(obj=student)
+        b = profile_resource.full_dehydrate(b)
+        data = profile_resource._meta.serializer.to_simple(b, None)
+        data['groups'] = group_ids
+        objects.append(data)
     trigger(
-        'groups_of_%s' % owner_id,
+        'groups_of_%s' % owner.id,
         'student_added_to_group',
         {
-            'objects': [
-                {'student_id': sid, 'groups': group_ids} for sid in student_ids]
+            'objects': objects
             },
         )
 
 
 
-def student_removed_from_group(owner_id, student_ids, group_ids):
+def student_removed_from_group(owner, students, groups):
+    """Removed event only needs student ID."""
+    group_ids = [g.id for g in groups]
     trigger(
-        'groups_of_%s' % owner_id,
+        'groups_of_%s' % owner.id,
         'student_removed_from_group',
         {
             'objects': [
-                {'student_id': sid, 'groups': group_ids} for sid in student_ids]
+                {'id': s.id, 'groups': group_ids} for s in students]
             },
         )
 

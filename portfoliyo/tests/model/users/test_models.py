@@ -550,8 +550,7 @@ class TestGroup(object):
         with mock.patch(target) as mock_student_added_to_group:
             g.students.add(s)
 
-        mock_student_added_to_group.assert_called_with(
-            g.owner.id, [s.id], [g.id])
+        mock_student_added_to_group.assert_called_with(g.owner, [s], [g])
 
 
     def test_add_student_to_group_reverse_event(self):
@@ -563,8 +562,7 @@ class TestGroup(object):
         with mock.patch(target) as mock_student_added_to_group:
             s.student_in_groups.add(g)
 
-        mock_student_added_to_group.assert_called_with(
-            g.owner.id, [s.id], [g.id])
+        mock_student_added_to_group.assert_called_with(g.owner, [s], [g])
 
 
     def test_remove_student_from_group_event(self):
@@ -577,8 +575,7 @@ class TestGroup(object):
         with mock.patch(target) as mock_student_removed_from_group:
             g.students.remove(s)
 
-        mock_student_removed_from_group.assert_called_with(
-            g.owner.id, [s.id], [g.id])
+        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
 
 
     def test_remove_student_from_group_reverse_event(self):
@@ -591,8 +588,7 @@ class TestGroup(object):
         with mock.patch(target) as mock_student_removed_from_group:
             s.student_in_groups.remove(g)
 
-        mock_student_removed_from_group.assert_called_with(
-            g.owner.id, [s.id], [g.id])
+        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
 
 
     def test_clear_student_from_group_event(self):
@@ -605,8 +601,7 @@ class TestGroup(object):
         with mock.patch(target) as mock_student_removed_from_group:
             g.students.clear()
 
-        mock_student_removed_from_group.assert_called_with(
-            g.owner.id, [s.id], [g.id])
+        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
 
 
     def test_clear_student_from_group_reverse_event(self):
@@ -619,8 +614,7 @@ class TestGroup(object):
         with mock.patch(target) as mock_student_removed_from_group:
             s.student_in_groups.clear()
 
-        mock_student_removed_from_group.assert_called_with(
-            g.owner.id, [s.id], [g.id])
+        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
 
 
 
