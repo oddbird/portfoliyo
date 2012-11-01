@@ -93,13 +93,13 @@ $post-h-padding   : gutter($center);
   border-color: $base1;
   background: $base3;
 
-  &.mine { background: lighten($blue,45); }
-  &.not-posted { background: lighten($red,45); }
   &.old {
     color: $base1;
     background: none;
     .title, .summary { color: $base1; }
   }
+  &.mine { background: lighten($blue,45); }
+  &.not-posted { background: lighten($red,45); }
 
   .timeout {
     @extend %error;
