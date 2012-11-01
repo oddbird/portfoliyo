@@ -1311,25 +1311,25 @@ button {
   font-weight: bold;
 }
 @media (min-width: 43.875em) {
-  [role="contentinfo"] .author {
-    width: 18.98734%;
+  .village-landing [role="contentinfo"] .author {
+    width: 39.24051%;
     float: left;
     margin-right: 1.26582%;
   }
-  [role="contentinfo"] .nonprofit {
-    width: 79.74684%;
+  .village-landing [role="contentinfo"] .nonprofit {
+    width: 59.49367%;
     float: right;
     margin-right: 0;
     text-align: right;
   }
 }
-.lt-ie9 [role="contentinfo"] .author {
-  width: 18.98734%;
+.lt-ie9 .village-landing [role="contentinfo"] .author {
+  width: 39.24051%;
   float: left;
   margin-right: 1.26582%;
 }
-.lt-ie9 [role="contentinfo"] .nonprofit {
-  width: 79.74684%;
+.lt-ie9 .village-landing [role="contentinfo"] .nonprofit {
+  width: 59.49367%;
   float: right;
   margin-right: 0;
   text-align: right;
