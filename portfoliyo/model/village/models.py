@@ -114,6 +114,9 @@ class BasePost(models.Model):
             # with in_reply_to we assume caller sent SMS
             if elder.phone != in_reply_to:
                 to_send.append((elder.phone, sms_body))
+                if elder.state != user_models.Profile.STATE.done:
+                    elder.state = user_models.Profile.STATE.done
+                    elder.save()
             sms_sent = True
 
             meta_sms.append(sms_data)

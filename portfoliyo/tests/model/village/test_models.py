@@ -12,7 +12,7 @@ import re
 from portfoliyo.model.users.models import contextualized_elders
 from portfoliyo.model.village import models, unread
 
-from portfoliyo.tests import factories
+from portfoliyo.tests import factories, utils
 
 
 
@@ -297,7 +297,6 @@ class TestPostCreate(object):
             "Pusher exception: Unexpected return status 413")
 
 
-
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_notifies_selected_mobile_users(self, mock_send_sms):
         """Sends text to selected active mobile users."""
@@ -331,6 +330,32 @@ class TestPostCreate(object):
                 'phone': "+13216540987",
                 }
             ]
+
+
+    @mock.patch('portfoliyo.model.village.models.sms.send')
+    def test_sending_sms_flips_to_done(self, mock_send_sms):
+        """If a user not in done state gets a text, we flip them to done."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__name="John Doe",
+            from_profile__phone=None,
+            )
+        rel2 = factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__user__is_active=True,
+            from_profile__state='kidname',
+            )
+
+        models.Post.create(
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
+
+        mock_send_sms.assert_called_with(
+            "+13216540987", "Hey dad --John Doe")
+        assert utils.refresh(rel2.elder).state == 'done'
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
