@@ -478,8 +478,8 @@ class TestBulkPost(object):
         assert group_post_data['group_id'] == 'all%s' % rel.elder.id
 
 
-    def test_new_post_unread_for_all_web_users_in_village(self):
-        """Sub-post of bulk post marked unread for all web users in village."""
+    def test_new_post_unread_for_all_web_users_in_village_except_author(self):
+        """Sub-post marked unread for all web users in village except author."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
         rel2 = factories.RelationshipFactory.create(
@@ -492,9 +492,9 @@ class TestBulkPost(object):
         models.BulkPost.create(rel.elder, group, 'Foo')
         sub = rel.student.posts_in_village.get()
 
-        # also unread for author
-        assert unread.is_unread(sub, rel.elder)
         assert unread.is_unread(sub, rel2.elder)
+        # not unread for author
+        assert not unread.is_unread(sub, rel.elder)
         # web users only
         assert not unread.is_unread(sub, rel3.elder)
 

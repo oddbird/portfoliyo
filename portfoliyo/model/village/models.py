@@ -278,9 +278,9 @@ class BulkPost(BasePost):
                 mark_read_url=reverse(
                     'mark_post_read', kwargs={'post_id': sub.id}),
                 )
-            # mark the subpost unread by all web users in village
+            # mark the subpost unread by all web users in village (not author)
             for elder in student.elders:
-                if elder.user.email:
+                if elder.user.email and elder != author:
                     unread.mark_unread(sub, elder)
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
