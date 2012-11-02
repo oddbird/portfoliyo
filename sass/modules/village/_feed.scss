@@ -17,7 +17,7 @@ $background       : lighten($base3,3);
   left: 0;
   right: 0;
   bottom: rhythm(4.75);
-  background: $base3;
+  background: $background;
 }
 
 $instruction-height: rhythm(5.5);
@@ -36,10 +36,12 @@ $instruction-height: rhythm(5.5);
   padding-left: $post-h-padding;
   padding-right: $post-h-padding;
   border: 0;
+  background: $base3;
   .starthead {
     @include adjust-font-size-to($xlargepx);
     @include serif;
   }
+  &:last-child { background: $background; }
   + .post { border-top: 1px solid; }
 }
 
