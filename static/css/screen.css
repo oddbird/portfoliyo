@@ -1427,10 +1427,13 @@ button {
 .tagline {
   font-size: 1.94444em;
   line-height: 1.31429em;
-}
-
-.description {
-  font-style: italic;
+  padding-top: 1.31429em;
+  margin-bottom: 0.65714em;
+  -webkit-transition: all 300ms;
+  -moz-transition: all 300ms;
+  -ms-transition: all 300ms;
+  -o-transition: all 300ms;
+  transition: all 300ms;
 }
 
 .main-register-link {
@@ -1445,21 +1448,22 @@ button {
   padding-right: 1em;
 }
 
-@media (min-width: 50.625em) {
+@media (min-width: 43.875em) {
   .main-image {
-    width: 54.43038%;
+    width: 59.49367%;
     float: left;
     margin-right: 1.26582%;
   }
 
   .intro-copy {
-    width: 44.3038%;
+    width: 39.24051%;
     float: right;
     margin-right: 0;
   }
-
+}
+@media (min-width: 55em) {
   .tagline {
-    padding-top: 2.95714em;
+    padding-top: 3.28571em;
   }
 }
 .feature, .team {
@@ -1510,7 +1514,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351888683') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351888883') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;

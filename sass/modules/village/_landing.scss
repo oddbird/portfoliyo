@@ -26,9 +26,10 @@
 .tagline {
   @extend %landing-title;
   @include adjust-font-size-to($largepx);
+  @include padding-leader(2,$largepx);
+  @include trailer(1,$largepx);
+  @include transition(all 300ms);
 }
-
-.description { font-style: italic; }
 
 .main-register-link {
   @extend %button;
@@ -40,10 +41,13 @@
   padding-right: 1em;
 }
 
-@include at-breakpoint(45em $break-cols) {
-  .main-image { @include span-columns(11); }
-  .intro-copy { @include span-columns(9 omega); }
-  .tagline { @include padding-leader(4.5,$largepx); }
+@include at-breakpoint($break) {
+  .main-image { @include span-columns(12); }
+  .intro-copy { @include span-columns(8 omega); }
+}
+
+@include breakpoint(55em) {
+  .tagline { @include padding-leader(5,$largepx); }
 }
 
 %landing-section {
