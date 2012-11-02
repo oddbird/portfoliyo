@@ -148,6 +148,19 @@ class BasePost(models.Model):
         self.meta['highlights'] = meta_highlights
 
 
+    def notify_email(self):
+        """Send email notifications to eligible users."""
+        # No email notifications on system-generated posts:
+        if not self.author:
+            return
+        send_to = self.elders_in_context.filter(
+            user__email__isnull=False,
+            email_notifications=True,
+            ).exclude(pk=self.author.pk)
+        for profile in send_to:
+            notifications.send_post_email_notification(profile, self)
+
+
     def get_relationship(self):
         return None
 
@@ -256,7 +269,6 @@ class BulkPost(BasePost):
                 meta=post.meta,
                 from_bulk=post,
                 )
-            sub.notify_email()
             sub.send_event(
                 'student_%s' % student.id,
                 author_sequence_id=sequence_id,
@@ -269,6 +281,8 @@ class BulkPost(BasePost):
                     unread.mark_unread(sub, elder)
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
+
+        post.notify_email()
 
         for number, body in sms_to_send:
             sms.send(number, body)
@@ -356,20 +370,6 @@ class Post(BasePost):
             sms.send(number, body)
 
         return post
-
-
-    def notify_email(self):
-        """Send email notifications to eligible users."""
-        # No email notifications on system-generated posts:
-        if not self.author:
-            return
-        send_to = user_models.Profile.objects.filter(
-            relationships_from__to_profile=self.student,
-            user__email__isnull=False,
-            email_notifications=True,
-            ).exclude(pk=self.author.pk)
-        for profile in send_to:
-            notifications.send_post_email_notification(profile, self)
 
 
     def get_relationship(self):

@@ -494,6 +494,27 @@ class TestBulkPost(object):
             models.BulkPost.create(None, None, '')
 
 
+    def test_only_one_email_notification(self):
+        """A bulk post sends only one email notification to a given user."""
+        author_rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=author_rel.student,
+            from_profile__email_notifications=True,
+            from_profile__user__email='foo@example.com',
+            )
+        author_second = factories.RelationshipFactory.create(
+            from_profile=author_rel.elder)
+        factories.RelationshipFactory.create(
+            from_profile=other_rel.elder,
+            to_profile=author_second.student,
+            )
+
+        models.BulkPost.create(author_rel.elder, None, "Hello?")
+
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == ['foo@example.com']
+
+
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_notifies_selected_mobile_users(self, mock_send_sms):
         """Sends text to selected active mobile users."""
