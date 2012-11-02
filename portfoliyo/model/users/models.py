@@ -568,7 +568,7 @@ class EldersForRelationships(QuerySetWrapper):
 
 
 # 1 and 0 already eliminated by base32 encoding
-AMBIGUOUS = ['L', 'I', 'O', 'S', '5']
+AMBIGUOUS = ['L', 'I', 'O', 'S', '2', '3', '4', '5', '6', '7', '8', '9']
 
 
 def generate_code(seed, length):
@@ -576,4 +576,6 @@ def generate_code(seed, length):
     full = base64.b32encode(sha1(seed).digest())
     for char in AMBIGUOUS:
         full = full.replace(char, '')
+    if len(full) < length:
+        full = full * ((length / len(full)) + 1)
     return full[:length]

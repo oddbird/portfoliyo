@@ -4,6 +4,7 @@ import mock
 import pytest
 
 from portfoliyo import model
+from portfoliyo.model.users.models import generate_code
 from portfoliyo.tests import factories, utils
 
 
@@ -704,3 +705,15 @@ class TestContextualizedElders(object):
         qs = qs.order_by('name')
 
         assert list(qs) == [rel2.elder, rel1.elder]
+
+
+
+class TestGenerateCode(object):
+    def test_too_many_ambiguous(self):
+        """If most of original code is bad chars, maintain min length."""
+        target = 'portfoliyo.model.users.models.base64.b32encode'
+        with mock.patch(target) as mock_b32encode:
+            mock_b32encode.return_value = '22222222222ABC'
+            code = generate_code('foo', 6)
+
+        assert code == 'ABCABC'
