@@ -24,7 +24,13 @@ $instruction-height: rhythm(5.5);
 
 .feed-posts {
   min-height: 100%;
-  padding-bottom: $instruction-height;
+  .show-instructions & {
+    &:after {
+      content: " ";
+      display: block;
+      height: $instruction-height;
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -47,6 +53,7 @@ $instruction-height: rhythm(5.5);
 
 .instructions {
   @include box-shadow($base 0 0 3px inset);
+  @include background($base2);
   @include background($base2
     linear-gradient(
       -45deg,
@@ -61,7 +68,6 @@ $instruction-height: rhythm(5.5);
   @include background-size(4em 4em);
   display: none;
   margin-top: - $instruction-height;
-  min-height: $instruction-height;
   padding: rhythm(1) $post-h-padding;
   .show-instructions & { display: block; }
 }
@@ -69,9 +75,8 @@ $instruction-height: rhythm(5.5);
   @include pie-clearfix;
   counter-reset: howto;
 }
+
 [class^="howto-"] {
-  @extend %icon;
-  @extend %icon-arrow-down;
   @include rhythm-borders(1px,.75);
   @include border-radius(.25em);
   @include box-shadow($back 0 0 .25em);
@@ -83,16 +88,27 @@ $instruction-height: rhythm(5.5);
   font-style: italic;
   counter-increment: howto;
   &:first-child { float: left; }
-  &:before {
-    @include adjust-font-size-to($largepx,1);
+  &:after {
+    content: " ";
+    display: block;
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-top: -.175em;
-    margin-left: -.5em;
-    color: $orange;
+    height: 0;
+    width: 0;
+    margin-left: rhythm(-.25);
+    border: rhythm(.5) solid rgba($orange,0);
+    border-top-color: $orange;
+    .lt-ie9 & {
+      @extend %icon-content;
+      @include adjust-font-size-to($largepx,1);
+      content: "\2193";
+      height: rhythm(1,$largepx);
+      width: rhythm(1,$largepx);
+      border: 0;
+    }
   }
-  &:after {
+  &:before {
     @include border-radius(8em);
     content: counter(howto,decimal);
     position: absolute;

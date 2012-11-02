@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before, .lt-ie9 [class^="howto-"]:after {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
@@ -291,7 +291,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\21ba";
 }
 
-.ui-multiselect:before, [class^="howto-"]:before {
+.ui-multiselect:before {
   content: "\2193";
 }
 
@@ -2183,7 +2183,11 @@ button {
 
 .feed-posts {
   min-height: 100%;
-  padding-bottom: 7.02778em;
+}
+.show-instructions .feed-posts:after {
+  content: " ";
+  display: block;
+  height: 7.02778em;
 }
 
 .getting-started {
@@ -2212,6 +2216,7 @@ button {
   -webkit-box-shadow: #657b83 0 0 3px inset;
   -moz-box-shadow: #657b83 0 0 3px inset;
   box-shadow: #657b83 0 0 3px inset;
+  background: #eee8d5;
   background: #eee8d5 -webkit-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
   background: #eee8d5 -moz-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
   background: #eee8d5 -o-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
@@ -2223,7 +2228,6 @@ button {
   background-size: 4em 4em;
   display: none;
   margin-top: -7.02778em;
-  min-height: 7.02778em;
   padding: 1.27778em 2.12766%;
 }
 .show-instructions .instructions {
@@ -2262,17 +2266,27 @@ button {
 [class^="howto-"]:first-child {
   float: left;
 }
-[class^="howto-"]:before {
-  font-size: 1.94444em;
-  line-height: 0.65714em;
+[class^="howto-"]:after {
+  content: " ";
+  display: block;
   position: absolute;
   top: 100%;
   left: 50%;
-  margin-top: -0.175em;
-  margin-left: -0.5em;
-  color: #cb4b16;
+  height: 0;
+  width: 0;
+  margin-left: -0.31944em;
+  border: 0.63889em solid rgba(203, 75, 22, 0);
+  border-top-color: #cb4b16;
 }
-[class^="howto-"]:after {
+.lt-ie9 [class^="howto-"]:after {
+  font-size: 1.94444em;
+  line-height: 0.65714em;
+  content: "\2193";
+  height: 0.65714em;
+  width: 0.65714em;
+  border: 0;
+}
+[class^="howto-"]:before {
   -webkit-border-radius: 8em;
   -moz-border-radius: 8em;
   -ms-border-radius: 8em;

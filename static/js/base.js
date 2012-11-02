@@ -84,11 +84,11 @@ var PYO = (function (PYO, $) {
         var feed = $('.village-feed');
         if (feed.length) {
             var instructions = feed.find('.instructions');
-            var feedPosts = feed.find('.feed-posts');
+            var feedPosts = feed.find('.feed-posts:after');
             var updateHeight = function () {
                 var instructionsHeight = instructions.outerHeight();
                 instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
-                feedPosts.css('padding-bottom', instructionsHeight.toString() + 'px');
+                feedPosts.css('height', instructionsHeight.toString() + 'px');
             };
 
             updateHeight();
