@@ -17,8 +17,7 @@ LOCATIONS = {
     'parent-instructions-template-en.pdf': {
         'name': (408, 505),
         'code': (356, 224),
-        'phone': (342, 206),
-        'example': (388, 170),
+        'phone': (456, 224),
         'sample_to': (145, 470),
         'sample_message_label': (145, 440),
         'sample_message': (145, 420),
@@ -26,8 +25,7 @@ LOCATIONS = {
     'parent-instructions-template-es.pdf': {
         'name': (424, 505),
         'code': (370, 170),
-        'phone': (345, 152),
-        'example': (386, 116),
+        'phone': (470, 170),
         'sample_to': (145, 470),
         'sample_message_label': (145, 440),
         'sample_message': (145, 420),
@@ -58,7 +56,6 @@ def generate_instructions_pdf(template_path, stream, name, code, phone):
     # addMapping('Cambridge-Round-Bold', 0, 0, 'Cambridge-Round-Bold')
 
     locations = LOCATIONS[os.path.basename(template_path)]
-    example = '%s Jane Doe' % code
     display_phone = formats.display_phone(phone)
 
     buffer = io.BytesIO()
@@ -73,13 +70,12 @@ def generate_instructions_pdf(template_path, stream, name, code, phone):
 
     draw(c, locations['sample_to'], 'To: %s' % display_phone)
     draw(c, locations['sample_message_label'], 'Message:')
-    draw(c, locations['sample_message'], example)
+    draw(c, locations['sample_message'], code)
 
     c.setFont('Helvetica-Bold', 12)
 
     draw(c, locations['code'], code)
     draw(c, locations['phone'], display_phone)
-    draw(c, locations['example'], example)
 
     c.showPage()
     c.save()
