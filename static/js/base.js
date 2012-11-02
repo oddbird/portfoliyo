@@ -74,8 +74,24 @@ var PYO = (function (PYO, $) {
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
                     updateHeight(true);
+                    PYO.updateFeedInstructionsHeight();
                 });
             });
+        }
+    };
+
+    PYO.updateFeedInstructionsHeight = function () {
+        var feed = $('.village-feed');
+        if (feed.length) {
+            var instructions = feed.find('.instructions');
+            var feedPosts = feed.find('.feed-posts');
+            var updateHeight = function () {
+                var instructionsHeight = instructions.outerHeight();
+                instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
+                feedPosts.css('padding-bottom', instructionsHeight.toString() + 'px');
+            };
+
+            updateHeight();
         }
     };
 
@@ -327,6 +343,7 @@ var PYO = (function (PYO, $) {
     PYO.initializeFeed = function () {
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.watchForReadPosts();
+        PYO.updateFeedInstructionsHeight();
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
