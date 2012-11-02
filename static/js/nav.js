@@ -275,7 +275,7 @@ var PYO = (function (PYO, $) {
                             PYO.addPost(post_obj);
                             if (scroll) {
                                 PYO.scrollToBottom();
-                            } else {
+                            } else if (newPostData.author_id !== PYO.activeUserId) {
                                 unread.removeClass('zero').text(++count);
                             }
                         };
@@ -293,7 +293,7 @@ var PYO = (function (PYO, $) {
                                         addNewPost(this);
                                     }
                                 }
-                            } else {
+                            } else if (this.author_id !== PYO.activeUserId) {
                                 unread.removeClass('zero').text(++count);
                             }
                         });
@@ -328,18 +328,20 @@ var PYO = (function (PYO, $) {
         channel.bind('message_posted', function (data) {
             if (data && data.posts && data.posts.length) {
                 $.each(data.posts, function () {
-                    var groups = nav.find('.group .group-link.ajax-link.listitem-select');
-                    var thisId = this.student_id.toString();
-                    var thisGroup = groups.filter(function () {
-                        var students_arr = $.trim($(this).data('students')).split(' ');
-                        return $.inArray(thisId, students_arr) !== -1;
-                    });
+                    if (this.author_id !== PYO.activeUserId) {
+                        var groups = nav.find('.group .group-link.ajax-link.listitem-select');
+                        var thisId = this.student_id.toString();
+                        var thisGroup = groups.filter(function () {
+                            var students_arr = $.trim($(this).data('students')).split(' ');
+                            return $.inArray(thisId, students_arr) !== -1;
+                        });
 
-                    thisGroup.each(function () {
-                        var unread = $(this).find('.unread');
-                        var count = parseInt($.trim(unread.text()), 10);
-                        unread.removeClass('zero').text(++count);
-                    });
+                        thisGroup.each(function () {
+                            var unread = $(this).find('.unread');
+                            var count = parseInt($.trim(unread.text()), 10);
+                            unread.removeClass('zero').text(++count);
+                        });
+                    }
                 });
             }
         });

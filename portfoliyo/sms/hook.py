@@ -52,6 +52,8 @@ def receive_sms(source, body):
             )
     elif profile.state == model.Profile.STATE.relationship:
         return handle_role_update(parent=profile, role=body.strip())
+    elif profile.state == model.Profile.STATE.name:
+        return handle_name_update(parent=profile, name=body.strip())
 
     students = profile.students
 
@@ -84,23 +86,19 @@ def receive_sms(source, body):
 
 def handle_unknown_source(source, body):
     """Handle a text from an unknown user."""
-    teacher, group, parent_name = get_teacher_group_and_name(body)
+    teacher, group = get_teacher_and_group(body)
     if teacher is not None:
-        if parent_name:
-            model.Profile.create_with_user(
-                school=teacher.school,
-                phone=source,
-                name=parent_name,
-                state=model.Profile.STATE.kidname,
-                invited_by=teacher,
-                invited_in_group=group,
-                )
-            return (
-                "Thanks! What is the name of your child in %s's class?"
-                % teacher.name
-                )
-        else:
-            return "Please include your name after the code."
+        model.Profile.create_with_user(
+            school=teacher.school,
+            phone=source,
+            state=model.Profile.STATE.kidname,
+            invited_by=teacher,
+            invited_in_group=group,
+            )
+        return (
+            "Thanks! What is the name of your child in %s's class?"
+            % teacher.name
+            )
     else:
         logger.error("Unknown text from %s: %s" % (source, body))
         return (
@@ -145,8 +143,7 @@ def handle_new_student(parent, teacher, student_name):
     return reply(
         parent.phone,
         [student],
-        "Last question: what is your relationship to that child "
-        "(mother, father, ...)?"
+        "And what is your relationship to that child (mother, father, ...)?",
         )
 
 
@@ -155,13 +152,31 @@ def handle_role_update(parent, role):
     parent.relationships_from.filter(
         description=parent.role).update(description=role)
     parent.role = role
-    parent.state = model.Profile.STATE.done
+    parent.state = model.Profile.STATE.name
     parent.save()
     teacher = parent.invited_by
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
             parent, rel.student, role, from_sms=True, email_notifications=False)
+    return reply(
+        parent.phone,
+        parent.students,
+        "Last question: what is your name? (So %s knows who is texting.)"
+        % teacher,
+        )
+
+
+def handle_name_update(parent, name):
+    """Handle defining name of parent."""
+    parent.name = name
+    parent.state = model.Profile.STATE.done
+    parent.save()
+    teacher = parent.invited_by
+    student_rels = parent.student_relationships
+    for rel in student_rels:
+        model.Post.create(
+            parent, rel.student, name, from_sms=True, email_notifications=False)
         if teacher and teacher.email_notifications and teacher.user.email:
             notifications.send_signup_email_notification(teacher, rel)
     return reply(
@@ -173,24 +188,16 @@ def handle_role_update(parent, role):
 
 
 
-def get_teacher_group_and_name(body):
+def get_teacher_and_group(body):
     """
-    Try to split a text into a valid teacher/group code and parent name.
+    Return (teacher, group) tuple based on code found in text.
 
-    On success, return tuple (teacher-profile, group, parent-name). Parent name
-    can be empty string if entire text is code. Group can be ``None`` if code
-    is teacher code.
-
-    On failure to find valid code, return (None, None, '').
+    If no valid code is found, both will be None. If a valid teacher code is
+    found, group will be None. If a valid group code is found, both will be
+    set (teacher will be set to group owner).
 
     """
-    body = body.strip()
-    try:
-        possible_code, parent_name = body.split(' ', 1)
-    except ValueError:
-        possible_code = body
-        parent_name = ''
-    possible_code = possible_code.rstrip('.,:;').upper()
+    possible_code = body.strip().split()[0].rstrip('.,:;').upper()
     try:
         group = model.Group.objects.get(code=possible_code)
     except model.Group.DoesNotExist:
@@ -199,10 +206,9 @@ def get_teacher_group_and_name(body):
             teacher = model.Profile.objects.get(code=possible_code)
         except model.Profile.DoesNotExist:
             teacher = None
-            parent_name = ''
     else:
         teacher = group.owner
-    return (teacher, group, parent_name)
+    return (teacher, group)
 
 
 

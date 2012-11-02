@@ -137,56 +137,41 @@ def test_no_students():
 
 
 def test_code_signup():
-    """Parent can create account by texting teacher code and their name."""
+    """Parent can create account by texting teacher code."""
     phone = '+13216430987'
     teacher = factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF")
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "abcdef John Doe")
+        reply = hook.receive_sms(phone, "abcdef")
 
     assert reply == (
         "Thanks! What is the name of your child in Teacher Jane's class?"
         )
     profile = model.Profile.objects.get(phone=phone)
-    assert profile.name == "John Doe"
+    assert profile.name == ""
     assert profile.state == model.Profile.STATE.kidname
     assert profile.invited_by == teacher
     assert not mock_create.call_count
 
 
 def test_group_code_signup():
-    """Parent can create account by texting group code and their name."""
+    """Parent can create account by texting group code."""
     phone = '+13216430987'
     group = factories.GroupFactory.create(
         owner__school_staff=True, owner__name="Teacher Jane", code="ABCDEFG")
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "abcdefg John Doe")
+        reply = hook.receive_sms(phone, "abcdefg")
 
     assert reply == (
         "Thanks! What is the name of your child in Teacher Jane's class?"
         )
     profile = model.Profile.objects.get(phone=phone)
-    assert profile.name == "John Doe"
+    assert profile.name == ""
     assert profile.state == model.Profile.STATE.kidname
     assert profile.invited_by == group.owner
     assert profile.invited_in_group == group
-    assert not mock_create.call_count
-
-
-def test_code_signup_lacks_name():
-    """If parent texts valid teacher code but omits name, they get help."""
-    phone = '+13216430987'
-    factories.ProfileFactory.create(
-        school_staff=True, name="Teacher Jane", code="ABCDEF")
-
-    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "ABCDEF")
-
-    assert reply == (
-        "Please include your name after the code."
-        )
     assert not mock_create.call_count
 
 
@@ -208,7 +193,7 @@ def test_code_signup_student_name():
             reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
-        "Last question: what is your relationship to that child "
+        "And what is your relationship to that child "
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
@@ -251,7 +236,7 @@ def test_group_code_signup_student_name():
             reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
-        "Last question: what is your relationship to that child "
+        "And what is your relationship to that child "
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
@@ -292,7 +277,7 @@ def test_code_signup_student_name_dupe_detection():
         reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
-        "Last question: what is your relationship to that child "
+        "And what is your relationship to that child "
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
@@ -302,11 +287,12 @@ def test_code_signup_student_name_dupe_detection():
 
 
 def test_code_signup_role():
-    """Parent can finish code signup by providing their role."""
+    """Parent can continue code signup by providing their role."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
         from_profile__email_notifications=True,
+        from_profile__name='Jane Doe',
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
     parent_rel = factories.RelationshipFactory.create(
@@ -323,12 +309,10 @@ def test_code_signup_role():
         reply = hook.receive_sms(phone, "father")
 
     assert reply == (
-        "All done, thank you! You can text this number any time "
-        "to talk with Jimmy Doe's teachers."
-        )
+        "Last question: what is your name? (So Jane Doe knows who is texting.)")
     parent = model.Profile.objects.get(phone=phone)
     assert parent.role == "father"
-    assert parent.state == model.Profile.STATE.done
+    assert parent.state == model.Profile.STATE.name
     parent_rel = utils.refresh(parent_rel)
     assert parent_rel.description == "father"
     student = teacher_rel.student
@@ -338,24 +322,61 @@ def test_code_signup_role():
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
         None, student, reply, in_reply_to=phone, email_notifications=False)
+
+
+def test_code_signup_name():
+    """Parent can finish signup by texting their name."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__email_notifications=True,
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe",
+        )
+    factories.RelationshipFactory.create(
+        from_profile__name="",
+        from_profile__phone=phone,
+        from_profile__state=model.Profile.STATE.name,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        )
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, "John Doe")
+
+    assert reply == (
+        "All done, thank you! You can text this number any time "
+        "to talk with Jimmy Doe's teachers."
+        )
+    parent = model.Profile.objects.get(phone=phone)
+    assert parent.name == "John Doe"
+    assert parent.state == model.Profile.STATE.done
+    student = teacher_rel.student
+    mock_create.assert_any_call(
+        parent, student, "John Doe", from_sms=True, email_notifications=False)
+    # and the automated reply is also sent on to village chat
+    mock_create.assert_any_call(
+        None, student, reply, in_reply_to=phone, email_notifications=False)
     # email notification of the signup is sent
     assert len(mail.outbox) == 1
     assert mail.outbox[0].to == ['teacher@example.com']
 
 
-def test_code_signup_role_no_notification():
+
+def test_code_signup_name_no_notification():
     """Finish signup sends no notification if teacher doesn't want them."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
         from_profile__email_notifications=False,
         from_profile__user__email='teacher@example.com',
-        to_profile__name="Jimmy Doe")
+        to_profile__name="Jimmy Doe",
+        )
     factories.RelationshipFactory.create(
         from_profile__name="John Doe",
         from_profile__role="",
         from_profile__phone=phone,
-        from_profile__state=model.Profile.STATE.relationship,
+        from_profile__state=model.Profile.STATE.name,
         from_profile__invited_by=teacher_rel.elder,
         to_profile=teacher_rel.student,
         )
@@ -368,22 +389,25 @@ def test_code_signup_role_no_notification():
 
 
 
-class TestGetTeacherGroupAndName(object):
+class TestGetTeacherAndGroup(object):
     def test_basic(self):
-        """Gets teacher and parent name if text starts with teacher code."""
+        """Gets teacher if text starts with teacher code."""
         t = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
 
-        f = hook.get_teacher_group_and_name
-        assert f("abcdef foo") == (t, None, "foo")
-        assert f("ABCDEF") == (t, None, "")
-        assert f("ACDC bar") == (None, None, "")
-        assert f("ABCDEF. some name") == (t, None, "some name")
+        f = hook.get_teacher_and_group
+        assert f("abcdef foo") == (t, None)
+        assert f("ABCDEF") == (t, None)
+        assert f("ACDC bar") == (None, None)
+        assert f("ABCDEF. some name") == (t, None)
+        assert f("ABCDEF\nsome sig") == (t, None)
 
     def test_group_code(self):
-        """Gets teacher, group and parent name if text starts w/ group code."""
-        g = factories.GroupFactory.create(code='ABCDEFG')
+        """Gets teacher and group if text starts with group code."""
+        g = factories.GroupFactory.create(
+            code='ABCDEFG', owner__code='ABCDEF')
 
-        f = hook.get_teacher_group_and_name
-        assert f("ABCDEFG") == (g.owner, g, "")
-        assert f("ACDC foo") == (None, None, "")
-        assert f("ABCDEFG My Name") == (g.owner, g, "My Name")
+        f = hook.get_teacher_and_group
+        assert f("ABCDEFG") == (g.owner, g)
+        assert f("ACDC foo") == (None, None)
+        assert f("ABCDEFG My Name") == (g.owner, g)
+        assert f("ABCDEF ") == (g.owner, None)

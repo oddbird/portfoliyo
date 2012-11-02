@@ -3,6 +3,8 @@ from django.conf import settings
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
 from django.template import loader
+from django.utils.encoding import smart_unicode
+from django.utils.safestring import mark_safe
 
 
 
@@ -14,12 +16,18 @@ def send_post_email_notification(profile, post):
         'profile': profile,
         'post': post,
         'author_role': role,
-        'village_url': (
-            settings.PORTFOLIYO_BASE_URL +
-            reverse('village', kwargs={'student_id': post.student.id})
-            ),
         'profile_url': settings.PORTFOLIYO_BASE_URL + reverse('edit_profile'),
     }
+
+    student = getattr(post, 'student', None)
+    if student:
+        c['village_url'] =  (
+            settings.PORTFOLIYO_BASE_URL +
+            reverse('village', kwargs={'student_id': student.id})
+            )
+        c['message_source'] = mark_safe(u"%s's %s" % (student, role))
+    else:
+        c['message_source'] = mark_safe(smart_unicode(post.author))
 
     subject = loader.render_to_string('notifications/new_post_subject.txt', c)
     # Email subject *must not* contain newlines

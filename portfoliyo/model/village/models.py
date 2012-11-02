@@ -114,6 +114,9 @@ class BasePost(models.Model):
             # with in_reply_to we assume caller sent SMS
             if elder.phone != in_reply_to:
                 to_send.append((elder.phone, sms_body))
+                if elder.state != user_models.Profile.STATE.done:
+                    elder.state = user_models.Profile.STATE.done
+                    elder.save()
             sms_sent = True
 
             meta_sms.append(sms_data)
@@ -146,6 +149,19 @@ class BasePost(models.Model):
                 )
 
         self.meta['highlights'] = meta_highlights
+
+
+    def notify_email(self):
+        """Send email notifications to eligible users."""
+        # No email notifications on system-generated posts:
+        if not self.author:
+            return
+        send_to = self.elders_in_context.filter(
+            user__email__isnull=False,
+            email_notifications=True,
+            ).exclude(pk=self.author.pk)
+        for profile in send_to:
+            notifications.send_post_email_notification(profile, self)
 
 
     def get_relationship(self):
@@ -256,19 +272,20 @@ class BulkPost(BasePost):
                 meta=post.meta,
                 from_bulk=post,
                 )
-            sub.notify_email()
             sub.send_event(
                 'student_%s' % student.id,
                 author_sequence_id=sequence_id,
                 mark_read_url=reverse(
                     'mark_post_read', kwargs={'post_id': sub.id}),
                 )
-            # mark the subpost unread by all web users in village
+            # mark the subpost unread by all web users in village (not author)
             for elder in student.elders:
-                if elder.user.email:
+                if elder.user.email and elder != author:
                     unread.mark_unread(sub, elder)
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
+
+        post.notify_email()
 
         for number, body in sms_to_send:
             sms.send(number, body)
@@ -356,20 +373,6 @@ class Post(BasePost):
             sms.send(number, body)
 
         return post
-
-
-    def notify_email(self):
-        """Send email notifications to eligible users."""
-        # No email notifications on system-generated posts:
-        if not self.author:
-            return
-        send_to = user_models.Profile.objects.filter(
-            relationships_from__to_profile=self.student,
-            user__email__isnull=False,
-            email_notifications=True,
-            ).exclude(pk=self.author.pk)
-        for profile in send_to:
-            notifications.send_post_email_notification(profile, self)
 
 
     def get_relationship(self):

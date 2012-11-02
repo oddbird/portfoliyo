@@ -12,7 +12,7 @@ import re
 from portfoliyo.model.users.models import contextualized_elders
 from portfoliyo.model.village import models, unread
 
-from portfoliyo.tests import factories
+from portfoliyo.tests import factories, utils
 
 
 
@@ -297,7 +297,6 @@ class TestPostCreate(object):
             "Pusher exception: Unexpected return status 413")
 
 
-
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_notifies_selected_mobile_users(self, mock_send_sms):
         """Sends text to selected active mobile users."""
@@ -331,6 +330,32 @@ class TestPostCreate(object):
                 'phone': "+13216540987",
                 }
             ]
+
+
+    @mock.patch('portfoliyo.model.village.models.sms.send')
+    def test_sending_sms_flips_to_done(self, mock_send_sms):
+        """If a user not in done state gets a text, we flip them to done."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__name="John Doe",
+            from_profile__phone=None,
+            )
+        rel2 = factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__user__is_active=True,
+            from_profile__state='kidname',
+            )
+
+        models.Post.create(
+            rel1.elder,
+            rel1.student,
+            'Hey dad',
+            sms_profile_ids=[rel2.elder.id],
+            )
+
+        mock_send_sms.assert_called_with(
+            "+13216540987", "Hey dad --John Doe")
+        assert utils.refresh(rel2.elder).state == 'done'
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -453,8 +478,8 @@ class TestBulkPost(object):
         assert group_post_data['group_id'] == 'all%s' % rel.elder.id
 
 
-    def test_new_post_unread_for_all_web_users_in_village(self):
-        """Sub-post of bulk post marked unread for all web users in village."""
+    def test_new_post_unread_for_all_web_users_in_village_except_author(self):
+        """Sub-post marked unread for all web users in village except author."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
         rel2 = factories.RelationshipFactory.create(
@@ -467,9 +492,9 @@ class TestBulkPost(object):
         models.BulkPost.create(rel.elder, group, 'Foo')
         sub = rel.student.posts_in_village.get()
 
-        # also unread for author
-        assert unread.is_unread(sub, rel.elder)
         assert unread.is_unread(sub, rel2.elder)
+        # not unread for author
+        assert not unread.is_unread(sub, rel.elder)
         # web users only
         assert not unread.is_unread(sub, rel3.elder)
 
@@ -492,6 +517,27 @@ class TestBulkPost(object):
         """Either group or author is required."""
         with pytest.raises(ValueError):
             models.BulkPost.create(None, None, '')
+
+
+    def test_only_one_email_notification(self):
+        """A bulk post sends only one email notification to a given user."""
+        author_rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=author_rel.student,
+            from_profile__email_notifications=True,
+            from_profile__user__email='foo@example.com',
+            )
+        author_second = factories.RelationshipFactory.create(
+            from_profile=author_rel.elder)
+        factories.RelationshipFactory.create(
+            from_profile=other_rel.elder,
+            to_profile=author_second.student,
+            )
+
+        models.BulkPost.create(author_rel.elder, None, "Hello?")
+
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == ['foo@example.com']
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')

@@ -57,7 +57,7 @@ class Profile(models.Model):
     # code for parent-initiated signups
     code = models.CharField(max_length=20, blank=True, null=True, unique=True)
     # signup status (for text-based multi-step signup); what are we awaiting?
-    STATE = Choices('kidname', 'relationship', 'done')
+    STATE = Choices('kidname', 'relationship', 'name', 'done')
     state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
     # does this user want to receive email notifications?
     email_notifications = models.BooleanField(default=True)
@@ -568,7 +568,7 @@ class EldersForRelationships(QuerySetWrapper):
 
 
 # 1 and 0 already eliminated by base32 encoding
-AMBIGUOUS = ['L', 'I', 'O', 'S', '5']
+AMBIGUOUS = ['L', 'I', 'O', 'S', '2', '3', '4', '5', '6', '7', '8', '9']
 
 
 def generate_code(seed, length):
@@ -576,4 +576,6 @@ def generate_code(seed, length):
     full = base64.b32encode(sha1(seed).digest())
     for char in AMBIGUOUS:
         full = full.replace(char, '')
+    if len(full) < length:
+        full = full * ((length / len(full)) + 1)
     return full[:length]
