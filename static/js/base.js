@@ -81,16 +81,25 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.updateFeedInstructionsHeight = function () {
-        var feed = $('.village-feed');
+        var feed = $('.village-feed.show-instructions');
         if (feed.length) {
             var instructions = feed.find('.instructions');
             var feedPosts = feed.find('.feed-posts:after');
+            var howToPost = instructions.find('.howto-post').css('margin-top', '');
+            var howToSms = instructions.find('.howto-sms').css('margin-top', '');
+            var diff;
             var updateHeight = function () {
                 var instructionsHeight = instructions.outerHeight();
                 instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
                 feedPosts.css('height', instructionsHeight.toString() + 'px');
+                if (howToSms.outerHeight() > howToPost.outerHeight()) {
+                    diff = howToSms.outerHeight() - howToPost.outerHeight();
+                    howToPost.css('margin-top', diff.toString() + 'px');
+                } else if (howToPost.outerHeight() > howToSms.outerHeight()) {
+                    diff = howToPost.outerHeight() > howToSms.outerHeight();
+                    howToSms.css('margin-top', diff.toString() + 'px');
+                }
             };
-
             updateHeight();
         }
     };

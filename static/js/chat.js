@@ -282,7 +282,6 @@ var PYO = (function (PYO, $) {
                             PYO.scrollToBottom();
                         }
                         PYO.authorPosts = feed.find('.post.mine').length;
-                        if (PYO.authorPosts) { feed.removeClass('show-instructions'); } else { feed.addClass('show-instructions'); }
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
