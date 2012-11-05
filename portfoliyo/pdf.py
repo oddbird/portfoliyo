@@ -21,6 +21,7 @@ LOCATIONS = {
         'sample_to': (145, 470),
         'sample_message_label': (145, 440),
         'sample_message': (145, 420),
+        'group': (620, 80),
         },
     'parent-instructions-template-es.pdf': {
         'name': (424, 505),
@@ -29,6 +30,7 @@ LOCATIONS = {
         'sample_to': (145, 470),
         'sample_message_label': (145, 440),
         'sample_message': (145, 420),
+        'group': (620, 80),
         },
     }
 
@@ -43,7 +45,8 @@ def draw(canvas, location, text):
 
 
 
-def generate_instructions_pdf(template_path, stream, name, code, phone):
+def generate_instructions_pdf(template_path, stream, name, code, phone,
+                              group=None):
     """Generate a parent signup instructions PDF and write it to stream."""
     template_page = pyPdf.PdfFileReader(open(template_path, 'rb')).getPage(0)
 
@@ -65,6 +68,10 @@ def generate_instructions_pdf(template_path, stream, name, code, phone):
 
     c.setFont('Helvetica-Bold', 36)
     draw(c, locations['name'], name)
+
+    if group:
+        c.setFont('Helvetica-Bold', 9)
+        draw(c, locations['group'], unicode(group))
 
     c.setFont('Helvetica-Bold', 9)
 
