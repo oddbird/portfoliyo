@@ -422,8 +422,6 @@ textarea {
 button, input[type="select"], select, textarea {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
-  -ms-border-radius: 0;
-  -o-border-radius: 0;
   border-radius: 0;
 }
 
@@ -463,8 +461,8 @@ optgroup {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 0.77778em;
   line-height: 1.64286em;
-  border-style: solid;
   border-width: 0.07143em;
+  border-style: solid;
   padding: 0.33929em;
   background: url('../images/rgbapng/ffffff40.png?1352138058');
   background: rgba(255, 255, 255, 0.25);
@@ -478,17 +476,14 @@ optgroup {
 .linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .add-student .form-actions button, .village-edit-form .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-add-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .ui-multiselect-all, .ui-multiselect-none, .announcements .announce, .meta .helplink, .login-nav .login-link, .main-register-link, .post-add-form .form-actions .action-post {
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
-  -ms-border-radius: 0.25em;
-  -o-border-radius: 0.25em;
   border-radius: 0.25em;
-  border-style: solid;
   border-width: 0.05556em;
+  border-style: solid;
   padding: 0.26389em;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
   background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
-  background: -ms-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background: linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background-color: #859900;
   border-color: #466721;
@@ -562,8 +557,8 @@ optgroup {
 }
 .iqtest > p {
   margin-top: 1.27778em;
-  border-top-style: solid;
   border-top-width: 0.11111em;
+  border-top-style: solid;
   padding-top: 1.16667em;
   font-style: italic;
 }
@@ -606,7 +601,6 @@ optgroup {
 .login form textarea, .register form textarea, .edit-profile form textarea, .reset-password form textarea, .change-password form textarea, .set-password form textarea, .activationfailed form textarea, .awaiting-activation form textarea, .no-students form textarea, [class^="errorpage-"] form textarea, .group-add-form textarea, .group-edit-form textarea, .add-student textarea, .village-edit-form textarea, .dashboard textarea, .pjax-error textarea, .elder-add-form textarea, .elder-edit-form textarea, .post-add-form textarea {
   -webkit-transition: 200ms min-height;
   -moz-transition: 200ms min-height;
-  -ms-transition: 200ms min-height;
   -o-transition: 200ms min-height;
   transition: 200ms min-height;
   min-height: 2.46429em;
@@ -755,8 +749,8 @@ button {
 }
 .school-field .radio-options .type, .students-field .check-options .type, .elders-field .check-options .type, .groups-field .check-options .type {
   padding-top: 0.20536em;
-  border-bottom-style: solid;
   border-bottom-width: 0.07143em;
+  border-bottom-style: solid;
   padding-bottom: 0.13393em;
   padding-left: 0.20536em;
   border-color: #93a1a1;
@@ -777,8 +771,6 @@ button {
 .ui-multiselect {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
   border-radius: 3px;
   background: url('../images/rgbapng/ffffff7f.png?1352138058');
   background: rgba(255, 255, 255, 0.5);
@@ -799,8 +791,8 @@ button {
 }
 
 .ui-multiselect-menu {
-  border-style: solid;
   border-width: 0.05556em;
+  border-style: solid;
   padding: 0.26389em;
   -webkit-box-shadow: 0px 0px 5px #333333;
   -moz-box-shadow: 0px 0px 5px #333333;
@@ -876,7 +868,6 @@ button {
   background: -webkit-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
   background: -moz-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
   background: -o-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
-  background: -ms-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
   background: linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
   background-color: #dc322f;
   border-color: #713438;
@@ -988,11 +979,9 @@ button {
   padding-right: 1em;
   -webkit-background-origin: content;
   -moz-background-origin: content;
-  -ms-background-origin: content-box;
-  -o-background-origin: content-box;
   background-origin: content-box;
-  -webkit-background-clip: content-box;
-  -moz-background-clip: content-box;
+  -webkit-background-clip: content;
+  -moz-background-clip: content;
   background-clip: content-box;
 }
 [role="banner"]:after, [role="contentinfo"]:after, [role="main"] .container:after {
@@ -1082,7 +1071,6 @@ button {
   background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background-color: #268bd2;
   border-color: #16608a;
@@ -1160,7 +1148,6 @@ button {
   background: -webkit-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background: -moz-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background: -o-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
-  background: -ms-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background: linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background-color: #cb4b16;
   border-color: #69402c;
@@ -1266,17 +1253,16 @@ button {
   display: inline-block;
 }
 .login-nav .login-link {
-  border-top-style: solid;
   border-top-width: 0.05556em;
+  border-top-style: solid;
   padding-top: 0.10417em;
-  border-bottom-style: solid;
   border-bottom-width: 0.05556em;
+  border-bottom-style: solid;
   padding-bottom: 0.10417em;
   background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
   background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: -ms-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background-color: #268bd2;
   border-color: #16608a;
@@ -1436,8 +1422,8 @@ button {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 1.94444em;
   line-height: 1.31429em;
-  border-style: solid;
   border-width: 0.02857em;
+  border-style: solid;
   padding: 0.13571em;
   width: 100%;
   padding-left: 1em;
@@ -1463,8 +1449,8 @@ button {
 }
 .feature, .team {
   overflow: hidden;
-  border-top-style: solid;
   border-top-width: 0.66667em;
+  border-top-style: solid;
   padding-top: 0.61111em;
   -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
@@ -1475,14 +1461,14 @@ button {
   clear: both;
 }
 .no-borderimage .feature, .no-borderimage .team {
-  border-top-style: solid;
   border-top-width: 0.05556em;
+  border-top-style: solid;
   padding-top: 1.22222em;
 }
 @media (min-width: 43.875em) {
   .feature, .team {
-    border-top-style: solid;
     border-top-width: 0.66667em;
+    border-top-style: solid;
     padding-top: 3.16667em;
     padding-bottom: 3.83333em;
     min-height: 15.33333em;
@@ -1578,8 +1564,8 @@ button {
     padding-left: 0;
   }
   .dev .fn {
-    border-bottom-style: solid;
     border-bottom-width: 0.05556em;
+    border-bottom-style: solid;
     padding-bottom: 0.26389em;
     margin-bottom: 0.31944em;
     border-color: #eee8d5;
@@ -1637,11 +1623,9 @@ button {
   padding-right: 1em;
   -webkit-background-origin: content;
   -moz-background-origin: content;
-  -ms-background-origin: content-box;
-  -o-background-origin: content-box;
   background-origin: content-box;
-  -webkit-background-clip: content-box;
-  -moz-background-clip: content-box;
+  -webkit-background-clip: content;
+  -moz-background-clip: content;
   background-clip: content-box;
   min-width: 39em;
   max-width: 100%;
@@ -1655,7 +1639,6 @@ button {
 .village {
   -webkit-transition: height 150ms;
   -moz-transition: height 150ms;
-  -ms-transition: height 150ms;
   -o-transition: height 150ms;
   transition: height 150ms;
   position: relative;
@@ -1774,8 +1757,6 @@ button {
 .select-groups [class*="label-color-"]:after {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
   border-radius: 3px;
   -webkit-box-shadow: #073642 0 0 2px inset;
   -moz-box-shadow: #073642 0 0 2px inset;
@@ -1949,15 +1930,10 @@ button {
   list-style-image: none;
   list-style-type: none;
   margin-left: 0;
-  display: -moz-inline-box;
-  -moz-box-orient: vertical;
+  display: -moz-inline-stack;
   display: inline-block;
   vertical-align: middle;
-  *vertical-align: auto;
   white-space: nowrap;
-}
-.parent-instructions .pdf-downloads li {
-  *display: inline;
 }
 .parent-instructions .pdf-downloads a {
   margin-right: 1em;
@@ -1998,8 +1974,8 @@ button {
 }
 
 .listitem-select, .additem-link {
-  border-bottom-style: solid;
   border-bottom-width: 0.07143em;
+  border-bottom-style: solid;
   padding-bottom: 0.33929em;
   padding-top: 0.41071em;
   border-color: #93a1a1;
@@ -2056,8 +2032,6 @@ button {
   line-height: 1.23214em;
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
-  -ms-border-radius: 0.25em;
-  -o-border-radius: 0.25em;
   border-radius: 0.25em;
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 3px inset;
@@ -2089,7 +2063,6 @@ button {
 .listitem-actions {
   -webkit-transition: all 400ms;
   -moz-transition: all 400ms;
-  -ms-transition: all 400ms;
   -o-transition: all 400ms;
   transition: all 400ms;
   position: absolute !important;
@@ -2163,8 +2136,6 @@ button {
   margin-top: 0.31944em;
   -webkit-border-radius: 0.125em;
   -moz-border-radius: 0.125em;
-  -ms-border-radius: 0.125em;
-  -o-border-radius: 0.125em;
   border-radius: 0.125em;
   background: url('../images/rgbapng/0736427f.png?1352138058');
   background: rgba(7, 54, 66, 0.5);
@@ -2212,13 +2183,11 @@ button {
 }
 
 [class^="howto-"] {
-  border-style: solid;
   border-width: 0.05556em;
+  border-style: solid;
   padding: 0.90278em;
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
-  -ms-border-radius: 0.25em;
-  -o-border-radius: 0.25em;
   border-radius: 0.25em;
   -webkit-box-shadow: #073642 0 0 0.25em;
   -moz-box-shadow: #073642 0 0 0.25em;
@@ -2245,8 +2214,6 @@ button {
 [class^="howto-"]:after {
   -webkit-border-radius: 8em;
   -moz-border-radius: 8em;
-  -ms-border-radius: 8em;
-  -o-border-radius: 8em;
   border-radius: 8em;
   content: counter(howto, decimal) ".";
   position: absolute;
@@ -2270,8 +2237,8 @@ button {
 .post {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  border-bottom-style: solid;
   border-bottom-width: 0.07143em;
+  border-bottom-style: solid;
   padding-bottom: 0.33929em;
   padding-left: 2.12766%;
   padding-right: 2.12766%;
@@ -2384,8 +2351,6 @@ button {
 .nametag {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
-  -ms-border-radius: 4px;
-  -o-border-radius: 4px;
   border-radius: 4px;
   background: url('../images/rgbapng/93a1a140.png?1352138059');
   background: rgba(147, 161, 161, 0.25);
@@ -2422,11 +2387,11 @@ button {
 .post-add-form .form-actions .action-post {
   font-size: 0.77778em;
   line-height: 1.64286em;
-  border-top-style: solid;
   border-top-width: 0.05556em;
+  border-top-style: solid;
   padding-top: 0.10417em;
-  border-bottom-style: solid;
   border-bottom-width: 0.05556em;
+  border-bottom-style: solid;
   padding-bottom: 0.10417em;
   text-transform: uppercase;
 }
@@ -2501,8 +2466,8 @@ button {
   margin-right: -1.28571em;
   padding-right: 1.28571em;
   padding-top: 0.41071em;
-  border-bottom-style: solid;
   border-bottom-width: 0.07143em;
+  border-bottom-style: solid;
   padding-bottom: 0.33929em;
   position: relative;
   display: block;
@@ -2572,8 +2537,8 @@ button {
   padding-left: 1.28571em;
   margin-right: -1.28571em;
   padding-right: 1.28571em;
-  border-style: solid;
   border-width: 0.07143em;
+  border-style: solid;
   padding: 0.33929em;
   display: block;
   padding-left: 1.28571em;
@@ -2615,16 +2580,6 @@ button {
   }
 }
 
-@-ms-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 @keyframes loading {
   0% {
     opacity: 0.25;
@@ -2647,7 +2602,6 @@ button {
   text-shadow: #002b36 0 0 3px;
   -webkit-animation: loading 1s linear alternate infinite both;
   -moz-animation: loading 1s linear alternate infinite both;
-  -ms-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
   background: url('../images/rgbapng/002b3640.png?1352138059');
@@ -2660,8 +2614,8 @@ button {
 
 .message {
   padding-top: 1.27778em;
-  border-bottom-style: solid;
   border-bottom-width: 0.05556em;
+  border-bottom-style: solid;
   padding-bottom: 1.22222em;
   -webkit-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
   -moz-box-shadow: #002b36 0 0 0.31944em, #002b36 0 0 0.63889em;
