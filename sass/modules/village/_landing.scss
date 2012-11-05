@@ -29,6 +29,10 @@
   @include padding-leader(2,$largepx);
   @include trailer(1,$largepx);
   @include transition(all 300ms);
+  strong {
+    display: block;
+    font-weight: bold;
+  }
 }
 
 .main-register-link {
@@ -42,12 +46,15 @@
 }
 
 @include at-breakpoint($break) {
-  .main-image { @include span-columns(12); }
-  .intro-copy { @include span-columns(8 omega); }
-}
-
-@include breakpoint(55em) {
-  .tagline { @include padding-leader(5,$largepx); }
+  .main-image {
+    @include span-columns(10);
+    @include prefix(1);
+  }
+  .intro-copy {
+    @include span-columns(10 omega);
+    @include pad(1,1);
+  }
+  .tagline { @include padding-leader(3,$largepx); }
 }
 
 %landing-section {
