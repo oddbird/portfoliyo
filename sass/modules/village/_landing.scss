@@ -69,8 +69,8 @@
 
 @include at-breakpoint($break) {
   .main-image {
-    @include span-columns(10);
-    @include prefix(1);
+    @include span-columns(9);
+    @include pre(1);
   }
   .intro-copy {
     @include span-columns(10 omega);
