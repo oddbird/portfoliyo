@@ -3,13 +3,12 @@
 
 .dashboard {
   @extend %village-solo-page;
-}
-
-.getstarted {
-  @include bleed(rhythm(2),left);
-  @include padding-trailer(ceil(image-height('start-arrow.png') / $base-line-height * 2) / 2);
-  background: image-url('start-arrow.png') no-repeat left bottom;
-  font-weight: bold;
+  @extend %type;
+  h2 {
+    @include trailing-border(2px,1,$largepx);
+    border-color: $base2;
+  }
+  li { @include adjust-leading-to(2); }
 }
 
 // ---------------------------------------------------------------------------

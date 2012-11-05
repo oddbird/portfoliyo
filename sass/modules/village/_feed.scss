@@ -25,7 +25,7 @@ $post-h-padding   : gutter($center);
   padding: rhythm(1) $post-h-padding;
   background: $base3;
   .starthead {
-    @include adjust-font-size-to($xlargepx);
+    @include adjust-font-size-to($largepx);
     @include serif;
     margin-bottom: -1px;
   }

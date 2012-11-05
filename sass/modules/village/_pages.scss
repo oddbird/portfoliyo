@@ -17,7 +17,6 @@
     @include adjust-font-size-to($largepx);
     @include trailer(1,$largepx);
     @include serif;
-    font-weight: bold;
   }
 }
 
