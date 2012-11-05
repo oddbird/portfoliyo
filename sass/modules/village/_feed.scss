@@ -44,7 +44,7 @@ $instruction-height: rhythm(5.5);
   border: 0;
   background: $base3;
   .starthead {
-    @include adjust-font-size-to($xlargepx);
+    @include adjust-font-size-to($largepx);
     @include serif;
   }
   &:last-child { background: $background; }
