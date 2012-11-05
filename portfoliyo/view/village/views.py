@@ -422,6 +422,7 @@ def pdf_parent_instructions(request, lang, group_id=None):
         name=request.user.profile.name or "Your Child's Teacher",
         code=group.code if group else request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
+        group=group,
         )
 
     return response
