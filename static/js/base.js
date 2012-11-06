@@ -55,9 +55,15 @@ var PYO = (function (PYO, $) {
             var footerHeight = $('footer').outerHeight();
             var pageHeight, transition;
             var updateHeight = function (animate) {
+                var scroll = PYO.scrolledToBottom();
                 pageHeight = $(window).height() - headerHeight - footerHeight;
                 if (animate) {
                     page.css('height', pageHeight.toString() + 'px');
+                    if (scroll) {
+                        $.doTimeout('page_height_scroll', 250, function () {
+                            PYO.scrollToBottom();
+                        });
+                    }
                 } else {
                     transition = page.css('transition');
                     page.css({
@@ -67,6 +73,7 @@ var PYO = (function (PYO, $) {
                     $(window).load(function () {
                         page.css('transition', transition);
                     });
+                    if (scroll) { PYO.scrollToBottom(); }
                 }
             };
             updateHeight();
@@ -74,33 +81,9 @@ var PYO = (function (PYO, $) {
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
                     updateHeight(true);
-                    PYO.updateFeedInstructionsHeight();
+                    PYO.updateFeedHeights();
                 });
             });
-        }
-    };
-
-    PYO.updateFeedInstructionsHeight = function () {
-        var instructions = $('.village-feed .instructions');
-        if (instructions.length) {
-            var feed = $('.village-feed');
-            var feedPosts = feed.find('.feed-posts:after');
-            var howToPost = instructions.find('.howto-post').css('margin-top', '');
-            var howToSms = instructions.find('.howto-sms').css('margin-top', '');
-            var diff;
-            var updateHeight = function () {
-                var instructionsHeight = instructions.outerHeight();
-                instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
-                feedPosts.css('height', instructionsHeight.toString() + 'px');
-                if (howToSms.outerHeight() > howToPost.outerHeight()) {
-                    diff = howToSms.outerHeight() - howToPost.outerHeight();
-                    howToPost.css('margin-top', diff.toString() + 'px');
-                } else if (howToPost.outerHeight() > howToSms.outerHeight()) {
-                    diff = howToPost.outerHeight() > howToSms.outerHeight();
-                    howToSms.css('margin-top', diff.toString() + 'px');
-                }
-            };
-            updateHeight();
         }
     };
 
@@ -352,7 +335,6 @@ var PYO = (function (PYO, $) {
     PYO.initializeFeed = function () {
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.watchForReadPosts();
-        PYO.updateFeedInstructionsHeight();
         PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');

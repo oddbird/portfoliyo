@@ -33,6 +33,40 @@ var PYO = (function (PYO, $) {
         return bottom;
     };
 
+    PYO.updateFeedHeights = function () {
+        var feed = $('.village-feed');
+        var scroll = PYO.scrolledToBottom();
+        if (feed.length) {
+            var postAddForm = $('.village .post-add-form');
+            if (postAddForm.length) {
+                feed.css('bottom', postAddForm.outerHeight().toString() + 'px');
+            }
+
+            var instructions = feed.find('.instructions');
+            if (instructions.length) {
+                var feedPosts = feed.find('.feed-posts:after');
+                var howToPost = instructions.find('.howto-post').css('margin-top', '');
+                var howToSms = instructions.find('.howto-sms').css('margin-top', '');
+                var diff;
+                var updateInstructions = function () {
+                    var instructionsHeight = instructions.outerHeight();
+                    instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
+                    feedPosts.css('height', instructionsHeight.toString() + 'px');
+                    if (howToSms.outerHeight() > howToPost.outerHeight()) {
+                        diff = howToSms.outerHeight() - howToPost.outerHeight();
+                        howToPost.css('margin-top', diff.toString() + 'px');
+                    } else if (howToPost.outerHeight() > howToSms.outerHeight()) {
+                        diff = howToPost.outerHeight() > howToSms.outerHeight();
+                        howToSms.css('margin-top', diff.toString() + 'px');
+                    }
+                };
+                updateInstructions();
+            }
+
+            if (scroll) { PYO.scrollToBottom(); }
+        }
+    };
+
     PYO.renderPost = function (data) {
         var posts;
         if (data && data.posts && data.posts.length) {
@@ -279,6 +313,7 @@ var PYO = (function (PYO, $) {
                         if (response && response.posts && response.posts.length && feedAjax.count === count) {
                             PYO.addPost(response);
                             feed.find('.post.unread').removeClass('unread');
+                            PYO.updateFeedHeights();
                             PYO.scrollToBottom();
                         }
                         PYO.authorPosts = feed.find('.post.mine').length;
