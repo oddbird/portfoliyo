@@ -24,12 +24,14 @@ $instruction-height: rhythm(5.5);
 
 .feed-posts {
   min-height: 100%;
-  .show-instructions & {
-    &:after {
-      content: " ";
-      display: block;
-      height: $instruction-height;
-    }
+  &:after {
+    content: " ";
+    clear: both;
+    display: block;
+    height: $instruction-height;
+  }
+  &:last-child:after {
+    display: none;
   }
 }
 
@@ -66,13 +68,12 @@ $instruction-height: rhythm(5.5);
     ) repeat scroll
   );
   @include background-size(4em 4em);
-  display: none;
   margin-top: - $instruction-height;
   padding: rhythm(1) $post-h-padding;
-  .show-instructions & { display: block; }
 }
 .howto {
   @include pie-clearfix;
+  clear: both;
   counter-reset: howto;
 }
 

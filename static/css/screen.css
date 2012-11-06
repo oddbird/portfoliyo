@@ -2154,16 +2154,20 @@ button {
 .feed-posts {
   min-height: 100%;
 }
-.show-instructions .feed-posts:after {
+.feed-posts:after {
   content: " ";
+  clear: both;
   display: block;
   height: 7.02778em;
+}
+.feed-posts:last-child:after {
+  display: none;
 }
 
 .getting-started {
   padding-top: 1.27778em;
-  border-bottom-style: solid;
   border-bottom-width: 0.05556em;
+  border-bottom-style: solid;
   padding-bottom: 1.22222em;
   padding-left: 2.12766%;
   padding-right: 2.12766%;
@@ -2190,21 +2194,17 @@ button {
   background: #eee8d5 -webkit-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
   background: #eee8d5 -moz-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
   background: #eee8d5 -o-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
-  background: #eee8d5 -ms-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
   background: #eee8d5 linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
   -webkit-background-size: 4em 4em;
   -moz-background-size: 4em 4em;
   -o-background-size: 4em 4em;
   background-size: 4em 4em;
-  display: none;
   margin-top: -7.02778em;
   padding: 1.27778em 2.12766%;
 }
-.show-instructions .instructions {
-  display: block;
-}
 
 .howto {
+  clear: both;
   counter-reset: howto;
 }
 .howto:after {
