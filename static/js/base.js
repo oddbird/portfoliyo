@@ -55,9 +55,15 @@ var PYO = (function (PYO, $) {
             var footerHeight = $('footer').outerHeight();
             var pageHeight, transition;
             var updateHeight = function (animate) {
+                var scroll = PYO.scrolledToBottom();
                 pageHeight = $(window).height() - headerHeight - footerHeight;
                 if (animate) {
                     page.css('height', pageHeight.toString() + 'px');
+                    if (scroll) {
+                        $.doTimeout('page_height_scroll', 250, function () {
+                            PYO.scrollToBottom();
+                        });
+                    }
                 } else {
                     transition = page.css('transition');
                     page.css({
@@ -67,6 +73,7 @@ var PYO = (function (PYO, $) {
                     $(window).load(function () {
                         page.css('transition', transition);
                     });
+                    if (scroll) { PYO.scrollToBottom(); }
                 }
             };
             updateHeight();
@@ -74,6 +81,7 @@ var PYO = (function (PYO, $) {
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
                     updateHeight(true);
+                    PYO.updateFeedHeights();
                 });
             });
         }

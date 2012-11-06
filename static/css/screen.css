@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before, .lt-ie9 [class^="howto-"]:after {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, [class^="howto-"]:before, .elder .vcard:before, .message:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
   margin-right: .4em;
 }
 
@@ -291,7 +291,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\21ba";
 }
 
-.ui-multiselect:before, [class^="howto-"]:before {
+.ui-multiselect:before {
   content: "\2193";
 }
 
@@ -479,7 +479,6 @@ optgroup {
   border-width: 0.05556em;
   border-style: solid;
   padding: 0.26389em;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(155, 179, 0, 0.25)), color-stop(50%, rgba(133, 153, 0, 0)), color-stop(100%, rgba(66, 77, 0, 0.25)));
   background: -webkit-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background: -moz-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
   background: -o-linear-gradient(top, rgba(155, 179, 0, 0.25), rgba(133, 153, 0, 0), rgba(66, 77, 0, 0.25));
@@ -863,7 +862,6 @@ button {
 }
 
 .ui-multiselect-none {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(224, 72, 69, 0.25)), color-stop(50%, rgba(220, 50, 47, 0)), color-stop(100%, rgba(163, 30, 27, 0.25)));
   background: -webkit-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
   background: -moz-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
   background: -o-linear-gradient(top, rgba(224, 72, 69, 0.25), rgba(220, 50, 47, 0), rgba(163, 30, 27, 0.25));
@@ -1066,7 +1064,6 @@ button {
   color: inherit;
 }
 .announcements .announce {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
   background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
@@ -1143,7 +1140,6 @@ button {
   display: block;
 }
 .meta .helplink {
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(226, 84, 24, 0.25)), color-stop(50%, rgba(203, 75, 22, 0)), color-stop(100%, rgba(134, 50, 15, 0.25)));
   background: -webkit-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background: -moz-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
   background: -o-linear-gradient(top, rgba(226, 84, 24, 0.25), rgba(203, 75, 22, 0), rgba(134, 50, 15, 0.25));
@@ -1258,7 +1254,6 @@ button {
   border-bottom-width: 0.05556em;
   border-bottom-style: solid;
   padding-bottom: 0.10417em;
-  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, rgba(55, 151, 219, 0.25)), color-stop(50%, rgba(38, 139, 210, 0)), color-stop(100%, rgba(26, 96, 145, 0.25)));
   background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
@@ -1494,7 +1489,6 @@ button {
   border-top-style: solid;
   padding-top: 0.61111em;
   -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
@@ -2199,29 +2193,62 @@ button {
   background: #fefbf1;
 }
 
+.feed-posts {
+  min-height: 100%;
+}
+.feed-posts .stickyhack {
+  clear: both;
+  display: block;
+  height: 7.02778em;
+}
+
 .getting-started {
-  padding: 1.27778em 2.12766%;
+  padding-top: 1.27778em;
+  border-bottom-width: 0.05556em;
+  border-bottom-style: solid;
+  padding-bottom: 1.22222em;
+  padding-left: 2.12766%;
+  padding-right: 2.12766%;
+  border: 0;
   background: #fdf6e3;
 }
 .getting-started .starthead {
   font-size: 1.94444em;
   line-height: 1.31429em;
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  margin-bottom: -1px;
 }
 .getting-started:last-child {
-  background: none;
+  background: #fefbf1;
 }
 .getting-started + .post {
   border-top: 1px solid;
 }
 
+.instructions {
+  -webkit-box-shadow: #657b83 0 0 3px inset;
+  -moz-box-shadow: #657b83 0 0 3px inset;
+  box-shadow: #657b83 0 0 3px inset;
+  background: #eee8d5;
+  background: #eee8d5 -webkit-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
+  background: #eee8d5 -moz-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
+  background: #eee8d5 -o-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
+  background: #eee8d5 linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
+  -webkit-background-size: 4em 4em;
+  -moz-background-size: 4em 4em;
+  -o-background-size: 4em 4em;
+  background-size: 4em 4em;
+  margin-top: -7.02778em;
+  padding: 1.27778em 2.12766%;
+}
+
 .howto {
-  display: none;
+  clear: both;
   counter-reset: howto;
 }
-.show-instructions .howto {
-  display: block;
+.howto:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 [class^="howto-"] {
@@ -2234,46 +2261,49 @@ button {
   -webkit-box-shadow: #073642 0 0 0.25em;
   -moz-box-shadow: #073642 0 0 0.25em;
   box-shadow: #073642 0 0 0.25em;
-  position: absolute;
-  bottom: 1.27778em;
-  width: 40.42553%;
-  background: #fdf6e3;
+  position: relative;
+  float: right;
+  width: 48.93617%;
+  background: #fefbf1;
   color: #cb4b16;
-  border-color: #073642;
   font-style: italic;
   counter-increment: howto;
 }
-[class^="howto-"]:before {
-  font-size: 1.94444em;
-  line-height: 0.65714em;
+[class^="howto-"]:first-child {
+  float: left;
+}
+[class^="howto-"]:after {
+  content: " ";
+  display: block;
   position: absolute;
   top: 100%;
   left: 50%;
-  margin-top: -0.175em;
-  margin-left: -0.5em;
-  color: #073642;
+  height: 0;
+  width: 0;
+  margin-left: -0.31944em;
+  border: 0.63889em solid rgba(203, 75, 22, 0);
+  border-top-color: #cb4b16;
 }
-[class^="howto-"]:after {
+.lt-ie9 [class^="howto-"]:after {
+  font-size: 1.94444em;
+  line-height: 0.65714em;
+  content: "\2193";
+  height: 0.65714em;
+  width: 0.65714em;
+  border: 0;
+}
+[class^="howto-"]:before {
   -webkit-border-radius: 8em;
   -moz-border-radius: 8em;
   border-radius: 8em;
-  content: counter(howto, decimal) ".";
+  content: counter(howto, decimal);
   position: absolute;
   top: -0.95833em;
   left: -0.63889em;
-  padding: 0.31944em 0.47917em;
+  padding: 0.15972em 0.47917em;
   background: #cb4b16;
   color: #fdf6e3;
   font-style: normal;
-  font-weight: bold;
-}
-
-.howto-post {
-  left: 2.12766%;
-}
-
-.howto-sms {
-  right: 2.12766%;
 }
 
 .post {
@@ -2294,7 +2324,7 @@ button {
 }
 .post.old {
   color: #93a1a1;
-  background: none;
+  background: #fefbf1;
 }
 .post.old .title, .post.old .summary {
   color: #93a1a1;

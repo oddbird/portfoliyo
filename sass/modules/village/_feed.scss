@@ -7,6 +7,8 @@ $post-time-size   : $xsmallpx;
 $post-v-padding   : .25;
 $post-h-padding   : gutter($center);
 
+$background       : lighten($base3,3);
+
 // ---------------------------------------------------------------------------
 // Village Feed
 
@@ -15,70 +17,105 @@ $post-h-padding   : gutter($center);
   left: 0;
   right: 0;
   bottom: rhythm(4.75);
-  background: lighten($base3,3);
+  background: $background;
+}
+
+$instruction-height: rhythm(5.5);
+
+.feed-posts {
+  min-height: 100%;
+  .stickyhack {
+    clear: both;
+    display: block;
+    height: $instruction-height;
+  }
 }
 
 // ---------------------------------------------------------------------------
 // Getting Started
 
 .getting-started {
-  padding: rhythm(1) $post-h-padding;
+  @include padding-leader;
+  @include trailing-border(1px,1);
+  padding-left: $post-h-padding;
+  padding-right: $post-h-padding;
+  border: 0;
   background: $base3;
   .starthead {
     @include adjust-font-size-to($largepx);
     @include serif;
-    margin-bottom: -1px;
   }
-  &:last-child { background: none; }
+  &:last-child { background: $background; }
   + .post { border-top: 1px solid; }
 }
 
-.howto {
-  display: none;
-  counter-reset: howto;
-  .show-instructions & { display: block; }
+.instructions {
+  @include box-shadow($base 0 0 3px inset);
+  @include background($base2);
+  @include background($base2
+    linear-gradient(
+      -45deg,
+      rgba($base1,.075) 25%,
+      rgba($base1,0) 25%,
+      rgba($base1,0) 50%,
+      rgba($base1,.075) 50%,
+      rgba($base1,.075) 75%,
+      rgba($base1,0) 75%
+    ) repeat scroll
+  );
+  @include background-size(4em 4em);
+  margin-top: - $instruction-height;
+  padding: rhythm(1) $post-h-padding;
 }
+.howto {
+  @include pie-clearfix;
+  clear: both;
+  counter-reset: howto;
+}
+
 [class^="howto-"] {
-  @extend %icon;
-  @extend %icon-arrow-down;
   @include rhythm-borders(1px,.75);
   @include border-radius(.25em);
   @include box-shadow($back 0 0 .25em);
-  position: absolute;
-  bottom: rhythm(1);
-  width: columns(5,$center);
-  background: $base3;
+  position: relative;
+  float: right;
+  width: columns(6,$center);
+  background: $background;
   color: $orange;
-  border-color: $back;
   font-style: italic;
   counter-increment: howto;
-  &:before {
-    @include adjust-font-size-to($largepx,1);
+  &:first-child { float: left; }
+  &:after {
+    content: " ";
+    display: block;
     position: absolute;
     top: 100%;
     left: 50%;
-    margin-top: -.175em;
-    margin-left: -.5em;
-    color: $back;
+    height: 0;
+    width: 0;
+    margin-left: rhythm(-.25);
+    border: rhythm(.5) solid rgba($orange,0);
+    border-top-color: $orange;
+    .lt-ie9 & {
+      @extend %icon-content;
+      @include adjust-font-size-to($largepx,1);
+      content: "\2193";
+      height: rhythm(1,$largepx);
+      width: rhythm(1,$largepx);
+      border: 0;
+    }
   }
-  &:after {
+  &:before {
     @include border-radius(8em);
-    content: counter(howto,decimal) ".";
+    content: counter(howto,decimal);
     position: absolute;
     top: rhythm(-.75);
     left: rhythm(-.5);
-    padding: rhythm(.25) rhythm(.375);
+    padding: rhythm(.125) rhythm(.375);
     background: $orange;
     color: $base3;
     font-style: normal;
-    font-weight: bold;
   }
-}
-.howto-post {
-  left: $post-h-padding;
-}
-.howto-sms {
-  right: $post-h-padding;
 }
 
 // ---------------------------------------------------------------------------
@@ -95,7 +132,7 @@ $post-h-padding   : gutter($center);
 
   &.old {
     color: $base1;
-    background: none;
+    background: $background;
     .title, .summary { color: $base1; }
   }
   &.mine { background: lighten($blue,45); }
