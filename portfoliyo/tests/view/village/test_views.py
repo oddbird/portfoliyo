@@ -450,6 +450,22 @@ class TestVillage(GroupContextTests):
         return reverse('village', kwargs=dict(student_id=student.id))
 
 
+    def test_instructions_only_if_never_posted(self, client):
+        "Posting instructions appear only if you've never posted."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        factories.PostFactory.create(author=rel.elder, student=rel.student)
+        newbie_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile=rel.student)
+
+        url = self.url(rel.student)
+        response = client.get(url, user=rel.elder.user)
+        newbie_response = client.get(url, user=newbie_rel.elder.user)
+
+        assert not len(response.html.findAll('article', 'instructions'))
+        assert len(newbie_response.html.findAll('article', 'instructions')) == 1
+
+
     @pytest.mark.parametrize('link_target', ['invite_elder'])
     def test_link_only_if_staff(self, client, link_target):
         """Link with given target is only present for school staff."""
