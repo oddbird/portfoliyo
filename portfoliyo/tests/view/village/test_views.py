@@ -85,7 +85,7 @@ class TestDashboard(object):
         response = client.get(
             reverse('dashboard'), user=rel.elder.user, status=200)
 
-        response.mustcontain("Please select a student")
+        response.mustcontain("Welcome to Portfoliyo")
 
 
 

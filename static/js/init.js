@@ -5,7 +5,10 @@ var PYO = (function (PYO, $) {
     $(function () {
         // plugins
         $('input[placeholder], textarea[placeholder]').placeholder();
-        $('#messages').messages({handleAjax: true});
+        $('#messages').messages({
+            handleAjax: true,
+            transientFadeSpeed: 2000
+        });
         $('.details:not(html)').html5accordion();
         $('.email').defuscate();
 
