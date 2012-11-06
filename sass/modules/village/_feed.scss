@@ -24,14 +24,10 @@ $instruction-height: rhythm(5.5);
 
 .feed-posts {
   min-height: 100%;
-  &:after {
-    content: " ";
+  .stickyhack {
     clear: both;
     display: block;
     height: $instruction-height;
-  }
-  &:last-child:after {
-    display: none;
   }
 }
 

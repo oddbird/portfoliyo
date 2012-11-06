@@ -2154,14 +2154,10 @@ button {
 .feed-posts {
   min-height: 100%;
 }
-.feed-posts:after {
-  content: " ";
+.feed-posts .stickyhack {
   clear: both;
   display: block;
   height: 7.02778em;
-}
-.feed-posts:last-child:after {
-  display: none;
 }
 
 .getting-started {
