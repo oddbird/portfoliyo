@@ -81,9 +81,9 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.updateFeedInstructionsHeight = function () {
-        var feed = $('.village-feed.show-instructions');
-        if (feed.length) {
-            var instructions = feed.find('.instructions');
+        var instructions = $('.village-feed .instructions');
+        if (instructions.length) {
+            var feed = $('.village-feed');
             var feedPosts = feed.find('.feed-posts:after');
             var howToPost = instructions.find('.howto-post').css('margin-top', '');
             var howToSms = instructions.find('.howto-sms').css('margin-top', '');

@@ -177,7 +177,7 @@ var PYO = (function (PYO, $) {
                     textarea.val('').change();
                     feed.find('.post.mine .details.open.auto').removeClass('open').prop('open', false).find('.details-body').hide();
                     feed.find('.post .details.auto').removeClass('auto');
-                    feed.removeClass('show-instructions');
+                    feed.find('.instructions').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                     $('#sms-target').multiselect('checkAll');
