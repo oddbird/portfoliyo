@@ -43,15 +43,15 @@ var PYO = (function (PYO, $) {
             }
 
             var instructions = feed.find('.instructions');
-            if (instructions.length) {
-                var feedPosts = feed.find('.feed-posts:after');
+            var stickyhack = feed.find('.feed-posts .stickyhack');
+            if (instructions.length && stickyhack.length) {
                 var howToPost = instructions.find('.howto-post').css('margin-top', '');
                 var howToSms = instructions.find('.howto-sms').css('margin-top', '');
                 var diff;
                 var updateInstructions = function () {
                     var instructionsHeight = instructions.outerHeight();
                     instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
-                    feedPosts.css('height', instructionsHeight.toString() + 'px');
+                    stickyhack.css('height', instructionsHeight.toString() + 'px');
                     if (howToSms.outerHeight() > howToPost.outerHeight()) {
                         diff = howToSms.outerHeight() - howToPost.outerHeight();
                         howToPost.css('margin-top', diff.toString() + 'px');
@@ -107,12 +107,15 @@ var PYO = (function (PYO, $) {
 
     PYO.addPost = function (data) {
         if (data) {
+            var feedPosts = $('.village-feed .feed-posts');
+            var stickyhack = feedPosts.find('.stickyhack');
             var posts = PYO.renderPost(data);
             posts.find('.details').html5accordion({
                 initialSlideSpeed: 0,
                 openCallback: smsDetailsOpened
             });
-            $('.village-feed .feed-posts').append(posts);
+            if (stickyhack.length) { stickyhack.before(posts); }
+            else { feedPosts.append(posts); }
             return posts;
         }
     };
