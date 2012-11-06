@@ -137,7 +137,7 @@ def accept_email_invite(request, uidb36, token):
         token=token,
         template_name='users/accept_email_invite.html',
         set_password_form=auth_forms.SetPasswordForm,
-        post_reset_redirect=reverse('edit_profile'),
+        post_reset_redirect=reverse('login'),
         )
 
     if response.status_code == 302:
