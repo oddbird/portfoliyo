@@ -9,9 +9,7 @@
   color: $base02;
 }
 
-.main-image {
-  img { max-width: 100%; }
-}
+.main-image { img { max-width: 100%; } }
 .intro {
   @include clearfix;
   @include trailer;
@@ -57,7 +55,7 @@
   @include at-breakpoint($break) {
     @include leading-border(12px,3);
     @include padding-trailer(3);
-    min-height: rhythm(12);
+    @include rem(min-height, rhythm(12));
   }
 }
 
@@ -100,8 +98,8 @@
 .dev {
   @include trailer(2);
   @include prefix(3);
+  @include rem(min-height, rhythm(6));
   position: relative;
-  min-height: rhythm(6);
   .fn { @extend %landing-title; }
   .no-backgroundsize & { border: 1px solid $base2; }
 
@@ -125,9 +123,9 @@
       text-align: center;
     }
     &:before {
+      @include rem(height, rhythm(6));
       position: static;
       width: 100%;
-      height: rhythm(6);
     }
   }
 

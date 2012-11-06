@@ -1,12 +1,7 @@
 // ---------------------------------------------------------------------------
 // Village Landing
 
-$initial-break  : $break;
-$break          : $break-width $break-cols;
-
 @import "village/landing";
-
-$break          : $initial-break;
 
 // ---------------------------------------------------------------------------
 // Imports

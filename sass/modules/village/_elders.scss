@@ -23,7 +23,6 @@
   #{$focus} {
     .listitem-actions {
       @include opacity(1);
-      .lt-ie9 & { display: block; }
     }
   }
 
