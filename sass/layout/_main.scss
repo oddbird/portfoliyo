@@ -4,5 +4,6 @@
 [role="main"] {
   color: $base;
   background: $base3;
+  overflow: hidden;
   .container { @extend %container; }
 }

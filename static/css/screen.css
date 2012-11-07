@@ -1281,6 +1281,7 @@ button {
 [role="main"] {
   color: #657b83;
   background: #fdf6e3;
+  overflow: hidden;
 }
 
 [role="contentinfo"] {
@@ -1373,11 +1374,6 @@ button {
 
 .add-school.fieldset {
   display: none;
-}
-
-.lt-ie9 .village-landing .container {
-  max-width: 594px;
-  max-width: 33rem;
 }
 
 .tagline, .feature-title, .dev .fn {
@@ -1636,6 +1632,32 @@ button {
 
 #jonny:before {
   background-image: url('../images/landing/jonny.png?1351725897');
+}
+
+.lt-ie9 .village-landing .container {
+  max-width: 594px;
+  max-width: 33rem;
+}
+.lt-ie9 .login-nav, .lt-ie9 .main-register-link {
+  display: none;
+}
+
+.browser-warning {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  border-width: 3px;
+  border-width: 0.16667rem;
+  border-style: solid;
+  padding: 20px;
+  padding: 1.11111rem;
+  display: none;
+  background: #fefbf1;
+  border-color: #cb4b16;
+}
+.lt-ie9 .browser-warning {
+  display: block;
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {

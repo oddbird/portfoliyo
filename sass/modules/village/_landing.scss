@@ -1,8 +1,6 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
-.lt-ie9 .village-landing .container { @include set-container-width; }
-
 %landing-title {
   @include serif;
   @include adjust-font-size-to($medpx);
@@ -141,3 +139,22 @@
 
 $names: peter carl eric jonny;
 @each $name in $names { ##{$name}:before { background-image: image-url('landing/#{$name}.png'); } }
+
+// ---------------------------------------------------------------------------
+// IE Fallback
+
+.lt-ie9 {
+  .village-landing .container { @include set-container-width; }
+  .login-nav, .main-register-link { display: none; }
+}
+
+.browser-warning {
+  @include leader;
+  @include trailer;
+  @include rhythm-borders(3px,1);
+  display: none;
+  background: lighten($base3,3);
+  border-color: $orange;
+  .lt-ie9 & { display: block; }
+}
+

@@ -19,6 +19,33 @@
 
 {% block maincontent %}
 <article class="landing">
+
+  {# Browser Warning ------------------------------------- #}
+  <aside class="browser-warning">
+    <p>
+      You are using an outdated version of Internet Explorer,
+      which does not support the technology used on this site and many others.
+      Old browsers can also be a security risk.
+      Please consider upgrading to a newer browser:
+    </p>
+    <p class="chrome"><a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a></p>
+    <div class="details">
+      <p class="summary">show more options »</p>
+      <div class="details-body">
+        <ul class="browser-list">
+          <li><a href="http://www.mozilla.org/en-US/firefox/fx/#desktop">Firefox</a></li>
+          <li><a href="">Safari</a></li>
+          <li><a href="">Internet Explorer</a></li>
+        </ul>
+      </div>
+    </div>
+    <p>
+      Chrome is free to download and easy to install,
+      and will provide you with a safer & faster browsing experience.
+    </p>
+  </aside>
+
+  {# Introduction ------------------------------------- #}
   <section class="intro">
     <figure class="main-image"><img src="{{ STATIC_URL }}images/landing/girl.png" alt=""></figure>
     <div class="intro-copy">
@@ -36,6 +63,7 @@
     </div>
   </section>
 
+  {# Features ------------------------------------- #}
   <section class="features">
     <article class="feature two-way-feature">
       <h3 class="feature-title">Two-way communication</h3>
@@ -61,6 +89,7 @@
     </article>
   </section>
 
+  {# Team ------------------------------------- #}
   <section class="team">
     <article id="harsh" class="vcard dev">
       <h3 class="fn">Harsh Patel</h3>
