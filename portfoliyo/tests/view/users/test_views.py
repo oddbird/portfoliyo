@@ -288,11 +288,11 @@ class TestAcceptEmailInvite(object):
         """Shortcut for accept-email-invite url."""
         rel = factories.RelationshipFactory(from_profile=profile)
         response = client.get(
-            reverse('invite_elder', kwargs=dict(student_id=rel.student.id)),
+            reverse('invite_teacher', kwargs=dict(student_id=rel.student.id)),
             user=profile.user,
             )
-        form = response.forms['invite-elder-form']
-        form['contact'] = 'new@example.com'
+        form = response.forms['invite-teacher-form']
+        form['email'] = 'new@example.com'
         form['relationship'] = 'teacher'
         form.submit(status=302)
 

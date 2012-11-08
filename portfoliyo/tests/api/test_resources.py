@@ -414,8 +414,7 @@ class TestGroupResource(object):
     def test_add_student_uri(self, no_csrf_client):
         """Each group has an add_student_uri for use in the web UI."""
         g = factories.GroupFactory.create()
-        add_student_url = reverse(
-            'add_student_in_group', kwargs={'group_id': g.id})
+        add_student_url = reverse('add_student', kwargs={'group_id': g.id})
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 

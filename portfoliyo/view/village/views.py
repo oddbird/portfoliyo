@@ -130,7 +130,7 @@ def add_group(request):
         if form.is_valid():
             group = form.save()
             if not group.students.exists():
-                return redirect('add_student_in_group', group_id=group.id)
+                return redirect('add_student', group_id=group.id)
             return redirect('group', group_id=group.id)
     else:
         form = forms.AddGroupForm(owner=request.user.profile)
@@ -174,44 +174,70 @@ def edit_group(request, group_id):
 
 
 @school_staff_required
-def invite_elder(request, student_id=None, group_id=None):
-    """Invite new elder to a student's village or to a group."""
-    if student_id:
-        rel = get_relationship_or_404(student_id, request.user.profile)
-        group = None
-        form_kwargs = {'rel': rel}
-        template_context = {
-            'student': rel.student,
-            'group': get_querystring_group(request, rel.student),
-            }
-        ajax_template = 'village/_invite_elder_student_content.html'
-    elif group_id:
-        group = get_object_or_404(
-            model.Group.objects.filter(owner=request.user.profile), id=group_id)
-        rel = None
-        form_kwargs = {'group': group}
-        template_context = {'group': group}
-        ajax_template = 'village/_invite_elder_group_content.html'
-    else:
-        raise http.Http404
+@ajax('village/_invite_family_content.html')
+def invite_family(request, student_id):
+    """Invite family member to a student's village."""
+    rel = get_relationship_or_404(student_id, request.user.profile)
+    group = get_querystring_group(request, rel.student)
 
     if request.method == 'POST':
-        form = forms.InviteElderForm(request.POST, **form_kwargs)
+        form = forms.InviteFamilyForm(request.POST, rel=rel)
         if form.is_valid():
             form.save()
-            if rel:
-                return redirect_to_village(
-                    rel.student, template_context.get('group'))
-            return redirect('group', group_id=group.id)
+            return redirect_to_village(rel.student, group)
     else:
-        form = forms.InviteElderForm(**form_kwargs)
-
-    template_context['form'] = form
+        form = forms.InviteFamilyForm(rel=rel)
 
     return TemplateResponse(
         request,
-        ajax_template if request.is_ajax() else 'village/invite_elder.html',
-        template_context,
+        'village/invite_family.html',
+        {'group': group, 'student': rel.student, 'form': form},
+        )
+
+
+
+@school_staff_required
+@ajax('village/_invite_teacher_content.html')
+def invite_teacher(request, student_id):
+    """Invite teacher to a student's village."""
+    rel = get_relationship_or_404(student_id, request.user.profile)
+    group = get_querystring_group(request, rel.student)
+
+    if request.method == 'POST':
+        form = forms.InviteTeacherForm(request.POST, rel=rel)
+        if form.is_valid():
+            form.save()
+            return redirect_to_village(rel.student, group)
+    else:
+        form = forms.InviteTeacherForm(rel=rel)
+
+    return TemplateResponse(
+        request,
+        'village/invite_teacher.html',
+        {'group': group, 'student': rel.student, 'form': form},
+        )
+
+
+
+@school_staff_required
+@ajax('village/_invite_teacher_group_content.html')
+def invite_teacher_to_group(request, group_id):
+    """Invite teacher to a group."""
+    group = get_object_or_404(
+        model.Group.objects.filter(owner=request.user.profile), id=group_id)
+
+    if request.method == 'POST':
+        form = forms.InviteTeacherForm(request.POST, group=group)
+        if form.is_valid():
+            form.save()
+            return redirect('group', group_id=group.id)
+    else:
+        form = forms.InviteTeacherForm(group=group)
+
+    return TemplateResponse(
+        request,
+        'village/invite_teacher_to_group.html',
+        {'group': group, 'form': form},
         )
 
 
@@ -370,8 +396,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
             group = model.AllStudentsGroup(request.user.profile)
 
     if request.method == 'POST':
-        form = forms.EditElderForm(
-            request.POST, instance=elder, editor=request.user.profile)
+        form = forms.EditElderForm(request.POST, instance=elder)
         if form.is_valid():
             form.save(elder_rel)
             messages.success(request, u"Changes saved!")
@@ -381,7 +406,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
                 return redirect('group', group_id=group.id)
             return redirect('all_students')
     else:
-        form = forms.EditElderForm(instance=elder, editor=request.user.profile)
+        form = forms.EditElderForm(instance=elder)
 
     return TemplateResponse(
         request,
