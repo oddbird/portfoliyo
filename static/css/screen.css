@@ -1437,8 +1437,6 @@ button {
   font-size: 1.94444rem;
   line-height: 46px;
   line-height: 2.55556rem;
-  padding-top: 46px;
-  padding-top: 2.55556rem;
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
   -webkit-transition: all 300ms;
@@ -1467,6 +1465,27 @@ button {
   padding-right: 1em;
 }
 
+@media (min-width: 43.875em) {
+  .main-image {
+    width: 44.3038%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-left: 5.06329%;
+  }
+
+  .intro-copy {
+    width: 49.36709%;
+    float: right;
+    margin-right: 0;
+    padding-left: 5.06329%;
+    padding-right: 5.06329%;
+  }
+
+  .tagline {
+    padding-top: 69px;
+    padding-top: 3.83333rem;
+  }
+}
 .feature, .team {
   overflow: hidden;
   border-top-width: 12px;
@@ -1488,6 +1507,80 @@ button {
   border-top-style: solid;
   padding-top: 22px;
   padding-top: 1.22222rem;
+}
+@media (min-width: 43.875em) {
+  .feature, .team {
+    border-top-width: 12px;
+    border-top-width: 0.66667rem;
+    border-top-style: solid;
+    padding-top: 57px;
+    padding-top: 3.16667rem;
+    padding-bottom: 69px;
+    padding-bottom: 3.83333rem;
+    min-height: 276px;
+    min-height: 15.33333rem;
+  }
+}
+
+@media (min-width: 43.875em) {
+  .feature {
+    padding-left: 10.12658%;
+    padding-right: 45.56962%;
+  }
+  .feature:nth-child(even) {
+    padding-left: 45.56962%;
+    padding-right: 10.12658%;
+  }
+}
+
+@media (min-width: 43.875em) {
+  .feature-title {
+    font-size: 35px;
+    font-size: 1.94444rem;
+    line-height: 46px;
+    line-height: 2.55556rem;
+  }
+}
+
+@media (min-width: 43.875em) {
+  .two-way-feature {
+    background: url('../images/landing/twoway.png?1351891853') no-repeat scroll right 85%;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-background-size: 44.3038% auto;
+    -moz-background-size: 44.3038% auto;
+    -o-background-size: 44.3038% auto;
+    background-size: 44.3038% auto;
+  }
+
+  .elders-feature {
+    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-background-size: 44.3038% auto;
+    -moz-background-size: 44.3038% auto;
+    -o-background-size: 44.3038% auto;
+    background-size: 44.3038% auto;
+  }
+
+  .signup-feature {
+    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-background-size: 44.3038% auto;
+    -moz-background-size: 44.3038% auto;
+    -o-background-size: 44.3038% auto;
+    background-size: 44.3038% auto;
+  }
+}
+@media (min-width: 43.875em) {
+  .team {
+    padding-bottom: 0px;
+    padding-bottom: 0rem;
+  }
 }
 
 .dev {
@@ -1540,6 +1633,27 @@ button {
     width: 100%;
   }
 }
+@media (min-width: 43.875em) {
+  .dev {
+    padding-left: 15.18987%;
+    width: 49.36709%;
+    float: left;
+    margin-right: 1.26582%;
+  }
+  .dev:nth-child(2), .dev:last-child {
+    float: right;
+    margin-right: 0;
+  }
+  .dev:nth-child(3), .dev:nth-child(4) {
+    clear: both;
+  }
+  .dev:nth-child(3) {
+    margin-left: 25.31646%;
+  }
+  .dev:before {
+    width: 28.20513%;
+  }
+}
 
 #peter:before {
   background-image: url('../images/landing/peter.png?1351725897');
@@ -1557,25 +1671,23 @@ button {
   background-image: url('../images/landing/jonny.png?1351725897');
 }
 
-.village-landing .container {
+.lt-ie9 .village-landing .container {
   max-width: 594px;
   max-width: 33rem;
 }
-
-.login-nav, .main-register-link {
+.lt-ie9 .login-nav, .lt-ie9 .main-register-link {
   display: none;
 }
 
 .browser-warning {
   margin-top: 23px;
   margin-top: 1.27778rem;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
   border-width: 3px;
   border-width: 0.16667rem;
   border-style: solid;
   padding: 20px;
   padding: 1.11111rem;
+  display: none;
   background: #fefbf1;
   border-color: #cb4b16;
 }

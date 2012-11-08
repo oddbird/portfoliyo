@@ -1,8 +1,6 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
-$breakpoint-media-output: false;
-
 %landing-title {
   @include serif;
   @include adjust-font-size-to($medpx);
@@ -47,7 +45,6 @@ $breakpoint-media-output: false;
 .tagline {
   @extend %landing-title;
   @include adjust-font-size-to($largepx);
-  @include padding-leader(2,$largepx);
   @include trailer(1,$largepx);
   @include transition(all 300ms);
   strong {
@@ -179,16 +176,15 @@ $names: peter carl eric jonny;
 // ---------------------------------------------------------------------------
 // IE Fallback
 
-// .lt-ie9 {
+.lt-ie9 {
   .village-landing .container { @include set-container-width; }
   .login-nav, .main-register-link { display: none; }
-// }
+}
 
 .browser-warning {
   @include leader;
-  @include trailer;
   @include rhythm-borders(3px,1);
-  // display: none;
+  display: none;
   background: lighten($base3,3);
   border-color: $orange;
   .lt-ie9 & { display: block; }
