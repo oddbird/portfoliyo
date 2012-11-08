@@ -970,10 +970,10 @@ button {
 
 [role="banner"], [role="contentinfo"], [role="main"] .container {
   max-width: 33em;
-  margin-left: auto;
-  margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
+  margin-left: auto;
+  margin-right: auto;
   -webkit-background-origin: content;
   -moz-background-origin: content;
   background-origin: content-box;
@@ -1386,8 +1386,36 @@ button {
   color: #073642;
 }
 
+.main-image {
+  position: relative;
+  overflow: hidden;
+}
 .main-image img {
+  -webkit-transition: all 400ms;
+  -moz-transition: all 400ms;
+  -o-transition: all 400ms;
+  transition: all 400ms;
   max-width: 100%;
+}
+.main-image .girlimg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.main-image:hover .deviceimg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
+  opacity: 0;
+  -webkit-transform: translateY(5%);
+  -moz-transform: translateY(5%);
+  -ms-transform: translateY(5%);
+  -o-transform: translateY(5%);
+  transform: translateY(5%);
+}
+.main-image:hover .girlimg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
 }
 
 .intro {
@@ -1406,10 +1434,16 @@ button {
 .tagline {
   font-size: 1.94444em;
   line-height: 1.31429em;
+  padding-top: 1.31429em;
+  margin-bottom: 0.65714em;
+  -webkit-transition: all 300ms;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  transition: all 300ms;
 }
-
-.description {
-  font-style: italic;
+.tagline strong {
+  display: block;
+  font-weight: bold;
 }
 
 .main-register-link {
@@ -1424,21 +1458,24 @@ button {
   padding-right: 1em;
 }
 
-@media (min-width: 50.625em) {
+@media (min-width: 43.875em) {
   .main-image {
-    width: 54.43038%;
+    width: 44.3038%;
     float: left;
     margin-right: 1.26582%;
+    margin-left: 5.06329%;
   }
 
   .intro-copy {
-    width: 44.3038%;
+    width: 49.36709%;
     float: right;
     margin-right: 0;
+    padding-left: 5.06329%;
+    padding-right: 5.06329%;
   }
 
   .tagline {
-    padding-top: 2.95714em;
+    padding-top: 1.97143em;
   }
 }
 .feature, .team {
@@ -1610,10 +1647,10 @@ button {
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
   max-width: 81em;
-  margin-left: auto;
-  margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
+  margin-left: auto;
+  margin-right: auto;
   -webkit-background-origin: content;
   -moz-background-origin: content;
   background-origin: content-box;
