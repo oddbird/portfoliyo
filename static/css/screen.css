@@ -1400,12 +1400,14 @@ button {
   max-width: 100%;
 }
 .main-image .girlimg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   position: absolute;
   top: 0;
   left: 0;
 }
 .main-image:hover .deviceimg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
   opacity: 0;
   -webkit-transform: translateY(5%);
   -moz-transform: translateY(5%);
@@ -1414,6 +1416,7 @@ button {
   transform: translateY(5%);
 }
 .main-image:hover .girlimg {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
   opacity: 1;
 }
 
