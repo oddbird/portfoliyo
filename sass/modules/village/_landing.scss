@@ -16,20 +16,19 @@
     @include transition(all 300ms);
     max-width: 100%;
   }
-  .deviceimg {
+  .girlimg {
     @include opacity(0);
-    @include transform(translateY(100%) rotate(45deg));
     position: absolute;
     top: 0;
     left: 0;
   }
   &:hover {
-    .girlimg {
-      @include opacity(0);
-    }
     .deviceimg {
+      @include opacity(0);
+      @include transform(translateX(-100%) rotate(-45deg));
+    }
+    .girlimg {
       @include opacity(1);
-      @include transform(translateY(0) rotate(0deg));
     }
   }
 }
