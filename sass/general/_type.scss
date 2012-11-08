@@ -9,7 +9,10 @@
     color: $color;
     text-decoration: none;
   }
-  #{$focus} { color: $hover; }
+  #{$focus} {
+    color: $hover;
+    cursor: pointer;
+  }
 }
 
 a {

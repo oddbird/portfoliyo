@@ -24,23 +24,39 @@
   <aside class="browser-warning">
     <p>
       You are using an outdated version of Internet Explorer,
-      which does not support the technology used on this site and many others.
-      Old browsers can also be a security risk.
-      Please consider upgrading to a newer browser:
+      which does not support the modern web technology used on this site.
+      Please consider upgrading to a modern browser:
     </p>
-    <p class="chrome"><a href="https://www.google.com/intl/en/chrome/browser/">Chrome</a></p>
-    <div class="details">
+    <p class="chrome">
+      <a href="https://www.google.com/intl/en/chrome/browser/">
+        <img src="{{ STATIC_URL }}images/browsers/chrome.png" alt="Chrome">
+      </a>
+    </p>
+    <div class="details browser-details">
       <p class="summary">show more options »</p>
       <div class="details-body">
         <ul class="browser-list">
-          <li><a href="http://www.mozilla.org/en-US/firefox/fx/#desktop">Firefox</a></li>
-          <li><a href="">Safari</a></li>
-          <li><a href="">Internet Explorer</a></li>
+          <li>
+            <a href="http://www.mozilla.org/en-US/firefox/fx/#desktop">
+              <img src="{{ STATIC_URL }}images/browsers/firefox.png" alt="Firefox">
+            </a>
+          </li>
+          <li>
+            <a href="http://www.apple.com/safari/">
+              <img src="{{ STATIC_URL }}images/browsers/safari.png" alt="Safari">
+            </a>
+          </li>
+          <li>
+            <a href="http://windows.microsoft.com/en-US/internet-explorer/download-ie">
+              <img src="{{ STATIC_URL }}images/browsers/explorer.png" alt="Internet Explorer">
+            </a>
+          </li>
         </ul>
       </div>
     </div>
     <p>
-      Chrome is free to download and easy to install,
+      <a href="https://www.google.com/intl/en/chrome/browser/">Google Chrome</a>
+      is free to download and easy to install,
       and will provide you with a safer & faster browsing experience.
     </p>
   </aside>
