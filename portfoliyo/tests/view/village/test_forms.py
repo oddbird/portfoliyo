@@ -137,7 +137,8 @@ class TestInviteTeacherForm(object):
 
         group_rel = utils.refresh(group_rel)
         assert group_rel.direct
-        assert not group_rel.groups.exists()
+        # group membership is not removed, though
+        assert set(group_rel.groups.all()) == {group}
 
 
     def test_invite_teacher_never_removes_student_relationships(self):
@@ -163,6 +164,21 @@ class TestInviteTeacherForm(object):
         rel = factories.RelationshipFactory.create()
         elder = factories.ProfileFactory.create(user__email='foo@example.com')
         group = factories.GroupFactory.create()
+        group.elders.add(elder)
+
+        form = forms.InviteTeacherForm(
+            self.data(contact='foo@example.com', groups=[]), rel=rel)
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert set(profile.elder_in_groups.all()) == {group}
+
+
+    def test_invite_teacher_never_removes_from_my_group(self):
+        """Inviting a teacher should never remove them from groups."""
+        rel = factories.RelationshipFactory.create()
+        elder = factories.ProfileFactory.create(user__email='foo@example.com')
+        group = factories.GroupFactory.create(owner=rel.elder)
         group.elders.add(elder)
 
         form = forms.InviteTeacherForm(

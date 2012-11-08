@@ -258,27 +258,11 @@ class InviteTeacherForm(forms.Form):
             if not created and not rel.direct:
                 rel.direct = True
                 rel.save()
-        self.update_elder_groups(profile, self.cleaned_data['groups'])
+
+        # inviting an elder never removes from groups, only adds
+        profile.elder_in_groups.add(*self.cleaned_data['groups'])
 
         return profile
-
-
-    def update_elder_groups(self, elder, groups):
-        """
-        Update elder to be in only given groups of self.inviter.
-
-        Don't touch any memberships they may have in anyone else's groups.
-
-        """
-        current = set(elder.elder_in_groups.filter(owner=self.inviter))
-        target = set(groups)
-        remove = current.difference(target)
-        add = target.difference(current)
-
-        if remove:
-            elder.elder_in_groups.remove(*remove)
-        if add:
-            elder.elder_in_groups.add(*add)
 
 
 
