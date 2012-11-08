@@ -119,11 +119,18 @@ var PYO = (function (PYO, $) {
             if (data) {
                 if (nav.data('is-staff') === 'True') { data.staff = true; }
                 data.add_group_url = nav.data('add-group-url');
-                var newGroups = ich.group_list(data);
-                PYO.updateNavActiveClasses(newGroups);
-                nav.trigger('before-replace').html(newGroups);
-                newGroups.find('.details').html5accordion();
-                newGroups.find('input[placeholder], textarea[placeholder]').placeholder();
+                var groupList = ich.group_list(data);
+                nav.trigger('before-replace').html(groupList);
+                var list = nav.find('.itemlist');
+                if (data.objects && data.objects.length) {
+                    $.each(data.objects, function () {
+                        var newGroup = ich.group_list_item(this);
+                        newGroup.appendTo(list);
+                    });
+                }
+                PYO.updateNavActiveClasses();
+                list.find('.details').html5accordion();
+                list.find('input[placeholder], textarea[placeholder]').placeholder();
                 PYO.listenForGroupPosts();
                 if (!all_students_group_obj && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
@@ -311,7 +318,7 @@ var PYO = (function (PYO, $) {
                 var allStudentsEl = groups.filter(function () {
                     return $(this).data('group-id').toString().indexOf('all') !== -1;
                 });
-                var students = $.trim(allStudentsEl.data('students')).split(' ');
+                var students = $.trim(allStudentsEl.data('student-ids')).split(' ');
 
                 $.each(students, function () {
                     var id = this;
@@ -332,7 +339,7 @@ var PYO = (function (PYO, $) {
                         var groups = nav.find('.group .group-link.ajax-link.listitem-select');
                         var thisId = this.student_id.toString();
                         var thisGroup = groups.filter(function () {
-                            var students_arr = $.trim($(this).data('students')).split(' ');
+                            var students_arr = $.trim($(this).data('student-ids')).split(' ');
                             return $.inArray(thisId, students_arr) !== -1;
                         });
 
@@ -372,7 +379,7 @@ var PYO = (function (PYO, $) {
                 var allStudentsEl = groups.filter(function () {
                     return $(this).data('group-id').toString().indexOf('all') !== -1;
                 });
-                var students = $.trim(allStudentsEl.data('students')).split(' ');
+                var students = $.trim(allStudentsEl.data('student-ids')).split(' ');
 
                 $.each(students, function () {
                     var id = this;
@@ -442,9 +449,9 @@ var PYO = (function (PYO, $) {
                         }
                         // If viewing the groups-list (and the all-students group is visible)
                         if (all_students_group.length && id) {
-                            var students = $.trim(all_students_group.data('students')) + ' ';
+                            var students = $.trim(all_students_group.data('student-ids')) + ' ';
                             students = students + id.toString() + ' ';
-                            all_students_group.data('students', students);
+                            all_students_group.data('student-ids', students);
                             PYO.subscribeToGroupChannel(id);
                         }
                     });
@@ -470,10 +477,10 @@ var PYO = (function (PYO, $) {
                             }
                             // If viewing the groups-list (and the all-students group is visible)
                             if (all_students_group.length) {
-                                var students_arr = $.trim(all_students_group.data('students')).split(' ');
+                                var students_arr = $.trim(all_students_group.data('student-ids')).split(' ');
                                 if ($.inArray(id.toString(), students_arr) !== -1) {
                                     students_arr.splice($.inArray(id.toString(), students_arr), 1);
-                                    all_students_group.data('students', students_arr.join(' '));
+                                    all_students_group.data('student-ids', students_arr.join(' '));
                                 }
                                 PYO.pusher.unsubscribe('student_' + id);
                             }
@@ -522,9 +529,9 @@ var PYO = (function (PYO, $) {
                         if (added_to_groups.length && id) {
                             added_to_groups.each(function () {
                                 var thisGroup = $(this);
-                                var students = $.trim(thisGroup.data('students')) + ' ';
+                                var students = $.trim(thisGroup.data('student-ids')) + ' ';
                                 students = students + id.toString() + ' ';
-                                thisGroup.data('students', students);
+                                thisGroup.data('student-ids', students);
                             });
                         }
                         // If viewing the group that includes the new student
@@ -553,10 +560,10 @@ var PYO = (function (PYO, $) {
                             if (removed_from_groups.length) {
                                 removed_from_groups.each(function () {
                                     var thisGroup = $(this);
-                                    var students_arr = $.trim(thisGroup.data('students')).split(' ');
+                                    var students_arr = $.trim(thisGroup.data('student-ids')).split(' ');
                                     if ($.inArray(id.toString(), students_arr) !== -1) {
                                         students_arr.splice($.inArray(id.toString(), students_arr), 1);
-                                        thisGroup.data('students', students_arr.join(' '));
+                                        thisGroup.data('student-ids', students_arr.join(' '));
                                     }
                                 });
                             }
@@ -574,7 +581,6 @@ var PYO = (function (PYO, $) {
                 if (data && data.objects && data.objects.length && nav.find('.group').length) {
                     $.each(data.objects, function () {
                         if (nav.data('is-staff') === 'True') { this.staff = true; }
-                        this.objects = true;
                         var group = ich.group_list_item(this).hide();
                         var inserted = false;
                         nav.find('.group').not(':first').each(function () {
