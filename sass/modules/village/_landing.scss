@@ -9,7 +9,30 @@ $breakpoint-media-output: false;
   color: $base02;
 }
 
-.main-image { img { max-width: 100%; } }
+.main-image {
+  position: relative;
+  overflow: hidden;
+  img {
+    @include transition(all 400ms);
+    max-width: 100%;
+  }
+  .girlimg {
+    @include opacity(0);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &:hover {
+    .deviceimg {
+      @include opacity(0);
+      @include translateY(5%);
+    }
+    .girlimg {
+      @include opacity(1);
+    }
+  }
+}
+
 .intro {
   @include clearfix;
   @include trailer;
@@ -24,9 +47,14 @@ $breakpoint-media-output: false;
 .tagline {
   @extend %landing-title;
   @include adjust-font-size-to($largepx);
+  @include padding-leader(2,$largepx);
+  @include trailer(1,$largepx);
+  @include transition(all 300ms);
+  strong {
+    display: block;
+    font-weight: bold;
+  }
 }
-
-.description { font-style: italic; }
 
 .main-register-link {
   @extend %button;
@@ -38,10 +66,16 @@ $breakpoint-media-output: false;
   padding-right: 1em;
 }
 
-@include at-breakpoint(45em $break-cols) {
-  .main-image { @include span-columns(11); }
-  .intro-copy { @include span-columns(9 omega); }
-  .tagline { @include padding-leader(4.5,$largepx); }
+@include at-breakpoint($break) {
+  .main-image {
+    @include span-columns(9);
+    @include pre(1);
+  }
+  .intro-copy {
+    @include span-columns(10 omega);
+    @include pad(1,1);
+  }
+  .tagline { @include padding-leader(3,$largepx); }
 }
 
 %landing-section {
@@ -158,12 +192,16 @@ $names: peter carl eric jonny;
   background: lighten($base3,3);
   border-color: $orange;
   .lt-ie9 & { display: block; }
-  img { max-width: 100%; }
+  img {
+    max-width: 100%;
+    vertical-align: top;
+  }
 }
 
 .chrome {
   @include pad(2,2);
-  @include leader;
+  @include leader(.5);
+  a { display: block; }
 }
 
 .browser-details {
@@ -174,6 +212,7 @@ $names: peter carl eric jonny;
     font-style: italic;
   }
   .details-body, & + p { clear: both; }
+  a { display: block; }
 }
 
 .browser-list {
