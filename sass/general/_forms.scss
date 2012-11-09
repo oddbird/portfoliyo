@@ -130,7 +130,7 @@ $input-rhythm: .25;
   .type {
     @include ellipsis;
     @include span-columns($label,$context);
-    padding: rhythm($input-rhythm) 0;
+    @include rem(padding, rhythm($input-rhythm) 0);
     text-align: right;
     + .value { @include span-columns($input omega,$context); }
   }
@@ -203,17 +203,15 @@ $input-rhythm: .25;
     &[type="month"], &[type="week"], &[type="time"],
     &[type="number"], &[type="search"], &[type="color"] {
       @extend %input;
+      @include rem(min-height, rhythm(1 + $input-rhythm*2, $input-font-size));
       margin: 0;
-      min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
-      .lt-ie9 & { min-height: rhythm(1, $input-font-size); }
     }
   }
 
   textarea {
     @extend %input;
     @include transition(200ms min-height);
-    min-height: rhythm(1 + $input-rhythm*2, $input-font-size);
-    .lt-ie9 & { min-height: rhythm(1, $input-font-size); }
+    @include rem(min-height, rhythm(1 + $input-rhythm*2, $input-font-size));
   }
 
   .fieldset-help {
@@ -242,8 +240,8 @@ $input-rhythm: .25;
     text-align: right;
     p {
       @include adjust-font-size-to($form-action-note-size);
+      @include rem(margin, 0 .4em rhythm(.5,$form-action-note-size) 0);
       display: inline-block;
-      margin: 0 .4em rhythm(.5,$form-action-note-size) 0;
     }
     button {
       @extend %button;
@@ -259,7 +257,7 @@ button { @include reset-button; }
 
 .options-header {
   @include clearfix;
-  padding: rhythm(.25);
+  @include rem(padding, rhythm(.25));
   background: $base;
   color: $base3;
   font-weight: bold;
@@ -300,7 +298,7 @@ button { @include reset-button; }
   @extend %check-options-base;
   @include adjust-font-size-to($input-font-size);
   @include rgba-background(rgba(white,.25));
-  max-height: rhythm(8,$input-font-size);
+  @include rem(max-height, rhythm(8,$input-font-size));
   border: 1px solid;
   .option {
     @extend %check-option;
@@ -315,7 +313,7 @@ button { @include reset-button; }
     @extend %check-type;
     @include padding-leader(.125,$input-font-size);
     @include trailing-border(1px,.125,$input-font-size);
-    padding-left: rhythm(.125,$input-font-size);
+    @include rem(padding-left, rhythm(.125,$input-font-size));
     border-color: $base1;
     border-color: rgba($base1,.25);
   }

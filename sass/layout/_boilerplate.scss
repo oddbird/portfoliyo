@@ -4,6 +4,7 @@
 %container {
   @include container($total-columns, $break);
   @include susy-grid-background;
+  @include transition(all 300ms);
 }
 
 %boilerplate {

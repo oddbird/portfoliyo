@@ -96,14 +96,6 @@ $instruction-height: rhythm(5.5);
     margin-left: rhythm(-.25);
     border: rhythm(.5) solid rgba($orange,0);
     border-top-color: $orange;
-    .lt-ie9 & {
-      @extend %icon-content;
-      @include adjust-font-size-to($largepx,1);
-      content: "\2193";
-      height: rhythm(1,$largepx);
-      width: rhythm(1,$largepx);
-      border: 0;
-    }
   }
   &:before {
     @include border-radius(8em);
@@ -239,7 +231,6 @@ $postaction-size: $smallpx;
     background: rgba(white,.75);
     padding-left: rhythm(.5, $addnote-fontsize);
     resize: none;
-    .lt-ie9 & { min-height: rhythm(2.5 - $input-rhythm*2, $addnote-fontsize); }
   }
   .charcount {
     @include adjust-font-size-to($xsmallpx);

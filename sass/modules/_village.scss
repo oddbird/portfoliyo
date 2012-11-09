@@ -1,12 +1,11 @@
 // ---------------------------------------------------------------------------
 // Village Landing
 
-$initial-break  : $break;
-$break          : $break-width $break-cols;
+@include capture-and-set-legacy-ie(false, false, true);
 
 @import "village/landing";
 
-$break          : $initial-break;
+@include set-legacy-ie-support($legacy-ie-matrix...);
 
 // ---------------------------------------------------------------------------
 // Imports

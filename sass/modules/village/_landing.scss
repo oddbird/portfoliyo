@@ -1,8 +1,6 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
-.lt-ie9 .village-landing .container { @include set-container-width; }
-
 %landing-title {
   @include serif;
   @include adjust-font-size-to($medpx);
@@ -47,7 +45,6 @@
 .tagline {
   @extend %landing-title;
   @include adjust-font-size-to($largepx);
-  @include padding-leader(2,$largepx);
   @include trailer(1,$largepx);
   @include transition(all 300ms);
   strong {
@@ -89,7 +86,7 @@
   @include at-breakpoint($break) {
     @include leading-border(12px,3);
     @include padding-trailer(3);
-    min-height: rhythm(12);
+    @include rem(min-height, rhythm(12));
   }
 }
 
@@ -132,8 +129,8 @@
 .dev {
   @include trailer(2);
   @include prefix(3);
+  @include rem(min-height, rhythm(6));
   position: relative;
-  min-height: rhythm(6);
   .fn { @extend %landing-title; }
   .no-backgroundsize & { border: 1px solid $base2; }
 
@@ -157,9 +154,9 @@
       text-align: center;
     }
     &:before {
+      @include rem(height, rhythm(6));
       position: static;
       width: 100%;
-      height: rhythm(6);
     }
   }
 
@@ -175,3 +172,50 @@
 
 $names: peter carl eric jonny;
 @each $name in $names { ##{$name}:before { background-image: image-url('landing/#{$name}.png'); } }
+
+// ---------------------------------------------------------------------------
+// IE Fallback
+
+.lt-ie9 {
+  .village-landing .container { @include set-container-width; }
+  .login-nav, .main-register-link { display: none; }
+}
+
+.browser-warning {
+  @include leader;
+  @include rhythm-borders(3px,1);
+  display: none;
+  background: lighten($base3,3);
+  border-color: $orange;
+  .lt-ie9 & { display: block; }
+  img {
+    max-width: 100%;
+    vertical-align: top;
+  }
+}
+
+.chrome {
+  @include pad(2,2);
+  @include leader(.5);
+  a { display: block; }
+}
+
+.browser-details {
+  .summary {
+    @include link($non-links: true);
+    @include trailer(1);
+    text-align: center;
+    font-style: italic;
+  }
+  .details-body, & + p { clear: both; }
+  a { display: block; }
+}
+
+.browser-list {
+  @include clearfix;
+  @include trailer(1);
+  text-align: center;
+  li { @include span-columns(2,6); }
+  li + li + li { @include omega; }
+}
+

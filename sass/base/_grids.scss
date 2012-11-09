@@ -13,15 +13,15 @@ $show-grid-backgrounds            : false;
 // Grids
 
 $total-columns  : 8;
-$column-width   : 3em;
-$gutter-width   : 1em;
-$grid-padding   : 1em;
+$column-width   : 3rem;
+$gutter-width   : 1rem;
+$grid-padding   : 1rem;
 
 $half-small     : floor($total-columns/2);
 
 $break-cols     : 20;
 $break-width    : columns-width(10);
-$break          : $break-width $break-cols lt-ie9;
+$break          : $break-width $break-cols;
 $half-break     : floor($break-cols/2);
 
 $left           : 4;

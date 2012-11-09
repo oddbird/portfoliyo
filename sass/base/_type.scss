@@ -4,6 +4,9 @@
 $base-font-size             : $normpx;
 $base-line-height           : $medpx;
 
+$rhythm-unit                : rem;
+$rem-with-px-fallback       : true;
+
 $relative-font-sizing       : true;
 $round-to-nearest-half-line : true;
 

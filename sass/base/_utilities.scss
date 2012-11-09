@@ -30,6 +30,6 @@
 
 @mixin rhythm-image($image, $font-size) {
   background-image: image-url($image);
-  height: image-rhythm($image, $font-size);
-  width: image-width($image);
+  @include rem(height, image-rhythm($image, $font-size));
+  @include rem(width, image-width($image));
 }
