@@ -392,6 +392,13 @@ class TestInviteTeacher(GroupContextTests):
         response.mustcontain("don't have access"), response.html
 
 
+    def test_ajax(self, client):
+        """Can load the view via Ajax without error."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        client.get(self.url(rel.student), user=rel.elder.user, ajax=True)
+
+
     def test_unauthed_ajax(self, client):
         """An unauthenticated ajax request gets 403 not redirect."""
         rel = factories.RelationshipFactory.create()
@@ -448,6 +455,12 @@ class TestInviteTeacherToGroup(object):
             self.url(group), user=group.owner.user, status=302).follow()
 
         response.mustcontain("don't have access"), response.html
+
+
+    def test_ajax(self, client):
+        """Can load the view via Ajax without error."""
+        group = factories.GroupFactory.create(owner__school_staff=True)
+        client.get(self.url(group), user=group.owner.user, ajax=True)
 
 
     def test_unauthed_ajax(self, client):
