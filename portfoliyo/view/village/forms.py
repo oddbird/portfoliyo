@@ -293,13 +293,14 @@ class StudentForm(forms.ModelForm):
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
             owner=self.elder)
-        elder_conditions = Q(school=self.elder.school, school_staff=True)
+        elder_conditions = Q(school=self.elder.school)
         # explicitly allow already-related elders when editing
         if self.instance.pk:
             elder_conditions = elder_conditions | Q(
                 relationships_from__to_profile=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            elder_conditions).exclude(pk=self.elder.pk).distinct()
+            elder_conditions).exclude(
+            pk=self.elder.pk).exclude(school_staff=False).distinct()
         self.fields['elders'].groups_attr = 'elder_in_groups'
         self.owners = set()
         if self.instance.pk:

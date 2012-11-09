@@ -574,6 +574,18 @@ class TestStudentForms(object):
         assert list(form.fields['elders'].queryset) == [rel2.elder, rel3.elder]
 
 
+    def test_family_not_listed(self):
+        """Only school staff listed in elders list."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student, from_profile__school_staff=False)
+
+        form = forms.StudentForm(instance=rel.student, elder=rel.elder)
+
+        assert parent_rel.elder not in set(form.fields['elders'].queryset)
+
+
     def test_edit_student_does_not_remove_parent(self):
         """Editing student doesn't remove parent relationships."""
         rel = factories.RelationshipFactory.create(
@@ -953,8 +965,28 @@ class TestGroupForms(object):
         group = factories.GroupFactory.create()
         elder = factories.ProfileFactory.create(
             school_staff=True, school=factories.SchoolFactory.create())
-        rel = factories.RelationshipFactory.create(from_profile=group.owner)
-        group.students.add(rel.student)
+        group.elders.add(elder)
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        group = form.save()
+
+        assert set(group.elders.all()) == {elder}
+
+
+    def test_can_preserve_parent_membership(self):
+        """Can preserve non-school-staff elder group membership."""
+        group = factories.GroupFactory.create()
+        elder = factories.ProfileFactory.create(
+            school_staff=False, school=group.owner.school)
         group.elders.add(elder)
 
         form = forms.GroupForm(
