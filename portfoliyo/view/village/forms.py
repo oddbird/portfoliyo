@@ -2,12 +2,12 @@
 Student/elder forms.
 
 """
+from django.db.models import Q
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
 from portfoliyo.model import events
 from .. import forms as pyoforms
-from ..users.forms import EditProfileForm
 
 
 
@@ -60,56 +60,18 @@ class ElderGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
 
 
 
-class ElderFormBase(forms.Form):
-    """Common elements of EditElderForm and InviteElderForm."""
-    groups = pyoforms.ModelMultipleChoiceField(
-        queryset=model.Group.objects.none(),
-        widget=GroupCheckboxSelectMultiple,
-        required=False,
-        )
-    students = StudentGroupIdsMultipleChoiceField(
-        queryset=model.Profile.objects.none(),
-        widget=StudentCheckboxSelectMultiple,
-        required=False,
-        )
+class EditElderForm(forms.Form):
+    name = forms.CharField(max_length=200)
+    role = forms.CharField(max_length=200)
 
 
-    def __init__(self, *args, **kwargs):
-        super(ElderFormBase, self).__init__(*args, **kwargs)
-        self.fields['groups'].queryset = model.Group.objects.filter(
-            owner=self.editor)
-        self.fields['students'].queryset = model.Profile.objects.filter(
-            relationships_to__from_profile=self.editor)
-        self.fields['students'].groups_attr = 'student_in_groups'
-
-
-    def update_elder_groups(self, elder, groups):
-        """
-        Update elder to be in only given groups of self.editor.
-
-        Don't touch any memberships they may have in anyone else's groups.
-
-        """
-        current = set(elder.elder_in_groups.filter(owner=self.editor))
-        target = set(groups)
-        remove = current.difference(target)
-        add = target.difference(current)
-
-        if remove:
-            elder.elder_in_groups.remove(*remove)
-        if add:
-            elder.elder_in_groups.add(*add)
-
-
-
-class EditElderForm(ElderFormBase, EditProfileForm):
-    def __init__(self, *args, **kwargs):
-        self.editor = kwargs.pop('editor')
-        super(EditElderForm, self).__init__(*args, **kwargs)
-        self.fields['groups'].initial = [
-            g.pk for g in self.instance.elder_in_groups.all()]
-        self.fields['students'].initial = [
-            s.pk for s in self.direct_students(self.instance)]
+    def __init__(self, *a, **kw):
+        """Pull instance kwarg out."""
+        self.instance = kw.pop('instance')
+        initial = kw.setdefault('initial', {})
+        initial['name'] = self.instance.name
+        initial['role'] = self.instance.role
+        super(EditElderForm, self).__init__(*a, **kw)
 
 
     def save(self, rel=None):
@@ -129,172 +91,162 @@ class EditElderForm(ElderFormBase, EditProfileForm):
             rel.save()
         self.instance.save()
 
-        check_for_orphans = self.update_elder_students(
-            self.instance, self.cleaned_data['students'])
-        self.update_elder_groups(self.instance, self.cleaned_data['groups'])
-        if check_for_orphans:
-            model.Relationship.objects.delete_orphans()
+        return self.instance
+
+
+
+class InviteFamilyForm(forms.Form):
+    """A form for inviting a family member to a student village."""
+    phone = forms.CharField(max_length=255)
+    relationship = forms.CharField(max_length=200)
+
+
+    def __init__(self, *args, **kwargs):
+        """
+        Requires ``rel``: relationship between inviting elder and student.
+
+        """
+        self.rel = kwargs.pop('rel')
+        self.inviter = self.rel.elder
+        super(InviteFamilyForm, self).__init__(*args, **kwargs)
+
+
+    def clean_phone(self):
+        phone = formats.normalize_phone(self.cleaned_data["phone"])
+        if phone is None:
+            raise forms.ValidationError(
+                "Please supply a valid US/Canada mobile number.")
+        return phone
+
+
+    def save(self):
+        """Save/return new elder profile & send invite, or return existing."""
+        phone = self.cleaned_data.get('phone')
+        relationship = self.cleaned_data.get('relationship', u"")
+
+        # first check for an existing user match
+        try:
+            self.instance = model.Profile.objects.get(phone=phone)
+        except model.Profile.DoesNotExist:
+            self.instance = model.Profile.create_with_user(
+                school=self.inviter.school,
+                phone=phone,
+                role=relationship,
+                is_active=True,
+                school_staff=False,
+                invited_by=self.inviter,
+                )
+            created = True
+        else:
+            created = False
+
+        # send invite notifications
+        if created:
+            invites.send_invite_sms(
+                self.instance.user,
+                template_name='registration/invite_elder_sms.txt',
+                extra_context={
+                    'inviter': self.inviter,
+                    'student': self.rel.student if self.rel else None,
+                    'inviter_rel': self.rel,
+                    },
+                )
+
+        rel, created = model.Relationship.objects.get_or_create(
+            from_profile=self.instance,
+            to_profile=self.rel.student,
+            defaults={
+                'description': relationship,
+                }
+            )
+
+        if not created and not rel.direct:
+            rel.direct = True
+            rel.save()
 
         return self.instance
 
 
-    def update_elder_students(self, elder, students):
-        """
-        Update elder to have exactly given direct (non-group) students.
 
-        Return boolean indicating whether it's necessary to check for orphan
-        relationships.
-
-        """
-        current = set(self.direct_students(elder))
-        target = set(students)
-        remove = current.difference(target)
-        add = target.difference(current)
-
-        check_for_orphans = False
-
-        if remove:
-            model.Relationship.objects.filter(
-                from_profile=elder,
-                to_profile__in=remove,
-                ).update(direct=False)
-            check_for_orphans = True
-
-        for student in add:
-            rel, created = model.Relationship.objects.get_or_create(
-                to_profile=student,
-                from_profile=elder,
-                )
-            if not created and not rel.direct:
-                rel.direct = True
-                rel.save()
-
-        return check_for_orphans
-
-
-    def direct_students(self, elder):
-        """
-        Get all direct students of an elder.
-
-        Memoized by elder id.
-
-        """
-        if not hasattr(self, '_direct_students'):
-            self._direct_students = {}
-        if self._direct_students.get(elder.pk) is None:
-            self._direct_students[elder.pk] = [
-                r.student for r in
-                model.Relationship.objects.filter(
-                    from_profile=elder,
-                    direct=True,
-                    ).select_related('to_profile')
-                ]
-        return self._direct_students[elder.pk]
-
-
-
-class InviteElderForm(ElderFormBase):
-    """A form for inviting an elder to a student village."""
-    contact = forms.CharField(max_length=255)
+class InviteTeacherForm(forms.Form):
+    """A form for inviting a teacher to a student village."""
+    email = forms.EmailField(max_length=255)
     relationship = forms.CharField(max_length=200)
+    groups = pyoforms.ModelMultipleChoiceField(
+        queryset=model.Group.objects.none(),
+        widget=GroupCheckboxSelectMultiple,
+        required=False,
+        )
+    students = StudentGroupIdsMultipleChoiceField(
+        queryset=model.Profile.objects.none(),
+        widget=StudentCheckboxSelectMultiple,
+        required=False,
+        )
 
 
     def __init__(self, *args, **kwargs):
         """
         Accepts ``rel`` or ``group``.
 
-        ``rel`` is relationship between inviting elder and student, if elder is
-        being invited in student context.
+        ``rel`` is relationship between inviting elder and student, if teacher
+        is being invited in student context.
 
-        ``group`` is a group owned by inviting elder, if elder is being invited
-        in group context.
+        ``group`` is a group owned by inviting elder, if teacher is being
+        invited in group context.
 
         """
         self.rel = kwargs.pop('rel', None)
         self.group = kwargs.pop('group', None)
-        self.editor = self.rel.elder if self.rel else self.group.owner
-        super(InviteElderForm, self).__init__(*args, **kwargs)
+        self.inviter = self.rel.elder if self.rel else self.group.owner
+        super(InviteTeacherForm, self).__init__(*args, **kwargs)
+        self.fields['groups'].queryset = model.Group.objects.filter(
+            owner=self.inviter)
+        self.fields['students'].queryset = model.Profile.objects.filter(
+            relationships_to__from_profile=self.inviter)
+        self.fields['students'].groups_attr = 'student_in_groups'
         if self.rel:
             self.fields['students'].initial = [self.rel.to_profile_id]
         if self.group:
             self.fields['groups'].initial = [self.group.id]
 
 
-    def clean_contact(self):
-        contact = self.cleaned_data["contact"]
-        as_phone = formats.normalize_phone(contact)
-        as_email = formats.normalize_email(contact)
-        if as_phone:
-            self.cleaned_data["phone"] = as_phone
-            self.cleaned_data["email"] = None
-        elif as_email:
-            self.cleaned_data["email"] = as_email
-            self.cleaned_data["phone"] = None
-        else:
-            raise forms.ValidationError(
-                "Please supply a valid email address or US mobile number.")
+    def clean_email(self):
+        return formats.normalize_email(self.cleaned_data["email"])
 
 
     def save(self):
         """Save/return new elder profile & send invites, or return existing."""
         email = self.cleaned_data.get("email")
-        phone = self.cleaned_data.get("phone")
         relationship = self.cleaned_data.get("relationship", u"")
-        staff = (email is not None)
 
         # first check for an existing user match
-        if email:
-            dupe_query = {"user__email": email}
-            active = False
-        else:
-            dupe_query = {"phone": phone}
-            active = True
         try:
-            profile = model.Profile.objects.get(**dupe_query)
+            profile = model.Profile.objects.get(user__email=email)
         except model.Profile.DoesNotExist:
             profile = model.Profile.create_with_user(
-                school=self.editor.school,
+                school=self.inviter.school,
                 email=email,
-                phone=phone,
                 role=relationship,
-                is_active=active,
-                school_staff=staff,
-                invited_by=self.editor,
+                is_active=False,
+                school_staff=True,
+                invited_by=self.inviter,
                 )
             created = True
         else:
             created = False
-            # update school_staff and role fields as needed
-            if ((staff and not profile.school_staff) or
-                    (relationship and not profile.role)):
-                profile.school_staff = True
-                if not profile.role:
-                    profile.role = relationship
-                profile.save()
 
         # send invite notifications
         if created:
-            if email:
-                invites.send_invite_email(
-                    profile.user,
-                    email_template_name='registration/invite_elder_email.txt',
-                    subject_template_name='registration/invite_elder_subject.txt',
-                    extra_context={
-                        'inviter': self.editor,
-                        'student': self.rel.student if self.rel else None,
-                        'inviter_rel': self.rel,
-                        },
-                    )
-            else:
-                invites.send_invite_sms(
-                    profile.user,
-                    template_name='registration/invite_elder_sms.txt',
-                    extra_context={
-                        'inviter': self.editor,
-                        'student': self.rel.student if self.rel else None,
-                        'inviter_rel': self.rel,
-                        },
-                    )
+            invites.send_invite_email(
+                profile.user,
+                email_template_name='registration/invite_elder_email.txt',
+                subject_template_name='registration/invite_elder_subject.txt',
+                extra_context={
+                    'inviter': self.inviter,
+                    'student': self.rel.student if self.rel else None,
+                    'inviter_rel': self.rel,
+                    },
+                )
 
         for student in self.cleaned_data['students']:
             rel, created = model.Relationship.objects.get_or_create(
@@ -307,7 +259,9 @@ class InviteElderForm(ElderFormBase):
             if not created and not rel.direct:
                 rel.direct = True
                 rel.save()
-        self.update_elder_groups(profile, self.cleaned_data['groups'])
+
+        # inviting an elder never removes from groups, only adds
+        profile.elder_in_groups.add(*self.cleaned_data['groups'])
 
         return profile
 
@@ -339,9 +293,14 @@ class StudentForm(forms.ModelForm):
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
             owner=self.elder)
+        elder_conditions = Q(school=self.elder.school)
+        # explicitly allow already-related elders when editing
+        if self.instance.pk:
+            elder_conditions = elder_conditions | Q(
+                relationships_from__to_profile=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.elder.school, school_staff=True).exclude(
-            pk=self.elder.pk)
+            elder_conditions).exclude(
+            pk=self.elder.pk).exclude(school_staff=False).distinct()
         self.fields['elders'].groups_attr = 'elder_in_groups'
         self.owners = set()
         if self.instance.pk:
@@ -522,9 +481,12 @@ class GroupForm(forms.ModelForm):
         super(GroupForm, self).__init__(*args, **kwargs)
         self.fields['students'].queryset = model.Profile.objects.filter(
             relationships_to__from_profile=self.owner)
+        elder_conditions = Q(school=self.owner.school, school_staff=True)
+        if self.instance.pk:
+            elder_conditions = elder_conditions | Q(
+                elder_in_groups=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.owner.school, school_staff=True).exclude(
-            pk=self.owner.pk)
+            elder_conditions).exclude(pk=self.owner.pk).distinct()
         self._old_name = self.instance.name
 
 

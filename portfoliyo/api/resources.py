@@ -274,7 +274,7 @@ class SlimGroupResource(PortfoliyoResource):
             kwargs={'group_id': bundle.obj.id},
             )
         bundle.data['add_student_uri'] = reverse(
-            'add_student_in_group', kwargs={'group_id': bundle.obj.id})
+            'add_student', kwargs={'group_id': bundle.obj.id})
         user = getattr(bundle.request, 'user', None)
         if user is not None:
             bundle.data['unread_count'] = model.unread.group_unread_count(

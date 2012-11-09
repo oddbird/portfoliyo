@@ -40,10 +40,32 @@ def elder_status_description(elder, current):
 
 
 @register.filter
-def contextualized_elders(queryset):
-    return model.contextualized_elders(queryset)
+def elder_types(qs):
+    """
+    Group a queryset of elders by type (school_staff/non).
 
+    Return list of two dictionaries, one with school_staff: True and one_with
+    school_staff: False, and each with a list of elders under the ``elders``
+    key.
 
-@register.filter
-def order(qs, order_by):
-    return qs.order_by(*order_by.split(','))
+    Similar to the regroup tag, but always returns both groups, even if their
+    list is empty.
+
+    """
+    staff = []
+    non = []
+    for elder in model.contextualized_elders(qs).order_by('school_staff', 'name'):
+        if elder.school_staff:
+            staff.append(elder)
+        else:
+            non.append(elder)
+    return [
+        {
+            'school_staff': False,
+            'elders': non,
+            },
+        {
+            'school_staff': True,
+            'elders': staff,
+            },
+        ]

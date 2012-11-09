@@ -1,7 +1,7 @@
 {% extends "village/_student_form.html" %}
 {% load url from future %}
 
-{% block form-action %}{% if group %}{% url 'add_student_in_group' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
+{% block form-action %}{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
 
 {% block form-class %}village-add-form details-body{% endblock %}
 

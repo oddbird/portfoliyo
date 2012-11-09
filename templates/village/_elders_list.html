@@ -3,13 +3,13 @@
 
 <div class="village-elders">
 
-  {% regroup nav_elders|contextualized_elders|order:'school_staff,name' by school_staff as elder_types %}
+  {% with nav_elders|elder_types as elder_types %}
   {% for elder_type in elder_types %}
 
-    <h2 class="elders-title">{% if elder_type.grouper %}Teachers{% else %}Family Members{% endif %}</h2>
+    <h2 class="elders-title">{% if elder_type.school_staff %}Teachers{% else %}Family Members{% endif %}</h2>
 
     <ul>
-      {% for nav_elder in elder_type.list %}
+      {% for nav_elder in elder_type.elders %}
       <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
         <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
           <b class="title">{{ nav_elder.role_in_context }}:</b>
@@ -28,11 +28,12 @@
       {% endfor %}
     </ul>
 
-  {% endfor %}
-
   {% block invite-elder %}
   {% if request.user.profile.school_staff %}
-  <a href="{% block invite-elder-url %}{% endblock %}" class="addelder-link ajax-link{% if active %} active{% endif %}">Invite Elder</a>
+  <a href="{% block invite-elder-url %}{% endblock %}" class="addelder-link ajax-link{% if invite_teacher_active and elder_type.school_staff %} active{% endif %}{% if invite_family_active and not elder_type.school_staff %} active{% endif %}">Invite {% if elder_type.school_staff %}Teacher{% else %}Family Member{% endif %}</a>
   {% endif %}
   {% endblock invite-elder %}
+
+  {% endfor %}
+  {% endwith %}
 </div>
