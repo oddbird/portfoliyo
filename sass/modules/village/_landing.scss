@@ -177,45 +177,13 @@ $names: peter carl eric jonny;
 // IE Fallback
 
 .lt-ie9 {
-  .village-landing .container { @include set-container-width; }
+  .village-landing {
+    .container { @include set-container-width; }
+    .browser-warning {
+      @include padding-trailer(0);
+      position: relative;
+      .modal { display: none; }
+    }
+  }
   .login-nav, .main-register-link { display: none; }
 }
-
-.browser-warning {
-  @include leader;
-  @include rhythm-borders(3px,1);
-  display: none;
-  background: lighten($base3,3);
-  border-color: $orange;
-  .lt-ie9 & { display: block; }
-  img {
-    max-width: 100%;
-    vertical-align: top;
-  }
-}
-
-.chrome {
-  @include pad(2,2);
-  @include leader(.5);
-  a { display: block; }
-}
-
-.browser-details {
-  .summary {
-    @include link($non-links: true);
-    @include trailer(1);
-    text-align: center;
-    font-style: italic;
-  }
-  .details-body, & + p { clear: both; }
-  a { display: block; }
-}
-
-.browser-list {
-  @include clearfix;
-  @include trailer(1);
-  text-align: center;
-  li { @include span-columns(2,6); }
-  li + li + li { @include omega; }
-}
-
