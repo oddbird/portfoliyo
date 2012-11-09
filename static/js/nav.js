@@ -4,6 +4,8 @@ var PYO = (function (PYO, $) {
 
     var all_students_group_obj;
 
+    PYO.students = [];
+
     PYO.navHandlers = function () {
         var nav = $('.village-nav');
         var History = window.History;
@@ -126,25 +128,24 @@ var PYO = (function (PYO, $) {
                     $.each(data.objects, function () {
                         var newGroup = ich.group_list_item(this);
                         newGroup.appendTo(list);
+                        if (this.id.toString().indexOf('all') !== -1) {
+                            PYO.students = this.students;
+                            if (!all_students_group_obj) {
+                                all_students_group_obj = {
+                                    name: this.name,
+                                    url: this.group_uri,
+                                    students_url: this.students_uri,
+                                    id: this.id,
+                                    add_student_url: this.add_student_uri
+                                };
+                            }
+                        }
                     });
                 }
                 PYO.updateNavActiveClasses();
                 list.find('.details').html5accordion();
                 list.find('input[placeholder], textarea[placeholder]').placeholder();
                 PYO.listenForGroupPosts();
-                if (!all_students_group_obj && data.objects && data.objects.length) {
-                    $.each(data.objects, function () {
-                        if (this.id.toString().indexOf('all') !== -1) {
-                            all_students_group_obj = {
-                                name: this.name,
-                                url: this.group_uri,
-                                students_url: this.students_uri,
-                                id: this.id,
-                                add_student_url: this.add_student_uri
-                            };
-                        }
-                    });
-                }
             } else { PYO.fetchGroupsError(); }
         };
 
