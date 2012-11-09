@@ -549,6 +549,31 @@ class TestStudentForms(object):
         assert set(profile.elders) == {rel.elder, other_rel.elder}
 
 
+    def test_no_dupes_in_elders_list(self):
+        """List of elders to select does not contain dupes."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        rel2 = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            from_profile__school=rel1.elder.school,
+            to_profile=rel1.student,
+            )
+        rel3 = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            school=rel1.elder.school,
+            )
+        factories.RelationshipFactory.create(
+            from_profile=rel1.elder,
+            to_profile=rel3.student)
+        factories.RelationshipFactory.create(
+            from_profile=rel2.elder,
+            to_profile=rel3.student)
+
+        form = forms.StudentForm(instance=rel1.student, elder=rel1.elder)
+
+        assert list(form.fields['elders'].queryset) == [rel2.elder, rel3.elder]
+
+
     def test_edit_student_does_not_remove_parent(self):
         """Editing student doesn't remove parent relationships."""
         rel = factories.RelationshipFactory.create(
@@ -945,6 +970,20 @@ class TestGroupForms(object):
         group = form.save()
 
         assert set(group.elders.all()) == {elder}
+
+
+    def test_no_dupes_in_elders_list(self):
+        """List of elders to select does not contain dupes."""
+        me = factories.ProfileFactory.create(school_staff=True)
+        g1 = factories.GroupFactory.create(owner=me)
+        g2 = factories.GroupFactory.create(owner=me)
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=me.school)
+        elder.elder_in_groups.add(g1, g2)
+
+        form = forms.GroupForm(instance=g1)
+
+        assert list(form.fields['elders'].queryset) == [elder]
 
 
     def test_edit_group_does_not_delete_and_recreate_relationships(self):

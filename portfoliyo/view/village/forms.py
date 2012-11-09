@@ -299,7 +299,7 @@ class StudentForm(forms.ModelForm):
             elder_conditions = elder_conditions | Q(
                 relationships_from__to_profile=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            elder_conditions).exclude(pk=self.elder.pk)
+            elder_conditions).exclude(pk=self.elder.pk).distinct()
         self.fields['elders'].groups_attr = 'elder_in_groups'
         self.owners = set()
         if self.instance.pk:
@@ -485,7 +485,7 @@ class GroupForm(forms.ModelForm):
             elder_conditions = elder_conditions | Q(
                 elder_in_groups=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            elder_conditions).exclude(pk=self.owner.pk)
+            elder_conditions).exclude(pk=self.owner.pk).distinct()
         self._old_name = self.instance.name
 
 
