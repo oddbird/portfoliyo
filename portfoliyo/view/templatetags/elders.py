@@ -61,11 +61,11 @@ def elder_types(qs):
             non.append(elder)
     return [
         {
-            'school_staff': True,
-            'elders': staff,
-            },
-        {
             'school_staff': False,
             'elders': non,
+            },
+        {
+            'school_staff': True,
+            'elders': staff,
             },
         ]
