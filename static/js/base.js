@@ -198,20 +198,20 @@ var PYO = (function (PYO, $) {
             if (el.closest('form').hasClass('village-add-form')) {
                 title = 'You are adding a student to the "' + $.trim(label.text()) + '" group.';
                 label.attr('title', title).data('title', title);
-            } else if (el.closest('form').hasClass('elder-add-form')) {
+            } else if (el.closest('form').is('#invite-teacher-form')) {
                 if (el.closest('.check-options').hasClass('select-groups')) {
-                    title = 'You are inviting an elder to join all the student villages in the "' + $.trim(label.text()) + '" group.';
+                    title = 'You are inviting a teacher to join all the student villages in the "' + $.trim(label.text()) + '" group.';
                     label.attr('title', title).data('title', title);
                 }
                 if (el.closest('.check-options').hasClass('select-students')) {
-                    title = "You are inviting an elder to join " + $.trim(label.text()) + "'s village.";
+                    title = "You are inviting a teacher to join " + $.trim(label.text()) + "'s village.";
                     label.attr('title', title).data('title', title);
                 }
             }
         });
     };
 
-    PYO.disableElderOwnerRemoval = function (container) {
+    PYO.disableStudentOwnerRemoval = function (container) {
         var form = $(container);
         var inputs = form.find('.relation-fieldset .check-options input.owner');
 
@@ -304,8 +304,11 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.formFocus = function () {
-        if ($('#invite-elder-form').length) {
-            $('#id_contact').focus();
+        if ($('#invite-teacher-form').length) {
+            $('#id_email').focus();
+        }
+        if ($('#invite-family-form').length) {
+            $('#id_phone').focus();
         }
         if ($('#add-student-form').length) {
             $('#id_name').focus();
@@ -351,9 +354,9 @@ var PYO = (function (PYO, $) {
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
-        if ($('#invite-elder-form').length) { PYO.disablePreselectedAssociations('#invite-elder-form'); }
+        if ($('#invite-teacher-form').length) { PYO.disablePreselectedAssociations('#invite-teacher-form'); }
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
-        if ($('#edit-student-form').length) { PYO.disableElderOwnerRemoval('#edit-student-form'); }
+        if ($('#edit-student-form').length) { PYO.disableStudentOwnerRemoval('#edit-student-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
         $('body').find('input:radio, input:checkbox').each(function () {
