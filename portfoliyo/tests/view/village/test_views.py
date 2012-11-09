@@ -606,6 +606,15 @@ class TestVillage(GroupContextTests):
         client.get(self.url(), ajax=True, status=403)
 
 
+    def test_superuser_readonly_view(self, client):
+        """Superuser can get read-only view of other villages."""
+        sup = factories.ProfileFactory.create(
+            user__is_superuser=True)
+        student = factories.ProfileFactory.create()
+
+        client.get(self.url(student), user=sup.user)
+
+
 
 class TestAllStudents(object):
     def url(self):
@@ -654,6 +663,15 @@ class TestJsonPosts(object):
         elif group is not None:
             kwargs['group_id'] = group.id
         return reverse('json_posts', kwargs=kwargs)
+
+
+    def test_superuser_readonly_view(self, client):
+        """Superuser can get read-only view of other villages."""
+        sup = factories.ProfileFactory.create(
+            user__is_superuser=True)
+        post = factories.PostFactory.create()
+
+        client.get(self.url(post.student), user=sup.user)
 
 
     def test_marks_posts_read(self, client):

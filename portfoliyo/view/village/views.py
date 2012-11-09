@@ -246,19 +246,29 @@ def invite_teacher_to_group(request, group_id):
 @ajax('village/_village_content.html')
 def village(request, student_id):
     """The main chat view for a student/village."""
-    rel = get_relationship_or_404(student_id, request.user.profile)
-    group = get_querystring_group(request, rel.student)
+    try:
+        rel = get_relationship_or_404(student_id, request.user.profile)
+    except http.Http404:
+        if not request.user.is_superuser:
+            raise
+        rel = None
+        student = get_object_or_404(model.Profile, pk=student_id)
+    else:
+        student = rel.student
+
+    group = get_querystring_group(request, student)
 
     return TemplateResponse(
         request,
         'village/village.html',
         {
-            'student': rel.student,
+            'student': student,
             'group': group,
             'relationship': rel,
             'sms_elders': model.sms_eligible(
-                model.contextualized_elders(rel.student.elder_relationships)),
-            'post_char_limit': model.post_char_limit(rel),
+                model.contextualized_elders(student.elder_relationships)),
+            'read_only': rel is None,
+            'post_char_limit': model.post_char_limit(rel) if rel else 0,
             },
         )
 
@@ -296,10 +306,17 @@ def json_posts(request, student_id=None, group_id=None):
     rel = None
     post_model = model.BulkPost
     if student_id is not None:
-        rel = get_relationship_or_404(student_id, request.user.profile)
+        try:
+            rel = get_relationship_or_404(student_id, request.user.profile)
+        except http.Http404:
+            if not request.user.is_superuser:
+                raise
+            student = get_object_or_404(model.Profile, pk=student_id)
+        else:
+            student = rel.student
         post_model = model.Post
-        target = rel.student
-        manager = rel.student.posts_in_village
+        target = student
+        manager = student.posts_in_village
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
