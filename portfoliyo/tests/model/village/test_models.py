@@ -93,6 +93,16 @@ def test_post_dict_no_relationship():
 
 
 
+def test_get_absolute_url():
+    """A Post's absolute-url is its village URL. (For admin view-on-site.)"""
+    post = factories.PostFactory.create()
+
+    assert post.get_absolute_url() == reverse(
+        'village', kwargs={'student_id': post.student_id})
+
+
+
+
 class TestPostCreate(object):
     @mock.patch('portfoliyo.model.village.models.timezone.now')
     def test_creates_post(self, mock_now):

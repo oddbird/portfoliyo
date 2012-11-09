@@ -392,6 +392,11 @@ class Post(BasePost):
         return self._rel
 
 
+    def get_absolute_url(self):
+        """A Post's URL is its village; this is for admin convenience."""
+        return reverse('village', kwargs={'student_id': self.student_id})
+
+
 
 def process_text(text, elders_in_context):
     """
