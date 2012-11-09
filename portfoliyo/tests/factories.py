@@ -55,21 +55,18 @@ class RelationshipFactory(factory.Factory):
 
     @classmethod
     def create(cls, **kwargs):
-        """Special handling for school; prevent cross-school relationships."""
+        """Special handling for school; avoid cross-school relationships."""
         school = kwargs.pop("school", None)
         if school is not None:
             kwargs['from_profile__school'] = school
             kwargs['to_profile__school'] = school
-        if ('to_profile__school' in kwargs and
-                not 'from_profile__school' in kwargs):
-            kwargs['from_profile__school'] = kwargs['to_profile__school']
         if 'to_profile' in kwargs and not 'from_profile' in kwargs:
-            kwargs['from_profile__school'] = kwargs['to_profile'].school
+            kwargs.setdefault(
+                'from_profile__school', kwargs['to_profile'].school)
         elif 'from_profile' in kwargs and not 'to_profile' in kwargs:
-            kwargs['to_profile__school'] = kwargs['from_profile'].school
+            kwargs.setdefault(
+                'to_profile__school', kwargs['from_profile'].school)
         rel = super(RelationshipFactory, cls).create(**kwargs)
-        if rel.from_profile.school != rel.to_profile.school:
-            raise ValueError("Cannot create relationship across schools.")
         return rel
 
 

@@ -2,6 +2,7 @@
 Student/elder forms.
 
 """
+from django.db.models import Q
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
@@ -292,9 +293,13 @@ class StudentForm(forms.ModelForm):
         super(StudentForm, self).__init__(*args, **kwargs)
         self.fields['groups'].queryset = model.Group.objects.filter(
             owner=self.elder)
+        elder_conditions = Q(school=self.elder.school, school_staff=True)
+        # explicitly allow already-related elders when editing
+        if self.instance.pk:
+            elder_conditions = elder_conditions | Q(
+                relationships_from__to_profile=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.elder.school, school_staff=True).exclude(
-            pk=self.elder.pk)
+            elder_conditions).exclude(pk=self.elder.pk)
         self.fields['elders'].groups_attr = 'elder_in_groups'
         self.owners = set()
         if self.instance.pk:

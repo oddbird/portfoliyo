@@ -524,6 +524,31 @@ class TestStudentForms(object):
         assert profile.student_in_groups.get() == group
 
 
+    def test_edit_student_with_other_school_elder(self):
+        """Can preserve cross-school elder relationship."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        other_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            from_profile__school=factories.SchoolFactory.create(),
+            to_profile=rel.student,
+            )
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [other_rel.elder.pk],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert set(profile.elders) == {rel.elder, other_rel.elder}
+
+
     def test_edit_student_does_not_remove_parent(self):
         """Editing student doesn't remove parent relationships."""
         rel = factories.RelationshipFactory.create(
