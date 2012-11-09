@@ -923,6 +923,30 @@ class TestGroupForms(object):
         assert set(group.elders.all()) == {elder}
 
 
+    def test_edit_group_with_cross_school_elder(self):
+        """Can preserve cross-school elder group membership."""
+        group = factories.GroupFactory.create()
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=factories.SchoolFactory.create())
+        rel = factories.RelationshipFactory.create(from_profile=group.owner)
+        group.students.add(rel.student)
+        group.elders.add(elder)
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        group = form.save()
+
+        assert set(group.elders.all()) == {elder}
+
+
     def test_edit_group_does_not_delete_and_recreate_relationships(self):
         group = factories.GroupFactory.create()
         elder = factories.ProfileFactory.create(

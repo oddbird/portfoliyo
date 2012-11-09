@@ -480,9 +480,12 @@ class GroupForm(forms.ModelForm):
         super(GroupForm, self).__init__(*args, **kwargs)
         self.fields['students'].queryset = model.Profile.objects.filter(
             relationships_to__from_profile=self.owner)
+        elder_conditions = Q(school=self.owner.school, school_staff=True)
+        if self.instance.pk:
+            elder_conditions = elder_conditions | Q(
+                elder_in_groups=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            school=self.owner.school, school_staff=True).exclude(
-            pk=self.owner.pk)
+            elder_conditions).exclude(pk=self.owner.pk)
         self._old_name = self.instance.name
 
 
