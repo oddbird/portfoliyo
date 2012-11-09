@@ -63,6 +63,8 @@
     </div>
   </footer>
 
-  {% block last %}{% endblock last %}
+  {% block last %}
+    {% include "_ie-warning.html" %}
+  {% endblock last %}
 
 {% endblock body %}
