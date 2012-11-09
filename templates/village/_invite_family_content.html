@@ -6,12 +6,14 @@
 
 {% block form-id %}invite-family-form{% endblock %}
 
-{% block form-header %}Invite Family of {{ student }}{% endblock %}
+{% block form-header %}Add Family of {{ student }}{% endblock %}
 
 {% block form-fields %}
   {% include "forms/_field.html" with field=form.phone|attr:"placeholder: 555-555-5555" %}
   {% include "forms/_field.html" with field=form.relationship|attr:"placeholder: e.g. 'Mom', 'Dad', 'Grandma', etc." %}
 {% endblock %}
+
+{% block form-submit-text %}add{% endblock %}
 
 {% block info-bar %}
 {% include "village/_village_info.html" with invite_family_active="true" %}
