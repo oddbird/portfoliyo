@@ -220,7 +220,7 @@ def invite_teacher(request, student_id):
 
 
 @school_staff_required
-@ajax('village/_invite_teacher_group_content.html')
+@ajax('village/_invite_teacher_to_group_content.html')
 def invite_teacher_to_group(request, group_id):
     """Invite teacher to a group."""
     group = get_object_or_404(
