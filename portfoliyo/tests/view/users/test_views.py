@@ -179,6 +179,20 @@ class TestPasswordReset(object):
         assert mail.outbox[0].to == ['user@example.com']
 
 
+    def test_inactive_user(self, client):
+        """An inactive user can get a password reset email."""
+        factories.UserFactory.create(email='user@example.com', is_active=False)
+
+        form = client.get(self.url).forms['reset-password-form']
+        form['email'] = 'user@example.com'
+
+        res = form.submit(status=302).follow()
+
+        res.mustcontain("Password reset email sent")
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == ['user@example.com']
+
+
     def test_bad_email(self, client):
         """Nonexistent user emails give no clue to an attacker."""
         form = client.get(self.url).forms['reset-password-form']
@@ -218,6 +232,19 @@ class TestPasswordResetConfirm(object):
         res = form.submit(status=302).follow()
 
         res.mustcontain("Password changed")
+
+
+    def test_inactive_user_becomes_active(self, client):
+        """An inactive user who completes a reset becomes active."""
+        user = factories.UserFactory.create(
+            email='user@example.com', is_active=False)
+        form = client.get(self.url(client, user)).forms['set-password-form']
+        new_password = 'sekrit123'
+        form['new_password1'] = new_password
+        form['new_password2'] = new_password
+        form.submit(status=302).follow()
+
+        assert utils.refresh(user).is_active
 
 
 

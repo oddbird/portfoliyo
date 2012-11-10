@@ -91,7 +91,7 @@ def password_reset_confirm(request, uidb36, token):
         uidb36=uidb36,
         token=token,
         template_name='users/password_reset_confirm.html',
-        set_password_form=auth_forms.SetPasswordForm,
+        set_password_form=forms.SetPasswordForm,
         post_reset_redirect=redirect_home(request.user),
         )
 

@@ -116,10 +116,16 @@ class PasswordResetForm(auth_forms.PasswordResetForm):
         """Fetch the affected users here before sending reset emails."""
         email = self.cleaned_data["email"]
         # super's save expects self.users_cache to be set.
-        self.users_cache = model.User.objects.filter(
-            email__iexact=email, is_active=True)
+        self.users_cache = model.User.objects.filter(email__iexact=email)
 
         return super(PasswordResetForm, self).save(*args, **kwargs)
+
+
+class SetPasswordForm(auth_forms.SetPasswordForm):
+    """A set-password form that activates inactive users."""
+    def save(self, *args, **kwargs):
+        self.user.is_active = True
+        return super(SetPasswordForm, self).save(*args, **kwargs)
 
 
 
