@@ -297,7 +297,7 @@ class TestActivate(object):
         """Get a confirmation message after activating."""
         res = client.get(self.url(client), status=302).follow()
 
-        res.mustcontain("Account activated")
+        res.mustcontain("account has been activated")
 
 
     def test_failed_activate(self, client):

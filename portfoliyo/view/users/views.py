@@ -30,6 +30,9 @@ def login(request):
         'template_name': 'users/login.html',
         'authentication_form': forms.CaptchaAuthenticationForm,
         }
+    if request.session.get('just_activated'):
+        del request.session['just_activated']
+        kwargs['extra_context'] = {'just_activated': True}
     # the contrib.auth login view doesn't pass request into the bound form,
     # but CaptchaAuthenticationForm needs it, so we ensure it's passed in
     if request.method == 'POST':
@@ -112,7 +115,7 @@ def activate(request, activation_key):
         )
 
     if response.status_code == 302:
-        messages.success(request, "Account activated; now you can login.")
+        request.session['just_activated'] = True
 
     return response
 
