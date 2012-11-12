@@ -60,7 +60,7 @@ $village-bleed          : $grid-padding * $village-ratio;
     @extend %icon;
     @extend %icon-plus;
     @extend %village-activenav;
-    @include rgba-background(rgba($green,.5));
+    background: rgba($green,.375);
     color: $base;
     font-weight: bold;
   }

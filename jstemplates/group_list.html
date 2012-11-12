@@ -2,7 +2,14 @@
   {{> group_list_item }}
 </ul>
 {{# staff }}
-<aside class="additem">
+<aside class="listitem additem addgroup">
   <a href="{{ add_group_url }}" class="additem-link ajax-link">Add Group</a>
+</aside>
+<aside class="listitem additem addstudent">
+  <a href="{{ group_add_student_url }}" class="additem-link ajax-link">Signup Parents</a>
+  <div class="listitem-actions">
+    <a href="#@@@" class="action-addbulk ajax-link" title="signup parents in bulk">bulk signup</a>
+    <a href="#@@@" class="action-addsingle ajax-link" title="signup a parent by hand">single signup</a>
+  </div>
 </aside>
 {{/ staff }}

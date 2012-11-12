@@ -47,8 +47,6 @@ $village-nav-action-color : $base03;
     @extend %village-activenav;
     @include rgba-background(rgba($village-nav-bg,.25));
     .title & {
-      @extend %icon;
-      @extend %icon-users;
       @include rgba-background(rgba($village-nav-title-bg,.25));
       font-weight: bold;
       color: $back;
@@ -59,7 +57,7 @@ $village-nav-action-color : $base03;
     }
     .group & {
       @extend %icon;
-      @extend %icon-users;
+      @extend %icon-list;
     }
   }
   #{$focus} {
@@ -131,25 +129,38 @@ $village-nav-action-color : $base03;
   }
   .action-remove { @extend %icon-trashcan; }
   .undo-action-remove { @extend %icon-undo; }
+  .action-addbulk { @extend %icon-users; }
+  .action-addsingle { @extend %icon-user; }
 }
 
 .action-back.groups {
   @extend %icon-replace;
-  @extend %icon-arrow-left;
-  @include adjust-font-size-to($normpx,1,$village-list-size);
+  @extend %icon-list;
   @include leader($village-nav-rhythm);
   @include border-radius(.125em);
-  @include rgba-background(rgba($back,.5));
+  @include rem(width, rhythm(1));
   position: relative;
+  overflow: hidden;
   float: left;
-  width: rhythm(1);
-  margin-right: .4em;
-  z-index: 6;
+  margin-right: .4rem;
   color: $base3;
-  #{$focus} { background: $accent; }
+  background: rgba($back,.5);
+  z-index: 6;
+  #{$focus} {
+    @extend %icon-arrow-left;
+    background: $accent;
+  }
 }
 
 .additem-link {
   @extend %village-nav-item;
   @extend %village-addlink;
+  .addgroup & {
+    @extend %icon-addlist;
+    background: rgba($blue,.25);
+    &:before {
+      @include adjust-font-size-to($normpx);
+      @include rem(margin-left, rhythm(-.18));
+    }
+  }
 }
