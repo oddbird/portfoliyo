@@ -469,7 +469,7 @@ optgroup {
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
+  background: url('../images/rgbapng/ffffff40.png?1352138058');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -760,7 +760,7 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
+  background: url('../images/rgbapng/ffffff40.png?1352138058');
   background: rgba(255, 255, 255, 0.25);
   max-height: 184px;
   max-height: 10.22222rem;
@@ -786,7 +786,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('../images/rgbapng/268bd220.png?1351286363');
+  background: url('../images/rgbapng/268bd220.png?1352138058');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -800,7 +800,7 @@ button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1351286363');
+  background: url('../images/rgbapng/ffffff7f.png?1352138058');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -814,7 +814,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1351286363');
+  background: url('../images/rgbapng/ffffffbf.png?1352138058');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -1496,10 +1496,10 @@ button {
   border-top-style: solid;
   padding-top: 11px;
   padding-top: 0.61111rem;
-  -moz-border-image: url('../images/landing/line.png?1351871054') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351871054') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351871054') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351871054') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   padding-bottom: 23px;
   padding-bottom: 1.27778rem;
   clear: both;
@@ -1547,7 +1547,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351889373') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351891853') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1558,7 +1558,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351871054') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1569,7 +1569,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1351871054') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1598,7 +1598,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1351871054') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1659,19 +1659,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351871054');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351871054');
+  background-image: url('../images/landing/carl.png?1351725897');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351871054');
+  background-image: url('../images/landing/eric.png?1351725897');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351871054');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 .lt-ie9 .village-landing .container {
@@ -1810,7 +1810,7 @@ button {
 }
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
-  background: url('../images/rgbapng/8599007f.png?1351286363');
+  background: url('../images/rgbapng/8599007f.png?1352138058');
   background: rgba(133, 153, 0, 0.5);
   color: #657b83;
   font-weight: bold;
@@ -2105,11 +2105,11 @@ button {
 }
 
 .listitem-select:link, .listitem-select:visited {
-  background: url('../images/rgbapng/eee8d540.png?1351286363');
+  background: url('../images/rgbapng/eee8d540.png?1352138058');
   background: rgba(238, 232, 213, 0.25);
 }
 .title .listitem-select:link, .title .listitem-select:visited {
-  background: url('../images/rgbapng/268bd240.png?1351286363');
+  background: url('../images/rgbapng/268bd240.png?1352138058');
   background: rgba(38, 139, 210, 0.25);
   font-weight: bold;
   color: #073642;
@@ -2119,11 +2119,11 @@ button {
   color: #fdf6e3;
 }
 .listitem-select:focus, .listitem-select:hover, .listitem-select:active {
-  background: url('../images/rgbapng/eee8d57f.png?1351286363');
+  background: url('../images/rgbapng/eee8d57f.png?1352138058');
   background: rgba(238, 232, 213, 0.5);
 }
 .title .listitem-select:focus, .title .listitem-select:hover, .title .listitem-select:active {
-  background: url('../images/rgbapng/268bd27f.png?1351286363');
+  background: url('../images/rgbapng/268bd27f.png?1352138058');
   background: rgba(38, 139, 210, 0.5);
 }
 .listitem-select .unread {
@@ -2234,7 +2234,7 @@ button {
   -webkit-border-radius: 0.125em;
   -moz-border-radius: 0.125em;
   border-radius: 0.125em;
-  background: url('../images/rgbapng/0736427f.png?1351286363');
+  background: url('../images/rgbapng/0736427f.png?1352138058');
   background: rgba(7, 54, 66, 0.5);
   position: relative;
   float: left;
@@ -2491,7 +2491,7 @@ button {
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
   border-radius: 4px;
-  background: url('../images/rgbapng/93a1a140.png?1351286363');
+  background: url('../images/rgbapng/93a1a140.png?1352138059');
   background: rgba(147, 161, 161, 0.25);
   display: inline-block;
   padding: 0 .4em;
@@ -2664,7 +2664,7 @@ button {
   color: #657b83;
 }
 .elder .vcard.declined {
-  background: url('../images/rgbapng/dc322f20.png?1351286363');
+  background: url('../images/rgbapng/dc322f20.png?1352138059');
   background: rgba(220, 50, 47, 0.125);
 }
 .elder .vcard.declined:before {
@@ -2713,7 +2713,7 @@ button {
   display: block;
 }
 .browser-warning .modal {
-  background: url('../images/rgbapng/073642bf.png?1352492093');
+  background: url('../images/rgbapng/073642bf.png?1352498380');
   background: rgba(7, 54, 66, 0.75);
   position: fixed;
   top: 0;
@@ -2845,7 +2845,7 @@ button {
   -moz-animation: loading 1s linear alternate infinite both;
   -o-animation: loading 1s linear alternate infinite both;
   animation: loading 1s linear alternate infinite both;
-  background: url('../images/rgbapng/002b3640.png?1351286363');
+  background: url('../images/rgbapng/002b3640.png?1352138059');
   background: rgba(0, 43, 54, 0.25);
   font-weight: bold;
   text-align: center;
@@ -2864,9 +2864,9 @@ button {
   -webkit-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
   -moz-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
   box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
+  overflow: hidden;
+  display: table-row;
   position: relative;
-  padding-left: 1rem;
-  padding-right: 1rem;
   border-color: #657b83;
 }
 .message:before {
@@ -2874,6 +2874,8 @@ button {
   font-size: 2.44444rem;
   line-height: 58px;
   line-height: 3.19444rem;
+  display: table-cell;
+  padding: 1rem;
   vertical-align: middle;
 }
 .message.info {
@@ -2892,7 +2894,9 @@ button {
   display: none;
 }
 .message p {
-  display: inline;
+  display: table-cell;
+  padding: 1rem 1rem 1rem 0;
+  vertical-align: middle;
 }
 
 #messages {
@@ -2900,10 +2904,11 @@ button {
   padding: 0;
   border: 0;
   list-style: none;
+  display: table;
   position: fixed;
   top: 25%;
-  right: 10%;
   left: 10%;
+  width: 80%;
   color: #fdf6e3;
   z-index: 999;
 }

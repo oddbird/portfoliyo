@@ -11,13 +11,15 @@
   @include padding-leader(1);
   @include trailing-border(1px,1);
   @include box-shadow($base03 0 0 rhythm(.25), $base03 0 0 rhythm(.5));
+  @include clearfix;
+  display: table-row;
   position: relative;
-  padding-left: $grid-padding;
-  padding-right: $grid-padding;
   border-color: $base;
 
   &:before {
     @include adjust-font-size-to($xlargepx);
+    display: table-cell;
+    padding: $grid-padding;
     vertical-align: middle;
   }
   &.info { @include message($blue, info-circle); }
@@ -27,15 +29,21 @@
 
   .js &.js-warning { display: none; }
 
-  p { display: inline; }
+  p {
+    display: table-cell;
+    padding: $grid-padding $grid-padding $grid-padding 0;
+    vertical-align: middle;
+
+  }
 }
 
 #messages {
   @include no-style-list;
+  display: table;
   position: fixed;
   top: 25%;
-  right: 10%;
   left: 10%;
+  width: 80%;
   color: $base3;
   z-index: 999;
   .close {
