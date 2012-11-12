@@ -60,5 +60,5 @@ $simple-center: $simple-width - $simple-side;
 
 .pagehead {
   @include adjust-font-size-to($largepx);
-  @include trailer(1,$largepx);
+  @include trailer;
 }
