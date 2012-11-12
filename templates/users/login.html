@@ -7,6 +7,13 @@
 <article class="login">
   <h2 class="pagehead">Login to Portfoliyo Village</h2>
 
+  {% comment %}
+  {# @@@ if redirected from activation #}
+  <div class="activated success">
+    <p>Success! Your account has been activated, you can now login.</p>
+  </div>
+  {% endcomment %}
+
   {% include "users/_login_form.html" %}
 </article>
 

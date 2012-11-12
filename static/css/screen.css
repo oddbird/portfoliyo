@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, [data-icon]:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, .activated:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before {
+.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, .activated:before {
   margin-right: .4em;
 }
 
@@ -239,11 +239,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\270e";
 }
 
-.ui-multiselect-all:before, .ui-multiselect-none:before, .listitem-actions .action-save:before, .message.success:before {
+.ui-multiselect-all:before, .ui-multiselect-none:before, .listitem-actions .action-save:before, .message.success:before, .success.activated:before {
   content: "\2713";
 }
 
-.ui-multiselect-none:before, .listitem-select.removed:before, .elder .vcard.declined:before, .message.error:before {
+.ui-multiselect-none:before, .listitem-select.removed:before, .elder .vcard.declined:before, .message.error:before, .error.activated:before {
   content: "\2717";
 }
 
@@ -251,11 +251,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2718";
 }
 
-.message.info:before {
+.message.info:before, .info.activated:before {
   content: "\69";
 }
 
-.announcements .announce:before, .elder .vcard.inactive:before, .message.warning:before {
+.announcements .announce:before, .elder .vcard.inactive:before, .message.warning:before, .warning.activated:before {
   content: "\26a0";
 }
 
@@ -1321,6 +1321,17 @@ button {
     margin-right: 0;
     text-align: right;
   }
+}
+
+.activated {
+  color: #fdf6e3;
+}
+.activated p {
+  width: 100%;
+}
+.activated + form {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
 }
 
 .email_notifications-field {
@@ -2853,7 +2864,7 @@ button {
   z-index: 100;
 }
 
-.message {
+.message, .activated {
   padding-top: 23px;
   padding-top: 1.27778rem;
   border-bottom-width: 1px;
@@ -2869,7 +2880,7 @@ button {
   position: relative;
   border-color: #657b83;
 }
-.message:before {
+.message:before, .activated:before {
   font-size: 44px;
   font-size: 2.44444rem;
   line-height: 58px;
@@ -2878,22 +2889,22 @@ button {
   padding: 1rem;
   vertical-align: middle;
 }
-.message.info {
+.message.info, .info.activated {
   background: #268bd2;
 }
-.message.success {
+.message.success, .success.activated {
   background: #859900;
 }
-.message.warning {
+.message.warning, .warning.activated {
   background: #b58900;
 }
-.message.error {
+.message.error, .error.activated {
   background: #dc322f;
 }
-.js .message.js-warning {
+.js .message.js-warning, .js .js-warning.activated {
   display: none;
 }
-.message p {
+.message p, .activated p {
   display: table-cell;
   padding: 1rem 1rem 1rem 0;
   vertical-align: middle;
