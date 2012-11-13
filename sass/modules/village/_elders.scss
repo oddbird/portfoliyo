@@ -54,7 +54,7 @@
     }
     &.declined {
       @extend %icon-x;
-      @include rgba-background(rgba($red,.125));
+      background: rgba($red,.125);
       &:before { color: $red; }
     }
     &.active {
