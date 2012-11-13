@@ -2,7 +2,6 @@
 from __future__ import absolute_import
 
 from collections import defaultdict
-import logging
 import re
 
 from django.core.urlresolvers import reverse
@@ -10,13 +9,10 @@ from django.db import models
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
-from portfoliyo.pusher import get_pusher
+from portfoliyo.model.events import trigger
 from portfoliyo import notifications, sms
 from ..users import models as user_models
 from . import unread
-
-
-logger = logging.getLogger(__name__)
 
 
 
@@ -176,15 +172,11 @@ class BasePost(models.Model):
         a Pusher failure is never worth aborting the post over.
 
         """
-        pusher = get_pusher()
-        if pusher is not None:
-            try:
-                pusher[channel].trigger(
-                    'message_posted',
-                    {'posts': [post_dict(self, **kwargs)]},
-                    )
-            except Exception as e:
-                logger.error("Pusher exception: %s" % str(e))
+        trigger(
+            channel,
+            'message_posted',
+            {'posts': [post_dict(self, **kwargs)]},
+            )
 
 
 
