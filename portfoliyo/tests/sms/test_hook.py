@@ -103,8 +103,7 @@ def test_unknown_profile():
 
     assert reply == (
         "Bummer, we don't recognize your invite code! "
-        "Please make sure it's typed exactly as it is on the paper, "
-        "followed by a space and then your name."
+        "Please make sure it's typed exactly as it is on the paper."
         )
 
 
