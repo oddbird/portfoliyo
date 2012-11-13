@@ -2652,6 +2652,10 @@ button {
   font-weight: bold;
   color: #fdf6e3;
   background: #4583aa;
+  border-color: #93a1a1;
+}
+.elders-title + .addelder-link {
+  border-top: 0;
 }
 
 .elder {
