@@ -377,6 +377,10 @@ a:focus, a:hover, a:active {
   border: 1px solid #073642;
 }
 
+.details .summary {
+  cursor: pointer;
+}
+
 .login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .parent-instructions h1, .dashboard h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .parent-instructions h2, .dashboard h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .parent-instructions h3, .dashboard h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .parent-instructions h4, .dashboard h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .parent-instructions h5, .dashboard h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .parent-instructions h6, .dashboard h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
@@ -1848,6 +1852,15 @@ button {
 .students-field + .students-field, .students-field + .elders-field, .elders-field + .students-field, .elders-field + .elders-field, .groups-field + .students-field, .groups-field + .elders-field {
   float: right;
   margin-right: 0;
+}
+
+.relation-fieldset .summary {
+  margin-top: 0px;
+  margin-top: 0rem;
+  text-align: right;
+}
+.relation-fieldset.details {
+  overflow: hidden;
 }
 
 .select-groups [class*="label-color-"]:after {

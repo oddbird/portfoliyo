@@ -21,6 +21,14 @@
   @return adjust-color($color, $lightness: $amount);
 }
 
+.relation-fieldset {
+  .summary {
+    @include leader(0);
+    text-align: right;
+  }
+  &.details { @include clearfix; }
+}
+
 $label-colors: $yellow $orange $magenta $violet $cyan $green
                lighten-color($yellow, 15%)
                lighten-color($orange, 15%)
