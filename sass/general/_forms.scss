@@ -159,6 +159,45 @@ $input-rhythm: .25;
   }
 }
 
+$arrow-width: 1rem;
+$step-back: mix($base,$base2,12.5%);
+$active-back: mix($base,$base2,25%);
+
+.form-steps {
+  @include adjust-font-size-to($smallpx);
+  @include inline-block-list;
+  @include trailer;
+  background: $base2;
+  counter-reset: form-steps;
+  li {
+    position: relative;
+    padding: rhythm(.25) rhythm(.25) rhythm(.25) $arrow-width*1.5;
+    margin-left: -.2em;
+    background: $step-back;
+    counter-increment: form-steps;
+    &:first-child { padding-left: rhythm(.5); }
+    &:before {
+      content: counter(form-steps,decimal) ". ";
+      font-weight: bold;
+    }
+    &:after {
+      @include stretch-y;
+      left: 100%;
+      content: " ";
+      width: $arrow-width;
+      border: $arrow-width*.5 solid rgba($base,0);
+      border-width: rhythm(.75) 0 rhythm(.75) $arrow-width;
+      border-left-color: $step-back;
+      z-index: 10;
+    }
+  }
+  .active {
+    color: $orange;
+    background: $active-back;
+    &:after { border-left-color: $active-back; }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Elements
 

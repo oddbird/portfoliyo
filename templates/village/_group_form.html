@@ -7,6 +7,8 @@
 
   <h2>{% block form-header %}{% endblock %}</h2>
 
+  {% block form-steps %}{% endblock form-steps %}
+
   {{ form.non_field_errors }}
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. 1st Period Math" label="Group Name" %}

@@ -473,7 +473,7 @@ optgroup {
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
-  background: url('../images/rgbapng/ffffff40.png?1352840093');
+  background: url('../images/rgbapng/ffffff40.png?1352840743');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -576,6 +576,63 @@ optgroup {
   padding-top: 21px;
   padding-top: 1.16667rem;
   font-style: italic;
+}
+
+.form-steps {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  background: #eee8d5;
+  counter-reset: form-steps;
+}
+.form-steps li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.form-steps li {
+  position: relative;
+  padding: 0.31944rem 0.31944rem 0.31944rem 1.5rem;
+  margin-left: -0.2em;
+  background: #dcdaca;
+  counter-increment: form-steps;
+}
+.form-steps li:first-child {
+  padding-left: 0.63889rem;
+}
+.form-steps li:before {
+  content: counter(form-steps, decimal) ". ";
+  font-weight: bold;
+}
+.form-steps li:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  content: " ";
+  width: 1rem;
+  border: 0.5rem solid rgba(101, 123, 131, 0);
+  border-width: 0.95833rem 0 0.95833rem 1rem;
+  border-left-color: #dcdaca;
+  z-index: 10;
+}
+.form-steps .active {
+  color: #cb4b16;
+  background: #cbccc0;
+}
+.form-steps .active:after {
+  border-left-color: #cbccc0;
 }
 
 .ui-multiselect-checkboxes [type="checkbox"], .email_notifications-field [type="checkbox"], .school_staff-field [type="checkbox"], .ui-multiselect-checkboxes [type="radio"], .email_notifications-field [type="radio"], .school_staff-field [type="radio"] {
@@ -764,7 +821,7 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  background: url('../images/rgbapng/ffffff40.png?1352840093');
+  background: url('../images/rgbapng/ffffff40.png?1352840743');
   background: rgba(255, 255, 255, 0.25);
   max-height: 184px;
   max-height: 10.22222rem;
@@ -790,7 +847,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('../images/rgbapng/268bd220.png?1352840093');
+  background: url('../images/rgbapng/268bd220.png?1352840743');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -804,7 +861,7 @@ button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1352840093');
+  background: url('../images/rgbapng/ffffff7f.png?1352840743');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -818,7 +875,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1352840093');
+  background: url('../images/rgbapng/ffffffbf.png?1352840743');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -2733,7 +2790,7 @@ button {
   display: block;
 }
 .browser-warning .modal {
-  background: url('../images/rgbapng/073642bf.png?1352840093');
+  background: url('../images/rgbapng/073642bf.png?1352840744');
   background: rgba(7, 54, 66, 0.75);
   position: fixed;
   top: 0;
