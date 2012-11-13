@@ -6,27 +6,29 @@
   {% with nav_elders|elder_types as elder_types %}
   {% for elder_type in elder_types %}
 
-    <h2 class="elders-title">{% if elder_type.school_staff %}Teachers{% else %}Family Members{% endif %}</h2>
+  <h2 class="elders-title">{% if elder_type.school_staff %}Teachers{% else %}Family Members{% endif %}</h2>
 
-    <ul>
-      {% for nav_elder in elder_type.elders %}
-      <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
-        <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
-          <b class="title">{{ nav_elder.role_in_context }}:</b>
-          <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        </span>
-        {% if not nav_elder.school_staff %}
-          <div class="listitem-actions">
-            {% if request.user.profile.school_staff %}
-            <a href="{% block edit-elder-url %}{% endblock %}" class="action-edit ajax-link" title="edit {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">edit</a>
-            {# <button class="action-remove" title="remove {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">remove</button> #}
-            {% endif %}
-            <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
-          </div>
-        {% endif %}
-      </li>
-      {% endfor %}
-    </ul>
+  {% if elder_type.elders %}
+  <ul>
+    {% for nav_elder in elder_type.elders %}
+    <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
+      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
+        <b class="title">{{ nav_elder.role_in_context }}:</b>
+        <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
+      </span>
+      {% if not nav_elder.school_staff %}
+        <div class="listitem-actions">
+          {% if request.user.profile.school_staff %}
+          <a href="{% block edit-elder-url %}{% endblock %}" class="action-edit ajax-link" title="edit {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">edit</a>
+          {# <button class="action-remove" title="remove {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">remove</button> #}
+          {% endif %}
+          <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
+        </div>
+      {% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 
   {% block invite-elder %}
   {% if request.user.profile.school_staff %}
