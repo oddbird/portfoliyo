@@ -240,71 +240,24 @@ class TestPostCreate(object):
         assert len(mail.outbox) == 0
 
 
-    @mock.patch('portfoliyo.model.village.models.get_pusher')
-    def test_triggers_pusher_event(self, mock_get_pusher):
-        """Triggers a pusher event if get_pusher doesn't return None."""
+    @mock.patch('portfoliyo.model.village.models.trigger')
+    def test_triggers_pusher_event(self, mock_trigger):
+        """Triggers a pusher event."""
         rel = factories.RelationshipFactory.create()
 
         post = models.Post.create(
             rel.elder, rel.student, 'Foo\n', sequence_id='33')
 
-        channel = mock_get_pusher.return_value['student_%s' % rel.student.id]
-        args = channel.trigger.call_args[0]
-        post_data = args[1]['posts'][0]
+        args = mock_trigger.call_args[0]
+        post_data = args[2]['posts'][0]
 
-        assert args[0] == 'message_posted'
+        assert args[0] == 'student_%s' % rel.student.id
+        assert args[1] == 'message_posted'
         assert post_data['author_sequence_id'] == '33'
         assert post_data['author_id'] == rel.elder.id
         assert post_data['student_id'] == rel.student.id
         assert post_data['mark_read_url'] == reverse(
             'mark_post_read', kwargs={'post_id': post.id})
-
-
-    def test_pusher_socket_error(self):
-        """
-        A pusher socket error is logged to Sentry and then ignored.
-
-        Pusher is not critical enough to be worth causing the post to fail.
-
-        """
-        import socket
-        rel = factories.RelationshipFactory.create()
-
-        get_pusher_location = 'portfoliyo.model.village.models.get_pusher'
-        logger_error_location = 'portfoliyo.model.village.models.logger.error'
-        with mock.patch(get_pusher_location) as mock_get_pusher:
-            channel = mock_get_pusher.return_value['student_%s' % rel.student.id]
-            channel.trigger.side_effect = socket.error('connection timed out')
-
-            with mock.patch(logger_error_location) as mock_logger_error:
-                models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
-
-        mock_logger_error.assert_called_with(
-            "Pusher exception: connection timed out")
-
-
-    def test_pusher_bad_response(self):
-        """
-        Any exception from Pusher is ignored and logged to Sentry.
-
-        Pusher is not critical enough to be worth causing the post to fail.
-
-        """
-        rel = factories.RelationshipFactory.create()
-
-        get_pusher_location = 'portfoliyo.model.village.models.get_pusher'
-        logger_error_location = 'portfoliyo.model.village.models.logger.error'
-        with mock.patch(get_pusher_location) as mock_get_pusher:
-            channel = mock_get_pusher.return_value[
-                'student_%s' % rel.student.id]
-            channel.trigger.side_effect = Exception(
-                'Unexpected return status 413')
-
-            with mock.patch(logger_error_location) as mock_logger_error:
-                models.Post.create(rel.elder, rel.student, 'Foo\n', '33')
-
-        mock_logger_error.assert_called_with(
-            "Pusher exception: Unexpected return status 413")
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
@@ -457,29 +410,21 @@ class TestBulkPost(object):
         assert set([rel.student, rel2.student]) == exp
 
 
-    @mock.patch('portfoliyo.model.village.models.get_pusher')
-    def test_triggers_pusher_event(self, mock_get_pusher):
+    @mock.patch('portfoliyo.model.village.models.trigger')
+    def test_triggers_pusher_event(self, mock_trigger):
         """Triggers pusher events for both self and sub-posts."""
         rel = factories.RelationshipFactory.create()
 
-        student_channel_name = 'student_%s' % rel.student.id
-        group_channel_name = 'group_all%s' % rel.elder.id
-        student_channel = mock.Mock()
-        group_channel = mock.Mock()
-        pusher = {
-            student_channel_name: student_channel,
-            group_channel_name: group_channel,
-            }
-        mock_get_pusher.return_value = pusher
-
         models.BulkPost.create(rel.elder, None, 'Foo\n', sequence_id='33')
 
-        student_args = student_channel.trigger.call_args[0]
-        student_post_data = student_args[1]['posts'][0]
-        group_args = group_channel.trigger.call_args[0]
-        group_post_data = group_args[1]['posts'][0]
+        student_args = mock_trigger.call_args_list[0][0]
+        student_post_data = student_args[2]['posts'][0]
+        group_args = mock_trigger.call_args_list[1][0]
+        group_post_data = group_args[2]['posts'][0]
 
-        assert student_args[0] == group_args[0] == 'message_posted'
+        assert student_args[0] == 'student_%s' % rel.student.id
+        assert group_args[0] == 'group_all%s' % rel.elder.id
+        assert student_args[1] == group_args[1] == 'message_posted'
         assert student_post_data['author_sequence_id'] == '33'
         assert student_post_data['author_id'] == rel.elder.id
         assert group_post_data['author_sequence_id'] == '33'

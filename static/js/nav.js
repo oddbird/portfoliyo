@@ -252,10 +252,10 @@ var PYO = (function (PYO, $) {
                 var group = el.hasClass('group-link');
                 if (group) {
                     id = el.data('group-id');
-                    channel = PYO.pusher.subscribe('group_' + id);
+                    channel = PYO.pusher.subscribe('private-group_' + id);
                 } else {
                     id = el.data('id');
-                    channel = PYO.pusher.subscribe('student_' + id);
+                    channel = PYO.pusher.subscribe('private-student_' + id);
                 }
 
                 channel.bind('message_posted', function (data) {
@@ -323,7 +323,7 @@ var PYO = (function (PYO, $) {
 
     PYO.subscribeToGroupChannel = function (id) {
         var nav = $('.village-nav');
-        var channel = PYO.pusher.subscribe('student_' + id);
+        var channel = PYO.pusher.subscribe('private-student_' + id);
 
         channel.bind('message_posted', function (data) {
             if (data && data.posts && data.posts.length) {
@@ -355,10 +355,10 @@ var PYO = (function (PYO, $) {
                 var id;
                 if (group) {
                     id = el.data('group-id');
-                    PYO.pusher.unsubscribe('group_' + id);
+                    PYO.pusher.unsubscribe('private-group_' + id);
                 } else {
                     id = el.data('id');
-                    PYO.pusher.unsubscribe('student_' + id);
+                    PYO.pusher.unsubscribe('private-student_' + id);
                 }
             });
         }
@@ -376,7 +376,7 @@ var PYO = (function (PYO, $) {
 
                 $.each(students, function () {
                     var id = this;
-                    PYO.pusher.unsubscribe('student_' + id);
+                    PYO.pusher.unsubscribe('private-student_' + id);
                 });
             }
         }
@@ -422,7 +422,7 @@ var PYO = (function (PYO, $) {
     PYO.listenForStudentChanges = function () {
         if (PYO.pusherKey && PYO.activeUserId) {
             var nav = $('.village-nav');
-            var channel = PYO.pusher.subscribe('students_of_' + PYO.activeUserId);
+            var channel = PYO.pusher.subscribe('private-students_of_' + PYO.activeUserId);
 
             channel.bind('student_added', function (data) {
                 if (data && data.objects && data.objects.length) {
@@ -475,7 +475,7 @@ var PYO = (function (PYO, $) {
                                     students_arr.splice($.inArray(id.toString(), students_arr), 1);
                                     all_students_group.data('students', students_arr.join(' '));
                                 }
-                                PYO.pusher.unsubscribe('student_' + id);
+                                PYO.pusher.unsubscribe('private-student_' + id);
                             }
                         }
                     });
@@ -503,7 +503,7 @@ var PYO = (function (PYO, $) {
     PYO.listenForGroupChanges = function () {
         if (PYO.pusherKey && PYO.activeUserId) {
             var nav = $('.village-nav');
-            var channel = PYO.pusher.subscribe('groups_of_' + PYO.activeUserId);
+            var channel = PYO.pusher.subscribe('private-groups_of_' + PYO.activeUserId);
 
             channel.bind('student_added_to_group', function (data) {
                 if (data && data.objects && data.objects.length) {

@@ -1,4 +1,4 @@
-"""Pusher-related code."""
+"""Code to get access to a Pusher API instance."""
 from __future__ import absolute_import
 
 from django.conf import settings
@@ -8,6 +8,7 @@ import pusher
 
 def context_processor(request):
     return {'PUSHER_KEY': getattr(settings, 'PUSHER_KEY', '')}
+
 
 
 def get_pusher():

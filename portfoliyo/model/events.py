@@ -1,5 +1,10 @@
 """Pusher events."""
+import logging
+
 from portfoliyo.pusher import get_pusher
+
+
+logger = logging.getLogger(__name__)
 
 
 
@@ -102,8 +107,16 @@ def student_removed_from_group(owner, students, groups):
 
 
 def trigger(channel, event, data):
-    """Fire ``event`` on ``channel`` with ``data`` if Pusher is configured."""
+    """
+    Fire ``event`` on ``channel`` with ``data`` if Pusher is configured.
+
+    Log failures, but never blow up.
+
+    """
     pusher = get_pusher()
     if pusher is None:
         return
-    pusher[channel].trigger(event, data)
+    try:
+        pusher['private-%s' % channel].trigger(event, data)
+    except Exception as e:
+        logger.error("Pusher exception: %s" % str(e))

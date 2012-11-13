@@ -45,11 +45,11 @@ $village-nav-action-color : $base03;
   @extend %village-nav-item;
   #{$link} {
     @extend %village-activenav;
-    @include rgba-background(rgba($village-nav-bg,.25));
+    background: rgba($village-nav-bg,.25);
     .title & {
-      @include rgba-background(rgba($village-nav-title-bg,.25));
-      font-weight: bold;
       color: $back;
+      background: rgba($village-nav-title-bg,.25);
+      font-weight: bold;
       &.active {
         background: $base1;
         color: $base3;
@@ -61,10 +61,8 @@ $village-nav-action-color : $base03;
     }
   }
   #{$focus} {
-    @include rgba-background(rgba($village-nav-bg,.5));
-    .title & {
-      @include rgba-background(rgba($village-nav-title-bg,.5));
-    }
+    background: rgba($village-nav-bg,.5);
+    .title & { background: rgba($village-nav-title-bg,.5); }
   }
 
   .unread {
@@ -82,8 +80,8 @@ $village-nav-action-color : $base03;
   }
   &.editing {
     @include mono;
-    background: lighten($orange,40);
     min-height: rhythm(1,$village-list-size);
+    background: lighten($orange,40);
   }
   &.removed {
     @extend %icon;

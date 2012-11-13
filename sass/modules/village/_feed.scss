@@ -182,10 +182,10 @@ $instruction-height: rhythm(5.5);
 
 .nametag {
   @include border-radius(4px);
-  @include rgba-background(rgba($base1,.25));
   display: inline-block;
   padding: 0 .4em;
   border: 1px solid $base01;
+  background: rgba($base1,.25);
   &.me {
     background: $blue;
     color: $base3;
