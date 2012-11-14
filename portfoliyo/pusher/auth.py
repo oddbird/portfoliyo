@@ -55,7 +55,10 @@ def pusher_auth(request):
 
     pusher = get_pusher()
 
-    if pusher and allow(request.user.profile, channel):
+    if (pusher and
+            request.user.is_authenticated() and
+            allow(request.user.profile, channel)
+            ):
         r = pusher[channel].authenticate(socket_id)
         return HttpResponse(json.dumps(r), mimetype="application/json")
 

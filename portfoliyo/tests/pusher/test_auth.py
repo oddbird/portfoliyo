@@ -134,7 +134,6 @@ class TestPusherAuthView(object):
         mock_allow.assert_called_once_with(profile, 'channel')
 
 
-
     def test_no_pusher(self, client):
         """Returns 403 if Pusher not configured."""
         profile = factories.ProfileFactory.create()
@@ -146,6 +145,20 @@ class TestPusherAuthView(object):
                     '/pusher/auth',
                     {'channel_name': 'channel', 'socket_id': 'socket-id'},
                     user=profile.user,
+                    status=403,
+                    )
+
+        assert mock_allow.call_count == 0
+
+
+    def test_anon_user(self, client):
+        """Returns 403 if the user is anonymous."""
+        with mock.patch('portfoliyo.pusher.auth.allow') as mock_allow:
+            with mock.patch('portfoliyo.pusher.auth.get_pusher') as mock_get_p:
+                mock_get_p.return_value = True # anything that isn't None
+                client.post(
+                    '/pusher/auth',
+                    {'channel_name': 'channel', 'socket_id': 'socket-id'},
                     status=403,
                     )
 
