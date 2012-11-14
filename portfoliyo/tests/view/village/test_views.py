@@ -123,6 +123,22 @@ class TestAddStudent(object):
             ) + "?group=" + str(group.id)
 
 
+    def test_steps_guide(self, client):
+        """Two-step group-creation guide appears if requested in querystring."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        normal_response = client.get(
+            reverse('add_student', kwargs={'group_id': g.id}),
+            user=g.owner.user,
+            )
+        twostep_response = client.get(
+            reverse('add_student', kwargs={'group_id': g.id}) + '?created=1',
+            user=g.owner.user,
+            )
+
+        assert len(normal_response.html.findAll('ol', 'form-steps')) == 0
+        assert len(twostep_response.html.findAll('ol', 'form-steps')) == 1
+
+
     def test_validation_error(self, client):
         """Name of student must be provided."""
         teacher = factories.ProfileFactory.create(school_staff=True)
@@ -236,7 +252,9 @@ class TestAddGroup(object):
 
         assert group.name == "Some Group"
         assert response['Location'] == utils.location(
-            reverse('add_student', kwargs={'group_id': group.id}))
+            reverse('add_student', kwargs={'group_id': group.id})
+            + '?created=1'
+            )
 
 
     def test_add_group_with_student(self, client):

@@ -88,6 +88,7 @@ def add_student(request, group_id=None):
         {
             'form': form,
             'group': group,
+            'group_just_created': group and request.GET.get('created', None),
             },
         )
 
@@ -130,7 +131,9 @@ def add_group(request):
         if form.is_valid():
             group = form.save()
             if not group.students.exists():
-                return redirect('add_student', group_id=group.id)
+                return redirect(
+                    reverse('add_student', kwargs={'group_id': group.id})
+                    + '?created=1')
             return redirect('group', group_id=group.id)
     else:
         form = forms.AddGroupForm(owner=request.user.profile)

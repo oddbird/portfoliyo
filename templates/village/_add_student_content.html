@@ -3,13 +3,13 @@
 
 {% block village-content %}
 <div class="add-student">
-  {% comment %}
-  {# @@@ only show when re-directed from group creation #}
+
+  {% if group_just_created %}
   <ol class="form-steps">
     <li>Give your group a name</li>
     <li class="active">Signup new parents in this group</li>
   </ol>
-  {% endcomment %}
+  {% endif %}
 
   {% if group.code or request.user.profile.code %}
   <div class="parent-instructions">
