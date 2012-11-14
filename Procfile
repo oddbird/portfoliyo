@@ -1,1 +1,1 @@
-web: gunicorn portfoliyo.wsgi -b 0.0.0.0:$PORT -w 2
+web: newrelic-admin run-program gunicorn portfoliyo.wsgi -b 0.0.0.0:$PORT -w 2
