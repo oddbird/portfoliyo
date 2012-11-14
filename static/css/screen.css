@@ -589,6 +589,7 @@ optgroup {
   overflow: hidden;
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
+  padding: 0 !important;
   background: #eee8d5;
   counter-reset: form-steps;
 }
@@ -1911,8 +1912,8 @@ button {
 }
 
 .relation-fieldset .summary {
-  margin-top: 0px;
-  margin-top: 0rem;
+  margin-top: -6px;
+  margin-top: -0.31944rem;
   text-align: right;
 }
 .relation-fieldset.details {

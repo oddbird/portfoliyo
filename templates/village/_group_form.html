@@ -5,9 +5,9 @@
 <form method="POST" action="{% block form-action %}{% endblock %}" class="{% block form-class %}{% endblock %}" id="{% block form-id %}{% endblock %}">
   {% csrf_token %}
 
-  <h2>{% block form-header %}{% endblock %}</h2>
-
   {% block form-steps %}{% endblock form-steps %}
+
+  <h2>{% block form-header %}{% endblock %}</h2>
 
   {{ form.non_field_errors }}
 

@@ -167,6 +167,7 @@ $active-back: mix($base,$base2,25%);
   @include adjust-font-size-to($smallpx);
   @include inline-block-list;
   @include trailer;
+  padding: 0 !important;
   background: $base2;
   counter-reset: form-steps;
   li {
