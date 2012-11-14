@@ -303,6 +303,29 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    PYO.setAddGroupButtonText = function (container) {
+        var form = $(container);
+        var button = form.find('.form-actions .action-post');
+        var defaultText = $.trim(button.text());
+        var students = form.find('.relation-fieldset .select-students input[name="students"]');
+
+        students.change(function () {
+            if (students.filter(':checked').length) {
+                if (!button.hasClass('create-group-text')) {
+                    button.addClass('create-group-text').fadeOut('fast', function () {
+                        button.text('Create Group').fadeIn('fast');
+                    });
+                }
+            } else {
+                if (button.hasClass('create-group-text')) {
+                    button.removeClass('create-group-text').fadeOut('fast', function () {
+                        button.text(defaultText).fadeIn('fast');
+                    });
+                }
+            }
+        });
+    };
+
     PYO.formFocus = function () {
         if ($('#invite-teacher-form').length) {
             $('#id_email').focus();
@@ -357,6 +380,7 @@ var PYO = (function (PYO, $) {
         if ($('#invite-teacher-form').length) { PYO.disablePreselectedAssociations('#invite-teacher-form'); }
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('#edit-student-form').length) { PYO.disableStudentOwnerRemoval('#edit-student-form'); }
+        if ($('#add-group-form').length) { PYO.setAddGroupButtonText('#add-group-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
         $('body').find('input:radio, input:checkbox').each(function () {
