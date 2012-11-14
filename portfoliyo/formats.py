@@ -26,8 +26,14 @@ def normalize_phone(value):
     except phonenumbers.NumberParseException:
         return None
     else:
-        return phonenumbers.format_number(
+        formatted = phonenumbers.format_number(
             phone_representation, phonenumbers.PhoneNumberFormat.E164)
+
+    # we only accept US/Canada numbers, they must be twelve digits in E.164
+    if len(formatted) != 12:
+        return None
+
+    return formatted
 
 
 def normalize_email(value):

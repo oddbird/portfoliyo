@@ -23,7 +23,7 @@
 
 .relation-fieldset {
   .summary {
-    @include leader(0);
+    @include leader(-.25);
     text-align: right;
   }
   &.details { @include clearfix; }

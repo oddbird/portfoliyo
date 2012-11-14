@@ -112,6 +112,23 @@ class TestAddStudentsBulk(object):
         assert len(response.html.findAll('a', href=pdf_link))
 
 
+    def test_steps_guide(self, client):
+        """Two-step group-creation guide appears if requested in querystring."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        normal_response = client.get(
+            reverse('add_students_bulk', kwargs={'group_id': g.id}),
+            user=g.owner.user,
+            )
+        twostep_response = client.get(
+            reverse(
+                'add_students_bulk', kwargs={'group_id': g.id}) + '?created=1',
+            user=g.owner.user,
+            )
+
+        assert len(normal_response.html.findAll('ol', 'form-steps')) == 0
+        assert len(twostep_response.html.findAll('ol', 'form-steps')) == 1
+
+
 
 class TestAddStudent(object):
     """Tests for add_student view."""
@@ -261,7 +278,9 @@ class TestAddGroup(object):
 
         assert group.name == "Some Group"
         assert response['Location'] == utils.location(
-            reverse('add_students_bulk', kwargs={'group_id': group.id}))
+            reverse('add_students_bulk', kwargs={'group_id': group.id})
+            + '?created=1'
+            )
 
 
     def test_add_group_with_student(self, client):

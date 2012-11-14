@@ -104,6 +104,7 @@ def add_students_bulk(request, group_id=None):
         'village/add_students_bulk.html',
         {
             'group': group,
+            'group_just_created': group and request.GET.get('created', None),
             },
         )
 
@@ -146,7 +147,9 @@ def add_group(request):
         if form.is_valid():
             group = form.save()
             if not group.students.exists():
-                return redirect('add_students_bulk', group_id=group.id)
+                return redirect(
+                    reverse('add_students_bulk', kwargs={'group_id': group.id})
+                    + '?created=1')
             return redirect('group', group_id=group.id)
     else:
         form = forms.AddGroupForm(owner=request.user.profile)

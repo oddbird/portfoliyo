@@ -24,7 +24,7 @@ def test_valid_phone_numbers(raw):
 
 @pytest.mark.parametrize(
     'raw',
-    ['foo', '', 'bar@example.com'],
+    ['foo', '', 'bar@example.com', '385123654312'],
     )
 def test_invalid_phone_numbers(raw):
     """Returns None for unparseable phone numbers."""
