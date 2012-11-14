@@ -94,6 +94,22 @@ def add_student(request, group_id=None):
 
 
 @school_staff_required
+@ajax('village/_add_students_bulk_content.html')
+def add_students_bulk(request, group_id=None):
+    """Add students by sending home a PDF to parents."""
+    group = get_object_or_404(model.Group, id=group_id) if group_id else None
+
+    return TemplateResponse(
+        request,
+        'village/add_students_bulk.html',
+        {
+            'group': group,
+            },
+        )
+
+
+
+@school_staff_required
 @ajax('village/_edit_student_content.html')
 def edit_student(request, student_id):
     """Edit a student."""
@@ -130,7 +146,7 @@ def add_group(request):
         if form.is_valid():
             group = form.save()
             if not group.students.exists():
-                return redirect('add_student', group_id=group.id)
+                return redirect('add_students_bulk', group_id=group.id)
             return redirect('group', group_id=group.id)
     else:
         form = forms.AddGroupForm(owner=request.user.profile)

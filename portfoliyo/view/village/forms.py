@@ -300,7 +300,8 @@ class StudentForm(forms.ModelForm):
                 relationships_from__to_profile=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
             elder_conditions).exclude(
-            pk=self.elder.pk).exclude(school_staff=False).distinct()
+            pk=self.elder.pk).exclude(school_staff=False).distinct().order_by(
+                'name')
         self.fields['elders'].groups_attr = 'elder_in_groups'
         self.owners = set()
         if self.instance.pk:
@@ -480,13 +481,14 @@ class GroupForm(forms.ModelForm):
             self.owner = kwargs.pop('owner')
         super(GroupForm, self).__init__(*args, **kwargs)
         self.fields['students'].queryset = model.Profile.objects.filter(
-            relationships_to__from_profile=self.owner)
+            relationships_to__from_profile=self.owner).order_by('name')
         elder_conditions = Q(school=self.owner.school, school_staff=True)
         if self.instance.pk:
             elder_conditions = elder_conditions | Q(
                 elder_in_groups=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            elder_conditions).exclude(pk=self.owner.pk).distinct()
+            elder_conditions).exclude(pk=self.owner.pk).distinct().order_by(
+            'name')
         self._old_name = self.instance.name
 
 
