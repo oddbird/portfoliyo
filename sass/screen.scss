@@ -5,6 +5,13 @@
 @import "general/root";
 
 // ---------------------------------------------------------------------------
+// Plugins
+
+@import "plugins/loading";
+@import "plugins/messages";
+@import "plugins/tabs";
+
+// ---------------------------------------------------------------------------
 // Layout
 
 @import "compass/layout";
@@ -37,9 +44,3 @@
 // Errors
 
 @import "modules/errorpages";
-
-// ---------------------------------------------------------------------------
-// Plugins
-
-@import "plugins/loading";
-@import "plugins/messages";

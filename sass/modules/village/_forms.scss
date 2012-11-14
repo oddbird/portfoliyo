@@ -83,29 +83,61 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 .group-add-form, .group-edit-form { @extend %village-solo-page; }
 .add-student, .village-edit-form { @extend %village-solo-page; }
 
-.parent-instructions {
+@include establish-tabs(english spanish);
+
+.pdf-previews {
+  @extend %radio-tabs;
+  @include clearfix;
+  @include leader;
+  background: $base01;
+  color: $base03;
+  .tab-title {
+    @include link(light,true);
+    display: inline-block;
+    padding: rhythm(.25) rhythm(1);
+  }
+  %active-tab-title {
+    background: rgba($back,.5);
+    font-weight: normal;
+  }
+}
+
+.pdf-preview {
   @extend %type;
-  h2 { @include trailer(.5, $largepx); }
-  p { overflow: hidden; }
-  .pdf-thumbnail {
-    @extend %img;
-    @include span-columns($left,$center);
-    min-width: columns-width(3);
+  @include rhythm-borders(1px,1);
+  @include box-shadow($back 0 0 rhythm(.25) inset);
+  overflow-y: scroll;
+  height: rhythm(12);
+  padding-left: image-width('phone.png') + ($base-font-size*2);
+  font-family: helvetica, sans-serif;
+  background: image-url('phone.png') no-repeat scroll rhythm(1) rhythm(1), image-url('handmadepaper.png') repeat scroll;
+  color: $base;
+  border-color: $back;
+  resize: vertical;
+  h3, h4 {
+    font-family: inherit;
+    font-weight: bold;
   }
-  .pdf-downloads {
-    @include inline-block-list;
-    @include rhythm(0,.5,.5,1);
-    @include bleed(rhythm(.5));
-    background: $base2;
-    text-align: right;
-    overflow: visible;
-    a {
-      @extend %icon;
-      @extend %icon-file-download;
-      margin-right: 1em;
-      &:after { content: " »"; }
-    }
+  h3 {
+    @include adjust-font-size-to($largepx);
+    @include leader;
   }
+  h4, li { @include trailer(.5); }
+  ol { @include trailer(2); }
+  strong { font-weight: bold; }
+}
+
+.pdf-downloads {
+  @include inline-block-list;
+  text-align: right;
+}
+
+.download-pdf {
+  @extend %icon;
+  @extend %icon-file-download;
+  @include link(light);
+  display: inline-block;
+  padding: rhythm(.25) rhythm(.5);
 }
 
 .student-form-details {

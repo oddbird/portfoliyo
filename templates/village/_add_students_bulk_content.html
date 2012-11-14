@@ -13,17 +13,55 @@
 
   {% if group.code or request.user.profile.code %}
   <div class="parent-instructions">
-    <img src="{{ STATIC_URL }}images/pdf.png" class="pdf-thumbnail" alt="">
     <h2>Parent signup:</h2>
     <p>
       Send this PDF home with students
       to have their parents add themselves to
       {% if group %}the '<strong>{{ group.name }}</strong>' group{% else %}your account{% endif %}.
     </p>
-    <ul class="pdf-downloads">
-      <li><a href="{% if group %}{% url 'pdf_parent_instructions' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="pdf-en">English</a></li>
-      <li><a href="{% if group %}{% url 'pdf_parent_instructions' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="pdf-es">Spanish</a></li>
-    </ul>
+
+    <section class="pdf-previews">
+      <input type="radio" name="pdf-tabs" id="english-toggle" class="tab-toggle" checked>
+      <label for="english-toggle" class="tab-title">English</label>
+
+      <input type="radio" name="pdf-tabs" id="spanish-toggle" class="tab-toggle">
+      <label for="spanish-toggle" class="tab-title">Spanish</label>
+
+      <article class="tab-content english-content pdf-preview">
+        <h3 class="vcard">Text <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
+        <p>
+          Hello parents! We have a new system
+          that allows you to text-message me
+          using any cell phone.
+          Any time you have a question about a deadline,
+          clarification about an assignment,
+          or want an update about how your child is doing in class,
+          you can text me -
+          just like you would with a friend or family member.
+        </p>
+        <p>
+          You'll also get reminders about conferences,
+          deadlines,
+          or anything else I feel you should know immediately.
+          We won’t share your information,
+          and we won’t text you unless we think it’s important.
+        </p>
+        <h4>Please sign up, to help us get started:</h4>
+        <ol>
+          <li>Text <strong>{ CODE }</strong> to <strong>{ NUMBER }</strong></li>
+          <li>Answer a few short questions, and you’re done!</li>
+        </ol>
+      </article>
+
+      <article class="tab-content spanish-content pdf-preview">
+        <h3 class="vcard">Texto <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
+      </article>
+
+      <ul class="pdf-downloads">
+        <li><a href="{% if group %}{% url 'pdf_parent_instructions' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="download-pdf pdf-en">English</a></li>
+        <li><a href="{% if group %}{% url 'pdf_parent_instructions' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="download-pdf pdf-es">Spanish</a></li>
+      </ul>
+    </section>
   </div>
   {% else %}
   {# This should never happen, but better to have something here just in case. #}

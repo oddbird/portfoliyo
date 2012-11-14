@@ -1,0 +1,20 @@
+// ---------------------------------------------------------------------------
+// Radio Button Tabs
+
+%active-tab-title {
+  font-weight: bold;
+}
+
+%radio-tabs {
+  .tab-content { display: none; }
+  .tab-toggle { @include gone; }
+}
+
+@mixin establish-tabs($slugs) {
+  @each $slug in $slugs {
+    ##{$slug}-toggle:checked {
+      & ~ [for="#{$slug}-toggle"] { @extend %active-tab-title; }
+      & ~ .#{$slug}-content { display: block; }
+    }
+  }
+}
