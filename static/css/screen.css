@@ -590,6 +590,63 @@ optgroup {
   font-style: italic;
 }
 
+.form-steps {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  background: #eee8d5;
+  counter-reset: form-steps;
+}
+.form-steps li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+  display: -moz-inline-stack;
+  display: inline-block;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+.form-steps li {
+  position: relative;
+  padding: 0.31944rem 0.31944rem 0.31944rem 1.5rem;
+  margin-left: -0.2em;
+  background: #dcdaca;
+  counter-increment: form-steps;
+}
+.form-steps li:first-child {
+  padding-left: 0.63889rem;
+}
+.form-steps li:before {
+  content: counter(form-steps, decimal) ". ";
+  font-weight: bold;
+}
+.form-steps li:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  content: " ";
+  width: 1rem;
+  border: 0.5rem solid rgba(101, 123, 131, 0);
+  border-width: 0.95833rem 0 0.95833rem 1rem;
+  border-left-color: #dcdaca;
+  z-index: 10;
+}
+.form-steps .active {
+  color: #cb4b16;
+  background: #cbccc0;
+}
+.form-steps .active:after {
+  border-left-color: #cbccc0;
+}
+
 .ui-multiselect-checkboxes [type="checkbox"], .email_notifications-field [type="checkbox"], .school_staff-field [type="checkbox"], .ui-multiselect-checkboxes [type="radio"], .email_notifications-field [type="radio"], .school_staff-field [type="radio"] {
   position: absolute;
   clip: rect(0 0 0 0);

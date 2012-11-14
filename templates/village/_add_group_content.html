@@ -1,5 +1,12 @@
 {% extends "village/_group_form.html" %}
 
+{% block form-steps %}
+<ol class="form-steps">
+  <li class="active">Give your group a name</li>
+  <li>Signup new parents in this group</li>
+</ol>
+{% endblock form-steps %}
+
 {% block form-action %}{% url add_group %}{% endblock %}
 
 {% block form-class %}group-add-form{% endblock %}
@@ -8,4 +15,4 @@
 
 {% block form-header %}Create a new group{% endblock %}
 
-{% block form-button-text %}Create{% endblock %}
+{% block form-button-text %}Next: Signup Parents!{% endblock %}
