@@ -115,7 +115,7 @@ class InviteFamilyForm(forms.Form):
         phone = formats.normalize_phone(self.cleaned_data["phone"])
         if phone is None:
             raise forms.ValidationError(
-                "Please supply a valid US/Canada mobile number.")
+                "Please supply a valid US or Canada mobile number.")
         return phone
 
 

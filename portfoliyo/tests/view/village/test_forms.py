@@ -334,7 +334,7 @@ class TestInviteFamilyForm(object):
 
         assert not form.is_valid()
         assert form.errors['phone'] == [
-            u"Please supply a valid US/Canada mobile number."]
+            u"Please supply a valid US or Canada mobile number."]
 
 
     def test_sets_invited_by(self):
