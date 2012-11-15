@@ -87,17 +87,17 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 
 .pdf-previews {
   @extend %radio-tabs;
-  @include clearfix;
-  @include leader;
-  background: $base01;
-  color: $base03;
+  position: relative;
   .tab-title {
-    @include link(light,true);
+    @include adjust-font-size-to($smallpx);
+    @include border-radius(.5rem);
     display: inline-block;
-    padding: rhythm(.25) rhythm(1);
+    position: relative;
+    top: rhythm(1.75);
+    padding: rhythm(.125) rhythm(1);
   }
   %active-tab-title {
-    background: rgba($back,.5);
+    background: rgba($back,.25);
     font-weight: normal;
   }
 }
@@ -107,25 +107,14 @@ $preview-columns: $center - $phone-columns;
 
 .pdf-preview {
   @extend %type;
+  @include clearfix;
   @include rhythm-borders(1px,1);
+  @include padding-leader(2);
   @include box-shadow($back 0 0 rhythm(.25) inset);
-  @include prefix($phone-columns,$center);
-  overflow-y: scroll;
-  height: rhythm(12);
-  font-family: helvetica, sans-serif;
+  margin: 0 rhythm(-1);
   background: image-url('handmadepaper.png') repeat scroll;
-  color: $base;
+  font-family: helvetica, sans-serif;
   border-color: $back;
-  resize: vertical;
-  &:before {
-    @include background(image-url('phone.png') no-repeat scroll top);
-    @include background-size(contain);
-    @include span-columns($phone-columns, $preview-columns);
-    @include pull($phone-columns, $preview-columns);
-    @include trailer;
-    content: " ";
-    height: image-height('phone.png');
-  }
   h3, h4 {
     font-family: inherit;
     font-weight: bold;
@@ -138,19 +127,23 @@ $preview-columns: $center - $phone-columns;
   li { @include trailer(.5); }
   ol { @include trailer(2); }
   strong { font-weight: bold; }
+  footer { @include adjust-font-size-to($smallpx); }
 }
 
 .pdf-downloads {
   @include inline-block-list;
+  @include adjust-font-size-to($smallpx);
+  position: absolute;
+  top: rhythm(1.5);
+  right: 0;
   text-align: right;
 }
 
 .download-pdf {
   @extend %icon;
   @extend %icon-file-download;
-  @include link(light);
   display: inline-block;
-  padding: rhythm(.25) rhythm(.5);
+  padding: rhythm(.25);
 }
 
 .student-form-details {
