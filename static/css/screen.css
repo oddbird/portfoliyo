@@ -2264,14 +2264,29 @@ button {
   -webkit-box-shadow: #073642 0 0 0.31944rem inset;
   -moz-box-shadow: #073642 0 0 0.31944rem inset;
   box-shadow: #073642 0 0 0.31944rem inset;
+  padding-left: 34.04255%;
   overflow-y: scroll;
   height: 15.33333rem;
-  padding-left: 216px;
   font-family: helvetica, sans-serif;
-  background: url('../images/phone.png?1352933483') no-repeat scroll 1.27778rem 1.27778rem, url('../images/handmadepaper.png?1339701544') repeat scroll;
+  background: url('../images/handmadepaper.png?1339701544') repeat scroll;
   color: #657b83;
   border-color: #073642;
   resize: vertical;
+}
+.pdf-preview:before {
+  background: url('../images/phone.png?1352933483') no-repeat scroll top;
+  -webkit-background-size: contain;
+  -moz-background-size: contain;
+  -o-background-size: contain;
+  background-size: contain;
+  width: 48.3871%;
+  float: left;
+  margin-right: 3.22581%;
+  margin-left: -51.6129%;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  content: " ";
+  height: 500px;
 }
 .pdf-preview h3, .pdf-preview h4 {
   font-family: inherit;
@@ -2285,7 +2300,11 @@ button {
   margin-top: 23px;
   margin-top: 1.27778rem;
 }
-.pdf-preview h4, .pdf-preview li {
+.pdf-preview h4 {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+.pdf-preview li {
   margin-bottom: 12px;
   margin-bottom: 0.63889rem;
 }
