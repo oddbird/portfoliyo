@@ -71,8 +71,11 @@ class EditElderForm(forms.Form):
         self.instance = kw.pop('instance')
         initial = kw.setdefault('initial', {})
         initial['name'] = self.instance.name
-        initial['role'] = self.instance.role
-        initial['phone'] = formats.display_phone(self.instance.phone)
+        initial['role'] = self.instance.role_in_context
+        initial['phone'] = (
+            formats.display_phone(self.instance.phone)
+            if self.instance.phone else ''
+            )
         super(EditElderForm, self).__init__(*a, **kw)
 
 

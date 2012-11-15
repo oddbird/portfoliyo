@@ -93,7 +93,7 @@ class TestEditElderForm(object):
             )
 
 
-    def test_bad_phone(self, sms):
+    def test_bad_phone(self):
         """Bad phone number results in validation error."""
         elder = factories.ProfileFactory.create()
 
@@ -108,6 +108,18 @@ class TestEditElderForm(object):
         assert not form.is_valid()
         assert form.errors['phone'] == [
             u"Please supply a valid US or Canada mobile number."]
+
+
+    def test_initial_role_is_contextual(self):
+        """role_in_context is used to populate role field."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__role="Various",
+            description="Math Teacher",
+            )
+
+        form = forms.EditElderForm(instance=model.elder_in_context(rel))
+
+        assert form.initial['role'] == "Math Teacher"
 
 
 

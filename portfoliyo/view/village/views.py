@@ -407,6 +407,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
         teacher_rel = get_relationship_or_404(student_id, request.user.profile)
         editor = model.elder_in_context(teacher_rel)
         elder_rel = get_relationship_or_404(student_id, elder)
+        elder = model.elder_in_context(elder_rel)
         group = get_querystring_group(request, elder_rel.student)
     else:
         elder_rel = None
