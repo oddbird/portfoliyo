@@ -2034,7 +2034,7 @@ button {
   margin-left: 0;
 }
 
-.active.additem-link:link, .active.addelder-link:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select, .elder .active.vcard {
+.active.additem-link:link, .active.addelder-link:link, .active.listitem-select:link, .elder .active.vcard:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:visited, .elder .active.vcard:visited, .active.additem-link:focus, .active.addelder-link:focus, .active.listitem-select:focus, .elder .active.vcard:focus, .active.additem-link:hover, .active.addelder-link:hover, .active.listitem-select:hover, .elder .active.vcard:hover, .active.additem-link:active, .active.addelder-link:active, .active.listitem-select:active, .elder .active.vcard:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -2418,9 +2418,6 @@ button {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-.listitem-select, .listitem-select:link, .listitem-select:visited {
-  background: rgba(238, 232, 213, 0.25);
-}
 .title .listitem-select, .title .listitem-select:link, .title .listitem-select:visited {
   color: #073642;
   background: rgba(38, 139, 210, 0.25);

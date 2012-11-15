@@ -1,7 +1,6 @@
 // ---------------------------------------------------------------------------
 // Village Nav
 
-$village-nav-bg       : $base2;
 $village-nav-title-bg : $blue;
 $village-nav-rhythm   : .25;
 $village-nav-action-color : $base03;
@@ -43,9 +42,8 @@ $village-nav-action-color : $base03;
 
 .listitem-select {
   @extend %village-nav-item;
+  @extend %village-activenav;
   #{$link} {
-    @extend %village-activenav;
-    background: rgba($village-nav-bg,.25);
     .title & {
       color: $back;
       background: rgba($village-nav-title-bg,.25);
@@ -61,7 +59,7 @@ $village-nav-action-color : $base03;
     }
   }
   #{$focus} {
-    background: rgba($village-nav-bg,.5);
+    background: rgba($base2,.5);
     .title & { background: rgba($village-nav-title-bg,.5); }
   }
 
