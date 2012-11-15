@@ -19,11 +19,16 @@ MANAGERS = ADMINS
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django_postgrespool",
         "NAME": "portfoliyo",
         "USER": os.environ.get("USER", "portfoliyo"),
         }
     }
+
+# South doesn't recognize django_postgrespool as Postgres without this
+SOUTH_DATABASE_ADAPTERS = {
+    'default': 'south.db.postgresql_psycopg2'
+}
 
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

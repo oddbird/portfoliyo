@@ -14,7 +14,7 @@ def parse_database_url(database, environment_variable='DATABASE_URL'):
         'HOST': url.hostname,
         'PORT': url.port,
         'ENGINE' : {
-            'postgres': 'django.db.backends.postgresql_psycopg2',
+            'postgres': 'django_postgrespool',
             'mysql': 'django.db.backends.mysql',
             'sqlite': 'django.db.backends.sqlite3',
         }[url.scheme],
