@@ -6,10 +6,10 @@
   <a href="{{ add_group_url }}" class="additem-link ajax-link">Add Group</a>
 </aside>
 <aside class="listitem additem addstudent">
-  <a href="#@@@" class="additem-link ajax-link">Signup Parents</a>
+  <a href="{{# add_students_bulk_url }}{{ add_students_bulk_url }}{{/ add_students_bulk_url }}{{^ add_students_bulk_url }}{{ add_student_url }}{{/ add_students_bulk_url }}" class="additem-link ajax-link">Signup Parents</a>
   <div class="listitem-actions">
-    <a href="#@@@" class="action-addbulk ajax-link" title="signup parents in bulk">bulk signup</a>
-    <a href="#@@@" class="action-addsingle ajax-link" title="signup a parent by hand">single signup</a>
+    {{# add_students_bulk_url }}<a href="{{ add_students_bulk_url }}" class="action-addbulk ajax-link" title="signup parents in bulk">bulk signup</a>{{/ add_students_bulk_url }}
+    {{# add_student_url }}<a href="{{ add_student_url }}" class="action-addsingle ajax-link" title="signup a parent by hand">single signup</a>{{/ add_student_url }}
   </div>
 </aside>
 {{/ staff }}
