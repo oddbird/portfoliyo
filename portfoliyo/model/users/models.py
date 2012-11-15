@@ -72,11 +72,16 @@ class Profile(models.Model):
         return (
             self.name or
             self.user.email or
-            getattr(self, 'role_in_context', None) or
-            self.role or
+            self.role_in_context or
             self.phone or
             u'<unknown>'
             )
+
+
+    def __init__(self, *a, **kw):
+        """Set role_in_context to be role by default, unless later annotated."""
+        super(Profile, self).__init__(*a, **kw)
+        self.role_in_context = self.role
 
 
     def save(self, *a, **kw):
@@ -490,6 +495,11 @@ def relationship_deleted(sender, instance, **kwargs):
 signals.post_save.connect(relationship_saved, sender=Relationship)
 signals.post_delete.connect(relationship_deleted, sender=Relationship)
 
+
+def elder_in_context(rel):
+    """Return elder in given relationship, annotated with role_in_context."""
+    rel.elder.role_in_context = rel.description_or_role
+    return rel.elder
 
 
 def contextualized_elders(queryset):

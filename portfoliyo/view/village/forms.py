@@ -63,20 +63,37 @@ class ElderGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
 class EditElderForm(forms.Form):
     name = forms.CharField(max_length=200)
     role = forms.CharField(max_length=200)
+    phone = forms.CharField(max_length=20, required=False)
 
 
     def __init__(self, *a, **kw):
-        """Pull instance kwarg out."""
+        """Pull instance kwarg out, set initial data."""
         self.instance = kw.pop('instance')
         initial = kw.setdefault('initial', {})
         initial['name'] = self.instance.name
         initial['role'] = self.instance.role
+        initial['phone'] = formats.display_phone(self.instance.phone)
         super(EditElderForm, self).__init__(*a, **kw)
 
 
-    def save(self, rel=None):
+    def clean_phone(self):
+        if not self.cleaned_data['phone']:
+            return None
+        phone = formats.normalize_phone(self.cleaned_data['phone'])
+        if phone is None:
+            raise forms.ValidationError(
+                "Please supply a valid US or Canada mobile number.")
+        return phone
+
+
+    def save(self, editor, rel=None):
         """Save elder (optionally in context of given village relationship)."""
         self.instance.name = self.cleaned_data['name']
+
+        old_phone = self.instance.phone
+        new_phone = self.cleaned_data['phone'] or None
+        self.instance.phone = new_phone
+
         old_profile_role = self.instance.role
         old_relationship_role = (
             rel.description_or_role if rel else self.instance.role)
@@ -90,6 +107,16 @@ class EditElderForm(forms.Form):
             rel.description = new_role
             rel.save()
         self.instance.save()
+
+        if new_phone and new_phone != old_phone:
+            invites.send_invite_sms(
+                self.instance,
+                template_name='registration/invite_elder_sms.txt',
+                extra_context={
+                    'inviter': editor,
+                    'student': rel.student if rel else None,
+                    },
+                )
 
         return self.instance
 
@@ -143,12 +170,11 @@ class InviteFamilyForm(forms.Form):
         # send invite notifications
         if created:
             invites.send_invite_sms(
-                self.instance.user,
+                self.instance,
                 template_name='registration/invite_elder_sms.txt',
                 extra_context={
-                    'inviter': self.inviter,
-                    'student': self.rel.student if self.rel else None,
-                    'inviter_rel': self.rel,
+                    'inviter': model.elder_in_context(self.rel),
+                    'student': self.rel.student,
                     },
                 )
 
@@ -238,7 +264,7 @@ class InviteTeacherForm(forms.Form):
         # send invite notifications
         if created:
             invites.send_invite_email(
-                profile.user,
+                profile,
                 email_template_name='registration/invite_elder_email.txt',
                 subject_template_name='registration/invite_elder_subject.txt',
                 extra_context={
