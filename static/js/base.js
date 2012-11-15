@@ -308,19 +308,22 @@ var PYO = (function (PYO, $) {
         var button = form.find('.form-actions .action-post');
         var defaultText = $.trim(button.text());
         var students = form.find('.relation-fieldset .select-students input[name="students"]');
+        var steps = form.find('.form-steps');
 
         students.change(function () {
             if (students.filter(':checked').length) {
-                if (!button.hasClass('create-group-text')) {
-                    button.addClass('create-group-text').fadeOut('fast', function () {
+                if (!button.data('group')) {
+                    button.data('group', true).fadeOut('fast', function () {
                         button.text('Create Group').fadeIn('fast');
                     });
+                    steps.slideUp();
                 }
             } else {
-                if (button.hasClass('create-group-text')) {
-                    button.removeClass('create-group-text').fadeOut('fast', function () {
+                if (button.data('group')) {
+                    button.data('group', false).fadeOut('fast', function () {
                         button.text(defaultText).fadeIn('fast');
                     });
+                    steps.slideDown();
                 }
             }
         });
