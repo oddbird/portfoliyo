@@ -23,11 +23,13 @@
   margin-left: columns($left);
 }
 
-$content-width: $center + $right;
+$village-border-color   : $base1;
+$content-width          : $center + $right;
 
 .village-main {
   position: relative;
   float: left;
   width: columns($center, $content-width);
   height: 100%;
+  border-right: 1px solid $village-border-color;
 }

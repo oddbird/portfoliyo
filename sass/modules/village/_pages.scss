@@ -22,6 +22,7 @@
 
 %village-solo-page {
   @extend %village-page;
+  @extend .village-main;
   @include span-columns($center omega, $content-width);
   @include post($right, $content-width);
   margin-left: gutter($content-width);
@@ -34,8 +35,6 @@
 
 // ---------------------------------------------------------------------------
 // Village Lists
-
-$village-border-color   : $base1;
 
 $village-list-size      : $smallpx;
 $village-ratio          : $base-font-size / $village-list-size;
