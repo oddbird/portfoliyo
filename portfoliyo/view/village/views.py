@@ -420,11 +420,14 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
     if elder.school_staff:
         raise http.Http404
     if student_id is not None:
-        get_relationship_or_404(student_id, request.user.profile)
+        teacher_rel = get_relationship_or_404(student_id, request.user.profile)
+        editor = model.elder_in_context(teacher_rel)
         elder_rel = get_relationship_or_404(student_id, elder)
+        elder = model.elder_in_context(elder_rel)
         group = get_querystring_group(request, elder_rel.student)
     else:
         elder_rel = None
+        editor = request.user.profile
         if group_id is not None:
             group = get_object_or_404(model.Group.objects.filter(
                     owner=request.user.profile), pk=group_id)
@@ -434,7 +437,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
     if request.method == 'POST':
         form = forms.EditElderForm(request.POST, instance=elder)
         if form.is_valid():
-            form.save(elder_rel)
+            form.save(editor=editor, rel=elder_rel)
             messages.success(request, u"Changes saved!")
             if elder_rel:
                 return redirect('village', student_id=student_id)

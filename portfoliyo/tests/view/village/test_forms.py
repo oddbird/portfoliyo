@@ -2,6 +2,7 @@
 from django.core import mail
 import mock
 
+from portfoliyo import model
 from portfoliyo.view.village import forms
 
 from portfoliyo.tests import factories, utils
@@ -26,12 +27,11 @@ class TestEditElderForm(object):
             {
                 'name': 'John Doe',
                 'role': 'science teacher',
-                'students': [rel.student.pk],
                 },
             instance=rel.elder,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(rel)
+        profile = form.save(editor=factories.ProfileFactory.create(), rel=rel)
 
         assert profile.role == 'math teacher'
         assert utils.refresh(rel).description == 'science teacher'
@@ -47,7 +47,6 @@ class TestEditElderForm(object):
             {
                 'name': 'John Doe',
                 'role': 'science teacher',
-                'students': [rel.student.pk],
                 },
             instance=rel.elder,
             )
@@ -56,6 +55,71 @@ class TestEditElderForm(object):
 
         assert profile.role == 'science teacher'
         assert utils.refresh(rel).description == ''
+
+
+    def test_update_phone_sends_invite_sms(self, sms):
+        """Changing elder's phone number sends invite SMS to that number."""
+        teacher_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            from_profile__name="Teacher John",
+            from_profile__role="Various",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
+        parent_rel = factories.RelationshipFactory.create(
+            from_profile__phone="+13216549876",
+            to_profile=teacher_rel.student,
+            )
+
+        form = forms.EditElderForm(
+            {
+                'name': 'John Doe',
+                'role': 'dad',
+                'phone': '+17894561234',
+                },
+            instance=parent_rel.elder,
+            )
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save(
+            editor=model.elder_in_context(teacher_rel), rel=parent_rel)
+
+        assert profile.phone == '+17894561234'
+        assert len(sms.outbox) == 1
+        assert sms.outbox[0].to == '+17894561234'
+        assert sms.outbox[0].body == (
+            "Hi! Jimmy Doe's Math Teacher Teacher John "
+            "will text you from this number. "
+            "Text 'stop' any time if you don't want this."
+            )
+
+
+    def test_bad_phone(self):
+        """Bad phone number results in validation error."""
+        elder = factories.ProfileFactory.create()
+
+        form = forms.EditElderForm(
+            {
+                'name': 'John Doe',
+                'role': 'dad',
+                'phone': 'foo',
+                },
+            instance=elder,
+            )
+        assert not form.is_valid()
+        assert form.errors['phone'] == [
+            u"Please supply a valid US or Canada mobile number."]
+
+
+    def test_initial_role_is_contextual(self):
+        """role_in_context is used to populate role field."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__role="Various",
+            description="Math Teacher",
+            )
+
+        form = forms.EditElderForm(instance=model.elder_in_context(rel))
+
+        assert form.initial['role'] == "Math Teacher"
 
 
 
