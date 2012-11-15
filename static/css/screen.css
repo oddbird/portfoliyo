@@ -1967,11 +1967,12 @@ button {
   margin-left: 18.98734%;
 }
 
-.village-main {
+.village-main, .group-add-form, .group-edit-form, .add-student, .village-edit-form, .dashboard, .pjax-error {
   position: relative;
   float: left;
   width: 74.60317%;
   height: 100%;
+  border-right: 1px solid #93a1a1;
 }
 
 .village-nav, .village-feed, .village-info {
@@ -2905,7 +2906,6 @@ button {
   padding-right: 1.28571rem;
   padding-left: 1.5873%;
   height: 100%;
-  border-left: 1px solid #93a1a1;
 }
 
 .elders-title, .elder .vcard {

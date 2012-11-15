@@ -3,6 +3,12 @@ import django_webtest
 
 
 
+# def pytest_sessionfinish(session, exitstatus):
+#     from sqlalchemy.pool import clear_managers
+#     clear_managers()
+
+
+
 def pytest_funcarg__client(request):
     """Give a test access to a WebTest client for integration-testing views."""
     # We don't use TestCase classes, but we instantiate the django_webtest
