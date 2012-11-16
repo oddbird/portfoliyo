@@ -385,25 +385,25 @@ a:focus, a:hover, a:active {
   cursor: pointer;
 }
 
-.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .pdf-preview h1, .dashboard h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .pdf-preview h2, .dashboard h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .pdf-preview h3, .dashboard h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .pdf-preview h4, .dashboard h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .pdf-preview h5, .dashboard h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .pdf-preview h6, .dashboard h6 {
+.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .pdf-instructions h1, .pdf-preview h1, .dashboard h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .pdf-instructions h2, .pdf-preview h2, .dashboard h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .pdf-instructions h3, .pdf-preview h3, .dashboard h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .pdf-instructions h4, .pdf-preview h4, .dashboard h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .pdf-instructions h5, .pdf-preview h5, .dashboard h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .pdf-instructions h6, .pdf-preview h6, .dashboard h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
-.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .pdf-preview p, .dashboard p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-preview ul, .dashboard ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-preview ol, .dashboard ol {
+.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .pdf-instructions p, .pdf-preview p, .dashboard p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
 }
-.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-preview ul, .dashboard ul {
+.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-preview ol, .dashboard ol {
+.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .pdf-preview em, .dashboard em {
+.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .pdf-instructions em, .pdf-preview em, .dashboard em {
   font-style: italic;
 }
-.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .pdf-preview strong, .dashboard strong {
+.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .pdf-instructions strong, .pdf-preview strong, .dashboard strong {
   font-weight: 500;
 }
 
@@ -2232,8 +2232,35 @@ button {
   display: block;
 }
 
+.pdf-instructions .one-line {
+  margin-left: -1.27778rem;
+  padding-left: 1.27778rem;
+  margin-right: -1.27778rem;
+  padding-right: 1.27778rem;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  padding-bottom: 23px;
+  padding-bottom: 1.27778rem;
+  background: #eee8d5;
+  color: #cb4b16;
+}
+.pdf-instructions .one-line b {
+  color: #657b83;
+}
+
 .pdf-previews {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 22px;
+  padding: 1.22222rem;
+  -webkit-box-shadow: #073642 0 0 0.31944rem inset;
+  -moz-box-shadow: #073642 0 0 0.31944rem inset;
+  box-shadow: #073642 0 0 0.31944rem inset;
   position: relative;
+  background: url('../images/handmadepaper.png?1353022619') repeat scroll;
 }
 .pdf-previews .tab-title {
   font-size: 14px;
@@ -2244,8 +2271,6 @@ button {
   -moz-border-radius: 0.5rem;
   border-radius: 0.5rem;
   display: inline-block;
-  position: relative;
-  top: 2.23611rem;
   padding: 0.15972rem 1.27778rem;
 }
 .pdf-previews #english-toggle:checked ~ [for="english-toggle"], .pdf-previews #spanish-toggle:checked ~ [for="spanish-toggle"] {
@@ -2255,18 +2280,8 @@ button {
 
 .pdf-preview {
   overflow: hidden;
-  border-width: 1px;
-  border-width: 0.05556rem;
-  border-style: solid;
-  padding: 22px;
-  padding: 1.22222rem;
-  padding-top: 46px;
-  padding-top: 2.55556rem;
-  -webkit-box-shadow: #073642 0 0 0.31944rem inset;
-  -moz-box-shadow: #073642 0 0 0.31944rem inset;
-  box-shadow: #073642 0 0 0.31944rem inset;
-  margin: 0 -1.27778rem;
-  background: url('../images/handmadepaper.png?1339701544') repeat scroll;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
   font-family: helvetica, sans-serif;
   border-color: #073642;
 }
@@ -2279,8 +2294,6 @@ button {
   font-size: 1.94444rem;
   line-height: 46px;
   line-height: 2.55556rem;
-  margin-top: 23px;
-  margin-top: 1.27778rem;
 }
 .pdf-preview h4 {
   margin-bottom: 23px;
@@ -2304,33 +2317,16 @@ button {
   line-height: 1.27778rem;
 }
 
-.pdf-downloads {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  overflow: hidden;
+.download-pdf {
   font-size: 14px;
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
+  display: block;
   position: absolute;
-  top: 1.91667rem;
-  right: 0;
-  text-align: right;
-}
-.pdf-downloads li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-  display: -moz-inline-stack;
-  display: inline-block;
-  vertical-align: middle;
-  white-space: nowrap;
-}
-
-.download-pdf {
-  display: inline-block;
-  padding: 0.31944rem;
+  top: 1.27778rem;
+  right: 1.27778rem;
+  padding: 0.15972rem;
 }
 
 .student-form-details .summary {

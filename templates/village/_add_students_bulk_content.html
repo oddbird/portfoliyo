@@ -14,11 +14,19 @@
   {% if group.code or request.user.profile.code %}
   <div class="parent-instructions">
     <h2>Parent signup:</h2>
-    <p>
-      Download this PDF
-      and send it home
-      to have parents sign themselves up.
-    </p>
+    <div class="pdf-instructions">
+      <p>
+        Parents can easily add themselves to
+        {% if group %}the '<strong>{{ group.name }}</strong>' group{% else %}your account{% endif %}:
+      </p>
+      <p class="one-line">
+        <b>Try it yourself!</b>
+        Text <strong>{CODE}</strong> to <strong>(415)&nbsp;504-3200</strong>.
+      </p>
+      <p>
+        Here's a printout that you can send home with students:
+      </p>
+    </div>
 
     <section class="pdf-previews">
       <input type="radio" name="pdf-tabs" id="english-toggle" class="tab-toggle" checked>
@@ -28,6 +36,9 @@
       <label for="spanish-toggle" class="tab-title">Spanish</label>
 
       <article class="tab-content english-content pdf-preview">
+        <a href="{% if group %}{% url 'pdf_parent_instructions' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="download-pdf pdf-en">
+          Download English PDF
+        </a>
         <h3 class="vcard">Text <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
         <p class="number">
           Send a text to: <strong>(415)&nbsp;504-3200</strong>
@@ -37,14 +48,11 @@
         </p>
         <p>
           If you have a question about a deadline,
-          clarification about an assignment,
+          need clarification about an assignment,
           or want an update on how your child is doing in class,
           just text me.
-          You'll also get reminders about conferences,
-          deadlines,
+          I'll send you reminders about conferences, deadlines,
           or anything else I feel you should know immediately.
-          We won’t share your information,
-          and we won’t text you unless we think it’s important.
         </p>
         <footer>
           <p>
@@ -55,13 +63,11 @@
       </article>
 
       <article class="tab-content spanish-content pdf-preview">
+        <a href="{% if group %}{% url 'pdf_parent_instructions' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="download-pdf pdf-es">
+          Download Spanish PDF
+        </a>
         <h3 class="vcard">Texto <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
       </article>
-
-      <ul class="pdf-downloads">
-        <li><a href="{% if group %}{% url 'pdf_parent_instructions' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="download-pdf pdf-en">English</a></li>
-        <li><a href="{% if group %}{% url 'pdf_parent_instructions' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="download-pdf pdf-es">Spanish</a></li>
-      </ul>
     </section>
   </div>
   {% else %}
