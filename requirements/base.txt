@@ -3,7 +3,7 @@ pytz==2012d
 Django==1.4.2
 
 psycopg2==2.4.5
-django-postgrespool==0.2.3.pyo1
+django-postgrespool==0.2.4
 SQLAlchemy==0.7.9
 PIL==1.1.7
 
