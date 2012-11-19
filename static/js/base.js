@@ -329,6 +329,22 @@ var PYO = (function (PYO, $) {
         });
     };
 
+    PYO.setPhoneChangedClass = function (container) {
+        var form = $(container);
+        var input = form.find('#id_phone');
+        var formfield = form.find('.formfield.phone-field');
+        var orig = input.val();
+
+        input.blur(function () {
+            var newPhone = $(this).val();
+            if (newPhone !== orig) {
+                formfield.addClass('changed');
+            } else {
+                formfield.removeClass('changed');
+            }
+        });
+    };
+
     PYO.formFocus = function () {
         if ($('#invite-teacher-form').length) {
             $('#id_email').focus();
@@ -384,6 +400,7 @@ var PYO = (function (PYO, $) {
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('#edit-student-form').length) { PYO.disableStudentOwnerRemoval('#edit-student-form'); }
         if ($('#add-group-form').length) { PYO.setAddGroupButtonText('#add-group-form'); }
+        if ($('#edit-elder-form').length) { PYO.setPhoneChangedClass('#edit-elder-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
         $('body').find('input:radio, input:checkbox').each(function () {
