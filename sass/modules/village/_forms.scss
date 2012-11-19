@@ -77,6 +77,17 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
   }
 }
 
+.sms-preview {
+  @include rhythm-margins;
+  padding: rhythm(1);
+  background: $base2;
+  text-align: left;
+  h3 {
+    display: inline;
+    font-weight: bold;
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Add/Edit Village
 

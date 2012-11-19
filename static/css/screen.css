@@ -2064,6 +2064,20 @@ button {
   color: #e8f2a6;
 }
 
+.sms-preview {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  padding: 1.27778rem;
+  background: #eee8d5;
+  text-align: left;
+}
+.sms-preview h3 {
+  display: inline;
+  font-weight: bold;
+}
+
 .parent-instructions h2 {
   margin-bottom: 12px;
   margin-bottom: 0.63889rem;
