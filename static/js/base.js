@@ -338,9 +338,6 @@ var PYO = (function (PYO, $) {
         }
         if ($('#add-student-form').length) {
             $('#id_name').focus();
-            $('.add-student .student-form-details a.summary').click(function () {
-                $('#id_name').focus();
-            });
         }
         if ($('#add-group-form').length) {
             $('#id_name').focus();
