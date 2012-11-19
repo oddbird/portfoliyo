@@ -2260,7 +2260,7 @@ button {
   -moz-box-shadow: #073642 0 0 0.31944rem inset;
   box-shadow: #073642 0 0 0.31944rem inset;
   position: relative;
-  background: url('../images/handmadepaper.png?1353022619') repeat scroll;
+  background: url('../images/handmadepaper.png?1353358863') repeat scroll;
 }
 .pdf-previews .tab-title {
   font-size: 14px;
@@ -2271,7 +2271,7 @@ button {
   -moz-border-radius: 0.5rem;
   border-radius: 0.5rem;
   display: inline-block;
-  padding: 0.15972rem 1.27778rem;
+  padding: 0.15972rem 0.63889rem;
 }
 .pdf-previews #english-toggle:checked ~ [for="english-toggle"], .pdf-previews #spanish-toggle:checked ~ [for="spanish-toggle"] {
   background: rgba(7, 54, 66, 0.25);
@@ -2315,6 +2315,12 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
+  clear: both;
+  text-align: right;
+  font-style: italic;
+}
+.pdf-preview footer p {
+  margin: 0;
 }
 
 .download-pdf {
@@ -2327,6 +2333,77 @@ button {
   top: 1.27778rem;
   right: 1.27778rem;
   padding: 0.15972rem;
+}
+
+.inst {
+  margin-top: 12px;
+  margin-top: 0.63889rem;
+  position: relative;
+}
+.inst strong {
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+  display: block;
+}
+.inst .number, .inst .code {
+  overflow: hidden;
+  margin-top: 12px;
+  margin-top: 0.63889rem;
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+  padding: 1.27778rem;
+  background: rgba(7, 54, 66, 0.125);
+}
+.inst .code {
+  margin-bottom: 35px;
+  margin-bottom: 1.91667rem;
+}
+@media (min-width: 60rem) {
+  .inst {
+    padding-top: 12px;
+    padding-top: 0.63889rem;
+  }
+  .inst:before {
+    width: 40.42553%;
+    float: left;
+    margin-right: 2.12766%;
+    background: url('../images/phone.png?1353359821') no-repeat scroll top center;
+    -webkit-background-size: 100% auto;
+    -moz-background-size: 100% auto;
+    -o-background-size: 100% auto;
+    background-size: 100% auto;
+    content: " ";
+    max-width: 260px;
+    margin-top: -0.63889rem;
+    margin-right: 2.12766%;
+    padding-bottom: 83%;
+  }
+  .inst .number:before, .inst .code:before {
+    content: attr(data-content);
+    display: block;
+    position: absolute;
+    left: 0;
+    width: 40.42553%;
+    max-width: 260px;
+    text-align: center;
+  }
+  .inst .number:before {
+    top: 3.83333rem;
+  }
+  .inst .code:before {
+    font-size: 23px;
+    font-size: 1.27778rem;
+    line-height: 35px;
+    line-height: 1.91667rem;
+    top: 8.94444rem;
+    font-weight: bold;
+  }
+}
+
+.personal-note {
+  overflow: hidden;
 }
 
 .student-form-details .summary {

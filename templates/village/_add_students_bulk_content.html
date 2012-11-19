@@ -15,16 +15,16 @@
   <div class="parent-instructions">
     <h2>Parent signup:</h2>
     <div class="pdf-instructions">
-      <p>
-        Parents can easily add themselves to
-        {% if group %}the '<strong>{{ group.name }}</strong>' group{% else %}your account{% endif %}:
-      </p>
       <p class="one-line">
-        <b>Try it yourself!</b>
         Text <strong>{CODE}</strong> to <strong>(415)&nbsp;504-3200</strong>.
       </p>
       <p>
-        Here's a printout that you can send home with students:
+        With that single sms,
+        parents can easily add themselves to
+        {% if group %}the '<strong>{{ group.name }}</strong>' group{% else %}your account{% endif %}.
+        <strong>Try it yourself!</strong>
+        We've prepared a handout that you can send home with students
+        to help their parents get started:
       </p>
     </div>
 
@@ -37,16 +37,18 @@
 
       <article class="tab-content english-content pdf-preview">
         <a href="{% if group %}{% url 'pdf_parent_instructions' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="download-pdf pdf-en">
-          Download English PDF
+          Download English
         </a>
         <h3 class="vcard">Text <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
-        <p class="number">
-          Send a text to: <strong>(415)&nbsp;504-3200</strong>
-        </p>
-        <p>
-          With the message: <strong>{CODE}</strong>
-        </p>
-        <p>
+        <div class="inst">
+          <p class="number" data-content="415-504-3200">
+            Send a text to: <strong>(415)&nbsp;504-3200</strong>
+          </p>
+          <p class="code" data-content="{CODE}">
+            With the message: <strong>{CODE}</strong>
+          </p>
+        </div>
+        <p class="personal-note">
           If you have a question about a deadline,
           need clarification about an assignment,
           or want an update on how your child is doing in class,
@@ -64,10 +66,18 @@
 
       <article class="tab-content spanish-content pdf-preview">
         <a href="{% if group %}{% url 'pdf_parent_instructions' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="download-pdf pdf-es">
-          Download Spanish PDF
+          Download Spanish
         </a>
         <h3 class="vcard">Texto <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
-        <p>
+        <div class="inst">
+          <p class="number" data-content="415-504-3200">
+            Envía un SMS al: <strong>(415)&nbsp;504-3200</strong>
+          </p>
+          <p class="code" data-content="{CODE}">
+            Con este mensaje: <strong>{CODE}</strong>
+          </p>
+        </div>
+        <p class="personal-note">
           Si usted tiene una pregunta acerca de una fecha límite,
           necesita alguna aclaración sobre la tarea,
           o si desea una actualización sobre cómo va su hijo en clase,
@@ -75,6 +85,12 @@
           Te voy a enviar recordatorios sobre conferencias, plazos,
           o cualquier otra cosa que siento que usted debe saber de inmediato.
         </p>
+        <footer>
+          <p>
+            Standard rates apply.
+            Text "stop" to unsubscribe.
+          </p>
+        </footer>
       </article>
     </section>
   </div>
