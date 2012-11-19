@@ -11,6 +11,7 @@ var PYO = (function (PYO, $) {
         count: 0
     };
     var smsDetailsOpened = function (trigger) {
+        trigger.css('overflow', '');
         if (trigger.closest('.post').is(':last-child')) {
             PYO.scrollToBottom();
         }
