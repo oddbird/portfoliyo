@@ -1,13 +1,13 @@
 """Selenium tests for home page."""
-from portfoliyo.tests import factories
+from .base_test import BaseTest
 
-from base_test import BaseTest
+from .login_page import LoginPage
+
 
 
 class TestHomePage(BaseTest):
 
     def test_login_and_logout(self):
-        from login_page import LoginPage
         login_pg = LoginPage(self.selenium)
 
         self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
