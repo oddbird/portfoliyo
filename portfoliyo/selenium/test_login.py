@@ -13,7 +13,7 @@ class TestLoginPage(BaseTest):
 
         login_pg.go_to_login_page()
 
-        assert login_pg.is_user_logged_in == False
+        assert not login_pg.is_user_logged_in
 
         login_pg.login()
 
@@ -22,4 +22,4 @@ class TestLoginPage(BaseTest):
 
         login_pg.click_logout()
 
-        assert login_pg.is_user_logged_in == False
+        assert not login_pg.is_user_logged_in

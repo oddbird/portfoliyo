@@ -1,7 +1,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import ElementNotVisibleException
-# from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 
@@ -38,9 +38,10 @@ class Page(object):
             return False
 
 
-    # def mouse_over_element(self, by, value):
-    #     element = self.selenium.find_element(by, value)
-    #     ActionChains(self.selenium).move_to_element(element).perform()
+    def mouse_over_element(self, by, value):
+        # This doesn't work to trigger :hover in Firefox, so is unused.
+        element = self.selenium.find_element(by, value)
+        ActionChains(self.selenium).move_to_element(element).perform()
 
 
     def wait_for_ajax(self):
