@@ -2315,8 +2315,6 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  clear: both;
-  text-align: right;
   font-style: italic;
 }
 .pdf-preview footer p {
@@ -2338,7 +2336,6 @@ button {
 .inst {
   margin-top: 12px;
   margin-top: 0.63889rem;
-  position: relative;
 }
 .inst strong {
   font-size: 35px;
@@ -2359,47 +2356,6 @@ button {
 .inst .code {
   margin-bottom: 35px;
   margin-bottom: 1.91667rem;
-}
-@media (min-width: 60rem) {
-  .inst {
-    padding-top: 12px;
-    padding-top: 0.63889rem;
-  }
-  .inst:before {
-    width: 40.42553%;
-    float: left;
-    margin-right: 2.12766%;
-    background: url('../images/phone.png?1353359821') no-repeat scroll top center;
-    -webkit-background-size: 100% auto;
-    -moz-background-size: 100% auto;
-    -o-background-size: 100% auto;
-    background-size: 100% auto;
-    content: " ";
-    max-width: 260px;
-    margin-top: -0.63889rem;
-    margin-right: 2.12766%;
-    padding-bottom: 83%;
-  }
-  .inst .number:before, .inst .code:before {
-    content: attr(data-content);
-    display: block;
-    position: absolute;
-    left: 0;
-    width: 40.42553%;
-    max-width: 260px;
-    text-align: center;
-  }
-  .inst .number:before {
-    top: 3.83333rem;
-  }
-  .inst .code:before {
-    font-size: 23px;
-    font-size: 1.27778rem;
-    line-height: 35px;
-    line-height: 1.91667rem;
-    top: 8.94444rem;
-    font-weight: bold;
-  }
 }
 
 .personal-note {

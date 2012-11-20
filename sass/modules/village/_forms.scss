@@ -135,8 +135,6 @@ $preview-columns: $center - $phone-columns;
   strong { font-weight: bold; }
   footer {
     @include adjust-font-size-to($smallpx);
-    clear: both;
-    text-align: right;
     font-style: italic;
     p { margin: 0; }
   }
@@ -155,7 +153,6 @@ $preview-columns: $center - $phone-columns;
 
 .inst {
   @include leader(.5);
-  position: relative;
   strong {
     @include adjust-font-size-to($largepx);
     display: block;
@@ -167,36 +164,6 @@ $preview-columns: $center - $phone-columns;
     background: rgba($back,.125);
   }
   .code { @include trailer(1.5); }
-  @include breakpoint(60rem) {
-    @include padding-leader(.5);
-    &:before {
-      @include span-columns(5,$center);
-      @include background(image-url('phone.png') no-repeat scroll top center);
-      @include background-size(100% auto);
-      content: " ";
-      max-width: image-width('phone.png');
-      margin-top: rhythm(-.5);
-      margin-right: gutter($center);
-      padding-bottom: 83%;
-    }
-    .number, .code {
-      &:before {
-        content: attr(data-content);
-        display: block;
-        position: absolute;
-        left: 0;
-        width: columns(5,$center);
-        max-width: image-width('phone.png');
-        text-align: center;
-      }
-    }
-    .number:before { top: rhythm(3); }
-    .code:before {
-      @include adjust-font-size-to($medpx);
-      top: rhythm(7);
-      font-weight: bold;
-    }
-  }
 }
 
 .personal-note { @include clearfix; }

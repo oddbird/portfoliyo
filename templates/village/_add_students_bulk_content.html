@@ -13,18 +13,15 @@
 
   {% if group.code or request.user.profile.code %}
   <div class="parent-instructions">
-    <h2>Parent signup:</h2>
+    <h2>Parent signup{% if group %} for {{ group.name }}{% endif %}:</h2>
     <div class="pdf-instructions">
       <p class="one-line">
-        Text <strong>{CODE}</strong> to <strong>(415)&nbsp;504-3200</strong>.
+        Text <strong>{CODE}</strong> to <strong>(415)&nbsp;504-3200</strong>
+        <b>— Try it yourself!</b>
       </p>
       <p>
-        With that single sms,
-        parents can easily add themselves to
-        {% if group %}the '<strong>{{ group.name }}</strong>' group{% else %}your account{% endif %}.
-        <strong>Try it yourself!</strong>
-        We've prepared a handout that you can send home with students
-        to help their parents get started:
+        Send this handout home with students
+        to help their parents sign up:
       </p>
     </div>
 
