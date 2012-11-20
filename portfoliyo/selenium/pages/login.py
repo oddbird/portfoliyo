@@ -16,13 +16,11 @@ class LoginPage(BasePage):
     submit_locator = (By.CSS_SELECTOR, '#loginform .form-actions > button')
 
 
-    # def go_to_login_page(self):
-    #     self.get_relative_path('/login/')
+    def go_to_login_page(self):
+        self.get_relative_path('/login/')
 
 
-    def login(self):
-        email = 'test@example.com'
-        password = 'testpw'
+    def login(self, email='test@example.com', password='testpw'):
 
         factories.ProfileFactory.create(
             user__email=email, user__password=password, user__is_staff=True)

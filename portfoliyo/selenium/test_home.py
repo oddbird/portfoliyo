@@ -9,9 +9,10 @@ class TestHomePage(BaseTest):
 
 
     def test_login_and_logout(self):
-        login_pg = LoginPage(self.selenium)
+        login_pg = LoginPage(self.selenium, self.live_server_url)
 
-        self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
+        login_pg.go_to_login_page()
+
         assert login_pg.is_user_logged_in == False
 
         login_pg.login()
