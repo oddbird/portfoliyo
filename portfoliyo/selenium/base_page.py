@@ -6,6 +6,7 @@ from .page import Page
 
 
 class BasePage(Page):
+    """Base class for all PYO Pages."""
     user_name_locator = (By.CSS_SELECTOR, '.meta .settingslink')
     logout_locator = (By.CSS_SELECTOR, '#logoutform > button')
 
@@ -22,6 +23,10 @@ class BasePage(Page):
 
     def click_logout(self):
         logout = self.selenium.find_element(*self.logout_locator)
-        self.mouse_over_element(*self.user_name_locator)
-        WebDriverWait(self.selenium, self.timeout).until(lambda s: logout.is_displayed())
+        # @@@ JS workaround because move_to_element (mouseover) does not
+        # trigger :hover pseudoclass to show submenu in Firefox Driver
+        javascript = '$(".meta .useractions").show();'
+        self.selenium.execute_script(javascript)
+        WebDriverWait(self.selenium, self.timeout).until(
+            lambda s: logout.is_displayed())
         logout.click()

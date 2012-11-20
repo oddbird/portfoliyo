@@ -7,6 +7,7 @@ from .login_page import LoginPage
 
 class TestHomePage(BaseTest):
 
+
     def test_login_and_logout(self):
         login_pg = LoginPage(self.selenium)
 

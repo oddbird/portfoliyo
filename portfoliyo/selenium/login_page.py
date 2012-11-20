@@ -6,6 +6,7 @@ from portfoliyo.tests import factories
 from .base_page import BasePage
 
 
+
 class LoginPage(BasePage):
 
     page_title = 'Portfoliyo'
