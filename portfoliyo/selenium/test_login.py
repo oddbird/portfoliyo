@@ -5,7 +5,7 @@ from .pages.login import LoginPage
 
 
 
-class TestHomePage(BaseTest):
+class TestLoginPage(BaseTest):
 
 
     def test_login_and_logout(self):
