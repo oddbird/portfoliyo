@@ -12,13 +12,13 @@ class TestHomePage(BaseTest):
         login_pg = LoginPage(self.selenium)
 
         self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
-        self.assertFalse(login_pg.is_user_logged_in)
+        assert login_pg.is_user_logged_in == False
 
         login_pg.login()
 
-        self.assertTrue(login_pg.is_user_logged_in)
-        self.assertEqual(login_pg.username_text, 'test@example.com')
+        assert login_pg.is_user_logged_in
+        assert login_pg.username_text == 'test@example.com'
 
         login_pg.click_logout()
 
-        self.assertFalse(login_pg.is_user_logged_in)
+        assert login_pg.is_user_logged_in == False
