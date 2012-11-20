@@ -1,19 +1,23 @@
 """Selenium tests for home page."""
-from django.test import LiveServerTestCase
-from selenium.webdriver.firefox.webdriver import WebDriver
+from portfoliyo.tests import factories
+
+from base_test import BaseTest
 
 
+class TestHomePage(BaseTest):
 
-class TestHomePage(LiveServerTestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.selenium = WebDriver()
-        super(TestHomePage, cls).setUpClass()
+    def test_login_and_logout(self):
+        from login_page import LoginPage
+        login_pg = LoginPage(self.selenium)
 
-    @classmethod
-    def tearDownClass(cls):
-        super(TestHomePage, cls).tearDownClass()
-        cls.selenium.quit()
+        self.selenium.get('%s%s' % (self.live_server_url, '/login/'))
+        self.assertFalse(login_pg.is_user_logged_in)
 
-    def test_landing(self):
-        self.selenium.get('%s%s' % (self.live_server_url, '/'))
+        login_pg.login()
+
+        self.assertTrue(login_pg.is_user_logged_in)
+        self.assertEqual(login_pg.username_text, 'test@example.com')
+
+        login_pg.click_logout()
+
+        self.assertFalse(login_pg.is_user_logged_in)
