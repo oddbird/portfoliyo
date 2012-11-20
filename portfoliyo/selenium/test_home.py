@@ -1,7 +1,7 @@
 """Selenium tests for home page."""
-from .base_test import BaseTest
+from .base import BaseTest
 
-from .login_page import LoginPage
+from .pages.login import LoginPage
 
 
 

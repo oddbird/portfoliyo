@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 
 from portfoliyo.tests import factories
 
-from .base_page import BasePage
+from .base import BasePage
 
 
 
