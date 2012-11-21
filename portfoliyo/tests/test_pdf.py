@@ -12,7 +12,7 @@ def test_generate_instructions_pdf():
     """Smoke test - writes to the stream and doesn't blow up."""
     stream = io.BytesIO()
     template_path = os.path.join(
-        os.path.dirname(pdf.__file__), 'parent-instructions-template-en.pdf')
+        os.path.dirname(pdf.__file__), 'parent-instructions-template.pdf')
     pdf.generate_instructions_pdf(
         template_path,
         stream,
@@ -29,7 +29,7 @@ def test_generate_instructions_pdf_no_group():
     """Can omit group argument."""
     stream = io.BytesIO()
     template_path = os.path.join(
-        os.path.dirname(pdf.__file__), 'parent-instructions-template-es.pdf')
+        os.path.dirname(pdf.__file__), 'parent-instructions-template.pdf')
     pdf.generate_instructions_pdf(
         template_path,
         stream,
@@ -45,7 +45,7 @@ def test_generate_instructions_pdf_unicode_group():
     """Group can have unicode name."""
     stream = io.BytesIO()
     template_path = os.path.join(
-        os.path.dirname(pdf.__file__), 'parent-instructions-template-en.pdf')
+        os.path.dirname(pdf.__file__), 'parent-instructions-template.pdf')
     pdf.generate_instructions_pdf(
         template_path,
         stream,

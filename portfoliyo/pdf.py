@@ -14,19 +14,10 @@ from portfoliyo import formats
 
 
 LOCATIONS = {
-    'parent-instructions-template-en.pdf': {
+    'parent-instructions-template.pdf': {
         'name': (408, 505),
         'code': (356, 224),
         'phone': (456, 224),
-        'sample_to': (145, 470),
-        'sample_message_label': (145, 440),
-        'sample_message': (145, 420),
-        'group': (620, 80),
-        },
-    'parent-instructions-template-es.pdf': {
-        'name': (424, 505),
-        'code': (370, 170),
-        'phone': (470, 170),
         'sample_to': (145, 470),
         'sample_message_label': (145, 440),
         'sample_message': (145, 420),

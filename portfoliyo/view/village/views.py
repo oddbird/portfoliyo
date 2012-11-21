@@ -480,7 +480,7 @@ def pdf_parent_instructions(request, lang, group_id=None):
     template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
     template_path = os.path.join(
         template_dir,
-        'parent-instructions-template-%s.pdf' % lang,
+        'parent-instructions-template.pdf',
         )
 
     if not os.path.isfile(template_path):
