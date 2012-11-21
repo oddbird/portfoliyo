@@ -469,17 +469,29 @@ class TestInviteFamilyForm(object):
         assert profile.user.is_active
 
 
-    def test_user_with_email_exists(self):
+    def test_user_with_phone_exists(self, sms):
         """If a user with given phone already exists, no new user is created."""
         elder = factories.ProfileFactory(phone='+13216541234')
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Teacher John",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
         form = forms.InviteFamilyForm(
             self.data(phone=elder.phone),
-            rel=factories.RelationshipFactory(),
+            rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
         profile = form.save()
 
         assert elder == profile
+        assert len(sms.outbox) == 1
+        assert sms.outbox[0].to == u'+13216541234'
+        assert sms.outbox[0].body == (
+            "Hi! Jimmy Doe's Math Teacher Teacher John "
+            "will text you from this number. "
+            "Text 'stop' any time if you don't want this."
+            )
 
 
     def test_existing_user_new_role(self):
@@ -499,19 +511,6 @@ class TestInviteFamilyForm(object):
 
         assert p.role == u"math teacher"
         assert p.student_relationships[0].description == u"science teacher"
-
-
-    def test_user_with_phone_exists(self):
-        """If a user with given phone already exists, no new user is created."""
-        elder = factories.ProfileFactory(phone='+13214567890')
-        form = forms.InviteFamilyForm(
-            self.data(phone='321.456.7890'),
-            rel=factories.RelationshipFactory(),
-            )
-        assert form.is_valid(), dict(form.errors)
-        profile = form.save()
-
-        assert elder == profile
 
 
     def test_relationship_exists(self):

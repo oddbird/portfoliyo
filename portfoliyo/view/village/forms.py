@@ -190,20 +190,16 @@ class InviteFamilyForm(forms.Form):
                 school_staff=False,
                 invited_by=self.inviter,
                 )
-            created = True
-        else:
-            created = False
 
         # send invite notifications
-        if created:
-            invites.send_invite_sms(
-                self.instance,
-                template_name='registration/invite_elder_sms.txt',
-                extra_context={
-                    'inviter': model.elder_in_context(self.rel),
-                    'student': self.rel.student,
-                    },
-                )
+        invites.send_invite_sms(
+            self.instance,
+            template_name='registration/invite_elder_sms.txt',
+            extra_context={
+                'inviter': model.elder_in_context(self.rel),
+                'student': self.rel.student,
+                },
+            )
 
         rel, created = model.Relationship.objects.get_or_create(
             from_profile=self.instance,
