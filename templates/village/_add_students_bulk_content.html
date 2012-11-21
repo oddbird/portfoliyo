@@ -32,63 +32,10 @@
       <input type="radio" name="pdf-tabs" id="spanish-toggle" class="tab-toggle">
       <label for="spanish-toggle" class="tab-title">Spanish</label>
 
-      <article class="tab-content english-content pdf-preview">
-        <a href="{% if group %}{% url 'pdf_parent_instructions' lang='en' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='en' %}{% endif %}" target="_new" class="download-pdf pdf-en">
-          Download English
-        </a>
-        <h3 class="vcard">Text <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
-        <div class="inst">
-          <p class="number" data-content="415-504-3200">
-            Send a text to: <strong>{{ pyo_phone }}</strong>
-          </p>
-          <p class="code" data-content="{{ code }}">
-            With the message: <strong>{{ code }}</strong>
-          </p>
-        </div>
-        <p class="personal-note">
-          If you have a question about a deadline,
-          need clarification about an assignment,
-          or want an update on how your child is doing in class,
-          just text me.
-          I'll send you reminders about conferences, deadlines,
-          or anything else I feel you should know immediately.
-        </p>
-        <footer>
-          <p>
-            Standard rates apply.
-            Text "stop" to unsubscribe.
-          </p>
-        </footer>
-      </article>
+      {% include 'village/signupsheet/_preview.html' with lang='English' lang_code='en' %}
 
-      <article class="tab-content spanish-content pdf-preview">
-        <a href="{% if group %}{% url 'pdf_parent_instructions' lang='es' group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang='es' %}{% endif %}" target="_new" class="download-pdf pdf-es">
-          Download Spanish
-        </a>
-        <h3 class="vcard">Texto <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
-        <div class="inst">
-          <p class="number" data-content="415-504-3200">
-            Envía un SMS al: <strong>{{ pyo_phone }}</strong>
-          </p>
-          <p class="code" data-content="{{ code }}">
-            Con este mensaje: <strong>{{ code }}</strong>
-          </p>
-        </div>
-        <p class="personal-note">
-          Si usted tiene una pregunta acerca de una fecha límite,
-          necesita alguna aclaración sobre la tarea,
-          o si desea una actualización sobre cómo va su hijo en clase,
-          sólo manda me un texto.
-          Te voy a enviar recordatorios sobre conferencias, plazos,
-          o cualquier otra cosa que siento que usted debe saber de inmediato.
-        </p>
-        <footer>
-          <p>
-            Standard rates apply.
-            Text "stop" to unsubscribe.
-          </p>
-        </footer>
-      </article>
+      {% include 'village/signupsheet/_preview.html' with lang='Spanish' lang_code='es' %}
+
     </section>
   </div>
   {% else %}
