@@ -61,4 +61,4 @@ class TestElderStatusDescription(object):
     def test_active(self):
         p = factories.ProfileFactory(name='Foo', phone='+13216540987')
         assert elders.elder_status_description(p, None) == (
-            'Foo will receive SMS notifications if mentioned in a post.')
+            'Foo receives SMS notifications.')
