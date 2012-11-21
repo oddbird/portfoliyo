@@ -198,7 +198,12 @@ def invite_family(request, student_id):
     return TemplateResponse(
         request,
         'village/invite_family.html',
-        {'group': group, 'student': rel.student, 'form': form},
+        {
+            'group': group,
+            'student': rel.student,
+            'inviter': model.elder_in_context(rel),
+            'form': form,
+            },
         )
 
 
@@ -442,6 +447,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
             'form': form,
             'group': group,
             'student': elder_rel.student if elder_rel else None,
+            'inviter': editor,
             'elder': elder,
             },
         )
