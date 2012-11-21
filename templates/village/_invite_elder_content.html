@@ -11,6 +11,7 @@
     {% block form-fields %}{% endblock %}
 
     <div class="form-actions">
+      {% block formactions %}{% endblock formactions %}
       <button type="submit" class="action-post">{% block form-submit-text %}invite{% endblock %}</button>
     </div>
 

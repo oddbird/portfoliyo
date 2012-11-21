@@ -93,9 +93,9 @@ $village-nav-action-color : $base03;
 %actions-base {
   @include transition(all 400ms);
   position: absolute !important;
-  top: -1px;
+  top: 0;
   right: 0;
-  bottom: 0px;
+  bottom: 1px;
   padding: rhythm($village-nav-rhythm,$village-list-size);
   padding-right: rhythm(.5,$village-list-size);
   background: $village-nav-action-color;
@@ -116,7 +116,7 @@ $village-nav-action-color : $base03;
   a, button {
     @extend %icon-replace;
     @include link(light,true);
-    margin-left: rhythm(.5,$village-list-size);
+    margin-left: rhythm(.5);
   }
   .action-edit { @extend %icon-pencil; }
   .action-save {

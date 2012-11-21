@@ -205,12 +205,21 @@ def invite_family(request, student_id):
             form.save()
             return redirect_to_village(rel.student, group)
     else:
-        form = forms.InviteFamilyForm(rel=rel)
+        phone = request.GET.get('phone', None)
+        initial = {}
+        if phone is not None:
+            initial['phone'] = phone
+        form = forms.InviteFamilyForm(initial=initial, rel=rel)
 
     return TemplateResponse(
         request,
         'village/invite_family.html',
-        {'group': group, 'student': rel.student, 'form': form},
+        {
+            'group': group,
+            'student': rel.student,
+            'inviter': model.elder_in_context(rel),
+            'form': form,
+            },
         )
 
 
@@ -435,9 +444,9 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
             group = model.AllStudentsGroup(request.user.profile)
 
     if request.method == 'POST':
-        form = forms.EditElderForm(request.POST, instance=elder)
+        form = forms.EditElderForm(request.POST, instance=elder, rel=elder_rel)
         if form.is_valid():
-            form.save(editor=editor, rel=elder_rel)
+            form.save(editor=editor)
             messages.success(request, u"Changes saved!")
             if elder_rel:
                 return redirect('village', student_id=student_id)
@@ -445,7 +454,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
                 return redirect('group', group_id=group.id)
             return redirect('all_students')
     else:
-        form = forms.EditElderForm(instance=elder)
+        form = forms.EditElderForm(instance=elder, rel=elder_rel)
 
     return TemplateResponse(
         request,
@@ -454,6 +463,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
             'form': form,
             'group': group,
             'student': elder_rel.student if elder_rel else None,
+            'inviter': editor,
             'elder': elder,
             },
         )

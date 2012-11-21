@@ -37,8 +37,7 @@
 // Village Lists
 
 $village-list-size      : $smallpx;
-$village-ratio          : $base-font-size / $village-list-size;
-$village-bleed          : $grid-padding * $village-ratio;
+$village-bleed          : $grid-padding;
 
 %village-lists {
   @include cond;
