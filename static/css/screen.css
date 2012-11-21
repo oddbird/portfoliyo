@@ -2245,9 +2245,9 @@ button {
   -o-transition: all 400ms;
   transition: all 400ms;
   position: absolute !important;
-  top: -1px;
+  top: 0;
   right: 0;
-  bottom: 0px;
+  bottom: 1px;
   padding: 0.31944rem;
   padding-right: 0.63889rem;
   background: #002b36;
