@@ -480,21 +480,11 @@ def pdf_parent_instructions(request, lang, group_id=None):
         model.Group.objects.filter(
             owner=request.user.profile, id=group_id)) if group_id else None
 
-    template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
-    template_path = os.path.join(
-        template_dir,
-        'parent-instructions-template.pdf',
-        )
-
-    if not os.path.isfile(template_path):
-        raise http.Http404
-
     response = http.HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = (
         'attachment; filename=instructions-%s.pdf' % lang)
 
     pdf.generate_instructions_pdf(
-        template_path=template_path,
         stream=response,
         name=request.user.profile.name or "Your Child's Teacher",
         code=group.code if group else request.user.profile.code or '',

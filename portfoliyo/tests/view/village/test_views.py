@@ -1177,13 +1177,3 @@ class TestPdfParentInstructions(object):
         assert resp.headers[
             'Content-Disposition'] == 'attachment; filename=instructions-en.pdf'
         assert resp.headers['Content-Type'] == 'application/pdf'
-
-
-    def test_missing_template(self, client):
-        """404 if template for requested lang is missing."""
-        elder = factories.ProfileFactory.create(school_staff=True)
-        url = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
-        target = 'portfoliyo.view.village.views.os.path.isfile'
-        with mock.patch(target) as mock_isfile:
-            mock_isfile.return_value = False
-            client.get(url, user=elder.user, status=404)

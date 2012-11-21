@@ -36,9 +36,14 @@ def draw(canvas, location, text):
 
 
 
-def generate_instructions_pdf(template_path, stream, name, code, phone,
-                              group=None):
+def generate_instructions_pdf(stream, name, code, phone, group=None):
     """Generate a parent signup instructions PDF and write it to stream."""
+    template_dir = os.path.dirname(os.path.abspath(__file__))
+    template_path = os.path.join(
+        template_dir,
+        'parent-instructions-template.pdf',
+        )
+
     template_page = pyPdf.PdfFileReader(open(template_path, 'rb')).getPage(0)
 
     # font_path = os.path.join(

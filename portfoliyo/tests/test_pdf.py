@@ -1,6 +1,5 @@
 """Tests for PDF generation."""
 import io
-import os
 
 from portfoliyo import pdf
 
@@ -11,10 +10,7 @@ from portfoliyo.tests import factories
 def test_generate_instructions_pdf():
     """Smoke test - writes to the stream and doesn't blow up."""
     stream = io.BytesIO()
-    template_path = os.path.join(
-        os.path.dirname(pdf.__file__), 'parent-instructions-template.pdf')
     pdf.generate_instructions_pdf(
-        template_path,
         stream,
         name='John Doe',
         code='ABCDEF',
@@ -28,10 +24,7 @@ def test_generate_instructions_pdf():
 def test_generate_instructions_pdf_no_group():
     """Can omit group argument."""
     stream = io.BytesIO()
-    template_path = os.path.join(
-        os.path.dirname(pdf.__file__), 'parent-instructions-template.pdf')
     pdf.generate_instructions_pdf(
-        template_path,
         stream,
         name='John Doe',
         code='ABCDEF',
@@ -44,10 +37,7 @@ def test_generate_instructions_pdf_no_group():
 def test_generate_instructions_pdf_unicode_group():
     """Group can have unicode name."""
     stream = io.BytesIO()
-    template_path = os.path.join(
-        os.path.dirname(pdf.__file__), 'parent-instructions-template.pdf')
     pdf.generate_instructions_pdf(
-        template_path,
         stream,
         name='John Doe',
         code='ABCDEF',
