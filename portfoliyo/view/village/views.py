@@ -13,7 +13,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
-from portfoliyo import model, pdf
+from portfoliyo import formats, model, pdf
 from ..ajax import ajax
 from ..decorators import school_staff_required, login_required
 from . import forms
@@ -104,6 +104,9 @@ def add_students_bulk(request, group_id=None):
         'village/add_students_bulk.html',
         {
             'group': group,
+            'code': group.code if group else request.user.profile.code,
+            'pyo_phone': formats.display_phone(
+                settings.PORTFOLIYO_SMS_DEFAULT_FROM),
             'group_just_created': group and request.GET.get('created', None),
             },
         )

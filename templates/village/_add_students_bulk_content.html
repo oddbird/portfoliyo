@@ -11,12 +11,12 @@
   </ol>
   {% endif %}
 
-  {% if group.code or request.user.profile.code %}
+  {% if code %}
   <div class="parent-instructions">
     <h2>Parent signup{% if group %} for {{ group.name }}{% endif %}:</h2>
     <div class="pdf-instructions">
       <p class="one-line">
-        Text <strong>{CODE}</strong> to <strong>(415)&nbsp;504-3200</strong>
+        Text <strong>{{ code }}</strong> to <strong>{{ pyo_phone }}</strong>
         <b>— Try it yourself!</b>
       </p>
       <p>
@@ -39,10 +39,10 @@
         <h3 class="vcard">Text <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
         <div class="inst">
           <p class="number" data-content="415-504-3200">
-            Send a text to: <strong>(415)&nbsp;504-3200</strong>
+            Send a text to: <strong>{{ pyo_phone }}</strong>
           </p>
-          <p class="code" data-content="{CODE}">
-            With the message: <strong>{CODE}</strong>
+          <p class="code" data-content="{{ code }}">
+            With the message: <strong>{{ code }}</strong>
           </p>
         </div>
         <p class="personal-note">
@@ -68,10 +68,10 @@
         <h3 class="vcard">Texto <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
         <div class="inst">
           <p class="number" data-content="415-504-3200">
-            Envía un SMS al: <strong>(415)&nbsp;504-3200</strong>
+            Envía un SMS al: <strong>{{ pyo_phone }}</strong>
           </p>
-          <p class="code" data-content="{CODE}">
-            Con este mensaje: <strong>{CODE}</strong>
+          <p class="code" data-content="{{ code }}">
+            Con este mensaje: <strong>{{ code }}</strong>
           </p>
         </div>
         <p class="personal-note">
