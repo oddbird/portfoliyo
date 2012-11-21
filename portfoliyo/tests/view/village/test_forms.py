@@ -1,5 +1,6 @@
 """Tests for village forms."""
 from django.core import mail
+from django.core.urlresolvers import reverse
 import mock
 
 from portfoliyo import model
@@ -29,9 +30,10 @@ class TestEditElderForm(object):
                 'role': 'science teacher',
                 },
             instance=rel.elder,
+            rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(editor=factories.ProfileFactory.create(), rel=rel)
+        profile = form.save(editor=factories.ProfileFactory.create())
 
         assert profile.role == 'math teacher'
         assert utils.refresh(rel).description == 'science teacher'
@@ -49,9 +51,10 @@ class TestEditElderForm(object):
                 'role': 'science teacher',
                 },
             instance=rel.elder,
+            rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(rel)
+        profile = form.save(editor=factories.ProfileFactory.create())
 
         assert profile.role == 'science teacher'
         assert utils.refresh(rel).description == ''
@@ -78,10 +81,10 @@ class TestEditElderForm(object):
                 'phone': '+17894561234',
                 },
             instance=parent_rel.elder,
+            rel=parent_rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(
-            editor=model.elder_in_context(teacher_rel), rel=parent_rel)
+        profile = form.save(editor=model.elder_in_context(teacher_rel))
 
         assert profile.phone == '+17894561234'
         assert len(sms.outbox) == 1
@@ -108,6 +111,50 @@ class TestEditElderForm(object):
         assert not form.is_valid()
         assert form.errors['phone'] == [
             u"Please supply a valid US or Canada mobile number."]
+
+
+    def test_dupe_phone(self):
+        """Dupe phone number results in validation error."""
+        factories.ProfileFactory.create(phone='+13216540987')
+        elder = factories.ProfileFactory.create()
+
+        form = forms.EditElderForm(
+            {
+                'name': 'John Doe',
+                'role': 'dad',
+                'phone': '321-654-0987',
+                },
+            instance=elder,
+            )
+        assert not form.is_valid()
+        assert form.errors['phone'] == [
+            u"A user with this phone number already exists."]
+
+
+    def test_dupe_phone_in_village(self):
+        """Dupe phone number in village links to invite."""
+        factories.ProfileFactory.create(phone='+13216540987')
+        rel = factories.RelationshipFactory.create()
+
+        form = forms.EditElderForm(
+            {
+                'name': 'John Doe',
+                'role': 'dad',
+                'phone': '(321) 654-0987',
+                },
+            instance=rel.elder,
+            rel=rel,
+            )
+        assert not form.is_valid()
+        invite_url = reverse(
+            'invite_family',
+            kwargs={'student_id': rel.to_profile_id},
+            ) + '?phone=%28321%29%20654-0987'
+        assert form.errors['phone'] == [
+            u"A user with this phone number already exists. "
+            u'You can <a href="%s">invite them</a> to this village instead.'
+            % invite_url
+            ]
 
 
     def test_initial_role_is_contextual(self):

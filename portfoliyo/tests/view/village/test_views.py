@@ -525,6 +525,17 @@ class TestInviteFamily(GroupContextTests):
         assert rel.student.relationships_to.count() == 2
 
 
+    def test_prepopulate_phone(self, client):
+        """Can prepopulate phone from query string."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        response = client.get(
+            self.url(rel.student) + '?phone=321', user=rel.elder.user)
+        form = response.forms['invite-family-form']
+
+        assert form['phone'].value == '321'
+
+
     def test_maintain_group_context_on_redirect(self, client):
         """The group context is passed on through the form submission."""
         rel = factories.RelationshipFactory.create(
