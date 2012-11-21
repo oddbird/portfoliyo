@@ -2179,8 +2179,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .listitem-select, .additem-link {
-  margin-left: -1.28571rem;
-  padding-left: 1.28571rem;
+  margin-left: -1rem;
+  padding-left: 1rem;
   display: block;
   position: relative;
 }
@@ -2197,17 +2197,17 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .nav-error, .remove-error {
-  margin-left: -1.28571rem;
-  padding-left: 1.28571rem;
+  margin-left: -1rem;
+  padding-left: 1rem;
 }
 
 .village-nav {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  left: -1.28571rem;
+  left: -1rem;
   width: 18.98734%;
-  padding-left: 1.28571rem;
+  padding-left: 1rem;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
   z-index: 5;
@@ -2279,9 +2279,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -o-transition: all 400ms;
   transition: all 400ms;
   position: absolute !important;
-  top: -1px;
+  top: 0;
   right: 0;
-  bottom: 0px;
+  bottom: 1px;
   padding: 0.31944rem;
   padding-right: 0.63889rem;
   background: #002b36;
@@ -2709,18 +2709,18 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  right: -1.28571rem;
+  right: -1rem;
   width: 23.80952%;
-  padding-right: 1.28571rem;
+  padding-right: 1rem;
   padding-left: 1.5873%;
   height: 100%;
 }
 
 .elders-title, .elder .vcard {
-  margin-left: -1.28571rem;
-  padding-left: 1.28571rem;
-  margin-right: -1.28571rem;
-  padding-right: 1.28571rem;
+  margin-left: -1rem;
+  padding-left: 1rem;
+  margin-right: -1rem;
+  padding-right: 1rem;
   padding-top: 6px;
   padding-top: 0.31944rem;
   border-bottom-width: 1px;
@@ -2747,19 +2747,23 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   position: relative;
 }
 .elder .listitem-actions {
-  right: -1.28571rem;
+  right: -1rem;
 }
 .elder:focus .listitem-actions, .elder:hover .listitem-actions, .elder:active .listitem-actions {
   opacity: 1;
 }
-.elder .title {
+.elder .title, .elder .type {
   font-weight: bold;
 }
-.elder .fn {
+.elder .fn, .elder .value {
   color: #93a1a1;
+}
+.elder .vcard {
+  padding-left: 2rem;
 }
 .elder .vcard:before {
   position: relative;
+  margin-left: -1rem;
   margin-right: 0;
   color: #859900;
   z-index: 2;
@@ -2786,22 +2790,22 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: #586e75;
   color: #fdf6e3;
 }
-.elder .vcard.active:before, .elder .vcard.active .fn {
+.elder .vcard.active:before, .elder .vcard.active .fn, .elder .vcard.active .value {
   color: #eee8d5;
 }
 
 .addelder-link {
-  margin-left: -1.28571rem;
-  padding-left: 1.28571rem;
-  margin-right: -1.28571rem;
-  padding-right: 1.28571rem;
+  margin-left: -1rem;
+  padding-left: 1rem;
+  margin-right: -1rem;
+  padding-right: 1rem;
   border-width: 1px;
   border-width: 0.05556rem;
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
   display: block;
-  padding-left: 1.28571rem;
+  padding-left: 1rem;
   border-color: #93a1a1;
   border-width: 1px 0;
 }
