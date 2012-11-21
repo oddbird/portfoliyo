@@ -15,6 +15,12 @@
       <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
         <b class="title">{{ nav_elder.role_in_context }}:</b>
         <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
+        {% if nav_elder.name and not nav_elder.user.email %}
+          <div class="tel">
+            <b class="type">Phone:</b>
+            <span class="value">{{ nav_elder.phone }}</span>
+          </div>
+        {% endif %}
       </span>
       {% if not nav_elder.school_staff %}
         <div class="listitem-actions">

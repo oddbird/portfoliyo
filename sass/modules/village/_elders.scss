@@ -28,16 +28,18 @@
     }
   }
 
-  .title { font-weight: bold; }
-  .fn { color: $base1; }
+  .title, .type { font-weight: bold; }
+  .fn, .value { color: $base1; }
 
   .vcard {
     @extend %icon;
     @extend %icon-record;
     @extend %elder-listitem;
     @extend %village-activenav;
+    padding-left: $village-bleed + 1rem;
     &:before {
       position: relative;
+      margin-left: -1rem;
       margin-right: 0;
       color: $green;
       z-index: 2;
@@ -60,7 +62,7 @@
     &.active {
       background: $base01;
       color: $base3;
-      &:before, .fn { color: $base2; }
+      &:before, .fn, .value { color: $base2; }
     }
   }
 }
