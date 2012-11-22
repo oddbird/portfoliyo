@@ -48,13 +48,16 @@ def receive_sms(source, body):
 
     if active_signups:
         if len(active_signups) > 1:
-            # shouldn't happen, since code for new signup won't be parsed if
-            # another signup is still in process
+            # shouldn't happen, since second signup sets first to done
             logger.warning('User %s has multiple active signups!' % source)
             # not much we can do but just pick one arbitrarily
         signup = active_signups[0]
     else:
         signup = None
+
+    teacher, group = get_teacher_and_group(body)
+    if teacher is not None:
+        return handle_subsequent_code(profile, teacher, group, signup)
 
     if signup is not None:
         if signup.state == model.TextSignup.STATE.kidname:
@@ -85,10 +88,6 @@ def receive_sms(source, body):
             )
     else:
         student = students[0]
-
-    teacher, group = get_teacher_and_group(body)
-    if teacher is not None:
-        return handle_subsequent_code(profile, teacher, group, student)
 
     model.Post.create(profile, student, body, from_sms=True)
 
@@ -129,27 +128,44 @@ def handle_unknown_source(source, body):
             )
 
 
-def handle_subsequent_code(profile, teacher, group, student):
-    """Handle a second code from an already-signed-up parent."""
+def handle_subsequent_code(profile, teacher, group, signup):
+    """
+    Handle a second code from an already-signed-up parent.
+
+    If ``signup`` is not ``None``, it is an already-in-progress but
+    not-yet-finished signup. In that case, we mark it done and transfer its
+    state to the new signup so we still get answers to the questions.
+
+    """
+    student = profile.students[0] if profile.students else None
     model.TextSignup.objects.create(
         family=profile,
         teacher=teacher,
         group=group,
         student=student,
-        state=model.TextSignup.STATE.done,
+        state=signup.state if signup else model.TextSignup.STATE.done,
         )
-    model.Relationship.objects.get_or_create(
-        from_profile=teacher,
-        to_profile=student,
-        defaults={'level': model.Relationship.LEVEL.owner},
-        )
+    if student:
+        model.Relationship.objects.get_or_create(
+            from_profile=teacher,
+            to_profile=student,
+            defaults={'level': model.Relationship.LEVEL.owner},
+            )
 
-    return reply(
-        profile.phone,
-        [student],
-        "Thank you! You can now text %s at this number too."
-        % teacher.name,
-        )
+    msg = "Ok, thanks! You can text %s at this number too." % teacher.name
+
+    if signup:
+        follow_ups = {
+            model.TextSignup.STATE.kidname: " Now, what's the student's name?",
+            model.TextSignup.STATE.relationship:
+            " Now, what's your relationship to the student?",
+            model.TextSignup.STATE.name: " Now, what's your name?",
+            }
+        msg = msg + follow_ups.get(signup.state, "")
+        signup.state = model.TextSignup.STATE.done
+        signup.save()
+
+    return reply(profile.phone, [student] if student else [], msg)
 
 
 def handle_new_student(signup, student_name):
