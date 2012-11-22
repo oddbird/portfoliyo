@@ -147,7 +147,7 @@ def handle_subsequent_code(profile, teacher, group, student):
     return reply(
         profile.phone,
         [student],
-        "Thank you! %s will now also receive your texts to this number."
+        "Thank you! You can now text %s at this number too."
         % teacher.name,
         )
 

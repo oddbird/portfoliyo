@@ -438,7 +438,7 @@ def test_subsequent_signup():
     reply = hook.receive_sms(phone, 'ABCDEF')
 
     assert reply == (
-        "Thank you! Ms. Doe will now also receive your texts to this number.")
+        "Thank you! You can now text Ms. Doe at this number too.")
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     assert new_signup.state == model.TextSignup.STATE.done
     assert new_signup.teacher == other_teacher
