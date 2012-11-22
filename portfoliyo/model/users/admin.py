@@ -30,11 +30,10 @@ admin.site.register(
         'role',
         'school_staff',
         'code',
-        'state',
         'invited_by',
         'declined',
         ],
-    list_filter=['school', 'school_staff', 'state', 'declined'],
+    list_filter=['school', 'school_staff', 'declined'],
     )
 admin.site.register(models.Group)
 admin.site.register(models.School)
