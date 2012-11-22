@@ -77,7 +77,10 @@ def test_pusher_socket_error():
             events.trigger('channel', 'event', {})
 
     mock_logger_error.assert_called_with(
-        "Pusher exception: connection timed out")
+        "Pusher exception: connection timed out",
+        exc_info=True,
+        extra={'stack': True},
+        )
 
 
 def test_pusher_bad_response():
@@ -98,4 +101,7 @@ def test_pusher_bad_response():
             events.trigger('channel', 'event', {})
 
     mock_logger_error.assert_called_with(
-        "Pusher exception: Unexpected return status 413")
+        "Pusher exception: Unexpected return status 413",
+        exc_info=True,
+        extra={'stack': True},
+        )
