@@ -121,7 +121,7 @@ def handle_unknown_source(source, body):
             % teacher.name
             )
     else:
-        logger.error("Unknown text from %s: %s" % (source, body))
+        logger.warning("Unknown text from %s: %s" % (source, body))
         return (
             "Bummer, we don't recognize your invite code! "
             "Please make sure it's typed exactly as it is on the paper."

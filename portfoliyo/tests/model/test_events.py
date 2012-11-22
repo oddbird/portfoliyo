@@ -68,15 +68,15 @@ def test_pusher_socket_error():
     import socket
 
     get_pusher_location = 'portfoliyo.model.events.get_pusher'
-    logger_error_location = 'portfoliyo.model.events.logger.error'
+    logger_warning_location = 'portfoliyo.model.events.logger.warning'
     with mock.patch(get_pusher_location) as mock_get_pusher:
         channel = mock_get_pusher.return_value['channel']
         channel.trigger.side_effect = socket.error('connection timed out')
 
-        with mock.patch(logger_error_location) as mock_logger_error:
+        with mock.patch(logger_warning_location) as mock_logger_warning:
             events.trigger('channel', 'event', {})
 
-    mock_logger_error.assert_called_with(
+    mock_logger_warning.assert_called_with(
         "Pusher exception: connection timed out",
         exc_info=True,
         extra={'stack': True},
@@ -91,16 +91,16 @@ def test_pusher_bad_response():
 
     """
     get_pusher_location = 'portfoliyo.model.events.get_pusher'
-    logger_error_location = 'portfoliyo.model.events.logger.error'
+    logger_warning_location = 'portfoliyo.model.events.logger.warning'
     with mock.patch(get_pusher_location) as mock_get_pusher:
         channel = mock_get_pusher.return_value['channel']
         channel.trigger.side_effect = Exception(
             'Unexpected return status 413')
 
-        with mock.patch(logger_error_location) as mock_logger_error:
+        with mock.patch(logger_warning_location) as mock_logger_warning:
             events.trigger('channel', 'event', {})
 
-    mock_logger_error.assert_called_with(
+    mock_logger_warning.assert_called_with(
         "Pusher exception: Unexpected return status 413",
         exc_info=True,
         extra={'stack': True},
