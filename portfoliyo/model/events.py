@@ -119,7 +119,7 @@ def trigger(channel, event, data):
     try:
         pusher['private-%s' % channel].trigger(event, data)
     except Exception as e:
-        logger.error(
+        logger.warning(
             "Pusher exception: %s" % str(e),
             exc_info=True,
             extra={'stack': True},
