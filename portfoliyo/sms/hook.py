@@ -16,7 +16,7 @@ def receive_sms(source, body):
 
     """
     # handle landing page easter egg
-    if body.strip().lower().startswith('xjgdlw'):
+    if body.strip().lower() == 'xjgdlw':
         return (
             "Woah! You actually tried it out? A cookie for you! "
             "Email sneaky@portfoliyo.org and we'll send you a cookie."
@@ -44,16 +44,28 @@ def receive_sms(source, body):
         profile.user.save()
         activated = True
 
-    if profile.state == model.Profile.STATE.kidname and profile.invited_by:
-        return handle_new_student(
-            parent=profile,
-            teacher=profile.invited_by,
-            student_name=body.strip(),
-            )
-    elif profile.state == model.Profile.STATE.relationship:
-        return handle_role_update(parent=profile, role=body.strip())
-    elif profile.state == model.Profile.STATE.name:
-        return handle_name_update(parent=profile, name=body.strip())
+    active_signups = profile.signups.exclude(state=model.TextSignup.STATE.done)
+
+    if active_signups:
+        if len(active_signups) > 1:
+            # shouldn't happen, since code for new signup won't be parsed if
+            # another signup is still in process
+            logger.warning('User %s has multiple active signups!' % source)
+            # not much we can do but just pick one arbitrarily
+        signup = active_signups[0]
+    else:
+        signup = None
+
+    if signup is not None:
+        if signup.state == model.TextSignup.STATE.kidname:
+            return handle_new_student(
+                signup=signup,
+                student_name=body.strip(),
+                )
+        elif signup.state == model.TextSignup.STATE.relationship:
+            return handle_role_update(signup=signup, role=body.strip())
+        elif signup.state == model.TextSignup.STATE.name:
+            return handle_name_update(signup=signup, name=body.strip())
 
     students = profile.students
 
@@ -88,12 +100,16 @@ def handle_unknown_source(source, body):
     """Handle a text from an unknown user."""
     teacher, group = get_teacher_and_group(body)
     if teacher is not None:
-        model.Profile.create_with_user(
+        family = model.Profile.create_with_user(
             school=teacher.school,
             phone=source,
-            state=model.Profile.STATE.kidname,
             invited_by=teacher,
-            invited_in_group=group,
+            )
+        model.TextSignup.objects.create(
+            family=family,
+            teacher=teacher,
+            group=group,
+            state=model.TextSignup.STATE.kidname,
             )
         return (
             "Thanks! What is the name of your child in %s's class?"
@@ -108,11 +124,11 @@ def handle_unknown_source(source, body):
 
 
 
-def handle_new_student(parent, teacher, student_name):
+def handle_new_student(signup, student_name):
     """Handle addition of a student to a just-signing-up parent's account."""
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
-        relationships_to__from_profile=teacher,
+        relationships_to__from_profile=signup.teacher,
         )
     if possible_dupes:
         dupe_found = True
@@ -120,40 +136,51 @@ def handle_new_student(parent, teacher, student_name):
     else:
         dupe_found = False
         student = model.Profile.create_with_user(
-            name=student_name, invited_by=teacher, school=teacher.school)
+            name=student_name,
+            invited_by=signup.teacher,
+            school=signup.teacher.school,
+            )
     model.Relationship.objects.create(
-        from_profile=parent,
+        from_profile=signup.family,
         to_profile=student,
         kind=model.Relationship.KIND.elder,
         )
     if not dupe_found:
         model.Relationship.objects.create(
-            from_profile=teacher,
+            from_profile=signup.teacher,
             to_profile=student,
             kind=model.Relationship.KIND.elder,
             level=model.Relationship.LEVEL.owner,
             )
-    if parent.invited_in_group:
-        student.student_in_groups.add(parent.invited_in_group)
-    parent.state = model.Profile.STATE.relationship
-    parent.save()
+    if signup.group:
+        student.student_in_groups.add(signup.group)
+    signup.state = model.TextSignup.STATE.relationship
+    signup.student = student
+    signup.save()
     model.Post.create(
-        parent, student, student_name, from_sms=True, email_notifications=False)
+        signup.family,
+        student,
+        student_name,
+        from_sms=True,
+        email_notifications=False,
+        )
     return reply(
-        parent.phone,
+        signup.family.phone,
         [student],
         "And what is your relationship to that child (mother, father, ...)?",
         )
 
 
-def handle_role_update(parent, role):
+def handle_role_update(signup, role):
     """Handle defining role of parent in relation to student."""
+    parent = signup.family
     parent.relationships_from.filter(
         description=parent.role).update(description=role)
     parent.role = role
-    parent.state = model.Profile.STATE.name
     parent.save()
-    teacher = parent.invited_by
+    signup.state = model.TextSignup.STATE.name
+    signup.save()
+    teacher = signup.teacher
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
@@ -166,12 +193,14 @@ def handle_role_update(parent, role):
         )
 
 
-def handle_name_update(parent, name):
+def handle_name_update(signup, name):
     """Handle defining name of parent."""
+    parent = signup.family
     parent.name = name
-    parent.state = model.Profile.STATE.done
     parent.save()
-    teacher = parent.invited_by
+    signup.state = model.TextSignup.STATE.done
+    signup.save()
+    teacher = signup.teacher
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(

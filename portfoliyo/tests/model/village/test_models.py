@@ -297,7 +297,7 @@ class TestPostCreate(object):
 
     @mock.patch('portfoliyo.model.village.models.sms.send')
     def test_sending_sms_flips_to_done(self, mock_send_sms):
-        """If a user not in done state gets a text, we flip them to done."""
+        """If a user in signup process gets a text, we flip them to done."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
             from_profile__phone=None,
@@ -306,7 +306,12 @@ class TestPostCreate(object):
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
-            from_profile__state='kidname',
+            )
+        signup = factories.TextSignupFactory.create(
+            teacher=rel1.elder,
+            family=rel2.elder,
+            student=rel1.student,
+            state='kidname',
             )
 
         models.Post.create(
@@ -318,7 +323,7 @@ class TestPostCreate(object):
 
         mock_send_sms.assert_called_with(
             "+13216540987", "Hey dad --John Doe")
-        assert utils.refresh(rel2.elder).state == 'done'
+        assert utils.refresh(signup).state == 'done'
 
 
     @mock.patch('portfoliyo.model.village.models.sms.send')

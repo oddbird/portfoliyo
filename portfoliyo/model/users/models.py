@@ -56,15 +56,11 @@ class Profile(models.Model):
     school_staff = models.BooleanField(default=False)
     # code for parent-initiated signups
     code = models.CharField(max_length=20, blank=True, null=True, unique=True)
-    # signup status (for text-based multi-step signup); what are we awaiting?
-    STATE = Choices('kidname', 'relationship', 'name', 'done')
-    state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
-    # does this user want to receive email notifications?
-    email_notifications = models.BooleanField(default=True)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
-    # what group was this user initially invited to?
-    invited_in_group = models.ForeignKey('Group', blank=True, null=True)
+    # does this user want to receive email notifications?
+    email_notifications = models.BooleanField(default=True)
+    # True if user has declined/stopped SMS notifications
     declined = models.BooleanField(default=False)
 
 
@@ -95,8 +91,7 @@ class Profile(models.Model):
     def create_with_user(cls, school,
                          name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         state=None, invited_by=None, invited_in_group=None,
-                         email_notifications=True):
+                         invited_by=None, email_notifications=True):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -126,9 +121,7 @@ class Profile(models.Model):
             user=user,
             role=role,
             school_staff=school_staff,
-            state=state or cls.STATE.done,
             invited_by=invited_by,
-            invited_in_group=invited_in_group,
             code=code,
             email_notifications=email_notifications,
             )
@@ -181,6 +174,20 @@ class Profile(models.Model):
     @property
     def students(self):
         return [rel.to_profile for rel in self.student_relationships]
+
+
+
+class TextSignup(models.Model):
+    """An in-progress or completed family-member SMS signup."""
+    # signup status; what are we awaiting?
+    STATE = Choices('kidname', 'relationship', 'name', 'done')
+    state = models.CharField(
+        max_length=20, choices=STATE, default=STATE.kidname)
+    family = models.ForeignKey(Profile, related_name='signups')
+    student = models.ForeignKey(
+        Profile, blank=True, null=True, related_name='family_signups')
+    teacher = models.ForeignKey(Profile, related_name='signed_up')
+    group = models.ForeignKey('Group', blank=True, null=True)
 
 
 

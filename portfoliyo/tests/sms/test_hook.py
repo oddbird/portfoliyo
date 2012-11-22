@@ -148,9 +148,13 @@ def test_code_signup():
         "Thanks! What is the name of your child in Teacher Jane's class?"
         )
     profile = model.Profile.objects.get(phone=phone)
+    signup = profile.signups.get()
     assert profile.name == ""
-    assert profile.state == model.Profile.STATE.kidname
+    assert signup.state == model.TextSignup.STATE.kidname
     assert profile.invited_by == teacher
+    assert signup.teacher == teacher
+    assert signup.student is None
+    assert signup.family == profile
     assert not mock_create.call_count
 
 
@@ -167,10 +171,14 @@ def test_group_code_signup():
         "Thanks! What is the name of your child in Teacher Jane's class?"
         )
     profile = model.Profile.objects.get(phone=phone)
+    signup = profile.signups.get()
     assert profile.name == ""
-    assert profile.state == model.Profile.STATE.kidname
+    assert signup.state == model.TextSignup.STATE.kidname
     assert profile.invited_by == group.owner
-    assert profile.invited_in_group == group
+    assert signup.teacher == group.owner
+    assert signup.group == group
+    assert signup.student is None
+    assert signup.family == profile
     assert not mock_create.call_count
 
 
@@ -179,11 +187,12 @@ def test_code_signup_student_name():
     phone = '+13216430987'
     teacher = factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF")
-    parent = factories.ProfileFactory.create(
-        name="John Doe",
-        phone=phone,
-        state=model.Profile.STATE.kidname,
-        invited_by=teacher,
+    factories.TextSignupFactory.create(
+        family__name="John Doe",
+        family__phone=phone,
+        family__invited_by=teacher,
+        state=model.TextSignup.STATE.kidname,
+        teacher=teacher,
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
@@ -196,6 +205,7 @@ def test_code_signup_student_name():
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
+    signup = parent.signups.get()
     assert len(teacher.students) == 1
     assert teacher.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
@@ -206,7 +216,8 @@ def test_code_signup_student_name():
     assert student.invited_by == teacher
     assert student.school == teacher.school
     assert set(student.elders) == set([teacher, parent])
-    assert parent.state == model.Profile.STATE.relationship
+    assert signup.state == model.TextSignup.STATE.relationship
+    assert signup.student == student
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(
         parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
@@ -221,12 +232,13 @@ def test_group_code_signup_student_name():
     phone = '+13216430987'
     group = factories.GroupFactory.create(
         owner__school_staff=True, owner__name="Teacher Jane", code="ABCDEFG")
-    parent = factories.ProfileFactory.create(
-        name="John Doe",
-        phone=phone,
-        state=model.Profile.STATE.kidname,
-        invited_by=group.owner,
-        invited_in_group=group,
+    factories.TextSignupFactory.create(
+        family__name="John Doe",
+        family__phone=phone,
+        family__invited_by=group.owner,
+        group=group,
+        teacher=group.owner,
+        state=model.TextSignup.STATE.kidname,
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
@@ -239,6 +251,7 @@ def test_group_code_signup_student_name():
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
+    signup = parent.signups.get()
     assert len(group.owner.students) == 1
     assert group.owner.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
@@ -250,7 +263,8 @@ def test_group_code_signup_student_name():
     assert student.invited_by == group.owner
     assert student.school == group.owner.school
     assert set(student.elders) == set([group.owner, parent])
-    assert parent.state == model.Profile.STATE.relationship
+    assert signup.state == model.TextSignup.STATE.relationship
+    assert signup.student == student
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(
         parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
@@ -265,11 +279,12 @@ def test_code_signup_student_name_dupe_detection():
     rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
         to_profile__name="Jimmy Doe")
-    factories.ProfileFactory.create(
-        name="John Doe",
-        phone=phone,
-        state=model.Profile.STATE.kidname,
-        invited_by=rel.elder,
+    factories.TextSignupFactory.create(
+        family__name="John Doe",
+        family__phone=phone,
+        family__invited_by=rel.elder,
+        teacher=rel.elder,
+        state=model.TextSignup.STATE.kidname,
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
@@ -280,9 +295,11 @@ def test_code_signup_student_name_dupe_detection():
         "(mother, father, ...)?"
         )
     parent = model.Profile.objects.get(phone=phone)
+    signup = parent.signups.get()
     assert len(parent.students) == 1
     student = parent.students[0]
     assert student == rel.student
+    assert signup.student == rel.student
 
 
 def test_code_signup_role():
@@ -298,10 +315,15 @@ def test_code_signup_role():
         from_profile__name="John Doe",
         from_profile__role="",
         from_profile__phone=phone,
-        from_profile__state=model.Profile.STATE.relationship,
         from_profile__invited_by=teacher_rel.elder,
         to_profile=teacher_rel.student,
         description="",
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        student=parent_rel.student,
+        teacher=teacher_rel.elder,
+        state=model.TextSignup.STATE.relationship,
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
@@ -310,8 +332,9 @@ def test_code_signup_role():
     assert reply == (
         "Last question: what is your name? (So Jane Doe knows who is texting.)")
     parent = model.Profile.objects.get(phone=phone)
+    signup = parent.signups.get()
     assert parent.role == "father"
-    assert parent.state == model.Profile.STATE.name
+    assert signup.state == model.TextSignup.STATE.name
     parent_rel = utils.refresh(parent_rel)
     assert parent_rel.description == "father"
     student = teacher_rel.student
@@ -332,12 +355,17 @@ def test_code_signup_name():
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
         )
-    factories.RelationshipFactory.create(
+    parent_rel = factories.RelationshipFactory.create(
         from_profile__name="",
         from_profile__phone=phone,
-        from_profile__state=model.Profile.STATE.name,
         from_profile__invited_by=teacher_rel.elder,
         to_profile=teacher_rel.student,
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        teacher=teacher_rel.elder,
+        student=teacher_rel.student,
+        state=model.TextSignup.STATE.name,
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
@@ -348,8 +376,9 @@ def test_code_signup_name():
         "to talk with Jimmy Doe's teachers."
         )
     parent = model.Profile.objects.get(phone=phone)
+    signup = parent.signups.get()
     assert parent.name == "John Doe"
-    assert parent.state == model.Profile.STATE.done
+    assert signup.state == model.TextSignup.STATE.done
     student = teacher_rel.student
     mock_create.assert_any_call(
         parent, student, "John Doe", from_sms=True, email_notifications=False)
@@ -371,13 +400,18 @@ def test_code_signup_name_no_notification():
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
         )
-    factories.RelationshipFactory.create(
+    parent_rel = factories.RelationshipFactory.create(
         from_profile__name="John Doe",
         from_profile__role="",
         from_profile__phone=phone,
-        from_profile__state=model.Profile.STATE.name,
         from_profile__invited_by=teacher_rel.elder,
         to_profile=teacher_rel.student,
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        teacher=teacher_rel.elder,
+        student=teacher_rel.student,
+        state=model.TextSignup.STATE.name,
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
@@ -385,6 +419,28 @@ def test_code_signup_name_no_notification():
 
     # no email notification of the signup is sent
     assert not len(mail.outbox)
+
+
+
+def test_multiple_active_signups_logs_warning():
+    """If a user has multiple active signups, a warning is logged."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(family__phone=phone)
+    factories.TextSignupFactory.create(family=signup.family)
+
+    with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+        hook.receive_sms(phone, "Jimmy Doe")
+
+    mock_logger.warning.assert_called_with(
+        "User %s has multiple active signups!" % phone)
+
+
+def test_bogus_signup_state_no_blowup():
+    """An unknown signup state acts like no in-process signup."""
+    phone = '+13216430987'
+    factories.TextSignupFactory.create(family__phone=phone, state='foo')
+
+    hook.receive_sms(phone, "Hello")
 
 
 

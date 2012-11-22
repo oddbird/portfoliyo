@@ -99,6 +99,7 @@ class BasePost(models.Model):
             pk__in=profile_ids)
 
         to_send = []
+        to_mark_done = []
 
         for elder in to_notify:
             sms_data = {
@@ -110,12 +111,17 @@ class BasePost(models.Model):
             # with in_reply_to we assume caller sent SMS
             if elder.phone != in_reply_to:
                 to_send.append((elder.phone, sms_body))
-                if elder.state != user_models.Profile.STATE.done:
-                    elder.state = user_models.Profile.STATE.done
-                    elder.save()
+                to_mark_done.append(elder)
             sms_sent = True
 
             meta_sms.append(sms_data)
+
+        # when we send an elder who didn't finish answering their signup
+        # questions an SMS, we can no longer assume their next reply is
+        # answering the last question we asked. So we mark all in-process
+        # signups done for all users we are sending an SMS to.
+        user_models.TextSignup.objects.filter(family__in=to_mark_done).update(
+            state=user_models.TextSignup.STATE.done)
 
         self.to_sms = sms_sent
         self.meta['sms'] = meta_sms
