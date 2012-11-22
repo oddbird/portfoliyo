@@ -541,6 +541,15 @@ class QuerySetWrapper(object):
         return {self._mangle_fieldname(k): v for k, v in kwargs.items()}
 
 
+    def _recursively_mangle_q(self, q_or_tuple):
+        if isinstance(q_or_tuple, models.Q):
+            q_or_tuple.children = [
+                self._recursively_mangle_q(c) for c in q_or_tuple.children]
+        else:
+            q_or_tuple = (self._mangle_fieldname(q_or_tuple[0]), q_or_tuple[1])
+        return q_or_tuple
+
+
     def filter(self, *args, **kwargs):
         return self._filter_or_exclude(False, *args, **kwargs)
 
@@ -550,6 +559,7 @@ class QuerySetWrapper(object):
 
 
     def _filter_or_exclude(self, negate, *args, **kwargs):
+        args = [self._recursively_mangle_q(a) for a in args]
         kwargs = self._mangle_fieldname_kwargs(kwargs)
         return self.__class__(
             self.queryset._filter_or_exclude(negate, *args, **kwargs))

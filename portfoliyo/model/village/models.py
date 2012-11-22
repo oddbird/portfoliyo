@@ -96,7 +96,7 @@ class BasePost(models.Model):
         sms_body = self.original_text + suffix
 
         to_notify = sms_eligible(self.elders_in_context).filter(
-            pk__in=profile_ids)
+            models.Q(pk__in=profile_ids) | models.Q(phone=in_reply_to))
 
         to_send = []
         to_mark_done = []

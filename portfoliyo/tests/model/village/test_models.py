@@ -387,7 +387,6 @@ class TestPostCreate(object):
             rel.student,
             'Thank you!',
             in_reply_to="+13216540987",
-            sms_profile_ids=[rel.elder.id],
             )
 
         assert mock_send_sms.call_count == 0
