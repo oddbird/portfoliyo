@@ -2,41 +2,50 @@
 import io
 import os
 
+from django.template.loader import render_to_string
 import pyPdf
-# from reportlab.lib.fonts import addMapping
+from reportlab.lib.colors import Color
 from reportlab.lib.pagesizes import LETTER, landscape
-# from reportlab.pdfbase import pdfmetrics
-# from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.lib.styles import ParagraphStyle
 from reportlab.pdfgen import canvas
+from reportlab.platypus import Paragraph
 
 from portfoliyo import formats
 
 
-
-LOCATIONS = {
-    'parent-instructions-template.pdf': {
-        'name': (408, 505),
-        'code': (356, 224),
-        'phone': (456, 224),
-        'sample_to': (145, 470),
-        'sample_message_label': (145, 440),
-        'sample_message': (145, 420),
-        'group': (620, 80),
-        },
+# Each tuple consists of ((x, y), font, font-size, wrap-width)
+# If wrap-width is None, do not wrap.
+SECTIONS = {
+    'header': ((350, 510), 'Helvetica-Bold', 30, 350),
+    'phone_label': ((370, 450), 'Helvetica', 20, None),
+    'phone': ((370, 405), 'Helvetica-Bold', 36, None),
+    'code_label': ((370, 320), 'Helvetica', 20, None),
+    'code': ((370, 275), 'Helvetica-Bold', 36, None),
+    'sample_to_label': ((120, 450), 'Helvetica', 20, None),
+    'sample_to': ((135, 405), 'Helvetica-Bold', 20, None),
+    'sample_message_label': ((120, 350), 'Helvetica', 20, None),
+    'sample_message': ((135, 305), 'Helvetica-Bold', 20, None),
+    'note': ((350, 100), 'Helvetica', 16, 350),
+    'footer': ((350, 65), 'Helvetica-Oblique', 10, 350),
+    'group': ((350, 50), 'Helvetica', 10, None),
     }
 
 
 COLOR = (7, 54, 66)
 
 
-
-def draw(canvas, location, text):
-    """Draw ``text`` on ``canvas`` at ``location`` (x, y) tuple."""
-    canvas.drawString(location[0], location[1], text)
+TEXT_TEMPLATES_BASE = 'village/signupsheet/'
 
 
 
-def generate_instructions_pdf(stream, name, code, phone, group=None):
+def get_text(lang, name):
+    """Get text for a given named section of PDF in given language."""
+    path = '%s%s/%s.txt' % (TEXT_TEMPLATES_BASE, lang, name)
+    return render_to_string(path).replace('\n', ' ').strip()
+
+
+
+def generate_instructions_pdf(stream, lang, name, code, phone, group=None):
     """Generate a parent signup instructions PDF and write it to stream."""
     template_dir = os.path.dirname(os.path.abspath(__file__))
     template_path = os.path.join(
@@ -44,41 +53,44 @@ def generate_instructions_pdf(stream, name, code, phone, group=None):
         'parent-instructions-template.pdf',
         )
 
-    template_page = pyPdf.PdfFileReader(open(template_path, 'rb')).getPage(0)
-
-    # font_path = os.path.join(
-    #     os.path.dirname(os.path.abspath(__file__)),
-    #     'cambridge_round_bold.ttf',
-    #     )
-
-    # pdfmetrics.registerFont(TTFont('Cambridge-Round-Bold', font_path))
-    # addMapping('Cambridge-Round-Bold', 0, 0, 'Cambridge-Round-Bold')
-
-    locations = LOCATIONS[os.path.basename(template_path)]
     display_phone = formats.display_phone(phone)
+
+    sections = {
+        'header': '%s %s' % (get_text(lang, 'action'), name),
+        'phone_label': get_text(lang, 'phone_label'),
+        'phone': display_phone,
+        'code_label': get_text(lang, 'code_label'),
+        'code': code,
+        'sample_to_label': 'To: ',
+        'sample_to': display_phone,
+        'sample_message_label': 'Message: ',
+        'sample_message': code,
+        'note': get_text(lang, 'note'),
+        'footer': get_text(lang, 'footer'),
+        }
+
+    if group:
+        sections['group'] = unicode(group)
+
+    template_page = pyPdf.PdfFileReader(open(template_path, 'rb')).getPage(0)
 
     buffer = io.BytesIO()
 
     c = canvas.Canvas(buffer, pagesize=landscape(LETTER))
-    c.setFillColorRGB(*[color/255.0 for color in COLOR])
+    text_color = Color(*[color/255.0 for color in COLOR])
 
-    c.setFont('Helvetica-Bold', 36)
-    draw(c, locations['name'], name)
-
-    if group:
-        c.setFont('Helvetica-Bold', 9)
-        draw(c, locations['group'], unicode(group))
-
-    c.setFont('Helvetica-Bold', 9)
-
-    draw(c, locations['sample_to'], 'To: %s' % display_phone)
-    draw(c, locations['sample_message_label'], 'Message:')
-    draw(c, locations['sample_message'], code)
-
-    c.setFont('Helvetica-Bold', 12)
-
-    draw(c, locations['code'], code)
-    draw(c, locations['phone'], display_phone)
+    for name, text in sections.items():
+        coords, fontname, fontsize, wrap = SECTIONS[name]
+        style = ParagraphStyle(
+            name=name,
+            fontName=fontname,
+            fontSize=fontsize,
+            textColor=text_color,
+            leading=fontsize + 4,
+            )
+        p = Paragraph(text, style=style)
+        p.wrapOn(c, wrap or 600, 600)
+        p.drawOn(c, coords[0], coords[1])
 
     c.showPage()
     c.save()

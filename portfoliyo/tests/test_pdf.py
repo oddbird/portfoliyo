@@ -12,6 +12,7 @@ def test_generate_instructions_pdf():
     stream = io.BytesIO()
     pdf.generate_instructions_pdf(
         stream,
+        lang='en',
         name='John Doe',
         code='ABCDEF',
         phone='+3214567890',
@@ -26,6 +27,7 @@ def test_generate_instructions_pdf_no_group():
     stream = io.BytesIO()
     pdf.generate_instructions_pdf(
         stream,
+        lang='es',
         name='John Doe',
         code='ABCDEF',
         phone='+3214567890',
@@ -39,6 +41,7 @@ def test_generate_instructions_pdf_unicode_group():
     stream = io.BytesIO()
     pdf.generate_instructions_pdf(
         stream,
+        lang='es',
         name='John Doe',
         code='ABCDEF',
         phone='+3214567890',
