@@ -664,11 +664,13 @@ class TestStudentForms(object):
         rel1 = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         rel2 = factories.RelationshipFactory.create(
+            from_profile__name='A',
             from_profile__school_staff=True,
             from_profile__school=rel1.elder.school,
             to_profile=rel1.student,
             )
         rel3 = factories.RelationshipFactory.create(
+            from_profile__name='B',
             from_profile__school_staff=True,
             school=rel1.elder.school,
             )

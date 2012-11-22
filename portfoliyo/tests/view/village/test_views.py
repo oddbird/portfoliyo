@@ -88,6 +88,48 @@ class TestDashboard(object):
 
 
 
+class TestAddStudentsBulk(object):
+    def test_contains_pdf_link(self, client):
+        """Add students bulk page contains link to parent instructions PDF."""
+        p = factories.ProfileFactory.create(code='ABCDEF', school_staff=True)
+        pdf_link = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
+        response = client.get(reverse('add_students_bulk'), user=p.user)
+
+        assert len(response.html.findAll('a', href=pdf_link))
+
+
+    def test_contains_group_pdf_link(self, client):
+        """Group add students bulk page has link to parent instructions PDF."""
+        g = factories.GroupFactory.create(
+            code='ABCDEF', owner__school_staff=True)
+        pdf_link = reverse(
+            'pdf_parent_instructions', kwargs={'lang': 'es', 'group_id': g.id})
+        response = client.get(
+            reverse('add_students_bulk', kwargs={'group_id': g.id}),
+            user=g.owner.user,
+            )
+
+        assert len(response.html.findAll('a', href=pdf_link))
+
+
+    def test_steps_guide(self, client):
+        """Two-step group-creation guide appears if requested in querystring."""
+        g = factories.GroupFactory.create(owner__school_staff=True)
+        normal_response = client.get(
+            reverse('add_students_bulk', kwargs={'group_id': g.id}),
+            user=g.owner.user,
+            )
+        twostep_response = client.get(
+            reverse(
+                'add_students_bulk', kwargs={'group_id': g.id}) + '?created=1',
+            user=g.owner.user,
+            )
+
+        assert len(normal_response.html.findAll('ol', 'form-steps')) == 0
+        assert len(twostep_response.html.findAll('ol', 'form-steps')) == 1
+
+
+
 class TestAddStudent(object):
     """Tests for add_student view."""
     def test_add_student(self, client):
@@ -121,22 +163,6 @@ class TestAddStudent(object):
         assert response['Location'] == utils.location(
             reverse('village', kwargs={'student_id': student.id}),
             ) + "?group=" + str(group.id)
-
-
-    def test_steps_guide(self, client):
-        """Two-step group-creation guide appears if requested in querystring."""
-        g = factories.GroupFactory.create(owner__school_staff=True)
-        normal_response = client.get(
-            reverse('add_student', kwargs={'group_id': g.id}),
-            user=g.owner.user,
-            )
-        twostep_response = client.get(
-            reverse('add_student', kwargs={'group_id': g.id}) + '?created=1',
-            user=g.owner.user,
-            )
-
-        assert len(normal_response.html.findAll('ol', 'form-steps')) == 0
-        assert len(twostep_response.html.findAll('ol', 'form-steps')) == 1
 
 
     def test_validation_error(self, client):
@@ -252,7 +278,7 @@ class TestAddGroup(object):
 
         assert group.name == "Some Group"
         assert response['Location'] == utils.location(
-            reverse('add_student', kwargs={'group_id': group.id})
+            reverse('add_students_bulk', kwargs={'group_id': group.id})
             + '?created=1'
             )
 
@@ -1151,13 +1177,3 @@ class TestPdfParentInstructions(object):
         assert resp.headers[
             'Content-Disposition'] == 'attachment; filename=instructions-en.pdf'
         assert resp.headers['Content-Type'] == 'application/pdf'
-
-
-    def test_missing_template(self, client):
-        """404 if template for requested lang is missing."""
-        elder = factories.ProfileFactory.create(school_staff=True)
-        url = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
-        target = 'portfoliyo.view.village.views.os.path.isfile'
-        with mock.patch(target) as mock_isfile:
-            mock_isfile.return_value = False
-            client.get(url, user=elder.user, status=404)

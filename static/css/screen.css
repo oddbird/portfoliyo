@@ -162,31 +162,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, .activated:before, [data-icon]:before {
+#messages .close:before, .announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .parent-instructions .pdf-downloads a:before, .title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, .message:before, .activated:before {
+#messages .close:before, .announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
   margin-right: .4em;
 }
 
-.announcements .close, .meta .helplink, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, #messages .close {
+#messages .close, .announcements .close, .meta .helplink, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.announcements .close:focus, .meta .helplink:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus, #messages .close:focus {
+#messages .close:focus, .announcements .close:focus, .meta .helplink:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus {
   outline: 0;
 }
-.announcements .close:focus:before, .meta .helplink:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, #messages .close:focus:before {
+#messages .close:focus:before, .announcements .close:focus:before, .meta .helplink:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before {
   outline: 1px dotted;
 }
-.announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, #messages .close:before {
+#messages .close:before, .announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -219,7 +219,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\25ef";
 }
 
-.title .listitem-select:link:before, .title .listitem-select:visited:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
+.listitem-actions .action-addsingle:before {
+  content: "\265f";
+}
+
+.listitem-actions .action-addbulk:before {
   content: "\265b";
 }
 
@@ -239,15 +243,15 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\270e";
 }
 
-.ui-multiselect-all:before, .ui-multiselect-none:before, .listitem-actions .action-save:before, .message.success:before, .success.activated:before {
+.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before, .success.activated:before, .listitem-actions .action-save:before {
   content: "\2713";
 }
 
-.ui-multiselect-none:before, .listitem-select.removed:before, .elder .vcard.declined:before, .message.error:before, .error.activated:before {
+.ui-multiselect-none:before, .message.error:before, .error.activated:before, .listitem-select.removed:before, .elder .vcard.declined:before {
   content: "\2717";
 }
 
-.announcements .close:before, #messages .close:before {
+#messages .close:before, .announcements .close:before {
   content: "\2718";
 }
 
@@ -255,7 +259,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\69";
 }
 
-.announcements .announce:before, .elder .vcard.inactive:before, .message.warning:before, .warning.activated:before {
+.message.warning:before, .warning.activated:before, .announcements .announce:before, .elder .vcard.inactive:before {
   content: "\26a0";
 }
 
@@ -295,16 +299,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\2193";
 }
 
-.action-back.groups:before {
+.action-back.groups:focus:before, .action-back.groups:hover:before, .action-back.groups:active:before {
   content: "\2190";
 }
 
-.parent-instructions .pdf-downloads a:before {
+.download-pdf:before {
   content: "\e002";
 }
 
 .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before {
   content: "\e003";
+}
+
+.addgroup .additem-link:before {
+  content: "\e005";
+}
+
+.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+  content: "\e006";
 }
 
 /* -------------------------------------------------------------------------*/
@@ -369,37 +381,29 @@ a:focus, a:hover, a:active {
   text-overflow: ellipsis;
 }
 
-.parent-instructions .pdf-thumbnail {
-  -webkit-box-shadow: #073642 0 0 0.125em;
-  -moz-box-shadow: #073642 0 0 0.125em;
-  box-shadow: #073642 0 0 0.125em;
-  max-width: 100%;
-  border: 1px solid #073642;
-}
-
 .details .summary {
   cursor: pointer;
 }
 
-.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .parent-instructions h1, .dashboard h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .parent-instructions h2, .dashboard h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .parent-instructions h3, .dashboard h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .parent-instructions h4, .dashboard h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .parent-instructions h5, .dashboard h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .parent-instructions h6, .dashboard h6 {
+.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .pdf-instructions h1, .pdf-preview h1, .dashboard h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .pdf-instructions h2, .pdf-preview h2, .dashboard h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .pdf-instructions h3, .pdf-preview h3, .dashboard h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .pdf-instructions h4, .pdf-preview h4, .dashboard h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .pdf-instructions h5, .pdf-preview h5, .dashboard h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .pdf-instructions h6, .pdf-preview h6, .dashboard h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
-.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .parent-instructions p, .dashboard p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .parent-instructions ul, .dashboard ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .parent-instructions ol, .dashboard ol {
+.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .pdf-instructions p, .pdf-preview p, .dashboard p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
 }
-.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .parent-instructions ul, .dashboard ul {
+.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .parent-instructions ol, .dashboard ol {
+.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .parent-instructions em, .dashboard em {
+.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .pdf-instructions em, .pdf-preview em, .dashboard em {
   font-style: italic;
 }
-.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .parent-instructions strong, .dashboard strong {
+.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .pdf-instructions strong, .pdf-preview strong, .dashboard strong {
   font-weight: 500;
 }
 
@@ -473,7 +477,7 @@ optgroup {
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
-  background: url('../images/rgbapng/ffffff40.png?1352840743');
+  background: url('../images/rgbapng/ffffff40.png?1351286363');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -822,7 +826,7 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  background: url('../images/rgbapng/ffffff40.png?1352840743');
+  background: url('../images/rgbapng/ffffff40.png?1351286363');
   background: rgba(255, 255, 255, 0.25);
   max-height: 184px;
   max-height: 10.22222rem;
@@ -848,7 +852,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('../images/rgbapng/268bd220.png?1352840743');
+  background: url('../images/rgbapng/268bd220.png?1352840797');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -862,7 +866,7 @@ button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1352840743');
+  background: url('../images/rgbapng/ffffff7f.png?1352840797');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -876,7 +880,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1352840743');
+  background: url('../images/rgbapng/ffffffbf.png?1352840797');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -970,6 +974,162 @@ button {
 }
 .ui-multiselect-none:active {
   background-color: #dc322f;
+}
+
+@-moz-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.25;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.loading {
+  position: relative;
+}
+.loading .overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-shadow: #002b36 0 0 3px;
+  -webkit-animation: loading 1s linear alternate infinite both;
+  -moz-animation: loading 1s linear alternate infinite both;
+  -o-animation: loading 1s linear alternate infinite both;
+  animation: loading 1s linear alternate infinite both;
+  font-weight: bold;
+  text-align: center;
+  color: #fdf6e3;
+  background: rgba(0, 43, 54, 0.25);
+  z-index: 100;
+}
+
+.message, .activated {
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  border-bottom-width: 1px;
+  border-bottom-width: 0.05556rem;
+  border-bottom-style: solid;
+  padding-bottom: 22px;
+  padding-bottom: 1.22222rem;
+  -webkit-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
+  -moz-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
+  box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
+  overflow: hidden;
+  display: table-row;
+  position: relative;
+  border-color: #657b83;
+}
+.message:before, .activated:before {
+  font-size: 44px;
+  font-size: 2.44444rem;
+  line-height: 58px;
+  line-height: 3.19444rem;
+  display: table-cell;
+  padding: 1rem;
+  vertical-align: middle;
+}
+.message.info, .info.activated {
+  background: #268bd2;
+}
+.message.success, .success.activated {
+  background: #859900;
+}
+.message.warning, .warning.activated {
+  background: #b58900;
+}
+.message.error, .error.activated {
+  background: #dc322f;
+}
+.js .message.js-warning, .js .js-warning.activated {
+  display: none;
+}
+.message p, .activated p {
+  display: table-cell;
+  padding: 1rem 1rem 1rem 0;
+  vertical-align: middle;
+}
+
+#messages {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  display: table;
+  position: fixed;
+  top: 25%;
+  left: 10%;
+  width: 80%;
+  color: #fdf6e3;
+  z-index: 999;
+}
+#messages li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+#messages .close {
+  position: absolute;
+  right: 0.63889rem;
+  top: 0.63889rem;
+  width: 1em;
+}
+#messages .close:link, #messages .close:visited {
+  color: #073642;
+}
+#messages .close:focus, #messages .close:hover, #messages .close:active {
+  color: #fdf6e3;
+}
+
+#english-toggle:checked ~ [for="english-toggle"], #spanish-toggle:checked ~ [for="spanish-toggle"] {
+  font-weight: bold;
+}
+
+.pdf-previews .tab-content {
+  display: none;
+}
+.pdf-previews .tab-toggle {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  margin: -1px;
+  padding: 0;
+  height: 1px;
+  width: 1px;
+  border: 0;
 }
 
 .initial-password {
@@ -1569,10 +1729,10 @@ button {
   border-top-style: solid;
   padding-top: 11px;
   padding-top: 0.61111rem;
-  -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
   padding-bottom: 23px;
   padding-bottom: 1.27778rem;
   clear: both;
@@ -1620,7 +1780,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351891853') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1352840797') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1631,7 +1791,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1352840797') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1642,7 +1802,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1352840797') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1671,7 +1831,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1352840797') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1732,19 +1892,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351725897');
+  background-image: url('../images/landing/peter.png?1352840797');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351725897');
+  background-image: url('../images/landing/carl.png?1352840797');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351725897');
+  background-image: url('../images/landing/eric.png?1352840797');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351725897');
+  background-image: url('../images/landing/jonny.png?1352840797');
 }
 
 .lt-ie9 .village-landing .container {
@@ -1875,7 +2035,7 @@ button {
   margin-left: 0;
 }
 
-.active.additem-link:link, .active.addelder-link:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:link, .active.listitem-select:visited, .elder .active.vcard {
+.active.additem-link:link, .active.addelder-link:link, .active.listitem-select:link, .elder .active.vcard:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:visited, .elder .active.vcard:visited, .active.additem-link:focus, .active.addelder-link:focus, .active.listitem-select:focus, .elder .active.vcard:focus, .active.additem-link:hover, .active.addelder-link:hover, .active.listitem-select:hover, .elder .active.vcard:hover, .active.additem-link:active, .active.addelder-link:active, .active.listitem-select:active, .elder .active.vcard:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -1885,7 +2045,7 @@ button {
 
 .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
   color: #657b83;
-  background: rgba(133, 153, 0, 0.5);
+  background: rgba(133, 153, 0, 0.375);
   font-weight: bold;
 }
 
@@ -2098,54 +2258,142 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   max-height: 5.11111rem;
 }
 
-.parent-instructions h2 {
+#english-toggle:checked ~ .english-content {
+  display: block;
+}
+
+#spanish-toggle:checked ~ .spanish-content {
+  display: block;
+}
+
+.pdf-instructions .one-line {
+  margin-left: -1.27778rem;
+  padding-left: 1.27778rem;
+  margin-right: -1.27778rem;
+  padding-right: 1.27778rem;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  padding-bottom: 23px;
+  padding-bottom: 1.27778rem;
+  background: #eee8d5;
+  color: #cb4b16;
+}
+.pdf-instructions .one-line b {
+  color: #657b83;
+}
+
+.pdf-previews {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 22px;
+  padding: 1.22222rem;
+  -webkit-box-shadow: #073642 0 0 0.31944rem inset;
+  -moz-box-shadow: #073642 0 0 0.31944rem inset;
+  box-shadow: #073642 0 0 0.31944rem inset;
+  position: relative;
+  background: url('../images/handmadepaper.png?1353531446') repeat scroll;
+}
+.pdf-previews .tab-title {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  padding: 0.15972rem 0.63889rem;
+}
+.pdf-previews #english-toggle:checked ~ [for="english-toggle"], .pdf-previews #spanish-toggle:checked ~ [for="spanish-toggle"] {
+  background: rgba(7, 54, 66, 0.25);
+  font-weight: normal;
+}
+
+.pdf-preview {
+  overflow: hidden;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  font-family: helvetica, sans-serif;
+  border-color: #073642;
+}
+.pdf-preview h3, .pdf-preview h4 {
+  font-family: inherit;
+  font-weight: bold;
+}
+.pdf-preview h3 {
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+}
+.pdf-preview h4 {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+.pdf-preview li {
   margin-bottom: 12px;
   margin-bottom: 0.63889rem;
 }
-.parent-instructions p {
-  overflow: hidden;
+.pdf-preview ol {
+  margin-bottom: 46px;
+  margin-bottom: 2.55556rem;
 }
-.parent-instructions .pdf-thumbnail {
-  width: 31.91489%;
-  float: left;
-  margin-right: 2.12766%;
-  min-width: 11rem;
+.pdf-preview strong {
+  font-weight: bold;
 }
-.parent-instructions .pdf-downloads {
+.pdf-preview footer {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  font-style: italic;
+}
+.pdf-preview footer p {
   margin: 0;
-  padding: 0;
-  border: 0;
+}
+
+.download-pdf {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  display: block;
+  position: absolute;
+  top: 1.27778rem;
+  right: 1.27778rem;
+  padding: 0.15972rem;
+}
+
+.inst {
+  margin-top: 12px;
+  margin-top: 0.63889rem;
+}
+.inst strong {
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+  display: block;
+}
+.inst .number, .inst .code {
   overflow: hidden;
-  margin-top: 0px;
-  margin-top: 0rem;
-  padding-top: 12px;
-  padding-top: 0.63889rem;
-  padding-bottom: 12px;
-  padding-bottom: 0.63889rem;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-  margin-left: -0.63889rem;
-  padding-left: 0.63889rem;
-  margin-right: -0.63889rem;
-  padding-right: 0.63889rem;
-  background: #eee8d5;
-  text-align: right;
-  overflow: visible;
+  margin-top: 12px;
+  margin-top: 0.63889rem;
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+  padding: 1.27778rem;
+  background: rgba(7, 54, 66, 0.125);
 }
-.parent-instructions .pdf-downloads li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-  display: -moz-inline-stack;
-  display: inline-block;
-  vertical-align: middle;
-  white-space: nowrap;
+.inst .code {
+  margin-bottom: 35px;
+  margin-bottom: 1.91667rem;
 }
-.parent-instructions .pdf-downloads a {
-  margin-right: 1em;
-}
-.parent-instructions .pdf-downloads a:after {
-  content: " »";
+
+.personal-note {
+  overflow: hidden;
 }
 
 .student-form-details .summary {
@@ -2220,9 +2468,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-.listitem-select:link, .listitem-select:visited {
-  background: rgba(238, 232, 213, 0.25);
-}
 .title .listitem-select:link, .title .listitem-select:visited {
   color: #073642;
   background: rgba(38, 139, 210, 0.25);
@@ -2337,25 +2582,35 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .action-back.groups {
-  font-size: 18px;
-  font-size: 1rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
   margin-top: 6px;
   margin-top: 0.31944rem;
   -webkit-border-radius: 0.125em;
   -moz-border-radius: 0.125em;
   border-radius: 0.125em;
-  position: relative;
-  float: left;
+  width: 23px;
   width: 1.27778rem;
-  margin-right: .4em;
-  z-index: 6;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  margin-right: .4rem;
   color: #fdf6e3;
   background: rgba(7, 54, 66, 0.5);
+  z-index: 6;
 }
 .action-back.groups:focus, .action-back.groups:hover, .action-back.groups:active {
   background: #d33682;
+}
+
+.addgroup .additem-link {
+  background: rgba(38, 139, 210, 0.25);
+}
+.addgroup .additem-link:before {
+  font-size: 18px;
+  font-size: 1rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin-left: -4px;
+  margin-left: -0.23rem;
 }
 
 .village-feed {
@@ -2829,7 +3084,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: block;
 }
 .browser-warning .modal {
-  background: url('../images/rgbapng/073642bf.png?1352840744');
+  background: url('../images/rgbapng/073642bf.png?1352840797');
   background: rgba(7, 54, 66, 0.75);
   position: fixed;
   top: 0;
@@ -2905,142 +3160,4 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .browser-list li + li + li {
   float: right;
   margin-right: 0;
-}
-
-@-moz-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@-webkit-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@-o-keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes loading {
-  0% {
-    opacity: 0.25;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
-.loading {
-  position: relative;
-}
-.loading .overlay {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-shadow: #002b36 0 0 3px;
-  -webkit-animation: loading 1s linear alternate infinite both;
-  -moz-animation: loading 1s linear alternate infinite both;
-  -o-animation: loading 1s linear alternate infinite both;
-  animation: loading 1s linear alternate infinite both;
-  font-weight: bold;
-  text-align: center;
-  color: #fdf6e3;
-  background: rgba(0, 43, 54, 0.25);
-  z-index: 100;
-}
-
-.message, .activated {
-  padding-top: 23px;
-  padding-top: 1.27778rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 22px;
-  padding-bottom: 1.22222rem;
-  -webkit-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
-  -moz-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
-  box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
-  overflow: hidden;
-  display: table-row;
-  position: relative;
-  border-color: #657b83;
-}
-.message:before, .activated:before {
-  font-size: 44px;
-  font-size: 2.44444rem;
-  line-height: 58px;
-  line-height: 3.19444rem;
-  display: table-cell;
-  padding: 1rem;
-  vertical-align: middle;
-}
-.message.info, .info.activated {
-  background: #268bd2;
-}
-.message.success, .success.activated {
-  background: #859900;
-}
-.message.warning, .warning.activated {
-  background: #b58900;
-}
-.message.error, .error.activated {
-  background: #dc322f;
-}
-.js .message.js-warning, .js .js-warning.activated {
-  display: none;
-}
-.message p, .activated p {
-  display: table-cell;
-  padding: 1rem 1rem 1rem 0;
-  vertical-align: middle;
-}
-
-#messages {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-  display: table;
-  position: fixed;
-  top: 25%;
-  left: 10%;
-  width: 80%;
-  color: #fdf6e3;
-  z-index: 999;
-}
-#messages li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-#messages .close {
-  position: absolute;
-  right: 0.63889rem;
-  top: 0.63889rem;
-  width: 1em;
-}
-#messages .close, #messages .close, #messages .close:link, #messages .close:visited {
-  color: #073642;
-}
-#messages .close:focus, #messages .close:hover, #messages .close:active {
-  color: #fdf6e3;
 }

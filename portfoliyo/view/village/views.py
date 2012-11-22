@@ -13,7 +13,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
-from portfoliyo import model, pdf
+from portfoliyo import formats, model, pdf
 from ..ajax import ajax
 from ..decorators import school_staff_required, login_required
 from . import forms
@@ -88,6 +88,25 @@ def add_student(request, group_id=None):
         {
             'form': form,
             'group': group,
+            },
+        )
+
+
+
+@school_staff_required
+@ajax('village/_add_students_bulk_content.html')
+def add_students_bulk(request, group_id=None):
+    """Add students by sending home a PDF to parents."""
+    group = get_object_or_404(model.Group, id=group_id) if group_id else None
+
+    return TemplateResponse(
+        request,
+        'village/add_students_bulk.html',
+        {
+            'group': group,
+            'code': group.code if group else request.user.profile.code,
+            'pyo_phone': formats.display_phone(
+                settings.PORTFOLIYO_SMS_DEFAULT_FROM),
             'group_just_created': group and request.GET.get('created', None),
             },
         )
@@ -132,7 +151,7 @@ def add_group(request):
             group = form.save()
             if not group.students.exists():
                 return redirect(
-                    reverse('add_student', kwargs={'group_id': group.id})
+                    reverse('add_students_bulk', kwargs={'group_id': group.id})
                     + '?created=1')
             return redirect('group', group_id=group.id)
     else:
@@ -461,22 +480,13 @@ def pdf_parent_instructions(request, lang, group_id=None):
         model.Group.objects.filter(
             owner=request.user.profile, id=group_id)) if group_id else None
 
-    template_dir = os.path.dirname(os.path.abspath(pdf.__file__))
-    template_path = os.path.join(
-        template_dir,
-        'parent-instructions-template-%s.pdf' % lang,
-        )
-
-    if not os.path.isfile(template_path):
-        raise http.Http404
-
     response = http.HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = (
         'attachment; filename=instructions-%s.pdf' % lang)
 
     pdf.generate_instructions_pdf(
-        template_path=template_path,
         stream=response,
+        lang=lang,
         name=request.user.profile.name or "Your Child's Teacher",
         code=group.code if group else request.user.profile.code or '',
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,

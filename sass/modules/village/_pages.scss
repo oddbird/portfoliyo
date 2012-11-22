@@ -47,19 +47,21 @@ $village-bleed          : $grid-padding;
 
 %village-activenav {
   &.active {
-    @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
-    background: $base01;
-    color: $base3;
+    #{$link}, #{$focus} {
+      @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
+      background: $base01;
+      color: $base3;
+    }
   }
 }
 
 %village-addlink {
+  @extend %village-activenav;
   #{$link} {
     @extend %icon;
     @extend %icon-plus;
-    @extend %village-activenav;
     color: $base;
-    background: rgba($green,.5);
+    background: rgba($green,.375);
     font-weight: bold;
   }
 }
