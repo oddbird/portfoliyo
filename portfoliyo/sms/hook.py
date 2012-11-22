@@ -151,8 +151,8 @@ def handle_subsequent_code(profile, teacher, group, signup):
             to_profile=student,
             defaults={'level': model.Relationship.LEVEL.owner},
             )
-    if group:
-        group.students.add(student)
+        if group:
+            group.students.add(student)
 
     msg = "Ok, thanks! You can text %s at this number too." % teacher.name
 

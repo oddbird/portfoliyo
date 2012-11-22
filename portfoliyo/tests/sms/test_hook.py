@@ -500,6 +500,31 @@ def test_subsequent_signup_when_first_needs_student_name():
     assert new_signup.group is None
 
 
+def test_subsequent_group_signup_when_first_needs_student_name():
+    """If first signup needs student name, second takes over there."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        state=model.TextSignup.STATE.kidname,
+        )
+    group = factories.GroupFactory.create(
+        code='ABCDEF', owner__name='Ms. Doe')
+
+    reply = hook.receive_sms(phone, 'ABCDEF')
+
+    assert reply == (
+        "Ok, thanks! You can text Ms. Doe at this number too. "
+        "Now, what's the student's name?"
+        )
+    new_signup = signup.family.signups.exclude(pk=signup.pk).get()
+    signup = utils.refresh(signup)
+    assert signup.state == model.TextSignup.STATE.done
+    assert new_signup.state == model.TextSignup.STATE.kidname
+    assert new_signup.teacher == group.owner
+    assert new_signup.student is None
+    assert new_signup.group == group
+
+
 def test_subsequent_signup_when_first_needs_role():
     """If first signup needs role, second takes over where it left off."""
     phone = '+13216430987'
