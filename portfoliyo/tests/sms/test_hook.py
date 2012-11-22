@@ -390,7 +390,6 @@ def test_code_signup_name():
     assert mail.outbox[0].to == ['teacher@example.com']
 
 
-
 def test_code_signup_name_no_notification():
     """Finish signup sends no notification if teacher doesn't want them."""
     phone = '+13216430987'
@@ -421,6 +420,32 @@ def test_code_signup_name_no_notification():
     assert not len(mail.outbox)
 
 
+def test_subsequent_signup():
+    """A parent can send a second code after completing first signup."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        state=model.TextSignup.STATE.done,
+        student=factories.ProfileFactory.create(),
+        )
+    factories.RelationshipFactory.create(
+        from_profile=signup.teacher, to_profile=signup.student)
+    factories.RelationshipFactory.create(
+        from_profile=signup.family, to_profile=signup.student)
+    other_teacher = factories.ProfileFactory.create(
+        code='ABCDEF', name='Ms. Doe')
+
+    reply = hook.receive_sms(phone, 'ABCDEF')
+
+    assert reply == (
+        "Thank you! Ms. Doe will now also receive your texts to this number.")
+    new_signup = signup.family.signups.exclude(pk=signup.pk).get()
+    assert new_signup.state == model.TextSignup.STATE.done
+    assert new_signup.teacher == other_teacher
+    assert new_signup.student == signup.student
+    assert new_signup.group is None
+    assert signup.student in other_teacher.students
+
 
 def test_multiple_active_signups_logs_warning():
     """If a user has multiple active signups, a warning is logged."""
@@ -441,7 +466,6 @@ def test_bogus_signup_state_no_blowup():
     factories.TextSignupFactory.create(family__phone=phone, state='foo')
 
     hook.receive_sms(phone, "Hello")
-
 
 
 class TestGetTeacherAndGroup(object):

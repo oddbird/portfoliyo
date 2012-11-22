@@ -83,15 +83,21 @@ def receive_sms(source, body):
             "You're not part of any student's Portfoliyo Village, "
             "so we're not able to deliver your message. Sorry!"
             )
+    else:
+        student = students[0]
 
-    model.Post.create(profile, students[0], body, from_sms=True)
+    teacher, group = get_teacher_and_group(body)
+    if teacher is not None:
+        return handle_subsequent_code(profile, teacher, group, student)
+
+    model.Post.create(profile, student, body, from_sms=True)
 
     if activated:
         return reply(
             source,
             profile.students,
             "Thank you! You can text this number any time "
-            "to talk with %s's teachers." % students[0].name
+            "to talk with %s's teachers." % student.name
         )
 
 
@@ -122,6 +128,28 @@ def handle_unknown_source(source, body):
             "Please make sure it's typed exactly as it is on the paper."
             )
 
+
+def handle_subsequent_code(profile, teacher, group, student):
+    """Handle a second code from an already-signed-up parent."""
+    model.TextSignup.objects.create(
+        family=profile,
+        teacher=teacher,
+        group=group,
+        student=student,
+        state=model.TextSignup.STATE.done,
+        )
+    model.Relationship.objects.get_or_create(
+        from_profile=teacher,
+        to_profile=student,
+        defaults={'level': model.Relationship.LEVEL.owner},
+        )
+
+    return reply(
+        profile.phone,
+        [student],
+        "Thank you! %s will now also receive your texts to this number."
+        % teacher.name,
+        )
 
 
 def handle_new_student(signup, student_name):
