@@ -521,7 +521,7 @@ def contextualized_elders(queryset):
     if queryset.model is Relationship:
         return EldersForRelationships(queryset)
     elif queryset.model is Profile:
-        return EldersInContext(queryset)
+        return queryset
     else:
         raise ValueError(
             "Only Profile or Relationship querysets can be contextualized.")
@@ -534,7 +534,7 @@ class QuerySetWrapper(object):
 
 
     def _mangle_fieldname(self, name):
-        return name
+        return name # pragma: no cover
 
 
     def _mangle_fieldname_kwargs(self, kwargs):
@@ -568,16 +568,6 @@ class QuerySetWrapper(object):
     def order_by(self, *args):
         args = [self._mangle_fieldname(fn) for fn in args]
         return self.__class__(self.queryset.order_by(*args))
-
-
-
-
-class EldersInContext(QuerySetWrapper):
-    """Elders queryset that tacks on ``role_in_context`` attr when iterated."""
-    def __iter__(self):
-        for elder in self.queryset:
-            elder.role_in_context = elder.role
-            yield elder
 
 
 
