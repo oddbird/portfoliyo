@@ -519,8 +519,9 @@ var PYO = (function (PYO, $) {
             channel.bind('student_added_to_group', function (data) {
                 if (data && data.objects && data.objects.length) {
                     $.each(data.objects, function () {
-                        var id = this.id;
-                        var added_to_groups_arr = this.groups;
+                        var evData = this;
+                        var id = evData.id;
+                        var added_to_groups_arr = evData.groups;
                         var group_titles = nav.find('.grouptitle .group-link');
                         var all_groups = nav.find('.group .group-link');
                         var group_dashboard = group_titles.filter(function () {
@@ -540,7 +541,10 @@ var PYO = (function (PYO, $) {
                         }
                         // If viewing the group that includes the new student
                         if (group_dashboard.length) {
-                            PYO.addStudentToList(this);
+                            group_dashboard.each(function () {
+                                evData.group_id = $(this).data('group-id');
+                                PYO.addStudentToList(evData);
+                            });
                         }
                     });
                 }
