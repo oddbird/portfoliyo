@@ -513,6 +513,24 @@ class TestInviteFamilyForm(object):
         assert p.student_relationships[0].description == u"science teacher"
 
 
+    def test_cannot_invite_to_second_student(self, sms):
+        """For now, it's an error to add a family member to a 2nd village."""
+        parent_rel = factories.RelationshipFactory(
+            from_profile__phone='+13216541234')
+        teacher_rel = factories.RelationshipFactory.create()
+        form = forms.InviteFamilyForm(
+            self.data(phone=parent_rel.elder.phone),
+            rel=teacher_rel,
+            )
+        assert not form.is_valid()
+
+        assert form.errors['phone'] == [
+            u"This person is already connected to a different student. "
+            u"Portfoliyo doesn't support family members in multiple villages "
+            u"yet, but we're working on it!"
+            ]
+
+
     def test_relationship_exists(self):
         """If existing family is already family for student, no error."""
         rel = factories.RelationshipFactory(from_profile__phone='+13214567890')

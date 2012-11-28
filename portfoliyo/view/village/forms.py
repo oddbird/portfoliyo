@@ -170,6 +170,19 @@ class InviteFamilyForm(forms.Form):
         if phone is None:
             raise forms.ValidationError(
                 "Please supply a valid US or Canada mobile number.")
+        try:
+            self.instance = model.Profile.objects.get(phone=phone)
+        except model.Profile.DoesNotExist:
+            self.instance = None
+        else:
+            students = set(self.instance.students)
+            students.discard(self.rel.student)
+            if students:
+                raise forms.ValidationError(
+                    u"This person is already connected to a different student. "
+                    u"Portfoliyo doesn't support family members in multiple "
+                    u"villages yet, but we're working on it!"
+                    )
         return phone
 
 
@@ -178,10 +191,7 @@ class InviteFamilyForm(forms.Form):
         phone = self.cleaned_data.get('phone')
         relationship = self.cleaned_data.get('relationship', u"")
 
-        # first check for an existing user match
-        try:
-            self.instance = model.Profile.objects.get(phone=phone)
-        except model.Profile.DoesNotExist:
+        if self.instance is None:
             self.instance = model.Profile.create_with_user(
                 school=self.inviter.school,
                 phone=phone,
