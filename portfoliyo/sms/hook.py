@@ -263,7 +263,10 @@ def get_teacher_and_group(body):
     set (teacher will be set to group owner).
 
     """
-    possible_code = body.strip().split()[0].rstrip('.,:;').upper()
+    try:
+        possible_code = body.strip().split()[0].rstrip('.,:;').upper()
+    except IndexError:
+        return (None, None)
     try:
         group = model.Group.objects.get(code=possible_code)
     except model.Group.DoesNotExist:

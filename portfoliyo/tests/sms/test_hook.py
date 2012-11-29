@@ -618,6 +618,7 @@ class TestGetTeacherAndGroup(object):
         assert f("ABCDEF. some name") == (t, None)
         assert f("ABCDEF\nsome sig") == (t, None)
 
+
     def test_group_code(self):
         """Gets teacher and group if text starts with group code."""
         g = factories.GroupFactory.create(
@@ -628,3 +629,8 @@ class TestGetTeacherAndGroup(object):
         assert f("ACDC foo") == (None, None)
         assert f("ABCDEFG My Name") == (g.owner, g)
         assert f("ABCDEF ") == (g.owner, None)
+
+
+    def test_empty(self):
+        """Returns None on empty text, doesn't barf."""
+        assert hook.get_teacher_and_group('') == (None, None)
