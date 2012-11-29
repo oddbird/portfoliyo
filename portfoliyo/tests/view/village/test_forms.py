@@ -828,8 +828,9 @@ class TestStudentForms(object):
         with mock.patch(target) as mock_student_edited:
             profile = form.save()
 
-        mock_student_edited.assert_called_with(
-            profile, other_rel.elder, rel.elder)
+        args = mock_student_edited.call_args[0]
+        assert args[0] == profile
+        assert set(args[1:]) == {other_rel.elder, rel.elder}
 
 
     def test_edit_student_only_sends_event_if_name_changed(self):
