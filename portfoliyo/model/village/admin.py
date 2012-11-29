@@ -48,7 +48,12 @@ class SchoolFilter(NoListFilter):
 
 class PostAdmin(admin.ModelAdmin):
     list_display=[
-        '__unicode__', 'linked_author', 'school', 'linked_student', 'timestamp']
+        '__unicode__',
+        'linked_author',
+        'school',
+        'linked_student',
+        'linked_timestamp',
+        ]
     list_filter=[AuthorFilter, StudentFilter, SchoolFilter]
 
 
@@ -71,6 +76,16 @@ class PostAdmin(admin.ModelAdmin):
     linked_student.short_description = 'student'
     linked_student.allow_tags = True
     linked_student.admin_order_field = 'student'
+
+
+    def linked_timestamp(self, post):
+        return u'<a href="%s">%s</a>' % (
+            post.get_absolute_url(),
+            post.timestamp.strftime('%b. %d, %Y, %I:%M %p'),
+            )
+    linked_timestamp.short_description = 'timestamp'
+    linked_timestamp.allow_tags = True
+    linked_timestamp.admin_order_field = 'timestamp'
 
 
     def school(self, post):
