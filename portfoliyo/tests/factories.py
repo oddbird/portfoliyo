@@ -41,6 +41,14 @@ class ProfileFactory(factory.Factory):
 
 
 
+class TextSignupFactory(factory.Factory):
+    FACTORY_FOR = model.TextSignup
+
+    family = factory.SubFactory(ProfileFactory)
+    teacher = factory.SubFactory(ProfileFactory)
+
+
+
 class RelationshipFactory(factory.Factory):
     FACTORY_FOR = model.Relationship
 

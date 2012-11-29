@@ -1,5 +1,6 @@
 """Tests for village forms."""
 from django.core import mail
+from django.core.urlresolvers import reverse
 import mock
 
 from portfoliyo import model
@@ -29,9 +30,10 @@ class TestEditElderForm(object):
                 'role': 'science teacher',
                 },
             instance=rel.elder,
+            rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(editor=factories.ProfileFactory.create(), rel=rel)
+        profile = form.save(editor=factories.ProfileFactory.create())
 
         assert profile.role == 'math teacher'
         assert utils.refresh(rel).description == 'science teacher'
@@ -49,9 +51,10 @@ class TestEditElderForm(object):
                 'role': 'science teacher',
                 },
             instance=rel.elder,
+            rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(rel)
+        profile = form.save(editor=factories.ProfileFactory.create())
 
         assert profile.role == 'science teacher'
         assert utils.refresh(rel).description == ''
@@ -78,10 +81,10 @@ class TestEditElderForm(object):
                 'phone': '+17894561234',
                 },
             instance=parent_rel.elder,
+            rel=parent_rel,
             )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save(
-            editor=model.elder_in_context(teacher_rel), rel=parent_rel)
+        profile = form.save(editor=model.elder_in_context(teacher_rel))
 
         assert profile.phone == '+17894561234'
         assert len(sms.outbox) == 1
@@ -108,6 +111,50 @@ class TestEditElderForm(object):
         assert not form.is_valid()
         assert form.errors['phone'] == [
             u"Please supply a valid US or Canada mobile number."]
+
+
+    def test_dupe_phone(self):
+        """Dupe phone number results in validation error."""
+        factories.ProfileFactory.create(phone='+13216540987')
+        elder = factories.ProfileFactory.create()
+
+        form = forms.EditElderForm(
+            {
+                'name': 'John Doe',
+                'role': 'dad',
+                'phone': '321-654-0987',
+                },
+            instance=elder,
+            )
+        assert not form.is_valid()
+        assert form.errors['phone'] == [
+            u"A user with this phone number already exists."]
+
+
+    def test_dupe_phone_in_village(self):
+        """Dupe phone number in village links to invite."""
+        factories.ProfileFactory.create(phone='+13216540987')
+        rel = factories.RelationshipFactory.create()
+
+        form = forms.EditElderForm(
+            {
+                'name': 'John Doe',
+                'role': 'dad',
+                'phone': '(321) 654-0987',
+                },
+            instance=rel.elder,
+            rel=rel,
+            )
+        assert not form.is_valid()
+        invite_url = reverse(
+            'invite_family',
+            kwargs={'student_id': rel.to_profile_id},
+            ) + '?phone=%28321%29%20654-0987'
+        assert form.errors['phone'] == [
+            u"A user with this phone number already exists. "
+            u'You can <a href="%s">invite them</a> to this village instead.'
+            % invite_url
+            ]
 
 
     def test_initial_role_is_contextual(self):
@@ -422,17 +469,29 @@ class TestInviteFamilyForm(object):
         assert profile.user.is_active
 
 
-    def test_user_with_email_exists(self):
+    def test_user_with_phone_exists(self, sms):
         """If a user with given phone already exists, no new user is created."""
         elder = factories.ProfileFactory(phone='+13216541234')
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Teacher John",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
         form = forms.InviteFamilyForm(
             self.data(phone=elder.phone),
-            rel=factories.RelationshipFactory(),
+            rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
         profile = form.save()
 
         assert elder == profile
+        assert len(sms.outbox) == 1
+        assert sms.outbox[0].to == u'+13216541234'
+        assert sms.outbox[0].body == (
+            "Hi! Jimmy Doe's Math Teacher Teacher John "
+            "will text you from this number. "
+            "Text 'stop' any time if you don't want this."
+            )
 
 
     def test_existing_user_new_role(self):
@@ -454,17 +513,22 @@ class TestInviteFamilyForm(object):
         assert p.student_relationships[0].description == u"science teacher"
 
 
-    def test_user_with_phone_exists(self):
-        """If a user with given phone already exists, no new user is created."""
-        elder = factories.ProfileFactory(phone='+13214567890')
+    def test_cannot_invite_to_second_student(self, sms):
+        """For now, it's an error to add a family member to a 2nd village."""
+        parent_rel = factories.RelationshipFactory(
+            from_profile__phone='+13216541234')
+        teacher_rel = factories.RelationshipFactory.create()
         form = forms.InviteFamilyForm(
-            self.data(phone='321.456.7890'),
-            rel=factories.RelationshipFactory(),
+            self.data(phone=parent_rel.elder.phone),
+            rel=teacher_rel,
             )
-        assert form.is_valid(), dict(form.errors)
-        profile = form.save()
+        assert not form.is_valid()
 
-        assert elder == profile
+        assert form.errors['phone'] == [
+            u"This person is already connected to a different student. "
+            u"Portfoliyo doesn't support family members in multiple villages "
+            u"yet, but we're working on it!"
+            ]
 
 
     def test_relationship_exists(self):
@@ -618,11 +682,13 @@ class TestStudentForms(object):
         rel1 = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         rel2 = factories.RelationshipFactory.create(
+            from_profile__name='A',
             from_profile__school_staff=True,
             from_profile__school=rel1.elder.school,
             to_profile=rel1.student,
             )
         rel3 = factories.RelationshipFactory.create(
+            from_profile__name='B',
             from_profile__school_staff=True,
             school=rel1.elder.school,
             )
@@ -762,8 +828,9 @@ class TestStudentForms(object):
         with mock.patch(target) as mock_student_edited:
             profile = form.save()
 
-        mock_student_edited.assert_called_with(
-            profile, other_rel.elder, rel.elder)
+        args = mock_student_edited.call_args[0]
+        assert args[0] == profile
+        assert set(args[1:]) == {other_rel.elder, rel.elder}
 
 
     def test_edit_student_only_sends_event_if_name_changed(self):

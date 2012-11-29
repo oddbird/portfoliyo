@@ -1,7 +1,6 @@
 // ---------------------------------------------------------------------------
 // Village Nav
 
-$village-nav-bg       : $base2;
 $village-nav-title-bg : $blue;
 $village-nav-rhythm   : .25;
 $village-nav-action-color : $base03;
@@ -43,12 +42,9 @@ $village-nav-action-color : $base03;
 
 .listitem-select {
   @extend %village-nav-item;
+  @extend %village-activenav;
   #{$link} {
-    @extend %village-activenav;
-    background: rgba($village-nav-bg,.25);
     .title & {
-      @extend %icon;
-      @extend %icon-users;
       color: $back;
       background: rgba($village-nav-title-bg,.25);
       font-weight: bold;
@@ -59,11 +55,11 @@ $village-nav-action-color : $base03;
     }
     .group & {
       @extend %icon;
-      @extend %icon-users;
+      @extend %icon-list;
     }
   }
   #{$focus} {
-    background: rgba($village-nav-bg,.5);
+    background: rgba($base2,.5);
     .title & { background: rgba($village-nav-title-bg,.5); }
   }
 
@@ -97,9 +93,9 @@ $village-nav-action-color : $base03;
 %actions-base {
   @include transition(all 400ms);
   position: absolute !important;
-  top: -1px;
+  top: 0;
   right: 0;
-  bottom: 0px;
+  bottom: 1px;
   padding: rhythm($village-nav-rhythm,$village-list-size);
   padding-right: rhythm(.5,$village-list-size);
   background: $village-nav-action-color;
@@ -120,7 +116,7 @@ $village-nav-action-color : $base03;
   a, button {
     @extend %icon-replace;
     @include link(light,true);
-    margin-left: rhythm(.5,$village-list-size);
+    margin-left: rhythm(.5);
   }
   .action-edit { @extend %icon-pencil; }
   .action-save {
@@ -129,25 +125,38 @@ $village-nav-action-color : $base03;
   }
   .action-remove { @extend %icon-trashcan; }
   .undo-action-remove { @extend %icon-undo; }
+  .action-addbulk { @extend %icon-users; }
+  .action-addsingle { @extend %icon-user; }
 }
 
 .action-back.groups {
   @extend %icon-replace;
-  @extend %icon-arrow-left;
-  @include adjust-font-size-to($normpx,1,$village-list-size);
+  @extend %icon-list;
   @include leader($village-nav-rhythm);
   @include border-radius(.125em);
+  @include rem(width, rhythm(1));
   position: relative;
+  overflow: hidden;
   float: left;
-  width: rhythm(1);
-  margin-right: .4em;
-  z-index: 6;
+  margin-right: .4rem;
   color: $base3;
   background: rgba($back,.5);
-  #{$focus} { background: $accent; }
+  z-index: 6;
+  #{$focus} {
+    @extend %icon-arrow-left;
+    background: $accent;
+  }
 }
 
 .additem-link {
   @extend %village-nav-item;
   @extend %village-addlink;
+  .addgroup & {
+    @extend %icon-addlist;
+    background: rgba($blue,.25);
+    &:before {
+      @include adjust-font-size-to($normpx);
+      @include rem(margin-left, rhythm(-.18));
+    }
+  }
 }

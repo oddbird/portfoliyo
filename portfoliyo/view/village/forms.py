@@ -2,7 +2,11 @@
 Student/elder forms.
 
 """
+import urllib
+
+from django.core.urlresolvers import reverse
 from django.db.models import Q
+from django.utils.safestring import mark_safe
 import floppyforms as forms
 
 from portfoliyo import model, invites, formats
@@ -67,8 +71,15 @@ class EditElderForm(forms.Form):
 
 
     def __init__(self, *a, **kw):
-        """Pull instance kwarg out, set initial data."""
+        """
+        Pull instance/rel kwargs out, set initial data.
+
+        Optional 'rel' kwarg is the relationship between the edited elder and a
+        student, if the elder is being edited in a student village context.
+
+        """
         self.instance = kw.pop('instance')
+        self.rel = kw.pop('rel', None)
         initial = kw.setdefault('initial', {})
         initial['name'] = self.instance.name
         initial['role'] = self.instance.role_in_context
@@ -86,10 +97,23 @@ class EditElderForm(forms.Form):
         if phone is None:
             raise forms.ValidationError(
                 "Please supply a valid US or Canada mobile number.")
+        if model.Profile.objects.filter(phone=phone).exists():
+            msg = "A user with this phone number already exists."
+            if self.rel:
+                invite_url = reverse(
+                    'invite_family',
+                    kwargs={'student_id': self.rel.to_profile_id},
+                    )
+                msg = mark_safe(
+                    '%s You can <a href="%s?phone=%s">invite them</a> '
+                    'to this village instead.' %
+                    (msg, invite_url, urllib.quote(self.cleaned_data['phone']))
+                    )
+            raise forms.ValidationError(msg)
         return phone
 
 
-    def save(self, editor, rel=None):
+    def save(self, editor):
         """Save elder (optionally in context of given village relationship)."""
         self.instance.name = self.cleaned_data['name']
 
@@ -99,7 +123,7 @@ class EditElderForm(forms.Form):
 
         old_profile_role = self.instance.role
         old_relationship_role = (
-            rel.description_or_role if rel else self.instance.role)
+            self.rel.description_or_role if self.rel else self.instance.role)
         new_role = self.cleaned_data['role']
         if old_profile_role == old_relationship_role:
             self.instance.role = new_role
@@ -107,8 +131,8 @@ class EditElderForm(forms.Form):
                 description=old_profile_role).update(
                 description='')
         else:
-            rel.description = new_role
-            rel.save()
+            self.rel.description = new_role
+            self.rel.save()
         self.instance.save()
 
         if new_phone and new_phone != old_phone:
@@ -117,7 +141,7 @@ class EditElderForm(forms.Form):
                 template_name='registration/invite_elder_sms.txt',
                 extra_context={
                     'inviter': editor,
-                    'student': rel.student if rel else None,
+                    'student': self.rel.student if self.rel else None,
                     },
                 )
 
@@ -146,6 +170,19 @@ class InviteFamilyForm(forms.Form):
         if phone is None:
             raise forms.ValidationError(
                 "Please supply a valid US or Canada mobile number.")
+        try:
+            self.instance = model.Profile.objects.get(phone=phone)
+        except model.Profile.DoesNotExist:
+            self.instance = None
+        else:
+            students = set(self.instance.students)
+            students.discard(self.rel.student)
+            if students:
+                raise forms.ValidationError(
+                    u"This person is already connected to a different student. "
+                    u"Portfoliyo doesn't support family members in multiple "
+                    u"villages yet, but we're working on it!"
+                    )
         return phone
 
 
@@ -154,10 +191,7 @@ class InviteFamilyForm(forms.Form):
         phone = self.cleaned_data.get('phone')
         relationship = self.cleaned_data.get('relationship', u"")
 
-        # first check for an existing user match
-        try:
-            self.instance = model.Profile.objects.get(phone=phone)
-        except model.Profile.DoesNotExist:
+        if self.instance is None:
             self.instance = model.Profile.create_with_user(
                 school=self.inviter.school,
                 phone=phone,
@@ -166,20 +200,16 @@ class InviteFamilyForm(forms.Form):
                 school_staff=False,
                 invited_by=self.inviter,
                 )
-            created = True
-        else:
-            created = False
 
         # send invite notifications
-        if created:
-            invites.send_invite_sms(
-                self.instance,
-                template_name='registration/invite_elder_sms.txt',
-                extra_context={
-                    'inviter': model.elder_in_context(self.rel),
-                    'student': self.rel.student,
-                    },
-                )
+        invites.send_invite_sms(
+            self.instance,
+            template_name='registration/invite_elder_sms.txt',
+            extra_context={
+                'inviter': model.elder_in_context(self.rel),
+                'student': self.rel.student,
+                },
+            )
 
         rel, created = model.Relationship.objects.get_or_create(
             from_profile=self.instance,
@@ -329,7 +359,8 @@ class StudentForm(forms.ModelForm):
                 relationships_from__to_profile=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
             elder_conditions).exclude(
-            pk=self.elder.pk).exclude(school_staff=False).distinct()
+            pk=self.elder.pk).exclude(school_staff=False).distinct().order_by(
+                'name')
         self.fields['elders'].groups_attr = 'elder_in_groups'
         self.owners = set()
         if self.instance.pk:
@@ -509,13 +540,14 @@ class GroupForm(forms.ModelForm):
             self.owner = kwargs.pop('owner')
         super(GroupForm, self).__init__(*args, **kwargs)
         self.fields['students'].queryset = model.Profile.objects.filter(
-            relationships_to__from_profile=self.owner)
+            relationships_to__from_profile=self.owner).order_by('name')
         elder_conditions = Q(school=self.owner.school, school_staff=True)
         if self.instance.pk:
             elder_conditions = elder_conditions | Q(
                 elder_in_groups=self.instance)
         self.fields['elders'].queryset = model.Profile.objects.filter(
-            elder_conditions).exclude(pk=self.owner.pk).distinct()
+            elder_conditions).exclude(pk=self.owner.pk).distinct().order_by(
+            'name')
         self._old_name = self.instance.name
 
 

@@ -269,6 +269,12 @@ class TestRelationship(object):
         assert rel.student is rel.to_profile
 
 
+    def test_delete_circularity(self):
+        """Can delete a profile that has relationships."""
+        rel = factories.RelationshipFactory.create()
+        rel.elder.delete()
+
+
 
 class TestGroup(object):
     """Tests for Group model."""

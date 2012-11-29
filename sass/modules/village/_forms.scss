@@ -77,36 +77,121 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
   }
 }
 
+.sms-preview {
+  @include transition(all 300ms);
+  background: $base2;
+  .form-actions & {
+    @include rhythm-margins;
+    padding: rhythm(1);
+    text-align: left;
+    h3 {
+      display: inline;
+      font-weight: bold;
+    }
+  }
+  .formfield-help & {
+    max-height: rhythm(0);
+    overflow: hidden;
+    font-style: normal;
+    color: $base;
+    input:focus ~ &, .changed & {
+      @include rhythm-margins(.5);
+      padding: rhythm(.5);
+      max-height: rhythm(4);
+    }
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Add/Edit Village
 
 .group-add-form, .group-edit-form { @extend %village-solo-page; }
 .add-student, .village-edit-form { @extend %village-solo-page; }
 
-.parent-instructions {
+@include establish-tabs(english spanish);
+
+.pdf-instructions {
   @extend %type;
-  h2 { @include trailer(.5, $largepx); }
-  p { overflow: hidden; }
-  .pdf-thumbnail {
-    @extend %img;
-    @include span-columns($left,$center);
-    min-width: columns-width(3);
-  }
-  .pdf-downloads {
-    @include inline-block-list;
-    @include rhythm(0,.5,.5,1);
-    @include bleed(rhythm(.5));
+  .one-line {
+    @include bleed(rhythm(1));
+    @include rhythm-padding(1);
     background: $base2;
-    text-align: right;
-    overflow: visible;
-    a {
-      @extend %icon;
-      @extend %icon-file-download;
-      margin-right: 1em;
-      &:after { content: " »"; }
-    }
+    color: $orange;
+    b { color: $base; }
   }
 }
+
+.pdf-previews {
+  @extend %radio-tabs;
+  @include leader;
+  @include rhythm-borders(1px,1);
+  @include box-shadow($back 0 0 rhythm(.25) inset);
+  position: relative;
+  background: image-url('handmadepaper.png') repeat scroll;
+  .tab-title {
+    @include adjust-font-size-to($smallpx);
+    @include border-radius(.5rem);
+    display: inline-block;
+    padding: rhythm(.125) rhythm(.5);
+  }
+  %active-tab-title {
+    background: rgba($back,.25);
+    font-weight: normal;
+  }
+}
+
+$phone-columns: 4;
+$preview-columns: $center - $phone-columns;
+
+.pdf-preview {
+  @extend %type;
+  @include clearfix;
+  @include padding-leader;
+  font-family: helvetica, sans-serif;
+  border-color: $back;
+  h3, h4 {
+    font-family: inherit;
+    font-weight: bold;
+  }
+  h3 { @include adjust-font-size-to($largepx); }
+  h4 { @include trailer; }
+  li { @include trailer(.5); }
+  ol { @include trailer(2); }
+  strong { font-weight: bold; }
+  footer {
+    @include adjust-font-size-to($smallpx);
+    font-style: italic;
+    p { margin: 0; }
+  }
+}
+
+.download-pdf {
+  @extend %icon;
+  @extend %icon-file-download;
+  @include adjust-font-size-to($smallpx);
+  display: block;
+  position: absolute;
+  top: rhythm(1);
+  right: rhythm(1);
+  padding: rhythm(.125);
+}
+
+.inst {
+  @include leader(.5);
+  strong {
+    @include adjust-font-size-to($largepx);
+    display: block;
+  }
+  .number, .code {
+    @include clearfix;
+    @include rhythm-margins(.5);
+    padding: rhythm(1);
+    background: rgba($back,.125);
+  }
+  .code { @include trailer(1.5); }
+}
+
+.personal-note { @include clearfix; }
 
 .student-form-details {
   .summary {

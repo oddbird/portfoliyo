@@ -7,7 +7,7 @@
     <h2>Edit {% firstof elder.name elder.user.email elder.phone "Family Member" %}</h2>
 
     {% include "forms/_field.html" with field=form.name %}
-    {% include "forms/_field.html" with field=form.phone helptext="We'll send a confirmation text to the new number." %}
+    {% include "forms/_field.html" with field=form.phone helpinclude="village/_edit_elder_sms_preview.html" %}
     {% include "forms/_field.html" with field=form.role label="Relation to student" %}
 
     <div class="form-actions">

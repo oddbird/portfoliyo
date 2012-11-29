@@ -56,15 +56,11 @@ class Profile(models.Model):
     school_staff = models.BooleanField(default=False)
     # code for parent-initiated signups
     code = models.CharField(max_length=20, blank=True, null=True, unique=True)
-    # signup status (for text-based multi-step signup); what are we awaiting?
-    STATE = Choices('kidname', 'relationship', 'name', 'done')
-    state = models.CharField(max_length=20, choices=STATE, default=STATE.done)
-    # does this user want to receive email notifications?
-    email_notifications = models.BooleanField(default=True)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
-    # what group was this user initially invited to?
-    invited_in_group = models.ForeignKey('Group', blank=True, null=True)
+    # does this user want to receive email notifications?
+    email_notifications = models.BooleanField(default=True)
+    # True if user has declined/stopped SMS notifications
     declined = models.BooleanField(default=False)
 
 
@@ -95,8 +91,7 @@ class Profile(models.Model):
     def create_with_user(cls, school,
                          name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         state=None, invited_by=None, invited_in_group=None,
-                         email_notifications=True):
+                         invited_by=None, email_notifications=True):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -126,9 +121,7 @@ class Profile(models.Model):
             user=user,
             role=role,
             school_staff=school_staff,
-            state=state or cls.STATE.done,
             invited_by=invited_by,
-            invited_in_group=invited_in_group,
             code=code,
             email_notifications=email_notifications,
             )
@@ -181,6 +174,20 @@ class Profile(models.Model):
     @property
     def students(self):
         return [rel.to_profile for rel in self.student_relationships]
+
+
+
+class TextSignup(models.Model):
+    """An in-progress or completed family-member SMS signup."""
+    # signup status; what are we awaiting?
+    STATE = Choices('kidname', 'relationship', 'name', 'done')
+    state = models.CharField(
+        max_length=20, choices=STATE, default=STATE.kidname)
+    family = models.ForeignKey(Profile, related_name='signups')
+    student = models.ForeignKey(
+        Profile, blank=True, null=True, related_name='family_signups')
+    teacher = models.ForeignKey(Profile, related_name='signed_up')
+    group = models.ForeignKey('Group', blank=True, null=True)
 
 
 
@@ -487,9 +494,17 @@ def relationship_saved(sender, instance, created, **kwargs):
 
 
 def relationship_deleted(sender, instance, **kwargs):
-    events.student_removed(instance.student, instance.elder)
-    for group in instance.elder.owned_groups.all():
-        group.students.remove(instance.student)
+    # This relationship may be being deleted in cascade from its student or
+    # elder being deleted, in which case it will already be gone.
+    try:
+        student = instance.student
+        elder = instance.elder
+    except Profile.DoesNotExist:
+        pass
+    else:
+        events.student_removed(student, elder)
+        for group in elder.owned_groups.all():
+            group.students.remove(student)
 
 
 signals.post_save.connect(relationship_saved, sender=Relationship)
@@ -514,7 +529,7 @@ def contextualized_elders(queryset):
     if queryset.model is Relationship:
         return EldersForRelationships(queryset)
     elif queryset.model is Profile:
-        return EldersInContext(queryset)
+        return queryset
     else:
         raise ValueError(
             "Only Profile or Relationship querysets can be contextualized.")
@@ -527,11 +542,20 @@ class QuerySetWrapper(object):
 
 
     def _mangle_fieldname(self, name):
-        return name
+        return name # pragma: no cover
 
 
     def _mangle_fieldname_kwargs(self, kwargs):
         return {self._mangle_fieldname(k): v for k, v in kwargs.items()}
+
+
+    def _recursively_mangle_q(self, q_or_tuple):
+        if isinstance(q_or_tuple, models.Q):
+            q_or_tuple.children = [
+                self._recursively_mangle_q(c) for c in q_or_tuple.children]
+        else:
+            q_or_tuple = (self._mangle_fieldname(q_or_tuple[0]), q_or_tuple[1])
+        return q_or_tuple
 
 
     def filter(self, *args, **kwargs):
@@ -543,6 +567,7 @@ class QuerySetWrapper(object):
 
 
     def _filter_or_exclude(self, negate, *args, **kwargs):
+        args = [self._recursively_mangle_q(a) for a in args]
         kwargs = self._mangle_fieldname_kwargs(kwargs)
         return self.__class__(
             self.queryset._filter_or_exclude(negate, *args, **kwargs))
@@ -551,16 +576,6 @@ class QuerySetWrapper(object):
     def order_by(self, *args):
         args = [self._mangle_fieldname(fn) for fn in args]
         return self.__class__(self.queryset.order_by(*args))
-
-
-
-
-class EldersInContext(QuerySetWrapper):
-    """Elders queryset that tacks on ``role_in_context`` attr when iterated."""
-    def __iter__(self):
-        for elder in self.queryset:
-            elder.role_in_context = elder.role
-            yield elder
 
 
 

@@ -1,0 +1,2 @@
+Se aplicarán tarifas estándar de envío de mensajes de texto.
+Texto "stop" para darse de baja.
