@@ -1,5 +1,5 @@
 from django.test import LiveServerTestCase
-from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 
