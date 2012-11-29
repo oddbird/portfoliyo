@@ -494,9 +494,17 @@ def relationship_saved(sender, instance, created, **kwargs):
 
 
 def relationship_deleted(sender, instance, **kwargs):
-    events.student_removed(instance.student, instance.elder)
-    for group in instance.elder.owned_groups.all():
-        group.students.remove(instance.student)
+    # This relationship may be being deleted in cascade from its student or
+    # elder being deleted, in which case it will already be gone.
+    try:
+        student = instance.student
+        elder = instance.elder
+    except Profile.DoesNotExist:
+        pass
+    else:
+        events.student_removed(student, elder)
+        for group in elder.owned_groups.all():
+            group.students.remove(student)
 
 
 signals.post_save.connect(relationship_saved, sender=Relationship)
