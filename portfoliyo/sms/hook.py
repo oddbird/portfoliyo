@@ -72,31 +72,23 @@ def receive_sms(source, body):
 
     students = profile.students
 
-    if len(students) > 1:
-        logger.warning(
-            "Text from %s (has multiple students): %s" % (source, body))
-        return (
-            "You're part of more than one student's Portfoliyo Village; "
-            "we're not yet able to route your texts. We'll fix that soon!"
-            )
-    elif not students:
+    if not students:
         logger.warning(
             "Text from %s (has no students): %s" % (source, body))
         return (
             "You're not part of any student's Portfoliyo Village, "
             "so we're not able to deliver your message. Sorry!"
             )
-    else:
-        student = students[0]
 
-    model.Post.create(profile, student, body, from_sms=True)
+    for student in students:
+        model.Post.create(profile, student, body, from_sms=True)
 
     if activated:
         return reply(
             source,
-            profile.students,
+            students,
             "Thank you! You can text this number any time "
-            "to talk with %s's teachers." % student.name
+            "to talk with %s's teachers." % students[0].name
         )
 
 
