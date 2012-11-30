@@ -281,6 +281,17 @@ def get_teacher_and_group(body):
 
 
 
+def interpolate_teacher_names(msg, parent):
+    """
+    Interpolate teachers of parent's students into msg's %s placeholder.
+
+    Avoids making the total message length over 160; falls back to "student's
+    teachers" with arbitrary student if necessary.
+
+    """
+
+
+
 def reply(phone, students, body):
     """Save given reply to given students' villages before returning it."""
     for student in students:
