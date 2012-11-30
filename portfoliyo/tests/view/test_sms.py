@@ -74,6 +74,25 @@ def test_reply(mock_receive_sms, mock_validate):
     assert xml[0].text == "a reply message!"
 
 
+@override_settings(TWILIO_AUTH_TOKEN='foo')
+@mock.patch('portfoliyo.view.sms.RequestValidator.validate')
+@mock.patch('portfoliyo.sms.hook.receive_sms')
+def test_splits_long_reply(mock_receive_sms, mock_validate):
+    """If receive_sms returns a long string, that is sent as >1 reply SMSes."""
+    mock_validate.return_value = True
+    mock_receive_sms.return_value = "a" * 161
+
+    response = sms.twilio_receive(signed_request(data()))
+
+    assert response.status_code == 200
+    xml = ElementTree.XML(response.content)
+
+    assert response.status_code == 200
+    assert len(xml) == 2
+    assert xml[0].text == ("a" * 157) + '...'
+    assert xml[1].text == '...' + ("a" * 4)
+
+
 def test_requires_TWILIO_AUTH_TOKEN(monkeypatch):
     """If TWILIO_AUTH_TOKEN setting is not set, returns 403."""
     if hasattr(settings, 'TWILIO_AUTH_TOKEN'):
