@@ -3,7 +3,6 @@ Student/elder (village) views.
 
 """
 import json
-import os
 
 from django.conf import settings
 from django.contrib import messages
