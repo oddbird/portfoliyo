@@ -8,6 +8,7 @@ from twilio import twiml
 from twilio.util import RequestValidator
 
 from portfoliyo.sms import hook
+from portfoliyo.sms.base import split_sms
 
 
 @csrf.csrf_exempt
@@ -35,6 +36,7 @@ def twilio_receive(request):
     response = twiml.Response()
 
     if reply:
-        response.sms(reply)
+        for chunk in split_sms(reply):
+            response.sms(chunk)
 
     return HttpResponse(str(response), content_type='application/xml')

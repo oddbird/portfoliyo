@@ -275,6 +275,15 @@ class TestRelationship(object):
         rel.elder.delete()
 
 
+    def test_deletes_orphaned_student(self):
+        """If deleting rel leaves student w/ no teachers, delete the student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        rel.delete()
+
+        assert utils.deleted(rel.student)
+
+
 
 class TestGroup(object):
     """Tests for Group model."""
@@ -448,7 +457,8 @@ class TestGroup(object):
         (And calls events.student_removed for each cleared relationship.)
 
         """
-        rel = factories.RelationshipFactory.create()
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
         e = factories.ProfileFactory.create()
         g = factories.GroupFactory.create()
         g.students.add(rel.student)
@@ -521,7 +531,8 @@ class TestGroup(object):
 
     def test_delete_relationship_removes_from_groups(self):
         """Deleting a relationship removes student from elder's groups."""
-        rel = factories.RelationshipFactory.create()
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
         other_elder = factories.ProfileFactory.create()
         group = factories.GroupFactory.create(owner=rel.elder)
         group.students.add(rel.student)

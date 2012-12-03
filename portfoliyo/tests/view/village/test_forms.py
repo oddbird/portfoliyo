@@ -765,7 +765,8 @@ class TestStudentForms(object):
 
     def test_edit_student_with_group_and_elder(self):
         """Can (de/)associate a student with a group/elder while editing."""
-        rel = factories.RelationshipFactory.create()
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
         factories.RelationshipFactory.create(
             from_profile__school_staff=True, to_profile=rel.student)
         group = factories.GroupFactory.create(owner=rel.elder)
@@ -788,7 +789,8 @@ class TestStudentForms(object):
 
     def test_remove_elder_sends_pusher_event(self):
         """Removing an elder from a student sends a pusher event."""
-        rel = factories.RelationshipFactory.create()
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
         other_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True, to_profile=rel.student)
         form = forms.StudentForm(
