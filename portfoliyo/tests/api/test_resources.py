@@ -267,19 +267,6 @@ class TestElderRelationshipResource(object):
         assert not utils.deleted(other_rel)
 
 
-    def test_delete_relationship_removes_from_groups(self, no_csrf_client):
-        """Deleting relationship removes students from my groups, too."""
-        rel = factories.RelationshipFactory.create()
-        g = factories.GroupFactory.create(owner=rel.elder)
-        g2 = factories.GroupFactory.create(owner__school=rel.elder.school)
-        rel.student.student_in_groups.add(g, g2)
-
-        no_csrf_client.delete(
-            self.detail_url(rel), user=rel.elder.user, status=204)
-
-        assert set(rel.student.student_in_groups.all()) == {g2}
-
-
     def test_cannot_delete_other_rel(self, no_csrf_client):
         """Another user may not delete a relationship that is not theirs."""
         rel = factories.RelationshipFactory.create()
