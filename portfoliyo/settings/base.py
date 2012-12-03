@@ -229,7 +229,7 @@ LOGIN_URL = "/login/"
 AUTHENTICATION_BACKENDS = ["portfoliyo.model.users.auth_backend.EmailBackend"]
 LOGIN_REDIRECT_URL = "/"
 
-DEFAULT_FROM_EMAIL = "Portfoliyo <noreply@portfoliyo.org>"
+DEFAULT_FROM_EMAIL = "Portfoliyo <harsh@portfoliyo.org>"
 
 PORTFOLIYO_SMS_BACKEND = "portfoliyo.sms.backends.console.ConsoleSMSBackend"
 PORTFOLIYO_SMS_DEFAULT_FROM = "+15555555555"
