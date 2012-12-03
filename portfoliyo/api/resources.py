@@ -230,26 +230,6 @@ class ElderRelationshipResource(PortfoliyoResource):
         allowed_methods = ['get', 'delete']
 
 
-    def obj_delete(self, request=None, **kwargs):
-        """Deleting relationship also removes that student from your groups."""
-        obj = kwargs.pop('_obj', None)
-
-        if not hasattr(obj, 'save'): # pragma: no cover
-            try:
-                obj = self.obj_get(request, **kwargs)
-            except ObjectDoesNotExist:
-                raise NotFound(
-                    "A model instance matching the provided arguments "
-                    "could not be found."
-                    )
-
-        model.Group.students.through.objects.filter(
-            group__owner=obj.elder, profile=obj.student).delete()
-
-        obj.delete()
-
-
-
 
 class SlimGroupResource(PortfoliyoResource):
     class Meta(PortfoliyoResource.Meta):
