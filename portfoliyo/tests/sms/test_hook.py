@@ -49,7 +49,7 @@ def test_activate_user(db):
     mock_create.assert_any_call(
         None, rel.student, reply, in_reply_to=phone, email_notifications=False)
     assert reply == (
-        "Thank you! You can text this number any time "
+        "Thank you! You can text this number "
         "to talk with Jimmy Doe's teachers."
         )
 
@@ -352,6 +352,7 @@ def test_code_signup_name(db):
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
         from_profile__email_notifications=True,
+        from_profile__name="Teacher Jane",
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
         )
@@ -372,8 +373,8 @@ def test_code_signup_name(db):
         reply = hook.receive_sms(phone, "John Doe")
 
     assert reply == (
-        "All done, thank you! You can text this number any time "
-        "to talk with Jimmy Doe's teachers."
+        "All done, thank you! You can text this number "
+        "to talk with Teacher Jane."
         )
     parent = model.Profile.objects.get(phone=phone)
     signup = parent.signups.get()
@@ -634,3 +635,205 @@ class TestGetTeacherAndGroup(object):
     def test_empty(self):
         """Returns None on empty text, doesn't barf."""
         assert hook.get_teacher_and_group('') == (None, None)
+
+
+
+class TestInterpolateTeacherNames(object):
+    def test_no_students(self, db):
+        parent = factories.ProfileFactory.create()
+
+        res = hook.interpolate_teacher_names(u'%s', parent)
+
+        assert res == u"teachers"
+
+    def test_one_teacher(self, db):
+        parent_rel = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name="Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', parent_rel.elder)
+
+        assert res == u"Mrs. Dodd"
+
+
+    def test_two_teachers_one_student(self, db):
+        parent_rel = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', parent_rel.elder)
+
+        assert res in {u"Mrs. Dodd & Mr. Todd", u"Mr. Todd & Mrs. Dodd"}
+
+
+    def test_two_teachers_two_students(self, db):
+        rel1 = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel1.elder)
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel2.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', rel1.elder)
+
+        assert res in {u"Mrs. Dodd & Mr. Todd", u"Mr. Todd & Mrs. Dodd"}
+
+
+    def test_three_teachers_one_student(self, db):
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Ms. Codd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', parent_rel.elder)
+
+        assert res == u"Frankie's teachers"
+
+
+    def test_three_teachers_two_students(self, db):
+        rel1 = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        rel2 = factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile,
+            to_profile__name=u"Maria")
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel2.to_profile,
+            from_profile__name=u"Ms. Codd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', rel1.elder)
+
+        assert res in {
+            u"Frankie & Maria's teachers", u"Maria & Frankie's teachers"}
+
+
+    def test_three_teachers_three_students(self, db):
+        rel1 = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        rel2 = factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile,
+            to_profile__name=u"Maria",
+            )
+        rel3 = factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile,
+            to_profile__name=u"Juan",
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel2.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel3.to_profile,
+            from_profile__name=u"Ms. Codd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', rel1.elder)
+
+        assert res == u"your students' teachers"
+
+
+    def test_two_teachers_one_student_too_long(self, db):
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Doddkerstein-Schnitzelberger",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Toddkinson-Hershberger",
+            from_profile__school_staff=True,
+            )
+        prefix = (u'a' * 130)
+        res = hook.interpolate_teacher_names(
+            prefix + '%s', parent_rel.elder)
+
+        assert res == prefix + u"Frankie's teachers"
+
+
+    def test_one_teacher_one_student_too_long(self, db):
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Doddkerstein-Schnitzelberger",
+            from_profile__school_staff=True,
+            )
+        prefix = (u'a' * 140)
+        res = hook.interpolate_teacher_names(
+            prefix + '%s', parent_rel.elder)
+
+        assert res == prefix + u"Frankie's teacher"
+
+
+    def test_everything_too_long(self, db):
+        """If all options are too long, take the best regardless of length."""
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        prefix = (u'a' * 155)
+        res = hook.interpolate_teacher_names(
+            prefix + '%s', parent_rel.elder)
+
+        assert res in {
+            prefix + u"Mrs. Dodd & Mr. Todd",
+            prefix + u"Mr. Todd & Mrs. Dodd",
+            }
