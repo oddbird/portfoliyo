@@ -22,7 +22,11 @@ Once this configuration is done, you should be able to run ``./manage.py
 syncdb --migrate``, then ``./manage.py runserver`` and access the site
 in your browser at ``http://localhost:8000``.
 
+You can run the tests with ``py.test``, or the ``Selenium`` tests with
+``py.test portfoliyo/selenium``.
+
 .. _virtualenv: http://www.virtualenv.org
+.. _Selenium: http://seleniumhq.org
 
 To install the necessary Ruby gems for Compass/Sass development (only
 necessary if you plan to modify Sass files and re-generate CSS), install

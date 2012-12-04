@@ -5,7 +5,7 @@ from portfoliyo.announce import models as announce
 from portfoliyo.tests import factories
 
 
-def test_mark_announcement_read(no_csrf_client):
+def test_mark_announcement_read(no_csrf_client, db):
     p = factories.ProfileFactory.create(user__email='foo@example.com')
     a = announce.to_all('something')
 

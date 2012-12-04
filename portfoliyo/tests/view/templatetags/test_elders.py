@@ -7,27 +7,27 @@ from portfoliyo.tests import factories
 class TestElderStatus(object):
     """Tests for elder_status template filter."""
     def test_declined(self):
-        p = factories.ProfileFactory(declined=True)
+        p = factories.ProfileFactory.build(declined=True)
         assert elders.elder_status(p, None) == 'declined'
 
 
     def test_inactive(self):
-        p = factories.ProfileFactory(user__is_active=False)
+        p = factories.ProfileFactory.build(user__is_active=False)
         assert elders.elder_status(p, None) == 'inactive'
 
 
     def test_mobile(self):
-        p = factories.ProfileFactory(phone='+13216540987')
+        p = factories.ProfileFactory.build(phone='+13216540987')
         assert elders.elder_status(p, None) == 'mobile'
 
 
     def test_offline(self):
-        p = factories.ProfileFactory()
+        p = factories.ProfileFactory.build()
         assert elders.elder_status(p, None) == 'offline'
 
 
     def test_current(self):
-        p = factories.ProfileFactory()
+        p = factories.ProfileFactory.build()
         assert elders.elder_status(p, p) == ''
 
 
@@ -35,30 +35,30 @@ class TestElderStatus(object):
 class TestElderStatusDescription(object):
     """Tests for elder_status_description filter."""
     def test_current(self):
-        p = factories.ProfileFactory()
+        p = factories.ProfileFactory.build()
         assert elders.elder_status_description(p, p) == 'This is you!'
 
 
     def test_declined(self):
-        p = factories.ProfileFactory(name='Foo', declined=True)
+        p = factories.ProfileFactory.build(name='Foo', declined=True)
         assert elders.elder_status_description(p, None) == (
             'Foo has declined to receive SMS notifications.')
 
 
     def test_no_phone(self):
-        p = factories.ProfileFactory(name='Foo', phone=None)
+        p = factories.ProfileFactory.build(name='Foo', phone=None)
         assert elders.elder_status_description(p, None) == (
             'Foo has no phone number on their account.')
 
 
     def test_inactive(self):
-        p = factories.ProfileFactory(
+        p = factories.ProfileFactory.build(
             name='Foo', phone='+13216540987', user__is_active=False)
         assert elders.elder_status_description(p, None) == (
             'Foo is inactive and will not receive SMS notifications.')
 
 
     def test_active(self):
-        p = factories.ProfileFactory(name='Foo', phone='+13216540987')
+        p = factories.ProfileFactory.build(name='Foo', phone='+13216540987')
         assert elders.elder_status_description(p, None) == (
             'Foo receives SMS notifications.')

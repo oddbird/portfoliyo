@@ -13,7 +13,7 @@ class TestHome(object):
         return reverse('home')
 
 
-    def test_login_required(self, client):
+    def test_login_required(self, client, db):
         """Shows landing page if user is unauthenticated."""
         register_url = reverse('register')
 
@@ -22,7 +22,7 @@ class TestHome(object):
         res.mustcontain('href="%s"' % register_url)
 
 
-    def test_redirect_to_add_group(self, client):
+    def test_redirect_to_add_group(self, client, db):
         """Redirects to add-group if staff user has no students."""
         profile = factories.ProfileFactory.create(school_staff=True)
         res = client.get(self.url, user=profile.user, status=302)
@@ -30,7 +30,7 @@ class TestHome(object):
         assert res['Location'] == location(reverse('add_group'))
 
 
-    def test_redirect_to_no_students(self, client):
+    def test_redirect_to_no_students(self, client, db):
         """Redirects to no-students if non-staff user has no students."""
         profile = factories.ProfileFactory.create(school_staff=False)
         res = client.get(self.url, user=profile.user, status=302)
@@ -38,7 +38,7 @@ class TestHome(object):
         assert res['Location'] == location(reverse('no_students'))
 
 
-    def test_multiple_student_dashboard(self, client):
+    def test_multiple_student_dashboard(self, client, db):
         """A user with multiple students gets redirected to dashboard."""
         rel = factories.RelationshipFactory(to_profile__name="Student One")
         factories.RelationshipFactory(

@@ -6,12 +6,12 @@ from portfoliyo.tests import factories
 
 def test_unicode():
     """Unicode rep of announcement is the text itself."""
-    a = factories.AnnouncementFactory(text="foobar")
+    a = factories.AnnouncementFactory.build(text="foobar")
 
     assert unicode(a) == u"foobar"
 
 
-def test_read_unread():
+def test_read_unread(db):
     """Test announce_to_all, get_unread_announcements, mark_read_by."""
     p1 = factories.ProfileFactory.create(user__email='one@example.com')
     p2 = factories.ProfileFactory.create(user__email='two@example.com')

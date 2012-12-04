@@ -40,6 +40,12 @@ class ProfileFactory(factory.Factory):
     school = factory.SubFactory(SchoolFactory)
 
 
+    @classmethod
+    def _prepare(cls, *args, **kw):
+        profile = super(ProfileFactory, cls)._prepare(*args, **kw)
+        profile.user.profile = profile
+        return profile
+
 
 class TextSignupFactory(factory.Factory):
     FACTORY_FOR = model.TextSignup
