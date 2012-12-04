@@ -1,15 +1,11 @@
 """Selenium tests for home page."""
-from .base import BaseTest
-
 from .pages.login import LoginPage
 
 
 
-class TestLoginPage(BaseTest):
-
-
-    def test_login_and_logout(self):
-        login_pg = LoginPage(self.selenium, self.live_server_url)
+class TestLoginPage(object):
+    def test_login_and_logout(self, selenium):
+        login_pg = LoginPage(selenium, selenium.live_server.url)
 
         login_pg.go_to_login_page()
 
