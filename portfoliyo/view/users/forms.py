@@ -35,8 +35,8 @@ class RegistrationForm(forms.Form):
     requires the password to be entered twice to catch typos.
 
     """
-    name = forms.CharField(max_length=200)
-    role = forms.CharField(max_length=200)
+    name = pyoforms.StripCharField(max_length=200)
+    role = pyoforms.StripCharField(max_length=200)
     password = forms.CharField(widget=forms.PasswordInput(render_value=False))
     password_confirm = forms.CharField(
         label="confirm password",
@@ -232,8 +232,8 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
 
 class EditProfileForm(forms.Form):
     """Form for editing a users profile."""
-    name = forms.CharField(max_length=200)
-    role = forms.CharField(max_length=200)
+    name = pyoforms.StripCharField(max_length=200)
+    role = pyoforms.StripCharField(max_length=200)
     email_notifications = forms.BooleanField(required=False)
 
 
