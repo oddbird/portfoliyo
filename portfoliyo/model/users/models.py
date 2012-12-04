@@ -282,7 +282,11 @@ class AllStudentsGroup(GroupBase):
 
 
 def group_deleted(sender, instance, **kwargs):
-    events.group_removed(instance)
+    try:
+        events.group_removed(instance)
+    except Profile.DoesNotExist:
+        # group was deleted in cascade from owner
+        pass
 
 
 
