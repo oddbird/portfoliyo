@@ -35,7 +35,7 @@ setting_changed.connect(_clear_url_caches)
 got_request_exception.connect(fake_sentry_handler)
 
 
-def test_sentry_500_handler(client):
+def test_sentry_500_handler(client, db):
     """500 handler puts request in template context."""
     with override_settings(
             ROOT_URLCONF='portfoliyo.tests.view.test_urls',

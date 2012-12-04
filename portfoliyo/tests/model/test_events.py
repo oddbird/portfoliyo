@@ -7,7 +7,7 @@ from portfoliyo.tests import factories
 
 
 
-def test_student_event():
+def test_student_event(db):
     """Pusher event for adding/editing/removing a student."""
     rel = factories.RelationshipFactory.create()
     with mock.patch('portfoliyo.model.events.get_pusher') as mock_get_pusher:
@@ -35,7 +35,7 @@ def test_student_event():
 
 
 
-def test_group_event():
+def test_group_event(db):
     """Pusher event for adding/editing/removing a group."""
     group = factories.GroupFactory.create()
     with mock.patch('portfoliyo.model.events.get_pusher') as mock_get_pusher:

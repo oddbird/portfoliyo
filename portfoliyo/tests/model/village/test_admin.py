@@ -9,7 +9,7 @@ def admin():
 
 
 
-def test_post_changelist(client):
+def test_post_changelist(client, db):
     factories.PostFactory.create()
 
     url = reverse('admin:village_post_changelist')
@@ -18,7 +18,7 @@ def test_post_changelist(client):
 
 
 
-def test_filter_by_author(client):
+def test_filter_by_author(client, db):
     factories.PostFactory.create(original_text='foobar')
     p = factories.PostFactory.create(original_text='other')
 
@@ -29,7 +29,7 @@ def test_filter_by_author(client):
 
 
 
-def test_filter_by_no_author(client):
+def test_filter_by_no_author(client, db):
     factories.PostFactory.create(original_text='foobar')
     factories.PostFactory.create(original_text='other', author=None)
 
@@ -40,7 +40,7 @@ def test_filter_by_no_author(client):
 
 
 
-def test_filter_by_student(client):
+def test_filter_by_student(client, db):
     factories.PostFactory.create(original_text='foobar')
     p = factories.PostFactory.create(original_text='other')
 
@@ -52,7 +52,7 @@ def test_filter_by_student(client):
 
 
 
-def test_filter_by_school(client):
+def test_filter_by_school(client, db):
     factories.PostFactory.create(original_text='foobar')
     p = factories.PostFactory.create(original_text='other')
 

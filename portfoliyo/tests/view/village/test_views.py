@@ -17,7 +17,7 @@ from portfoliyo.tests import factories, utils
 
 class GroupContextTests(object):
     """Common tests for views that maintain group context via querystring."""
-    def test_maintain_group_context(self, client):
+    def test_maintain_group_context(self, client, db):
         """Can take ?group=id to maintain group nav context."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -32,7 +32,7 @@ class GroupContextTests(object):
         assert response.context['group'] == group
 
 
-    def test_group_context_student_must_be_in_group(self, client):
+    def test_group_context_student_must_be_in_group(self, client, db):
         """?group=id not effective unless student is in group."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -46,7 +46,7 @@ class GroupContextTests(object):
         assert response.context['group'] is None
 
 
-    def test_group_context_must_own_group(self, client):
+    def test_group_context_must_own_group(self, client, db):
         """?group=id not effective unless active user owns group."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -61,7 +61,7 @@ class GroupContextTests(object):
         assert response.context['group'] is None
 
 
-    def test_group_context_bad_id(self, client):
+    def test_group_context_bad_id(self, client, db):
         """?group=id doesn't blow up with non-int id."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -76,7 +76,7 @@ class GroupContextTests(object):
 
 
 class TestDashboard(object):
-    def test_dashboard(self, client):
+    def test_dashboard(self, client, db):
         """Asks user to pick a student."""
         rel = factories.RelationshipFactory(to_profile__name="Student Two")
         factories.RelationshipFactory(
@@ -89,7 +89,7 @@ class TestDashboard(object):
 
 
 class TestAddStudentsBulk(object):
-    def test_contains_pdf_link(self, client):
+    def test_contains_pdf_link(self, client, db):
         """Add students bulk page contains link to parent instructions PDF."""
         p = factories.ProfileFactory.create(code='ABCDEF', school_staff=True)
         pdf_link = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
@@ -98,7 +98,7 @@ class TestAddStudentsBulk(object):
         assert len(response.html.findAll('a', href=pdf_link))
 
 
-    def test_contains_group_pdf_link(self, client):
+    def test_contains_group_pdf_link(self, client, db):
         """Group add students bulk page has link to parent instructions PDF."""
         g = factories.GroupFactory.create(
             code='ABCDEF', owner__school_staff=True)
@@ -112,7 +112,7 @@ class TestAddStudentsBulk(object):
         assert len(response.html.findAll('a', href=pdf_link))
 
 
-    def test_steps_guide(self, client):
+    def test_steps_guide(self, client, db):
         """Two-step group-creation guide appears if requested in querystring."""
         g = factories.GroupFactory.create(owner__school_staff=True)
         normal_response = client.get(
@@ -132,7 +132,7 @@ class TestAddStudentsBulk(object):
 
 class TestAddStudent(object):
     """Tests for add_student view."""
-    def test_add_student(self, client):
+    def test_add_student(self, client, db):
         """User can add a student."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
@@ -147,7 +147,7 @@ class TestAddStudent(object):
             reverse('village', kwargs={'student_id': student.id}))
 
 
-    def test_add_student_in_group(self, client):
+    def test_add_student_in_group(self, client, db):
         """User can add a student in a group context."""
         group = factories.GroupFactory.create(owner__school_staff=True)
         form = client.get(
@@ -165,7 +165,7 @@ class TestAddStudent(object):
             ) + "?group=" + str(group.id)
 
 
-    def test_validation_error(self, client):
+    def test_validation_error(self, client, db):
         """Name of student must be provided."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
@@ -175,7 +175,7 @@ class TestAddStudent(object):
         response.mustcontain("field is required")
 
 
-    def test_requires_school_staff(self, client):
+    def test_requires_school_staff(self, client, db):
         """Adding a student requires ``school_staff`` attribute."""
         someone = factories.ProfileFactory.create(school_staff=False)
         response = client.get(
@@ -184,7 +184,7 @@ class TestAddStudent(object):
         response.mustcontain("don't have access"), response.html
 
 
-    def test_anonymous_user_doesnt_blow_up(self, client):
+    def test_anonymous_user_doesnt_blow_up(self, client, db):
         """Anonymous user on school-staff-required redirects gracefully."""
         response = client.get(reverse('add_student'), status=302).follow()
 
@@ -201,7 +201,7 @@ class TestEditStudent(GroupContextTests):
         return reverse('edit_student', kwargs={'student_id': student.id})
 
 
-    def test_edit_student(self, client):
+    def test_edit_student(self, client, db):
         """User can edit a student."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -216,7 +216,7 @@ class TestEditStudent(GroupContextTests):
             reverse('village', kwargs={'student_id': rel.student.id}))
 
 
-    def test_maintain_group_context_on_redirect(self, client):
+    def test_maintain_group_context_on_redirect(self, client, db):
         """The group context is passed on through the form submission."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -233,7 +233,7 @@ class TestEditStudent(GroupContextTests):
         assert response.context['group'] == group
 
 
-    def test_validation_error(self, client):
+    def test_validation_error(self, client, db):
         """Name of student must be provided."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -247,13 +247,13 @@ class TestEditStudent(GroupContextTests):
         response.mustcontain("field is required")
 
 
-    def test_requires_relationship(self, client):
+    def test_requires_relationship(self, client, db):
         """Editing a student requires elder relationship."""
         someone = factories.ProfileFactory.create(school_staff=True)
         client.get(self.url(), user=someone.user, status=404)
 
 
-    def test_requires_school_staff(self, client):
+    def test_requires_school_staff(self, client, db):
         """Editing a student requires ``school_staff`` attribute."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=False)
@@ -266,7 +266,7 @@ class TestEditStudent(GroupContextTests):
 
 class TestAddGroup(object):
     """Tests for add_group view."""
-    def test_add_group(self, client):
+    def test_add_group(self, client, db):
         """User can add a group."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
@@ -283,7 +283,7 @@ class TestAddGroup(object):
             )
 
 
-    def test_add_group_with_student(self, client):
+    def test_add_group_with_student(self, client, db):
         """User can add a group with a student."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -300,7 +300,7 @@ class TestAddGroup(object):
             reverse('group', kwargs={'group_id': group.id}))
 
 
-    def test_validation_error(self, client):
+    def test_validation_error(self, client, db):
         """Name of group must be provided."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         form = client.get(
@@ -310,7 +310,7 @@ class TestAddGroup(object):
         response.mustcontain("field is required")
 
 
-    def test_requires_school_staff(self, client):
+    def test_requires_school_staff(self, client, db):
         """Adding a group requires ``school_staff`` attribute."""
         someone = factories.ProfileFactory.create(school_staff=False)
         response = client.get(
@@ -329,7 +329,7 @@ class TestEditGroup(object):
         return reverse('edit_group', kwargs={'group_id': group.id})
 
 
-    def test_edit_group(self, client):
+    def test_edit_group(self, client, db):
         """User can edit a group."""
         group = factories.GroupFactory.create(owner__school_staff=True)
         form = client.get(
@@ -343,7 +343,7 @@ class TestEditGroup(object):
             reverse('group', kwargs={'group_id': group.id}))
 
 
-    def test_validation_error(self, client):
+    def test_validation_error(self, client, db):
         """Name of group must be provided."""
         group = factories.GroupFactory.create(
             owner__school_staff=True)
@@ -357,7 +357,7 @@ class TestEditGroup(object):
         response.mustcontain("field is required")
 
 
-    def test_requires_owner(self, client):
+    def test_requires_owner(self, client, db):
         """Editing a group requires being its owner."""
         group = factories.GroupFactory.create(
             owner__school_staff=True)
@@ -375,7 +375,7 @@ class TestInviteTeacher(GroupContextTests):
         return reverse('invite_teacher', kwargs=dict(student_id=student.id))
 
 
-    def test_invite_teacher(self, client):
+    def test_invite_teacher(self, client, db):
         """User can invite a teacher."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -396,7 +396,7 @@ class TestInviteTeacher(GroupContextTests):
         assert rel.student.relationships_to.count() == 2
 
 
-    def test_maintain_group_context_on_redirect(self, client):
+    def test_maintain_group_context_on_redirect(self, client, db):
         """The group context is passed on through the form submission."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -414,7 +414,7 @@ class TestInviteTeacher(GroupContextTests):
         assert response.context['group'] == group
 
 
-    def test_validation_error(self, client):
+    def test_validation_error(self, client, db):
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
@@ -426,7 +426,7 @@ class TestInviteTeacher(GroupContextTests):
         response.mustcontain("field is required")
 
 
-    def test_requires_school_staff(self, client):
+    def test_requires_school_staff(self, client, db):
         """Inviting teachers requires ``school_staff`` attribute."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=False)
@@ -436,21 +436,21 @@ class TestInviteTeacher(GroupContextTests):
         response.mustcontain("don't have access"), response.html
 
 
-    def test_ajax(self, client):
+    def test_ajax(self, client, db):
         """Can load the view via Ajax without error."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         client.get(self.url(rel.student), user=rel.elder.user, ajax=True)
 
 
-    def test_unauthed_ajax(self, client):
+    def test_unauthed_ajax(self, client, db):
         """An unauthenticated ajax request gets 403 not redirect."""
         rel = factories.RelationshipFactory.create()
         client.get(
             self.url(rel.student), user=rel.elder.user, ajax=True, status=403)
 
 
-    def test_requires_relationship(self, client):
+    def test_requires_relationship(self, client, db):
         """Only a teacher of that student can invite more."""
         elder = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
@@ -465,7 +465,7 @@ class TestInviteTeacherToGroup(object):
         return reverse('invite_teacher', kwargs=dict(group_id=group.id))
 
 
-    def test_invite_teacher_to_group(self, client):
+    def test_invite_teacher_to_group(self, client, db):
         """User can invite an teacher to a group."""
         group = factories.GroupFactory.create(owner__school_staff=True)
         response = client.get(self.url(group=group), user=group.owner.user)
@@ -481,7 +481,7 @@ class TestInviteTeacherToGroup(object):
         assert group.elders.count() == 1
 
 
-    def test_validation_error(self, client):
+    def test_validation_error(self, client, db):
         group = factories.GroupFactory.create(owner__school_staff=True)
         response = client.get(self.url(group), user=group.owner.user)
         form = response.forms['invite-teacher-form']
@@ -492,7 +492,7 @@ class TestInviteTeacherToGroup(object):
         response.mustcontain("field is required")
 
 
-    def test_requires_school_staff(self, client):
+    def test_requires_school_staff(self, client, db):
         """Inviting teachers requires ``school_staff`` attribute."""
         group = factories.GroupFactory.create(owner__school_staff=False)
         response = client.get(
@@ -501,20 +501,20 @@ class TestInviteTeacherToGroup(object):
         response.mustcontain("don't have access"), response.html
 
 
-    def test_ajax(self, client):
+    def test_ajax(self, client, db):
         """Can load the view via Ajax without error."""
         group = factories.GroupFactory.create(owner__school_staff=True)
         client.get(self.url(group), user=group.owner.user, ajax=True)
 
 
-    def test_unauthed_ajax(self, client):
+    def test_unauthed_ajax(self, client, db):
         """An unauthenticated ajax request gets 403 not redirect."""
         group = factories.GroupFactory.create()
         client.get(
             self.url(group), user=group.owner.user, ajax=True, status=403)
 
 
-    def test_requires_ownership(self, client):
+    def test_requires_ownership(self, client, db):
         """Only owner of the group can invite more."""
         elder = factories.ProfileFactory.create(school_staff=True)
         group = factories.GroupFactory.create()
@@ -529,7 +529,7 @@ class TestInviteFamily(GroupContextTests):
         return reverse('invite_family', kwargs=dict(student_id=student.id))
 
 
-    def test_invite_family(self, client):
+    def test_invite_family(self, client, db):
         """User can invite a family member."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -551,7 +551,7 @@ class TestInviteFamily(GroupContextTests):
         assert rel.student.relationships_to.count() == 2
 
 
-    def test_prepopulate_phone(self, client):
+    def test_prepopulate_phone(self, client, db):
         """Can prepopulate phone from query string."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -562,7 +562,7 @@ class TestInviteFamily(GroupContextTests):
         assert form['phone'].value == '321'
 
 
-    def test_maintain_group_context_on_redirect(self, client):
+    def test_maintain_group_context_on_redirect(self, client, db):
         """The group context is passed on through the form submission."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -580,7 +580,7 @@ class TestInviteFamily(GroupContextTests):
         assert response.context['group'] == group
 
 
-    def test_validation_error(self, client):
+    def test_validation_error(self, client, db):
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
@@ -592,7 +592,7 @@ class TestInviteFamily(GroupContextTests):
         response.mustcontain("field is required")
 
 
-    def test_requires_school_staff(self, client):
+    def test_requires_school_staff(self, client, db):
         """Inviting family requires ``school_staff`` attribute."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=False)
@@ -602,14 +602,14 @@ class TestInviteFamily(GroupContextTests):
         response.mustcontain("don't have access"), response.html
 
 
-    def test_unauthed_ajax(self, client):
+    def test_unauthed_ajax(self, client, db):
         """An unauthenticated ajax request gets 403 not redirect."""
         rel = factories.RelationshipFactory.create()
         client.get(
             self.url(rel.student), user=rel.elder.user, ajax=True, status=403)
 
 
-    def test_requires_relationship(self, client):
+    def test_requires_relationship(self, client, db):
         """Only a teacher of that student can invite family."""
         elder = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
@@ -626,7 +626,7 @@ class TestVillage(GroupContextTests):
         return reverse('village', kwargs=dict(student_id=student.id))
 
 
-    def test_instructions_only_if_never_posted(self, client):
+    def test_instructions_only_if_never_posted(self, client, db):
         "Posting instructions appear only if you've never posted."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -643,7 +643,7 @@ class TestVillage(GroupContextTests):
 
 
     @pytest.mark.parametrize('link_target', ['invite_teacher', 'invite_family'])
-    def test_link_only_if_staff(self, client, link_target):
+    def test_link_only_if_staff(self, client, link_target, db):
         """Link with given target is only present for school staff."""
         parent_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=False)
@@ -661,7 +661,7 @@ class TestVillage(GroupContextTests):
         assert len(parent_links) == 0
 
 
-    def test_requires_relationship(self, client):
+    def test_requires_relationship(self, client, db):
         """Only an elder of that student can view village."""
         elder = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
@@ -669,12 +669,12 @@ class TestVillage(GroupContextTests):
         client.get(self.url(student), user=elder.user, status=404)
 
 
-    def test_login_required_ajax(self, client):
+    def test_login_required_ajax(self, client, db):
         """An unauthenticated ajax request gets 403 not redirect."""
         client.get(self.url(), ajax=True, status=403)
 
 
-    def test_superuser_readonly_view(self, client):
+    def test_superuser_readonly_view(self, client, db):
         """Superuser can get read-only view of other villages."""
         sup = factories.ProfileFactory.create(
             user__is_superuser=True)
@@ -689,7 +689,7 @@ class TestAllStudents(object):
         return reverse('all_students')
 
 
-    def test_all_students(self, client):
+    def test_all_students(self, client, db):
         """Can view an all-students page."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         client.get(self.url(), user=teacher.user, status=200)
@@ -704,7 +704,7 @@ class TestGroupDetail(object):
         return reverse('group', kwargs=dict(group_id=group.id))
 
 
-    def test_group_detail(self, client):
+    def test_group_detail(self, client, db):
         """Can view a group detail page."""
         group = factories.GroupFactory.create(
             owner__school_staff=True)
@@ -712,7 +712,7 @@ class TestGroupDetail(object):
         client.get(self.url(group), user=group.owner.user, status=200)
 
 
-    def test_requires_ownership(self, client):
+    def test_requires_ownership(self, client, db):
         """Only the owner of a group can view it."""
         group = factories.GroupFactory.create()
         someone = factories.ProfileFactory.create(
@@ -733,7 +733,7 @@ class TestJsonPosts(object):
         return reverse('json_posts', kwargs=kwargs)
 
 
-    def test_superuser_readonly_view(self, client):
+    def test_superuser_readonly_view(self, client, db):
         """Superuser can get read-only view of other villages."""
         sup = factories.ProfileFactory.create(
             user__is_superuser=True)
@@ -742,7 +742,7 @@ class TestJsonPosts(object):
         client.get(self.url(post.student), user=sup.user)
 
 
-    def test_marks_posts_read(self, client):
+    def test_marks_posts_read(self, client, db):
         """Loading the backlog marks all posts in village as read."""
         rel = factories.RelationshipFactory.create()
         post = factories.PostFactory.create(student=rel.student)
@@ -759,7 +759,7 @@ class TestJsonPosts(object):
         assert not unread.is_unread(post2, rel.elder)
 
 
-    def test_requires_relationship(self, client):
+    def test_requires_relationship(self, client, db):
         """Only an elder of that student can get posts."""
         elder = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
@@ -767,7 +767,7 @@ class TestJsonPosts(object):
         client.get(self.url(student=student), user=elder.user, status=404)
 
 
-    def test_requires_group_owner(self, client):
+    def test_requires_group_owner(self, client, db):
         """Only the owner of a group can get its posts."""
         elder = factories.ProfileFactory.create(school_staff=True)
         group = factories.GroupFactory.create()
@@ -775,7 +775,7 @@ class TestJsonPosts(object):
         client.get(self.url(group=group), user=elder.user, status=404)
 
 
-    def test_create_post(self, no_csrf_client):
+    def test_create_post(self, no_csrf_client, db):
         """Creates a post and returns its JSON representation."""
         rel = factories.RelationshipFactory.create()
 
@@ -791,7 +791,7 @@ class TestJsonPosts(object):
         assert post['student_id'] == rel.student.id
 
 
-    def test_create_post_with_sms_notifications(self, no_csrf_client):
+    def test_create_post_with_sms_notifications(self, no_csrf_client, db):
         """Creates a post and sends SMSes."""
         rel = factories.RelationshipFactory.create(
             from_profile__name="Mr. Doe")
@@ -814,7 +814,7 @@ class TestJsonPosts(object):
         mock_send_sms.assert_called_with("+13216540987", "foo --Mr. Doe")
 
 
-    def test_create_group_post(self, no_csrf_client):
+    def test_create_group_post(self, no_csrf_client, db):
         """Creates a group post and returns its JSON representation."""
         group = factories.GroupFactory.create()
 
@@ -830,7 +830,7 @@ class TestJsonPosts(object):
         assert post['group_id'] == group.id
 
 
-    def test_create_all_students_post(self, no_csrf_client):
+    def test_create_all_students_post(self, no_csrf_client, db):
         """Creates an all-students post and returns its JSON representation."""
         elder = factories.ProfileFactory.create()
 
@@ -846,7 +846,7 @@ class TestJsonPosts(object):
         assert post['group_id'] == 'all%s' % elder.id
 
 
-    def test_create_post_with_sequence_id(self, no_csrf_client):
+    def test_create_post_with_sequence_id(self, no_csrf_client, db):
         """Can include a sequence_id with post, will get it back."""
         rel = factories.RelationshipFactory.create()
 
@@ -859,7 +859,7 @@ class TestJsonPosts(object):
         assert response.json['posts'][0]['author_sequence_id'] == '5'
 
 
-    def test_length_limit(self, no_csrf_client):
+    def test_length_limit(self, no_csrf_client, db):
         """Error if post is too long."""
         rel = factories.RelationshipFactory.create(
             from_profile__name='Fred')
@@ -878,7 +878,7 @@ class TestJsonPosts(object):
             }
 
 
-    def test_get_posts(self, client):
+    def test_get_posts(self, client, db):
         """Get backlog posts in chronological order."""
         rel = factories.RelationshipFactory.create(
             from_profile__name='Fred')
@@ -906,7 +906,7 @@ class TestJsonPosts(object):
         assert [p['unread'] for p in posts] == [False, True]
 
 
-    def test_get_group_posts(self, client):
+    def test_get_group_posts(self, client, db):
         """Get backlog group posts in chronological order."""
         group = factories.GroupFactory.create(
             owner__name='Fred')
@@ -932,7 +932,7 @@ class TestJsonPosts(object):
         assert [p['text'] for p in posts] == ['post2', 'post1']
 
 
-    def test_get_all_student_posts(self, client):
+    def test_get_all_student_posts(self, client, db):
         """Get backlog all-student posts in chronological order."""
         elder = factories.ProfileFactory.create()
 
@@ -957,7 +957,7 @@ class TestJsonPosts(object):
         assert [p['text'] for p in posts] == ['post2', 'post1']
 
 
-    def test_backlog_limit(self, client, monkeypatch):
+    def test_backlog_limit(self, client, monkeypatch, db):
         """There's a limit on number of posts returned."""
         rel = factories.RelationshipFactory.create(
             from_profile__name='Fred')
@@ -989,7 +989,7 @@ class TestMarkPostRead(object):
         return reverse('mark_post_read', kwargs={'post_id': post.id})
 
 
-    def test_mark_read(self, no_csrf_client):
+    def test_mark_read(self, no_csrf_client, db):
         """Can mark a post read with POST to dedicated URI."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -1020,7 +1020,7 @@ class TestEditElder(object):
         return reverse('edit_elder', kwargs=kwargs)
 
 
-    def test_success(self, client):
+    def test_success(self, client, db):
         """School staff can edit profile of non school staff."""
         rel = factories.RelationshipFactory(
             from_profile__name='Old Name', from_profile__role='Old Role')
@@ -1041,7 +1041,7 @@ class TestEditElder(object):
         assert elder.role == 'New Role'
 
 
-    def test_error(self, client):
+    def test_error(self, client, db):
         """Test form redisplay with errors."""
         rel = factories.RelationshipFactory()
         editor_rel = factories.RelationshipFactory(
@@ -1057,7 +1057,7 @@ class TestEditElder(object):
         res.mustcontain('field is required')
 
 
-    def test_in_group(self, client):
+    def test_in_group(self, client, db):
         """Can edit an elder from a group context."""
         elder = factories.ProfileFactory.create()
         editor = factories.ProfileFactory.create(
@@ -1078,7 +1078,7 @@ class TestEditElder(object):
         assert elder.role == 'New Role'
 
 
-    def test_in_all_students_group(self, client):
+    def test_in_all_students_group(self, client, db):
         """Can edit an elder from the all-students group."""
         elder = factories.ProfileFactory.create()
         editor = factories.ProfileFactory.create(
@@ -1095,7 +1095,7 @@ class TestEditElder(object):
         assert elder.role == 'New Role'
 
 
-    def test_school_staff_required(self, client):
+    def test_school_staff_required(self, client, db):
         """Only school staff can access."""
         rel = factories.RelationshipFactory(
             from_profile__name='Old Name', from_profile__role='Old Role')
@@ -1109,7 +1109,7 @@ class TestEditElder(object):
         res.mustcontain("don't have access")
 
 
-    def test_cannot_edit_school_staff(self, client):
+    def test_cannot_edit_school_staff(self, client, db):
         """Cannot edit other school staff."""
         rel = factories.RelationshipFactory(
             from_profile__school_staff=True)
@@ -1120,7 +1120,7 @@ class TestEditElder(object):
         client.get(url, user=editor_rel.elder.user, status=404)
 
 
-    def test_requires_relationship(self, client):
+    def test_requires_relationship(self, client, db):
         """Editing user must have relationship with student."""
         rel = factories.RelationshipFactory()
         editor = factories.ProfileFactory(school_staff=True)
@@ -1131,7 +1131,7 @@ class TestEditElder(object):
 
 
 class TestPdfParentInstructions(object):
-    def test_basic(self, client):
+    def test_basic(self, client, db):
         """Smoke test that we get a PDF response back and nothing breaks."""
         elder = factories.ProfileFactory.create(
             school_staff=True, code='ABCDEF')
@@ -1143,7 +1143,7 @@ class TestPdfParentInstructions(object):
         assert resp.headers['Content-Type'] == 'application/pdf'
 
 
-    def test_group(self, client):
+    def test_group(self, client, db):
         """Can get a PDF for a group code."""
         group = factories.GroupFactory.create(owner__school_staff=True)
         url = reverse(
@@ -1157,7 +1157,7 @@ class TestPdfParentInstructions(object):
         assert resp.headers['Content-Type'] == 'application/pdf'
 
 
-    def test_must_own_group(self, client):
+    def test_must_own_group(self, client, db):
         """Can't get a PDF for a group that isn't yours."""
         group = factories.GroupFactory.create()
         someone = factories.ProfileFactory(school_staff=True)
@@ -1168,7 +1168,7 @@ class TestPdfParentInstructions(object):
         client.get(url, user=someone.user, status=404)
 
 
-    def test_no_code(self, client):
+    def test_no_code(self, client, db):
         """Doesn't blow up if requesting user has no code."""
         elder = factories.ProfileFactory.create(school_staff=True)
         url = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})

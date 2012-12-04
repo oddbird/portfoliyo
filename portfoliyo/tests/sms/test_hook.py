@@ -8,7 +8,7 @@ from portfoliyo.sms import hook
 from portfoliyo.tests import factories, utils
 
 
-def test_create_post():
+def test_create_post(db):
     """Creates Post (and no reply) if one associated student."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(phone=phone)
@@ -34,7 +34,7 @@ def test_easter_egg():
 
 
 
-def test_activate_user():
+def test_activate_user(db):
     """Receiving SMS from inactive user activates and gives them more info."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
@@ -55,7 +55,7 @@ def test_activate_user():
 
 
 
-def test_decline():
+def test_decline(db):
     """If an inactive user replies with 'stop', they are marked declined."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
@@ -76,7 +76,7 @@ def test_decline():
 
 
 
-def test_active_user_decline():
+def test_active_user_decline(db):
     """If an active user replies with 'stop', they are marked declined."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
@@ -97,7 +97,7 @@ def test_active_user_decline():
 
 
 
-def test_unknown_profile():
+def test_unknown_profile(db):
     """Reply if profile is unknown."""
     reply = hook.receive_sms('123', 'foo')
 
@@ -107,7 +107,7 @@ def test_unknown_profile():
         )
 
 
-def test_multiple_students():
+def test_multiple_students(db):
     """If multiple associated students, post goes in both villages."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(phone=phone)
@@ -122,7 +122,7 @@ def test_multiple_students():
     assert reply is None
 
 
-def test_no_students():
+def test_no_students(db):
     """Reply if no associated students."""
     phone = '+13216430987'
     factories.ProfileFactory.create(phone=phone)
@@ -135,7 +135,7 @@ def test_no_students():
         )
 
 
-def test_code_signup():
+def test_code_signup(db):
     """Parent can create account by texting teacher code."""
     phone = '+13216430987'
     teacher = factories.ProfileFactory.create(
@@ -158,7 +158,7 @@ def test_code_signup():
     assert not mock_create.call_count
 
 
-def test_group_code_signup():
+def test_group_code_signup(db):
     """Parent can create account by texting group code."""
     phone = '+13216430987'
     group = factories.GroupFactory.create(
@@ -182,7 +182,7 @@ def test_group_code_signup():
     assert not mock_create.call_count
 
 
-def test_code_signup_student_name():
+def test_code_signup_student_name(db):
     """Parent can continue code signup by providing student name."""
     phone = '+13216430987'
     teacher = factories.ProfileFactory.create(
@@ -227,7 +227,7 @@ def test_code_signup_student_name():
 
 
 
-def test_group_code_signup_student_name():
+def test_group_code_signup_student_name(db):
     """Parent can continue group code signup by providing student name."""
     phone = '+13216430987'
     group = factories.GroupFactory.create(
@@ -273,7 +273,7 @@ def test_group_code_signup_student_name():
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
-def test_code_signup_student_name_dupe_detection():
+def test_code_signup_student_name_dupe_detection(db):
     """Don't create duplicate students in a teacher's class."""
     phone = '+13216430987'
     rel = factories.RelationshipFactory.create(
@@ -302,7 +302,7 @@ def test_code_signup_student_name_dupe_detection():
     assert signup.student == rel.student
 
 
-def test_code_signup_role():
+def test_code_signup_role(db):
     """Parent can continue code signup by providing their role."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
@@ -346,7 +346,7 @@ def test_code_signup_role():
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
-def test_code_signup_name():
+def test_code_signup_name(db):
     """Parent can finish signup by texting their name."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
@@ -390,7 +390,7 @@ def test_code_signup_name():
     assert mail.outbox[0].to == ['teacher@example.com']
 
 
-def test_code_signup_name_no_notification():
+def test_code_signup_name_no_notification(db):
     """Finish signup sends no notification if teacher doesn't want them."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
@@ -420,7 +420,7 @@ def test_code_signup_name_no_notification():
     assert not len(mail.outbox)
 
 
-def test_subsequent_signup():
+def test_subsequent_signup(db):
     """A parent can send a second code after completing first signup."""
     phone = '+13216430987'
     signup = factories.TextSignupFactory.create(
@@ -447,7 +447,7 @@ def test_subsequent_signup():
     assert signup.student in other_teacher.students
 
 
-def test_subsequent_group_signup():
+def test_subsequent_group_signup(db):
     """A parent can send a group code after completing first signup."""
     phone = '+13216430987'
     signup = factories.TextSignupFactory.create(
@@ -475,7 +475,7 @@ def test_subsequent_group_signup():
     assert group.students.filter(pk=signup.student.pk).exists()
 
 
-def test_subsequent_signup_when_first_needs_student_name():
+def test_subsequent_signup_when_first_needs_student_name(db):
     """If first signup needs student name, second takes over there."""
     phone = '+13216430987'
     signup = factories.TextSignupFactory.create(
@@ -500,7 +500,7 @@ def test_subsequent_signup_when_first_needs_student_name():
     assert new_signup.group is None
 
 
-def test_subsequent_group_signup_when_first_needs_student_name():
+def test_subsequent_group_signup_when_first_needs_student_name(db):
     """If first signup needs student name, second takes over there."""
     phone = '+13216430987'
     signup = factories.TextSignupFactory.create(
@@ -525,7 +525,7 @@ def test_subsequent_group_signup_when_first_needs_student_name():
     assert new_signup.group == group
 
 
-def test_subsequent_signup_when_first_needs_role():
+def test_subsequent_signup_when_first_needs_role(db):
     """If first signup needs role, second takes over where it left off."""
     phone = '+13216430987'
     signup = factories.TextSignupFactory.create(
@@ -555,7 +555,7 @@ def test_subsequent_signup_when_first_needs_role():
     assert new_signup.group is None
 
 
-def test_subsequent_signup_when_first_needs_name():
+def test_subsequent_signup_when_first_needs_name(db):
     """If first signup needs name, second takes over where it left off."""
     phone = '+13216430987'
     signup = factories.TextSignupFactory.create(
@@ -585,7 +585,7 @@ def test_subsequent_signup_when_first_needs_name():
     assert new_signup.group is None
 
 
-def test_multiple_active_signups_logs_warning():
+def test_multiple_active_signups_logs_warning(db):
     """If a user has multiple active signups, a warning is logged."""
     phone = '+13216430987'
     signup = factories.TextSignupFactory.create(family__phone=phone)
@@ -598,7 +598,7 @@ def test_multiple_active_signups_logs_warning():
         "User %s has multiple active signups!" % phone)
 
 
-def test_bogus_signup_state_no_blowup():
+def test_bogus_signup_state_no_blowup(db):
     """An unknown signup state acts like no in-process signup."""
     phone = '+13216430987'
     factories.TextSignupFactory.create(family__phone=phone, state='foo')
@@ -607,7 +607,7 @@ def test_bogus_signup_state_no_blowup():
 
 
 class TestGetTeacherAndGroup(object):
-    def test_basic(self):
+    def test_basic(self, db):
         """Gets teacher if text starts with teacher code."""
         t = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
 
@@ -618,7 +618,8 @@ class TestGetTeacherAndGroup(object):
         assert f("ABCDEF. some name") == (t, None)
         assert f("ABCDEF\nsome sig") == (t, None)
 
-    def test_group_code(self):
+
+    def test_group_code(self, db):
         """Gets teacher and group if text starts with group code."""
         g = factories.GroupFactory.create(
             code='ABCDEFG', owner__code='ABCDEF')
@@ -628,3 +629,8 @@ class TestGetTeacherAndGroup(object):
         assert f("ACDC foo") == (None, None)
         assert f("ABCDEFG My Name") == (g.owner, g)
         assert f("ABCDEF ") == (g.owner, None)
+
+
+    def test_empty(self):
+        """Returns None on empty text, doesn't barf."""
+        assert hook.get_teacher_and_group('') == (None, None)

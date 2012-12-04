@@ -33,7 +33,7 @@ def test_sms():
 
 
 
-def test_post_dict():
+def test_post_dict(db):
     """post_dict returns dictionary of post data."""
     rel = factories.RelationshipFactory.create(
         from_profile__name='The Teacher', description='desc')
@@ -65,8 +65,8 @@ def test_post_dict():
 
 def test_post_dict_no_author():
     """Special handling for author-less (automated) posts."""
-    student = factories.ProfileFactory.create()
-    post = factories.PostFactory.create(author=None, student=student)
+    student = factories.ProfileFactory.build()
+    post = factories.PostFactory.build(author=None, student=student)
 
     d = models.post_dict(post)
 
@@ -76,7 +76,7 @@ def test_post_dict_no_author():
 
 
 
-def test_post_dict_no_relationship():
+def test_post_dict_no_relationship(db):
     """If relationship is gone, uses author's role instead."""
     rel = factories.RelationshipFactory.create(
         from_profile__name='The Teacher',
@@ -93,7 +93,7 @@ def test_post_dict_no_relationship():
 
 
 
-def test_get_absolute_url():
+def test_get_absolute_url(db):
     """A Post's absolute-url is its village URL. (For admin view-on-site.)"""
     post = factories.PostFactory.create()
 
@@ -104,14 +104,15 @@ def test_get_absolute_url():
 
 
 class TestPostCreate(object):
-    @mock.patch('portfoliyo.model.village.models.timezone.now')
-    def test_creates_post(self, mock_now):
+    def test_creates_post(self, db):
         """Actually creates and returns a Post object."""
-        mock_now.return_value = datetime.datetime(
-            2012, 9, 17, 6, 25, tzinfo=utc)
         rel = factories.RelationshipFactory.create()
 
-        post = models.Post.create(rel.elder, rel.student, 'Foo\n')
+        target = 'portfoliyo.model.village.models.timezone.now'
+        with mock.patch(target) as mock_now:
+            mock_now.return_value = datetime.datetime(
+                2012, 9, 17, 6, 25, tzinfo=utc)
+            post = models.Post.create(rel.elder, rel.student, 'Foo\n')
 
         assert post.author == rel.elder
         assert post.student == rel.student
@@ -123,7 +124,7 @@ class TestPostCreate(object):
         assert post.meta == {'sms': [], 'highlights': []}
 
 
-    def test_highlights(self):
+    def test_highlights(self, db):
         """Highlight info is stored in meta['highlights']."""
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(
@@ -147,7 +148,7 @@ class TestPostCreate(object):
             ]
 
 
-    def test_new_post_unread_for_all_web_users_in_village(self):
+    def test_new_post_unread_for_all_web_users_in_village(self, db):
         """New post is marked unread for all non-author web users in village."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
@@ -164,7 +165,7 @@ class TestPostCreate(object):
         assert not unread.is_unread(post, rel3.elder)
 
 
-    def test_creates_post_from_sms(self):
+    def test_creates_post_from_sms(self, db):
         """Post object can have from_sms set to True."""
         rel = factories.RelationshipFactory.create()
 
@@ -175,7 +176,7 @@ class TestPostCreate(object):
         assert post.to_sms == False
 
 
-    def test_sends_email_notification(self):
+    def test_sends_email_notification(self, db):
         """Sends email notifications to those who want them."""
         # Will author the post, thus no email notification
         rel = factories.RelationshipFactory.create(
@@ -211,7 +212,7 @@ class TestPostCreate(object):
         assert [m.to for m in mail.outbox] == [[rel2.elder.user.email]]
 
 
-    def test_no_email_notification_for_system_posts(self):
+    def test_no_email_notification_for_system_posts(self, db):
         """No email notifications for system-generated posts."""
         # Would otherwise get an email notification
         rel = factories.RelationshipFactory.create(
@@ -224,7 +225,7 @@ class TestPostCreate(object):
         assert len(mail.outbox) == 0
 
 
-    def test_create_post_without_email_notification(self):
+    def test_create_post_without_email_notification(self, db):
         """Can pass a flag to avoid email notifications."""
         # Would otherwise get an email notification
         rel = factories.RelationshipFactory.create(
@@ -240,13 +241,14 @@ class TestPostCreate(object):
         assert len(mail.outbox) == 0
 
 
-    @mock.patch('portfoliyo.model.village.models.trigger')
-    def test_triggers_pusher_event(self, mock_trigger):
+    def test_triggers_pusher_event(self, db):
         """Triggers a pusher event."""
         rel = factories.RelationshipFactory.create()
 
-        post = models.Post.create(
-            rel.elder, rel.student, 'Foo\n', sequence_id='33')
+        target = 'portfoliyo.model.village.models.trigger'
+        with mock.patch(target) as mock_trigger:
+            post = models.Post.create(
+                rel.elder, rel.student, 'Foo\n', sequence_id='33')
 
         args = mock_trigger.call_args[0]
         post_data = args[2]['posts'][0]
@@ -260,8 +262,7 @@ class TestPostCreate(object):
             'mark_post_read', kwargs={'post_id': post.id})
 
 
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_notifies_selected_mobile_users(self, mock_send_sms):
+    def test_notifies_selected_mobile_users(self, db):
         """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
@@ -275,12 +276,14 @@ class TestPostCreate(object):
             description="Father",
             )
 
-        post = models.Post.create(
-            rel1.elder,
-            rel1.student,
-            'Hey dad',
-            sms_profile_ids=[rel2.elder.id],
-            )
+        target = 'portfoliyo.model.village.models.sms.send'
+        with mock.patch(target) as mock_send_sms:
+            post = models.Post.create(
+                rel1.elder,
+                rel1.student,
+                'Hey dad',
+                sms_profile_ids=[rel2.elder.id],
+                )
 
         mock_send_sms.assert_called_with(
             "+13216540987", "Hey dad --John Doe")
@@ -295,8 +298,7 @@ class TestPostCreate(object):
             ]
 
 
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_sending_sms_flips_to_done(self, mock_send_sms):
+    def test_sending_sms_flips_to_done(self, db):
         """If a user in signup process gets a text, we flip them to done."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
@@ -314,20 +316,21 @@ class TestPostCreate(object):
             state='kidname',
             )
 
-        models.Post.create(
-            rel1.elder,
-            rel1.student,
-            'Hey dad',
-            sms_profile_ids=[rel2.elder.id],
-            )
+        target = 'portfoliyo.model.village.models.sms.send'
+        with mock.patch(target) as mock_send_sms:
+            models.Post.create(
+                rel1.elder,
+                rel1.student,
+                'Hey dad',
+                sms_profile_ids=[rel2.elder.id],
+                )
 
         mock_send_sms.assert_called_with(
             "+13216540987", "Hey dad --John Doe")
         assert utils.refresh(signup).state == 'done'
 
 
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_only_notifies_active_mobile_users(self, mock_send_sms):
+    def test_only_notifies_active_mobile_users(self, db):
         """Sends text only to active users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None,
@@ -338,20 +341,21 @@ class TestPostCreate(object):
             from_profile__user__is_active=False,
             )
 
-        post = models.Post.create(
-            rel1.elder,
-            rel1.student,
-            'Hey dad',
-            sms_profile_ids=[rel2.elder.id],
-            )
+        target = 'portfoliyo.model.village.models.sms.send'
+        with mock.patch(target) as mock_send_sms:
+            post = models.Post.create(
+                rel1.elder,
+                rel1.student,
+                'Hey dad',
+                sms_profile_ids=[rel2.elder.id],
+                )
 
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False
         assert post.meta['sms'] == []
 
 
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_only_notifies_mobile_users(self, mock_send_sms):
+    def test_only_notifies_mobile_users(self, db):
         """Sends text only to users with phone numbers."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None)
@@ -361,20 +365,21 @@ class TestPostCreate(object):
             from_profile__user__is_active=True,
             )
 
-        post = models.Post.create(
-            rel1.elder,
-            rel1.student,
-            'Hey dad',
-            sms_profile_ids=[rel2.elder.id],
-            )
+        target = 'portfoliyo.model.village.models.sms.send'
+        with mock.patch(target) as mock_send_sms:
+            post = models.Post.create(
+                rel1.elder,
+                rel1.student,
+                'Hey dad',
+                sms_profile_ids=[rel2.elder.id],
+                )
 
         assert mock_send_sms.call_count == 0
         assert post.to_sms == False
         assert post.meta['sms'] == []
 
 
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_can_create_autoreply_post(self, mock_send_sms):
+    def test_can_create_autoreply_post(self, db):
         """Auto-reply sends no notification to that phone."""
         rel = factories.RelationshipFactory.create(
             from_profile__phone="+13216540987",
@@ -382,12 +387,14 @@ class TestPostCreate(object):
             description="Father",
             )
 
-        post = models.Post.create(
-            None,
-            rel.student,
-            'Thank you!',
-            in_reply_to="+13216540987",
-            )
+        target = 'portfoliyo.model.village.models.sms.send'
+        with mock.patch(target) as mock_send_sms:
+            post = models.Post.create(
+                None,
+                rel.student,
+                'Thank you!',
+                in_reply_to="+13216540987",
+                )
 
         assert mock_send_sms.call_count == 0
         assert post.original_text == "Thank you!"
@@ -398,7 +405,7 @@ class TestPostCreate(object):
 
 
 class TestBulkPost(object):
-    def test_create(self):
+    def test_create(self, db):
         """Creates a bulk post and posts in individual villages."""
         rel = factories.RelationshipFactory()
         rel2 = factories.RelationshipFactory(from_profile=rel.elder)
@@ -414,12 +421,13 @@ class TestBulkPost(object):
         assert set([rel.student, rel2.student]) == exp
 
 
-    @mock.patch('portfoliyo.model.village.models.trigger')
-    def test_triggers_pusher_event(self, mock_trigger):
+    def test_triggers_pusher_event(self, db):
         """Triggers pusher events for both self and sub-posts."""
         rel = factories.RelationshipFactory.create()
 
-        models.BulkPost.create(rel.elder, None, 'Foo\n', sequence_id='33')
+        target = 'portfoliyo.model.village.models.trigger'
+        with mock.patch(target) as mock_trigger:
+            models.BulkPost.create(rel.elder, None, 'Foo\n', sequence_id='33')
 
         student_args = mock_trigger.call_args_list[0][0]
         student_post_data = student_args[2]['posts'][0]
@@ -437,7 +445,7 @@ class TestBulkPost(object):
         assert group_post_data['group_id'] == 'all%s' % rel.elder.id
 
 
-    def test_new_post_unread_for_all_web_users_in_village_except_author(self):
+    def test_new_post_unread_for_all_web_users_in_village_but_author(self, db):
         """Sub-post marked unread for all web users in village except author."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
@@ -458,11 +466,11 @@ class TestBulkPost(object):
         assert not unread.is_unread(sub, rel3.elder)
 
 
-    def test_all_students(self):
+    def test_all_students(self, db):
         """group=None sends to all author's students."""
-        rel = factories.RelationshipFactory()
-        rel2 = factories.RelationshipFactory(from_profile=rel.elder)
-        rel3 = factories.RelationshipFactory(from_profile=rel.elder)
+        rel = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
+        rel3 = factories.RelationshipFactory.create(from_profile=rel.elder)
         post = models.BulkPost.create(rel.elder, None, "Hallo")
 
         exp = set([
@@ -478,7 +486,7 @@ class TestBulkPost(object):
             models.BulkPost.create(None, None, '')
 
 
-    def test_only_one_email_notification(self):
+    def test_only_one_email_notification(self, db):
         """A bulk post sends only one email notification to a given user."""
         author_rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(
@@ -499,8 +507,7 @@ class TestBulkPost(object):
         assert mail.outbox[0].to == ['foo@example.com']
 
 
-    @mock.patch('portfoliyo.model.village.models.sms.send')
-    def test_notifies_selected_mobile_users(self, mock_send_sms):
+    def test_notifies_selected_mobile_users(self, db):
         """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
@@ -516,8 +523,10 @@ class TestBulkPost(object):
         group = factories.GroupFactory.create()
         group.students.add(rel1.student)
 
-        post = models.BulkPost.create(
-            rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
+        target = 'portfoliyo.model.village.models.sms.send'
+        with mock.patch(target) as mock_send_sms:
+            post = models.BulkPost.create(
+                rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
 
         mock_send_sms.assert_called_with(
             "+13216540987", "Hey dad --John Doe")
@@ -559,7 +568,7 @@ class TestProcessText(object):
         assert self.call_simple('foo\nbar') == 'foo<br>bar'
 
 
-    def test_full(self):
+    def test_full(self, db):
         """End-to-end test with highlights, newlines, HTML."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
@@ -696,7 +705,7 @@ class TestReplaceHighlights(object):
 
 
 
-def test_get_highlight_names():
+def test_get_highlight_names(db):
     """Returns dict mapping highlightable names to elders-in-context."""
     rel1 = factories.RelationshipFactory.create(
         from_profile__name="John Doe",

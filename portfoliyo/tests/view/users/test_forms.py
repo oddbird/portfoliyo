@@ -15,7 +15,7 @@ class TestRegistrationForm(object):
         }
 
 
-    def test_unmatched_passwords(self):
+    def test_unmatched_passwords(self, db):
         """Registration form not valid if passwords don't match."""
         data = self.base_data.copy()
         data['password'] = 'other-sekrit'
@@ -25,7 +25,7 @@ class TestRegistrationForm(object):
         assert form.errors['__all__'] == [u"The passwords didn't match."]
 
 
-    def test_dupe_email(self):
+    def test_dupe_email(self, db):
         """Registration form not valid if email already in use."""
         factories.UserFactory.create(email='some@example.com')
         form = forms.RegistrationForm(self.base_data.copy())
@@ -37,7 +37,7 @@ class TestRegistrationForm(object):
             ]
 
 
-    def test_add_school(self):
+    def test_add_school(self, db):
         """If addschool is True, create a new school and use it."""
         data = self.base_data.copy()
         data['addschool'] = '1'
@@ -53,7 +53,7 @@ class TestRegistrationForm(object):
         assert school.id is None
 
 
-    def test_add_school_validation_error(self):
+    def test_add_school_validation_error(self, db):
         """If addschool is True but fields not complete, validation error."""
         data = self.base_data.copy()
         data['addschool'] = 'True'
@@ -67,7 +67,7 @@ class TestRegistrationForm(object):
             u"This field is required."]
 
 
-    def test_no_addschool_validation_error_if_addschool_false(self):
+    def test_no_addschool_validation_error_if_addschool_false(self, db):
         """If addschool is False, addschool form not bound."""
         data = self.base_data.copy()
         data['addschool'] = 'False'
@@ -78,7 +78,7 @@ class TestRegistrationForm(object):
         assert not form.addschool_form.is_bound
 
 
-    def test_no_school(self):
+    def test_no_school(self, db):
         """If no school selected, create one."""
         form = forms.RegistrationForm(self.base_data.copy())
 
@@ -92,7 +92,7 @@ class TestRegistrationForm(object):
 
 
 class TestEditProfileForm(object):
-    def test_update_relationships(self):
+    def test_update_relationships(self, db):
         """
         Updating role updates matching relationship descriptions to empty.
 

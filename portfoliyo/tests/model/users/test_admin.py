@@ -30,7 +30,7 @@ class TestProfileAdmin(object):
 
 
 class TestUserChangeForm(object):
-    def test_no_empty_string_email(self):
+    def test_no_empty_string_email(self, db):
         form = admin.UserChangeForm(
             {
                 'email': '',
