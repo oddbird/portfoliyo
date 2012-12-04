@@ -305,20 +305,22 @@ def interpolate_teacher_names(msg, parent):
         )
 
     if len(students) > 2:
-        student_possessive = u"your students' teachers"
+        student_possessive = u"your students'"
     elif len(students) == 2:
-        student_possessive = u"%s & %s's teachers" % (
+        student_possessive = u"%s & %s's" % (
             students[0], students[1])
     else:
-        student_possessive = u"%s's teachers" % (students[0])
+        student_possessive = u"%s's" % (students[0])
 
     # Set up some wording options in order of preference
     options = []
+    student_possessive_full = u"%s teachers" % student_possessive
     if len(teachers) == 2:
         options.append(u"%s & %s" % (teachers[0], teachers[1]))
     elif len(teachers) == 1:
         options.append(unicode(teachers[0]))
-    options.append(student_possessive)
+        student_possessive_full = u"%s teacher" % student_possessive
+    options.append(student_possessive_full)
 
     # Take the first option that results in a message shorter than 160
     # characters. If all options are too long, revert to the first one.

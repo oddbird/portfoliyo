@@ -800,6 +800,21 @@ class TestInterpolateTeacherNames(object):
         assert res == prefix + u"Frankie's teachers"
 
 
+    def test_one_teacher_one_student_too_long(self, db):
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Doddkerstein-Schnitzelberger",
+            from_profile__school_staff=True,
+            )
+        prefix = (u'a' * 140)
+        res = hook.interpolate_teacher_names(
+            prefix + '%s', parent_rel.elder)
+
+        assert res == prefix + u"Frankie's teacher"
+
+
     def test_everything_too_long(self, db):
         """If all options are too long, take the best regardless of length."""
         parent_rel = factories.RelationshipFactory.create(
