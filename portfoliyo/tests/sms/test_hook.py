@@ -49,7 +49,7 @@ def test_activate_user(db):
     mock_create.assert_any_call(
         None, rel.student, reply, in_reply_to=phone, email_notifications=False)
     assert reply == (
-        "Thank you! You can text this number any time "
+        "Thank you! You can text this number "
         "to talk with Jimmy Doe's teachers."
         )
 
@@ -373,7 +373,7 @@ def test_code_signup_name(db):
         reply = hook.receive_sms(phone, "John Doe")
 
     assert reply == (
-        "All done, thank you! You can text this number any time "
+        "All done, thank you! You can text this number "
         "to talk with Teacher Jane."
         )
     parent = model.Profile.objects.get(phone=phone)

@@ -88,7 +88,7 @@ def receive_sms(source, body):
             source,
             students,
             interpolate_teacher_names(
-                "Thank you! You can text this number any time "
+                "Thank you! You can text this number "
                 "to talk with %s.",
                 profile,
                 )
@@ -252,7 +252,7 @@ def handle_name_update(signup, name):
         parent.phone,
         parent.students,
         interpolate_teacher_names(
-            "All done, thank you! You can text this number any time "
+            "All done, thank you! You can text this number "
             "to talk with %s.",
             parent,
             )
