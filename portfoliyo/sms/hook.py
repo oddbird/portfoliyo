@@ -87,8 +87,11 @@ def receive_sms(source, body):
         return reply(
             source,
             students,
-            "Thank you! You can text this number any time "
-            "to talk with %s's teachers." % students[0].name
+            interpolate_teacher_names(
+                "Thank you! You can text this number any time "
+                "to talk with %s.",
+                profile,
+                )
         )
 
 
@@ -248,8 +251,11 @@ def handle_name_update(signup, name):
     return reply(
         parent.phone,
         parent.students,
-        "All done, thank you! You can text this number any time "
-        "to talk with %s's teachers." % rel.student.name
+        interpolate_teacher_names(
+            "All done, thank you! You can text this number any time "
+            "to talk with %s.",
+            parent,
+            )
         )
 
 
@@ -285,10 +291,45 @@ def interpolate_teacher_names(msg, parent):
     """
     Interpolate teachers of parent's students into msg's %s placeholder.
 
-    Avoids making the total message length over 160; falls back to "student's
-    teachers" with arbitrary student if necessary.
+    Avoids making the total message length over 160 if possible.
 
     """
+    students = parent.students
+    if not students:
+        return msg % u"teachers"
+    teachers = list(
+        model.Profile.objects.filter(
+            school_staff=True,
+            relationships_from__to_profile__in=students
+            ).distinct()
+        )
+
+    if len(students) > 2:
+        student_possessive = u"your students' teachers"
+    elif len(students) == 2:
+        student_possessive = u"%s & %s's teachers" % (
+            students[0], students[1])
+    else:
+        student_possessive = u"%s's teachers" % (students[0])
+
+    # Set up some wording options in order of preference
+    options = []
+    if len(teachers) == 2:
+        options.append(u"%s & %s" % (teachers[0], teachers[1]))
+    elif len(teachers) == 1:
+        options.append(unicode(teachers[0]))
+    options.append(student_possessive)
+
+    # Take the first option that results in a message shorter than 160
+    # characters. If all options are too long, revert to the first one.
+    first = None
+    for o in options:
+        interpolated = msg % o
+        if first is None:
+            first = interpolated
+        if len(interpolated) <= 160:
+            return interpolated
+    return first
 
 
 
