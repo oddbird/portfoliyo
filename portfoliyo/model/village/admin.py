@@ -52,6 +52,7 @@ class PostAdmin(admin.ModelAdmin):
         'linked_author',
         'school',
         'linked_student',
+        'teacher_email',
         'linked_timestamp',
         ]
     list_filter=[AuthorFilter, StudentFilter, SchoolFilter]
@@ -59,7 +60,7 @@ class PostAdmin(admin.ModelAdmin):
 
     def queryset(self, request):
         return super(PostAdmin, self).queryset(request).select_related(
-            'author', 'student', 'student__school')
+            'author', 'student', 'student__school', 'student__invited_by__user')
 
 
     def linked_author(self, post):
@@ -93,6 +94,13 @@ class PostAdmin(admin.ModelAdmin):
             post.student.school_id, post.student.school)
     school.allow_tags = True
     school.admin_order_field = 'student_school'
+
+
+    def teacher_email(self, post):
+        teacher = post.student.invited_by
+        return teacher.user.email if teacher else None
+    teacher_email.short_description = 'teacher email'
+    teacher_email.admin_order_field = 'student__invited_by'
 
 
 
