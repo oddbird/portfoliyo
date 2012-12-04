@@ -10,7 +10,7 @@ from portfoliyo.tests import factories, utils
 
 
 class TestEditElderForm(object):
-    def test_edit_custom_relationship_description(self):
+    def test_edit_custom_relationship_description(self, db):
         """
         Editing elder changes role in that village, profile only if matched.
 
@@ -20,7 +20,7 @@ class TestEditElderForm(object):
         it was the same as their role in that village.
 
         """
-        rel = factories.RelationshipFactory(
+        rel = factories.RelationshipFactory.create(
             description="gifted and talented teacher",
             from_profile__role="math teacher",
             )
@@ -39,9 +39,9 @@ class TestEditElderForm(object):
         assert utils.refresh(rel).description == 'science teacher'
 
 
-    def test_empty_relationship_description_left_alone(self):
+    def test_empty_relationship_description_left_alone(self, db):
         """Empty relationship description left empty."""
-        rel = factories.RelationshipFactory(
+        rel = factories.RelationshipFactory.create(
             description="",
             from_profile__role="math teacher",
             )
@@ -60,7 +60,7 @@ class TestEditElderForm(object):
         assert utils.refresh(rel).description == ''
 
 
-    def test_update_phone_sends_invite_sms(self, sms):
+    def test_update_phone_sends_invite_sms(self, sms, db):
         """Changing elder's phone number sends invite SMS to that number."""
         teacher_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True,
@@ -96,7 +96,7 @@ class TestEditElderForm(object):
             )
 
 
-    def test_bad_phone(self):
+    def test_bad_phone(self, db):
         """Bad phone number results in validation error."""
         elder = factories.ProfileFactory.create()
 
@@ -113,7 +113,7 @@ class TestEditElderForm(object):
             u"Please supply a valid US or Canada mobile number."]
 
 
-    def test_dupe_phone(self):
+    def test_dupe_phone(self, db):
         """Dupe phone number results in validation error."""
         factories.ProfileFactory.create(phone='+13216540987')
         elder = factories.ProfileFactory.create()
@@ -131,7 +131,7 @@ class TestEditElderForm(object):
             u"A user with this phone number already exists."]
 
 
-    def test_dupe_phone_in_village(self):
+    def test_dupe_phone_in_village(self, db):
         """Dupe phone number in village links to invite."""
         factories.ProfileFactory.create(phone='+13216540987')
         rel = factories.RelationshipFactory.create()
@@ -157,7 +157,7 @@ class TestEditElderForm(object):
             ]
 
 
-    def test_initial_role_is_contextual(self):
+    def test_initial_role_is_contextual(self, db):
         """role_in_context is used to populate role field."""
         rel = factories.RelationshipFactory.create(
             from_profile__role="Various",
@@ -182,7 +182,7 @@ class TestInviteTeacherForm(object):
         return defaults
 
 
-    def test_creates_profile(self):
+    def test_creates_profile(self, db):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(
             self.data(email='bar@EXAMPLE.com'), rel=rel)
@@ -193,7 +193,7 @@ class TestInviteTeacherForm(object):
         assert profile.school_staff
 
 
-    def test_sends_invite_email(self):
+    def test_sends_invite_email(self, db):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(
             self.data(email='bar@EXAMPLE.com'), rel=rel)
@@ -204,7 +204,7 @@ class TestInviteTeacherForm(object):
         assert mail.outbox[0].to == [u'bar@example.com']
 
 
-    def test_invite_teacher_with_students_and_groups(self):
+    def test_invite_teacher_with_students_and_groups(self, db):
         """Can associate newly-invited teacher with students and groups."""
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(from_profile=rel.elder)
@@ -221,7 +221,7 @@ class TestInviteTeacherForm(object):
         assert set(profile.students) == {rel.student, rel2.student}
 
 
-    def test_invite_teacher_transforms_group_relationship_to_direct(self):
+    def test_invite_teacher_transforms_group_relationship_to_direct(self, db):
         """Can transform a group student relationship to a direct one."""
         rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(
@@ -252,7 +252,7 @@ class TestInviteTeacherForm(object):
         assert set(group_rel.groups.all()) == {group}
 
 
-    def test_invite_teacher_never_removes_student_relationships(self):
+    def test_invite_teacher_never_removes_student_relationships(self, db):
         """Inviting existing teacher never removes student relationships."""
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(
@@ -271,7 +271,7 @@ class TestInviteTeacherForm(object):
         assert set(profile.students) == {rel.student, rel2.student}
 
 
-    def test_invite_teacher_never_removes_from_another_teachers_group(self):
+    def test_invite_teacher_never_removes_from_another_teachers_group(self, db):
         rel = factories.RelationshipFactory.create()
         elder = factories.ProfileFactory.create(user__email='foo@example.com')
         group = factories.GroupFactory.create()
@@ -285,7 +285,7 @@ class TestInviteTeacherForm(object):
         assert set(profile.elder_in_groups.all()) == {group}
 
 
-    def test_invite_teacher_never_removes_from_my_group(self):
+    def test_invite_teacher_never_removes_from_my_group(self, db):
         """Inviting a teacher should never remove them from groups."""
         rel = factories.RelationshipFactory.create()
         elder = factories.ProfileFactory.create(user__email='foo@example.com')
@@ -300,7 +300,7 @@ class TestInviteTeacherForm(object):
         assert set(profile.elder_in_groups.all()) == {group}
 
 
-    def test_context_student_pre_checked(self):
+    def test_context_student_pre_checked(self, db):
         """Student from whose village teacher is invited initially checked."""
         rel = factories.RelationshipFactory.create()
 
@@ -309,7 +309,7 @@ class TestInviteTeacherForm(object):
         assert form.fields['students'].initial == [rel.student.pk]
 
 
-    def test_context_group_pre_checked(self):
+    def test_context_group_pre_checked(self, db):
         """Group teacher is invited to is initially checked."""
         group = factories.GroupFactory.create()
 
@@ -318,9 +318,9 @@ class TestInviteTeacherForm(object):
         assert form.fields['groups'].initial == [group.pk]
 
 
-    def test_sets_invited_by(self):
+    def test_sets_invited_by(self, db):
         """Invited_by field is set to inviting elder."""
-        rel = factories.RelationshipFactory()
+        rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(self.data(), rel=rel)
         assert form.is_valid()
         profile = form.save()
@@ -328,7 +328,7 @@ class TestInviteTeacherForm(object):
         assert profile.invited_by == rel.elder
 
 
-    def test_user_inactive(self):
+    def test_user_inactive(self, db):
         """New user invited by email is inactive."""
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(self.data(), rel=rel)
@@ -338,9 +338,9 @@ class TestInviteTeacherForm(object):
         assert not profile.user.is_active
 
 
-    def test_user_with_email_exists(self):
+    def test_user_with_email_exists(self, db):
         """If a user with given email already exists, no new user is created."""
-        elder = factories.ProfileFactory(user__email='foo@example.com')
+        elder = factories.ProfileFactory.create(user__email='foo@example.com')
         form = forms.InviteTeacherForm(
             self.data(contact='foo@example.COM'),
             rel=factories.RelationshipFactory(),
@@ -351,9 +351,9 @@ class TestInviteTeacherForm(object):
         assert elder == profile
 
 
-    def test_existing_teacher_new_role(self):
+    def test_existing_teacher_new_role(self, db):
         """Inviting an existing teacher with new role doesn't change profile."""
-        factories.ProfileFactory(
+        factories.ProfileFactory.create(
             user__email='foo@example.com', role="math teacher")
         rel = factories.RelationshipFactory()
         form = forms.InviteTeacherForm(
@@ -371,9 +371,9 @@ class TestInviteTeacherForm(object):
         assert p.student_relationships[0].description == u"science teacher"
 
 
-    def test_existing_teacher_has_role(self):
+    def test_existing_teacher_has_role(self, db):
         """If existing teacher has a role, it isn't updated."""
-        teacher = factories.ProfileFactory(
+        teacher = factories.ProfileFactory.create(
             school_staff=True, role='something', user__email='foo@example.com')
         form = forms.InviteTeacherForm(
             self.data(
@@ -387,9 +387,9 @@ class TestInviteTeacherForm(object):
         assert profile.role == u'something'
 
 
-    def test_relationship_exists(self):
+    def test_relationship_exists(self, db):
         """If existing teacher is already teacher for student, no error."""
-        rel = factories.RelationshipFactory(
+        rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
         form = forms.InviteTeacherForm(
             self.data(contact=rel.elder.user.email), rel=rel)
@@ -413,7 +413,7 @@ class TestInviteFamilyForm(object):
         return defaults
 
 
-    def test_invite_family(self, sms):
+    def test_invite_family(self, sms, db):
         """Can invite a family member by phone."""
         rel = factories.RelationshipFactory.create(
             from_profile__name="Teacher John",
@@ -438,7 +438,7 @@ class TestInviteFamilyForm(object):
             )
 
 
-    def test_bad_phone(self):
+    def test_bad_phone(self, db):
         """Bad phone number results in validation error."""
         form = forms.InviteFamilyForm(
             self.data(phone='foo'), rel=factories.RelationshipFactory.create())
@@ -448,9 +448,9 @@ class TestInviteFamilyForm(object):
             u"Please supply a valid US or Canada mobile number."]
 
 
-    def test_sets_invited_by(self):
+    def test_sets_invited_by(self, db):
         """Invited_by field is set to inviting elder."""
-        rel = factories.RelationshipFactory()
+        rel = factories.RelationshipFactory.create()
         form = forms.InviteFamilyForm(self.data(), rel=rel)
         assert form.is_valid()
         profile = form.save()
@@ -458,7 +458,7 @@ class TestInviteFamilyForm(object):
         assert profile.invited_by == rel.elder
 
 
-    def test_phone_user_active(self):
+    def test_phone_user_active(self, db):
         """User invited by phone is immediately active."""
         rel = factories.RelationshipFactory.create()
         form = forms.InviteFamilyForm(
@@ -469,7 +469,7 @@ class TestInviteFamilyForm(object):
         assert profile.user.is_active
 
 
-    def test_user_with_phone_exists(self, sms):
+    def test_user_with_phone_exists(self, sms, db):
         """If a user with given phone already exists, no new user is created."""
         elder = factories.ProfileFactory(phone='+13216541234')
         rel = factories.RelationshipFactory.create(
@@ -494,9 +494,9 @@ class TestInviteFamilyForm(object):
             )
 
 
-    def test_existing_user_new_role(self):
+    def test_existing_user_new_role(self, db):
         """Inviting an existing elder with a new role doesn't change profile."""
-        factories.ProfileFactory(
+        factories.ProfileFactory.create(
             phone='+13216541234', role="math teacher")
         rel = factories.RelationshipFactory()
         form = forms.InviteFamilyForm(
@@ -513,7 +513,7 @@ class TestInviteFamilyForm(object):
         assert p.student_relationships[0].description == u"science teacher"
 
 
-    def test_cannot_invite_to_second_student(self, sms):
+    def test_cannot_invite_to_second_student(self, sms, db):
         """For now, it's an error to add a family member to a 2nd village."""
         parent_rel = factories.RelationshipFactory(
             from_profile__phone='+13216541234')
@@ -531,9 +531,10 @@ class TestInviteFamilyForm(object):
             ]
 
 
-    def test_relationship_exists(self):
+    def test_relationship_exists(self, db):
         """If existing family is already family for student, no error."""
-        rel = factories.RelationshipFactory(from_profile__phone='+13214567890')
+        rel = factories.RelationshipFactory.create(
+            from_profile__phone='+13214567890')
         form = forms.InviteFamilyForm(self.data(phone=rel.elder.phone), rel=rel)
         assert form.is_valid(), dict(form.errors)
         profile = form.save()
@@ -542,9 +543,9 @@ class TestInviteFamilyForm(object):
         assert len(profile.students) == 1
 
 
-    def test_group_relationship_exists(self):
+    def test_group_relationship_exists(self, db):
         """If existing family is already elder via group, upgrades to direct."""
-        rel = factories.RelationshipFactory()
+        rel = factories.RelationshipFactory.create()
         elder = factories.ProfileFactory.create(phone='+13214567890')
         group = factories.GroupFactory.create(owner=rel.elder)
         group.elders.add(elder)
@@ -559,7 +560,7 @@ class TestInviteFamilyForm(object):
 
 
 class TestStudentForms(object):
-    def test_add_student(self):
+    def test_add_student(self, db):
         """Saves a student, given just name."""
         elder = factories.ProfileFactory.create()
         form = forms.AddStudentForm({'name': "Some Student"}, elder=elder)
@@ -575,7 +576,7 @@ class TestStudentForms(object):
         assert rel.level == 'owner'
 
 
-    def test_add_student_sends_pusher_event(self):
+    def test_add_student_sends_pusher_event(self, db):
         """Adding a student sends a Pusher event."""
         elder = factories.ProfileFactory.create()
         form = forms.AddStudentForm({'name': "Some Student"}, elder=elder)
@@ -587,7 +588,7 @@ class TestStudentForms(object):
         mock_student_added.assert_called_with(profile, elder)
 
 
-    def test_add_student_in_group_context(self):
+    def test_add_student_in_group_context(self, db):
         """If group is passed in, prepopulate its checkbox."""
         rel = factories.RelationshipFactory.create()
         group = factories.GroupFactory.create(owner=rel.elder)
@@ -597,7 +598,7 @@ class TestStudentForms(object):
         assert form.fields['groups'].initial == [group.pk]
 
 
-    def test_group_ids(self):
+    def test_group_ids(self, db):
         """group_ids attr of each choice is list of group memberships."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -620,7 +621,7 @@ class TestStudentForms(object):
         assert elder_from_choice.group_ids == [group.pk]
 
 
-    def test_self_not_in_elder_choices(self):
+    def test_self_not_in_elder_choices(self, db):
         """The user viewing the form is not in the elder choices."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -630,7 +631,7 @@ class TestStudentForms(object):
         assert rel.elder not in form.fields['elders'].queryset
 
 
-    def test_add_student_with_group_and_elder(self):
+    def test_add_student_with_group_and_elder(self, db):
         """Can associate a student with a group or an elder while creating."""
         elder = factories.ProfileFactory.create()
         other_elder = factories.ProfileFactory.create(
@@ -652,7 +653,7 @@ class TestStudentForms(object):
         assert profile.student_in_groups.get() == group
 
 
-    def test_edit_student_with_other_school_elder(self):
+    def test_edit_student_with_other_school_elder(self, db):
         """Can preserve cross-school elder relationship."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -677,7 +678,7 @@ class TestStudentForms(object):
         assert set(profile.elders) == {rel.elder, other_rel.elder}
 
 
-    def test_no_dupes_in_elders_list(self):
+    def test_no_dupes_in_elders_list(self, db):
         """List of elders to select does not contain dupes."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -704,7 +705,7 @@ class TestStudentForms(object):
         assert list(form.fields['elders'].queryset) == [rel2.elder, rel3.elder]
 
 
-    def test_family_not_listed(self):
+    def test_family_not_listed(self, db):
         """Only school staff listed in elders list."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -716,7 +717,7 @@ class TestStudentForms(object):
         assert parent_rel.elder not in set(form.fields['elders'].queryset)
 
 
-    def test_edit_student_does_not_remove_parent(self):
+    def test_edit_student_does_not_remove_parent(self, db):
         """Editing student doesn't remove parent relationships."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -738,7 +739,7 @@ class TestStudentForms(object):
         assert set(profile.elders) == {rel.elder, parent_rel.elder}
 
 
-    def test_edit_student_cannot_remove_owner(self):
+    def test_edit_student_cannot_remove_owner(self, db):
         """Editing student cannot remove owners."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -763,7 +764,7 @@ class TestStudentForms(object):
         assert set(profile.elders) == {rel.elder, owner_rel.elder}
 
 
-    def test_edit_student_with_group_and_elder(self):
+    def test_edit_student_with_group_and_elder(self, db):
         """Can (de/)associate a student with a group/elder while editing."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -787,7 +788,7 @@ class TestStudentForms(object):
         assert profile.student_in_groups.get() == group
 
 
-    def test_remove_elder_sends_pusher_event(self):
+    def test_remove_elder_sends_pusher_event(self, db):
         """Removing an elder from a student sends a pusher event."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -811,7 +812,7 @@ class TestStudentForms(object):
         mock_student_removed.assert_called_with(profile, other_rel.elder)
 
 
-    def test_edit_student_sends_pusher_event(self):
+    def test_edit_student_sends_pusher_event(self, db):
         """Editing a student sends a pusher event to all their elders."""
         rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(to_profile=rel.student)
@@ -835,7 +836,7 @@ class TestStudentForms(object):
         assert set(args[1:]) == {other_rel.elder, rel.elder}
 
 
-    def test_edit_student_only_sends_event_if_name_changed(self):
+    def test_edit_student_only_sends_event_if_name_changed(self, db):
         """Sends pusher event only  if name changed."""
         rel = factories.RelationshipFactory.create(
             to_profile__name="Some Student")
@@ -857,7 +858,7 @@ class TestStudentForms(object):
         assert not mock_student_edited.call_count
 
 
-    def test_edit_student_never_removes_from_others_groups(self):
+    def test_edit_student_never_removes_from_others_groups(self, db):
         """Editing a student never removes them from others' groups."""
         rel = factories.RelationshipFactory.create()
         group1 = factories.GroupFactory.create(owner=rel.elder)
@@ -879,7 +880,7 @@ class TestStudentForms(object):
         assert set(profile.student_in_groups.all()) == {group2}
 
 
-    def test_edit_student_transforms_group_rel_to_direct(self):
+    def test_edit_student_transforms_group_rel_to_direct(self, db):
         """Can add a direct relationship where there was a group one."""
         rel = factories.RelationshipFactory.create()
         other_elder = factories.ProfileFactory.create(
@@ -906,7 +907,7 @@ class TestStudentForms(object):
         assert not rel.groups.exists()
 
 
-    def test_edit_student_transforms_direct_rel_to_group(self):
+    def test_edit_student_transforms_direct_rel_to_group(self, db):
         """
         Can add a group relationship where there was a direct one.
 
@@ -942,7 +943,7 @@ class TestStudentForms(object):
         assert set(other_rel.groups.all()) == {group}
 
 
-    def test_edit_form_group_and_elder_initial(self):
+    def test_edit_form_group_and_elder_initial(self, db):
         """Group and elder initial values set correctly when editing student."""
         rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(
@@ -956,7 +957,7 @@ class TestStudentForms(object):
         assert form.fields['groups'].initial == [group.pk]
 
 
-    def test_edit_student_add_elder(self):
+    def test_edit_student_add_elder(self, db):
         """Can associate a student with an elder while editing."""
         rel = factories.RelationshipFactory.create()
         new_elder = factories.ProfileFactory(
@@ -1001,7 +1002,7 @@ class TestStudentForms(object):
                 ]
 
 
-    def test_cannot_associate_elder_from_other_school(self):
+    def test_cannot_associate_elder_from_other_school(self, db):
         """Cannot associate student with an elder from a different school."""
         rel = factories.RelationshipFactory.create()
         elder = factories.ProfileFactory.create(school_staff=True)
@@ -1009,7 +1010,7 @@ class TestStudentForms(object):
         self._assert_cannot_add(rel, elder)
 
 
-    def test_cannot_associate_non_school_staff_elder(self):
+    def test_cannot_associate_non_school_staff_elder(self, db):
         """Cannot associate student with a non-staff elder."""
         rel = factories.RelationshipFactory.create()
         elder = factories.ProfileFactory.create(
@@ -1018,7 +1019,7 @@ class TestStudentForms(object):
         self._assert_cannot_add(rel, elder)
 
 
-    def test_cannot_associate_group_from_other_owner(self):
+    def test_cannot_associate_group_from_other_owner(self, db):
         """Cannot associate student with a group that isn't yours."""
         rel = factories.RelationshipFactory.create()
         group = factories.GroupFactory.create()
@@ -1026,7 +1027,7 @@ class TestStudentForms(object):
         self._assert_cannot_add(rel, group)
 
 
-    def test_add_two_students_same_name(self):
+    def test_add_two_students_same_name(self, db):
         """Adding two students with same name causes no username trouble."""
         form = forms.AddStudentForm(
             {'name': "Some Student"}, elder=factories.ProfileFactory.create())
@@ -1043,7 +1044,7 @@ class TestStudentForms(object):
 
 
 class TestGroupForms(object):
-    def test_create_group_with_students_and_elders(self):
+    def test_create_group_with_students_and_elders(self, db):
         """Can add students and elders to a group when creating it."""
         me = factories.ProfileFactory.create(school_staff=True)
         elder = factories.ProfileFactory.create(
@@ -1066,7 +1067,7 @@ class TestGroupForms(object):
         assert set(group.elders.all()) == {elder}
 
 
-    def test_edit_group_with_students_and_elders(self):
+    def test_edit_group_with_students_and_elders(self, db):
         """Can add/remove students and elders from group when editing."""
         group = factories.GroupFactory.create()
         prev_elder = factories.ProfileFactory.create(
@@ -1093,7 +1094,7 @@ class TestGroupForms(object):
         assert set(group.elders.all()) == {elder}
 
 
-    def test_edit_group_with_cross_school_elder(self):
+    def test_edit_group_with_cross_school_elder(self, db):
         """Can preserve cross-school elder group membership."""
         group = factories.GroupFactory.create()
         elder = factories.ProfileFactory.create(
@@ -1115,7 +1116,7 @@ class TestGroupForms(object):
         assert set(group.elders.all()) == {elder}
 
 
-    def test_can_preserve_parent_membership(self):
+    def test_can_preserve_parent_membership(self, db):
         """Can preserve non-school-staff elder group membership."""
         group = factories.GroupFactory.create()
         elder = factories.ProfileFactory.create(
@@ -1137,7 +1138,7 @@ class TestGroupForms(object):
         assert set(group.elders.all()) == {elder}
 
 
-    def test_no_dupes_in_elders_list(self):
+    def test_no_dupes_in_elders_list(self, db):
         """List of elders to select does not contain dupes."""
         me = factories.ProfileFactory.create(school_staff=True)
         g1 = factories.GroupFactory.create(owner=me)
@@ -1151,7 +1152,7 @@ class TestGroupForms(object):
         assert list(form.fields['elders'].queryset) == [elder]
 
 
-    def test_edit_group_does_not_delete_and_recreate_relationships(self):
+    def test_edit_group_does_not_delete_and_recreate_relationships(self, db):
         group = factories.GroupFactory.create()
         elder = factories.ProfileFactory.create(
             school_staff=True, school=group.owner.school)
@@ -1176,7 +1177,7 @@ class TestGroupForms(object):
         utils.refresh(group_rel)
 
 
-    def test_edit_group_fires_event(self):
+    def test_edit_group_fires_event(self, db):
         """Editing a group's name fires a Pusher event."""
         group = factories.GroupFactory.create(name='Old name')
 
@@ -1197,7 +1198,7 @@ class TestGroupForms(object):
         mock_group_edited.assert_called_with(group)
 
 
-    def test_edit_group_fires_event_only_if_name_changed(self):
+    def test_edit_group_fires_event_only_if_name_changed(self, db):
         """Editing a group without changing name does not fire event."""
         group = factories.GroupFactory.create(name='A name')
 
@@ -1218,7 +1219,7 @@ class TestGroupForms(object):
         assert not mock_group_edited.call_count
 
 
-    def test_self_not_in_elder_choices(self):
+    def test_self_not_in_elder_choices(self, db):
         """The user viewing the form is not in the elder choices."""
         group = factories.GroupFactory.create(owner__school_staff=True)
 
@@ -1250,7 +1251,7 @@ class TestGroupForms(object):
                 ]
 
 
-    def test_cannot_add_elder_from_other_school(self):
+    def test_cannot_add_elder_from_other_school(self, db):
         """Cannot add an elder from a different school to a group."""
         group = factories.GroupFactory.create()
         elder = factories.ProfileFactory.create(school_staff=True)
@@ -1258,7 +1259,7 @@ class TestGroupForms(object):
         self._assert_cannot_add(group, elder=elder)
 
 
-    def test_cannot_add_non_staff_elder(self):
+    def test_cannot_add_non_staff_elder(self, db):
         """Cannot add an elder who is not school staff."""
         group = factories.GroupFactory.create()
         elder = factories.ProfileFactory.create(
@@ -1267,7 +1268,7 @@ class TestGroupForms(object):
         self._assert_cannot_add(group, elder=elder)
 
 
-    def test_cannot_add_unrelated_student(self):
+    def test_cannot_add_unrelated_student(self, db):
         """Cannot add a student you aren't related to to a group."""
         group = factories.GroupFactory.create()
         student = factories.ProfileFactory.create()

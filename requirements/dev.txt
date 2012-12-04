@@ -10,9 +10,9 @@ WebOb==1.2
 
 coverage==3.5.2
 
-pytest==2.2.4
-py==1.4.9
-pytest-django==1.4
+pytest==2.3.4
+py==1.4.12
+pytest-django==2.0.0
 pytest-cov==1.6
 cov-core==1.6
 

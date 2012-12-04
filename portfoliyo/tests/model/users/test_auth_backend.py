@@ -4,7 +4,7 @@ from portfoliyo.model.users import auth_backend
 from portfoliyo.tests import factories, utils
 
 
-def test_authenticate_failure():
+def test_authenticate_failure(db):
     """authenticate method returns None if no matching user."""
     backend = auth_backend.EmailBackend()
     user = backend.authenticate(username='foo', password='bar')
@@ -12,7 +12,7 @@ def test_authenticate_failure():
     assert user is None
 
 
-def test_authenticate_select_related():
+def test_authenticate_select_related(db):
     """authenticate method returns user with profile pre-selected."""
     factories.ProfileFactory.create(
         user__email='test@example.com', user__password='testpw')
@@ -23,7 +23,7 @@ def test_authenticate_select_related():
         user.profile
 
 
-def test_get_user_select_related():
+def test_get_user_select_related(db):
     """get_user method returns user with profile pre-selected."""
     profile = factories.ProfileFactory.create()
     backend = auth_backend.EmailBackend()
@@ -33,7 +33,7 @@ def test_get_user_select_related():
         user.profile
 
 
-def test_get_user_nonexistent():
+def test_get_user_nonexistent(db):
     """get_user method returns None if no matching user."""
     backend = auth_backend.EmailBackend()
     user = backend.get_user(999)

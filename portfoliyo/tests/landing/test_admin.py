@@ -6,7 +6,7 @@ from portfoliyo.tests.landing.factories import LeadFactory
 
 
 
-def test_lead_changelist(client):
+def test_lead_changelist(client, db):
     """The Lead admin changelist loads successfully."""
     admin = factories.ProfileFactory.create(
         user__is_staff=True, user__is_superuser=True)
@@ -14,7 +14,7 @@ def test_lead_changelist(client):
         reverse("admin:landing_lead_changelist"), user=admin.user, status=200)
 
 
-def test_lead_change(client):
+def test_lead_change(client, db):
     """The Lead admin change page loads successfully."""
     admin = factories.ProfileFactory.create(
         user__is_staff=True, user__is_superuser=True)

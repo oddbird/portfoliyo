@@ -7,7 +7,7 @@ from portfoliyo.tests import factories
 
 
 
-def test_no_html_encoding_in_emails():
+def test_no_html_encoding_in_emails(db):
     post = factories.PostFactory.create(original_text="What's up?")
     to_notify = factories.RelationshipFactory.create(
         to_profile=post.student,

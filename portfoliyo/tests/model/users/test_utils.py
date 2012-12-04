@@ -5,7 +5,7 @@ from portfoliyo.tests import factories
 
 
 class TestUserNetworks(object):
-    def test_simple(self):
+    def test_simple(self, db):
         rel1 = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create()
 
@@ -15,7 +15,7 @@ class TestUserNetworks(object):
             ]
 
 
-    def test_joined_by_elder(self):
+    def test_joined_by_elder(self, db):
         rel1 = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(
             from_profile=rel1.elder)
@@ -29,7 +29,7 @@ class TestUserNetworks(object):
             ]
 
 
-    def test_joined_by_student(self):
+    def test_joined_by_student(self, db):
         rel1 = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.student)
@@ -43,7 +43,7 @@ class TestUserNetworks(object):
             ]
 
 
-    def test_merge_networks(self):
+    def test_merge_networks(self, db):
         rel1 = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(school=rel1.elder.school)
         factories.RelationshipFactory.create(
@@ -59,7 +59,7 @@ class TestUserNetworks(object):
             ]
 
 
-    def test_already_in_same_network(self):
+    def test_already_in_same_network(self, db):
         rel1 = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(school=rel1.elder.school)
         factories.RelationshipFactory.create(
@@ -77,7 +77,7 @@ class TestUserNetworks(object):
             ]
 
 
-    def test_lone_ranger(self):
+    def test_lone_ranger(self, db):
         p = factories.ProfileFactory.create()
 
         assert model.utils.user_networks() == [{p.pk}]
