@@ -226,6 +226,28 @@ def test_code_signup_student_name(db):
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
+def test_unusually_long_student_name_logs_warning(db):
+    """If a student name is unusually long, a warning is logged."""
+    phone = '+13216430987'
+    teacher = factories.ProfileFactory.create(
+        school_staff=True, name="Teacher Jane", code="ABCDEF")
+    factories.TextSignupFactory.create(
+        family__name="John Doe",
+        family__phone=phone,
+        family__invited_by=teacher,
+        state=model.TextSignup.STATE.kidname,
+        teacher=teacher,
+        )
+
+    msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+            hook.receive_sms(phone, msg)
+
+    mock_logger.warning.assert_called_with(
+        "Unusually long student name: %s" % msg)
+
+
 
 def test_group_code_signup_student_name(db):
     """Parent can continue group code signup by providing student name."""
@@ -346,6 +368,39 @@ def test_code_signup_role(db):
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
+def test_unusually_long_role_logs_warning(db):
+    """If a family member role is unusually long, a warning is logged."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__email_notifications=True,
+        from_profile__name='Jane Doe',
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe")
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="John Doe",
+        from_profile__role="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        description="",
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        student=parent_rel.student,
+        teacher=teacher_rel.elder,
+        state=model.TextSignup.STATE.relationship,
+        )
+
+    msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+            hook.receive_sms(phone, msg)
+
+    mock_logger.warning.assert_called_with(
+        "Unusually long relationship: %s" % msg)
+
+
 def test_code_signup_name(db):
     """Parent can finish signup by texting their name."""
     phone = '+13216430987'
@@ -389,6 +444,40 @@ def test_code_signup_name(db):
     # email notification of the signup is sent
     assert len(mail.outbox) == 1
     assert mail.outbox[0].to == ['teacher@example.com']
+
+
+
+def test_unusually_long_parent_name_logs_warning(db):
+    """If a family member name is unusually long, a warning is logged."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__email_notifications=True,
+        from_profile__name="Teacher Jane",
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe",
+        )
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        teacher=teacher_rel.elder,
+        student=teacher_rel.student,
+        state=model.TextSignup.STATE.name,
+        )
+
+    msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+            hook.receive_sms(phone, msg)
+
+    mock_logger.warning.assert_called_with(
+        "Unusually long family member name: %s" % msg)
+
 
 
 def test_code_signup_name_no_notification(db):

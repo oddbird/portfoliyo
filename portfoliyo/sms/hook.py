@@ -4,6 +4,12 @@ import logging
 from portfoliyo import model, notifications
 
 
+# The maximum expected length (in words) of a name or role
+# Setting a fairly low bar for starters to get more data, since it's only
+# warning us, not affecting the user
+MAX_EXPECTED_NAME_LENGTH = 5
+
+
 logger = logging.getLogger(__name__)
 
 
@@ -167,6 +173,9 @@ def handle_subsequent_code(profile, teacher, group, signup):
 
 def handle_new_student(signup, student_name):
     """Handle addition of a student to a just-signing-up parent's account."""
+    if len(student_name.split()) > MAX_EXPECTED_NAME_LENGTH:
+        logger.warning("Unusually long student name: %s" % student_name)
+
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
         relationships_to__from_profile=signup.teacher,
@@ -214,6 +223,9 @@ def handle_new_student(signup, student_name):
 
 def handle_role_update(signup, role):
     """Handle defining role of parent in relation to student."""
+    if len(role.split()) > MAX_EXPECTED_NAME_LENGTH:
+        logger.warning("Unusually long relationship: %s" % role)
+
     parent = signup.family
     parent.relationships_from.filter(
         description=parent.role).update(description=role)
@@ -236,6 +248,9 @@ def handle_role_update(signup, role):
 
 def handle_name_update(signup, name):
     """Handle defining name of parent."""
+    if len(name.split()) > MAX_EXPECTED_NAME_LENGTH:
+        logger.warning("Unusually long family member name: %s" % name)
+
     parent = signup.family
     parent.name = name
     parent.save()
