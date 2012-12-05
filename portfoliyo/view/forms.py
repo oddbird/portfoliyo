@@ -49,3 +49,11 @@ class CheckboxSelectMultiple(forms.CheckboxSelectMultiple):
         data = self.context_data.copy()
         data['initial'] = set(map(str, getattr(self, 'initial', None) or []))
         return data
+
+
+
+class StripCharField(forms.CharField):
+    """CharField that strips leading/trailing whitespace."""
+    def to_python(self, *args, **kw):
+        val = super(StripCharField, self).to_python(*args, **kw)
+        return val.strip()

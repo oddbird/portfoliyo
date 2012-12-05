@@ -65,9 +65,9 @@ class ElderGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
 
 
 class EditElderForm(forms.Form):
-    name = forms.CharField(max_length=200)
-    role = forms.CharField(max_length=200)
-    phone = forms.CharField(max_length=20, required=False)
+    name = pyoforms.StripCharField(max_length=200)
+    role = pyoforms.StripCharField(max_length=200)
+    phone = pyoforms.StripCharField(max_length=20, required=False)
 
 
     def __init__(self, *a, **kw):
@@ -151,8 +151,8 @@ class EditElderForm(forms.Form):
 
 class InviteFamilyForm(forms.Form):
     """A form for inviting a family member to a student village."""
-    phone = forms.CharField(max_length=255)
-    relationship = forms.CharField(max_length=200)
+    phone = pyoforms.StripCharField(max_length=255)
+    relationship = pyoforms.StripCharField(max_length=200)
 
 
     def __init__(self, *args, **kwargs):
@@ -230,7 +230,7 @@ class InviteFamilyForm(forms.Form):
 class InviteTeacherForm(forms.Form):
     """A form for inviting a teacher to a student village."""
     email = forms.EmailField(max_length=255)
-    relationship = forms.CharField(max_length=200)
+    relationship = pyoforms.StripCharField(max_length=200)
     groups = pyoforms.ModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
@@ -328,6 +328,7 @@ class InviteTeacherForm(forms.Form):
 
 class StudentForm(forms.ModelForm):
     """Form for editing a student."""
+    name = pyoforms.StripCharField()
     groups = pyoforms.ModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
@@ -343,7 +344,6 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = model.Profile
         fields = ['name', 'groups', 'elders']
-        widgets = {'name': forms.TextInput}
 
 
     def __init__(self, *args, **kwargs):
@@ -513,6 +513,7 @@ class AddStudentForm(StudentForm):
 
 class GroupForm(forms.ModelForm):
     """Form for editing Groups."""
+    name = pyoforms.StripCharField()
     students = pyoforms.ModelMultipleChoiceField(
         queryset=model.Profile.objects.none(),
         widget=StudentCheckboxSelectMultiple,
@@ -528,7 +529,6 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = model.Group
         fields = ['name', 'students', 'elders']
-        widgets = {'name': forms.TextInput}
 
 
     def __init__(self, *args, **kwargs):

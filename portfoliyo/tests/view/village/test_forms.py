@@ -576,6 +576,16 @@ class TestStudentForms(object):
         assert rel.level == 'owner'
 
 
+    def test_add_student_strips_whitespace(self, db):
+        """Leading and trailing whitespace are stripped from student name."""
+        elder = factories.ProfileFactory.create()
+        form = forms.AddStudentForm({'name': "  Some Student\t"}, elder=elder)
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert profile.name == u"Some Student"
+
+
     def test_add_student_sends_pusher_event(self, db):
         """Adding a student sends a Pusher event."""
         elder = factories.ProfileFactory.create()
