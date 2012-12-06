@@ -97,7 +97,8 @@ class EditElderForm(forms.Form):
         if phone is None:
             raise forms.ValidationError(
                 "Please supply a valid US or Canada mobile number.")
-        if model.Profile.objects.filter(phone=phone).exists():
+        if model.Profile.objects.filter(
+                phone=phone).exclude(pk=self.instance.pk).exists():
             msg = "A user with this phone number already exists."
             if self.rel:
                 invite_url = reverse(

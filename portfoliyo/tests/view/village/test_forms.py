@@ -10,6 +10,22 @@ from portfoliyo.tests import factories, utils
 
 
 class TestEditElderForm(object):
+    def test_edit_family_member(self, db):
+        """Can edit a family member's name."""
+        phone = '+13216540987'
+        parent = factories.ProfileFactory.create(
+            phone=phone, name='Old Name', role='dad')
+
+        form = forms.EditElderForm(
+            {'name': 'New Name', 'role': 'dad', 'phone': phone},
+            instance=parent,
+            )
+        assert form.is_valid(), dict(form.errors)
+        assert parent == form.save(editor=factories.ProfileFactory.create())
+        parent = utils.refresh(parent)
+        assert parent.name == 'New Name'
+
+
     def test_edit_custom_relationship_description(self, db):
         """
         Editing elder changes role in that village, profile only if matched.
