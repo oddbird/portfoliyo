@@ -245,7 +245,7 @@ def test_unusually_long_student_name_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long student name: %s" % msg)
+        "Unusually long student name: %s", msg)
 
 
 
@@ -398,7 +398,7 @@ def test_unusually_long_role_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long relationship: %s" % msg)
+        "Unusually long relationship: %s", msg)
 
 
 def test_code_signup_name(db):
@@ -476,7 +476,7 @@ def test_unusually_long_parent_name_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long family member name: %s" % msg)
+        "Unusually long family member name: %s", msg)
 
 
 
@@ -685,7 +685,7 @@ def test_multiple_active_signups_logs_warning(db):
         hook.receive_sms(phone, "Jimmy Doe")
 
     mock_logger.warning.assert_called_with(
-        "User %s has multiple active signups!" % phone)
+        "User %s has multiple active signups!", phone)
 
 
 def test_bogus_signup_state_no_blowup(db):

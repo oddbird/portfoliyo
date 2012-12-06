@@ -55,7 +55,7 @@ def receive_sms(source, body):
     if active_signups:
         if len(active_signups) > 1:
             # shouldn't happen, since second signup sets first to done
-            logger.warning('User %s has multiple active signups!' % source)
+            logger.warning('User %s has multiple active signups!', source)
             # not much we can do but just pick one arbitrarily
         signup = active_signups[0]
     else:
@@ -80,7 +80,7 @@ def receive_sms(source, body):
 
     if not students:
         logger.warning(
-            "Text from %s (has no students): %s" % (source, body))
+            "Text from %s (has no students): %s", source, body)
         return (
             "You're not part of any student's Portfoliyo Village, "
             "so we're not able to deliver your message. Sorry!"
@@ -122,7 +122,7 @@ def handle_unknown_source(source, body):
             % teacher.name
             )
     else:
-        logger.warning("Unknown text from %s: %s" % (source, body))
+        logger.warning("Unknown text from %s: %s", source, body)
         return (
             "Bummer, we don't recognize your invite code! "
             "Please make sure it's typed exactly as it is on the paper."
@@ -174,7 +174,7 @@ def handle_subsequent_code(profile, teacher, group, signup):
 def handle_new_student(signup, student_name):
     """Handle addition of a student to a just-signing-up parent's account."""
     if len(student_name.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long student name: %s" % student_name)
+        logger.warning("Unusually long student name: %s", student_name)
 
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
@@ -224,7 +224,7 @@ def handle_new_student(signup, student_name):
 def handle_role_update(signup, role):
     """Handle defining role of parent in relation to student."""
     if len(role.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long relationship: %s" % role)
+        logger.warning("Unusually long relationship: %s", role)
 
     parent = signup.family
     parent.relationships_from.filter(
@@ -249,7 +249,7 @@ def handle_role_update(signup, role):
 def handle_name_update(signup, name):
     """Handle defining name of parent."""
     if len(name.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long family member name: %s" % name)
+        logger.warning("Unusually long family member name: %s", name)
 
     parent = signup.family
     parent.name = name
