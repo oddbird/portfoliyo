@@ -1,35 +1,24 @@
 """Sending invites to prospective users by email or SMS."""
 from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import send_mail
 from django.template import loader
 from django.utils.http import int_to_base36
 
-from portfoliyo import sms
+from portfoliyo import email, sms
 
 
 
-def send_invite_email(profile,
-                      subject_template_name,
-                      email_template_name,
-                      token_generator=default_token_generator,
-                      from_email=None,
-                      extra_context=None,
-                      ):
+def send_invite_email(profile, template_name, extra_context=None):
     """Generates a one-use invite link and sends to the user."""
     c = {
         'uid': int_to_base36(profile.user.id),
         'profile': profile,
-        'token': token_generator.make_token(profile.user),
+        'token': default_token_generator.make_token(profile.user),
         'base_url': settings.PORTFOLIYO_BASE_URL,
     }
     c.update(extra_context or {})
 
-    subject = loader.render_to_string(subject_template_name, c)
-    # Email subject *must not* contain newlines
-    subject = ''.join(subject.splitlines())
-    email = loader.render_to_string(email_template_name, c)
-    send_mail(subject, email, from_email, [profile.user.email])
+    email.send_multipart(template_name, c, [profile.user.email])
 
 
 

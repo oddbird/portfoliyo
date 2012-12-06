@@ -298,8 +298,7 @@ class InviteTeacherForm(forms.Form):
         if created:
             invites.send_invite_email(
                 profile,
-                email_template_name='registration/invite_elder_email.txt',
-                subject_template_name='registration/invite_elder_subject.txt',
+                template_name='registration/invite_elder_email',
                 extra_context={
                     'inviter': self.inviter,
                     'student': self.rel.student if self.rel else None,
