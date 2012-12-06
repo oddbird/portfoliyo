@@ -12,6 +12,7 @@ South==0.7.5
 django-compressor==1.2.obc1
 django-appconf==0.5
 BeautifulSoup==3.2.1
+Markdown==2.2.1
 
 django-floppyforms==1.0
 
