@@ -128,6 +128,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.contrib.markup",
     "floppyforms",
     "widget_tweaks",
     "form_utils",
