@@ -8,6 +8,8 @@
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. Jane Doe" label="Student Name" %}
 
+  {% block add-family %}{% endblock add-family %}
+
   <div class="fieldset relation-fieldset">
     <p class="fieldset-help">
       Select existing teachers and groups to associate with this student.

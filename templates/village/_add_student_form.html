@@ -1,5 +1,6 @@
 {% extends "village/_student_form.html" %}
 {% load url from future %}
+{% load markup %}
 
 {% block form-action %}{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
 
@@ -8,5 +9,23 @@
 {% block form-id %}add-student-form{% endblock %}
 
 {% block form-header %}Add a Student:{% endblock %}
+
+{% block add-family %}
+<div class="content-template">
+{% filter markdown %}
+
+### Invite family members:
+
+Family Member:
+
+- relationship [text input]
+- phone number [text input]
+- optional name? [text input]
+
+*[ajax] add family member »*
+
+{% endfilter %}
+</div>
+{% endblock add-family %}
 
 {% block form-button-text %}add{% endblock %}
