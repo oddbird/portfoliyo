@@ -46,7 +46,7 @@ twilio==3.3.11
 httplib2==0.7.6
 pyjwt==0.1.2
 
-pusher==0.6
+pusher==0.6.pyo1
 
 reportlab==2.5
 pyPdf==1.13
