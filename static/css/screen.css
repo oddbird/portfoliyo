@@ -681,6 +681,21 @@ optgroup {
   min-height: 35px;
   min-height: 1.91667rem;
 }
+.login form fieldset, .register form fieldset, .edit-profile form fieldset, .reset-password form fieldset, .change-password form fieldset, .set-password form fieldset, .activationfailed form fieldset, .awaiting-activation form fieldset, .no-students form fieldset, [class^="errorpage-"] form fieldset, .group-add-form fieldset, .group-edit-form fieldset, .add-student fieldset, .village-edit-form fieldset, .dashboard fieldset, .pjax-error fieldset, .elder-invite-form fieldset, .elder-edit-form fieldset, .post-add-form fieldset {
+  -webkit-box-shadow: #073642 0 0 0.25em inset;
+  -moz-box-shadow: #073642 0 0 0.25em inset;
+  box-shadow: #073642 0 0 0.25em inset;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  padding: 1.27778rem;
+  background: #eee8d5;
+}
+.login form .fieldset-header, .register form .fieldset-header, .edit-profile form .fieldset-header, .reset-password form .fieldset-header, .change-password form .fieldset-header, .set-password form .fieldset-header, .activationfailed form .fieldset-header, .awaiting-activation form .fieldset-header, .no-students form .fieldset-header, [class^="errorpage-"] form .fieldset-header, .group-add-form .fieldset-header, .group-edit-form .fieldset-header, .add-student .fieldset-header, .village-edit-form .fieldset-header, .dashboard .fieldset-header, .pjax-error .fieldset-header, .elder-invite-form .fieldset-header, .elder-edit-form .fieldset-header, .post-add-form .fieldset-header {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
 .login form .fieldset-help, .register form .fieldset-help, .edit-profile form .fieldset-help, .reset-password form .fieldset-help, .change-password form .fieldset-help, .set-password form .fieldset-help, .activationfailed form .fieldset-help, .awaiting-activation form .fieldset-help, .no-students form .fieldset-help, [class^="errorpage-"] form .fieldset-help, .group-add-form .fieldset-help, .group-edit-form .fieldset-help, .add-student .fieldset-help, .village-edit-form .fieldset-help, .dashboard .fieldset-help, .pjax-error .fieldset-help, .elder-invite-form .fieldset-help, .elder-edit-form .fieldset-help, .post-add-form .fieldset-help {
   margin-top: 23px;
   margin-top: 1.27778rem;
@@ -699,7 +714,14 @@ optgroup {
   color: #93a1a1;
   font-style: italic;
 }
-.login form .formfield-optional, .register form .formfield-optional, .edit-profile form .formfield-optional, .reset-password form .formfield-optional, .change-password form .formfield-optional, .set-password form .formfield-optional, .activationfailed form .formfield-optional, .awaiting-activation form .formfield-optional, .no-students form .formfield-optional, [class^="errorpage-"] form .formfield-optional, .group-add-form .formfield-optional, .group-edit-form .formfield-optional, .add-student .formfield-optional, .village-edit-form .formfield-optional, .dashboard .formfield-optional, .pjax-error .formfield-optional, .elder-invite-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional {
+.login form .formfield-optional, .register form .formfield-optional, .edit-profile form .formfield-optional, .reset-password form .formfield-optional, .change-password form .formfield-optional, .set-password form .formfield-optional, .activationfailed form .formfield-optional, .awaiting-activation form .formfield-optional, .no-students form .formfield-optional, [class^="errorpage-"] form .formfield-optional, .group-add-form .formfield-optional, .group-edit-form .formfield-optional, .add-student .formfield-optional, .village-edit-form .formfield-optional, .dashboard .formfield-optional, .pjax-error .formfield-optional, .elder-invite-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional, .login form .fieldset-optional, .register form .fieldset-optional, .edit-profile form .fieldset-optional, .reset-password form .fieldset-optional, .change-password form .fieldset-optional, .set-password form .fieldset-optional, .activationfailed form .fieldset-optional, .awaiting-activation form .fieldset-optional, .no-students form .fieldset-optional, [class^="errorpage-"] form .fieldset-optional, .group-add-form .fieldset-optional, .group-edit-form .fieldset-optional, .add-student .fieldset-optional, .village-edit-form .fieldset-optional, .dashboard .fieldset-optional, .pjax-error .fieldset-optional, .elder-invite-form .fieldset-optional, .elder-edit-form .fieldset-optional, .post-add-form .fieldset-optional {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  color: #93a1a1;
+}
+.login form .optional-fieldset .formfield-optional, .register form .optional-fieldset .formfield-optional, .edit-profile form .optional-fieldset .formfield-optional, .reset-password form .optional-fieldset .formfield-optional, .change-password form .optional-fieldset .formfield-optional, .set-password form .optional-fieldset .formfield-optional, .activationfailed form .optional-fieldset .formfield-optional, .awaiting-activation form .optional-fieldset .formfield-optional, .no-students form .optional-fieldset .formfield-optional, [class^="errorpage-"] form .optional-fieldset .formfield-optional, .group-add-form .optional-fieldset .formfield-optional, .group-edit-form .optional-fieldset .formfield-optional, .add-student .optional-fieldset .formfield-optional, .village-edit-form .optional-fieldset .formfield-optional, .dashboard .optional-fieldset .formfield-optional, .pjax-error .optional-fieldset .formfield-optional, .elder-invite-form .optional-fieldset .formfield-optional, .elder-edit-form .optional-fieldset .formfield-optional, .post-add-form .optional-fieldset .formfield-optional {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;

@@ -11,17 +11,16 @@
 {% block form-header %}Add a Student:{% endblock %}
 
 {% block add-family %}
-<div class="content-template">
-
-<fieldset>
-  <p>Invite a family member (optional):</p>
+<fieldset class="invite-family-fieldset optional-fieldset">
+  <p class="fieldset-header">
+    Invite a family member:
+    <span class="fieldset-optional">[optional]</span>
+  </p>
 
   {% include "forms/_field.html" with field=form.family_form.relationship|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." %}
   {% include "forms/_field.html" with field=form.family_form.phone|attr:"placeholder:555-555-5555" %}
 
 </fieldset>
-
-</div>
 {% endblock add-family %}
 
 {% block form-button-text %}add{% endblock %}

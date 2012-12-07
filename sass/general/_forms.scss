@@ -254,6 +254,18 @@ $active-back: mix($base,$base2,25%);
     @include rem(min-height, rhythm(1 + $input-rhythm*2, $input-font-size));
   }
 
+  fieldset {
+    @include box-shadow($back 0 0 .25em inset);
+    @include leader;
+    @include trailer;
+    padding: rhythm(1);
+    background: $base2;
+  }
+
+  .fieldset-header {
+    @include trailer;
+  }
+
   .fieldset-help {
     @include leader;
     @include trailer(.5);
@@ -269,7 +281,11 @@ $active-back: mix($base,$base2,25%);
     font-style: italic;
   }
 
-  .formfield-optional { @include gone; }
+  .formfield-optional, .fieldset-optional {
+    @include adjust-font-size-to($smallpx);
+    color: $base1;
+  }
+  .optional-fieldset { .formfield-optional { @include gone; } }
 
   $form-action-note-size: $smallpx;
 
