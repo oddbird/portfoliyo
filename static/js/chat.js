@@ -117,6 +117,7 @@ var PYO = (function (PYO, $) {
             });
             if (stickyhack.length) { stickyhack.before(posts); }
             else { feedPosts.append(posts); }
+            PYO.authorPosts = feedPosts.find('.post.mine').length;
             return posts;
         }
     };
@@ -187,7 +188,7 @@ var PYO = (function (PYO, $) {
                 event.preventDefault();
                 if (textarea.val().length) {
                     var text = $.trim(textarea.val());
-                    var author_sequence_id = ++PYO.authorPosts;
+                    var author_sequence_id = PYO.authorPosts + 1;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
@@ -320,7 +321,6 @@ var PYO = (function (PYO, $) {
                             PYO.updateFeedHeights();
                             PYO.scrollToBottom();
                         }
-                        PYO.authorPosts = feed.find('.post.mine').length;
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {

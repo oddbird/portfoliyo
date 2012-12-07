@@ -30,7 +30,8 @@ def send_post_email_notification(profile, post):
     else:
         c['message_source'] = mark_safe(smart_unicode(post.author))
 
-    email.send_multipart('notifications/new_post', c, [profile.user.email])
+    email.send_multipart(
+        'notifications/new_post', c, [profile.user.email], fail_silently=True)
 
 
 
@@ -46,4 +47,9 @@ def send_signup_email_notification(profile, rel):
         'profile_url': settings.PORTFOLIYO_BASE_URL + reverse('edit_profile'),
     }
 
-    email.send_multipart('notifications/new_student', c, [profile.user.email])
+    email.send_multipart(
+        'notifications/new_student',
+        c,
+        [profile.user.email],
+        fail_silently=True,
+        )
