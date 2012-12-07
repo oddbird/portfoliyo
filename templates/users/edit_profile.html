@@ -1,5 +1,5 @@
 {% extends "base_site.html" %}
-{% load widget_tweaks %}
+{% load widget_tweaks markup %}
 
 {% block maincontent %}
 
@@ -16,7 +16,20 @@
       {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
     </div>
 
-    {% include "forms/_field.html" with field=form.email_notifications label="Email me when a text is sent to one of my villages." %}
+<div class="content-template">
+{% filter markdown %}
+
+### [fieldset] Send me a notification email when...
+
+- [checkbox] A new parent signs up on my account.
+- [checkbox] A parent sends a text to one of my villages.
+- [checkbox] Another teacher adds me to one of their villages.
+- [checkbox] Another teacher posts to one of my villages.
+
+{% endfilter %}
+</div>
+
+    {# include "forms/_field.html" with field=form.email_notifications label="Email me when a text is sent to one of my villages." #}
 
     <div class="form-actions">
       <button type="submit">Save changes</button>
