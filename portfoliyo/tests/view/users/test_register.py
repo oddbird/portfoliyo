@@ -5,6 +5,7 @@ Tests for custom django-registration backend.
 from django.core import mail
 import mock
 
+from portfoliyo import model
 from portfoliyo.tests import factories
 from portfoliyo.view.users import forms, register
 
@@ -82,12 +83,13 @@ def test_register_creates_code(db):
 
 
 def test_register_sets_email_notifications(db):
-    """register method sets email_notifications on profile."""
+    """register method sets notification prefs on profile."""
     user1 = _register(email_notifications=False, email='foo@example.com')
     user2 = _register(email_notifications=True, email='bar@example.com')
 
-    assert not user1.profile.email_notifications
-    assert user2.profile.email_notifications
+    for pref in model.Profile.NOTIFICATION_PREFS:
+        assert not getattr(user1.profile, pref)
+        assert getattr(user2.profile, pref)
 
 
 def test_register_creates_registration_profile(db):

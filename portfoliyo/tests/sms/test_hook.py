@@ -331,7 +331,6 @@ def test_code_signup_role(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name='Jane Doe',
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
@@ -375,7 +374,6 @@ def test_unusually_long_role_logs_warning(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name='Jane Doe',
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
@@ -408,7 +406,7 @@ def test_code_signup_name(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
+        from_profile__notify_new_parent=True,
         from_profile__name="Teacher Jane",
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
@@ -454,7 +452,6 @@ def test_unusually_long_parent_name_logs_warning(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name="Teacher Jane",
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
@@ -487,7 +484,7 @@ def test_code_signup_name_no_notification(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=False,
+        from_profile__notify_new_parent=False,
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
         )

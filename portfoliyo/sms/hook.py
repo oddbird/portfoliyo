@@ -263,7 +263,7 @@ def handle_name_update(signup, name):
     for rel in student_rels:
         model.Post.create(
             parent, rel.student, name, from_sms=True, email_notifications=False)
-        if teacher and teacher.email_notifications and teacher.user.email:
+        if teacher and teacher.notify_new_parent and teacher.user.email:
             notifications.send_signup_email_notification(teacher, rel)
     return reply(
         parent.phone,
