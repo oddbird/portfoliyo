@@ -58,10 +58,15 @@ class Profile(models.Model):
     code = models.CharField(max_length=20, blank=True, null=True, unique=True)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
-    # does this user want to receive email notifications?
-    email_notifications = models.BooleanField(default=True)
     # True if user has declined/stopped SMS notifications
     declined = models.BooleanField(default=False)
+
+    # opt in/out to various types of email notifications
+    notify_new_parent = models.BooleanField(default=True)
+    notify_parent_text = models.BooleanField(default=True)
+    notify_added_to_village = models.BooleanField(default=True)
+    notify_joined_my_village = models.BooleanField(default=True)
+    notify_teacher_post = models.BooleanField(default=True)
 
 
     def __unicode__(self):
