@@ -385,25 +385,25 @@ a:focus, a:hover, a:active {
   cursor: pointer;
 }
 
-.login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .pdf-instructions h1, .pdf-preview h1, .dashboard h1, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .pdf-instructions h2, .pdf-preview h2, .dashboard h2, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .pdf-instructions h3, .pdf-preview h3, .dashboard h3, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .pdf-instructions h4, .pdf-preview h4, .dashboard h4, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .pdf-instructions h5, .pdf-preview h5, .dashboard h5, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .pdf-instructions h6, .pdf-preview h6, .dashboard h6 {
+.content-template h1, .login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .pdf-instructions h1, .pdf-preview h1, .dashboard h1, .content-template h2, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .pdf-instructions h2, .pdf-preview h2, .dashboard h2, .content-template h3, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .pdf-instructions h3, .pdf-preview h3, .dashboard h3, .content-template h4, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .pdf-instructions h4, .pdf-preview h4, .dashboard h4, .content-template h5, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .pdf-instructions h5, .pdf-preview h5, .dashboard h5, .content-template h6, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .pdf-instructions h6, .pdf-preview h6, .dashboard h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
-.login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .pdf-instructions p, .pdf-preview p, .dashboard p, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
+.content-template p, .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .pdf-instructions p, .pdf-preview p, .dashboard p, .content-template ul, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul, .content-template ol, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
 }
-.login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul {
+.content-template ul, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
+.content-template ol, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .pdf-instructions em, .pdf-preview em, .dashboard em {
+.content-template em, .login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .pdf-instructions em, .pdf-preview em, .dashboard em {
   font-style: italic;
 }
-.login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .pdf-instructions strong, .pdf-preview strong, .dashboard strong {
+.content-template strong, .login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .pdf-instructions strong, .pdf-preview strong, .dashboard strong {
   font-weight: 500;
 }
 
@@ -477,7 +477,7 @@ optgroup {
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
+  background: url('../images/rgbapng/ffffff40.png?1352840743');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -826,7 +826,7 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
+  background: url('../images/rgbapng/ffffff40.png?1352840743');
   background: rgba(255, 255, 255, 0.25);
   max-height: 184px;
   max-height: 10.22222rem;
@@ -852,7 +852,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('../images/rgbapng/268bd220.png?1352840797');
+  background: url('../images/rgbapng/268bd220.png?1352840743');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -866,7 +866,7 @@ button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1352840797');
+  background: url('../images/rgbapng/ffffff7f.png?1352840743');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -880,7 +880,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1352840797');
+  background: url('../images/rgbapng/ffffffbf.png?1352840743');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -1112,6 +1112,23 @@ button {
 }
 #messages .close:focus, #messages .close:hover, #messages .close:active {
   color: #fdf6e3;
+}
+
+.content-template {
+  -webkit-box-shadow: #073642 0 0 0.25em inset;
+  -moz-box-shadow: #073642 0 0 0.25em inset;
+  box-shadow: #073642 0 0 0.25em inset;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  padding: 1.27778rem;
+  background: #eee8d5;
+}
+.content-template h3 {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  font-weight: bold;
 }
 
 #english-toggle:checked ~ [for="english-toggle"], #spanish-toggle:checked ~ [for="spanish-toggle"] {
@@ -1729,10 +1746,10 @@ button {
   border-top-style: solid;
   padding-top: 11px;
   padding-top: 0.61111rem;
-  -moz-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   padding-bottom: 23px;
   padding-bottom: 1.27778rem;
   clear: both;
@@ -1780,7 +1797,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1352840797') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351891853') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1791,7 +1808,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1352840797') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1802,7 +1819,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1352840797') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1831,7 +1848,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1352840797') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1892,19 +1909,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1352840797');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1352840797');
+  background-image: url('../images/landing/carl.png?1351725897');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1352840797');
+  background-image: url('../images/landing/eric.png?1351725897');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1352840797');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 .lt-ie9 .village-landing .container {
@@ -2294,7 +2311,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: #073642 0 0 0.31944rem inset;
   box-shadow: #073642 0 0 0.31944rem inset;
   position: relative;
-  background: url('../images/handmadepaper.png?1353531446') repeat scroll;
+  background: url('../images/handmadepaper.png?1353558228') repeat scroll;
 }
 .pdf-previews .tab-title {
   font-size: 14px;
@@ -3084,7 +3101,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: block;
 }
 .browser-warning .modal {
-  background: url('../images/rgbapng/073642bf.png?1352840797');
+  background: url('../images/rgbapng/073642bf.png?1352840744');
   background: rgba(7, 54, 66, 0.75);
   position: fixed;
   top: 0;
