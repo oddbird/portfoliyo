@@ -102,8 +102,10 @@ def test_unknown_profile(db):
     reply = hook.receive_sms('123', 'foo')
 
     assert reply == (
-        "Bummer, we don't recognize your invite code! "
-        "Please make sure it's typed exactly as it is on the paper."
+        "We don't recognize your phone number, "
+        "so we don't know who to send your text to! "
+        "If you are just signing up, "
+        "make sure your invite code is typed correctly."
         )
 
 
