@@ -177,7 +177,7 @@ LOGGING = {
         },
     },
     "root": {
-        "level": "WARNING",
+        "level": "DEBUG",
         "handlers": ["console"],
     },
     "formatters": {

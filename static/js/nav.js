@@ -303,6 +303,8 @@ var PYO = (function (PYO, $) {
                                     } else {
                                         addNewPost(this);
                                     }
+                                } else {
+                                    addNewPost(this);
                                 }
                             } else if (this.author_id !== PYO.activeUserId) {
                                 unread.removeClass('zero').text(++count);

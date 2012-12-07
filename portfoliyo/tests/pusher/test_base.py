@@ -19,7 +19,7 @@ def test_get_pusher(mock_Pusher):
         p = pusher.get_pusher()
 
     assert p is mock_Pusher.return_value
-    mock_Pusher.assert_called_with(app_id='a', key='k', secret='s')
+    mock_Pusher.assert_called_with(app_id='a', key='k', secret='s', port=443)
 
 
 def test_get_pusher_none():
