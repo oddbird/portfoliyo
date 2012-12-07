@@ -582,7 +582,7 @@ class TestStudentForms(object):
         form = forms.AddStudentForm({'name': "Some Student"}, elder=elder)
         assert form.is_valid(), dict(form.errors)
         profile = form.save()
-        rel = profile.elder_relationships[0]
+        rel = profile.elder_relationships.get()
 
         assert profile.name == u"Some Student"
         assert profile.invited_by == elder
@@ -590,6 +590,44 @@ class TestStudentForms(object):
         assert rel.elder == elder
         assert rel.student == profile
         assert rel.level == 'owner'
+
+
+    def test_add_student_with_family(self, db):
+        """Saves a student and adds a family member."""
+        teacher = factories.ProfileFactory.create()
+        phone = "+13216540987"
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'family-phone': phone,
+                'family-relationship': "mother",
+                },
+            elder=teacher,
+            )
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+        family = profile.elder_relationships.exclude(
+            from_profile=teacher).get().elder
+
+        assert set(profile.elders) == {teacher, family}
+        assert family.phone == phone
+        assert family.role == "mother"
+
+
+    def test_add_student_with_family_error(self, db):
+        """Both family fields required if one is filled out."""
+        teacher = factories.ProfileFactory.create()
+        phone = "+13216540987"
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'family-phone': phone,
+                },
+            elder=teacher,
+            )
+        assert not form.is_valid()
+        assert form.family_form.errors['relationship'] == [
+            u"This field is required."]
 
 
     def test_add_student_strips_whitespace(self, db):
