@@ -1,6 +1,6 @@
 {% extends "village/_student_form.html" %}
 {% load url from future %}
-{% load markup %}
+{% load widget_tweaks %}
 
 {% block form-action %}{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
 
@@ -12,14 +12,15 @@
 
 {% block add-family %}
 <div class="content-template">
-{% filter markdown %}
 
-### (fieldset) Invite a family member:
+<fieldset>
+  <p>Invite a family member (optional):</p>
 
-- relationship _input[type="text"][placeholder="e.g. Mom, Dad, Grandma, etc."]_
-- phone number _input[type="text"][placeholder="555-555-5555"]_
+  {% include "forms/_field.html" with field=form.family_form.relationship|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." %}
+  {% include "forms/_field.html" with field=form.family_form.phone|attr:"placeholder:555-555-5555" %}
 
-{% endfilter %}
+</fieldset>
+
 </div>
 {% endblock add-family %}
 

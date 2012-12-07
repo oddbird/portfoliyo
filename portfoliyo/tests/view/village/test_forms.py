@@ -614,6 +614,28 @@ class TestStudentForms(object):
         assert family.role == "mother"
 
 
+    def test_add_student_with_family_that_already_has_student(self, db):
+        """Saves a student and adds a family member."""
+        teacher = factories.ProfileFactory.create()
+        phone = "+13216540987"
+        factories.RelationshipFactory.create(
+            from_profile__phone=phone)
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'family-phone': phone,
+                'family-relationship': "mother",
+                },
+            elder=teacher,
+            )
+        assert not form.is_valid()
+        assert form.family_form.errors['phone'] == [
+            u"This person is already connected to a different student. "
+            u"Portfoliyo doesn't support family members in multiple "
+            u"villages yet, but we're working on it!"
+            ]
+
+
     def test_add_student_with_family_error(self, db):
         """Both family fields required if one is filled out."""
         teacher = factories.ProfileFactory.create()
