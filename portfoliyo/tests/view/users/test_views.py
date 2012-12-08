@@ -290,7 +290,7 @@ class TestRegister(object):
 
 class TestConfirmEmail(object):
     """Tests for confirm_email view."""
-    def url(self, client, db):
+    def url(self, client):
         """Shortcut for confirm_email url."""
         school = factories.SchoolFactory.create()
         form = client.get(reverse('register')).forms['register-form']
@@ -311,12 +311,12 @@ class TestConfirmEmail(object):
 
     def test_confirm(self, client, db):
         """Get a confirmation message after activating."""
-        res = client.get(self.url(client, db), status=302).follow()
+        res = client.get(self.url(client), status=302).follow()
 
         res.mustcontain("address new@example.com confirmed")
 
 
-    def test_failed_activate(self, client, db):
+    def test_failed_confirm(self, client, db):
         """Failed confirm returns a failure message."""
         res = client.get(
             reverse(
