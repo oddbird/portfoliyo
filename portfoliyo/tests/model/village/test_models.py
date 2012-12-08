@@ -240,7 +240,7 @@ class TestPostCreate(object):
         factories.RelationshipFactory.create(
             from_profile__user__email='five@example.com',
             from_profile__user__is_active=False,
-            from_profile__email_notifications=True,
+            from_profile__notify_teacher_post=True,
             to_profile=rel.student,
             )
         # Has no email - no notification

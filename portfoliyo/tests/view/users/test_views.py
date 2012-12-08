@@ -257,7 +257,7 @@ class TestRegister(object):
 
 
     def test_register(self, client, db):
-        """Get a confirmation message after registering."""
+        """Get logged in and redirected to home after registering."""
         school = factories.SchoolFactory.create()
         form = client.get(self.url).forms['register-form']
         form['name'] = 'Some Body'
@@ -266,16 +266,32 @@ class TestRegister(object):
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
         form['school'] = str(school.id)
-        res = form.submit(status=302).follow()
+        res = form.submit(status=302)
 
-        res.mustcontain("confirm your email")
+        assert res['Location'] == utils.location(reverse('add_group'))
+
+        res.follow(status=200)
+
+
+    def test_register_failed(self, client, db):
+        """Form redisplayed with any errors."""
+        school = factories.SchoolFactory.create()
+        form = client.get(self.url).forms['register-form']
+        form['email'] = 'some@example.com'
+        form['password'] = 'sekrit123'
+        form['password_confirm'] = 'sekrit123'
+        form['role'] = 'Test User'
+        form['school'] = str(school.id)
+        res = form.submit(status=200)
+
+        res.mustcontain('field is required')
 
 
 
-class TestActivate(object):
-    """Tests for activate view."""
+class TestConfirmEmail(object):
+    """Tests for confirm_email view."""
     def url(self, client, db):
-        """Shortcut for activate url."""
+        """Shortcut for confirm_email url."""
         school = factories.SchoolFactory.create()
         form = client.get(reverse('register')).forms['register-form']
         form['name'] = 'New Body'
@@ -290,22 +306,24 @@ class TestActivate(object):
             if '://' in line:
                 return line.strip()
 
-        assert False, "Activation link not found in activation email."
+        assert False, "Email-confirm link not found in activation email."
 
 
-    def test_activate(self, client, db):
+    def test_confirm(self, client, db):
         """Get a confirmation message after activating."""
         res = client.get(self.url(client, db), status=302).follow()
 
-        res.mustcontain("account has been activated")
+        res.mustcontain("address new@example.com confirmed")
 
 
     def test_failed_activate(self, client, db):
-        """Failed activation returns a failure message."""
+        """Failed confirm returns a failure message."""
         res = client.get(
-            reverse('activate', kwargs={'activation_key': 'foo'}))
+            reverse(
+                'confirm_email', kwargs={'uidb36': 'foo', 'token': 'foo-bar'})
+            )
 
-        res.mustcontain("that activation key is not valid")
+        res.mustcontain("doesn't seem to be valid")
 
 
 
