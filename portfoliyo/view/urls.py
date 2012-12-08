@@ -19,6 +19,7 @@ urlpatterns = patterns(
     '',
     url(r'^pusher/auth$', pusher_views.pusher_auth),
     url(r'^_twilio_hook/$', sms_views.twilio_receive),
+    url(r'^_twilio_voice/$', sms_views.twilio_voice),
     url(r'^$', home_views.home, name='home'),
     url(r'^no_students/$',
         login_required(direct_to_template),
