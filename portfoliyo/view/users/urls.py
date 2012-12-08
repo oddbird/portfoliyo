@@ -40,4 +40,11 @@ urlpatterns = patterns(
         direct_to_template,
         {'template': 'users/registration_closed.html'},
         name='registration_disallowed'),
+    # @@@ This is here only for backwards-compatibility for people who got
+    # old-style activation emails before we deployed this change, but hadn't
+    # clicked the link yet. It should be removed after a week or so.
+    url(r'^activate/(?P<activation_key>\w+)/$',
+        views.activate,
+        name='activate',
+        ),
     )

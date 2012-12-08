@@ -15,6 +15,8 @@ from django.utils.http import base36_to_int
 from django.views.decorators.http import require_POST
 
 from ratelimit.decorators import ratelimit
+from registration import views as registration_views
+from registration import signals as registration_signals
 from session_csrf import anonymous_csrf
 
 from portfoliyo import model, invites
@@ -160,6 +162,34 @@ def confirm_email(request, uidb36, token):
 
     return TemplateResponse(request, 'users/confirmation_failed.html')
 
+
+# @@@ This is here only for backwards-compatibility for people who got
+# old-style activation emails before we deployed this change, but hadn't
+# clicked the link yet. It should be removed after a week or so.
+def activate(request, activation_key):
+    response = registration_views.activate(
+        request,
+        backend='registration.backends.default.DefaultBackend',
+        activation_key=activation_key,
+        template_name='users/activate.html',
+        success_url=reverse('login'),
+        )
+
+    if response.status_code == 302:
+        messages.success(
+            request,
+            "Success! Your account has been activated, you can now login.",
+            )
+
+    return response
+
+def user_activated(sender, user, **kwargs):
+    profile = user.profile
+    profile.email_confirmed = True
+    profile.save()
+
+registration_signals.user_activated.connect(user_activated)
+# @@@ end of back-compat code
 
 
 @anonymous_csrf

@@ -327,6 +327,44 @@ class TestConfirmEmail(object):
 
 
 
+# @@@ This is here only for backwards-compatibility for people who got
+# old-style activation emails before we deployed this change, but hadn't
+# clicked the link yet. It should be removed after a week or so.
+class TestActivate(object):
+    """Tests for activate view."""
+    def url(self, client, profile):
+        """Shortcut for activate url."""
+        from registration.models import RegistrationProfile
+        reg_profile = RegistrationProfile.objects.create_profile(profile.user)
+
+        return reverse(
+            'activate', kwargs={'activation_key': reg_profile.activation_key})
+
+
+    def test_activate(self, client, db):
+        """Get a confirmation message after activating."""
+        profile = factories.ProfileFactory.create(
+            user__is_active=False,
+            email_confirmed=False,
+            )
+
+        res = client.get(self.url(client, profile), status=302).follow()
+
+        res.mustcontain("account has been activated")
+        profile = utils.refresh(profile)
+        assert profile.email_confirmed
+        assert profile.user.is_active
+
+
+    def test_failed_activate(self, client, db):
+        """Failed confirm returns a failure message."""
+        res = client.get(
+            reverse('activate', kwargs={'activation_key': 'foo'}))
+
+        res.mustcontain("is not valid")
+
+
+
 class TestAcceptEmailInvite(object):
     """Tests for accept-email-invite view."""
     def url(self, client, profile):
