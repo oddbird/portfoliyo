@@ -160,6 +160,7 @@ class BasePost(models.Model):
             return
         send_to = self.elders_in_context.filter(
             user__email__isnull=False,
+            user__is_active=True,
             email_notifications=True,
             ).exclude(pk=self.author.pk)
         for profile in send_to:

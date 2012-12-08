@@ -200,6 +200,13 @@ class TestPostCreate(object):
             from_profile__email_notifications=False,
             to_profile=rel.student,
             )
+        # Inactive - no notifications
+        factories.RelationshipFactory.create(
+            from_profile__user__email='five@example.com',
+            from_profile__user__is_active=False,
+            from_profile__email_notifications=True,
+            to_profile=rel.student,
+            )
         # Has no email - no notification
         factories.RelationshipFactory.create(
             from_profile__user__email=None,
