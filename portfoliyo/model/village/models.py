@@ -158,7 +158,10 @@ class BasePost(models.Model):
         # No email notifications on system-generated posts:
         if not self.author:
             return
-        filters = {'user__email__isnull': False}
+        filters = {
+            'user__email__isnull': False,
+            'user__is_active': True,
+            }
         if from_sms:
             filters['notify_parent_text'] = True
         else:
