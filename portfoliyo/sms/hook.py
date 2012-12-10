@@ -7,7 +7,7 @@ from portfoliyo import model, notifications
 # The maximum expected length (in words) of a name or role
 # Setting a fairly low bar for starters to get more data, since it's only
 # warning us, not affecting the user
-MAX_EXPECTED_NAME_LENGTH = 5
+MAX_EXPECTED_ANSWER_LENGTH = 5
 
 
 logger = logging.getLogger(__name__)
@@ -172,9 +172,6 @@ def handle_new_student(signup, body):
     """Handle addition of a student to a just-signing-up parent's account."""
     student_name = get_answer(body)
 
-    if len(student_name.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long student name: %s", student_name)
-
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
         relationships_to__from_profile=signup.teacher,
@@ -224,9 +221,6 @@ def handle_role_update(signup, body):
     """Handle defining role of parent in relation to student."""
     role = get_answer(body)
 
-    if len(role.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long relationship: %s", role)
-
     parent = signup.family
     parent.relationships_from.filter(
         description=parent.role).update(description=role)
@@ -250,9 +244,6 @@ def handle_role_update(signup, body):
 def handle_name_update(signup, body):
     """Handle defining name of parent."""
     name = get_answer(body)
-
-    if len(name.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long family member name: %s", name)
 
     parent = signup.family
     parent.name = name
@@ -373,4 +364,13 @@ def get_answer(msg):
     """
     stripped_lines = (l.strip() for l in msg.splitlines())
     non_empty_lines = [l for l in stripped_lines if l]
-    return non_empty_lines[0] if non_empty_lines else ""
+    answer = non_empty_lines[0] if non_empty_lines else ""
+
+    if len(answer.split()) > MAX_EXPECTED_ANSWER_LENGTH:
+        logger.warning(
+            "Unusually long SMS question answer: %s",
+            answer,
+            extra={'stack': True},
+            )
+
+    return answer
