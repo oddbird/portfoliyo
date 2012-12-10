@@ -479,9 +479,15 @@ def pdf_parent_instructions(request, lang, group_id=None):
         model.Group.objects.filter(
             owner=request.user.profile, id=group_id)) if group_id else None
 
+    lang_verbose = dict(settings.LANGUAGES).get(lang, lang)
+
+    filename = "Portfoliyo %s%s.pdf" % (
+        lang_verbose,
+        (" - %s" % group.name) if group else "",
+        )
+
     response = http.HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = (
-        'attachment; filename=instructions-%s.pdf' % lang)
+    response['Content-Disposition'] = 'attachment; filename=%s' % filename
 
     pdf.generate_instructions_pdf(
         stream=response,

@@ -1138,22 +1138,24 @@ class TestPdfParentInstructions(object):
         url = reverse('pdf_parent_instructions', kwargs={'lang': 'es'})
         resp = client.get(url, user=elder.user, status=200)
 
-        assert resp.headers[
-            'Content-Disposition'] == 'attachment; filename=instructions-es.pdf'
+        content_disposition = 'attachment; filename=Portfoliyo Spanish.pdf'
+        assert resp.headers['Content-Disposition'] == content_disposition
         assert resp.headers['Content-Type'] == 'application/pdf'
 
 
     def test_group(self, client, db):
         """Can get a PDF for a group code."""
-        group = factories.GroupFactory.create(owner__school_staff=True)
+        group = factories.GroupFactory.create(
+            owner__school_staff=True, name='1st Period Math')
         url = reverse(
             'pdf_parent_instructions',
             kwargs={'lang': 'en', 'group_id': group.id},
             )
         resp = client.get(url, user=group.owner.user, status=200)
 
-        assert resp.headers[
-            'Content-Disposition'] == 'attachment; filename=instructions-en.pdf'
+        content_disposition = (
+            'attachment; filename=Portfoliyo English - 1st Period Math.pdf')
+        assert resp.headers['Content-Disposition'] == content_disposition
         assert resp.headers['Content-Type'] == 'application/pdf'
 
 
@@ -1174,6 +1176,6 @@ class TestPdfParentInstructions(object):
         url = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
         resp = client.get(url, user=elder.user, status=200)
 
-        assert resp.headers[
-            'Content-Disposition'] == 'attachment; filename=instructions-en.pdf'
+        content_disposition = 'attachment; filename=Portfoliyo English.pdf'
+        assert resp.headers['Content-Disposition'] == content_disposition
         assert resp.headers['Content-Type'] == 'application/pdf'
