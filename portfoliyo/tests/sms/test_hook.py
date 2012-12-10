@@ -242,11 +242,19 @@ def test_code_signup_student_name_strips_extra_lines(db):
         teacher=teacher,
         )
 
-    hook.receive_sms(phone, "Jimmy Doe\nLook at me!")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        hook.receive_sms(phone, "Jimmy Doe\nLook at me!")
 
     parent = model.Profile.objects.get(phone=phone)
     student = parent.students[0]
     assert student.name == u"Jimmy Doe"
+    mock_create.assert_any_call(
+        parent,
+        student,
+        "Jimmy Doe\nLook at me!",
+        from_sms=True,
+        email_notifications=False,
+        )
 
 
 def test_unusually_long_student_name_logs_warning(db):

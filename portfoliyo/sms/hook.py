@@ -67,14 +67,11 @@ def receive_sms(source, body):
 
     if signup is not None:
         if signup.state == model.TextSignup.STATE.kidname:
-            return handle_new_student(
-                signup=signup,
-                student_name=get_answer(body),
-                )
+            return handle_new_student(signup, body)
         elif signup.state == model.TextSignup.STATE.relationship:
-            return handle_role_update(signup=signup, role=get_answer(body))
+            return handle_role_update(signup, body)
         elif signup.state == model.TextSignup.STATE.name:
-            return handle_name_update(signup=signup, name=get_answer(body))
+            return handle_name_update(signup, body)
 
     students = profile.students
 
@@ -171,8 +168,10 @@ def handle_subsequent_code(profile, teacher, group, signup):
     return reply(profile.phone, [student] if student else [], msg)
 
 
-def handle_new_student(signup, student_name):
+def handle_new_student(signup, body):
     """Handle addition of a student to a just-signing-up parent's account."""
+    student_name = get_answer(body)
+
     if len(student_name.split()) > MAX_EXPECTED_NAME_LENGTH:
         logger.warning("Unusually long student name: %s", student_name)
 
@@ -210,7 +209,7 @@ def handle_new_student(signup, student_name):
     model.Post.create(
         signup.family,
         student,
-        student_name,
+        body,
         from_sms=True,
         email_notifications=False,
         )
@@ -221,8 +220,10 @@ def handle_new_student(signup, student_name):
         )
 
 
-def handle_role_update(signup, role):
+def handle_role_update(signup, body):
     """Handle defining role of parent in relation to student."""
+    role = get_answer(body)
+
     if len(role.split()) > MAX_EXPECTED_NAME_LENGTH:
         logger.warning("Unusually long relationship: %s", role)
 
@@ -237,7 +238,7 @@ def handle_role_update(signup, role):
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, role, from_sms=True, email_notifications=False)
+            parent, rel.student, body, from_sms=True, email_notifications=False)
     return reply(
         parent.phone,
         parent.students,
@@ -246,8 +247,10 @@ def handle_role_update(signup, role):
         )
 
 
-def handle_name_update(signup, name):
+def handle_name_update(signup, body):
     """Handle defining name of parent."""
+    name = get_answer(body)
+
     if len(name.split()) > MAX_EXPECTED_NAME_LENGTH:
         logger.warning("Unusually long family member name: %s", name)
 
@@ -260,7 +263,7 @@ def handle_name_update(signup, name):
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, name, from_sms=True, email_notifications=False)
+            parent, rel.student, body, from_sms=True, email_notifications=False)
         if teacher and teacher.email_notifications and teacher.user.email:
             notifications.send_signup_email_notification(teacher, rel)
     return reply(
