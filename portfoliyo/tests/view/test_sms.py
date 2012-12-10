@@ -125,3 +125,18 @@ def test_validation(mock_validate):
     response = sms.twilio_receive(signed_request())
 
     assert response.status_code == 403
+
+
+@override_settings(TWILIO_AUTH_TOKEN='foo', STATIC_URL='/static/')
+@mock.patch('portfoliyo.view.sms.RequestValidator.validate')
+def test_receive_voice_call(mock_validate):
+    """Plays phone-message.wav recording."""
+    mock_validate.return_value = True
+
+    response = sms.twilio_voice(signed_request({}))
+
+    assert response.status_code == 200
+    assert response.content == (
+        '<?xml version="1.0" encoding="UTF-8"?>'
+        '<Response><Play>/static/audio/phone-message.wav</Play></Response>'
+        )
