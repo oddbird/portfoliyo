@@ -1138,7 +1138,7 @@ class TestPdfParentInstructions(object):
         url = reverse('pdf_parent_instructions', kwargs={'lang': 'es'})
         resp = client.get(url, user=elder.user, status=200)
 
-        content_disposition = 'attachment; filename=Portfoliyo Spanish.pdf'
+        content_disposition = 'attachment; filename="Portfoliyo Spanish.pdf"'
         assert resp.headers['Content-Disposition'] == content_disposition
         assert resp.headers['Content-Type'] == 'application/pdf'
 
@@ -1154,7 +1154,7 @@ class TestPdfParentInstructions(object):
         resp = client.get(url, user=group.owner.user, status=200)
 
         content_disposition = (
-            'attachment; filename=Portfoliyo English - 1st Period Math.pdf')
+            'attachment; filename="Portfoliyo English - 1st Period Math.pdf"')
         assert resp.headers['Content-Disposition'] == content_disposition
         assert resp.headers['Content-Type'] == 'application/pdf'
 
@@ -1176,6 +1176,6 @@ class TestPdfParentInstructions(object):
         url = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
         resp = client.get(url, user=elder.user, status=200)
 
-        content_disposition = 'attachment; filename=Portfoliyo English.pdf'
+        content_disposition = 'attachment; filename="Portfoliyo English.pdf"'
         assert resp.headers['Content-Disposition'] == content_disposition
         assert resp.headers['Content-Type'] == 'application/pdf'

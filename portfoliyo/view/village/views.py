@@ -481,13 +481,13 @@ def pdf_parent_instructions(request, lang, group_id=None):
 
     lang_verbose = dict(settings.LANGUAGES).get(lang, lang)
 
-    filename = "Portfoliyo %s%s.pdf" % (
-        lang_verbose,
-        (" - %s" % group.name) if group else "",
-        )
+    filename = "Portfoliyo {0}{1}.pdf".format(
+            lang_verbose,
+            " - {0}".format(group.name) if group else "",
+            )
 
     response = http.HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename=%s' % filename
+    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
 
     pdf.generate_instructions_pdf(
         stream=response,
