@@ -69,12 +69,12 @@ def receive_sms(source, body):
         if signup.state == model.TextSignup.STATE.kidname:
             return handle_new_student(
                 signup=signup,
-                student_name=body.strip(),
+                student_name=get_answer(body),
                 )
         elif signup.state == model.TextSignup.STATE.relationship:
-            return handle_role_update(signup=signup, role=body.strip())
+            return handle_role_update(signup=signup, role=get_answer(body))
         elif signup.state == model.TextSignup.STATE.name:
-            return handle_name_update(signup=signup, name=body.strip())
+            return handle_name_update(signup=signup, name=get_answer(body))
 
     students = profile.students
 
@@ -95,10 +95,7 @@ def receive_sms(source, body):
             source,
             students,
             interpolate_teacher_names(
-                "Thank you! You can text this number "
-                "to talk with %s.",
-                profile,
-                )
+                "Thank you! You can text this number to talk with %s.", profile)
         )
 
 
@@ -270,8 +267,7 @@ def handle_name_update(signup, name):
         parent.phone,
         parent.students,
         interpolate_teacher_names(
-            "All done, thank you! You can text this number "
-            "to talk with %s.",
+            "All done, thank you! You can text this number to talk with %s.",
             parent,
             )
         )
@@ -359,3 +355,19 @@ def reply(phone, students, body):
         model.Post.create(
             None, student, body, in_reply_to=phone, email_notifications=False)
     return body
+
+
+
+def get_answer(msg):
+    """
+    Extract an answer to a question from an incoming text.
+
+    Assume that the expected answer is a single name or short phrase.
+
+    Strips leading and trailing whitespace, ignores all lines except the first
+    non-empty one.
+
+    """
+    stripped_lines = (l.strip() for l in msg.splitlines())
+    non_empty_lines = [l for l in stripped_lines if l]
+    return non_empty_lines[0] if non_empty_lines else ""
