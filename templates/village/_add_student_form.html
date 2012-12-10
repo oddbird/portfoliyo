@@ -20,6 +20,10 @@
   {% include "forms/_field.html" with field=form.family_form.relationship|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." %}
   {% include "forms/_field.html" with field=form.family_form.phone|attr:"placeholder:555-555-5555" %}
 
+  <blockquote class="sms-preview">
+    <h3>Invitation:</h3>
+    {% include "registration/invite_elder_sms.txt" %}
+  </blockquote>
 </fieldset>
 {% endblock add-family %}
 

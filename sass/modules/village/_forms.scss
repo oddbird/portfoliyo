@@ -80,7 +80,7 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 .sms-preview {
   @include transition(all 300ms);
   background: $base2;
-  .form-actions & {
+  .form-actions &, .invite-family-fieldset & {
     @include rhythm-margins;
     padding: rhythm(1);
     text-align: left;
@@ -88,6 +88,10 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
       display: inline;
       font-weight: bold;
     }
+  }
+  .invite-family-fieldset & {
+    margin-bottom: 0;
+    background: $base3;
   }
   .formfield-help & {
     max-height: rhythm(0);
