@@ -88,10 +88,7 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     "django.contrib.auth.context_processors.auth",
     "django.contrib.messages.context_processors.messages",
     "session_csrf.context_processor",
-    "portfoliyo.google_analytics.context_processor",
-    "portfoliyo.uservoice.context_processor",
-    "portfoliyo.snapengage.context_processor",
-    "portfoliyo.pusher.context_processor",
+    "portfoliyo.view.context_processors.services",
 ]
 
 MIDDLEWARE_CLASSES = [
