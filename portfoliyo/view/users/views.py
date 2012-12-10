@@ -124,10 +124,7 @@ def register(request):
                 request,
                 "Welcome to Portfoliyo! We're glad you're here. "
                 "We'll start by creating a group for your first students "
-                "(could be a class or a period) "
-                "and then you can add students and their parents to it, "
-                "either by sending a signup sheet home with the students "
-                "or by entering the parent phone numbers yourself."
+                "and then you can add students and their parents."
                 )
             return redirect(redirect_home(user))
     else:
