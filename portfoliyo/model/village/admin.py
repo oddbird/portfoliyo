@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.utils import timezone
 
 from . import models
 
@@ -82,7 +83,7 @@ class PostAdmin(admin.ModelAdmin):
     def linked_timestamp(self, post):
         return u'<a href="%s">%s</a>' % (
             post.get_absolute_url(),
-            post.timestamp.strftime('%b. %d, %Y, %I:%M %p'),
+            timezone.localtime(post.timestamp).strftime('%b. %d, %Y, %I:%M %p'),
             )
     linked_timestamp.short_description = 'timestamp'
     linked_timestamp.allow_tags = True
