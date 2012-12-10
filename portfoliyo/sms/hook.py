@@ -82,8 +82,9 @@ def receive_sms(source, body):
         logger.warning(
             "Text from %s (has no students): %s", source, body)
         return (
-            "You're not part of any student's Portfoliyo Village, "
-            "so we're not able to deliver your message. Sorry!"
+            "Sorry, we can't find find any students connected to your number, "
+            "so we're not able to deliver your message. "
+            "Please contact your student's teacher for help."
             )
 
     for student in students:
