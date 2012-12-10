@@ -162,14 +162,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
+#messages .close:before, .announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
+#messages .close:before, .announcements .close:before, .meta .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
   margin-right: .4em;
 }
 
@@ -203,19 +203,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: attr(data-icon);
 }
 
-.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
   content: "\2610";
 }
 
-.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
   content: "\2611";
 }
 
-.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
   content: "\25c9";
 }
 
-.ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
+.ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
   content: "\25ef";
 }
 
@@ -640,7 +640,7 @@ optgroup {
   border-left-color: #cbccc0;
 }
 
-.ui-multiselect-checkboxes [type="checkbox"], .email_notifications-field [type="checkbox"], .school_staff-field [type="checkbox"], .ui-multiselect-checkboxes [type="radio"], .email_notifications-field [type="radio"], .school_staff-field [type="radio"] {
+.ui-multiselect-checkboxes [type="checkbox"], .email_notifications-field [type="checkbox"], .fieldset.notifications [type="checkbox"], .school_staff-field [type="checkbox"], .ui-multiselect-checkboxes [type="radio"], .email_notifications-field [type="radio"], .fieldset.notifications [type="radio"], .school_staff-field [type="radio"] {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -650,17 +650,22 @@ optgroup {
   width: 1px;
   border: 0;
 }
-.ui-multiselect-checkboxes [type="checkbox"] + .type, .email_notifications-field [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .ui-multiselect-checkboxes [type="radio"] + .type, .email_notifications-field [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
+.ui-multiselect-checkboxes [type="checkbox"] + .type, .email_notifications-field [type="checkbox"] + .type, .fieldset.notifications [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .ui-multiselect-checkboxes [type="radio"] + .type, .email_notifications-field [type="radio"] + .type, .fieldset.notifications [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
   display: block;
+  font-style: italic;
 }
-.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   margin-left: .4em;
   color: #586e75;
 }
-.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before, .ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before, .ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
   color: #268bd2;
 }
-.ui-multiselect-checkboxes [type="checkbox"]:focus + .type, .email_notifications-field [type="checkbox"]:focus + .type, .school_staff-field [type="checkbox"]:focus + .type, .ui-multiselect-checkboxes [type="radio"]:focus + .type, .email_notifications-field [type="radio"]:focus + .type, .school_staff-field [type="radio"]:focus + .type {
+.ui-multiselect-checkboxes [type="checkbox"]:focus + .type, .email_notifications-field [type="checkbox"]:focus + .type, .fieldset.notifications [type="checkbox"]:focus + .type, .school_staff-field [type="checkbox"]:focus + .type, .ui-multiselect-checkboxes [type="radio"]:focus + .type, .email_notifications-field [type="radio"]:focus + .type, .fieldset.notifications [type="radio"]:focus + .type, .school_staff-field [type="radio"]:focus + .type {
   color: #002b36;
 }
 
@@ -1588,6 +1593,24 @@ button {
   margin: 0;
   padding: 0;
   text-align: left;
+}
+
+.fieldset.notifications {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+.fieldset.notifications [type="checkbox"] + .type, .fieldset.notifications [type="radio"] + .type {
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.fieldset.notifications .fieldset-header {
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
 }
 
 @media (min-width: 43.875em) {
