@@ -13,6 +13,7 @@ from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
 from portfoliyo import formats, model, pdf
+from portfoliyo.view import tracking
 from ..ajax import ajax
 from ..decorators import school_staff_required, login_required
 from . import forms
@@ -77,6 +78,7 @@ def add_student(request, group_id=None):
             request.POST, elder=request.user.profile, group=group)
         if form.is_valid():
             student = form.save()
+            tracking.track(request, 'added student')
             return redirect_to_village(student, group)
     else:
         form = forms.AddStudentForm(elder=request.user.profile, group=group)
@@ -124,6 +126,7 @@ def edit_student(request, student_id):
             request.POST, instance=rel.student, elder=rel.elder)
         if form.is_valid():
             student = form.save()
+            tracking.track(request, 'edited student')
             return redirect_to_village(student, group)
     else:
         form = forms.StudentForm(instance=rel.student, elder=rel.elder)
@@ -148,6 +151,7 @@ def add_group(request):
         form = forms.AddGroupForm(request.POST, owner=request.user.profile)
         if form.is_valid():
             group = form.save()
+            tracking.track(request, 'added group')
             if not group.students.exists():
                 return redirect(
                     reverse('add_students_bulk', kwargs={'group_id': group.id})
@@ -179,6 +183,7 @@ def edit_group(request, group_id):
         form = forms.GroupForm(request.POST, instance=group)
         if form.is_valid():
             group = form.save()
+            tracking.track(request, 'edited group')
             return redirect('group', group_id=group.id)
     else:
         form = forms.GroupForm(instance=group)
@@ -205,6 +210,7 @@ def invite_family(request, student_id):
         form = forms.InviteFamilyForm(request.POST, rel=rel)
         if form.is_valid():
             form.save()
+            tracking.track(request, 'invited family')
             return redirect_to_village(rel.student, group)
     else:
         phone = request.GET.get('phone', None)
@@ -237,6 +243,7 @@ def invite_teacher(request, student_id):
         form = forms.InviteTeacherForm(request.POST, rel=rel)
         if form.is_valid():
             form.save()
+            tracking.track(request, 'invited teacher')
             return redirect_to_village(rel.student, group)
     else:
         form = forms.InviteTeacherForm(rel=rel)
@@ -260,6 +267,7 @@ def invite_teacher_to_group(request, group_id):
         form = forms.InviteTeacherForm(request.POST, group=group)
         if form.is_valid():
             form.save()
+            tracking.track(request, 'invited teacher to group')
             return redirect('group', group_id=group.id)
     else:
         form = forms.InviteTeacherForm(group=group)
@@ -497,5 +505,7 @@ def pdf_parent_instructions(request, lang, group_id=None):
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
         group=group,
         )
+
+    tracking.track(request, 'downloaded signup pdf', language=lang)
 
     return response
