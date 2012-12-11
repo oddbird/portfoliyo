@@ -6,11 +6,6 @@ import mock
 from portfoliyo import pusher
 
 
-def test_context_processor():
-    with override_settings(PUSHER_KEY="foo"):
-        expected = {"PUSHER_KEY": "foo"}
-        assert pusher.context_processor(None) == expected
-
 
 @mock.patch('pusher.Pusher')
 def test_get_pusher(mock_Pusher):

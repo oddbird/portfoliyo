@@ -6,11 +6,6 @@ import pusher
 
 
 
-def context_processor(request):
-    return {'PUSHER_KEY': getattr(settings, 'PUSHER_KEY', '')}
-
-
-
 def get_pusher():
     """Return a real pusher client if configured in settings, or None."""
     app_id = getattr(settings, 'PUSHER_APPID', None)
