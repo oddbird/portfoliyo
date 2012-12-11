@@ -4,7 +4,7 @@ Hello,
 
 To accept this invitation, visit
 
-{{ base_url }}{% url accept_email_invite uidb36=uid token=token %}
+{{ base_url }}{% url accept_email_invite uidb36=uidb36 token=token %}
 
 If you don't want to participate in {% if student %}{{ student }}'s education via {% endif %}Portfoliyo,
 you can simply ignore this email.

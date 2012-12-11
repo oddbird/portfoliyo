@@ -4,6 +4,8 @@ Account-related views.
 """
 from functools import partial
 
+from django.conf import settings
+from django.contrib import auth
 from django.contrib.auth import views as auth_views, forms as auth_forms
 from django.contrib import messages
 from django.core.urlresolvers import reverse
@@ -14,12 +16,13 @@ from django.views.decorators.http import require_POST
 
 from ratelimit.decorators import ratelimit
 from registration import views as registration_views
+from registration import signals as registration_signals
 from session_csrf import anonymous_csrf
 
-from portfoliyo import model
+from portfoliyo import model, invites
 from ..decorators import login_required
 from ..home import redirect_home
-from . import forms
+from . import forms, tokens
 
 
 
@@ -30,9 +33,6 @@ def login(request):
         'template_name': 'users/login.html',
         'authentication_form': forms.CaptchaAuthenticationForm,
         }
-    if request.session.get('just_activated'):
-        del request.session['just_activated']
-        kwargs['extra_context'] = {'just_activated': True}
     # the contrib.auth login view doesn't pass request into the bound form,
     # but CaptchaAuthenticationForm needs it, so we ensure it's passed in
     if request.method == 'POST':
@@ -70,8 +70,8 @@ def password_reset(request):
         request,
         password_reset_form=forms.PasswordResetForm,
         template_name='users/password_reset.html',
-        email_template_name='registration/password_reset_email.txt',
-        subject_template_name='registration/password_reset_subject.txt',
+        email_template_name='emails/password_reset.txt',
+        subject_template_name='emails/password_reset.subject.txt',
         post_reset_redirect=redirect_home(request.user),
         )
 
@@ -105,31 +105,88 @@ def password_reset_confirm(request, uidb36, token):
 
 
 
+@anonymous_csrf
+def register(request):
+    if request.method == 'POST':
+        form = forms.RegistrationForm(request.POST)
+        if form.is_valid():
+            profile = form.save()
+            user = profile.user
+            user.backend = settings.AUTHENTICATION_BACKENDS[0]
+            auth.login(request, user)
+            token_generator = tokens.EmailConfirmTokenGenerator()
+            invites.send_invite_email(
+                profile,
+                'emails/activation',
+                token_generator=token_generator,
+                )
+            messages.success(
+                request,
+                "Welcome to Portfoliyo! "
+                "Start by creating a group "
+                "and then add students and parents."
+                )
+            return redirect(redirect_home(user))
+    else:
+        form = forms.RegistrationForm()
+
+    return TemplateResponse(
+        request,
+        'users/register.html',
+        {'form': form},
+        )
+
+
+
+def confirm_email(request, uidb36, token):
+    """Confirm an email address."""
+    try:
+        uid_int = base36_to_int(uidb36)
+        user = model.User.objects.get(id=uid_int)
+    except (ValueError, model.User.DoesNotExist):
+        user = None
+
+    token_generator = tokens.EmailConfirmTokenGenerator()
+
+    if user is not None and token_generator.check_token(user, token):
+        user.is_active = True
+        user.save()
+        profile = user.profile
+        profile.email_confirmed = True
+        profile.save()
+        messages.success(request, "Email address %s confirmed!" % user.email)
+        return redirect(redirect_home(user))
+
+    return TemplateResponse(request, 'users/confirmation_failed.html')
+
+
+# @@@ This is here only for backwards-compatibility for people who got
+# old-style activation emails before we deployed this change, but hadn't
+# clicked the link yet. It should be removed after a week or so.
 def activate(request, activation_key):
     response = registration_views.activate(
         request,
+        backend='registration.backends.default.DefaultBackend',
         activation_key=activation_key,
-        backend='portfoliyo.view.users.register.RegistrationBackend',
         template_name='users/activate.html',
         success_url=reverse('login'),
         )
 
     if response.status_code == 302:
-        request.session['just_activated'] = True
+        messages.success(
+            request,
+            "Success! Your account has been activated, you can now login.",
+            )
 
     return response
 
+def user_activated(sender, user, **kwargs):
+    profile = user.profile
+    profile.email_confirmed = True
+    profile.save()
 
-
-@anonymous_csrf
-def register(request):
-    return registration_views.register(
-        request,
-        backend='portfoliyo.view.users.register.RegistrationBackend',
-        template_name='users/register.html',
-        success_url=reverse('awaiting_activation'),
-        )
-
+registration_signals.user_activated.connect(user_activated)
+# @@@ end of back-compat code
 
 
 @anonymous_csrf
