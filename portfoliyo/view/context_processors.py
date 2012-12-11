@@ -6,5 +6,6 @@ def services(request):
         'USERVOICE_ID': getattr(settings, 'USERVOICE_ID', ''),
         'SNAPENGAGE_ID': getattr(settings, 'SNAPENGAGE_ID', ''),
         'MIXPANEL_ID': getattr(settings, 'MIXPANEL_ID', ''),
+        'CRAZYEGG_ID': getattr(settings, 'CRAZYEGG_ID', ''),
         'PUSHER_KEY': getattr(settings, 'PUSHER_KEY', ''),
         }
