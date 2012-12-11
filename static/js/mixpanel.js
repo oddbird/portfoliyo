@@ -18,7 +18,7 @@
                 // the landing and register pages anonymously. If we don't do
                 // this, then we can't track users' progression from landing to
                 // register to use of the site.
-                if (value[0] === 'registered') {
+                if (value[0] === 'registered' && value[1].user_id) {
                     mixpanel.alias(value[1].user_id);
                 }
             });
@@ -65,7 +65,7 @@
     var ajaxPageViews = function () {
         var History = window.History;
         if (History.enabled) {
-            History.Adapter.bind(window, 'statechange', function () {
+            $(window).on('statechange', function () {
                 // by the time we get here, the URL is already changed, so
                 // mixpanel gets the right URL automatically.
                 mixpanel.track_pageview();
