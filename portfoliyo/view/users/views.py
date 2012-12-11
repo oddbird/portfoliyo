@@ -130,11 +130,12 @@ def register(request):
             tracking.track(
                 request,
                 'registered',
-                emails=(
+                email_notifications=(
                     'yes'
                     if form.cleaned_data.get('email_notifications')
                     else 'no'
                     ),
+                user_id=user.id,
                 )
             return redirect(redirect_home(user))
     else:
