@@ -6,10 +6,12 @@
         existence ('article.awaiting-activation', 'registered');
         existence ('.login .activated.success', 'activated');
 
-        ajaxclick ('.action-post', 'posted');
-        ajaxclick ('.group-posts', 'mass texted');
+        ajaxClick ('.action-post', 'posted');
+        ajaxClick ('.group-posts', 'mass texted');
 
         serverEvents ('.meta', 'user-events');
+
+        ajaxPageViews ();
 
         // this should come last, to make sure that on registration we call
         // mixpanel.alias() with their user id (so mixpanel knows that user ID
@@ -46,7 +48,7 @@
         }
     };
 
-    var ajaxclick = function (sel, eventName) {
+    var ajaxClick = function (sel, eventName) {
         // This function is only safe to use on clicks that don't reload the
         // page (otherwise the page will reload before this has time to
         // actually send the event off to mixpanel).  For normal links, use
@@ -73,6 +75,17 @@
                     });
                 }
             }
+        }
+    };
+
+    var ajaxPageViews = function () {
+        var History = window.History;
+        if (History.enabled) {
+            History.Adapter.bind(window, 'statechange', function () {
+                // by the time we get here, the URL is already changed, so
+                // mixpanel gets the right URL automatically.
+                mixpanel.track_pageview();
+            });
         }
     };
 
