@@ -94,7 +94,7 @@ class PostAdmin(admin.ModelAdmin):
         return u'<a href="?school=%s">%s</a>' % (
             post.student.school_id, post.student.school)
     school.allow_tags = True
-    school.admin_order_field = 'student_school'
+    school.admin_order_field = 'student__school'
 
 
     def teacher_email(self, post):
