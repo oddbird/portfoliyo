@@ -1,5 +1,7 @@
 (function ($) {
 
+    'use strict';
+
     var serverEvents = function (sel, dataAttr) {
         // Look for and record events the server recorded in a JSON structure
         // in the given data attribute of the element named by the given
@@ -8,7 +10,7 @@
         // and the second a properties object.
         var events = $(sel).data(dataAttr);
         if (events) {
-            $.each(events, function(index, value) {
+            $.each(events, function (index, value) {
                 mixpanel.track(value[0], value[1]);
                 // If the user just registered, tell mixpanel that we'll be
                 // identifying them by user ID from now on, but they should
@@ -22,7 +24,6 @@
             });
         }
     };
-
 
     var existence = function (sel, eventName) {
         // Fire given event name if the given selector exists on the page.
