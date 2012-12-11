@@ -122,9 +122,9 @@ def register(request):
                 )
             messages.success(
                 request,
-                "Welcome to Portfoliyo! We're glad you're here. "
-                "We'll start by creating a group for your first students "
-                "and then you can add students and their parents."
+                "Welcome to Portfoliyo! "
+                "Start by creating a group "
+                "and then add students and parents."
                 )
             return redirect(redirect_home(user))
     else:
