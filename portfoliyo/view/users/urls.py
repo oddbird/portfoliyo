@@ -27,16 +27,12 @@ urlpatterns = patterns(
     url(r'^accept/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
         views.accept_email_invite,
         name='accept_email_invite'),
+    url(r'^confirm/(?P<uidb36>[0-9A-Za-z]{1,13})-(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
+        views.confirm_email,
+        name='confirm_email'),
 
     # registration -----------------------------------------------------------
 
-    # Activation keys get matched by \w+ instead of the more specific
-    # [a-fA-F0-9]{40} because a bad activation key should still get to the view;
-    # that way it can return a sensible 'invalid key' message instead of a
-    # confusing 404.
-    url(r'^activate/(?P<activation_key>\w+)/$',
-        views.activate,
-        name='activate'),
     url(r'^register/$',
         views.register,
         name='register'),
@@ -44,9 +40,11 @@ urlpatterns = patterns(
         direct_to_template,
         {'template': 'users/registration_closed.html'},
         name='registration_disallowed'),
-    url(r'^activate/$',
-        direct_to_template,
-        {"template": "users/awaiting_activation.html"},
-        name="awaiting_activation",
+    # @@@ This is here only for backwards-compatibility for people who got
+    # old-style activation emails before we deployed this change, but hadn't
+    # clicked the link yet. It should be removed after a week or so.
+    url(r'^activate/(?P<activation_key>\w+)/$',
+        views.activate,
+        name='activate',
         ),
     )

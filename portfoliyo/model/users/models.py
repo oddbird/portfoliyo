@@ -60,6 +60,7 @@ class Profile(models.Model):
     invited_by = models.ForeignKey('self', blank=True, null=True)
     # True if user has declined/stopped SMS notifications
     declined = models.BooleanField(default=False)
+    email_confirmed = models.BooleanField(default=False)
 
     # opt in/out to various types of email notifications
     NOTIFICATION_PREFS = [
