@@ -14,10 +14,8 @@
         ajaxPageViews ();
 
         // this should come last, to make sure that on registration we call
-        // mixpanel.alias() with their user id (so mixpanel knows that user ID
-        // is the same user as the previously-anonymous one it saw on the
-        // landing and registration pages) before we try to identify the user
-        // using their user-id.
+        // mixpanel.alias() with their user id (handled in serverEvents) before
+        // we try to identify the user using their user-id.
         identifyUser ('.meta .settingslink');
     });
 
@@ -32,7 +30,12 @@
         if (events) {
             $.each(events, function(index, value) {
                 mixpanel.track(value[0], value[1]);
-                // if the user just registered, note
+                // If the user just registered, tell mixpanel that we'll be
+                // identifying them by user ID from now on, but they should
+                // still be considered the same person who previously viewed
+                // the landing and register pages anonymously. If we don't do
+                // this, then we can't track users' progression from landing to
+                // register to use of the site.
                 if (value[0] == 'registered') {
                     mixpanel.alias(value[1].user_id);
                 }
