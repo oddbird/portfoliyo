@@ -1037,30 +1037,82 @@ button {
   z-index: 100;
 }
 
+@-moz-keyframes message-in {
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-12.77778rem);
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes message-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-12.77778rem);
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@-o-keyframes message-in {
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-12.77778rem);
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    -o-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes message-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .message, .activated {
-  padding-top: 23px;
-  padding-top: 1.27778rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 22px;
-  padding-bottom: 1.22222rem;
-  -webkit-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
-  -moz-box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
-  box-shadow: #002b36 0 0 0.31944rem, #002b36 0 0 0.63889rem;
+  -webkit-animation: message-in 1s ease backwards;
+  -moz-animation: message-in 1s ease backwards;
+  -o-animation: message-in 1s ease backwards;
+  animation: message-in 1s ease backwards;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 11px;
+  padding: 0.58333rem;
   overflow: hidden;
-  display: table-row;
+  -webkit-box-shadow: #002b36 0 0 0.31944rem;
+  -moz-box-shadow: #002b36 0 0 0.31944rem;
+  box-shadow: #002b36 0 0 0.31944rem;
   position: relative;
-  border-color: #657b83;
+  border-color: #073642;
+  width: 19rem;
 }
 .message:before, .activated:before {
-  font-size: 44px;
-  font-size: 2.44444rem;
-  line-height: 58px;
-  line-height: 3.19444rem;
-  display: table-cell;
-  padding: 1rem;
-  vertical-align: middle;
+  position: absolute;
+  top: 0.63889rem;
+  left: 0.63889rem;
 }
 .message.info, .info.activated {
   background: #268bd2;
@@ -1078,23 +1130,23 @@ button {
   display: none;
 }
 .message p, .activated p {
-  display: table-cell;
-  padding: 1rem 1rem 1rem 0;
-  vertical-align: middle;
+  margin: 0 1.27778rem;
 }
 
 #messages {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
-  display: table;
   position: fixed;
-  top: 25%;
-  left: 10%;
-  width: 80%;
-  color: #fdf6e3;
+  top: 2.55556rem;
+  right: 1rem;
   z-index: 999;
+  color: #fdf6e3;
 }
 #messages li {
   list-style-image: none;
@@ -1103,9 +1155,9 @@ button {
 }
 #messages .close {
   position: absolute;
-  right: 0.63889rem;
-  top: 0.63889rem;
-  width: 1em;
+  right: .125rem;
+  top: 0;
+  width: 1rem;
 }
 #messages .close:link, #messages .close:visited {
   color: #073642;
