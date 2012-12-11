@@ -117,7 +117,7 @@ def register(request):
             token_generator = tokens.EmailConfirmTokenGenerator()
             invites.send_invite_email(
                 profile,
-                'emails/activation',
+                'emails/welcome',
                 token_generator=token_generator,
                 )
             messages.success(
