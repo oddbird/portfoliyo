@@ -1,5 +1,10 @@
-"""Test hooks and funcarg resources."""
-def pytest_funcarg__client(request):
+"""Test hooks and fixture resources."""
+import pytest
+
+
+
+@pytest.fixture
+def client(request):
     """Give a test access to a WebTest client for integration-testing views."""
     # We don't use TestCase classes, but we instantiate the django_webtest
     # TestCase subclass to use its methods for patching/unpatching settings.
@@ -13,7 +18,8 @@ def pytest_funcarg__client(request):
 
 
 
-def pytest_funcarg__no_csrf_client(request):
+@pytest.fixture
+def no_csrf_client(request):
     """Give a test access to a CSRF-exempt WebTest client."""
     # We don't use TestCase classes, but we instantiate the django_webtest
     # TestCase subclass to use its methods for patching/unpatching settings.
@@ -37,7 +43,8 @@ class FakeSMSMessage(object):
 
 
 
-def pytest_funcarg__sms(request):
+@pytest.fixture
+def sms(request):
     """Monkeypatch SMS backend to collect messages for test inspection."""
     from portfoliyo.sms import base
     monkeypatch = request.getfuncargvalue('monkeypatch')

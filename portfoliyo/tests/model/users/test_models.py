@@ -635,6 +635,14 @@ class TestGroup(object):
         mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
 
 
+    def test_profile_deletion(self, db):
+        """Can delete group-owning profile."""
+        g = factories.GroupFactory.create()
+        g.owner.delete()
+
+        assert utils.deleted(g)
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self, db):

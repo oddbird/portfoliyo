@@ -1,11 +1,13 @@
 """Tests for admin."""
 import mock
+import pytest
 
 from portfoliyo.model.users import admin
 
 
 
-def pytest_funcarg__pa(request):
+@pytest.fixture
+def pa(request):
     return admin.ProfileAdmin(admin.models.Profile, mock.Mock())
 
 
@@ -46,7 +48,8 @@ class TestUserChangeForm(object):
 
 
 
-def pytest_funcarg__ua(request):
+@pytest.fixture
+def ua(request):
     return admin.UserAdmin(admin.auth_models.User, mock.Mock())
 
 

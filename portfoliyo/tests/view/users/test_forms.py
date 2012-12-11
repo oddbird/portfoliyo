@@ -15,6 +15,17 @@ class TestRegistrationForm(object):
         }
 
 
+    def test_register(self, db):
+        """Registration creates active school_staff w/ unconfirmed email."""
+        form = forms.RegistrationForm(self.base_data.copy())
+
+        assert form.is_valid()
+        profile = form.save()
+        assert not profile.email_confirmed
+        assert profile.school_staff
+        assert profile.user.is_active
+
+
     def test_unmatched_passwords(self, db):
         """Registration form not valid if passwords don't match."""
         data = self.base_data.copy()
@@ -46,11 +57,10 @@ class TestRegistrationForm(object):
         form = forms.RegistrationForm(data)
 
         assert form.is_valid()
-        school = form.cleaned_data['school']
+        profile = form.save()
+        school = profile.school
         assert school.name == u"New School"
         assert school.postcode == u"12345"
-        # don't save the school to DB on form validation, reg backend will
-        assert school.id is None
 
 
     def test_add_school_validation_error(self, db):
@@ -83,11 +93,10 @@ class TestRegistrationForm(object):
         form = forms.RegistrationForm(self.base_data.copy())
 
         assert form.is_valid()
-        school = form.cleaned_data['school']
+        profile = form.save()
+        school = profile.school
         assert school.auto
         assert not school.postcode
-        # don't save the school to DB on form validation, reg backend will
-        assert school.id is None
 
 
 

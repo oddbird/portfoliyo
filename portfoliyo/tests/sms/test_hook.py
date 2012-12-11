@@ -49,7 +49,7 @@ def test_activate_user(db):
     mock_create.assert_any_call(
         None, rel.student, reply, in_reply_to=phone, email_notifications=False)
     assert reply == (
-        "Thank you! You can text this number any time "
+        "Thank you! You can text this number "
         "to talk with Jimmy Doe's teachers."
         )
 
@@ -102,8 +102,10 @@ def test_unknown_profile(db):
     reply = hook.receive_sms('123', 'foo')
 
     assert reply == (
-        "Bummer, we don't recognize your invite code! "
-        "Please make sure it's typed exactly as it is on the paper."
+        "We don't recognize your phone number, "
+        "so we don't know who to send your text to! "
+        "If you are just signing up, "
+        "make sure your invite code is typed correctly."
         )
 
 
@@ -130,8 +132,9 @@ def test_no_students(db):
     reply = hook.receive_sms(phone, 'foo')
 
     assert reply == (
-        "You're not part of any student's Portfoliyo Village, "
-        "so we're not able to deliver your message. Sorry!"
+            "Sorry, we can't find find any students connected to your number, "
+            "so we're not able to deliver your message. "
+            "Please contact your student's teacher for help."
         )
 
 
@@ -226,6 +229,56 @@ def test_code_signup_student_name(db):
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
+def test_code_signup_student_name_strips_extra_lines(db):
+    """Extra lines (eg SMS auto-sig) not included in student name."""
+    phone = '+13216430987'
+    teacher = factories.ProfileFactory.create(
+        school_staff=True, name="Teacher Jane", code="ABCDEF")
+    factories.TextSignupFactory.create(
+        family__name="John Doe",
+        family__phone=phone,
+        family__invited_by=teacher,
+        state=model.TextSignup.STATE.kidname,
+        teacher=teacher,
+        )
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        hook.receive_sms(phone, "Jimmy Doe\nLook at me!")
+
+    parent = model.Profile.objects.get(phone=phone)
+    student = parent.students[0]
+    assert student.name == u"Jimmy Doe"
+    mock_create.assert_any_call(
+        parent,
+        student,
+        "Jimmy Doe\nLook at me!",
+        from_sms=True,
+        email_notifications=False,
+        )
+
+
+def test_unusually_long_student_name_logs_warning(db):
+    """If a student name is unusually long, a warning is logged."""
+    phone = '+13216430987'
+    teacher = factories.ProfileFactory.create(
+        school_staff=True, name="Teacher Jane", code="ABCDEF")
+    factories.TextSignupFactory.create(
+        family__name="John Doe",
+        family__phone=phone,
+        family__invited_by=teacher,
+        state=model.TextSignup.STATE.kidname,
+        teacher=teacher,
+        )
+
+    msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+            hook.receive_sms(phone, msg)
+
+    mock_logger.warning.assert_called_with(
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
+
+
 
 def test_group_code_signup_student_name(db):
     """Parent can continue group code signup by providing student name."""
@@ -307,7 +360,6 @@ def test_code_signup_role(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name='Jane Doe',
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
@@ -346,12 +398,74 @@ def test_code_signup_role(db):
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
+def test_code_signup_role_strips_extra_lines(db):
+    """Extra lines (eg SMS auto-sig) not included in parent role."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__name='Jane Doe',
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe")
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="John Doe",
+        from_profile__role="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        description="",
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        student=parent_rel.student,
+        teacher=teacher_rel.elder,
+        state=model.TextSignup.STATE.relationship,
+        )
+
+    hook.receive_sms(phone, "father\nI'm a sig!")
+
+    parent = model.Profile.objects.get(phone=phone)
+    assert parent.role == "father"
+
+
+def test_unusually_long_role_logs_warning(db):
+    """If a family member role is unusually long, a warning is logged."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__name='Jane Doe',
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe")
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="John Doe",
+        from_profile__role="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        description="",
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        student=parent_rel.student,
+        teacher=teacher_rel.elder,
+        state=model.TextSignup.STATE.relationship,
+        )
+
+    msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+            hook.receive_sms(phone, msg)
+
+    mock_logger.warning.assert_called_with(
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
+
+
 def test_code_signup_name(db):
     """Parent can finish signup by texting their name."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
+        from_profile__notify_new_parent=True,
+        from_profile__name="Teacher Jane",
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
         )
@@ -372,8 +486,8 @@ def test_code_signup_name(db):
         reply = hook.receive_sms(phone, "John Doe")
 
     assert reply == (
-        "All done, thank you! You can text this number any time "
-        "to talk with Jimmy Doe's teachers."
+        "All done, thank you! You can text this number "
+        "to talk with Teacher Jane."
         )
     parent = model.Profile.objects.get(phone=phone)
     signup = parent.signups.get()
@@ -390,12 +504,72 @@ def test_code_signup_name(db):
     assert mail.outbox[0].to == ['teacher@example.com']
 
 
+def test_code_signup_name_strips_extra_lines(db):
+    """Extra lines (e.g. SMS auto-sig) excluded from parent name."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__name="Teacher Jane",
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe",
+        )
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        teacher=teacher_rel.elder,
+        student=teacher_rel.student,
+        state=model.TextSignup.STATE.name,
+        )
+
+    hook.receive_sms(phone, "\n John Doe\nI'm a sig too!")
+
+    parent = model.Profile.objects.get(phone=phone)
+    assert parent.name == "John Doe"
+
+
+def test_unusually_long_parent_name_logs_warning(db):
+    """If a family member name is unusually long, a warning is logged."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__name="Teacher Jane",
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe",
+        )
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        teacher=teacher_rel.elder,
+        student=teacher_rel.student,
+        state=model.TextSignup.STATE.name,
+        )
+
+    msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+            hook.receive_sms(phone, msg)
+
+    mock_logger.warning.assert_called_with(
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
+
+
+
 def test_code_signup_name_no_notification(db):
     """Finish signup sends no notification if teacher doesn't want them."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=False,
+        from_profile__notify_new_parent=False,
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
         )
@@ -595,7 +769,7 @@ def test_multiple_active_signups_logs_warning(db):
         hook.receive_sms(phone, "Jimmy Doe")
 
     mock_logger.warning.assert_called_with(
-        "User %s has multiple active signups!" % phone)
+        "User %s has multiple active signups!", phone)
 
 
 def test_bogus_signup_state_no_blowup(db):
@@ -634,3 +808,205 @@ class TestGetTeacherAndGroup(object):
     def test_empty(self):
         """Returns None on empty text, doesn't barf."""
         assert hook.get_teacher_and_group('') == (None, None)
+
+
+
+class TestInterpolateTeacherNames(object):
+    def test_no_students(self, db):
+        parent = factories.ProfileFactory.create()
+
+        res = hook.interpolate_teacher_names(u'%s', parent)
+
+        assert res == u"teachers"
+
+    def test_one_teacher(self, db):
+        parent_rel = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name="Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', parent_rel.elder)
+
+        assert res == u"Mrs. Dodd"
+
+
+    def test_two_teachers_one_student(self, db):
+        parent_rel = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', parent_rel.elder)
+
+        assert res in {u"Mrs. Dodd & Mr. Todd", u"Mr. Todd & Mrs. Dodd"}
+
+
+    def test_two_teachers_two_students(self, db):
+        rel1 = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(from_profile=rel1.elder)
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel2.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', rel1.elder)
+
+        assert res in {u"Mrs. Dodd & Mr. Todd", u"Mr. Todd & Mrs. Dodd"}
+
+
+    def test_three_teachers_one_student(self, db):
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Ms. Codd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', parent_rel.elder)
+
+        assert res == u"Frankie's teachers"
+
+
+    def test_three_teachers_two_students(self, db):
+        rel1 = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        rel2 = factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile,
+            to_profile__name=u"Maria")
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel2.to_profile,
+            from_profile__name=u"Ms. Codd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', rel1.elder)
+
+        assert res in {
+            u"Frankie & Maria's teachers", u"Maria & Frankie's teachers"}
+
+
+    def test_three_teachers_three_students(self, db):
+        rel1 = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        rel2 = factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile,
+            to_profile__name=u"Maria",
+            )
+        rel3 = factories.RelationshipFactory.create(
+            from_profile=rel1.from_profile,
+            to_profile__name=u"Juan",
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel2.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel3.to_profile,
+            from_profile__name=u"Ms. Codd",
+            from_profile__school_staff=True,
+            )
+
+        res = hook.interpolate_teacher_names(u'%s', rel1.elder)
+
+        assert res == u"your students' teachers"
+
+
+    def test_two_teachers_one_student_too_long(self, db):
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Doddkerstein-Schnitzelberger",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Toddkinson-Hershberger",
+            from_profile__school_staff=True,
+            )
+        prefix = (u'a' * 130)
+        res = hook.interpolate_teacher_names(
+            prefix + '%s', parent_rel.elder)
+
+        assert res == prefix + u"Frankie's teachers"
+
+
+    def test_one_teacher_one_student_too_long(self, db):
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Doddkerstein-Schnitzelberger",
+            from_profile__school_staff=True,
+            )
+        prefix = (u'a' * 140)
+        res = hook.interpolate_teacher_names(
+            prefix + '%s', parent_rel.elder)
+
+        assert res == prefix + u"Frankie's teacher"
+
+
+    def test_everything_too_long(self, db):
+        """If all options are too long, take the best regardless of length."""
+        parent_rel = factories.RelationshipFactory.create(
+            to_profile__name=u"Frankie")
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mrs. Dodd",
+            from_profile__school_staff=True,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=parent_rel.to_profile,
+            from_profile__name=u"Mr. Todd",
+            from_profile__school_staff=True,
+            )
+        prefix = (u'a' * 155)
+        res = hook.interpolate_teacher_names(
+            prefix + '%s', parent_rel.elder)
+
+        assert res in {
+            prefix + u"Mrs. Dodd & Mr. Todd",
+            prefix + u"Mr. Todd & Mrs. Dodd",
+            }

@@ -65,9 +65,9 @@ class ElderGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
 
 
 class EditElderForm(forms.Form):
-    name = forms.CharField(max_length=200)
-    role = forms.CharField(max_length=200)
-    phone = forms.CharField(max_length=20, required=False)
+    name = pyoforms.StripCharField(max_length=200)
+    role = pyoforms.StripCharField(max_length=200)
+    phone = pyoforms.StripCharField(max_length=20, required=False)
 
 
     def __init__(self, *a, **kw):
@@ -97,7 +97,8 @@ class EditElderForm(forms.Form):
         if phone is None:
             raise forms.ValidationError(
                 "Please supply a valid US or Canada mobile number.")
-        if model.Profile.objects.filter(phone=phone).exists():
+        if model.Profile.objects.filter(
+                phone=phone).exclude(pk=self.instance.pk).exists():
             msg = "A user with this phone number already exists."
             if self.rel:
                 invite_url = reverse(
@@ -138,7 +139,7 @@ class EditElderForm(forms.Form):
         if new_phone and new_phone != old_phone:
             invites.send_invite_sms(
                 self.instance,
-                template_name='registration/invite_elder_sms.txt',
+                template_name='sms/invite_elder.txt',
                 extra_context={
                     'inviter': editor,
                     'student': self.rel.student if self.rel else None,
@@ -151,8 +152,8 @@ class EditElderForm(forms.Form):
 
 class InviteFamilyForm(forms.Form):
     """A form for inviting a family member to a student village."""
-    phone = forms.CharField(max_length=255)
-    relationship = forms.CharField(max_length=200)
+    phone = pyoforms.StripCharField(max_length=255)
+    relationship = pyoforms.StripCharField(max_length=200)
 
 
     def __init__(self, *args, **kwargs):
@@ -204,7 +205,7 @@ class InviteFamilyForm(forms.Form):
         # send invite notifications
         invites.send_invite_sms(
             self.instance,
-            template_name='registration/invite_elder_sms.txt',
+            template_name='sms/invite_elder.txt',
             extra_context={
                 'inviter': model.elder_in_context(self.rel),
                 'student': self.rel.student,
@@ -230,7 +231,7 @@ class InviteFamilyForm(forms.Form):
 class InviteTeacherForm(forms.Form):
     """A form for inviting a teacher to a student village."""
     email = forms.EmailField(max_length=255)
-    relationship = forms.CharField(max_length=200)
+    relationship = pyoforms.StripCharField(max_length=200)
     groups = pyoforms.ModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
@@ -298,8 +299,7 @@ class InviteTeacherForm(forms.Form):
         if created:
             invites.send_invite_email(
                 profile,
-                email_template_name='registration/invite_elder_email.txt',
-                subject_template_name='registration/invite_elder_subject.txt',
+                template_name='emails/invite_elder',
                 extra_context={
                     'inviter': self.inviter,
                     'student': self.rel.student if self.rel else None,
@@ -328,6 +328,7 @@ class InviteTeacherForm(forms.Form):
 
 class StudentForm(forms.ModelForm):
     """Form for editing a student."""
+    name = pyoforms.StripCharField()
     groups = pyoforms.ModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
@@ -343,7 +344,6 @@ class StudentForm(forms.ModelForm):
     class Meta:
         model = model.Profile
         fields = ['name', 'groups', 'elders']
-        widgets = {'name': forms.TextInput}
 
 
     def __init__(self, *args, **kwargs):
@@ -513,6 +513,7 @@ class AddStudentForm(StudentForm):
 
 class GroupForm(forms.ModelForm):
     """Form for editing Groups."""
+    name = pyoforms.StripCharField()
     students = pyoforms.ModelMultipleChoiceField(
         queryset=model.Profile.objects.none(),
         widget=StudentCheckboxSelectMultiple,
@@ -528,7 +529,6 @@ class GroupForm(forms.ModelForm):
     class Meta:
         model = model.Group
         fields = ['name', 'students', 'elders']
-        widgets = {'name': forms.TextInput}
 
 
     def __init__(self, *args, **kwargs):

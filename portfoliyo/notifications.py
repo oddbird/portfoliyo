@@ -1,10 +1,11 @@
 """Notifications."""
 from django.conf import settings
-from django.core.mail import send_mail
 from django.core.urlresolvers import reverse
-from django.template import loader
 from django.utils.encoding import smart_unicode
 from django.utils.safestring import mark_safe
+
+
+from portfoliyo import email
 
 
 
@@ -29,11 +30,8 @@ def send_post_email_notification(profile, post):
     else:
         c['message_source'] = mark_safe(smart_unicode(post.author))
 
-    subject = loader.render_to_string('notifications/new_post_subject.txt', c)
-    # Email subject *must not* contain newlines
-    subject = ''.join(subject.splitlines())
-    email = loader.render_to_string('notifications/new_post_email.txt', c)
-    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [profile.user.email])
+    email.send_multipart(
+        'notifications/new_post', c, [profile.user.email], fail_silently=True)
 
 
 
@@ -49,10 +47,9 @@ def send_signup_email_notification(profile, rel):
         'profile_url': settings.PORTFOLIYO_BASE_URL + reverse('edit_profile'),
     }
 
-    subject = loader.render_to_string(
-        'notifications/new_student_subject.txt', c)
-    # Email subject *must not* contain newlines
-    subject = ''.join(subject.splitlines())
-    email = loader.render_to_string(
-        'notifications/new_student_email.txt', c)
-    send_mail(subject, email, settings.DEFAULT_FROM_EMAIL, [profile.user.email])
+    email.send_multipart(
+        'notifications/new_student',
+        c,
+        [profile.user.email],
+        fail_silently=True,
+        )
