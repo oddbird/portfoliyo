@@ -8,12 +8,13 @@ from portfoliyo import email, sms
 
 
 
-def send_invite_email(profile, template_name, extra_context=None):
+def send_invite_email(profile, template_name, extra_context=None,
+                      token_generator=default_token_generator):
     """Generates a one-use invite link and sends to the user."""
     c = {
-        'uid': int_to_base36(profile.user.id),
+        'uidb36': int_to_base36(profile.user.id),
         'profile': profile,
-        'token': default_token_generator.make_token(profile.user),
+        'token': token_generator.make_token(profile.user),
         'base_url': settings.PORTFOLIYO_BASE_URL,
     }
     c.update(extra_context or {})

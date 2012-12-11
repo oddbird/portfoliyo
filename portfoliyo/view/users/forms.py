@@ -104,6 +104,28 @@ class RegistrationForm(forms.Form):
         return self.cleaned_data['email']
 
 
+    def save(self):
+        """Save and return new user profile."""
+        school = self.cleaned_data['school']
+        if school.id is None:
+            school.save()
+
+        profile = model.Profile.create_with_user(
+            name=self.cleaned_data['name'],
+            email=self.cleaned_data['email'],
+            password=self.cleaned_data['password'],
+            role=self.cleaned_data['role'],
+            school=school,
+            school_staff=True,
+            email_confirmed=False,
+            is_active=True,
+            email_notifications=self.cleaned_data['email_notifications'],
+            )
+
+        return profile
+
+
+
 
 class PasswordResetForm(auth_forms.PasswordResetForm):
     """A password reset form that doesn't reveal valid users."""
