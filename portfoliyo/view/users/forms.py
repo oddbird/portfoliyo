@@ -230,33 +230,26 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
 
 
 
-class EditProfileForm(forms.Form):
+class EditProfileForm(forms.ModelForm):
     """Form for editing a users profile."""
     name = pyoforms.StripCharField(max_length=200)
     role = pyoforms.StripCharField(max_length=200)
-    email_notifications = forms.BooleanField(required=False)
 
 
-    def __init__(self, *a, **kw):
-        """Pull instance kwarg out."""
-        self.instance = kw.pop('instance')
-        initial = kw.setdefault('initial', {})
-        initial['name'] = self.instance.name
-        initial['role'] = self.instance.role
-        initial['email_notifications'] = self.instance.email_notifications
-        super(EditProfileForm, self).__init__(*a, **kw)
+    class Meta:
+        fields = ['name', 'role'] + model.Profile.NOTIFICATION_PREFS
+        model = model.Profile
+
+
+    def __init__(self, *args, **kw):
+        super(EditProfileForm, self).__init__(*args, **kw)
+        self.old_role = self.instance.role
 
 
     def save(self):
         """Save edits and return updated profile."""
-        self.instance.name = self.cleaned_data['name']
-        self.instance.email_notifications = self.cleaned_data[
-            'email_notifications']
-        old_role = self.instance.role
-        new_role = self.cleaned_data['role']
-        self.instance.role = new_role
-        self.instance.save()
-        self.instance.relationships_from.filter(description=old_role).update(
+        profile = super(EditProfileForm, self).save()
+        profile.relationships_from.filter(description=self.old_role).update(
             description='')
 
-        return self.instance
+        return profile

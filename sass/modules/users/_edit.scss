@@ -11,6 +11,13 @@
   font-style: italic;
 }
 
+.fieldset.notifications {
+  @extend %radio-check-defaults;
+  @include inline-radio-checkbox;
+  @include rhythm-margins;
+  .fieldset-header { @include trailer(.5); }
+}
+
 .initial-password {
   @extend %notice;
   @extend %simple-inline-form;
