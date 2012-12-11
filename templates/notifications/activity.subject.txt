@@ -1,0 +1,1 @@
+New activity in {# if NUMBER == 1 #}{# { STUDENT }'s village #}{# else #}{ NUMBER } of your villages.
