@@ -1,25 +1,5 @@
 (function ($) {
 
-    $(function () {
-        existence ('article.landing', 'viewed landing');
-        existence ('article.register', 'viewed register');
-        existence ('article.awaiting-activation', 'registered');
-        existence ('.login .activated.success', 'activated');
-
-        ajaxClick ('.action-post', 'posted');
-        ajaxClick ('.group-posts', 'mass texted');
-
-        serverEvents ('.meta', 'user-events');
-
-        ajaxPageViews ();
-
-        // this should come last, to make sure that on registration we call
-        // mixpanel.alias() with their user id (handled in serverEvents) before
-        // we try to identify the user using their user-id.
-        identifyUser ('.meta .settingslink');
-    });
-
-
     var serverEvents = function (sel, dataAttr) {
         // Look for and record events the server recorded in a JSON structure
         // in the given data attribute of the element named by the given
@@ -36,7 +16,7 @@
                 // the landing and register pages anonymously. If we don't do
                 // this, then we can't track users' progression from landing to
                 // register to use of the site.
-                if (value[0] == 'registered') {
+                if (value[0] === 'registered') {
                     mixpanel.alias(value[1].user_id);
                 }
             });
@@ -91,5 +71,24 @@
             });
         }
     };
+
+    $(function () {
+        existence('article.landing', 'viewed landing');
+        existence('article.register', 'viewed register');
+        existence('article.awaiting-activation', 'registered');
+        existence('.login .activated.success', 'activated');
+
+        ajaxClick('.action-post', 'posted');
+        ajaxClick('.group-posts', 'mass texted');
+
+        serverEvents('.meta', 'user-events');
+
+        ajaxPageViews();
+
+        // this should come last, to make sure that on registration we call
+        // mixpanel.alias() with their user id (handled in serverEvents) before
+        // we try to identify the user using their user-id.
+        identifyUser('.meta .settingslink');
+    });
 
 }(jQuery));
