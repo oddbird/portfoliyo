@@ -125,11 +125,12 @@ typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var
 <script src="{{ STATIC_URL }}js/nav.js"></script>
 <script src="{{ STATIC_URL }}js/user.js"></script>
 <script src="{{ STATIC_URL }}js/init.js"></script>
+{% endcompress %}
+{% endblock js %}
+
 {% if MIXPANEL_ID %}
 <script src="{{ STATIC_URL }}js/mixpanel.js"></script>
 {% endif %}
-{% endcompress %}
-{% endblock js %}
 
 {% block extrajs %}
 {% endblock extrajs %}
