@@ -1,24 +1,30 @@
 (function ($) {
 
     $(function () {
-        existence ('article.landing', 'Viewed landing');
-        existence ('article.register', 'Viewed register');
-        existence ('article.awaiting-activation', 'Registered');
-        existence ('.login .activated.success', 'Activated');
+        existence ('article.landing', 'viewed landing');
+        existence ('article.register', 'viewed register');
+        existence ('article.awaiting-activation', 'registered');
+        existence ('.login .activated.success', 'activated');
 
-        $('body').on('click', '.action-post', function () {
-            mixpanel.track('Posted');
-        });
-        $('body').on('click', '.group-posts .action-post', function () {
-            mixpanel.track('Mass texted');
-        });
+        ajaxclick ('.action-post', 'posted');
+        ajaxclick ('.group-posts', 'mass texted');
+
+        mixpanel.track_links ('a.download-pdf', 'downloaded signup pdf');
     });
 
 
-    var existence = function (sel, event) {
+    var existence = function (sel, event_name) {
         if ($(sel).length) {
-            mixpanel.track(event);
+            mixpanel.track(event_name);
         }
+    };
+
+    var ajaxclick = function (sel, event_name) {
+        // This function is only safe to use on clicks that don't reload the page.
+        // For normal links, use mixpanel.track_click instead.
+        $('body').on('click', sel, function () {
+            mixpanel.track(event_name);
+        });
     };
 
 }(jQuery));
