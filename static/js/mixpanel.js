@@ -1,24 +1,23 @@
 (function ($) {
 
     $(function () {
-        landing ('article.landing');
-        register ('article.register');
+        existence ('article.landing', 'Viewed landing');
+        existence ('article.register', 'Viewed register');
+        existence ('article.awaiting-activation', 'Registered');
+        existence ('.login .activated.success', 'Activated');
+
+        $('body').on('click', '.action-post', function () {
+            mixpanel.track('Posted');
+        });
+        $('body').on('click', '.group-posts .action-post', function () {
+            mixpanel.track('Mass texted');
+        });
     });
 
 
-    var landing = function (sel) {
+    var existence = function (sel, event) {
         if ($(sel).length) {
-            mixpanel.track('Viewed landing');
-        }
-    };
-
-    var register = function (sel) {
-        var container = $(sel);
-        if (container.length) {
-            mixpanel.track('Viewed register');
-            container.on('click', 'button.go-network', function () {
-                mixpanel.track('Registered!');
-            });
+            mixpanel.track(event);
         }
     };
 
