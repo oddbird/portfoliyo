@@ -1,5 +1,5 @@
 import pytest
-from selenium.webdriver.chrome.webdriver import WebDriver
+from selenium.webdriver.firefox.webdriver import WebDriver
 
 
 
