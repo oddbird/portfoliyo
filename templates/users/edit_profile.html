@@ -1,5 +1,5 @@
 {% extends "base_site.html" %}
-{% load widget_tweaks markup %}
+{% load widget_tweaks %}
 
 {% block maincontent %}
 
@@ -16,8 +16,8 @@
       {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
     </div>
 
-    <fieldset>
-      <p>Send me a notification email when...</p>
+    <div class="fieldset notifications">
+      <p class="fieldset-header">Send me a notification email when...</p>
 
       {% include "forms/_field.html" with field=form.notify_new_parent label="A new parent signs up on my account." %}
       {% include "forms/_field.html" with field=form.notify_parent_text label="A parent sends a text to one of my villages." %}
@@ -28,7 +28,7 @@
       {% endcomment %}
       {% include "forms/_field.html" with field=form.notify_teacher_post label="Another teacher posts to one of my villages." %}
 
-    </fieldset>
+    </div>
 
     <div class="form-actions">
       <button type="submit">Save changes</button>

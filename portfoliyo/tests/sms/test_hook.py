@@ -132,8 +132,9 @@ def test_no_students(db):
     reply = hook.receive_sms(phone, 'foo')
 
     assert reply == (
-        "You're not part of any student's Portfoliyo Village, "
-        "so we're not able to deliver your message. Sorry!"
+            "Sorry, we can't find find any students connected to your number, "
+            "so we're not able to deliver your message. "
+            "Please contact your student's teacher for help."
         )
 
 
@@ -228,6 +229,34 @@ def test_code_signup_student_name(db):
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
+def test_code_signup_student_name_strips_extra_lines(db):
+    """Extra lines (eg SMS auto-sig) not included in student name."""
+    phone = '+13216430987'
+    teacher = factories.ProfileFactory.create(
+        school_staff=True, name="Teacher Jane", code="ABCDEF")
+    factories.TextSignupFactory.create(
+        family__name="John Doe",
+        family__phone=phone,
+        family__invited_by=teacher,
+        state=model.TextSignup.STATE.kidname,
+        teacher=teacher,
+        )
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        hook.receive_sms(phone, "Jimmy Doe\nLook at me!")
+
+    parent = model.Profile.objects.get(phone=phone)
+    student = parent.students[0]
+    assert student.name == u"Jimmy Doe"
+    mock_create.assert_any_call(
+        parent,
+        student,
+        "Jimmy Doe\nLook at me!",
+        from_sms=True,
+        email_notifications=False,
+        )
+
+
 def test_unusually_long_student_name_logs_warning(db):
     """If a student name is unusually long, a warning is logged."""
     phone = '+13216430987'
@@ -247,7 +276,7 @@ def test_unusually_long_student_name_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long student name: %s", msg)
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
 
 
 
@@ -369,6 +398,35 @@ def test_code_signup_role(db):
         None, student, reply, in_reply_to=phone, email_notifications=False)
 
 
+def test_code_signup_role_strips_extra_lines(db):
+    """Extra lines (eg SMS auto-sig) not included in parent role."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__name='Jane Doe',
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe")
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="John Doe",
+        from_profile__role="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        description="",
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        student=parent_rel.student,
+        teacher=teacher_rel.elder,
+        state=model.TextSignup.STATE.relationship,
+        )
+
+    hook.receive_sms(phone, "father\nI'm a sig!")
+
+    parent = model.Profile.objects.get(phone=phone)
+    assert parent.role == "father"
+
+
 def test_unusually_long_role_logs_warning(db):
     """If a family member role is unusually long, a warning is logged."""
     phone = '+13216430987'
@@ -398,7 +456,7 @@ def test_unusually_long_role_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long relationship: %s", msg)
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
 
 
 def test_code_signup_name(db):
@@ -446,6 +504,33 @@ def test_code_signup_name(db):
     assert mail.outbox[0].to == ['teacher@example.com']
 
 
+def test_code_signup_name_strips_extra_lines(db):
+    """Extra lines (e.g. SMS auto-sig) excluded from parent name."""
+    phone = '+13216430987'
+    teacher_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__name="Teacher Jane",
+        from_profile__user__email='teacher@example.com',
+        to_profile__name="Jimmy Doe",
+        )
+    parent_rel = factories.RelationshipFactory.create(
+        from_profile__name="",
+        from_profile__phone=phone,
+        from_profile__invited_by=teacher_rel.elder,
+        to_profile=teacher_rel.student,
+        )
+    factories.TextSignupFactory.create(
+        family=parent_rel.elder,
+        teacher=teacher_rel.elder,
+        student=teacher_rel.student,
+        state=model.TextSignup.STATE.name,
+        )
+
+    hook.receive_sms(phone, "\n John Doe\nI'm a sig too!")
+
+    parent = model.Profile.objects.get(phone=phone)
+    assert parent.name == "John Doe"
+
 
 def test_unusually_long_parent_name_logs_warning(db):
     """If a family member name is unusually long, a warning is logged."""
@@ -475,7 +560,7 @@ def test_unusually_long_parent_name_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long family member name: %s", msg)
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
 
 
 

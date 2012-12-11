@@ -7,7 +7,7 @@ from portfoliyo import model, notifications
 # The maximum expected length (in words) of a name or role
 # Setting a fairly low bar for starters to get more data, since it's only
 # warning us, not affecting the user
-MAX_EXPECTED_NAME_LENGTH = 5
+MAX_EXPECTED_ANSWER_LENGTH = 5
 
 
 logger = logging.getLogger(__name__)
@@ -67,14 +67,11 @@ def receive_sms(source, body):
 
     if signup is not None:
         if signup.state == model.TextSignup.STATE.kidname:
-            return handle_new_student(
-                signup=signup,
-                student_name=body.strip(),
-                )
+            return handle_new_student(signup, body)
         elif signup.state == model.TextSignup.STATE.relationship:
-            return handle_role_update(signup=signup, role=body.strip())
+            return handle_role_update(signup, body)
         elif signup.state == model.TextSignup.STATE.name:
-            return handle_name_update(signup=signup, name=body.strip())
+            return handle_name_update(signup, body)
 
     students = profile.students
 
@@ -82,8 +79,9 @@ def receive_sms(source, body):
         logger.warning(
             "Text from %s (has no students): %s", source, body)
         return (
-            "You're not part of any student's Portfoliyo Village, "
-            "so we're not able to deliver your message. Sorry!"
+            "Sorry, we can't find find any students connected to your number, "
+            "so we're not able to deliver your message. "
+            "Please contact your student's teacher for help."
             )
 
     for student in students:
@@ -94,10 +92,7 @@ def receive_sms(source, body):
             source,
             students,
             interpolate_teacher_names(
-                "Thank you! You can text this number "
-                "to talk with %s.",
-                profile,
-                )
+                "Thank you! You can text this number to talk with %s.", profile)
         )
 
 
@@ -173,10 +168,9 @@ def handle_subsequent_code(profile, teacher, group, signup):
     return reply(profile.phone, [student] if student else [], msg)
 
 
-def handle_new_student(signup, student_name):
+def handle_new_student(signup, body):
     """Handle addition of a student to a just-signing-up parent's account."""
-    if len(student_name.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long student name: %s", student_name)
+    student_name = get_answer(body)
 
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
@@ -212,7 +206,7 @@ def handle_new_student(signup, student_name):
     model.Post.create(
         signup.family,
         student,
-        student_name,
+        body,
         from_sms=True,
         email_notifications=False,
         )
@@ -223,10 +217,9 @@ def handle_new_student(signup, student_name):
         )
 
 
-def handle_role_update(signup, role):
+def handle_role_update(signup, body):
     """Handle defining role of parent in relation to student."""
-    if len(role.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long relationship: %s", role)
+    role = get_answer(body)
 
     parent = signup.family
     parent.relationships_from.filter(
@@ -239,7 +232,7 @@ def handle_role_update(signup, role):
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, role, from_sms=True, email_notifications=False)
+            parent, rel.student, body, from_sms=True, email_notifications=False)
     return reply(
         parent.phone,
         parent.students,
@@ -248,10 +241,9 @@ def handle_role_update(signup, role):
         )
 
 
-def handle_name_update(signup, name):
+def handle_name_update(signup, body):
     """Handle defining name of parent."""
-    if len(name.split()) > MAX_EXPECTED_NAME_LENGTH:
-        logger.warning("Unusually long family member name: %s", name)
+    name = get_answer(body)
 
     parent = signup.family
     parent.name = name
@@ -262,15 +254,14 @@ def handle_name_update(signup, name):
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, name, from_sms=True, email_notifications=False)
+            parent, rel.student, body, from_sms=True, email_notifications=False)
         if teacher and teacher.notify_new_parent and teacher.user.email:
             notifications.send_signup_email_notification(teacher, rel)
     return reply(
         parent.phone,
         parent.students,
         interpolate_teacher_names(
-            "All done, thank you! You can text this number "
-            "to talk with %s.",
+            "All done, thank you! You can text this number to talk with %s.",
             parent,
             )
         )
@@ -358,3 +349,28 @@ def reply(phone, students, body):
         model.Post.create(
             None, student, body, in_reply_to=phone, email_notifications=False)
     return body
+
+
+
+def get_answer(msg):
+    """
+    Extract an answer to a question from an incoming text.
+
+    Assume that the expected answer is a single name or short phrase.
+
+    Strips leading and trailing whitespace, ignores all lines except the first
+    non-empty one.
+
+    """
+    stripped_lines = (l.strip() for l in msg.splitlines())
+    non_empty_lines = [l for l in stripped_lines if l]
+    answer = non_empty_lines[0] if non_empty_lines else ""
+
+    if len(answer.split()) > MAX_EXPECTED_ANSWER_LENGTH:
+        logger.warning(
+            "Unusually long SMS question answer: %s",
+            answer,
+            extra={'stack': True},
+            )
+
+    return answer
