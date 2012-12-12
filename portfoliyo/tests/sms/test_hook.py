@@ -276,7 +276,7 @@ def test_unusually_long_student_name_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long student name: %s", msg)
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
 
 
 
@@ -360,7 +360,6 @@ def test_code_signup_role(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name='Jane Doe',
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
@@ -404,7 +403,6 @@ def test_code_signup_role_strips_extra_lines(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name='Jane Doe',
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
@@ -434,7 +432,6 @@ def test_unusually_long_role_logs_warning(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name='Jane Doe',
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe")
@@ -459,7 +456,7 @@ def test_unusually_long_role_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long relationship: %s", msg)
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
 
 
 def test_code_signup_name(db):
@@ -467,7 +464,7 @@ def test_code_signup_name(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
+        from_profile__notify_new_parent=True,
         from_profile__name="Teacher Jane",
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
@@ -512,7 +509,6 @@ def test_code_signup_name_strips_extra_lines(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name="Teacher Jane",
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
@@ -541,7 +537,6 @@ def test_unusually_long_parent_name_logs_warning(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=True,
         from_profile__name="Teacher Jane",
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
@@ -565,7 +560,7 @@ def test_unusually_long_parent_name_logs_warning(db):
             hook.receive_sms(phone, msg)
 
     mock_logger.warning.assert_called_with(
-        "Unusually long family member name: %s", msg)
+        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
 
 
 
@@ -574,7 +569,7 @@ def test_code_signup_name_no_notification(db):
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
-        from_profile__email_notifications=False,
+        from_profile__notify_new_parent=False,
         from_profile__user__email='teacher@example.com',
         to_profile__name="Jimmy Doe",
         )

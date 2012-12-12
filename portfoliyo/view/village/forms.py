@@ -139,7 +139,7 @@ class EditElderForm(forms.Form):
         if new_phone and new_phone != old_phone:
             invites.send_invite_sms(
                 self.instance,
-                template_name='registration/invite_elder_sms.txt',
+                template_name='sms/invite_elder.txt',
                 extra_context={
                     'inviter': editor,
                     'student': self.rel.student if self.rel else None,
@@ -220,7 +220,7 @@ class InviteFamilyForm(forms.Form):
         # send invite notifications
         invites.send_invite_sms(
             self.instance,
-            template_name='registration/invite_elder_sms.txt',
+            template_name='sms/invite_elder.txt',
             extra_context={
                 'inviter': model.elder_in_context(self.rel),
                 'student': self.rel.student,
@@ -314,7 +314,7 @@ class InviteTeacherForm(forms.Form):
         if created:
             invites.send_invite_email(
                 profile,
-                template_name='registration/invite_elder_email',
+                template_name='emails/invite_elder',
                 extra_context={
                     'inviter': self.inviter,
                     'student': self.rel.student if self.rel else None,

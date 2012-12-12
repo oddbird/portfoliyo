@@ -58,10 +58,23 @@ class Profile(models.Model):
     code = models.CharField(max_length=20, blank=True, null=True, unique=True)
     # who invited this user to the site?
     invited_by = models.ForeignKey('self', blank=True, null=True)
-    # does this user want to receive email notifications?
-    email_notifications = models.BooleanField(default=True)
     # True if user has declined/stopped SMS notifications
     declined = models.BooleanField(default=False)
+    email_confirmed = models.BooleanField(default=False)
+
+    # opt in/out to various types of email notifications
+    NOTIFICATION_PREFS = [
+        'notify_new_parent',
+        'notify_parent_text',
+        'notify_added_to_village',
+        'notify_joined_my_village',
+        'notify_teacher_post',
+        ]
+    notify_new_parent = models.BooleanField(default=True)
+    notify_parent_text = models.BooleanField(default=True)
+    notify_added_to_village = models.BooleanField(default=True)
+    notify_joined_my_village = models.BooleanField(default=True)
+    notify_teacher_post = models.BooleanField(default=True)
 
 
     def __unicode__(self):
@@ -91,7 +104,7 @@ class Profile(models.Model):
     def create_with_user(cls, school,
                          name='', email=None, phone=None, password=None,
                          role='', school_staff=False, is_active=False,
-                         invited_by=None, email_notifications=True):
+                         email_notifications=True, **kwargs):
         """
         Create a Profile and associated User and return the new Profile.
 
@@ -114,17 +127,20 @@ class Profile(models.Model):
         user.set_password(password)
         user.save()
         code = generate_code(username, 6) if school_staff else None
-        profile = cls(
-            school=school,
-            name=name,
-            phone=phone,
-            user=user,
-            role=role,
-            school_staff=school_staff,
-            invited_by=invited_by,
-            code=code,
-            email_notifications=email_notifications,
+        kwargs.update(
+            {
+                'school': school,
+                'name': name,
+                'phone': phone,
+                'user': user,
+                'role': role,
+                'school_staff': school_staff,
+                'code': code,
+                }
             )
+        for pref in cls.NOTIFICATION_PREFS:
+            kwargs[pref] = email_notifications
+        profile = cls(**kwargs)
 
         # try a few times to generate a unique code, if we keep failing give up
         # and raise the error
