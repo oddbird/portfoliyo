@@ -17,6 +17,9 @@
     <span class="fieldset-optional">[optional]</span>
   </p>
 
+  {{ family_form.non_field_errors }}
+
+  {% include "forms/_field.html" with field=form.family_form.name %}
   {% include "forms/_field.html" with field=form.family_form.relationship|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." %}
   {% include "forms/_field.html" with field=form.family_form.phone|attr:"placeholder:555-555-5555" %}
 

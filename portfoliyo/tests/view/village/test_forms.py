@@ -429,8 +429,8 @@ class TestInviteFamilyForm(object):
         return defaults
 
 
-    def test_invite_family(self, sms, db):
-        """Can invite a family member by phone."""
+    def test_invite_family_by_relationship(self, sms, db):
+        """Can invite a family member by relationship and phone."""
         rel = factories.RelationshipFactory.create(
             from_profile__name="Teacher John",
             to_profile__name="Jimmy Doe",
@@ -452,6 +452,40 @@ class TestInviteFamilyForm(object):
             "will text you from this number. "
             "Text 'stop' any time if you don't want this."
             )
+
+
+    def test_invite_family_by_name(self, db):
+        """Can invite a family member by name and phone."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Teacher John",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
+        form = forms.InviteFamilyForm(
+            self.data(phone='(321)456-7890', relationship='', name="Jane Doe"),
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert profile.phone == u'+13214567890'
+        assert not profile.school_staff
+
+
+    def test_either_name_or_relationship_required(self, db):
+        """Either name or relationship field must be filled out."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Teacher John",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
+        form = forms.InviteFamilyForm(
+            self.data(phone='(321)456-7890', relationship="", name=""),
+            rel=rel,
+            )
+        assert not form.is_valid()
+        assert form.errors['__all__'] == [
+            u"Either name or relationship is required."]
 
 
     def test_bad_phone(self, db):
@@ -636,19 +670,18 @@ class TestStudentForms(object):
             ]
 
 
-    def test_add_student_with_family_error(self, db):
-        """Both family fields required if one is filled out."""
+    def test_add_student_with_family_phone_required(self, db):
+        """Phone field is required if either name or relationship is given."""
         teacher = factories.ProfileFactory.create()
-        phone = "+13216540987"
         form = forms.AddStudentForm(
             {
                 'name': "Some Student",
-                'family-phone': phone,
+                'family-name': "Some Parent",
                 },
             elder=teacher,
             )
         assert not form.is_valid()
-        assert form.family_form.errors['relationship'] == [
+        assert form.family_form.errors['phone'] == [
             u"This field is required."]
 
 

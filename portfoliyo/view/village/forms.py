@@ -152,8 +152,9 @@ class EditElderForm(forms.Form):
 
 class InviteFamilyForm(forms.Form):
     """A form for inviting a family member to a student village."""
+    name = pyoforms.StripCharField(max_length=200, required=False)
+    relationship = pyoforms.StripCharField(max_length=200, required=False)
     phone = pyoforms.StripCharField(max_length=255)
-    relationship = pyoforms.StripCharField(max_length=200)
 
 
     def __init__(self, *args, **kwargs):
@@ -165,7 +166,18 @@ class InviteFamilyForm(forms.Form):
         super(InviteFamilyForm, self).__init__(*args, **kwargs)
 
 
+    def clean(self):
+        """Either name or relationship must be provided."""
+        if self.fields['phone'].required and not (
+                self.cleaned_data.get('name') or
+                self.cleaned_data.get('relationship')):
+            raise forms.ValidationError(
+                u"Either name or relationship is required.")
+        return self.cleaned_data
+
+
     def clean_phone(self):
+        """Ensure phone number is valid and that person can be invited."""
         phone = self.cleaned_data.get('phone', "")
         if not phone and not self.fields['phone'].required:
             return phone

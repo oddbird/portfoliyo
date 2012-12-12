@@ -585,11 +585,12 @@ class TestInviteFamily(GroupContextTests):
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-family-form']
-        form['phone'] = "(123)456-7890"
-        form['relationship'] = ""
+        form['phone'] = ""
+        form['relationship'] = "mom"
+        form['name'] = "Some Mom"
         response = form.submit(status=200)
 
-        response.mustcontain("field is required")
+        response.mustcontain(u"field is required")
 
 
     def test_requires_school_staff(self, client, db):

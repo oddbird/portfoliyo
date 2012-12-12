@@ -9,8 +9,9 @@
 {% block form-header %}Invite Family of {{ student }}{% endblock %}
 
 {% block form-fields %}
-  {% include "forms/_field.html" with field=form.phone|attr:"placeholder: 555-555-5555" %}
+  {% include "forms/_field.html" with field=form.name %}
   {% include "forms/_field.html" with field=form.relationship|attr:"placeholder: e.g. 'Mom', 'Dad', 'Grandma', etc." %}
+  {% include "forms/_field.html" with field=form.phone|attr:"placeholder: 555-555-5555" %}
 {% endblock %}
 
 {% block formactions %}
