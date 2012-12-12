@@ -128,6 +128,10 @@ typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var
 {% endcompress %}
 {% endblock js %}
 
+{% if MIXPANEL_ID %}
+<script src="{{ STATIC_URL }}js/mixpanel.js"></script>
+{% endif %}
+
 {% block extrajs %}
 {% endblock extrajs %}
 
