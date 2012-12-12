@@ -15,6 +15,9 @@ import json
 def track(request, event_name, **kwargs):
     """Record that user accomplished ``event_name``, perhaps w/ extra data."""
     events = request.session.setdefault('tracking', [])
+    # modifying the list that is already in the session doesn't set modified
+    # True, so data isn't saved unless we explicitly set it to True
+    request.session.modified = True
     events.append((event_name, kwargs))
 
 
