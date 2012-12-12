@@ -57,6 +57,7 @@
                     mixpanel.people.set({
                         $email: userEmail
                     });
+                    mixpanel.register({'email': userEmail});
                 }
             }
         }
