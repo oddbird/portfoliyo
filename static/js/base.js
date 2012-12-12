@@ -335,6 +335,9 @@ var PYO = (function (PYO, $) {
             var input = form.find('#id_name');
             var replace = form.find('.replace-student-name');
 
+            // handle form reloads with prefilled form data
+            replace.text(input.val());
+
             input.keyup(function () {
                 replace.text(input.val());
             });
