@@ -79,8 +79,8 @@
         existence('article.awaiting-activation', 'registered');
         existence('.login .activated.success', 'activated');
 
-        ajaxClick('.action-post', 'posted');
-        ajaxClick('.group-posts', 'mass texted');
+        ajaxClick('.village-posts .action-post', 'posted');
+        ajaxClick('.group-posts .action-post', 'mass texted');
 
         serverEvents('.meta', 'user-events');
 

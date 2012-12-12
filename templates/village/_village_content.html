@@ -6,6 +6,7 @@
 {% block getting-started-header %}Welcome to {{ student.name }}'s Village!{% endblock %}
 {% block getting-started-body %}Post messages for {{ student.name }}'s family members and teachers, and see their replies below.{% endblock %}
 
+{% block addpost-classes %}village-posts{% endblock %}
 {% block form-action %}{% url 'json_posts' student_id=student.id %}{% endblock %}
 
 {% block info-bar %}
