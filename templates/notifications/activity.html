@@ -1,24 +1,36 @@
 {# Content Template #}
+{# STUDENT and GROUP references should always be linked. #}
 
-{# New Post #}
+{# 1. Requested Posts - parents then teachers, internally ordered by time #}
 
-{ TEACHER/PARENT } ({ ROLE }) posted in [{ STUDENT }'s village](link to village):
+{# 1.1 Single Posts #}
 
-{# posts #}
-  - {# standard post details #}
+# In { STUDENT }'s village:
 
-{# Bulk Post #}
+{# context & new posts, standard post details #}
+{ POSTS }
+
+{# 1.2 Bulk Post #}
 {# only treat as bulk if it went to more than one of my villages #}
 
-{ TEACHER } sent a message to { NUMBER } of you villages:
+# In { STUDENT }, { STUDENT }, { STUDENT }, and { NUMBER - 3 } more villages:
 
-{# post #}
-  - To: { STUDENT }, { STUDENT }, { STUDENT }, and { NUMBER - 3 } more...
-  - {# standard post details #}
+{# no context, standard post details #}
+{ POST }
 
-{# Activity #}
+{# 2. Requested Activity #}
 
-Other activity:
+- { STUDENT }'s village was created by { PARENT } ({ ROLE }){# if group #} in the { GROUP } group{# endif #}.
+- { TEACHER } added you to { STUDENT }'s village.
+- { TEACHER } joined { STUDENT }'s village.
+
+{# 3. Non-Requested Posts + Activity - ordered by time #}
+
+- { STUDENT } has new posts from { TEACHER/PARENT }, { TEACHER/PARENT }, and { TEACHER/PARENT }.
+- { STUDENT }, { STUDENT }, { STUDENT }, and { NUMBER - 3 } more have a bulk post from { TEACHER/PARENT }.
 - { PARENT } ({ ROLE }) created a village for { STUDENT }{# if group #} in the { GROUP } group{# endif #}.
 - { TEACHER } added you to { STUDENT }'s village.
 - { TEACHER } joined { STUDENT }'s village.
+
+{# 2 and 3 don't need headers in the html, but will be styled differently. #}
+{# They should be distinct html blocks. #}
