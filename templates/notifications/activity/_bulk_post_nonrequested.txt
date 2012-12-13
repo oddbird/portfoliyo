@@ -1,0 +1,20 @@
+{% if students|length == 2 %}
+- {% for student in students %}
+{% if forloop.first %}{{ student }} and {% else %}{{ student }} {% endif %}
+{% endfor %}
+villages {% endif %}
+
+{% if students|length == 3 %}
+- {% for student in students %}
+{% if forloop.last %}and {{ student }} {% else %}{{ student }}, {% endif %}
+{% endfor %}
+villages {% endif %}
+
+{% if students|length > 3 %}
+- {% for student in students %}
+{% if forloop.counter < 4 %}{{ student }}, {% endif %}
+{% endfor %}
+and {{ students|length - 3 }} more village {% if students|length > 4 %}s {% endif %}
+{% endif %}
+
+have {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} from {{ teacher }}.

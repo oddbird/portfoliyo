@@ -1,0 +1,5 @@
+{% if students|length == 1 %}
+{{ students }}'s {{ parent.role }} ({{ parent }}) just signed up.
+{% else %}
+You have {{ students|length }} new villages.
+{% endif %}

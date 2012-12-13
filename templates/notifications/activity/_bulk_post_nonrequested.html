@@ -1,0 +1,24 @@
+<li>
+  {% if students|length == 2 %}
+  {% for student in students %}
+  {% if forloop.first %}
+  <a href="{{ village_url }}">{{ student }}</a> and {% else %}<a href="{{ village_url }}">{{ student }} </a>
+  {% endif %}
+  {% endfor %}
+  villages {% endif %}
+
+  {% if students|length == 3 %}
+  {% for student in students %}
+  {% if forloop.last %}and <a href="{{ village_url }}">{{ student }} </a>{% else %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}
+  {% endfor %}
+  villages {% endif %}
+
+  {% if students|length > 3 %}
+  {% for student in students %}
+  {% if forloop.counter < 4 %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}
+  {% endfor %}
+  and {{ students|length - 3 }} more village {% if students|length > 4 %}s {% endif %}
+  {% endif %}
+
+  have {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} from {{ teacher }}.
+</li>

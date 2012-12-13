@@ -1,0 +1,15 @@
+<article class="post">
+
+  <header class="post-meta">
+    <h3 class="byline vcard">
+      <b class="title">{{ post.role }}:</b>
+      <span class="fn">{{ post.author }}</span>
+    </h3>
+    <time class="pubdate" datetime="{{ post.timestamp }}">{{ post.date }} at {{ post.time }}</time>
+  </header>
+
+  <p class="post-text">
+    {{ post.html_text }}
+  </p>
+
+</article>

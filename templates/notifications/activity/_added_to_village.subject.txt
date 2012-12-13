@@ -1,0 +1,5 @@
+{% if villages|length == 1 %}
+{{ teacher }} added you to {{ student }}'s village.
+{% else %}
+You have been added to {{ villages|length }} villages.
+{% endif %}

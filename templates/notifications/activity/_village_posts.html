@@ -1,0 +1,6 @@
+<h2>In <a href="{{ village_url }}">{{ student }}'s village</a>:</h2>
+
+{# posts should include context posts #}
+{% for post in posts %}
+  {% include "includes/_post.html" %}
+{% endfor %}

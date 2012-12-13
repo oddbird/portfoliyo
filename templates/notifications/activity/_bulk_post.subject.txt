@@ -1,0 +1,5 @@
+{% if teachers|length == 1 %}
+{{ teachers }} sent {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} in {{ villages|length }} of your villages.
+{% else %}
+{{ teachers|length }} teachers sent {{ posts|length }} messages in {{ villages|length }} of your villages.
+{% endif %}

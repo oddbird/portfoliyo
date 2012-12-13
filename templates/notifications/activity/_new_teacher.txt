@@ -1,0 +1,1 @@
+- {{ teacher }} joined {{ student }}'s village. Start a conversation: {{ village_url }}

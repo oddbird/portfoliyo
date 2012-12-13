@@ -1,0 +1,22 @@
+{% if students|length == 2 %}
+<h2>
+  In {% for student in students %}{% if forloop.first %}<a href="{{ village_url }}">{{ student }}</a> and {% else %}<a href="{{ village_url }}">{{ student }}</a>{% endif %}{% endfor %} villages:
+</h2>
+{% endif %}
+
+{% if students|length == 3 %}
+<h2>
+  In {% for student in students %}{% if forloop.last %}and <a href="{{ village_url }}">{{ student }}</a>{% else %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}{% endfor %} villages:
+</h2>
+{% endif %}
+
+{% if students|length > 3 %}
+<h2>
+  In {% for student in students %}{% if forloop.counter < 4 %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}{% endfor %}and {{ students|length - 3 }} more village{% if students|length > 4 %}s{% endif %}:
+</h2>
+{% endif %}
+
+{# posts should NOT include context posts #}
+{% for post in posts %}
+  {% include "includes/_post.html" %}
+{% endfor %}

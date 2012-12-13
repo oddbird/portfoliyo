@@ -1,0 +1,4 @@
+{% if teachers|length == 1 %}
+{{ teachers }} joined {% if students|length == 1 %}{{ student }}'s village{% else %}{{ students|length }} of your villages{% endif %}.
+{% else %}
+{{ teachers|length }} teachers joined {% if students|length == 1 %}{{ student }}'s village{% else %}{{ students|length }} of your villages{% endif %}.

@@ -1,0 +1,5 @@
+{% if students|length == 1 %}
+New message{% if posts|length > 1 %}s{% endif %} in {{ students }}'s village.
+{% else %}
+New messages in {{ students|length }} of your villages.
+{% endif %}

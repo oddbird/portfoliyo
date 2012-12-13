@@ -1,0 +1,53 @@
+Recent activity in Portfoliyo:
+
+{# 1. Requested Posts - parents then teachers, internally ordered by time #}
+
+{# 1.1 Single Posts #}
+
+{% for village in villages %}
+  {% include "activity/_village_posts.txt" %}
+{% endfor %}
+
+{# 1.2 Bulk Post #}
+{# only treat as bulk if it went to more than one of my villages #}
+
+{% for combo_of_villages in combos_of_villages %}
+  {% include "activity/_bulk_post.txt" %}
+{% endfor %}
+
+{# 2. Requested Activity #}
+
+{% for student in students %}
+  {% include "activity/_new_student.txt" %}
+{% endfor %}
+{% for village in villages %}
+  {% include "activity/_added_to_village.txt" %}
+{% endfor %}
+{% for teacher in teachers %}
+  {% include "activity/_new_teacher.txt" %}
+{% endfor %}
+
+{# 3. Non-Requested Posts + Activity - ordered by time #}
+
+Other activity:
+
+{% for village in villages %}
+  {% include "activity/_village_posts_nonrequested.txt" %}
+{% endfor %}
+{# this should loop over each combination of villages for EACH posting teacher #}
+{% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
+  {% include "activity/_bulk_post_nonrequested.txt" %}
+{% endfor %}
+{% for student in students %}
+  {% include "activity/_new_student.txt" %}
+{% endfor %}
+{% for village in villages %}
+  {% include "activity/_added_to_village.txt" %}
+{% endfor %}
+{% for teacher in teachers %}
+  {% include "activity/_new_teacher.txt" %}
+{% endfor %}
+
+
+--
+Don't want email notifications? Edit your profile: {{ profile_url }}

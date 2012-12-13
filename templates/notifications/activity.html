@@ -1,36 +1,56 @@
-{# Content Template #}
-{# STUDENT and GROUP references should always be linked. #}
+<h1>Recent activity in Portfoliyo:</h1>
 
 {# 1. Requested Posts - parents then teachers, internally ordered by time #}
 
 {# 1.1 Single Posts #}
 
-# In { STUDENT }'s village:
-
-{# context & new posts, displayed just as in villages, minus sms info #}
-{ POSTS }
+{% for village in villages %}
+  {% include "activity/_village_posts.html" %}
+{% endfor %}
 
 {# 1.2 Bulk Post #}
 {# only treat as bulk if it went to more than one of my villages #}
 
-# In { STUDENT }, { STUDENT }, { STUDENT }, and { NUMBER - 3 } more villages:
-
-{# no context, post details just as in village minus sms info #}
-{ POST }
+{% for combo_of_villages in combos_of_villages %}
+  {% include "activity/_bulk_post.html" %}
+{% endfor %}
 
 {# 2. Requested Activity #}
 
-- { STUDENT }'s village was created by { PARENT } ({ ROLE }){# if group #} in the { GROUP } group{# endif #}.
-- { TEACHER } added you to { STUDENT }'s village.
-- { TEACHER } joined { STUDENT }'s village.
+<ul class="requested">
+  {% for student in students %}
+    {% include "activity/_new_student.html" %}
+  {% endfor %}
+  {% for village in villages %}
+    {% include "activity/_added_to_village.html" %}
+  {% endfor %}
+  {% for teacher in teachers %}
+    {% include "activity/_new_teacher.html" %}
+  {% endfor %}
+</ul>
 
 {# 3. Non-Requested Posts + Activity - ordered by time #}
 
-- { STUDENT } has new posts from { TEACHER/PARENT }, { TEACHER/PARENT }, and { TEACHER/PARENT }.
-- { STUDENT }, { STUDENT }, { STUDENT }, and { NUMBER - 3 } more have a bulk post from { TEACHER/PARENT }.
-- { PARENT } ({ ROLE }) created a village for { STUDENT }{# if group #} in the { GROUP } group{# endif #}.
-- { TEACHER } added you to { STUDENT }'s village.
-- { TEACHER } joined { STUDENT }'s village.
+<ul class="nonrequested">
+  {% for village in villages %}
+    {% include "activity/_village_posts_nonrequested.html" %}
+  {% endfor %}
+  {# this should loop over each combination of villages for EACH posting teacher #}
+  {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
+    {% include "activity/_bulk_post_nonrequested.html" %}
+  {% endfor %}
+  {% for student in students %}
+    {% include "activity/_new_student.html" %}
+  {% endfor %}
+  {% for village in villages %}
+    {% include "activity/_added_to_village.html" %}
+  {% endfor %}
+  {% for teacher in teachers %}
+    {% include "activity/_new_teacher.html" %}
+  {% endfor %}
+</ul>
 
-{# 2 and 3 don't need headers in the html, but will be styled differently. #}
-{# They should be distinct html blocks. #}
+<p>
+--<br />
+Don't want email notifications? <a href="{{ profile_url }}">Edit your profile</a>.
+</p>
