@@ -20,7 +20,7 @@
   {{ family_form.non_field_errors }}
 
   {% include "forms/_field.html" with field=form.family_form.name|attr:"placeholder:Please include either a name or relationship." %}
-  {% include "forms/_field.html" with field=form.family_form.relationship|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." %}
+  {% include "forms/_field.html" with field=form.family_form.role|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." label="Relation to student" %}
   {% include "forms/_field.html" with field=form.family_form.phone|attr:"placeholder:555-555-5555" %}
 
   {% include "sms/invite_elder.html" with inviter=user.profile student='<span class="replace-student-name">[student]</span>'|safe %}

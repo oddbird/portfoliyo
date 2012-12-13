@@ -64,12 +64,37 @@ class ElderGroupIdsMultipleChoiceField(GroupIdsMultipleChoiceField):
 
 
 
-class EditElderForm(forms.Form):
-    name = pyoforms.StripCharField(max_length=200)
-    role = pyoforms.StripCharField(max_length=200)
-    phone = pyoforms.StripCharField(max_length=20, required=False)
+class FamilyForm(forms.Form):
+    """Common elements for editing/inviting family."""
+    name = pyoforms.StripCharField(max_length=200, required=False)
+    role = pyoforms.StripCharField(max_length=200, required=False)
+    phone = pyoforms.StripCharField(max_length=20)
 
 
+    def clean(self):
+        """Either name or relationship must be provided."""
+        if self.fields['phone'].required and not (
+                self.cleaned_data.get('name') or
+                self.cleaned_data.get('role')):
+            raise forms.ValidationError(
+                u"Either name or relationship is required.")
+        return self.cleaned_data
+
+
+    def clean_phone(self):
+        """Ensure phone number is valid."""
+        phone = self.cleaned_data.get('phone', "")
+        if not phone and not self.fields['phone'].required:
+            return phone
+        phone = formats.normalize_phone(phone)
+        if phone is None:
+            raise forms.ValidationError(
+                "Please supply a valid US or Canada mobile number.")
+        return phone
+
+
+
+class EditFamilyForm(FamilyForm):
     def __init__(self, *a, **kw):
         """
         Pull instance/rel kwargs out, set initial data.
@@ -87,16 +112,12 @@ class EditElderForm(forms.Form):
             formats.display_phone(self.instance.phone)
             if self.instance.phone else ''
             )
-        super(EditElderForm, self).__init__(*a, **kw)
+        super(EditFamilyForm, self).__init__(*a, **kw)
 
 
     def clean_phone(self):
-        if not self.cleaned_data['phone']:
-            return None
-        phone = formats.normalize_phone(self.cleaned_data['phone'])
-        if phone is None:
-            raise forms.ValidationError(
-                "Please supply a valid US or Canada mobile number.")
+        """Ensure phone number is valid and not a duplicate."""
+        phone = super(EditFamilyForm, self).clean_phone()
         if model.Profile.objects.filter(
                 phone=phone).exclude(pk=self.instance.pk).exists():
             msg = "A user with this phone number already exists."
@@ -150,13 +171,8 @@ class EditElderForm(forms.Form):
 
 
 
-class InviteFamilyForm(forms.Form):
+class InviteFamilyForm(FamilyForm):
     """A form for inviting a family member to a student village."""
-    name = pyoforms.StripCharField(max_length=200, required=False)
-    relationship = pyoforms.StripCharField(max_length=200, required=False)
-    phone = pyoforms.StripCharField(max_length=255)
-
-
     def __init__(self, *args, **kwargs):
         """
         Optionally takes ``rel`` between inviting elder and student.
@@ -166,25 +182,9 @@ class InviteFamilyForm(forms.Form):
         super(InviteFamilyForm, self).__init__(*args, **kwargs)
 
 
-    def clean(self):
-        """Either name or relationship must be provided."""
-        if self.fields['phone'].required and not (
-                self.cleaned_data.get('name') or
-                self.cleaned_data.get('relationship')):
-            raise forms.ValidationError(
-                u"Either name or relationship is required.")
-        return self.cleaned_data
-
-
     def clean_phone(self):
         """Ensure phone number is valid and that person can be invited."""
-        phone = self.cleaned_data.get('phone', "")
-        if not phone and not self.fields['phone'].required:
-            return phone
-        phone = formats.normalize_phone(phone)
-        if phone is None:
-            raise forms.ValidationError(
-                "Please supply a valid US or Canada mobile number.")
+        phone = super(InviteFamilyForm, self).clean_phone()
         try:
             self.instance = model.Profile.objects.get(phone=phone)
         except model.Profile.DoesNotExist:
@@ -217,7 +217,7 @@ class InviteFamilyForm(forms.Form):
         inviter = self.rel.elder
 
         phone = self.cleaned_data.get('phone')
-        relationship = self.cleaned_data.get('relationship', u"")
+        relationship = self.cleaned_data.get('role', u"")
 
         if self.instance is None:
             self.instance = model.Profile.create_with_user(
@@ -258,7 +258,7 @@ class InviteFamilyForm(forms.Form):
 class InviteTeacherForm(forms.Form):
     """A form for inviting a teacher to a student village."""
     email = forms.EmailField(max_length=255)
-    relationship = pyoforms.StripCharField(max_length=200)
+    role = pyoforms.StripCharField(max_length=200)
     groups = pyoforms.ModelMultipleChoiceField(
         queryset=model.Group.objects.none(),
         widget=GroupCheckboxSelectMultiple,
@@ -304,7 +304,7 @@ class InviteTeacherForm(forms.Form):
     def save(self):
         """Save/return new elder profile & send invites, or return existing."""
         email = self.cleaned_data.get("email")
-        relationship = self.cleaned_data.get("relationship", u"")
+        role = self.cleaned_data.get("role", u"")
 
         # first check for an existing user match
         try:
@@ -313,7 +313,7 @@ class InviteTeacherForm(forms.Form):
             profile = model.Profile.create_with_user(
                 school=self.inviter.school,
                 email=email,
-                role=relationship,
+                role=role,
                 is_active=False,
                 school_staff=True,
                 invited_by=self.inviter,
@@ -339,7 +339,7 @@ class InviteTeacherForm(forms.Form):
                 from_profile=profile,
                 to_profile=student,
                 defaults={
-                    'description': relationship,
+                    'description': role,
                     }
                 )
             if not created and not rel.direct:
