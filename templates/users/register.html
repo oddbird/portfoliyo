@@ -1,20 +1,11 @@
 {% extends "base_site.html" %}
 {% load widget_tweaks %}
 
-{% block title %}Create an account | {{ block.super }}{% endblock title %}
+{% block title %}Get started | {{ block.super }}{% endblock title %}
 
 {% block maincontent %}
 <article class="register">
-  <h2 class="pagehead">Create your Portfoliyo account</h2>
-
-  <p>
-    Welcome to Portfoliyo!
-  </p>
-  <p>
-    Ready to get started?
-    Fill out some basic info here,
-    then we'll confirm your email address and you can start adding students!
-  </p>
+  <h2 class="pagehead">Let's get started!</h2>
 
   <form method="POST" class="register-form" id="register-form">
     {% csrf_token %}

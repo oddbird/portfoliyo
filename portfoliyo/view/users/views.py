@@ -220,6 +220,7 @@ def accept_email_invite(request, uidb36, token):
             u"Now log in using your email address and password "
             u"to see messages about your student.",
             )
+        tracking.track(request, 'accepted email invite')
 
     return response
 

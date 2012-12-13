@@ -1,7 +1,0 @@
-{% extends "village/_elders_list.html" %}
-
-{% load url from future %}
-
-{% block edit-elder-url %}{% url 'edit_elder' student_id=student.id elder_id=nav_elder.id %}{% endblock %}
-
-{% block invite-elder-url %}{% if elder_type.school_staff %}{% url 'invite_teacher' student_id=student.id %}{% else %}{% url 'invite_family' student_id=student.id %}{% endif %}{% if group %}?group={{ group.id }}{% endif %}{% endblock %}
