@@ -242,8 +242,13 @@ def invite_teacher(request, student_id):
     if request.method == 'POST':
         form = forms.InviteTeacherForm(request.POST, rel=rel)
         if form.is_valid():
-            form.save()
-            tracking.track(request, 'invited teacher')
+            teacher = form.save()
+            tracking.track(
+                request,
+                'invited teacher',
+                invitedEmail=teacher.user.email,
+                studentId=student_id,
+                )
             return redirect_to_village(rel.student, group)
     else:
         form = forms.InviteTeacherForm(rel=rel)
@@ -266,8 +271,13 @@ def invite_teacher_to_group(request, group_id):
     if request.method == 'POST':
         form = forms.InviteTeacherForm(request.POST, group=group)
         if form.is_valid():
-            form.save()
-            tracking.track(request, 'invited teacher to group')
+            teacher = form.save()
+            tracking.track(
+                request,
+                'invited teacher to group',
+                invitedEmail=teacher.user.email,
+                groupId=group_id,
+                )
             return redirect('group', group_id=group.id)
     else:
         form = forms.InviteTeacherForm(group=group)
