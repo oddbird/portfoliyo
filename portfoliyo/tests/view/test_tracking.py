@@ -3,14 +3,19 @@ import mock
 from portfoliyo.view import tracking
 
 
+class MockSession(dict):
+    pass
+
+
 
 def test_track():
     """track() function records event data in session."""
     request = mock.Mock()
-    request.session = {}
+    request.session = MockSession()
     tracking.track(request, 'some event', foo='bar')
 
     assert request.session['tracking'] == [('some event', {'foo': 'bar'})]
+    assert request.session.modified
 
 
 
