@@ -1,4 +1,4 @@
-{% extends "village/_student_form.html" %}
+{% extends "village/student_form/_base.html" %}
 {% load url from future %}
 
 {% block form-action %}{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
