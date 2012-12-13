@@ -1,0 +1,9 @@
+{% extends "village/elders_list/_base.html" %}
+
+{% load url from future %}
+
+{% block edit-elder-url %}{% if group.is_all %}{% url 'edit_elder' elder_id=nav_elder.id %}{% else %}{% url 'edit_elder' elder_id=nav_elder.id group_id=group.id %}{% endif %}{% endblock %}
+
+{% block invite-elder %}{% if elder_type.school_staff and not group.is_all %}{{ block.super }}{% endif %}{% endblock %}
+
+{% block invite-elder-url %}{% url 'invite_teacher' group_id=group.id %}{% endblock %}

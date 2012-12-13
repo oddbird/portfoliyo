@@ -32,17 +32,6 @@
         }
     };
 
-    var ajaxClick = function (sel, eventName) {
-        // This function is only safe to use on clicks that don't reload the
-        // page (otherwise the page will reload before this has time to
-        // actually send the event off to mixpanel).  For normal links, use
-        // mixpanel.track_click (or better, do it on the target page or on the
-        // server).
-        $('body').on('click', sel, function () {
-            mixpanel.track(eventName);
-        });
-    };
-
     var identifyUser = function (sel) {
         // Identify the current user to MixPanel, based on data attributes
         // found on the element named by the given selector.
@@ -74,16 +63,22 @@
         }
     };
 
+    var postEvents = function (sel) {
+        $('body').on('successful-post', sel, function (e, data) {
+            if (data.studentId) { mixpanel.track('posted', data); }
+            else { mixpanel.track('mass texted', data); }
+        });
+    };
+
     $(function () {
         existence('article.landing', 'viewed landing');
         existence('article.register', 'viewed register');
         existence('article.awaiting-activation', 'registered');
         existence('.login .activated.success', 'activated');
 
-        ajaxClick('.village-posts .action-post', 'posted');
-        ajaxClick('.group-posts .action-post', 'mass texted');
-
         serverEvents('.meta', 'user-events');
+
+        postEvents('.village-feed');
 
         ajaxPageViews();
 
