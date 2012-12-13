@@ -23,10 +23,8 @@
   {% include "forms/_field.html" with field=form.family_form.relationship|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." %}
   {% include "forms/_field.html" with field=form.family_form.phone|attr:"placeholder:555-555-5555" %}
 
-  <blockquote class="sms-preview">
-    <h3>We'll send them this invitation:</h3>
-    {% include "sms/invite_elder.txt" with inviter=user.profile student='<span class="replace-student-name">[student]</span>'|safe %}
-  </blockquote>
+  {% include "sms/invite_elder.html" with inviter=user.profile student='<span class="replace-student-name">[student]</span>'|safe %}
+
 </fieldset>
 {% endblock add-family %}
 
