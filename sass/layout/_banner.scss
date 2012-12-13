@@ -3,12 +3,8 @@
 
 $banner-size    : $smallpx;
 $banner-rhythm  : .25;
-$banner-leading : 1 + $banner-rhythm*2;
 
-%banner-item {
-  @include padding-leader($banner-rhythm);
-  @include padding-trailer($banner-rhythm);
-}
+%banner-item { @include rhythm-padding($banner-rhythm); }
 
 // ---------------------------------------------------------------------------
 // Banner

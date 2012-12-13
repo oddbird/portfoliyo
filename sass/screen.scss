@@ -2,7 +2,7 @@
 // Imports
 
 @import "base/settings";
-@import "general/root";
+@import "general/general";
 
 // ---------------------------------------------------------------------------
 // Plugins
@@ -33,13 +33,6 @@
 // Village
 
 @import "modules/village";
-
-// ---------------------------------------------------------------------------
-// Pyo
-
-// @import "modules/feed/profile";
-// @import "modules/feed/combined";
-// @import "modules/feed/post";
 
 // ---------------------------------------------------------------------------
 // Errors
