@@ -333,14 +333,15 @@ var PYO = (function (PYO, $) {
         var form = $(container);
         if (form.length) {
             var input = form.find('#id_name');
-            var replace = form.find('.replace-student-name');
+            var toReplace = form.find('.replace-student-name');
+            var update = function () {
+                toReplace.text(input.val() || '[student]');
+            };
 
             // handle form reloads with prefilled form data
-            replace.text(input.val());
+            update();
 
-            input.keyup(function () {
-                replace.text(input.val());
-            });
+            input.keyup(update);
         }
     };
 
