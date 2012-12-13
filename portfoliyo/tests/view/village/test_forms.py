@@ -9,14 +9,14 @@ from portfoliyo.view.village import forms
 from portfoliyo.tests import factories, utils
 
 
-class TestEditElderForm(object):
+class TestEditFamilyForm(object):
     def test_edit_family_member(self, db):
         """Can edit a family member's name."""
         phone = '+13216540987'
         parent = factories.ProfileFactory.create(
             phone=phone, name='Old Name', role='dad')
 
-        form = forms.EditElderForm(
+        form = forms.EditFamilyForm(
             {'name': 'New Name', 'role': 'dad', 'phone': phone},
             instance=parent,
             )
@@ -36,14 +36,17 @@ class TestEditElderForm(object):
         it was the same as their role in that village.
 
         """
+        phone = '+13216540987'
         rel = factories.RelationshipFactory.create(
-            description="gifted and talented teacher",
-            from_profile__role="math teacher",
+            description="mother",
+            from_profile__role="mom",
+            from_profile__phone=phone,
             )
-        form = forms.EditElderForm(
+        form = forms.EditFamilyForm(
             {
-                'name': 'John Doe',
-                'role': 'science teacher',
+                'name': "Jane Doe",
+                'role': "aunt",
+                'phone': phone,
                 },
             instance=rel.elder,
             rel=rel,
@@ -51,20 +54,47 @@ class TestEditElderForm(object):
         assert form.is_valid(), dict(form.errors)
         profile = form.save(editor=factories.ProfileFactory.create())
 
-        assert profile.role == 'math teacher'
-        assert utils.refresh(rel).description == 'science teacher'
+        assert profile.role == "mom"
+        assert utils.refresh(rel).description == "aunt"
+
+
+    def test_edit_relationship_description(self, db):
+        """Editing elder sets role to empty if it matches village role. """
+        phone = '+13216540987'
+        rel = factories.RelationshipFactory.create(
+            description="mom",
+            from_profile__role="mom",
+            from_profile__phone=phone,
+            )
+        form = forms.EditFamilyForm(
+            {
+                'name': "Jane Doe",
+                'role': "aunt",
+                'phone': phone,
+                },
+            instance=rel.elder,
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save(editor=factories.ProfileFactory.create())
+
+        assert profile.role == "aunt"
+        assert utils.refresh(rel).description == ""
 
 
     def test_empty_relationship_description_left_alone(self, db):
         """Empty relationship description left empty."""
+        phone = '+13216540987'
         rel = factories.RelationshipFactory.create(
             description="",
-            from_profile__role="math teacher",
+            from_profile__role="mom",
+            from_profile__phone=phone,
             )
-        form = forms.EditElderForm(
+        form = forms.EditFamilyForm(
             {
-                'name': 'John Doe',
-                'role': 'science teacher',
+                'name': "Jane Doe",
+                'role': "aunt",
+                'phone': phone,
                 },
             instance=rel.elder,
             rel=rel,
@@ -72,8 +102,8 @@ class TestEditElderForm(object):
         assert form.is_valid(), dict(form.errors)
         profile = form.save(editor=factories.ProfileFactory.create())
 
-        assert profile.role == 'science teacher'
-        assert utils.refresh(rel).description == ''
+        assert profile.role == "aunt"
+        assert utils.refresh(rel).description == ""
 
 
     def test_update_phone_sends_invite_sms(self, sms, db):
@@ -90,7 +120,7 @@ class TestEditElderForm(object):
             to_profile=teacher_rel.student,
             )
 
-        form = forms.EditElderForm(
+        form = forms.EditFamilyForm(
             {
                 'name': 'John Doe',
                 'role': 'dad',
@@ -116,7 +146,7 @@ class TestEditElderForm(object):
         """Bad phone number results in validation error."""
         elder = factories.ProfileFactory.create()
 
-        form = forms.EditElderForm(
+        form = forms.EditFamilyForm(
             {
                 'name': 'John Doe',
                 'role': 'dad',
@@ -134,7 +164,7 @@ class TestEditElderForm(object):
         factories.ProfileFactory.create(phone='+13216540987')
         elder = factories.ProfileFactory.create()
 
-        form = forms.EditElderForm(
+        form = forms.EditFamilyForm(
             {
                 'name': 'John Doe',
                 'role': 'dad',
@@ -152,7 +182,7 @@ class TestEditElderForm(object):
         factories.ProfileFactory.create(phone='+13216540987')
         rel = factories.RelationshipFactory.create()
 
-        form = forms.EditElderForm(
+        form = forms.EditFamilyForm(
             {
                 'name': 'John Doe',
                 'role': 'dad',
@@ -180,7 +210,7 @@ class TestEditElderForm(object):
             description="Math Teacher",
             )
 
-        form = forms.EditElderForm(instance=model.elder_in_context(rel))
+        form = forms.EditFamilyForm(instance=model.elder_in_context(rel))
 
         assert form.initial['role'] == "Math Teacher"
 
@@ -192,7 +222,7 @@ class TestInviteTeacherForm(object):
         """Utility method to get default form data, with override option."""
         defaults = {
             'email': 'foo@example.com',
-            'relationship': 'math teacher',
+            'role': 'math teacher',
             }
         defaults.update(kwargs)
         return defaults
@@ -375,7 +405,7 @@ class TestInviteTeacherForm(object):
         form = forms.InviteTeacherForm(
             self.data(
                 contact='foo@example.com',
-                relationship="science teacher",
+                role="science teacher",
                 students=[rel.student.pk],
                 ),
             rel=rel,
@@ -393,7 +423,7 @@ class TestInviteTeacherForm(object):
             school_staff=True, role='something', user__email='foo@example.com')
         form = forms.InviteTeacherForm(
             self.data(
-                email=teacher.user.email, relationship='foo'),
+                email=teacher.user.email, role='foo'),
             rel=factories.RelationshipFactory(),
             )
         assert form.is_valid(), dict(form.errors)
@@ -423,21 +453,21 @@ class TestInviteFamilyForm(object):
         """Utility method to get default form data, with override option."""
         defaults = {
             'phone': '321-456-1234',
-            'relationship': 'mom',
+            'role': 'mom',
             }
         defaults.update(kwargs)
         return defaults
 
 
-    def test_invite_family(self, sms, db):
-        """Can invite a family member by phone."""
+    def test_invite_family_by_role(self, sms, db):
+        """Can invite a family member by role and phone."""
         rel = factories.RelationshipFactory.create(
             from_profile__name="Teacher John",
             to_profile__name="Jimmy Doe",
             description="Math Teacher",
             )
         form = forms.InviteFamilyForm(
-            self.data(phone='(321)456-7890', relationship='father'),
+            self.data(phone='(321)456-7890', role='father'),
             rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
@@ -452,6 +482,40 @@ class TestInviteFamilyForm(object):
             "will text you from this number. "
             "Text 'stop' any time if you don't want this."
             )
+
+
+    def test_invite_family_by_name(self, db):
+        """Can invite a family member by name and phone."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Teacher John",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
+        form = forms.InviteFamilyForm(
+            self.data(phone='(321)456-7890', role='', name="Jane Doe"),
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        profile = form.save()
+
+        assert profile.phone == u'+13214567890'
+        assert not profile.school_staff
+
+
+    def test_either_name_or_role_required(self, db):
+        """Either name or role field must be filled out."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Teacher John",
+            to_profile__name="Jimmy Doe",
+            description="Math Teacher",
+            )
+        form = forms.InviteFamilyForm(
+            self.data(phone='(321)456-7890', role="", name=""),
+            rel=rel,
+            )
+        assert not form.is_valid()
+        assert form.errors['__all__'] == [
+            u"Either name or relationship is required."]
 
 
     def test_bad_phone(self, db):
@@ -518,7 +582,7 @@ class TestInviteFamilyForm(object):
         form = forms.InviteFamilyForm(
             self.data(
                 phone='3216541234',
-                relationship="science teacher",
+                role="science teacher",
                 ),
             rel=rel,
             )
@@ -582,7 +646,7 @@ class TestStudentForms(object):
         form = forms.AddStudentForm({'name': "Some Student"}, elder=elder)
         assert form.is_valid(), dict(form.errors)
         profile = form.save()
-        rel = profile.elder_relationships[0]
+        rel = profile.elder_relationships.get()
 
         assert profile.name == u"Some Student"
         assert profile.invited_by == elder
@@ -590,6 +654,66 @@ class TestStudentForms(object):
         assert rel.elder == elder
         assert rel.student == profile
         assert rel.level == 'owner'
+
+
+    def test_add_student_with_family(self, db):
+        """Saves a student and adds a family member."""
+        teacher = factories.ProfileFactory.create()
+        phone = "+13216540987"
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'family-phone': phone,
+                'family-role': "mother",
+                },
+            elder=teacher,
+            )
+        assert form.is_valid(), (
+            dict(form.errors), dict(form.family_form.errors))
+        profile = form.save()
+        family = profile.elder_relationships.exclude(
+            from_profile=teacher).get().elder
+
+        assert set(profile.elders) == {teacher, family}
+        assert family.phone == phone
+        assert family.role == "mother"
+
+
+    def test_add_student_with_family_that_already_has_student(self, db):
+        """Saves a student and adds a family member."""
+        teacher = factories.ProfileFactory.create()
+        phone = "+13216540987"
+        factories.RelationshipFactory.create(
+            from_profile__phone=phone)
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'family-phone': phone,
+                'family-role': "mother",
+                },
+            elder=teacher,
+            )
+        assert not form.is_valid()
+        assert form.family_form.errors['phone'] == [
+            u"This person is already connected to a different student. "
+            u"Portfoliyo doesn't support family members in multiple "
+            u"villages yet, but we're working on it!"
+            ]
+
+
+    def test_add_student_with_family_phone_required(self, db):
+        """Phone field is required if either name or relationship is given."""
+        teacher = factories.ProfileFactory.create()
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'family-name': "Some Parent",
+                },
+            elder=teacher,
+            )
+        assert not form.is_valid()
+        assert form.family_form.errors['phone'] == [
+            u"This field is required."]
 
 
     def test_add_student_strips_whitespace(self, db):

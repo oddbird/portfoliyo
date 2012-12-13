@@ -80,14 +80,20 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 .sms-preview {
   @include transition(all 300ms);
   background: $base2;
-  .form-actions & {
+  border-color: $base1;
+  text-align: left;
+  h3 {
+    display: inline;
+    font-weight: bold;
+  }
+  .form-actions &, .invite-family-fieldset & {
+    @include adjust-font-size-to($smallpx);
     @include rhythm-margins;
-    padding: rhythm(1);
-    text-align: left;
-    h3 {
-      display: inline;
-      font-weight: bold;
-    }
+    @include rhythm-borders(1px,.5);
+  }
+  .invite-family-fieldset & {
+    margin-bottom: 0;
+    background: rgba($base3,.5);
   }
   .formfield-help & {
     max-height: rhythm(0);
@@ -96,7 +102,7 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
     color: $base;
     input:focus ~ &, .changed & {
       @include rhythm-margins(.5);
-      padding: rhythm(.5);
+      @include rhythm-borders(1px,.5);
       max-height: rhythm(4);
     }
   }
@@ -106,7 +112,7 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 // Add/Edit Village
 
 .group-add-form, .group-edit-form { @extend %village-solo-page; }
-.village-add-form, .village-edit-form { @extend %village-solo-page; }
+.village-add-form, .village-edit-form, .bulk-signup { @extend %village-solo-page; }
 
 @include establish-tabs(english spanish);
 

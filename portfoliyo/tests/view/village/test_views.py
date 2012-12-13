@@ -382,7 +382,7 @@ class TestInviteTeacher(GroupContextTests):
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-teacher-form']
         form['email'] = "ms.johns@example.com"
-        form['relationship'] = "Math Teacher"
+        form['role'] = "Math Teacher"
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -408,7 +408,7 @@ class TestInviteTeacher(GroupContextTests):
             user=rel.elder.user,
             ).forms['invite-teacher-form']
         form['email'] = "ms.johns@example.com"
-        form['relationship'] = "Father"
+        form['role'] = "Father"
         response = form.submit().follow()
 
         assert response.context['group'] == group
@@ -420,7 +420,7 @@ class TestInviteTeacher(GroupContextTests):
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-teacher-form']
         form['email'] = "ms.johns@example.com"
-        form['relationship'] = ""
+        form['role'] = ""
         response = form.submit(status=200)
 
         response.mustcontain("field is required")
@@ -471,7 +471,7 @@ class TestInviteTeacherToGroup(object):
         response = client.get(self.url(group=group), user=group.owner.user)
         form = response.forms['invite-teacher-form']
         form['email'] = "ms.johns@example.com"
-        form['relationship'] = "Math Teacher"
+        form['role'] = "Math Teacher"
         response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -486,7 +486,7 @@ class TestInviteTeacherToGroup(object):
         response = client.get(self.url(group), user=group.owner.user)
         form = response.forms['invite-teacher-form']
         form['email'] = "ms.johns@example.com"
-        form['relationship'] = ""
+        form['role'] = ""
         response = form.submit(status=200)
 
         response.mustcontain("field is required")
@@ -536,7 +536,7 @@ class TestInviteFamily(GroupContextTests):
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-family-form']
         form['phone'] = "312-456-1234"
-        form['relationship'] = "Father"
+        form['role'] = "Father"
         with mock.patch('portfoliyo.sms.send') as mock_send:
             response = form.submit(status=302)
 
@@ -574,7 +574,7 @@ class TestInviteFamily(GroupContextTests):
             user=rel.elder.user,
             ).forms['invite-family-form']
         form['phone'] = "312-456-1234"
-        form['relationship'] = "Father"
+        form['role'] = "Father"
         response = form.submit().follow()
 
         assert response.context['group'] == group
@@ -585,11 +585,12 @@ class TestInviteFamily(GroupContextTests):
             from_profile__school_staff=True)
         response = client.get(self.url(rel.student), user=rel.elder.user)
         form = response.forms['invite-family-form']
-        form['phone'] = "(123)456-7890"
-        form['relationship'] = ""
+        form['phone'] = ""
+        form['role'] = "mom"
+        form['name'] = "Some Mom"
         response = form.submit(status=200)
 
-        response.mustcontain("field is required")
+        response.mustcontain(u"field is required")
 
 
     def test_requires_school_staff(self, client, db):
@@ -1005,7 +1006,7 @@ class TestMarkPostRead(object):
 
 
 
-class TestEditElder(object):
+class TestEditFamily(object):
     def url(self, rel=None, elder=None, group=None):
         """rel is relationship between a student and elder to be edited."""
         assert elder or rel
@@ -1032,6 +1033,7 @@ class TestEditElder(object):
             url, user=editor_rel.elder.user).forms['edit-elder-form']
         form['name'] = 'New Name'
         form['role'] = 'New Role'
+        form['phone'] = '+13216540987'
         res = form.submit(status=302)
 
         assert res['Location'] == utils.location(
@@ -1039,6 +1041,7 @@ class TestEditElder(object):
         elder = utils.refresh(rel.elder)
         assert elder.name == 'New Name'
         assert elder.role == 'New Role'
+        assert elder.phone == '+13216540987'
 
 
     def test_error(self, client, db):
@@ -1071,6 +1074,7 @@ class TestEditElder(object):
             ).forms['edit-elder-form']
         form['name'] = 'New Name'
         form['role'] = 'New Role'
+        form['phone'] = '+13216540987'
         form.submit()
 
         elder = utils.refresh(elder)
@@ -1088,6 +1092,7 @@ class TestEditElder(object):
             self.url(elder=elder), user=editor.user).forms['edit-elder-form']
         form['name'] = 'New Name'
         form['role'] = 'New Role'
+        form['phone'] = '+13216540987'
         form.submit()
 
         elder = utils.refresh(elder)
