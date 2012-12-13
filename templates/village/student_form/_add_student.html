@@ -19,12 +19,12 @@
 
   {{ family_form.non_field_errors }}
 
-  {% include "forms/_field.html" with field=form.family_form.name %}
+  {% include "forms/_field.html" with field=form.family_form.name|attr:"placeholder:Please include either a name or relationship." %}
   {% include "forms/_field.html" with field=form.family_form.relationship|attr:"placeholder:e.g. Mom, Dad, Grandma, etc." %}
   {% include "forms/_field.html" with field=form.family_form.phone|attr:"placeholder:555-555-5555" %}
 
   <blockquote class="sms-preview">
-    <h3>Will send invitation:</h3>
+    <h3>We'll send them this invitation:</h3>
     {% include "sms/invite_elder.txt" with inviter=user.profile student='<span class="replace-student-name">[student]</span>'|safe %}
   </blockquote>
 </fieldset>

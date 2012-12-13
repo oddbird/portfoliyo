@@ -477,7 +477,7 @@ optgroup {
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
+  background: url('../images/rgbapng/ffffff40.png?1352840743');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -718,6 +718,7 @@ optgroup {
   margin: 0;
   color: #93a1a1;
   font-style: italic;
+  text-align: right;
 }
 .login form .formfield-optional, .register form .formfield-optional, .edit-profile form .formfield-optional, .reset-password form .formfield-optional, .change-password form .formfield-optional, .set-password form .formfield-optional, .activationfailed form .formfield-optional, .awaiting-activation form .formfield-optional, .no-students form .formfield-optional, [class^="errorpage-"] form .formfield-optional, .group-add-form .formfield-optional, .group-edit-form .formfield-optional, .village-add-form .formfield-optional, .village-edit-form .formfield-optional, .dashboard .formfield-optional, .pjax-error .formfield-optional, .elder-invite-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional, .login form .fieldset-optional, .register form .fieldset-optional, .edit-profile form .fieldset-optional, .reset-password form .fieldset-optional, .change-password form .fieldset-optional, .set-password form .fieldset-optional, .activationfailed form .fieldset-optional, .awaiting-activation form .fieldset-optional, .no-students form .fieldset-optional, [class^="errorpage-"] form .fieldset-optional, .group-add-form .fieldset-optional, .group-edit-form .fieldset-optional, .village-add-form .fieldset-optional, .village-edit-form .fieldset-optional, .dashboard .fieldset-optional, .pjax-error .fieldset-optional, .elder-invite-form .fieldset-optional, .elder-edit-form .fieldset-optional, .post-add-form .fieldset-optional {
   font-size: 14px;
@@ -853,7 +854,7 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
+  background: url('../images/rgbapng/ffffff40.png?1352840743');
   background: rgba(255, 255, 255, 0.25);
   max-height: 184px;
   max-height: 10.22222rem;
@@ -879,7 +880,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('../images/rgbapng/268bd220.png?1352840797');
+  background: url('../images/rgbapng/268bd220.png?1352840743');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -893,7 +894,7 @@ button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1352840797');
+  background: url('../images/rgbapng/ffffff7f.png?1352840743');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -907,7 +908,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1352840797');
+  background: url('../images/rgbapng/ffffffbf.png?1352840743');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -1843,10 +1844,10 @@ button {
   border-top-style: solid;
   padding-top: 11px;
   padding-top: 0.61111rem;
-  -moz-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   padding-bottom: 23px;
   padding-bottom: 1.27778rem;
   clear: both;
@@ -1894,7 +1895,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1352840797') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1351891853') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1905,7 +1906,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1352840797') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1916,7 +1917,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1352840797') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1945,7 +1946,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1352840797') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2006,19 +2007,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1352840797');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1352840797');
+  background-image: url('../images/landing/carl.png?1351725897');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1352840797');
+  background-image: url('../images/landing/eric.png?1351725897');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1352840797');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 .lt-ie9 .village-landing .container {
@@ -2344,22 +2345,31 @@ button {
   -o-transition: all 300ms;
   transition: all 300ms;
   background: #eee8d5;
+  border-color: #93a1a1;
+  text-align: left;
+}
+.sms-preview h3 {
+  display: inline;
+  font-weight: bold;
 }
 .form-actions .sms-preview, .invite-family-fieldset .sms-preview {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   margin-top: 23px;
   margin-top: 1.27778rem;
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
-  padding: 1.27778rem;
-  text-align: left;
-}
-.form-actions .sms-preview h3, .invite-family-fieldset .sms-preview h3 {
-  display: inline;
-  font-weight: bold;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 11px;
+  padding: 0.58333rem;
 }
 .invite-family-fieldset .sms-preview {
   margin-bottom: 0;
-  background: #fdf6e3;
+  background: rgba(253, 246, 227, 0.5);
 }
 .formfield-help .sms-preview {
   max-height: 0rem;
@@ -2372,7 +2382,11 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-top: 0.63889rem;
   margin-bottom: 12px;
   margin-bottom: 0.63889rem;
-  padding: 0.63889rem;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 11px;
+  padding: 0.58333rem;
   max-height: 5.11111rem;
 }
 
@@ -2412,7 +2426,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: #073642 0 0 0.31944rem inset;
   box-shadow: #073642 0 0 0.31944rem inset;
   position: relative;
-  background: url('../images/handmadepaper.png?1353558027') repeat scroll;
+  background: url('../images/handmadepaper.png?1353558228') repeat scroll;
 }
 .pdf-previews .tab-title {
   font-size: 14px;
@@ -3202,7 +3216,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: block;
 }
 .browser-warning .modal {
-  background: url('../images/rgbapng/073642bf.png?1352840797');
+  background: url('../images/rgbapng/073642bf.png?1352840744');
   background: rgba(7, 54, 66, 0.75);
   position: fixed;
   top: 0;
