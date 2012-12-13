@@ -32,17 +32,6 @@
         }
     };
 
-    var ajaxClick = function (sel, eventName) {
-        // This function is only safe to use on clicks that don't reload the
-        // page (otherwise the page will reload before this has time to
-        // actually send the event off to mixpanel).  For normal links, use
-        // mixpanel.track_click (or better, do it on the target page or on the
-        // server).
-        $('body').on('click', sel, function () {
-            mixpanel.track(eventName);
-        });
-    };
-
     var identifyUser = function (sel) {
         // Identify the current user to MixPanel, based on data attributes
         // found on the element named by the given selector.
@@ -80,8 +69,10 @@
         existence('article.awaiting-activation', 'registered');
         existence('.login .activated.success', 'activated');
 
-        ajaxClick('.village-posts .action-post', 'posted');
-        ajaxClick('.group-posts .action-post', 'mass texted');
+        $('body').on('successful-post', '.village-feed', function (e, data) {
+            if (data.studentId) { mixpanel.track('posted', data); }
+            else { mixpanel.track('mass texted', data); }
+        });
 
         serverEvents('.meta', 'user-events');
 
