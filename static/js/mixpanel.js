@@ -2,6 +2,22 @@
 
     'use strict';
 
+    var registerNewUser = function (sel, dataAttr) {
+        // If the user just registered, tell mixpanel that we'll be identifying
+        // them by user ID from now on, but they should still be considered the
+        // same person who previously viewed the landing and register pages
+        // anonymously. If we don't do this, then we can't track users'
+        // progression from landing to register to use of the site.
+        var events = $(sel).data(dataAttr);
+        if (events) {
+            $.each(events, function (index, value) {
+                if (value[0] === 'registered' && value[1].user_id) {
+                    mixpanel.alias(value[1].user_id);
+                }
+            });
+        }
+    };
+
     var serverEvents = function (sel, dataAttr) {
         // Look for and record events the server recorded in a JSON structure
         // in the given data attribute of the element named by the given
@@ -12,15 +28,6 @@
         if (events) {
             $.each(events, function (index, value) {
                 mixpanel.track(value[0], value[1]);
-                // If the user just registered, tell mixpanel that we'll be
-                // identifying them by user ID from now on, but they should
-                // still be considered the same person who previously viewed
-                // the landing and register pages anonymously. If we don't do
-                // this, then we can't track users' progression from landing to
-                // register to use of the site.
-                if (value[0] === 'registered' && value[1].user_id) {
-                    mixpanel.alias(value[1].user_id);
-                }
             });
         }
     };
@@ -71,6 +78,13 @@
     };
 
     $(function () {
+        // These two should come first so that all other events are tagged with
+        // the appropriate user data. Registering a new user should come before
+        // identifying them by user ID, so we don't lose the association with
+        // the prior anonymous user
+        registerNewUser('.meta', 'user-events');
+        identifyUser('.meta .settingslink');
+
         existence('article.landing', 'viewed landing');
         existence('article.register', 'viewed register');
         existence('article.awaiting-activation', 'registered');
@@ -81,11 +95,6 @@
         postEvents('.village-feed');
 
         ajaxPageViews();
-
-        // this should come last, to make sure that on registration we call
-        // mixpanel.alias() with their user id (handled in serverEvents) before
-        // we try to identify the user using their user-id.
-        identifyUser('.meta .settingslink');
     });
 
 }(jQuery));
