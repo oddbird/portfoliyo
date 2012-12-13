@@ -4,27 +4,27 @@
   <a href="{% if group %}{% url 'pdf_parent_instructions' lang=lang_code group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang=lang_code %}{% endif %}" target="_new" class="download-pdf pdf-{{ lang_code }}">
     Download {{ lang }}
   </a>
-  <h3 class="vcard">{% with 'village/signupsheet/'|add:lang_code|add:'/action.txt' as action_tpl %}{% include action_tpl %}{% endwith %} <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
+  <h3 class="vcard">{% with 'village/bulksignup/sheet/'|add:lang_code|add:'/action.txt' as action_tpl %}{% include action_tpl %}{% endwith %} <b class="fn">{% firstof user.profile.name user.email %}</b></h3>
   <div class="inst">
     <p class="number" data-content="{{ pyo_phone }}">
-      {% with 'village/signupsheet/'|add:lang_code|add:'/phone_label.txt' as phone_label_tpl %}
+      {% with 'village/bulksignup/sheet/'|add:lang_code|add:'/phone_label.txt' as phone_label_tpl %}
       {% include phone_label_tpl %} <strong>{{ pyo_phone }}</strong>
       {% endwith %}
     </p>
     <p class="code" data-content="{{ code }}">
-      {% with 'village/signupsheet/'|add:lang_code|add:'/code_label.txt' as code_label_tpl %}
+      {% with 'village/bulksignup/sheet/'|add:lang_code|add:'/code_label.txt' as code_label_tpl %}
       {% include code_label_tpl %} <strong>{{ code }}</strong>
       {% endwith %}
     </p>
   </div>
   <p class="personal-note">
-    {% with 'village/signupsheet/'|add:lang_code|add:'/note.txt' as note_tpl %}
+    {% with 'village/bulksignup/sheet/'|add:lang_code|add:'/note.txt' as note_tpl %}
     {% include note_tpl %}
     {% endwith %}
   </p>
   <footer>
     <p>
-      {% with 'village/signupsheet/'|add:lang_code|add:'/footer.txt' as footer_tpl %}
+      {% with 'village/bulksignup/sheet/'|add:lang_code|add:'/footer.txt' as footer_tpl %}
       {% include footer_tpl %}
       {% endwith %}
     </p>

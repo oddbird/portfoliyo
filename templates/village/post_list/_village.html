@@ -1,4 +1,4 @@
-{% extends "village/_chat_content.html" %}
+{% extends "village/post_list/_base.html" %}
 {% load url from future %}
 
 {% block village-feed-attrs %}data-backlog-url="{% url 'json_posts' student_id=student.id %}" data-post-url="{% url 'json_posts' student_id=student.id %}"{% endblock %}
@@ -10,5 +10,5 @@
 {% block form-action %}{% url 'json_posts' student_id=student.id %}{% endblock %}
 
 {% block info-bar %}
-{% include "village/_village_info.html" %}
+{% include "village/post_list/_village_info.html" %}
 {% endblock %}

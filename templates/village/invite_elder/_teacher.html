@@ -1,4 +1,4 @@
-{% extends "village/_invite_elder_content.html" %}
+{% extends "village/invite_elder/_base.html" %}
 {% load url from future %}
 {% load widget_tweaks %}
 
@@ -22,5 +22,5 @@
 {% endblock %}
 
 {% block info-bar %}
-{% include "village/_village_info.html" with invite_teacher_active="true" %}
+{% include "village/post_list/_village_info.html" with invite_teacher_active="true" %}
 {% endblock %}

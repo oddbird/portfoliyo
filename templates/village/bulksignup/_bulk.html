@@ -1,4 +1,4 @@
-{% extends "village/_village_content_main.html" %}
+{% extends "village/_base.html" %}
 {% load url from future %}
 
 {% block village-content %}
@@ -32,9 +32,9 @@
       <input type="radio" name="pdf-tabs" id="spanish-toggle" class="tab-toggle">
       <label for="spanish-toggle" class="tab-title">Spanish</label>
 
-      {% include 'village/signupsheet/_preview.html' with lang='English' lang_code='en' %}
+      {% include 'village/bulksignup/sheet/_preview.html' with lang='English' lang_code='en' %}
 
-      {% include 'village/signupsheet/_preview.html' with lang='Spanish' lang_code='es' %}
+      {% include 'village/bulksignup/sheet/_preview.html' with lang='Spanish' lang_code='es' %}
 
     </section>
   </div>

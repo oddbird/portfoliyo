@@ -1,4 +1,4 @@
-{% extends "village/_invite_teacher_content.html" %}
+{% extends "village/invite_elder/_teacher.html" %}
 {% load url from future %}
 
 {% block form-action %}{% url 'invite_teacher' group_id=group.id %}{% endblock %}
@@ -6,5 +6,5 @@
 {% block form-header %}Invite Teacher to {{ group }}{% endblock %}
 
 {% block info-bar %}
-{% include "village/_group_info.html" with invite_teacher_active="true" %}
+{% include "village/post_list/_group_info.html" with invite_teacher_active="true" %}
 {% endblock %}

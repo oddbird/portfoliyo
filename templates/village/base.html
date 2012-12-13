@@ -11,7 +11,7 @@
 {% block maincontent %}
 <article class="village" data-pusher-key="{{ PUSHER_KEY }}" data-user-id="{{ request.user.profile.id }}" data-relationships-url="{% url 'api_dispatch_list' api_name='v1' resource_name='relationship' %}">
 
-  {% include "village/_village_nav.html" %}
+  {% include "village/_nav.html" %}
 
   {% block village %}{% endblock village %}
 

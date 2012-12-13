@@ -1,4 +1,4 @@
-{% extends "village/_village_content_main.html" %}
+{% extends "village/_base.html" %}
 
 {% block village-content %}
 <div class="village-main">
@@ -7,7 +7,7 @@
     <h2>Edit {% firstof elder.name elder.user.email elder.phone "Family Member" %}</h2>
 
     {% include "forms/_field.html" with field=form.name %}
-    {% include "forms/_field.html" with field=form.phone helpinclude="village/_edit_elder_sms_preview.html" %}
+    {% include "forms/_field.html" with field=form.phone helpinclude="village/elder_form/_sms_preview.html" %}
     {% include "forms/_field.html" with field=form.role label="Relation to student" %}
 
     <div class="form-actions">
@@ -17,8 +17,8 @@
 </div>
 
 {% if student %}
-{% include "village/_village_info.html" %}
+{% include "village/post_list/_village_info.html" %}
 {% else %}
-{% include "village/_group_info.html" %}
+{% include "village/post_list/_group_info.html" %}
 {% endif %}
 {% endblock village-content %}

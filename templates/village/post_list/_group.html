@@ -1,4 +1,4 @@
-{% extends "village/_chat_content.html" %}
+{% extends "village/post_list/_base.html" %}
 {% load url from future %}
 
 {% block village-feed-attrs %}{% if group.is_all %} data-backlog-url="{% url 'json_posts' %}" data-post-url="{% url 'json_posts' %}"{% else %} data-backlog-url="{% url 'json_posts' group_id=group.id %}" data-post-url="{% url 'json_posts' group_id=group.id %}"{% endif %}{% endblock %}
@@ -10,5 +10,5 @@
 {% block form-action %}{% if group.is_all %}{% url 'json_posts' %}{% else %}{% url 'json_posts' group_id=group.id %}{% endif %}{% endblock %}
 
 {% block info-bar %}
-  {% include "village/_group_info.html" %}
+  {% include "village/post_list/_group_info.html" %}
 {% endblock %}
