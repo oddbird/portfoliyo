@@ -16,17 +16,17 @@ from .. import forms as pyoforms
 
 
 class StudentCheckboxSelectMultiple(pyoforms.CheckboxSelectMultiple):
-    template_name = 'village/student_checkbox_select.html'
+    template_name = 'village/checkbox_select/_student.html'
 
 
 
 class ElderCheckboxSelectMultiple(pyoforms.CheckboxSelectMultiple):
-    template_name = 'village/elder_checkbox_select.html'
+    template_name = 'village/checkbox_select/_elder.html'
 
 
 
 class GroupCheckboxSelectMultiple(pyoforms.CheckboxSelectMultiple):
-    template_name = 'village/group_checkbox_select.html'
+    template_name = 'village/checkbox_select/_group.html'
 
 
 
