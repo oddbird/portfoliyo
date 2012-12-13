@@ -411,9 +411,11 @@ var PYO = (function (PYO, $) {
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
-        PYO.addStudentReplaceNameInInvitation('#add-student-form');
         if ($('#invite-teacher-form').length) { PYO.disablePreselectedAssociations('#invite-teacher-form'); }
-        if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
+        if ($('#add-student-form').length) {
+            PYO.disablePreselectedAssociations('#add-student-form');
+            PYO.addStudentReplaceNameInInvitation('#add-student-form');
+        }
         if ($('#edit-student-form').length) { PYO.disableStudentOwnerRemoval('#edit-student-form'); }
         if ($('#add-group-form').length) { PYO.setAddGroupButtonText('#add-group-form'); }
         if ($('#edit-elder-form').length) { PYO.setPhoneChangedClass('#edit-elder-form'); }
