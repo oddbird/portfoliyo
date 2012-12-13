@@ -166,6 +166,7 @@ def confirm_email(request, uidb36, token):
         profile.email_confirmed = True
         profile.save()
         messages.success(request, "Email address %s confirmed!" % user.email)
+        tracking.track(request, 'confirmed email')
         return redirect(redirect_home(user))
 
     return TemplateResponse(request, 'users/confirmation_failed.html')
@@ -220,6 +221,7 @@ def accept_email_invite(request, uidb36, token):
             u"Now log in using your email address and password "
             u"to see messages about your student.",
             )
+        tracking.track(request, 'accepted email invite')
 
     return response
 
