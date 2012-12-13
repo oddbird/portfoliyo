@@ -63,18 +63,22 @@
         }
     };
 
+    var postEvents = function (sel) {
+        $('body').on('successful-post', sel, function (e, data) {
+            if (data.studentId) { mixpanel.track('posted', data); }
+            else { mixpanel.track('mass texted', data); }
+        });
+    };
+
     $(function () {
         existence('article.landing', 'viewed landing');
         existence('article.register', 'viewed register');
         existence('article.awaiting-activation', 'registered');
         existence('.login .activated.success', 'activated');
 
-        $('body').on('successful-post', '.village-feed', function (e, data) {
-            if (data.studentId) { mixpanel.track('posted', data); }
-            else { mixpanel.track('mass texted', data); }
-        });
-
         serverEvents('.meta', 'user-events');
+
+        postEvents('.village-feed');
 
         ajaxPageViews();
 
