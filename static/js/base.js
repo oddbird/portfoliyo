@@ -329,6 +329,24 @@ var PYO = (function (PYO, $) {
         });
     };
 
+    PYO.addStudentReplaceNameInInvitation = function (container) {
+        var form = $(container);
+        if (form.length) {
+            var input = form.find('#id_name');
+            var toReplace = form.find('.replace-student-name');
+            var update = function () {
+                toReplace.text(input.val() || '[student]');
+            };
+
+            // handle form reloads with prefilled form data
+            update();
+
+            input.keyup(function () {
+                $(this).doTimeout('addStudentReplaceName', 150, update);
+            });
+        }
+    };
+
     PYO.setPhoneChangedClass = function (container) {
         var form = $(container);
         var input = form.find('#id_phone');
@@ -393,6 +411,7 @@ var PYO = (function (PYO, $) {
         PYO.activeGroupId = $('.village-content').data('group-id');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
+        PYO.addStudentReplaceNameInInvitation('#add-student-form');
         if ($('#invite-teacher-form').length) { PYO.disablePreselectedAssociations('#invite-teacher-form'); }
         if ($('#add-student-form').length) { PYO.disablePreselectedAssociations('#add-student-form'); }
         if ($('#edit-student-form').length) { PYO.disableStudentOwnerRemoval('#edit-student-form'); }

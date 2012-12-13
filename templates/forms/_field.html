@@ -14,9 +14,8 @@
     {% include "forms/field/_input.html" %}
   {% endif %}
 
-  {% if helptext or helpinclude or field|optional %}
+  {% if helptext or helpinclude %}
     <div class="formfield-help">
-      {% if field|optional %}<span class="formfield-optional">[optional]</span>{% endif %}
       {% if helptext %}{{ helptext }}{% endif %}
       {% if helpinclude %}{% include helpinclude %}{% endif %}
     </div>

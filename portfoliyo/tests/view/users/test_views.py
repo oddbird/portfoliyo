@@ -376,7 +376,7 @@ class TestAcceptEmailInvite(object):
             )
         form = response.forms['invite-teacher-form']
         form['email'] = 'new@example.com'
-        form['relationship'] = 'teacher'
+        form['role'] = 'teacher'
         form.submit(status=302)
 
         for line in mail.outbox[0].body.splitlines():

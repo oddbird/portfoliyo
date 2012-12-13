@@ -477,7 +477,7 @@ optgroup {
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
-  background: url('../images/rgbapng/ffffff40.png?1352840743');
+  background: url('../images/rgbapng/ffffff40.png?1351286363');
   background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
@@ -686,6 +686,21 @@ optgroup {
   min-height: 35px;
   min-height: 1.91667rem;
 }
+.login form fieldset, .register form fieldset, .edit-profile form fieldset, .reset-password form fieldset, .change-password form fieldset, .set-password form fieldset, .activationfailed form fieldset, .awaiting-activation form fieldset, .no-students form fieldset, [class^="errorpage-"] form fieldset, .group-add-form fieldset, .group-edit-form fieldset, .village-add-form fieldset, .village-edit-form fieldset, .bulk-signup fieldset, .dashboard fieldset, .pjax-error fieldset, .elder-invite-form fieldset, .elder-edit-form fieldset, .post-add-form fieldset {
+  -webkit-box-shadow: #073642 0 0 0.25em inset;
+  -moz-box-shadow: #073642 0 0 0.25em inset;
+  box-shadow: #073642 0 0 0.25em inset;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  padding: 1.27778rem;
+  background: #eee8d5;
+}
+.login form .fieldset-header, .register form .fieldset-header, .edit-profile form .fieldset-header, .reset-password form .fieldset-header, .change-password form .fieldset-header, .set-password form .fieldset-header, .activationfailed form .fieldset-header, .awaiting-activation form .fieldset-header, .no-students form .fieldset-header, [class^="errorpage-"] form .fieldset-header, .group-add-form .fieldset-header, .group-edit-form .fieldset-header, .village-add-form .fieldset-header, .village-edit-form .fieldset-header, .bulk-signup .fieldset-header, .dashboard .fieldset-header, .pjax-error .fieldset-header, .elder-invite-form .fieldset-header, .elder-edit-form .fieldset-header, .post-add-form .fieldset-header {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
 .login form .fieldset-help, .register form .fieldset-help, .edit-profile form .fieldset-help, .reset-password form .fieldset-help, .change-password form .fieldset-help, .set-password form .fieldset-help, .activationfailed form .fieldset-help, .awaiting-activation form .fieldset-help, .no-students form .fieldset-help, [class^="errorpage-"] form .fieldset-help, .group-add-form .fieldset-help, .group-edit-form .fieldset-help, .village-add-form .fieldset-help, .village-edit-form .fieldset-help, .bulk-signup .fieldset-help, .dashboard .fieldset-help, .pjax-error .fieldset-help, .elder-invite-form .fieldset-help, .elder-edit-form .fieldset-help, .post-add-form .fieldset-help {
   margin-top: 23px;
   margin-top: 1.27778rem;
@@ -703,8 +718,16 @@ optgroup {
   margin: 0;
   color: #93a1a1;
   font-style: italic;
+  text-align: right;
 }
-.login form .formfield-optional, .register form .formfield-optional, .edit-profile form .formfield-optional, .reset-password form .formfield-optional, .change-password form .formfield-optional, .set-password form .formfield-optional, .activationfailed form .formfield-optional, .awaiting-activation form .formfield-optional, .no-students form .formfield-optional, [class^="errorpage-"] form .formfield-optional, .group-add-form .formfield-optional, .group-edit-form .formfield-optional, .village-add-form .formfield-optional, .village-edit-form .formfield-optional, .bulk-signup .formfield-optional, .dashboard .formfield-optional, .pjax-error .formfield-optional, .elder-invite-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional {
+.login form .formfield-optional, .register form .formfield-optional, .edit-profile form .formfield-optional, .reset-password form .formfield-optional, .change-password form .formfield-optional, .set-password form .formfield-optional, .activationfailed form .formfield-optional, .awaiting-activation form .formfield-optional, .no-students form .formfield-optional, [class^="errorpage-"] form .formfield-optional, .group-add-form .formfield-optional, .group-edit-form .formfield-optional, .village-add-form .formfield-optional, .village-edit-form .formfield-optional, .bulk-signup .formfield-optional, .dashboard .formfield-optional, .pjax-error .formfield-optional, .elder-invite-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional, .login form .fieldset-optional, .register form .fieldset-optional, .edit-profile form .fieldset-optional, .reset-password form .fieldset-optional, .change-password form .fieldset-optional, .set-password form .fieldset-optional, .activationfailed form .fieldset-optional, .awaiting-activation form .fieldset-optional, .no-students form .fieldset-optional, [class^="errorpage-"] form .fieldset-optional, .group-add-form .fieldset-optional, .group-edit-form .fieldset-optional, .village-add-form .fieldset-optional, .village-edit-form .fieldset-optional, .bulk-signup .fieldset-optional, .dashboard .fieldset-optional, .pjax-error .fieldset-optional, .elder-invite-form .fieldset-optional, .elder-edit-form .fieldset-optional, .post-add-form .fieldset-optional {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  color: #93a1a1;
+}
+.login form .optional-fieldset .formfield-optional, .register form .optional-fieldset .formfield-optional, .edit-profile form .optional-fieldset .formfield-optional, .reset-password form .optional-fieldset .formfield-optional, .change-password form .optional-fieldset .formfield-optional, .set-password form .optional-fieldset .formfield-optional, .activationfailed form .optional-fieldset .formfield-optional, .awaiting-activation form .optional-fieldset .formfield-optional, .no-students form .optional-fieldset .formfield-optional, [class^="errorpage-"] form .optional-fieldset .formfield-optional, .group-add-form .optional-fieldset .formfield-optional, .group-edit-form .optional-fieldset .formfield-optional, .village-add-form .optional-fieldset .formfield-optional, .village-edit-form .optional-fieldset .formfield-optional, .bulk-signup .optional-fieldset .formfield-optional, .dashboard .optional-fieldset .formfield-optional, .pjax-error .optional-fieldset .formfield-optional, .elder-invite-form .optional-fieldset .formfield-optional, .elder-edit-form .optional-fieldset .formfield-optional, .post-add-form .optional-fieldset .formfield-optional {
   position: absolute;
   clip: rect(0 0 0 0);
   overflow: hidden;
@@ -831,7 +854,7 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  background: url('../images/rgbapng/ffffff40.png?1352840743');
+  background: url('../images/rgbapng/ffffff40.png?1351286363');
   background: rgba(255, 255, 255, 0.25);
   max-height: 184px;
   max-height: 10.22222rem;
@@ -857,7 +880,7 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('../images/rgbapng/268bd220.png?1352840743');
+  background: url('../images/rgbapng/268bd220.png?1352840797');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -871,7 +894,7 @@ button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1352840743');
+  background: url('../images/rgbapng/ffffff7f.png?1352840797');
   background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
@@ -885,7 +908,7 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1352840743');
+  background: url('../images/rgbapng/ffffffbf.png?1352840797');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -1821,10 +1844,10 @@ button {
   border-top-style: solid;
   padding-top: 11px;
   padding-top: 0.61111rem;
-  -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
   padding-bottom: 23px;
   padding-bottom: 1.27778rem;
   clear: both;
@@ -1872,7 +1895,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1351891853') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1352840797') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1883,7 +1906,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1352840797') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1894,7 +1917,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1352840797') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1923,7 +1946,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1352840797') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1984,19 +2007,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351725897');
+  background-image: url('../images/landing/peter.png?1352840797');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351725897');
+  background-image: url('../images/landing/carl.png?1352840797');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351725897');
+  background-image: url('../images/landing/eric.png?1352840797');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351725897');
+  background-image: url('../images/landing/jonny.png?1352840797');
 }
 
 .lt-ie9 .village-landing .container {
@@ -2322,18 +2345,31 @@ button {
   -o-transition: all 300ms;
   transition: all 300ms;
   background: #eee8d5;
+  border-color: #93a1a1;
+  text-align: left;
 }
-.form-actions .sms-preview {
+.sms-preview h3 {
+  display: inline;
+  font-weight: bold;
+}
+.form-actions .sms-preview, .invite-family-fieldset .sms-preview {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   margin-top: 23px;
   margin-top: 1.27778rem;
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
-  padding: 1.27778rem;
-  text-align: left;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 11px;
+  padding: 0.58333rem;
 }
-.form-actions .sms-preview h3 {
-  display: inline;
-  font-weight: bold;
+.invite-family-fieldset .sms-preview {
+  margin-bottom: 0;
+  background: rgba(253, 246, 227, 0.5);
 }
 .formfield-help .sms-preview {
   max-height: 0rem;
@@ -2346,7 +2382,11 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-top: 0.63889rem;
   margin-bottom: 12px;
   margin-bottom: 0.63889rem;
-  padding: 0.63889rem;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 11px;
+  padding: 0.58333rem;
   max-height: 5.11111rem;
 }
 
@@ -2386,7 +2426,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: #073642 0 0 0.31944rem inset;
   box-shadow: #073642 0 0 0.31944rem inset;
   position: relative;
-  background: url('../images/handmadepaper.png?1353558228') repeat scroll;
+  background: url('../images/handmadepaper.png?1353558027') repeat scroll;
 }
 .pdf-previews .tab-title {
   font-size: 14px;
@@ -3176,7 +3216,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: block;
 }
 .browser-warning .modal {
-  background: url('../images/rgbapng/073642bf.png?1352840744');
+  background: url('../images/rgbapng/073642bf.png?1352840797');
   background: rgba(7, 54, 66, 0.75);
   position: fixed;
   top: 0;

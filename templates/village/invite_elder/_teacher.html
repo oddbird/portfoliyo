@@ -10,7 +10,7 @@
 
 {% block form-fields %}
   {% include "forms/_field.html" with field=form.email|attr:"placeholder: teacher@example.com" %}
-  {% include "forms/_field.html" with field=form.relationship|attr:"placeholder: e.g. 'Math Teacher', 'Science Teacher', etc." %}
+  {% include "forms/_field.html" with field=form.role|attr:"placeholder: e.g. 'Math Teacher', 'Science Teacher', etc." %}
 
   <div class="fieldset relation-fieldset">
     <p class="fieldset-help">

@@ -464,7 +464,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
             group = model.AllStudentsGroup(request.user.profile)
 
     if request.method == 'POST':
-        form = forms.EditElderForm(request.POST, instance=elder, rel=elder_rel)
+        form = forms.EditFamilyForm(request.POST, instance=elder, rel=elder_rel)
         if form.is_valid():
             form.save(editor=editor)
             messages.success(request, u"Changes saved!")
@@ -474,7 +474,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
                 return redirect('group', group_id=group.id)
             return redirect('all_students')
     else:
-        form = forms.EditElderForm(instance=elder, rel=elder_rel)
+        form = forms.EditFamilyForm(instance=elder, rel=elder_rel)
 
     return TemplateResponse(
         request,
