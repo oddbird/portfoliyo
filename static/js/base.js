@@ -341,7 +341,9 @@ var PYO = (function (PYO, $) {
             // handle form reloads with prefilled form data
             update();
 
-            input.keyup(update);
+            input.keyup(function () {
+                $(this).doTimeout('addStudentReplaceName', 150, update);
+            });
         }
     };
 
