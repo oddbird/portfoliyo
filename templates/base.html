@@ -94,7 +94,7 @@ typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var
 
 </head>
 
-<body id="portfoliyo" class="{% block bodyclasses %}{% if request.real_user %} impersonate {% endif %}{% endblock %}">
+<body id="portfoliyo" class="{% block bodyclasses %}{% if request.real_user %} impersonate {% endif %}{% endblock %}" data-user-events="{{ events.json }}">
 {% block body %}
 
 {% endblock body %}

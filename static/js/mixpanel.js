@@ -46,12 +46,14 @@
         if (elem.length) {
             var userId = elem.data('user-id');
             var userEmail = elem.data('user-email');
+            var userName = elem.data('user-name');
             if (userId) {
                 mixpanel.identify(userId);
                 if (userEmail) {
                     mixpanel.name_tag(userEmail);
                     mixpanel.people.set({
                         $email: userEmail,
+                        $name: userName,
                         $last_login: new Date()
                     });
                     mixpanel.register({'email': userEmail});
@@ -83,7 +85,7 @@
         // the appropriate user data. Registering a new user should come before
         // identifying them by user ID, so we don't lose the association with
         // the prior anonymous user
-        registerNewUser('.meta', 'user-events');
+        registerNewUser('body', 'user-events');
         identifyUser('.meta .settingslink');
 
         existence('article.landing', 'viewed landing');
@@ -91,7 +93,7 @@
         existence('article.awaiting-activation', 'registered');
         existence('.login .activated.success', 'activated');
 
-        serverEvents('.meta', 'user-events');
+        serverEvents('body', 'user-events');
 
         postEvents('.village-feed');
 
