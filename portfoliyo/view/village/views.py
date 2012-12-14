@@ -13,6 +13,7 @@ from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
 from portfoliyo import formats, model, pdf
+from portfoliyo.view import tracking
 from ..ajax import ajax
 from ..decorators import school_staff_required, login_required
 from . import forms
@@ -23,7 +24,7 @@ BACKLOG_POSTS = 100
 
 
 @login_required
-@ajax('village/_dashboard_content.html')
+@ajax('village/_dashboard.html')
 def dashboard(request):
     """Dashboard view for users with multiple students."""
     return TemplateResponse(
@@ -67,7 +68,7 @@ def get_querystring_group(request, student):
 
 
 @school_staff_required
-@ajax('village/_add_student_content.html')
+@ajax('village/student_form/_add_student.html')
 def add_student(request, group_id=None):
     """Add a student."""
     group = get_object_or_404(model.Group, id=group_id) if group_id else None
@@ -77,13 +78,14 @@ def add_student(request, group_id=None):
             request.POST, elder=request.user.profile, group=group)
         if form.is_valid():
             student = form.save()
+            tracking.track(request, 'added student')
             return redirect_to_village(student, group)
     else:
         form = forms.AddStudentForm(elder=request.user.profile, group=group)
 
     return TemplateResponse(
         request,
-        'village/add_student.html',
+        'village/student_form/add_student.html',
         {
             'form': form,
             'group': group,
@@ -93,14 +95,14 @@ def add_student(request, group_id=None):
 
 
 @school_staff_required
-@ajax('village/_add_students_bulk_content.html')
+@ajax('village/bulksignup/_bulk.html')
 def add_students_bulk(request, group_id=None):
     """Add students by sending home a PDF to parents."""
     group = get_object_or_404(model.Group, id=group_id) if group_id else None
 
     return TemplateResponse(
         request,
-        'village/add_students_bulk.html',
+        'village/bulksignup/bulk.html',
         {
             'group': group,
             'code': group.code if group else request.user.profile.code,
@@ -113,7 +115,7 @@ def add_students_bulk(request, group_id=None):
 
 
 @school_staff_required
-@ajax('village/_edit_student_content.html')
+@ajax('village/student_form/_edit_student.html')
 def edit_student(request, student_id):
     """Edit a student."""
     rel = get_relationship_or_404(student_id, request.user.profile)
@@ -124,13 +126,14 @@ def edit_student(request, student_id):
             request.POST, instance=rel.student, elder=rel.elder)
         if form.is_valid():
             student = form.save()
+            tracking.track(request, 'edited student')
             return redirect_to_village(student, group)
     else:
         form = forms.StudentForm(instance=rel.student, elder=rel.elder)
 
     return TemplateResponse(
         request,
-        'village/edit_student.html',
+        'village/student_form/edit_student.html',
         {
             'form': form,
             'student': rel.student,
@@ -141,13 +144,14 @@ def edit_student(request, student_id):
 
 
 @school_staff_required
-@ajax('village/_add_group_content.html')
+@ajax('village/group_form/_add_group.html')
 def add_group(request):
     """Add a group."""
     if request.method == 'POST':
         form = forms.AddGroupForm(request.POST, owner=request.user.profile)
         if form.is_valid():
             group = form.save()
+            tracking.track(request, 'added group')
             if not group.students.exists():
                 return redirect(
                     reverse('add_students_bulk', kwargs={'group_id': group.id})
@@ -158,7 +162,7 @@ def add_group(request):
 
     return TemplateResponse(
         request,
-        'village/add_group.html',
+        'village/group_form/add_group.html',
         {
             'form': form,
             },
@@ -167,7 +171,7 @@ def add_group(request):
 
 
 @school_staff_required
-@ajax('village/_edit_group_content.html')
+@ajax('village/group_form/_edit_group.html')
 def edit_group(request, group_id):
     """Edit a group."""
     group = get_object_or_404(
@@ -179,13 +183,14 @@ def edit_group(request, group_id):
         form = forms.GroupForm(request.POST, instance=group)
         if form.is_valid():
             group = form.save()
+            tracking.track(request, 'edited group')
             return redirect('group', group_id=group.id)
     else:
         form = forms.GroupForm(instance=group)
 
     return TemplateResponse(
         request,
-        'village/edit_group.html',
+        'village/group_form/edit_group.html',
         {
             'form': form,
             'group': group,
@@ -195,7 +200,7 @@ def edit_group(request, group_id):
 
 
 @school_staff_required
-@ajax('village/_invite_family_content.html')
+@ajax('village/invite_elder/_family.html')
 def invite_family(request, student_id):
     """Invite family member to a student's village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
@@ -205,6 +210,7 @@ def invite_family(request, student_id):
         form = forms.InviteFamilyForm(request.POST, rel=rel)
         if form.is_valid():
             form.save()
+            tracking.track(request, 'invited family')
             return redirect_to_village(rel.student, group)
     else:
         phone = request.GET.get('phone', None)
@@ -215,7 +221,7 @@ def invite_family(request, student_id):
 
     return TemplateResponse(
         request,
-        'village/invite_family.html',
+        'village/invite_elder/family.html',
         {
             'group': group,
             'student': rel.student,
@@ -227,7 +233,7 @@ def invite_family(request, student_id):
 
 
 @school_staff_required
-@ajax('village/_invite_teacher_content.html')
+@ajax('village/invite_elder/_teacher.html')
 def invite_teacher(request, student_id):
     """Invite teacher to a student's village."""
     rel = get_relationship_or_404(student_id, request.user.profile)
@@ -236,21 +242,27 @@ def invite_teacher(request, student_id):
     if request.method == 'POST':
         form = forms.InviteTeacherForm(request.POST, rel=rel)
         if form.is_valid():
-            form.save()
+            teacher = form.save()
+            tracking.track(
+                request,
+                'invited teacher',
+                invitedEmail=teacher.user.email,
+                studentId=student_id,
+                )
             return redirect_to_village(rel.student, group)
     else:
         form = forms.InviteTeacherForm(rel=rel)
 
     return TemplateResponse(
         request,
-        'village/invite_teacher.html',
+        'village/invite_elder/teacher.html',
         {'group': group, 'student': rel.student, 'form': form},
         )
 
 
 
 @school_staff_required
-@ajax('village/_invite_teacher_to_group_content.html')
+@ajax('village/invite_elder/_teacher_to_group.html')
 def invite_teacher_to_group(request, group_id):
     """Invite teacher to a group."""
     group = get_object_or_404(
@@ -259,21 +271,27 @@ def invite_teacher_to_group(request, group_id):
     if request.method == 'POST':
         form = forms.InviteTeacherForm(request.POST, group=group)
         if form.is_valid():
-            form.save()
+            teacher = form.save()
+            tracking.track(
+                request,
+                'invited teacher to group',
+                invitedEmail=teacher.user.email,
+                groupId=group_id,
+                )
             return redirect('group', group_id=group.id)
     else:
         form = forms.InviteTeacherForm(group=group)
 
     return TemplateResponse(
         request,
-        'village/invite_teacher_to_group.html',
+        'village/invite_elder/teacher_to_group.html',
         {'group': group, 'form': form},
         )
 
 
 
 @login_required
-@ajax('village/_village_content.html')
+@ajax('village/post_list/_village.html')
 def village(request, student_id):
     """The main chat view for a student/village."""
     try:
@@ -290,7 +308,7 @@ def village(request, student_id):
 
     return TemplateResponse(
         request,
-        'village/village.html',
+        'village/post_list/village.html',
         {
             'student': student,
             'group': group,
@@ -305,7 +323,7 @@ def village(request, student_id):
 
 
 @login_required
-@ajax('village/_group_content.html')
+@ajax('village/post_list/_group.html')
 def group(request, group_id=None):
     """The main chat view for a group."""
     if group_id is None:
@@ -318,7 +336,7 @@ def group(request, group_id=None):
 
     return TemplateResponse(
         request,
-        'village/group.html',
+        'village/post_list/group.html',
         {
             'group': group,
             'sms_elders': model.sms_eligible(
@@ -422,7 +440,7 @@ def mark_post_read(request, post_id):
 
 
 @school_staff_required
-@ajax('village/_edit_elder_content.html')
+@ajax('village/elder_form/_edit_elder.html')
 def edit_elder(request, elder_id, student_id=None, group_id=None):
     """Edit a village elder."""
     elder = get_object_or_404(
@@ -446,7 +464,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
             group = model.AllStudentsGroup(request.user.profile)
 
     if request.method == 'POST':
-        form = forms.EditElderForm(request.POST, instance=elder, rel=elder_rel)
+        form = forms.EditFamilyForm(request.POST, instance=elder, rel=elder_rel)
         if form.is_valid():
             form.save(editor=editor)
             messages.success(request, u"Changes saved!")
@@ -456,11 +474,11 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
                 return redirect('group', group_id=group.id)
             return redirect('all_students')
     else:
-        form = forms.EditElderForm(instance=elder, rel=elder_rel)
+        form = forms.EditFamilyForm(instance=elder, rel=elder_rel)
 
     return TemplateResponse(
         request,
-        'village/edit_elder.html',
+        'village/elder_form/edit_elder.html',
         {
             'form': form,
             'group': group,
@@ -497,5 +515,7 @@ def pdf_parent_instructions(request, lang, group_id=None):
         phone=settings.PORTFOLIYO_SMS_DEFAULT_FROM,
         group=group,
         )
+
+    tracking.track(request, 'downloaded signup pdf', language=lang)
 
     return response

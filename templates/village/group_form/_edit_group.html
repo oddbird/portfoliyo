@@ -1,0 +1,13 @@
+{% extends "village/group_form/_base.html" %}
+
+{% block form-action %}{% url edit_group group_id=group.id %}{% endblock %}
+
+{% block form-class %}group-edit-form{% endblock %}
+
+{% block form-id %}edit-group-form{% endblock %}
+
+{% block form-header %}Edit '{{ group }}'{% endblock %}
+
+{% block groupdetailsopen %}open{% endblock groupdetailsopen %}
+
+{% block form-button-text %}save{% endblock %}

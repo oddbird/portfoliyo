@@ -20,6 +20,7 @@ from registration import signals as registration_signals
 from session_csrf import anonymous_csrf
 
 from portfoliyo import model, invites
+from portfoliyo.view import tracking
 from ..decorators import login_required
 from ..home import redirect_home
 from . import forms, tokens
@@ -126,6 +127,16 @@ def register(request):
                 "Start by creating a group "
                 "and then add students and parents."
                 )
+            tracking.track(
+                request,
+                'registered',
+                email_notifications=(
+                    'yes'
+                    if form.cleaned_data.get('email_notifications')
+                    else 'no'
+                    ),
+                user_id=user.id,
+                )
             return redirect(redirect_home(user))
     else:
         form = forms.RegistrationForm()
@@ -155,6 +166,7 @@ def confirm_email(request, uidb36, token):
         profile.email_confirmed = True
         profile.save()
         messages.success(request, "Email address %s confirmed!" % user.email)
+        tracking.track(request, 'confirmed email')
         return redirect(redirect_home(user))
 
     return TemplateResponse(request, 'users/confirmation_failed.html')
@@ -209,6 +221,7 @@ def accept_email_invite(request, uidb36, token):
             u"Now log in using your email address and password "
             u"to see messages about your student.",
             )
+        tracking.track(request, 'accepted email invite')
 
     return response
 

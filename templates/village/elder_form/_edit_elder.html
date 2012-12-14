@@ -1,0 +1,24 @@
+{% extends "village/_base.html" %}
+
+{% block village-content %}
+<div class="village-main">
+  <form method="POST" id="edit-elder-form" class="elder-edit-form">
+    {% csrf_token %}
+    <h2>Edit {% firstof elder.name elder.user.email elder.phone "Family Member" %}</h2>
+
+    {% include "forms/_field.html" with field=form.name %}
+    {% include "forms/_field.html" with field=form.role label="Relation to student" %}
+    {% include "forms/_field.html" with field=form.phone helpinclude="village/elder_form/_sms_preview.html" %}
+
+    <div class="form-actions">
+      <button type="submit">Save changes</button>
+    </div>
+  </form>
+</div>
+
+{% if student %}
+{% include "village/post_list/_village_info.html" %}
+{% else %}
+{% include "village/post_list/_group_info.html" %}
+{% endif %}
+{% endblock village-content %}

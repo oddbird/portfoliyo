@@ -328,7 +328,7 @@ var PYO = (function (PYO, $) {
 
                 $.each(students, function () {
                     var id = this;
-                    PYO.subscribeToGroupChannel(id);
+                    if (id) { PYO.subscribeToGroupChannel(id); }
                 });
             }
         }
@@ -389,7 +389,7 @@ var PYO = (function (PYO, $) {
 
                 $.each(students, function () {
                     var id = this;
-                    PYO.pusher.unsubscribe('private-student_' + id);
+                    if (id) { PYO.pusher.unsubscribe('private-student_' + id); }
                 });
             }
         }
