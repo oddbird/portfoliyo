@@ -81,6 +81,8 @@
     };
 
     $(function () {
+        if (typeof(mixpanel) === 'undefined') { return false; }
+
         // These two should come first so that all other events are tagged with
         // the appropriate user data. Registering a new user should come before
         // identifying them by user ID, so we don't lose the association with
