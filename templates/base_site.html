@@ -15,7 +15,7 @@
 
     {% block metanav %}
     {% if user.is_authenticated %}
-    <nav class="meta" data-user-events="{{ events.json }}">
+    <nav class="meta">
       {% if SNAPENGAGE_ID %}
       <a href="#" class="helplink" onClick="return SnapABug.startLink();">Help</a>
       {% endif %}
