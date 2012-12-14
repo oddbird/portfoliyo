@@ -3,18 +3,18 @@ from .pages.login import LoginPage
 
 
 
-def test_login_and_logout(selenium):
-    login_pg = LoginPage(selenium, selenium.live_server.url)
+def test_login_and_logout(selenium, teacher):
+    login_pg = LoginPage(selenium)
 
     login_pg.go_to_login_page()
 
     assert not login_pg.is_user_logged_in
 
-    login_pg.login()
+    home_pg = login_pg.login(email=teacher.user.email, password=teacher.user.password)
 
-    assert login_pg.is_user_logged_in
-    assert login_pg.username_text == 'test@example.com'
+    assert home_pg.is_user_logged_in
+    assert home_pg.username_text == 'test@example.com'
 
-    login_pg.click_logout()
+    home_pg.click_logout()
 
-    assert not login_pg.is_user_logged_in
+    assert not home_pg.is_user_logged_in

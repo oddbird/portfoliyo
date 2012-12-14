@@ -7,14 +7,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 class Page(object):
     """Base class for all Pages."""
-    def __init__(self, selenium, live_server_url):
+    def __init__(self, selenium):
         self.selenium = selenium
         self.timeout = 30
-        self.live_server_url = live_server_url
 
 
     def get_relative_path(self, url):
-        self.selenium.get('%s%s' % (self.live_server_url, url))
+        self.selenium.get('%s%s' % (self.selenium.live_server, url))
 
 
     def is_element_present(self, by, value):

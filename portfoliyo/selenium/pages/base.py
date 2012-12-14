@@ -30,3 +30,5 @@ class BasePage(Page):
         WebDriverWait(self.selenium, self.timeout).until(
             lambda s: logout.is_displayed())
         logout.click()
+        from .home import HomePage
+        return HomePage(self.selenium)
