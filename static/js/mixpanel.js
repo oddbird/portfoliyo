@@ -51,7 +51,8 @@
                 if (userEmail) {
                     mixpanel.name_tag(userEmail);
                     mixpanel.people.set({
-                        $email: userEmail
+                        $email: userEmail,
+                        $last_login: new Date()
                     });
                     mixpanel.register({'email': userEmail});
                 }
