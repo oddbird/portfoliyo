@@ -1,5 +1,5 @@
 import pytest
-from selenium.webdriver.firefox.webdriver import WebDriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 
 
@@ -24,18 +24,12 @@ def factories(request):
 
 
 @pytest.fixture(scope='function')
-def teacher(
-        request,
-        factories,
-        email='test@example.com',
-        password='testpw',
-        is_staff=True,
-        ):
-
+def teacher(request, factories):
+    password = 'testpw'
     teacher = factories.ProfileFactory.create(
-        user__email=email,
+        user__email='test@example.com',
         user__password=password,
-        user__is_staff=is_staff,
+        user__is_staff=True,
         )
-    teacher.user.password = password
+    teacher.raw_password = password
     return teacher
