@@ -166,6 +166,7 @@ def confirm_email(request, uidb36, token):
         profile.email_confirmed = True
         profile.save()
         messages.success(request, "Email address %s confirmed!" % user.email)
+        tracking.track(request, 'confirmed email')
         return redirect(redirect_home(user))
 
     return TemplateResponse(request, 'users/confirmation_failed.html')

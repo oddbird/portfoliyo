@@ -86,6 +86,29 @@ $announce-width: $break-cols - $brand-width - $meta-width;
   text-align: right;
 }
 
+.helplink {
+  @extend %icon-replace;
+  @extend %icon-help;
+  @extend %button;
+  @include button-color($orange);
+  @include leader($banner-rhythm/2, $banner-size);
+  line-height: 1em;
+  float: right;
+  margin-left: 1em;
+  padding: 0 .5em;
+
+  @include box-sizing(content-box);
+  @include at-breakpoint($break) {
+    text-indent: 0;
+    width: auto;
+    &:before {
+      position: static;
+      padding: 0;
+      margin-right: .4em;
+    }
+  }
+}
+
 .meta {
   @extend %metanav-base;
 
@@ -97,27 +120,7 @@ $announce-width: $break-cols - $brand-width - $meta-width;
   }
 
   .settingslink { @extend %ellipsis; }
-  .helplink {
-    @extend %icon-replace;
-    @extend %icon-help;
-    @extend %button;
-    @include button-color($orange);
-    @include leader($banner-rhythm/2, $banner-size);
-    float: right;
-    margin-left: 1em;
-    padding: 0 .5em;
 
-    @include box-sizing(content-box);
-    @include at-breakpoint($break) {
-      text-indent: 0;
-      width: auto;
-      &:before {
-        position: static;
-        padding: 0;
-        margin-right: .4em;
-      }
-    }
-  }
   [href*="edit"] { @extend %icon-settings; }
   [href*="password"] { @extend %icon-key; }
   button {

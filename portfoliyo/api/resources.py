@@ -1,10 +1,8 @@
 """Portfoliyo API resources."""
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ObjectDoesNotExist
 from tastypie import constants, fields
 from tastypie.authorization import ReadOnlyAuthorization
 from tastypie.bundle import Bundle
-from tastypie.exceptions import NotFound
 from tastypie.resources import ModelResource
 
 from portfoliyo.api.authentication import SessionAuthentication
