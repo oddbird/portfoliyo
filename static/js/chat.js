@@ -188,7 +188,7 @@ var PYO = (function (PYO, $) {
                 event.preventDefault();
                 if (textarea.val().length) {
                     var text = $.trim(textarea.val());
-                    var author_sequence_id = PYO.authorPosts + 1;
+                    var author_sequence_id = (PYO.authorPosts || 0) + 1;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
