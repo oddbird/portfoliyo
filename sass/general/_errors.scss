@@ -1,0 +1,11 @@
+// ---------------------------------------------------------------------------
+// Errors
+
+%error {
+  background: $red;
+  color: $base3;
+  a {
+    #{$link} { color: mix($base3, $alt, 65%); }
+    #{$focus} { color: mix($base3, $accent, 65%); }
+  }
+}

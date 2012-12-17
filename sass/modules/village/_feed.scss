@@ -244,15 +244,6 @@ $postaction-size: $smallpx;
 // ---------------------------------------------------------------------------
 // Errors
 
-%error {
-  background: $red;
-  color: $base3;
-  a {
-    #{$link} { color: mix($base3, $alt, 65%); }
-    #{$focus} { color: mix($base3, $accent, 65%); }
-  }
-}
-
 .feed-error {
   @extend %error;
   padding: rhythm(1);

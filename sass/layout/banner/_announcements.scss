@@ -1,0 +1,36 @@
+// ---------------------------------------------------------------------------
+// Announcements
+
+.announcements {
+  @extend %banner-item;
+  @include adjust-font-size-to($banner-size);
+  clear: both;
+  color: inherit;
+  .announce {
+    @extend %icon;
+    @extend %icon-warning;
+    @extend %button;
+    @include button-color($blue);
+    display: inline-block;
+    padding: 0 .5em;
+  }
+  a {
+    #{$link} { color: adjust-color($accent, $lightness: 35%); }
+    #{$focus} { color: adjust-color($accent, $lightness: 45%); }
+  }
+
+  .close {
+    @extend %icon-replace;
+    @extend %icon-x-alt;
+    margin-left: 1em;
+  }
+
+  @include at-breakpoint($break) {
+    @include span-columns($announce-width);
+    clear: none;
+  }
+  .village-app & {
+    @include span-columns($announce-width,$break-cols);
+    clear: none;
+  }
+}

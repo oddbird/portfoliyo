@@ -3,18 +3,9 @@
 
 [role="contentinfo"] {
   @extend %boilerplate;
+  @include adjust-font-size-to($xxsmallpx);
   @include rhythm(0,.25,.25,0);
-  .wrap { @include adjust-font-size-to($xxsmallpx); }
+
   .author { text-transform: uppercase; }
   strong { font-weight: bold; }
-
-  .village-landing & {
-    @include at-breakpoint($break) {
-      .author { @include span-columns($left + $right); }
-      .nonprofit {
-        @include span-columns($center omega);
-        text-align: right;
-      }
-    }
-  }
 }

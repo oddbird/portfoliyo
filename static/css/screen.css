@@ -225,7 +225,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\3f";
 }
 
-.additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before {
+.additem-link:before, .addelder-link:before {
   content: "\2b";
 }
 
@@ -273,36 +273,36 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e005";
 }
 
-.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+.group .listitem-select:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
   content: "\e006";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .announcements .close:before, .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
+#messages .close:before, .helplink:before, .announcements .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .announcements .announce:before, .additem-link:before, .addelder-link:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .announcements .close:before, .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .announcements .announce:before, .meta span:before, .meta a:before, .meta button:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
+#messages .close:before, .helplink:before, .announcements .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .announcements .announce:before, .additem-link:before, .addelder-link:before, .download-pdf:before, .group .listitem-select:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
   margin-right: .4em;
 }
 
-#messages .close, .announcements .close, .helplink, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary {
+#messages .close, .helplink, .announcements .close, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-#messages .close:focus, .announcements .close:focus, .helplink:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus {
+#messages .close:focus, .helplink:focus, .announcements .close:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus {
   outline: 0;
 }
-#messages .close:focus:before, .announcements .close:focus:before, .helplink:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before {
+#messages .close:focus:before, .helplink:focus:before, .announcements .close:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before {
   outline: 1px dotted;
 }
-#messages .close:before, .announcements .close:before, .helplink:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before {
+#messages .close:before, .helplink:before, .announcements .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -373,6 +373,17 @@ a:focus, a:hover, a:active {
   cursor: pointer;
 }
 
+.pjax-error p, .nav-error, .remove-error, .post .timeout, .feed-error {
+  background: #dc322f;
+  color: #fdf6e3;
+}
+.pjax-error p a:link, .nav-error a:link, .remove-error a:link, .post .timeout a:link, .feed-error a:link, .pjax-error p a:visited, .nav-error a:visited, .remove-error a:visited, .post .timeout a:visited, .feed-error a:visited {
+  color: #b1d0dd;
+}
+.pjax-error p a:focus, .nav-error a:focus, .remove-error a:focus, .post .timeout a:focus, .feed-error a:focus, .pjax-error p a:hover, .nav-error a:hover, .remove-error a:hover, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:active, .nav-error a:active, .remove-error a:active, .post .timeout a:active, .feed-error a:active {
+  color: #eeb2c1;
+}
+
 .ui-multiselect-checkboxes label, .meta .settingslink, .useractions a, .useractions button {
   white-space: nowrap;
   overflow: hidden;
@@ -381,25 +392,25 @@ a:focus, a:hover, a:active {
   text-overflow: ellipsis;
 }
 
-.content-template h1, .login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, [class^="errorpage-"] h1, .pdf-instructions h1, .pdf-preview h1, .dashboard h1, .content-template h2, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, [class^="errorpage-"] h2, .pdf-instructions h2, .pdf-preview h2, .dashboard h2, .content-template h3, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, [class^="errorpage-"] h3, .pdf-instructions h3, .pdf-preview h3, .dashboard h3, .content-template h4, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, [class^="errorpage-"] h4, .pdf-instructions h4, .pdf-preview h4, .dashboard h4, .content-template h5, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, [class^="errorpage-"] h5, .pdf-instructions h5, .pdf-preview h5, .dashboard h5, .content-template h6, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, [class^="errorpage-"] h6, .pdf-instructions h6, .pdf-preview h6, .dashboard h6 {
+.content-template h1, .login h1, .register h1, .edit-profile h1, .reset-password h1, .change-password h1, .set-password h1, [class^="errorpage-"] h1, .activationfailed h1, .awaiting-activation h1, .no-students h1, .pdf-instructions h1, .pdf-preview h1, .dashboard h1, .content-template h2, .login h2, .register h2, .edit-profile h2, .reset-password h2, .change-password h2, .set-password h2, [class^="errorpage-"] h2, .activationfailed h2, .awaiting-activation h2, .no-students h2, .pdf-instructions h2, .pdf-preview h2, .dashboard h2, .content-template h3, .login h3, .register h3, .edit-profile h3, .reset-password h3, .change-password h3, .set-password h3, [class^="errorpage-"] h3, .activationfailed h3, .awaiting-activation h3, .no-students h3, .pdf-instructions h3, .pdf-preview h3, .dashboard h3, .content-template h4, .login h4, .register h4, .edit-profile h4, .reset-password h4, .change-password h4, .set-password h4, [class^="errorpage-"] h4, .activationfailed h4, .awaiting-activation h4, .no-students h4, .pdf-instructions h4, .pdf-preview h4, .dashboard h4, .content-template h5, .login h5, .register h5, .edit-profile h5, .reset-password h5, .change-password h5, .set-password h5, [class^="errorpage-"] h5, .activationfailed h5, .awaiting-activation h5, .no-students h5, .pdf-instructions h5, .pdf-preview h5, .dashboard h5, .content-template h6, .login h6, .register h6, .edit-profile h6, .reset-password h6, .change-password h6, .set-password h6, [class^="errorpage-"] h6, .activationfailed h6, .awaiting-activation h6, .no-students h6, .pdf-instructions h6, .pdf-preview h6, .dashboard h6 {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
-.content-template p, .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, .activationfailed p, .awaiting-activation p, .no-students p, [class^="errorpage-"] p, .pdf-instructions p, .pdf-preview p, .dashboard p, .content-template ul, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul, .content-template ol, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
+.content-template p, .login p, .register p, .edit-profile p, .reset-password p, .change-password p, .set-password p, [class^="errorpage-"] p, .activationfailed p, .awaiting-activation p, .no-students p, .pdf-instructions p, .pdf-preview p, .dashboard p, .content-template ul, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, [class^="errorpage-"] ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul, .content-template ol, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, [class^="errorpage-"] ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
 }
-.content-template ul, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, [class^="errorpage-"] ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul {
+.content-template ul, .login ul, .register ul, .edit-profile ul, .reset-password ul, .change-password ul, .set-password ul, [class^="errorpage-"] ul, .activationfailed ul, .awaiting-activation ul, .no-students ul, .pdf-instructions ul, .pdf-preview ul, .dashboard ul {
   list-style: disc;
   padding-left: 1.5em;
 }
-.content-template ol, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, [class^="errorpage-"] ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
+.content-template ol, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, [class^="errorpage-"] ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, .pdf-instructions ol, .pdf-preview ol, .dashboard ol {
   list-style: decimal;
   padding-left: 1.5em;
 }
-.content-template em, .login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, .activationfailed em, .awaiting-activation em, .no-students em, [class^="errorpage-"] em, .pdf-instructions em, .pdf-preview em, .dashboard em {
+.content-template em, .login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, [class^="errorpage-"] em, .activationfailed em, .awaiting-activation em, .no-students em, .pdf-instructions em, .pdf-preview em, .dashboard em {
   font-style: italic;
 }
-.content-template strong, .login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, [class^="errorpage-"] strong, .pdf-instructions strong, .pdf-preview strong, .dashboard strong {
+.content-template strong, .login strong, .register strong, .edit-profile strong, .reset-password strong, .change-password strong, .set-password strong, [class^="errorpage-"] strong, .activationfailed strong, .awaiting-activation strong, .no-students strong, .pdf-instructions strong, .pdf-preview strong, .dashboard strong {
   font-weight: 500;
 }
 
@@ -462,7 +473,7 @@ optgroup {
   font-style: italic;
 }
 
-.login form input[type="text"], .register form input[type="text"], .edit-profile form input[type="text"], .reset-password form input[type="text"], .change-password form input[type="text"], .set-password form input[type="text"], .activationfailed form input[type="text"], .awaiting-activation form input[type="text"], .no-students form input[type="text"], [class^="errorpage-"] form input[type="text"], .group-add-form input[type="text"], .group-edit-form input[type="text"], .village-add-form input[type="text"], .village-edit-form input[type="text"], .bulk-signup input[type="text"], .dashboard input[type="text"], .pjax-error input[type="text"], .elder-invite-form input[type="text"], .elder-edit-form input[type="text"], .post-add-form input[type="text"], .login form input[type="password"], .register form input[type="password"], .edit-profile form input[type="password"], .reset-password form input[type="password"], .change-password form input[type="password"], .set-password form input[type="password"], .activationfailed form input[type="password"], .awaiting-activation form input[type="password"], .no-students form input[type="password"], [class^="errorpage-"] form input[type="password"], .group-add-form input[type="password"], .group-edit-form input[type="password"], .village-add-form input[type="password"], .village-edit-form input[type="password"], .bulk-signup input[type="password"], .dashboard input[type="password"], .pjax-error input[type="password"], .elder-invite-form input[type="password"], .elder-edit-form input[type="password"], .post-add-form input[type="password"], .login form input[type="email"], .register form input[type="email"], .edit-profile form input[type="email"], .reset-password form input[type="email"], .change-password form input[type="email"], .set-password form input[type="email"], .activationfailed form input[type="email"], .awaiting-activation form input[type="email"], .no-students form input[type="email"], [class^="errorpage-"] form input[type="email"], .group-add-form input[type="email"], .group-edit-form input[type="email"], .village-add-form input[type="email"], .village-edit-form input[type="email"], .bulk-signup input[type="email"], .dashboard input[type="email"], .pjax-error input[type="email"], .elder-invite-form input[type="email"], .elder-edit-form input[type="email"], .post-add-form input[type="email"], .login form input[type="url"], .register form input[type="url"], .edit-profile form input[type="url"], .reset-password form input[type="url"], .change-password form input[type="url"], .set-password form input[type="url"], .activationfailed form input[type="url"], .awaiting-activation form input[type="url"], .no-students form input[type="url"], [class^="errorpage-"] form input[type="url"], .group-add-form input[type="url"], .group-edit-form input[type="url"], .village-add-form input[type="url"], .village-edit-form input[type="url"], .bulk-signup input[type="url"], .dashboard input[type="url"], .pjax-error input[type="url"], .elder-invite-form input[type="url"], .elder-edit-form input[type="url"], .post-add-form input[type="url"], .login form input[type="tel"], .register form input[type="tel"], .edit-profile form input[type="tel"], .reset-password form input[type="tel"], .change-password form input[type="tel"], .set-password form input[type="tel"], .activationfailed form input[type="tel"], .awaiting-activation form input[type="tel"], .no-students form input[type="tel"], [class^="errorpage-"] form input[type="tel"], .group-add-form input[type="tel"], .group-edit-form input[type="tel"], .village-add-form input[type="tel"], .village-edit-form input[type="tel"], .bulk-signup input[type="tel"], .dashboard input[type="tel"], .pjax-error input[type="tel"], .elder-invite-form input[type="tel"], .elder-edit-form input[type="tel"], .post-add-form input[type="tel"], .login form input[type="date"], .register form input[type="date"], .edit-profile form input[type="date"], .reset-password form input[type="date"], .change-password form input[type="date"], .set-password form input[type="date"], .activationfailed form input[type="date"], .awaiting-activation form input[type="date"], .no-students form input[type="date"], [class^="errorpage-"] form input[type="date"], .group-add-form input[type="date"], .group-edit-form input[type="date"], .village-add-form input[type="date"], .village-edit-form input[type="date"], .bulk-signup input[type="date"], .dashboard input[type="date"], .pjax-error input[type="date"], .elder-invite-form input[type="date"], .elder-edit-form input[type="date"], .post-add-form input[type="date"], .login form input[type="datetime"], .register form input[type="datetime"], .edit-profile form input[type="datetime"], .reset-password form input[type="datetime"], .change-password form input[type="datetime"], .set-password form input[type="datetime"], .activationfailed form input[type="datetime"], .awaiting-activation form input[type="datetime"], .no-students form input[type="datetime"], [class^="errorpage-"] form input[type="datetime"], .group-add-form input[type="datetime"], .group-edit-form input[type="datetime"], .village-add-form input[type="datetime"], .village-edit-form input[type="datetime"], .bulk-signup input[type="datetime"], .dashboard input[type="datetime"], .pjax-error input[type="datetime"], .elder-invite-form input[type="datetime"], .elder-edit-form input[type="datetime"], .post-add-form input[type="datetime"], .login form input[type="datetime-local"], .register form input[type="datetime-local"], .edit-profile form input[type="datetime-local"], .reset-password form input[type="datetime-local"], .change-password form input[type="datetime-local"], .set-password form input[type="datetime-local"], .activationfailed form input[type="datetime-local"], .awaiting-activation form input[type="datetime-local"], .no-students form input[type="datetime-local"], [class^="errorpage-"] form input[type="datetime-local"], .group-add-form input[type="datetime-local"], .group-edit-form input[type="datetime-local"], .village-add-form input[type="datetime-local"], .village-edit-form input[type="datetime-local"], .bulk-signup input[type="datetime-local"], .dashboard input[type="datetime-local"], .pjax-error input[type="datetime-local"], .elder-invite-form input[type="datetime-local"], .elder-edit-form input[type="datetime-local"], .post-add-form input[type="datetime-local"], .login form input[type="month"], .register form input[type="month"], .edit-profile form input[type="month"], .reset-password form input[type="month"], .change-password form input[type="month"], .set-password form input[type="month"], .activationfailed form input[type="month"], .awaiting-activation form input[type="month"], .no-students form input[type="month"], [class^="errorpage-"] form input[type="month"], .group-add-form input[type="month"], .group-edit-form input[type="month"], .village-add-form input[type="month"], .village-edit-form input[type="month"], .bulk-signup input[type="month"], .dashboard input[type="month"], .pjax-error input[type="month"], .elder-invite-form input[type="month"], .elder-edit-form input[type="month"], .post-add-form input[type="month"], .login form input[type="week"], .register form input[type="week"], .edit-profile form input[type="week"], .reset-password form input[type="week"], .change-password form input[type="week"], .set-password form input[type="week"], .activationfailed form input[type="week"], .awaiting-activation form input[type="week"], .no-students form input[type="week"], [class^="errorpage-"] form input[type="week"], .group-add-form input[type="week"], .group-edit-form input[type="week"], .village-add-form input[type="week"], .village-edit-form input[type="week"], .bulk-signup input[type="week"], .dashboard input[type="week"], .pjax-error input[type="week"], .elder-invite-form input[type="week"], .elder-edit-form input[type="week"], .post-add-form input[type="week"], .login form input[type="time"], .register form input[type="time"], .edit-profile form input[type="time"], .reset-password form input[type="time"], .change-password form input[type="time"], .set-password form input[type="time"], .activationfailed form input[type="time"], .awaiting-activation form input[type="time"], .no-students form input[type="time"], [class^="errorpage-"] form input[type="time"], .group-add-form input[type="time"], .group-edit-form input[type="time"], .village-add-form input[type="time"], .village-edit-form input[type="time"], .bulk-signup input[type="time"], .dashboard input[type="time"], .pjax-error input[type="time"], .elder-invite-form input[type="time"], .elder-edit-form input[type="time"], .post-add-form input[type="time"], .login form input[type="number"], .register form input[type="number"], .edit-profile form input[type="number"], .reset-password form input[type="number"], .change-password form input[type="number"], .set-password form input[type="number"], .activationfailed form input[type="number"], .awaiting-activation form input[type="number"], .no-students form input[type="number"], [class^="errorpage-"] form input[type="number"], .group-add-form input[type="number"], .group-edit-form input[type="number"], .village-add-form input[type="number"], .village-edit-form input[type="number"], .bulk-signup input[type="number"], .dashboard input[type="number"], .pjax-error input[type="number"], .elder-invite-form input[type="number"], .elder-edit-form input[type="number"], .post-add-form input[type="number"], .login form input[type="search"], .register form input[type="search"], .edit-profile form input[type="search"], .reset-password form input[type="search"], .change-password form input[type="search"], .set-password form input[type="search"], .activationfailed form input[type="search"], .awaiting-activation form input[type="search"], .no-students form input[type="search"], [class^="errorpage-"] form input[type="search"], .group-add-form input[type="search"], .group-edit-form input[type="search"], .village-add-form input[type="search"], .village-edit-form input[type="search"], .bulk-signup input[type="search"], .dashboard input[type="search"], .pjax-error input[type="search"], .elder-invite-form input[type="search"], .elder-edit-form input[type="search"], .post-add-form input[type="search"], .login form input[type="color"], .register form input[type="color"], .edit-profile form input[type="color"], .reset-password form input[type="color"], .change-password form input[type="color"], .set-password form input[type="color"], .activationfailed form input[type="color"], .awaiting-activation form input[type="color"], .no-students form input[type="color"], [class^="errorpage-"] form input[type="color"], .group-add-form input[type="color"], .group-edit-form input[type="color"], .village-add-form input[type="color"], .village-edit-form input[type="color"], .bulk-signup input[type="color"], .dashboard input[type="color"], .pjax-error input[type="color"], .elder-invite-form input[type="color"], .elder-edit-form input[type="color"], .post-add-form input[type="color"], .login form textarea, .register form textarea, .edit-profile form textarea, .reset-password form textarea, .change-password form textarea, .set-password form textarea, .activationfailed form textarea, .awaiting-activation form textarea, .no-students form textarea, [class^="errorpage-"] form textarea, .group-add-form textarea, .group-edit-form textarea, .village-add-form textarea, .village-edit-form textarea, .bulk-signup textarea, .dashboard textarea, .pjax-error textarea, .elder-invite-form textarea, .elder-edit-form textarea, .post-add-form textarea {
+.login form input[type="text"], .register form input[type="text"], .edit-profile form input[type="text"], .reset-password form input[type="text"], .change-password form input[type="text"], .set-password form input[type="text"], [class^="errorpage-"] form input[type="text"], .activationfailed form input[type="text"], .awaiting-activation form input[type="text"], .no-students form input[type="text"], .pjax-error input[type="text"], .group-add-form input[type="text"], .group-edit-form input[type="text"], .village-add-form input[type="text"], .village-edit-form input[type="text"], .bulk-signup input[type="text"], .dashboard input[type="text"], .elder-invite-form input[type="text"], .elder-edit-form input[type="text"], .post-add-form input[type="text"], .login form input[type="password"], .register form input[type="password"], .edit-profile form input[type="password"], .reset-password form input[type="password"], .change-password form input[type="password"], .set-password form input[type="password"], [class^="errorpage-"] form input[type="password"], .activationfailed form input[type="password"], .awaiting-activation form input[type="password"], .no-students form input[type="password"], .pjax-error input[type="password"], .group-add-form input[type="password"], .group-edit-form input[type="password"], .village-add-form input[type="password"], .village-edit-form input[type="password"], .bulk-signup input[type="password"], .dashboard input[type="password"], .elder-invite-form input[type="password"], .elder-edit-form input[type="password"], .post-add-form input[type="password"], .login form input[type="email"], .register form input[type="email"], .edit-profile form input[type="email"], .reset-password form input[type="email"], .change-password form input[type="email"], .set-password form input[type="email"], [class^="errorpage-"] form input[type="email"], .activationfailed form input[type="email"], .awaiting-activation form input[type="email"], .no-students form input[type="email"], .pjax-error input[type="email"], .group-add-form input[type="email"], .group-edit-form input[type="email"], .village-add-form input[type="email"], .village-edit-form input[type="email"], .bulk-signup input[type="email"], .dashboard input[type="email"], .elder-invite-form input[type="email"], .elder-edit-form input[type="email"], .post-add-form input[type="email"], .login form input[type="url"], .register form input[type="url"], .edit-profile form input[type="url"], .reset-password form input[type="url"], .change-password form input[type="url"], .set-password form input[type="url"], [class^="errorpage-"] form input[type="url"], .activationfailed form input[type="url"], .awaiting-activation form input[type="url"], .no-students form input[type="url"], .pjax-error input[type="url"], .group-add-form input[type="url"], .group-edit-form input[type="url"], .village-add-form input[type="url"], .village-edit-form input[type="url"], .bulk-signup input[type="url"], .dashboard input[type="url"], .elder-invite-form input[type="url"], .elder-edit-form input[type="url"], .post-add-form input[type="url"], .login form input[type="tel"], .register form input[type="tel"], .edit-profile form input[type="tel"], .reset-password form input[type="tel"], .change-password form input[type="tel"], .set-password form input[type="tel"], [class^="errorpage-"] form input[type="tel"], .activationfailed form input[type="tel"], .awaiting-activation form input[type="tel"], .no-students form input[type="tel"], .pjax-error input[type="tel"], .group-add-form input[type="tel"], .group-edit-form input[type="tel"], .village-add-form input[type="tel"], .village-edit-form input[type="tel"], .bulk-signup input[type="tel"], .dashboard input[type="tel"], .elder-invite-form input[type="tel"], .elder-edit-form input[type="tel"], .post-add-form input[type="tel"], .login form input[type="date"], .register form input[type="date"], .edit-profile form input[type="date"], .reset-password form input[type="date"], .change-password form input[type="date"], .set-password form input[type="date"], [class^="errorpage-"] form input[type="date"], .activationfailed form input[type="date"], .awaiting-activation form input[type="date"], .no-students form input[type="date"], .pjax-error input[type="date"], .group-add-form input[type="date"], .group-edit-form input[type="date"], .village-add-form input[type="date"], .village-edit-form input[type="date"], .bulk-signup input[type="date"], .dashboard input[type="date"], .elder-invite-form input[type="date"], .elder-edit-form input[type="date"], .post-add-form input[type="date"], .login form input[type="datetime"], .register form input[type="datetime"], .edit-profile form input[type="datetime"], .reset-password form input[type="datetime"], .change-password form input[type="datetime"], .set-password form input[type="datetime"], [class^="errorpage-"] form input[type="datetime"], .activationfailed form input[type="datetime"], .awaiting-activation form input[type="datetime"], .no-students form input[type="datetime"], .pjax-error input[type="datetime"], .group-add-form input[type="datetime"], .group-edit-form input[type="datetime"], .village-add-form input[type="datetime"], .village-edit-form input[type="datetime"], .bulk-signup input[type="datetime"], .dashboard input[type="datetime"], .elder-invite-form input[type="datetime"], .elder-edit-form input[type="datetime"], .post-add-form input[type="datetime"], .login form input[type="datetime-local"], .register form input[type="datetime-local"], .edit-profile form input[type="datetime-local"], .reset-password form input[type="datetime-local"], .change-password form input[type="datetime-local"], .set-password form input[type="datetime-local"], [class^="errorpage-"] form input[type="datetime-local"], .activationfailed form input[type="datetime-local"], .awaiting-activation form input[type="datetime-local"], .no-students form input[type="datetime-local"], .pjax-error input[type="datetime-local"], .group-add-form input[type="datetime-local"], .group-edit-form input[type="datetime-local"], .village-add-form input[type="datetime-local"], .village-edit-form input[type="datetime-local"], .bulk-signup input[type="datetime-local"], .dashboard input[type="datetime-local"], .elder-invite-form input[type="datetime-local"], .elder-edit-form input[type="datetime-local"], .post-add-form input[type="datetime-local"], .login form input[type="month"], .register form input[type="month"], .edit-profile form input[type="month"], .reset-password form input[type="month"], .change-password form input[type="month"], .set-password form input[type="month"], [class^="errorpage-"] form input[type="month"], .activationfailed form input[type="month"], .awaiting-activation form input[type="month"], .no-students form input[type="month"], .pjax-error input[type="month"], .group-add-form input[type="month"], .group-edit-form input[type="month"], .village-add-form input[type="month"], .village-edit-form input[type="month"], .bulk-signup input[type="month"], .dashboard input[type="month"], .elder-invite-form input[type="month"], .elder-edit-form input[type="month"], .post-add-form input[type="month"], .login form input[type="week"], .register form input[type="week"], .edit-profile form input[type="week"], .reset-password form input[type="week"], .change-password form input[type="week"], .set-password form input[type="week"], [class^="errorpage-"] form input[type="week"], .activationfailed form input[type="week"], .awaiting-activation form input[type="week"], .no-students form input[type="week"], .pjax-error input[type="week"], .group-add-form input[type="week"], .group-edit-form input[type="week"], .village-add-form input[type="week"], .village-edit-form input[type="week"], .bulk-signup input[type="week"], .dashboard input[type="week"], .elder-invite-form input[type="week"], .elder-edit-form input[type="week"], .post-add-form input[type="week"], .login form input[type="time"], .register form input[type="time"], .edit-profile form input[type="time"], .reset-password form input[type="time"], .change-password form input[type="time"], .set-password form input[type="time"], [class^="errorpage-"] form input[type="time"], .activationfailed form input[type="time"], .awaiting-activation form input[type="time"], .no-students form input[type="time"], .pjax-error input[type="time"], .group-add-form input[type="time"], .group-edit-form input[type="time"], .village-add-form input[type="time"], .village-edit-form input[type="time"], .bulk-signup input[type="time"], .dashboard input[type="time"], .elder-invite-form input[type="time"], .elder-edit-form input[type="time"], .post-add-form input[type="time"], .login form input[type="number"], .register form input[type="number"], .edit-profile form input[type="number"], .reset-password form input[type="number"], .change-password form input[type="number"], .set-password form input[type="number"], [class^="errorpage-"] form input[type="number"], .activationfailed form input[type="number"], .awaiting-activation form input[type="number"], .no-students form input[type="number"], .pjax-error input[type="number"], .group-add-form input[type="number"], .group-edit-form input[type="number"], .village-add-form input[type="number"], .village-edit-form input[type="number"], .bulk-signup input[type="number"], .dashboard input[type="number"], .elder-invite-form input[type="number"], .elder-edit-form input[type="number"], .post-add-form input[type="number"], .login form input[type="search"], .register form input[type="search"], .edit-profile form input[type="search"], .reset-password form input[type="search"], .change-password form input[type="search"], .set-password form input[type="search"], [class^="errorpage-"] form input[type="search"], .activationfailed form input[type="search"], .awaiting-activation form input[type="search"], .no-students form input[type="search"], .pjax-error input[type="search"], .group-add-form input[type="search"], .group-edit-form input[type="search"], .village-add-form input[type="search"], .village-edit-form input[type="search"], .bulk-signup input[type="search"], .dashboard input[type="search"], .elder-invite-form input[type="search"], .elder-edit-form input[type="search"], .post-add-form input[type="search"], .login form input[type="color"], .register form input[type="color"], .edit-profile form input[type="color"], .reset-password form input[type="color"], .change-password form input[type="color"], .set-password form input[type="color"], [class^="errorpage-"] form input[type="color"], .activationfailed form input[type="color"], .awaiting-activation form input[type="color"], .no-students form input[type="color"], .pjax-error input[type="color"], .group-add-form input[type="color"], .group-edit-form input[type="color"], .village-add-form input[type="color"], .village-edit-form input[type="color"], .bulk-signup input[type="color"], .dashboard input[type="color"], .elder-invite-form input[type="color"], .elder-edit-form input[type="color"], .post-add-form input[type="color"], .login form textarea, .register form textarea, .edit-profile form textarea, .reset-password form textarea, .change-password form textarea, .set-password form textarea, [class^="errorpage-"] form textarea, .activationfailed form textarea, .awaiting-activation form textarea, .no-students form textarea, .pjax-error textarea, .group-add-form textarea, .group-edit-form textarea, .village-add-form textarea, .village-edit-form textarea, .bulk-signup textarea, .dashboard textarea, .elder-invite-form textarea, .elder-edit-form textarea, .post-add-form textarea {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 14px;
   font-size: 0.77778rem;
@@ -481,7 +492,7 @@ optgroup {
   outline: 0;
 }
 
-.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .village-add-form .form-actions button, .village-edit-form .form-actions button, .bulk-signup .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-invite-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .ui-multiselect-all, .ui-multiselect-none, .announcements .announce, .helplink, .login-nav .login-link, .main-register-link, .post-add-form .form-actions .action-post {
+.linkaction, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, [class^="errorpage-"] form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, .pjax-error .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .village-add-form .form-actions button, .village-edit-form .form-actions button, .bulk-signup .form-actions button, .dashboard .form-actions button, .elder-invite-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button, .ui-multiselect-all, .ui-multiselect-none, .helplink, .login-nav .login-link, .announcements .announce, .main-register-link, .post-add-form .form-actions .action-post {
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
   border-radius: 0.25em;
@@ -507,16 +518,16 @@ optgroup {
   color: #fdf6e3;
   text-align: center;
 }
-.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .village-add-form .form-actions button:hover, .village-edit-form .form-actions button:hover, .bulk-signup .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-invite-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .announcements .announce:hover, .helplink:hover, .login-nav .login-link:hover, .main-register-link:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .village-add-form .form-actions button:focus, .village-edit-form .form-actions button:focus, .bulk-signup .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-invite-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .announcements .announce:focus, .helplink:focus, .login-nav .login-link:focus, .main-register-link:focus, .post-add-form .form-actions .action-post:focus {
+.linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, .pjax-error .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .village-add-form .form-actions button:hover, .village-edit-form .form-actions button:hover, .bulk-signup .form-actions button:hover, .dashboard .form-actions button:hover, .elder-invite-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .helplink:hover, .login-nav .login-link:hover, .announcements .announce:hover, .main-register-link:hover, .post-add-form .form-actions .action-post:hover, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, .pjax-error .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .village-add-form .form-actions button:focus, .village-edit-form .form-actions button:focus, .bulk-signup .form-actions button:focus, .dashboard .form-actions button:focus, .elder-invite-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .helplink:focus, .login-nav .login-link:focus, .announcements .announce:focus, .main-register-link:focus, .post-add-form .form-actions .action-post:focus {
   background-color: #9bb300;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .announcements .announce:active, .helplink:active, .login-nav .login-link:active, .main-register-link:active, .post-add-form .form-actions .action-post:active {
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, .pjax-error .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .dashboard .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .helplink:active, .login-nav .login-link:active, .announcements .announce:active, .main-register-link:active, .post-add-form .form-actions .action-post:active {
   background-color: #859900;
 }
-.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .no-students form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .village-add-form .form-actions button:link, .village-edit-form .form-actions button:link, .bulk-signup .form-actions button:link, .dashboard .form-actions button:link, .pjax-error .form-actions button:link, .elder-invite-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .ui-multiselect-all:link, .ui-multiselect-none:link, .announcements .announce:link, .helplink:link, .login-nav .login-link:link, .main-register-link:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .no-students form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .village-add-form .form-actions button:visited, .village-edit-form .form-actions button:visited, .bulk-signup .form-actions button:visited, .dashboard .form-actions button:visited, .pjax-error .form-actions button:visited, .elder-invite-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .ui-multiselect-all:visited, .ui-multiselect-none:visited, .announcements .announce:visited, .helplink:visited, .login-nav .login-link:visited, .main-register-link:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .village-add-form .form-actions button:focus, .village-edit-form .form-actions button:focus, .bulk-signup .form-actions button:focus, .dashboard .form-actions button:focus, .pjax-error .form-actions button:focus, .elder-invite-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .announcements .announce:focus, .helplink:focus, .login-nav .login-link:focus, .main-register-link:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .village-add-form .form-actions button:hover, .village-edit-form .form-actions button:hover, .bulk-signup .form-actions button:hover, .dashboard .form-actions button:hover, .pjax-error .form-actions button:hover, .elder-invite-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .announcements .announce:hover, .helplink:hover, .login-nav .login-link:hover, .main-register-link:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .announcements .announce:active, .helplink:active, .login-nav .login-link:active, .main-register-link:active, .post-add-form .form-actions .action-post:active {
+.linkaction:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .no-students form .form-actions button:link, .pjax-error .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .village-add-form .form-actions button:link, .village-edit-form .form-actions button:link, .bulk-signup .form-actions button:link, .dashboard .form-actions button:link, .elder-invite-form .form-actions button:link, .elder-edit-form .form-actions button:link, .post-add-form .form-actions button:link, .ui-multiselect-all:link, .ui-multiselect-none:link, .helplink:link, .login-nav .login-link:link, .announcements .announce:link, .main-register-link:link, .post-add-form .form-actions .action-post:link, .linkaction:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .no-students form .form-actions button:visited, .pjax-error .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .village-add-form .form-actions button:visited, .village-edit-form .form-actions button:visited, .bulk-signup .form-actions button:visited, .dashboard .form-actions button:visited, .elder-invite-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .post-add-form .form-actions button:visited, .ui-multiselect-all:visited, .ui-multiselect-none:visited, .helplink:visited, .login-nav .login-link:visited, .announcements .announce:visited, .main-register-link:visited, .post-add-form .form-actions .action-post:visited, .linkaction:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, .pjax-error .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .village-add-form .form-actions button:focus, .village-edit-form .form-actions button:focus, .bulk-signup .form-actions button:focus, .dashboard .form-actions button:focus, .elder-invite-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .post-add-form .form-actions button:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .helplink:focus, .login-nav .login-link:focus, .announcements .announce:focus, .main-register-link:focus, .post-add-form .form-actions .action-post:focus, .linkaction:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, .pjax-error .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .village-add-form .form-actions button:hover, .village-edit-form .form-actions button:hover, .bulk-signup .form-actions button:hover, .dashboard .form-actions button:hover, .elder-invite-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .post-add-form .form-actions button:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .helplink:hover, .login-nav .login-link:hover, .announcements .announce:hover, .main-register-link:hover, .post-add-form .form-actions .action-post:hover, .linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, .pjax-error .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .dashboard .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .helplink:active, .login-nav .login-link:active, .announcements .announce:active, .main-register-link:active, .post-add-form .form-actions .action-post:active {
   color: #fdf6e3;
 }
-.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .dashboard .form-actions button:active, .pjax-error .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .announcements .announce:active, .helplink:active, .login-nav .login-link:active, .main-register-link:active, .post-add-form .form-actions .action-post:active {
+.linkaction:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, .pjax-error .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .dashboard .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .post-add-form .form-actions button:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .helplink:active, .login-nav .login-link:active, .announcements .announce:active, .main-register-link:active, .post-add-form .form-actions .action-post:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
@@ -659,16 +670,16 @@ optgroup {
   color: #002b36;
 }
 
-.login form .type, .register form .type, .edit-profile form .type, .reset-password form .type, .change-password form .type, .set-password form .type, .activationfailed form .type, .awaiting-activation form .type, .no-students form .type, [class^="errorpage-"] form .type, .group-add-form .type, .group-edit-form .type, .village-add-form .type, .village-edit-form .type, .bulk-signup .type, .dashboard .type, .pjax-error .type, .elder-invite-form .type, .elder-edit-form .type, .post-add-form .type {
+.login form .type, .register form .type, .edit-profile form .type, .reset-password form .type, .change-password form .type, .set-password form .type, [class^="errorpage-"] form .type, .activationfailed form .type, .awaiting-activation form .type, .no-students form .type, .pjax-error .type, .group-add-form .type, .group-edit-form .type, .village-add-form .type, .village-edit-form .type, .bulk-signup .type, .dashboard .type, .elder-invite-form .type, .elder-edit-form .type, .post-add-form .type {
   display: block;
   color: #586e75;
 }
-.login form input[type="text"], .register form input[type="text"], .edit-profile form input[type="text"], .reset-password form input[type="text"], .change-password form input[type="text"], .set-password form input[type="text"], .activationfailed form input[type="text"], .awaiting-activation form input[type="text"], .no-students form input[type="text"], [class^="errorpage-"] form input[type="text"], .group-add-form input[type="text"], .group-edit-form input[type="text"], .village-add-form input[type="text"], .village-edit-form input[type="text"], .bulk-signup input[type="text"], .dashboard input[type="text"], .pjax-error input[type="text"], .elder-invite-form input[type="text"], .elder-edit-form input[type="text"], .post-add-form input[type="text"], .login form input[type="password"], .register form input[type="password"], .edit-profile form input[type="password"], .reset-password form input[type="password"], .change-password form input[type="password"], .set-password form input[type="password"], .activationfailed form input[type="password"], .awaiting-activation form input[type="password"], .no-students form input[type="password"], [class^="errorpage-"] form input[type="password"], .group-add-form input[type="password"], .group-edit-form input[type="password"], .village-add-form input[type="password"], .village-edit-form input[type="password"], .bulk-signup input[type="password"], .dashboard input[type="password"], .pjax-error input[type="password"], .elder-invite-form input[type="password"], .elder-edit-form input[type="password"], .post-add-form input[type="password"], .login form input[type="email"], .register form input[type="email"], .edit-profile form input[type="email"], .reset-password form input[type="email"], .change-password form input[type="email"], .set-password form input[type="email"], .activationfailed form input[type="email"], .awaiting-activation form input[type="email"], .no-students form input[type="email"], [class^="errorpage-"] form input[type="email"], .group-add-form input[type="email"], .group-edit-form input[type="email"], .village-add-form input[type="email"], .village-edit-form input[type="email"], .bulk-signup input[type="email"], .dashboard input[type="email"], .pjax-error input[type="email"], .elder-invite-form input[type="email"], .elder-edit-form input[type="email"], .post-add-form input[type="email"], .login form input[type="url"], .register form input[type="url"], .edit-profile form input[type="url"], .reset-password form input[type="url"], .change-password form input[type="url"], .set-password form input[type="url"], .activationfailed form input[type="url"], .awaiting-activation form input[type="url"], .no-students form input[type="url"], [class^="errorpage-"] form input[type="url"], .group-add-form input[type="url"], .group-edit-form input[type="url"], .village-add-form input[type="url"], .village-edit-form input[type="url"], .bulk-signup input[type="url"], .dashboard input[type="url"], .pjax-error input[type="url"], .elder-invite-form input[type="url"], .elder-edit-form input[type="url"], .post-add-form input[type="url"], .login form input[type="tel"], .register form input[type="tel"], .edit-profile form input[type="tel"], .reset-password form input[type="tel"], .change-password form input[type="tel"], .set-password form input[type="tel"], .activationfailed form input[type="tel"], .awaiting-activation form input[type="tel"], .no-students form input[type="tel"], [class^="errorpage-"] form input[type="tel"], .group-add-form input[type="tel"], .group-edit-form input[type="tel"], .village-add-form input[type="tel"], .village-edit-form input[type="tel"], .bulk-signup input[type="tel"], .dashboard input[type="tel"], .pjax-error input[type="tel"], .elder-invite-form input[type="tel"], .elder-edit-form input[type="tel"], .post-add-form input[type="tel"], .login form input[type="date"], .register form input[type="date"], .edit-profile form input[type="date"], .reset-password form input[type="date"], .change-password form input[type="date"], .set-password form input[type="date"], .activationfailed form input[type="date"], .awaiting-activation form input[type="date"], .no-students form input[type="date"], [class^="errorpage-"] form input[type="date"], .group-add-form input[type="date"], .group-edit-form input[type="date"], .village-add-form input[type="date"], .village-edit-form input[type="date"], .bulk-signup input[type="date"], .dashboard input[type="date"], .pjax-error input[type="date"], .elder-invite-form input[type="date"], .elder-edit-form input[type="date"], .post-add-form input[type="date"], .login form input[type="datetime"], .register form input[type="datetime"], .edit-profile form input[type="datetime"], .reset-password form input[type="datetime"], .change-password form input[type="datetime"], .set-password form input[type="datetime"], .activationfailed form input[type="datetime"], .awaiting-activation form input[type="datetime"], .no-students form input[type="datetime"], [class^="errorpage-"] form input[type="datetime"], .group-add-form input[type="datetime"], .group-edit-form input[type="datetime"], .village-add-form input[type="datetime"], .village-edit-form input[type="datetime"], .bulk-signup input[type="datetime"], .dashboard input[type="datetime"], .pjax-error input[type="datetime"], .elder-invite-form input[type="datetime"], .elder-edit-form input[type="datetime"], .post-add-form input[type="datetime"], .login form input[type="datetime-local"], .register form input[type="datetime-local"], .edit-profile form input[type="datetime-local"], .reset-password form input[type="datetime-local"], .change-password form input[type="datetime-local"], .set-password form input[type="datetime-local"], .activationfailed form input[type="datetime-local"], .awaiting-activation form input[type="datetime-local"], .no-students form input[type="datetime-local"], [class^="errorpage-"] form input[type="datetime-local"], .group-add-form input[type="datetime-local"], .group-edit-form input[type="datetime-local"], .village-add-form input[type="datetime-local"], .village-edit-form input[type="datetime-local"], .bulk-signup input[type="datetime-local"], .dashboard input[type="datetime-local"], .pjax-error input[type="datetime-local"], .elder-invite-form input[type="datetime-local"], .elder-edit-form input[type="datetime-local"], .post-add-form input[type="datetime-local"], .login form input[type="month"], .register form input[type="month"], .edit-profile form input[type="month"], .reset-password form input[type="month"], .change-password form input[type="month"], .set-password form input[type="month"], .activationfailed form input[type="month"], .awaiting-activation form input[type="month"], .no-students form input[type="month"], [class^="errorpage-"] form input[type="month"], .group-add-form input[type="month"], .group-edit-form input[type="month"], .village-add-form input[type="month"], .village-edit-form input[type="month"], .bulk-signup input[type="month"], .dashboard input[type="month"], .pjax-error input[type="month"], .elder-invite-form input[type="month"], .elder-edit-form input[type="month"], .post-add-form input[type="month"], .login form input[type="week"], .register form input[type="week"], .edit-profile form input[type="week"], .reset-password form input[type="week"], .change-password form input[type="week"], .set-password form input[type="week"], .activationfailed form input[type="week"], .awaiting-activation form input[type="week"], .no-students form input[type="week"], [class^="errorpage-"] form input[type="week"], .group-add-form input[type="week"], .group-edit-form input[type="week"], .village-add-form input[type="week"], .village-edit-form input[type="week"], .bulk-signup input[type="week"], .dashboard input[type="week"], .pjax-error input[type="week"], .elder-invite-form input[type="week"], .elder-edit-form input[type="week"], .post-add-form input[type="week"], .login form input[type="time"], .register form input[type="time"], .edit-profile form input[type="time"], .reset-password form input[type="time"], .change-password form input[type="time"], .set-password form input[type="time"], .activationfailed form input[type="time"], .awaiting-activation form input[type="time"], .no-students form input[type="time"], [class^="errorpage-"] form input[type="time"], .group-add-form input[type="time"], .group-edit-form input[type="time"], .village-add-form input[type="time"], .village-edit-form input[type="time"], .bulk-signup input[type="time"], .dashboard input[type="time"], .pjax-error input[type="time"], .elder-invite-form input[type="time"], .elder-edit-form input[type="time"], .post-add-form input[type="time"], .login form input[type="number"], .register form input[type="number"], .edit-profile form input[type="number"], .reset-password form input[type="number"], .change-password form input[type="number"], .set-password form input[type="number"], .activationfailed form input[type="number"], .awaiting-activation form input[type="number"], .no-students form input[type="number"], [class^="errorpage-"] form input[type="number"], .group-add-form input[type="number"], .group-edit-form input[type="number"], .village-add-form input[type="number"], .village-edit-form input[type="number"], .bulk-signup input[type="number"], .dashboard input[type="number"], .pjax-error input[type="number"], .elder-invite-form input[type="number"], .elder-edit-form input[type="number"], .post-add-form input[type="number"], .login form input[type="search"], .register form input[type="search"], .edit-profile form input[type="search"], .reset-password form input[type="search"], .change-password form input[type="search"], .set-password form input[type="search"], .activationfailed form input[type="search"], .awaiting-activation form input[type="search"], .no-students form input[type="search"], [class^="errorpage-"] form input[type="search"], .group-add-form input[type="search"], .group-edit-form input[type="search"], .village-add-form input[type="search"], .village-edit-form input[type="search"], .bulk-signup input[type="search"], .dashboard input[type="search"], .pjax-error input[type="search"], .elder-invite-form input[type="search"], .elder-edit-form input[type="search"], .post-add-form input[type="search"], .login form input[type="color"], .register form input[type="color"], .edit-profile form input[type="color"], .reset-password form input[type="color"], .change-password form input[type="color"], .set-password form input[type="color"], .activationfailed form input[type="color"], .awaiting-activation form input[type="color"], .no-students form input[type="color"], [class^="errorpage-"] form input[type="color"], .group-add-form input[type="color"], .group-edit-form input[type="color"], .village-add-form input[type="color"], .village-edit-form input[type="color"], .bulk-signup input[type="color"], .dashboard input[type="color"], .pjax-error input[type="color"], .elder-invite-form input[type="color"], .elder-edit-form input[type="color"], .post-add-form input[type="color"] {
+.login form input[type="text"], .register form input[type="text"], .edit-profile form input[type="text"], .reset-password form input[type="text"], .change-password form input[type="text"], .set-password form input[type="text"], [class^="errorpage-"] form input[type="text"], .activationfailed form input[type="text"], .awaiting-activation form input[type="text"], .no-students form input[type="text"], .pjax-error input[type="text"], .group-add-form input[type="text"], .group-edit-form input[type="text"], .village-add-form input[type="text"], .village-edit-form input[type="text"], .bulk-signup input[type="text"], .dashboard input[type="text"], .elder-invite-form input[type="text"], .elder-edit-form input[type="text"], .post-add-form input[type="text"], .login form input[type="password"], .register form input[type="password"], .edit-profile form input[type="password"], .reset-password form input[type="password"], .change-password form input[type="password"], .set-password form input[type="password"], [class^="errorpage-"] form input[type="password"], .activationfailed form input[type="password"], .awaiting-activation form input[type="password"], .no-students form input[type="password"], .pjax-error input[type="password"], .group-add-form input[type="password"], .group-edit-form input[type="password"], .village-add-form input[type="password"], .village-edit-form input[type="password"], .bulk-signup input[type="password"], .dashboard input[type="password"], .elder-invite-form input[type="password"], .elder-edit-form input[type="password"], .post-add-form input[type="password"], .login form input[type="email"], .register form input[type="email"], .edit-profile form input[type="email"], .reset-password form input[type="email"], .change-password form input[type="email"], .set-password form input[type="email"], [class^="errorpage-"] form input[type="email"], .activationfailed form input[type="email"], .awaiting-activation form input[type="email"], .no-students form input[type="email"], .pjax-error input[type="email"], .group-add-form input[type="email"], .group-edit-form input[type="email"], .village-add-form input[type="email"], .village-edit-form input[type="email"], .bulk-signup input[type="email"], .dashboard input[type="email"], .elder-invite-form input[type="email"], .elder-edit-form input[type="email"], .post-add-form input[type="email"], .login form input[type="url"], .register form input[type="url"], .edit-profile form input[type="url"], .reset-password form input[type="url"], .change-password form input[type="url"], .set-password form input[type="url"], [class^="errorpage-"] form input[type="url"], .activationfailed form input[type="url"], .awaiting-activation form input[type="url"], .no-students form input[type="url"], .pjax-error input[type="url"], .group-add-form input[type="url"], .group-edit-form input[type="url"], .village-add-form input[type="url"], .village-edit-form input[type="url"], .bulk-signup input[type="url"], .dashboard input[type="url"], .elder-invite-form input[type="url"], .elder-edit-form input[type="url"], .post-add-form input[type="url"], .login form input[type="tel"], .register form input[type="tel"], .edit-profile form input[type="tel"], .reset-password form input[type="tel"], .change-password form input[type="tel"], .set-password form input[type="tel"], [class^="errorpage-"] form input[type="tel"], .activationfailed form input[type="tel"], .awaiting-activation form input[type="tel"], .no-students form input[type="tel"], .pjax-error input[type="tel"], .group-add-form input[type="tel"], .group-edit-form input[type="tel"], .village-add-form input[type="tel"], .village-edit-form input[type="tel"], .bulk-signup input[type="tel"], .dashboard input[type="tel"], .elder-invite-form input[type="tel"], .elder-edit-form input[type="tel"], .post-add-form input[type="tel"], .login form input[type="date"], .register form input[type="date"], .edit-profile form input[type="date"], .reset-password form input[type="date"], .change-password form input[type="date"], .set-password form input[type="date"], [class^="errorpage-"] form input[type="date"], .activationfailed form input[type="date"], .awaiting-activation form input[type="date"], .no-students form input[type="date"], .pjax-error input[type="date"], .group-add-form input[type="date"], .group-edit-form input[type="date"], .village-add-form input[type="date"], .village-edit-form input[type="date"], .bulk-signup input[type="date"], .dashboard input[type="date"], .elder-invite-form input[type="date"], .elder-edit-form input[type="date"], .post-add-form input[type="date"], .login form input[type="datetime"], .register form input[type="datetime"], .edit-profile form input[type="datetime"], .reset-password form input[type="datetime"], .change-password form input[type="datetime"], .set-password form input[type="datetime"], [class^="errorpage-"] form input[type="datetime"], .activationfailed form input[type="datetime"], .awaiting-activation form input[type="datetime"], .no-students form input[type="datetime"], .pjax-error input[type="datetime"], .group-add-form input[type="datetime"], .group-edit-form input[type="datetime"], .village-add-form input[type="datetime"], .village-edit-form input[type="datetime"], .bulk-signup input[type="datetime"], .dashboard input[type="datetime"], .elder-invite-form input[type="datetime"], .elder-edit-form input[type="datetime"], .post-add-form input[type="datetime"], .login form input[type="datetime-local"], .register form input[type="datetime-local"], .edit-profile form input[type="datetime-local"], .reset-password form input[type="datetime-local"], .change-password form input[type="datetime-local"], .set-password form input[type="datetime-local"], [class^="errorpage-"] form input[type="datetime-local"], .activationfailed form input[type="datetime-local"], .awaiting-activation form input[type="datetime-local"], .no-students form input[type="datetime-local"], .pjax-error input[type="datetime-local"], .group-add-form input[type="datetime-local"], .group-edit-form input[type="datetime-local"], .village-add-form input[type="datetime-local"], .village-edit-form input[type="datetime-local"], .bulk-signup input[type="datetime-local"], .dashboard input[type="datetime-local"], .elder-invite-form input[type="datetime-local"], .elder-edit-form input[type="datetime-local"], .post-add-form input[type="datetime-local"], .login form input[type="month"], .register form input[type="month"], .edit-profile form input[type="month"], .reset-password form input[type="month"], .change-password form input[type="month"], .set-password form input[type="month"], [class^="errorpage-"] form input[type="month"], .activationfailed form input[type="month"], .awaiting-activation form input[type="month"], .no-students form input[type="month"], .pjax-error input[type="month"], .group-add-form input[type="month"], .group-edit-form input[type="month"], .village-add-form input[type="month"], .village-edit-form input[type="month"], .bulk-signup input[type="month"], .dashboard input[type="month"], .elder-invite-form input[type="month"], .elder-edit-form input[type="month"], .post-add-form input[type="month"], .login form input[type="week"], .register form input[type="week"], .edit-profile form input[type="week"], .reset-password form input[type="week"], .change-password form input[type="week"], .set-password form input[type="week"], [class^="errorpage-"] form input[type="week"], .activationfailed form input[type="week"], .awaiting-activation form input[type="week"], .no-students form input[type="week"], .pjax-error input[type="week"], .group-add-form input[type="week"], .group-edit-form input[type="week"], .village-add-form input[type="week"], .village-edit-form input[type="week"], .bulk-signup input[type="week"], .dashboard input[type="week"], .elder-invite-form input[type="week"], .elder-edit-form input[type="week"], .post-add-form input[type="week"], .login form input[type="time"], .register form input[type="time"], .edit-profile form input[type="time"], .reset-password form input[type="time"], .change-password form input[type="time"], .set-password form input[type="time"], [class^="errorpage-"] form input[type="time"], .activationfailed form input[type="time"], .awaiting-activation form input[type="time"], .no-students form input[type="time"], .pjax-error input[type="time"], .group-add-form input[type="time"], .group-edit-form input[type="time"], .village-add-form input[type="time"], .village-edit-form input[type="time"], .bulk-signup input[type="time"], .dashboard input[type="time"], .elder-invite-form input[type="time"], .elder-edit-form input[type="time"], .post-add-form input[type="time"], .login form input[type="number"], .register form input[type="number"], .edit-profile form input[type="number"], .reset-password form input[type="number"], .change-password form input[type="number"], .set-password form input[type="number"], [class^="errorpage-"] form input[type="number"], .activationfailed form input[type="number"], .awaiting-activation form input[type="number"], .no-students form input[type="number"], .pjax-error input[type="number"], .group-add-form input[type="number"], .group-edit-form input[type="number"], .village-add-form input[type="number"], .village-edit-form input[type="number"], .bulk-signup input[type="number"], .dashboard input[type="number"], .elder-invite-form input[type="number"], .elder-edit-form input[type="number"], .post-add-form input[type="number"], .login form input[type="search"], .register form input[type="search"], .edit-profile form input[type="search"], .reset-password form input[type="search"], .change-password form input[type="search"], .set-password form input[type="search"], [class^="errorpage-"] form input[type="search"], .activationfailed form input[type="search"], .awaiting-activation form input[type="search"], .no-students form input[type="search"], .pjax-error input[type="search"], .group-add-form input[type="search"], .group-edit-form input[type="search"], .village-add-form input[type="search"], .village-edit-form input[type="search"], .bulk-signup input[type="search"], .dashboard input[type="search"], .elder-invite-form input[type="search"], .elder-edit-form input[type="search"], .post-add-form input[type="search"], .login form input[type="color"], .register form input[type="color"], .edit-profile form input[type="color"], .reset-password form input[type="color"], .change-password form input[type="color"], .set-password form input[type="color"], [class^="errorpage-"] form input[type="color"], .activationfailed form input[type="color"], .awaiting-activation form input[type="color"], .no-students form input[type="color"], .pjax-error input[type="color"], .group-add-form input[type="color"], .group-edit-form input[type="color"], .village-add-form input[type="color"], .village-edit-form input[type="color"], .bulk-signup input[type="color"], .dashboard input[type="color"], .elder-invite-form input[type="color"], .elder-edit-form input[type="color"], .post-add-form input[type="color"] {
   min-height: 35px;
   min-height: 1.91667rem;
   margin: 0;
 }
-.login form textarea, .register form textarea, .edit-profile form textarea, .reset-password form textarea, .change-password form textarea, .set-password form textarea, .activationfailed form textarea, .awaiting-activation form textarea, .no-students form textarea, [class^="errorpage-"] form textarea, .group-add-form textarea, .group-edit-form textarea, .village-add-form textarea, .village-edit-form textarea, .bulk-signup textarea, .dashboard textarea, .pjax-error textarea, .elder-invite-form textarea, .elder-edit-form textarea, .post-add-form textarea {
+.login form textarea, .register form textarea, .edit-profile form textarea, .reset-password form textarea, .change-password form textarea, .set-password form textarea, [class^="errorpage-"] form textarea, .activationfailed form textarea, .awaiting-activation form textarea, .no-students form textarea, .pjax-error textarea, .group-add-form textarea, .group-edit-form textarea, .village-add-form textarea, .village-edit-form textarea, .bulk-signup textarea, .dashboard textarea, .elder-invite-form textarea, .elder-edit-form textarea, .post-add-form textarea {
   -webkit-transition: 200ms min-height;
   -moz-transition: 200ms min-height;
   -o-transition: 200ms min-height;
@@ -676,7 +687,7 @@ optgroup {
   min-height: 35px;
   min-height: 1.91667rem;
 }
-.login form fieldset, .register form fieldset, .edit-profile form fieldset, .reset-password form fieldset, .change-password form fieldset, .set-password form fieldset, .activationfailed form fieldset, .awaiting-activation form fieldset, .no-students form fieldset, [class^="errorpage-"] form fieldset, .group-add-form fieldset, .group-edit-form fieldset, .village-add-form fieldset, .village-edit-form fieldset, .bulk-signup fieldset, .dashboard fieldset, .pjax-error fieldset, .elder-invite-form fieldset, .elder-edit-form fieldset, .post-add-form fieldset {
+.login form fieldset, .register form fieldset, .edit-profile form fieldset, .reset-password form fieldset, .change-password form fieldset, .set-password form fieldset, [class^="errorpage-"] form fieldset, .activationfailed form fieldset, .awaiting-activation form fieldset, .no-students form fieldset, .pjax-error fieldset, .group-add-form fieldset, .group-edit-form fieldset, .village-add-form fieldset, .village-edit-form fieldset, .bulk-signup fieldset, .dashboard fieldset, .elder-invite-form fieldset, .elder-edit-form fieldset, .post-add-form fieldset {
   -webkit-box-shadow: #073642 0 0 0.25em inset;
   -moz-box-shadow: #073642 0 0 0.25em inset;
   box-shadow: #073642 0 0 0.25em inset;
@@ -687,18 +698,18 @@ optgroup {
   padding: 1.27778rem;
   background: #eee8d5;
 }
-.login form .fieldset-header, .register form .fieldset-header, .edit-profile form .fieldset-header, .reset-password form .fieldset-header, .change-password form .fieldset-header, .set-password form .fieldset-header, .activationfailed form .fieldset-header, .awaiting-activation form .fieldset-header, .no-students form .fieldset-header, [class^="errorpage-"] form .fieldset-header, .group-add-form .fieldset-header, .group-edit-form .fieldset-header, .village-add-form .fieldset-header, .village-edit-form .fieldset-header, .bulk-signup .fieldset-header, .dashboard .fieldset-header, .pjax-error .fieldset-header, .elder-invite-form .fieldset-header, .elder-edit-form .fieldset-header, .post-add-form .fieldset-header {
+.login form .fieldset-header, .register form .fieldset-header, .edit-profile form .fieldset-header, .reset-password form .fieldset-header, .change-password form .fieldset-header, .set-password form .fieldset-header, [class^="errorpage-"] form .fieldset-header, .activationfailed form .fieldset-header, .awaiting-activation form .fieldset-header, .no-students form .fieldset-header, .pjax-error .fieldset-header, .group-add-form .fieldset-header, .group-edit-form .fieldset-header, .village-add-form .fieldset-header, .village-edit-form .fieldset-header, .bulk-signup .fieldset-header, .dashboard .fieldset-header, .elder-invite-form .fieldset-header, .elder-edit-form .fieldset-header, .post-add-form .fieldset-header {
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
 }
-.login form .fieldset-help, .register form .fieldset-help, .edit-profile form .fieldset-help, .reset-password form .fieldset-help, .change-password form .fieldset-help, .set-password form .fieldset-help, .activationfailed form .fieldset-help, .awaiting-activation form .fieldset-help, .no-students form .fieldset-help, [class^="errorpage-"] form .fieldset-help, .group-add-form .fieldset-help, .group-edit-form .fieldset-help, .village-add-form .fieldset-help, .village-edit-form .fieldset-help, .bulk-signup .fieldset-help, .dashboard .fieldset-help, .pjax-error .fieldset-help, .elder-invite-form .fieldset-help, .elder-edit-form .fieldset-help, .post-add-form .fieldset-help {
+.login form .fieldset-help, .register form .fieldset-help, .edit-profile form .fieldset-help, .reset-password form .fieldset-help, .change-password form .fieldset-help, .set-password form .fieldset-help, [class^="errorpage-"] form .fieldset-help, .activationfailed form .fieldset-help, .awaiting-activation form .fieldset-help, .no-students form .fieldset-help, .pjax-error .fieldset-help, .group-add-form .fieldset-help, .group-edit-form .fieldset-help, .village-add-form .fieldset-help, .village-edit-form .fieldset-help, .bulk-signup .fieldset-help, .dashboard .fieldset-help, .elder-invite-form .fieldset-help, .elder-edit-form .fieldset-help, .post-add-form .fieldset-help {
   margin-top: 23px;
   margin-top: 1.27778rem;
   margin-bottom: 12px;
   margin-bottom: 0.63889rem;
   font-style: italic;
 }
-.login form .formfield-help, .register form .formfield-help, .edit-profile form .formfield-help, .reset-password form .formfield-help, .change-password form .formfield-help, .set-password form .formfield-help, .activationfailed form .formfield-help, .awaiting-activation form .formfield-help, .no-students form .formfield-help, [class^="errorpage-"] form .formfield-help, .group-add-form .formfield-help, .group-edit-form .formfield-help, .village-add-form .formfield-help, .village-edit-form .formfield-help, .bulk-signup .formfield-help, .dashboard .formfield-help, .pjax-error .formfield-help, .elder-invite-form .formfield-help, .elder-edit-form .formfield-help, .post-add-form .formfield-help {
+.login form .formfield-help, .register form .formfield-help, .edit-profile form .formfield-help, .reset-password form .formfield-help, .change-password form .formfield-help, .set-password form .formfield-help, [class^="errorpage-"] form .formfield-help, .activationfailed form .formfield-help, .awaiting-activation form .formfield-help, .no-students form .formfield-help, .pjax-error .formfield-help, .group-add-form .formfield-help, .group-edit-form .formfield-help, .village-add-form .formfield-help, .village-edit-form .formfield-help, .bulk-signup .formfield-help, .dashboard .formfield-help, .elder-invite-form .formfield-help, .elder-edit-form .formfield-help, .post-add-form .formfield-help {
   font-size: 14px;
   font-size: 0.77778rem;
   line-height: 23px;
@@ -710,19 +721,19 @@ optgroup {
   font-style: italic;
   text-align: right;
 }
-.login form .formfield-optional, .register form .formfield-optional, .edit-profile form .formfield-optional, .reset-password form .formfield-optional, .change-password form .formfield-optional, .set-password form .formfield-optional, .activationfailed form .formfield-optional, .awaiting-activation form .formfield-optional, .no-students form .formfield-optional, [class^="errorpage-"] form .formfield-optional, .group-add-form .formfield-optional, .group-edit-form .formfield-optional, .village-add-form .formfield-optional, .village-edit-form .formfield-optional, .bulk-signup .formfield-optional, .dashboard .formfield-optional, .pjax-error .formfield-optional, .elder-invite-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional, .login form .fieldset-optional, .register form .fieldset-optional, .edit-profile form .fieldset-optional, .reset-password form .fieldset-optional, .change-password form .fieldset-optional, .set-password form .fieldset-optional, .activationfailed form .fieldset-optional, .awaiting-activation form .fieldset-optional, .no-students form .fieldset-optional, [class^="errorpage-"] form .fieldset-optional, .group-add-form .fieldset-optional, .group-edit-form .fieldset-optional, .village-add-form .fieldset-optional, .village-edit-form .fieldset-optional, .bulk-signup .fieldset-optional, .dashboard .fieldset-optional, .pjax-error .fieldset-optional, .elder-invite-form .fieldset-optional, .elder-edit-form .fieldset-optional, .post-add-form .fieldset-optional {
+.login form .formfield-optional, .register form .formfield-optional, .edit-profile form .formfield-optional, .reset-password form .formfield-optional, .change-password form .formfield-optional, .set-password form .formfield-optional, [class^="errorpage-"] form .formfield-optional, .activationfailed form .formfield-optional, .awaiting-activation form .formfield-optional, .no-students form .formfield-optional, .pjax-error .formfield-optional, .group-add-form .formfield-optional, .group-edit-form .formfield-optional, .village-add-form .formfield-optional, .village-edit-form .formfield-optional, .bulk-signup .formfield-optional, .dashboard .formfield-optional, .elder-invite-form .formfield-optional, .elder-edit-form .formfield-optional, .post-add-form .formfield-optional, .login form .fieldset-optional, .register form .fieldset-optional, .edit-profile form .fieldset-optional, .reset-password form .fieldset-optional, .change-password form .fieldset-optional, .set-password form .fieldset-optional, [class^="errorpage-"] form .fieldset-optional, .activationfailed form .fieldset-optional, .awaiting-activation form .fieldset-optional, .no-students form .fieldset-optional, .pjax-error .fieldset-optional, .group-add-form .fieldset-optional, .group-edit-form .fieldset-optional, .village-add-form .fieldset-optional, .village-edit-form .fieldset-optional, .bulk-signup .fieldset-optional, .dashboard .fieldset-optional, .elder-invite-form .fieldset-optional, .elder-edit-form .fieldset-optional, .post-add-form .fieldset-optional {
   font-size: 14px;
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
   color: #93a1a1;
 }
-.login form .optional-fieldset .formfield-optional, .register form .optional-fieldset .formfield-optional, .edit-profile form .optional-fieldset .formfield-optional, .reset-password form .optional-fieldset .formfield-optional, .change-password form .optional-fieldset .formfield-optional, .set-password form .optional-fieldset .formfield-optional, .activationfailed form .optional-fieldset .formfield-optional, .awaiting-activation form .optional-fieldset .formfield-optional, .no-students form .optional-fieldset .formfield-optional, [class^="errorpage-"] form .optional-fieldset .formfield-optional, .group-add-form .optional-fieldset .formfield-optional, .group-edit-form .optional-fieldset .formfield-optional, .village-add-form .optional-fieldset .formfield-optional, .village-edit-form .optional-fieldset .formfield-optional, .bulk-signup .optional-fieldset .formfield-optional, .dashboard .optional-fieldset .formfield-optional, .pjax-error .optional-fieldset .formfield-optional, .elder-invite-form .optional-fieldset .formfield-optional, .elder-edit-form .optional-fieldset .formfield-optional, .post-add-form .optional-fieldset .formfield-optional {
+.login form .optional-fieldset .formfield-optional, .register form .optional-fieldset .formfield-optional, .edit-profile form .optional-fieldset .formfield-optional, .reset-password form .optional-fieldset .formfield-optional, .change-password form .optional-fieldset .formfield-optional, .set-password form .optional-fieldset .formfield-optional, [class^="errorpage-"] form .optional-fieldset .formfield-optional, .activationfailed form .optional-fieldset .formfield-optional, .awaiting-activation form .optional-fieldset .formfield-optional, .no-students form .optional-fieldset .formfield-optional, .pjax-error .optional-fieldset .formfield-optional, .group-add-form .optional-fieldset .formfield-optional, .group-edit-form .optional-fieldset .formfield-optional, .village-add-form .optional-fieldset .formfield-optional, .village-edit-form .optional-fieldset .formfield-optional, .bulk-signup .optional-fieldset .formfield-optional, .dashboard .optional-fieldset .formfield-optional, .elder-invite-form .optional-fieldset .formfield-optional, .elder-edit-form .optional-fieldset .formfield-optional, .post-add-form .optional-fieldset .formfield-optional {
   position: absolute;
   top: -9999px;
   left: -9999px;
 }
-.login form .form-actions, .register form .form-actions, .edit-profile form .form-actions, .reset-password form .form-actions, .change-password form .form-actions, .set-password form .form-actions, .activationfailed form .form-actions, .awaiting-activation form .form-actions, .no-students form .form-actions, [class^="errorpage-"] form .form-actions, .group-add-form .form-actions, .group-edit-form .form-actions, .village-add-form .form-actions, .village-edit-form .form-actions, .bulk-signup .form-actions, .dashboard .form-actions, .pjax-error .form-actions, .elder-invite-form .form-actions, .elder-edit-form .form-actions, .post-add-form .form-actions {
+.login form .form-actions, .register form .form-actions, .edit-profile form .form-actions, .reset-password form .form-actions, .change-password form .form-actions, .set-password form .form-actions, [class^="errorpage-"] form .form-actions, .activationfailed form .form-actions, .awaiting-activation form .form-actions, .no-students form .form-actions, .pjax-error .form-actions, .group-add-form .form-actions, .group-edit-form .form-actions, .village-add-form .form-actions, .village-edit-form .form-actions, .bulk-signup .form-actions, .dashboard .form-actions, .elder-invite-form .form-actions, .elder-edit-form .form-actions, .post-add-form .form-actions {
   margin-top: 12px;
   margin-top: 0.63889rem;
   padding-top: 0px;
@@ -735,7 +746,7 @@ optgroup {
   clear: both;
   text-align: right;
 }
-.login form .form-actions p, .register form .form-actions p, .edit-profile form .form-actions p, .reset-password form .form-actions p, .change-password form .form-actions p, .set-password form .form-actions p, .activationfailed form .form-actions p, .awaiting-activation form .form-actions p, .no-students form .form-actions p, [class^="errorpage-"] form .form-actions p, .group-add-form .form-actions p, .group-edit-form .form-actions p, .village-add-form .form-actions p, .village-edit-form .form-actions p, .bulk-signup .form-actions p, .dashboard .form-actions p, .pjax-error .form-actions p, .elder-invite-form .form-actions p, .elder-edit-form .form-actions p, .post-add-form .form-actions p {
+.login form .form-actions p, .register form .form-actions p, .edit-profile form .form-actions p, .reset-password form .form-actions p, .change-password form .form-actions p, .set-password form .form-actions p, [class^="errorpage-"] form .form-actions p, .activationfailed form .form-actions p, .awaiting-activation form .form-actions p, .no-students form .form-actions p, .pjax-error .form-actions p, .group-add-form .form-actions p, .group-edit-form .form-actions p, .village-add-form .form-actions p, .village-edit-form .form-actions p, .bulk-signup .form-actions p, .dashboard .form-actions p, .elder-invite-form .form-actions p, .elder-edit-form .form-actions p, .post-add-form .form-actions p {
   font-size: 14px;
   font-size: 0.77778rem;
   line-height: 23px;
@@ -744,7 +755,7 @@ optgroup {
   margin: 0 0.4em 0.63889rem 0;
   display: inline-block;
 }
-.login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, [class^="errorpage-"] form .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .village-add-form .form-actions button, .village-edit-form .form-actions button, .bulk-signup .form-actions button, .dashboard .form-actions button, .pjax-error .form-actions button, .elder-invite-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button {
+.login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, [class^="errorpage-"] form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, .pjax-error .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .village-add-form .form-actions button, .village-edit-form .form-actions button, .bulk-signup .form-actions button, .dashboard .form-actions button, .elder-invite-form .form-actions button, .elder-edit-form .form-actions button, .post-add-form .form-actions button {
   text-transform: capitalize;
 }
 
@@ -1179,6 +1190,9 @@ button {
 }
 
 .initial-password {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -1rem;
   padding-left: 1rem;
   margin-right: -1rem;
@@ -1205,14 +1219,14 @@ button {
   margin-bottom: 1.27778rem;
 }
 
-.login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed, .awaiting-activation, .no-students, [class^="errorpage-"] {
+.login, .register, .edit-profile, .reset-password, .change-password, .set-password, [class^="errorpage-"], .activationfailed, .awaiting-activation, .no-students {
   padding-top: 46px;
   padding-top: 2.55556rem;
   padding-bottom: 46px;
   padding-bottom: 2.55556rem;
 }
 @media (min-width: 43.875em) {
-  .login, .register, .edit-profile, .reset-password, .change-password, .set-password, .activationfailed, .awaiting-activation, .no-students, [class^="errorpage-"] {
+  .login, .register, .edit-profile, .reset-password, .change-password, .set-password, [class^="errorpage-"], .activationfailed, .awaiting-activation, .no-students {
     padding-left: 25.31646%;
     padding-right: 25.31646%;
   }
@@ -1288,6 +1302,7 @@ button {
 
 [role="banner"], [role="contentinfo"] {
   clear: both;
+  color: #c0c4bb;
 }
 [role="banner"] a:link, [role="contentinfo"] a:link, [role="banner"] a:visited, [role="contentinfo"] a:visited {
   color: #fdf6e3;
@@ -1297,25 +1312,12 @@ button {
   color: #e896b2;
   cursor: pointer;
 }
-[role="banner"] ::-webkit-input-placeholder, [role="contentinfo"] ::-webkit-input-placeholder {
-  color: rgba(238, 232, 213, 0.75);
-}
-[role="banner"] :-moz-placeholder, [role="contentinfo"] :-moz-placeholder {
-  color: rgba(238, 232, 213, 0.75);
-}
-[role="banner"] .placeholder, [role="contentinfo"] .placeholder {
-  color: rgba(238, 232, 213, 0.75);
-}
 
-.brand .wordmark, .announcements, .meta span, .meta a, .meta button, .login-nav a {
+.brand .wordmark, .login-nav a, .meta span, .meta a, .meta button, .announcements {
   padding-top: 6px;
   padding-top: 0.31944rem;
   padding-bottom: 6px;
   padding-bottom: 0.31944rem;
-}
-
-[role="banner"] {
-  color: #c0c4bb;
 }
 
 .brand {
@@ -1348,55 +1350,7 @@ button {
   margin-right: 1.26582%;
 }
 
-.announcements {
-  font-size: 14px;
-  font-size: 0.77778rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
-  clear: both;
-  color: inherit;
-}
-.announcements .announce {
-  background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
-  background-color: #268bd2;
-  border-color: #16608a;
-  display: inline-block;
-  padding: 0 .5em;
-}
-.announcements .announce:hover, .announcements .announce:focus {
-  background-color: #3797db;
-}
-.announcements .announce:active {
-  background-color: #268bd2;
-}
-.announcements a:link, .announcements a:visited {
-  color: #f3c8dd;
-}
-.announcements a:focus, .announcements a:hover, .announcements a:active {
-  color: #fcf2f7;
-}
-.announcements .close {
-  margin-left: 1em;
-}
-@media (min-width: 43.875em) {
-  .announcements {
-    width: 54.43038%;
-    float: left;
-    margin-right: 1.26582%;
-    clear: none;
-  }
-}
-.village-app .announcements {
-  width: 54.43038%;
-  float: left;
-  margin-right: 1.26582%;
-  clear: none;
-}
-
-.meta, .login-nav {
+.login-nav, .meta {
   font-size: 14px;
   font-size: 0.77778rem;
   line-height: 23px;
@@ -1408,13 +1362,13 @@ button {
   text-align: right;
 }
 @media (min-width: 43.875em) {
-  .meta, .login-nav {
+  .login-nav, .meta {
     width: 24.05063%;
     float: right;
     margin-right: 0;
   }
 }
-.village-app .meta, .village-app .login-nav {
+.village-app .login-nav, .village-app .meta {
   width: 24.05063%;
   float: right;
   margin-right: 0;
@@ -1453,6 +1407,42 @@ button {
     padding: 0;
     margin-right: .4em;
   }
+}
+
+.login-nav ul {
+  list-style-type: none;
+}
+.login-nav ul, .login-nav ul li {
+  margin: 0px;
+  padding: 0px;
+  display: inline;
+}
+.login-nav a {
+  display: inline-block;
+}
+.login-nav .login-link {
+  border-top-width: 1px;
+  border-top-width: 0.05556rem;
+  border-top-style: solid;
+  padding-top: 2px;
+  padding-top: 0.10417rem;
+  border-bottom-width: 1px;
+  border-bottom-width: 0.05556rem;
+  border-bottom-style: solid;
+  padding-bottom: 2px;
+  padding-bottom: 0.10417rem;
+  background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
+  background-color: #268bd2;
+  border-color: #16608a;
+}
+.login-nav .login-link:hover, .login-nav .login-link:focus {
+  background-color: #3797db;
+}
+.login-nav .login-link:active {
+  background-color: #268bd2;
 }
 
 .meta span, .meta a {
@@ -1506,40 +1496,52 @@ button {
   display: block;
 }
 
-.login-nav ul {
-  list-style-type: none;
+.announcements {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  clear: both;
+  color: inherit;
 }
-.login-nav ul, .login-nav ul li {
-  margin: 0px;
-  padding: 0px;
-  display: inline;
-}
-.login-nav a {
-  display: inline-block;
-}
-.login-nav .login-link {
-  border-top-width: 1px;
-  border-top-width: 0.05556rem;
-  border-top-style: solid;
-  padding-top: 2px;
-  padding-top: 0.10417rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 2px;
-  padding-bottom: 0.10417rem;
+.announcements .announce {
   background: -webkit-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -moz-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: -o-linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background: linear-gradient(top, rgba(55, 151, 219, 0.25), rgba(38, 139, 210, 0), rgba(26, 96, 145, 0.25));
   background-color: #268bd2;
   border-color: #16608a;
+  display: inline-block;
+  padding: 0 .5em;
 }
-.login-nav .login-link:hover, .login-nav .login-link:focus {
+.announcements .announce:hover, .announcements .announce:focus {
   background-color: #3797db;
 }
-.login-nav .login-link:active {
+.announcements .announce:active {
   background-color: #268bd2;
+}
+.announcements a:link, .announcements a:visited {
+  color: #f3c8dd;
+}
+.announcements a:focus, .announcements a:hover, .announcements a:active {
+  color: #fcf2f7;
+}
+.announcements .close {
+  margin-left: 1em;
+}
+@media (min-width: 43.875em) {
+  .announcements {
+    width: 54.43038%;
+    float: left;
+    margin-right: 1.26582%;
+    clear: none;
+  }
+}
+.village-app .announcements {
+  width: 54.43038%;
+  float: left;
+  margin-right: 1.26582%;
+  clear: none;
 }
 
 [role="main"] {
@@ -1549,6 +1551,10 @@ button {
 }
 
 [role="contentinfo"] {
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   margin-top: 0px;
   margin-top: 0rem;
   padding-top: 6px;
@@ -1558,115 +1564,11 @@ button {
   margin-bottom: 0px;
   margin-bottom: 0rem;
 }
-[role="contentinfo"] .wrap {
-  font-size: 12px;
-  font-size: 0.66667rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
-}
 [role="contentinfo"] .author {
   text-transform: uppercase;
 }
 [role="contentinfo"] strong {
   font-weight: bold;
-}
-@media (min-width: 43.875em) {
-  .village-landing [role="contentinfo"] .author {
-    width: 39.24051%;
-    float: left;
-    margin-right: 1.26582%;
-  }
-  .village-landing [role="contentinfo"] .nonprofit {
-    width: 59.49367%;
-    float: right;
-    margin-right: 0;
-    text-align: right;
-  }
-}
-
-.activated {
-  color: #fdf6e3;
-}
-.activated p {
-  width: 100%;
-}
-.activated + form {
-  margin-top: 23px;
-  margin-top: 1.27778rem;
-}
-
-.email_notifications-field {
-  font-size: 14px;
-  font-size: 0.77778rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
-  margin-top: -12px;
-  margin-top: -0.63889rem;
-  font-style: italic;
-}
-.email_notifications-field [type="checkbox"] + .type, .email_notifications-field [type="radio"] + .type {
-  display: inline-block;
-  width: auto;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-}
-
-.fieldset.notifications {
-  margin-top: 23px;
-  margin-top: 1.27778rem;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-}
-.fieldset.notifications [type="checkbox"] + .type, .fieldset.notifications [type="radio"] + .type {
-  display: inline-block;
-  width: auto;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-}
-.fieldset.notifications .fieldset-header {
-  margin-bottom: 12px;
-  margin-bottom: 0.63889rem;
-}
-
-@media (min-width: 43.875em) {
-  .initial-password {
-    margin-left: -51.28205%;
-    padding-left: 51.28205%;
-    margin-right: -51.28205%;
-    padding-right: 51.28205%;
-    padding-top: 23px;
-    padding-top: 1.27778rem;
-  }
-  .initial-password label {
-    padding-left: 1.27778rem;
-  }
-}
-
-.school-field {
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-}
-.school-field .school-name {
-  width: 65.95745%;
-  float: left;
-  margin-right: 2.12766%;
-}
-.school-field .school-zip {
-  width: 31.91489%;
-  float: right;
-  margin-right: 0;
-  text-align: right;
-}
-.school-field .zip {
-  position: absolute;
-  right: 0.31944rem;
-  color: #93a1a1;
-}
-
-.add-school.fieldset {
-  display: none;
 }
 
 .tagline, .feature-title, .dev .fn {
@@ -1964,6 +1866,20 @@ button {
   background-image: url('../images/landing/jonny.png?1351725897');
 }
 
+@media (min-width: 43.875em) {
+  .village-landing [role="contentinfo"] .author {
+    width: 39.24051%;
+    float: left;
+    margin-right: 1.26582%;
+  }
+  .village-landing [role="contentinfo"] .nonprofit {
+    width: 59.49367%;
+    float: right;
+    margin-right: 0;
+    text-align: right;
+  }
+}
+
 .lt-ie9 .village-landing .container {
   max-width: 594px;
   max-width: 33rem;
@@ -1977,6 +1893,190 @@ button {
   display: none;
 }
 .lt-ie9 .login-nav, .lt-ie9 .main-register-link {
+  display: none;
+}
+
+.browser-warning {
+  padding-top: 46px;
+  padding-top: 2.55556rem;
+  padding-bottom: 46px;
+  padding-bottom: 2.55556rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  display: none;
+}
+.lt-ie9 .browser-warning {
+  display: block;
+}
+.browser-warning .modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(7, 54, 66, 0.75);
+  z-index: 10;
+}
+.browser-warning .wrap {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  border-width: 3px;
+  border-width: 0.16667rem;
+  border-style: solid;
+  padding: 20px;
+  padding: 1.11111rem;
+  max-width: 558px;
+  max-width: 31rem;
+  position: relative;
+  margin: 0 auto;
+  background: #fefbf1;
+  color: #657b83;
+  border-color: #cb4b16;
+  z-index: 100;
+}
+.browser-warning img {
+  max-width: 100%;
+  vertical-align: top;
+}
+
+.chrome {
+  padding-left: 25.80645%;
+  padding-right: 25.80645%;
+  margin-top: 12px;
+  margin-top: 0.63889rem;
+}
+.chrome a {
+  display: block;
+}
+
+.browser-details .summary {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  text-align: center;
+  font-style: italic;
+}
+.browser-details .summary, .browser-details .summary:link, .browser-details .summary:visited {
+  color: #268bd2;
+  text-decoration: none;
+}
+.browser-details .summary:focus, .browser-details .summary:hover, .browser-details .summary:active {
+  color: #d33682;
+  cursor: pointer;
+}
+.browser-details .details-body, .browser-details + p {
+  clear: both;
+}
+.browser-details a {
+  display: block;
+}
+
+.browser-list {
+  overflow: hidden;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  text-align: center;
+}
+.browser-list li {
+  width: 30.43478%;
+  float: left;
+  margin-right: 4.34783%;
+}
+.browser-list li + li + li {
+  float: right;
+  margin-right: 0;
+}
+
+.pjax-error p {
+  padding: 1.27778rem;
+}
+
+.activated {
+  color: #fdf6e3;
+}
+.activated p {
+  width: 100%;
+}
+.activated + form {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+}
+
+.email_notifications-field {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin-top: -12px;
+  margin-top: -0.63889rem;
+  font-style: italic;
+}
+.email_notifications-field [type="checkbox"] + .type, .email_notifications-field [type="radio"] + .type {
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.fieldset.notifications {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+.fieldset.notifications [type="checkbox"] + .type, .fieldset.notifications [type="radio"] + .type {
+  display: inline-block;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+.fieldset.notifications .fieldset-header {
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+}
+
+@media (min-width: 43.875em) {
+  .initial-password {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin-left: -51.28205%;
+    padding-left: 51.28205%;
+    margin-right: -51.28205%;
+    padding-right: 51.28205%;
+    padding-top: 23px;
+    padding-top: 1.27778rem;
+  }
+  .initial-password label {
+    padding-left: 1.27778rem;
+  }
+}
+
+.school-field {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+.school-field .school-name {
+  width: 65.95745%;
+  float: left;
+  margin-right: 2.12766%;
+}
+.school-field .school-zip {
+  width: 31.91489%;
+  float: right;
+  margin-right: 0;
+  text-align: right;
+}
+.school-field .zip {
+  position: absolute;
+  right: 0.31944rem;
+  color: #93a1a1;
+}
+
+.add-school.fieldset {
   display: none;
 }
 
@@ -2024,7 +2124,7 @@ button {
   margin-left: 18.98734%;
 }
 
-.village-main, .group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .dashboard, .pjax-error {
+.village-main, .pjax-error, .group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .dashboard {
   position: relative;
   float: left;
   width: 74.60317%;
@@ -2042,16 +2142,16 @@ button {
   position: absolute;
 }
 
-.group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .dashboard, .pjax-error, .elder-invite-form, .elder-edit-form {
+.pjax-error, .group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .dashboard, .elder-invite-form, .elder-edit-form {
   height: 100%;
   padding: 1.27778rem;
   overflow-y: scroll;
 }
-.group-add-form > :last-child, .group-edit-form > :last-child, .village-add-form > :last-child, .village-edit-form > :last-child, .bulk-signup > :last-child, .dashboard > :last-child, .pjax-error > :last-child, .elder-invite-form > :last-child, .elder-edit-form > :last-child {
+.pjax-error > :last-child, .group-add-form > :last-child, .group-edit-form > :last-child, .village-add-form > :last-child, .village-edit-form > :last-child, .bulk-signup > :last-child, .dashboard > :last-child, .elder-invite-form > :last-child, .elder-edit-form > :last-child {
   margin-bottom: 46px;
   margin-bottom: 2.55556rem;
 }
-.group-add-form h2, .group-edit-form h2, .village-add-form h2, .village-edit-form h2, .bulk-signup h2, .dashboard h2, .pjax-error h2, .elder-invite-form h2, .elder-edit-form h2 {
+.pjax-error h2, .group-add-form h2, .group-edit-form h2, .village-add-form h2, .village-edit-form h2, .bulk-signup h2, .dashboard h2, .elder-invite-form h2, .elder-edit-form h2 {
   font-size: 35px;
   font-size: 1.94444rem;
   line-height: 46px;
@@ -2061,7 +2161,7 @@ button {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-.group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .dashboard, .pjax-error {
+.pjax-error, .group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .dashboard {
   width: 74.60317%;
   float: right;
   margin-right: 0;
@@ -2092,7 +2192,7 @@ button {
   margin-left: 0;
 }
 
-.active.additem-link:link, .active.addelder-link:link, .active.listitem-select:link, .elder .active.vcard:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:visited, .elder .active.vcard:visited, .active.additem-link:focus, .active.addelder-link:focus, .active.listitem-select:focus, .elder .active.vcard:focus, .active.additem-link:hover, .active.addelder-link:hover, .active.listitem-select:hover, .elder .active.vcard:hover, .active.additem-link:active, .active.addelder-link:active, .active.listitem-select:active, .elder .active.vcard:active {
+.active.additem-link, .active.addelder-link, .active.listitem-select, .elder .active.vcard, .active.additem-link:link, .active.addelder-link:link, .active.listitem-select:link, .elder .active.vcard:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:visited, .elder .active.vcard:visited, .active.additem-link:focus, .active.addelder-link:focus, .active.listitem-select:focus, .elder .active.vcard:focus, .active.additem-link:hover, .active.addelder-link:hover, .active.listitem-select:hover, .elder .active.vcard:hover, .active.additem-link:active, .active.addelder-link:active, .active.listitem-select:active, .elder .active.vcard:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -2100,7 +2200,7 @@ button {
   color: #fdf6e3;
 }
 
-.additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
+.additem-link, .addelder-link, .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
   color: #657b83;
   background: rgba(133, 153, 0, 0.375);
   font-weight: bold;
@@ -2345,6 +2445,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .pdf-instructions .one-line {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -1.27778rem;
   padding-left: 1.27778rem;
   margin-right: -1.27778rem;
@@ -2505,6 +2608,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .listitem-select, .additem-link {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -1rem;
   padding-left: 1rem;
   display: block;
@@ -2523,6 +2629,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .nav-error, .remove-error {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -1rem;
   padding-left: 1rem;
 }
@@ -2546,12 +2655,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-.title .listitem-select:link, .title .listitem-select:visited {
+.title .listitem-select, .title .listitem-select:link, .title .listitem-select:visited {
   color: #073642;
   background: rgba(38, 139, 210, 0.25);
   font-weight: bold;
 }
-.title .listitem-select:link.active, .title .listitem-select:visited.active {
+.title .listitem-select.active, .title .listitem-select:link.active, .title .listitem-select:visited.active {
   background: #93a1a1;
   color: #fdf6e3;
 }
@@ -2638,7 +2747,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .listitem-actions a, .listitem-actions button {
   margin-left: 0.63889rem;
 }
-.listitem-actions a, .listitem-actions a:link, .listitem-actions a:visited, .listitem-actions button, .listitem-actions button:link, .listitem-actions button:visited {
+.listitem-actions a, .listitem-actions a, .listitem-actions a:link, .listitem-actions a:visited, .listitem-actions button, .listitem-actions button, .listitem-actions button:link, .listitem-actions button:visited {
   color: #fdf6e3;
   text-decoration: none;
 }
@@ -2842,6 +2951,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: #fdf4f3;
 }
 .post .timeout {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -2.12766%;
   padding-left: 2.12766%;
   margin-right: -2.12766%;
@@ -2887,6 +2999,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-right: .2em;
 }
 .sms-info .details-body {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -2.12766%;
   padding-left: 2.12766%;
   margin-right: -2.12766%;
@@ -3011,17 +3126,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   cursor: default;
 }
 
-.nav-error, .remove-error, .post .timeout, .feed-error, .pjax-error p {
-  background: #dc322f;
-  color: #fdf6e3;
-}
-.nav-error a, .remove-error a, .post .timeout a, .feed-error a, .pjax-error p a, .nav-error a:link, .remove-error a:link, .post .timeout a:link, .feed-error a:link, .pjax-error p a:link, .nav-error a:visited, .remove-error a:visited, .post .timeout a:visited, .feed-error a:visited, .pjax-error p a:visited {
-  color: #b1d0dd;
-}
-.nav-error a:focus, .remove-error a:focus, .post .timeout a:focus, .feed-error a:focus, .pjax-error p a:focus, .nav-error a:hover, .remove-error a:hover, .post .timeout a:hover, .feed-error a:hover, .pjax-error p a:hover, .nav-error a:active, .remove-error a:active, .post .timeout a:active, .feed-error a:active, .pjax-error p a:active {
-  color: #eeb2c1;
-}
-
 .feed-error {
   padding: 1.27778rem;
 }
@@ -3038,6 +3142,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .elders-title, .elder .vcard {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -1rem;
   padding-left: 1rem;
   margin-right: -1rem;
@@ -3116,6 +3223,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .addelder-link {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
   margin-left: -1rem;
   padding-left: 1rem;
   margin-right: -1rem;
@@ -3129,100 +3239,4 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   padding-left: 1rem;
   border-color: #93a1a1;
   border-width: 1px 0;
-}
-
-.pjax-error p {
-  padding: 1.27778rem;
-}
-
-.browser-warning {
-  padding-top: 46px;
-  padding-top: 2.55556rem;
-  padding-bottom: 46px;
-  padding-bottom: 2.55556rem;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  display: none;
-}
-.lt-ie9 .browser-warning {
-  display: block;
-}
-.browser-warning .modal {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(7, 54, 66, 0.75);
-  z-index: 10;
-}
-.browser-warning .wrap {
-  margin-top: 23px;
-  margin-top: 1.27778rem;
-  border-width: 3px;
-  border-width: 0.16667rem;
-  border-style: solid;
-  padding: 20px;
-  padding: 1.11111rem;
-  max-width: 558px;
-  max-width: 31rem;
-  position: relative;
-  margin: 0 auto;
-  background: #fefbf1;
-  color: #657b83;
-  border-color: #cb4b16;
-  z-index: 100;
-}
-.browser-warning img {
-  max-width: 100%;
-  vertical-align: top;
-}
-
-.chrome {
-  padding-left: 25.80645%;
-  padding-right: 25.80645%;
-  margin-top: 12px;
-  margin-top: 0.63889rem;
-}
-.chrome a {
-  display: block;
-}
-
-.browser-details .summary {
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-  text-align: center;
-  font-style: italic;
-}
-.browser-details .summary, .browser-details .summary, .browser-details .summary:link, .browser-details .summary:visited {
-  color: #268bd2;
-  text-decoration: none;
-}
-.browser-details .summary:focus, .browser-details .summary:hover, .browser-details .summary:active {
-  color: #d33682;
-  cursor: pointer;
-}
-.browser-details .details-body, .browser-details + p {
-  clear: both;
-}
-.browser-details a {
-  display: block;
-}
-
-.browser-list {
-  overflow: hidden;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-  text-align: center;
-}
-.browser-list li {
-  width: 30.43478%;
-  float: left;
-  margin-right: 4.34783%;
-}
-.browser-list li + li + li {
-  float: right;
-  margin-right: 0;
 }
