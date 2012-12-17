@@ -40,7 +40,7 @@ class ProfileAuthorization(PortfoliyoAuthorization):
         """Only allow users to see same-school or related profiles."""
         same_school = Q(school=request.user.profile.school_id)
         my_student = Q(relationships_to__from_profile=request.user.profile)
-        return object_list.filter(same_school | my_student)
+        return object_list.filter(same_school | my_student).distinct()
 
 
 
