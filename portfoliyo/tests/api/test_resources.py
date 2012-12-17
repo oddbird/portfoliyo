@@ -135,7 +135,10 @@ class TestProfileResource(object):
 
         response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
 
-        assert response.json['objects'][0]['unread_count'] == 1
+        assert [
+            o for o in response.json['objects']
+            if o['id'] == rel.student.id
+            ][0]['unread_count'] == 1
 
 
     def test_edit_student_uri(self, no_csrf_client, db):
