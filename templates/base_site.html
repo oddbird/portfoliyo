@@ -26,6 +26,13 @@
         <li><form action="{% url 'logout' %}" method="POST" class="signout" id="logoutform">{% csrf_token %}<button type="submit">Sign Out</button></form></li>
       </ul>
     </nav>
+    {% else %}
+    <nav class="login-nav">
+      <ul>
+        <li><a href="{% url 'register' %}" class="register-link">Get Started</a> or</li>
+        <li><a href="{% url 'login' %}" class="login-link">Login</a></li>
+      </ul>
+    </nav>
     {% endif %}
     {% endblock metanav %}
 
