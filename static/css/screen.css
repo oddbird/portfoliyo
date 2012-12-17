@@ -1,7 +1,7 @@
-/*
-  Mixins are slightly modified from Benjamin Doherty's first implementations: http://gist.github.com/377912
-  rgba-background mixin can now be passed an option $dir variable
-*/
+[id*="english"], [id*="spanish"] {
+  display: none;
+}
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -473,10 +473,9 @@ optgroup {
   border-style: solid;
   padding: 5px;
   padding: 0.26389rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
-  background: rgba(255, 255, 255, 0.25);
   width: 100%;
   color: inherit;
+  background: rgba(255, 255, 255, 0.25);
   border-color: inherit;
   vertical-align: top;
   outline: 0;
@@ -812,10 +811,9 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  background: url('../images/rgbapng/ffffff40.png?1351286363');
-  background: rgba(255, 255, 255, 0.25);
   max-height: 184px;
   max-height: 10.22222rem;
+  background: rgba(255, 255, 255, 0.25);
   border: 1px solid;
 }
 .school-field .radio-options .option .type, .students-field .check-options .option .type, .elders-field .check-options .option .type, .groups-field .check-options .option .type {
@@ -838,7 +836,6 @@ button {
 }
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
-  background: url('../images/rgbapng/268bd220.png?1352840797');
   background: rgba(38, 139, 210, 0.125);
   font-weight: bold;
 }
@@ -852,13 +849,12 @@ button {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  background: url('../images/rgbapng/ffffff7f.png?1352840797');
-  background: rgba(255, 255, 255, 0.5);
   position: relative;
   padding: 0 1.4em 0 .4em;
   min-width: 15rem;
-  border: 1px solid #93a1a1;
   color: inherit;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid #93a1a1;
 }
 .ui-multiselect:before {
   position: absolute;
@@ -866,7 +862,6 @@ button {
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
-  background: url('../images/rgbapng/ffffffbf.png?1352840797');
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -880,7 +875,6 @@ button {
   -moz-box-shadow: 0px 0px 5px #333333;
   box-shadow: 0px 0px 5px #333333;
   position: relative;
-  background: #657b83;
   position: absolute;
   right: 0;
   bottom: 100%;
@@ -888,23 +882,15 @@ button {
   background: #fdf6e3;
   z-index: 900;
 }
-.ui-multiselect-menu:after, .ui-multiselect-menu:before {
-  top: 100%;
-  border: solid transparent;
+.ui-multiselect-menu:before {
   content: " ";
+  position: absolute;
   height: 0;
   width: 0;
-  position: absolute;
+  border: solid transparent;
   pointer-events: none;
-}
-.ui-multiselect-menu:after {
+  top: 100%;
   border-top-color: #657b83;
-  border-width: 0.5em;
-  left: 50%;
-  margin-left: -0.5em;
-}
-.ui-multiselect-menu:before {
-  border-top-color: false;
   border-width: 0.5em;
   left: 50%;
   margin-left: -0.5em;
@@ -1167,19 +1153,6 @@ button {
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
   font-weight: bold;
-}
-
-#english-toggle:checked ~ [for="english-toggle"], #spanish-toggle:checked ~ [for="spanish-toggle"] {
-  font-weight: bold;
-}
-
-.pdf-previews .tab-content {
-  display: none;
-}
-.pdf-previews .tab-toggle {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
 }
 
 .initial-password {
@@ -1474,7 +1447,6 @@ button {
 
 .useractions {
   position: relative;
-  background: #586e75;
   -webkit-box-shadow: #073642 0 0 9px;
   -moz-box-shadow: #073642 0 0 9px;
   box-shadow: #073642 0 0 9px;
@@ -1489,23 +1461,15 @@ button {
   z-index: 900;
   display: none;
 }
-.useractions:after, .useractions:before {
-  bottom: 100%;
-  border: solid transparent;
+.useractions:before {
   content: " ";
+  position: absolute;
   height: 0;
   width: 0;
-  position: absolute;
+  border: solid transparent;
   pointer-events: none;
-}
-.useractions:after {
+  bottom: 100%;
   border-bottom-color: #586e75;
-  border-width: 0.63889rem;
-  left: 50%;
-  margin-left: -0.63889rem;
-}
-.useractions:before {
-  border-bottom-color: false;
   border-width: 0.63889rem;
   left: 50%;
   margin-left: -0.63889rem;
@@ -1797,10 +1761,10 @@ button {
   border-top-style: solid;
   padding-top: 11px;
   padding-top: 0.61111rem;
-  -moz-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1352840797') 100% 0 repeat;
+  -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
+  border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
   padding-bottom: 23px;
   padding-bottom: 1.27778rem;
   clear: both;
@@ -1848,7 +1812,7 @@ button {
 
 @media (min-width: 43.875em) {
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1352840797') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1355774663') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1859,7 +1823,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1352840797') no-repeat scroll left 85%;
+    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1870,7 +1834,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1352840797') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1899,7 +1863,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1352840797') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1960,19 +1924,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1352840797');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1352840797');
+  background-image: url('../images/landing/carl.png?1351725897');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1352840797');
+  background-image: url('../images/landing/eric.png?1351725897');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1352840797');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 .lt-ie9 .village-landing .container {
@@ -2326,12 +2290,16 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   max-height: 5.11111rem;
 }
 
-#english-toggle:checked ~ .english-content {
+[class*="english"], [class*="spanish"] {
+  display: none;
+}
+
+[id*="english"]:checked ~ [class*="english"], [id*="spanish"]:checked ~ [class*="spanish"] {
   display: block;
 }
 
-#spanish-toggle:checked ~ .spanish-content {
-  display: block;
+[id*="english"]:checked ~ [for*="english"], [id*="spanish"]:checked ~ [for*="spanish"] {
+  font-weight: bold;
 }
 
 .pdf-instructions .one-line {
@@ -2362,7 +2330,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: #073642 0 0 0.31944rem inset;
   box-shadow: #073642 0 0 0.31944rem inset;
   position: relative;
-  background: url('../images/handmadepaper.png?1353558027') repeat scroll;
+  background: url('../images/handmadepaper.png?1353558228') repeat scroll;
 }
 .pdf-previews .tab-title {
   font-size: 14px;
@@ -2375,7 +2343,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: inline-block;
   padding: 0.15972rem 0.63889rem;
 }
-.pdf-previews #english-toggle:checked ~ [for="english-toggle"], .pdf-previews #spanish-toggle:checked ~ [for="spanish-toggle"] {
+.pdf-previews [id*="english"]:checked ~ [for*="english"], .pdf-previews [id*="spanish"]:checked ~ [for*="spanish"] {
   background: rgba(7, 54, 66, 0.25);
   font-weight: normal;
 }
@@ -2608,28 +2576,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 
 .listitem-actions {
   position: relative;
-  background: #002b36;
-}
-.listitem-actions:after, .listitem-actions:before {
-  right: 100%;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-}
-.listitem-actions:after {
-  border-right-color: #002b36;
-  border-width: 0.31944rem;
-  top: 50%;
-  margin-top: -0.31944rem;
 }
 .listitem-actions:before {
-  border-right-color: false;
-  border-width: 0.31944rem;
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  right: 100%;
+  border-right-color: #002b36;
+  border-width: 0.375rem;
   top: 50%;
-  margin-top: -0.31944rem;
+  margin-top: -0.375rem;
 }
 .listitem-actions form {
   display: inline;
@@ -2760,6 +2719,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
   border-radius: 0.25em;
+  position: relative;
   -webkit-box-shadow: #073642 0 0 0.25em;
   -moz-box-shadow: #073642 0 0 0.25em;
   box-shadow: #073642 0 0 0.25em;
@@ -2771,22 +2731,28 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-style: italic;
   counter-increment: howto;
 }
+[class^="howto-"]:before, [class^="howto-"]:after {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  top: 100%;
+  border-top-color: #fefbf1;
+  border-width: 9px;
+  left: 50%;
+  margin-left: -9px;
+}
+[class^="howto-"]:before {
+  border-width: 11.25px;
+  border-top-color: #cb4b16;
+  margin-left: -11.25px;
+}
 [class^="howto-"]:first-child {
   float: left;
 }
-[class^="howto-"]:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  height: 0;
-  width: 0;
-  margin-left: -0.31944rem;
-  border: 0.63889rem solid rgba(203, 75, 22, 0);
-  border-top-color: #cb4b16;
-}
-[class^="howto-"]:before {
+[class^="howto-"] p:before {
   -webkit-border-radius: 8em;
   -moz-border-radius: 8em;
   border-radius: 8em;
@@ -2886,31 +2852,21 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-bottom: 6px;
   margin-bottom: 0.31944rem;
   position: relative;
-  background: #93a1a1;
   display: none;
   background: #93a1a1;
   color: #fdf6e3;
 }
-.sms-info .details-body:after, .sms-info .details-body:before {
-  top: 100%;
-  border: solid transparent;
+.sms-info .details-body:before {
   content: " ";
+  position: absolute;
   height: 0;
   width: 0;
-  position: absolute;
+  border: solid transparent;
   pointer-events: none;
-}
-.sms-info .details-body:after {
+  top: 100%;
   border-top-color: #93a1a1;
   border-width: 0.375em;
-  left: 50%;
-  margin-left: -0.375em;
-}
-.sms-info .details-body:before {
-  border-top-color: false;
-  border-width: 0.375em;
-  left: 50%;
-  margin-left: -0.375em;
+  left: 2.12766%;
 }
 .sms-info .details-body:after {
   left: 2.12766%;
@@ -3152,13 +3108,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: block;
 }
 .browser-warning .modal {
-  background: url('../images/rgbapng/073642bf.png?1352840797');
-  background: rgba(7, 54, 66, 0.75);
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  background: rgba(7, 54, 66, 0.75);
   z-index: 10;
 }
 .browser-warning .wrap {

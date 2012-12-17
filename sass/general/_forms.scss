@@ -26,9 +26,9 @@ $input-rhythm: .25;
   @include sans;
   @include adjust-font-size-to($input-font-size);
   @include rhythm-borders(1px,$input-rhythm,$input-font-size);
-  @include rgba-background(rgba(white,.25));
   width: 100%;
   color: inherit;
+  background: rgba(white,.25);
   border-color: inherit;
   vertical-align: top;
   outline: 0;
@@ -311,8 +311,8 @@ button { @include reset-button; }
 %check-options {
   @extend %check-options-base;
   @include adjust-font-size-to($input-font-size);
-  @include rgba-background(rgba(white,.25));
   @include rem(max-height, rhythm(8,$input-font-size));
+  background: rgba(white,.25);
   border: 1px solid;
   .option {
     @extend %check-option;
@@ -334,7 +334,7 @@ button { @include reset-button; }
 }
 
 %options-checked {
-  @include rgba-background(rgba($blue,.125));
+  background: rgba($blue,.125);
   font-weight: bold;
 }
 
@@ -355,26 +355,26 @@ button { @include reset-button; }
   @extend %icon;
   @extend %icon-arrow-down;
   @include border-radius(3px);
-  @include rgba-background(rgba(white,.5));
   position: relative;
   padding: 0 1.4em 0 .4em;
   min-width: columns-width(4);
-  border: 1px solid $base1;
   color: inherit;
+  background: rgba(white,.5);
+  border: 1px solid $base1;
   &:before {
     position: absolute;
     right: 0;
     margin: 0;
   }
   #{$focus} {
-    @include rgba-background(rgba(white,.75));
+    background: rgba(white,.75);
   }
 }
 
 .ui-multiselect-menu {
   @include rhythm-borders(1px,.25);
   @include box-shadow;
-  @include css-arrow(bottom, .5em, $base);
+  @include arrow(bottom .5em $base);
   position: absolute;
   right: 0;
   bottom: 100%;

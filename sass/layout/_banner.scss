@@ -136,7 +136,7 @@ $useraction-border-color  : $back;
 $useraction-background    : $base01;
 
 .useractions {
-  @include css-arrow(top, rhythm(.5), $useraction-background);
+  @include arrow(top rhythm(.5) $useraction-background);
   @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
   @include stretch-x;
   top: 100%;

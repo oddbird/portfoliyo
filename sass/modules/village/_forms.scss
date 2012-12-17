@@ -108,7 +108,8 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 .group-add-form, .group-edit-form { @extend %village-solo-page; }
 .village-add-form, .village-edit-form { @extend %village-solo-page; }
 
-@include establish-tabs(english spanish);
+@include tab-defaults;
+@include tabs(english spanish);
 
 .pdf-instructions {
   @extend %type;
