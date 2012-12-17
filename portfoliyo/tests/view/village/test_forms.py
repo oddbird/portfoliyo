@@ -136,7 +136,7 @@ class TestEditFamilyForm(object):
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == '+17894561234'
         assert sms.outbox[0].body == (
-            "Hi! Jimmy Doe's Math Teacher Teacher John "
+            "Hi! Jimmy Doe's Math Teacher, Teacher John, "
             "will text you from this number. "
             "Text 'stop' any time if you don't want this."
             )
@@ -478,7 +478,7 @@ class TestInviteFamilyForm(object):
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == u'+13214567890'
         assert sms.outbox[0].body == (
-            "Hi! Jimmy Doe's Math Teacher Teacher John "
+            "Hi! Jimmy Doe's Math Teacher, Teacher John, "
             "will text you from this number. "
             "Text 'stop' any time if you don't want this."
             )
@@ -499,6 +499,7 @@ class TestInviteFamilyForm(object):
         profile = form.save()
 
         assert profile.phone == u'+13214567890'
+        assert profile.name == "Jane Doe"
         assert not profile.school_staff
 
 
@@ -568,7 +569,7 @@ class TestInviteFamilyForm(object):
         assert len(sms.outbox) == 1
         assert sms.outbox[0].to == u'+13216541234'
         assert sms.outbox[0].body == (
-            "Hi! Jimmy Doe's Math Teacher Teacher John "
+            "Hi! Jimmy Doe's Math Teacher, Teacher John, "
             "will text you from this number. "
             "Text 'stop' any time if you don't want this."
             )

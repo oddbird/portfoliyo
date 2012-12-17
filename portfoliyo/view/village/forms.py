@@ -216,12 +216,14 @@ class InviteFamilyForm(FamilyForm):
 
         inviter = self.rel.elder
 
+        name = self.cleaned_data.get('name')
         phone = self.cleaned_data.get('phone')
         relationship = self.cleaned_data.get('role', u"")
 
         if self.instance is None:
             self.instance = model.Profile.create_with_user(
                 school=inviter.school,
+                name=name,
                 phone=phone,
                 role=relationship,
                 is_active=True,
