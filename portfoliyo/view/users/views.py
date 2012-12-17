@@ -15,8 +15,6 @@ from django.utils.http import base36_to_int
 from django.views.decorators.http import require_POST
 
 from ratelimit.decorators import ratelimit
-from registration import views as registration_views
-from registration import signals as registration_signals
 from session_csrf import anonymous_csrf
 
 from portfoliyo import model, invites
