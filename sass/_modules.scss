@@ -1,0 +1,13 @@
+// ---------------------------------------------------------------------------
+// Landing Page
+
+@include capture-and-set-legacy-ie(false, false, true);
+@import "modules/landing";
+@include set-legacy-ie-support($legacy-ie-matrix...);
+
+// ---------------------------------------------------------------------------
+// Modules
+
+@import "modules/errors";
+@import "modules/users";
+@import "modules/village";

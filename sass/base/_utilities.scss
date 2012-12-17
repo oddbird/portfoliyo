@@ -12,16 +12,3 @@
   top: auto;
   left: auto;
 }
-
-// ----------------------------------------------------------------------------
-// images
-
-@function image-rhythm($image, $font-size: $base-font-size) {
-  @return rhythm(ceil(image-height($image) / $base-line-height), $font-size);
-}
-
-@mixin rhythm-image($image, $font-size) {
-  background-image: image-url($image);
-  @include rem(height, image-rhythm($image, $font-size));
-  @include rem(width, image-width($image));
-}

@@ -1,0 +1,7 @@
+// ---------------------------------------------------------------------------
+// Error Pages
+
+[class^="errorpage-"] {
+  @extend %simple-page;
+  @extend %type;
+}
