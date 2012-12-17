@@ -114,7 +114,8 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 .group-add-form, .group-edit-form { @extend %village-solo-page; }
 .village-add-form, .village-edit-form, .bulk-signup { @extend %village-solo-page; }
 
-@include establish-tabs(english spanish);
+@include tab-defaults;
+@include tabs(english spanish);
 
 .pdf-instructions {
   @extend %type;
@@ -128,7 +129,6 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 }
 
 .pdf-previews {
-  @extend %radio-tabs;
   @include leader;
   @include rhythm-borders(1px,1);
   @include box-shadow($back 0 0 rhythm(.25) inset);

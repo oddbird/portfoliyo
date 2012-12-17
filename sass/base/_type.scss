@@ -24,7 +24,7 @@ $focus  :   "&:focus, &:hover, &:active";
   #{$link}, #{$focus} { color: inherit; }
 }
 
-@mixin camolink {
+@mixin camo-link {
   #{$link} { color: inherit; }
   #{$focus} { color: $accent; }
 }

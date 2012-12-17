@@ -1,0 +1,51 @@
+// ---------------------------------------------------------------------------
+// Selected Text
+
+@mixin selected-text {
+  ::-webkit-selection { @content; }
+  ::-moz-selection { @content; }
+  ::selection { @content; }
+}
+
+@include selected-text {
+  color: contrast-color($alt);
+  background: $alt;
+  text-shadow: none;
+}
+
+// ---------------------------------------------------------------------------
+// Links
+
+@mixin link($light: false, $non-links: false) {
+  $color  : if($light, $base3, $alt);
+  $hover  : if($light, mix($base3,$accent), $accent);
+  $link   : if($non-links, '&, ' + $link, $link);
+  #{$link} {
+    color: $color;
+    text-decoration: none;
+  }
+  #{$focus} {
+    color: $hover;
+    cursor: pointer;
+  }
+}
+
+a {
+  &:hover, &:active { outline: none; }
+  @include link;
+}
+
+// ---------------------------------------------------------------------------
+// Images
+
+%img {
+  @include box-shadow($back 0 0 .125em);
+  max-width: 100%;
+  border: 1px solid $back;
+}
+
+// ---------------------------------------------------------------------------
+// Summary/Details
+
+.details > .summary { cursor: pointer; }
+
