@@ -51,5 +51,5 @@ DEPENDENCIES
   compass!
   modular-scale (~> 1.0.2)
   rb-fsevent (~> 0.9.1)
-  sass (~> 3.2.1)
+  sass (~> 3.2.3)
   susy!
