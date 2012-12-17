@@ -77,6 +77,7 @@
         $('body').on('successful-post', sel, function (e, data) {
             data.massText = !data.studentId;
             mixpanel.track('posted', data);
+            mixpanel.people.increment('posts');
         });
     };
 
