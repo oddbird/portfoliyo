@@ -1,10 +1,10 @@
 """Selenium tests for home page."""
-from .pages.login import LoginPage
+from .pages import login
 
 
 
 def test_login_and_logout(selenium, teacher):
-    login_pg = LoginPage(selenium)
+    login_pg = login.LoginPage(selenium)
 
     login_pg.go_to_login_page()
 

@@ -1,10 +1,10 @@
 from selenium.webdriver.common.by import By
 
-from .base import BasePage
+from . import base
 
 
 
-class HomePage(BasePage):
+class HomePage(base.BasePage):
 
     page_title = 'Portfoliyo'
 

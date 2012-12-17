@@ -1,11 +1,12 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 
-from .base import BasePage
+from . import base
+from . import home
 
 
 
-class LoginPage(BasePage):
+class LoginPage(base.BasePage):
 
     page_title = 'Portfoliyo'
 
@@ -26,5 +27,4 @@ class LoginPage(BasePage):
         WebDriverWait(self.selenium, self.timeout).until(
             lambda s: self.is_user_logged_in)
 
-        from .home import HomePage
-        return HomePage(self.selenium)
+        return home.HomePage(self.selenium)

@@ -1,11 +1,11 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
-from .page import Page
+from . import page
 
 
 
-class BasePage(Page):
+class BasePage(page.Page):
     """Base class for all PYO Pages."""
     user_name_locator = (By.CSS_SELECTOR, '.meta .settingslink')
     logout_locator = (By.CSS_SELECTOR, '#logoutform > button')
@@ -30,5 +30,5 @@ class BasePage(Page):
         WebDriverWait(self.selenium, self.timeout).until(
             lambda s: logout.is_displayed())
         logout.click()
-        from .home import HomePage
-        return HomePage(self.selenium)
+        from . import home
+        return home.HomePage(self.selenium)
