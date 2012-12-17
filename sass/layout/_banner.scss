@@ -3,12 +3,8 @@
 
 $banner-size    : $smallpx;
 $banner-rhythm  : .25;
-$banner-leading : 1 + $banner-rhythm*2;
 
-%banner-item {
-  @include padding-leader($banner-rhythm);
-  @include padding-trailer($banner-rhythm);
-}
+%banner-item { @include rhythm-padding($banner-rhythm); }
 
 // ---------------------------------------------------------------------------
 // Banner
@@ -143,7 +139,7 @@ $useraction-border-color  : $back;
 $useraction-background    : $base01;
 
 .useractions {
-  @include css-arrow(top, rhythm(.5), $useraction-background);
+  @include arrow(top rhythm(.5) $useraction-background);
   @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
   @include stretch-x;
   top: 100%;

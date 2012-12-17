@@ -76,6 +76,7 @@ $instruction-height: rhythm(5.5);
 [class^="howto-"] {
   @include rhythm-borders(1px,.75);
   @include border-radius(.25em);
+  @include arrow(bottom $base-size/2 $background, 1.5px $orange);
   @include box-shadow($back 0 0 .25em);
   position: relative;
   float: right;
@@ -85,19 +86,7 @@ $instruction-height: rhythm(5.5);
   font-style: italic;
   counter-increment: howto;
   &:first-child { float: left; }
-  &:after {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    height: 0;
-    width: 0;
-    margin-left: rhythm(-.25);
-    border: rhythm(.5) solid rgba($orange,0);
-    border-top-color: $orange;
-  }
-  &:before {
+  p:before {
     @include border-radius(8em);
     content: counter(howto,decimal);
     position: absolute;
@@ -170,7 +159,7 @@ $instruction-height: rhythm(5.5);
   .details-body {
     @include bleed($post-h-padding);
     @include trailer($post-v-padding);
-    @include css-arrow(bottom, .375em, $base1);
+    @include arrow(bottom $post-h-padding .375em $base1);
     display: none;
     background: $base1;
     color: $base3;
