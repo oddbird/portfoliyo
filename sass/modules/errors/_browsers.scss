@@ -1,20 +1,4 @@
 // ---------------------------------------------------------------------------
-// Error Pages
-
-[class^="errorpage-"] {
-  @extend %simple-page;
-  @extend %type;
-}
-
-.pjax-error {
-  @extend %village-solo-page;
-  p {
-    @extend %error;
-    padding: rhythm(1);
-  }
-}
-
-// ---------------------------------------------------------------------------
 // IE Warning
 
 .browser-warning {
@@ -74,5 +58,3 @@
   li { @include span-columns(2,6); }
   li + li + li { @include omega; }
 }
-
-

@@ -10,6 +10,6 @@
 %boilerplate {
   @extend %container;
   clear: both;
+  color: mix($base1,$base2);
   a { @include link(light); }
-  @include placeholder { color: rgba($base2,.75); }
 }

@@ -1,0 +1,106 @@
+// ---------------------------------------------------------------------------
+// Meta
+
+%metanav-base {
+  @include adjust-font-size-to($banner-size);
+  @include span-columns(5 omega);
+  @include at-breakpoint($break) { @include span-columns($meta-width omega); }
+  .village-app & { @include span-columns($meta-width omega, $break-cols); }
+  position: relative;
+  text-align: right;
+}
+
+// ---------------------------------------------------------------------------
+// Help Link
+
+.helplink {
+  @extend %icon-replace;
+  @extend %icon-help;
+  @extend %button;
+  @include button-color($orange);
+  @include leader($banner-rhythm/2, $banner-size);
+  line-height: 1em;
+  float: right;
+  margin-left: 1em;
+  padding: 0 .5em;
+
+  @include box-sizing(content-box);
+  @include at-breakpoint($break) {
+    text-indent: 0;
+    width: auto;
+    &:before {
+      position: static;
+      padding: 0;
+      margin-right: .4em;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Login Meta
+
+.login-nav {
+  @extend %metanav-base;
+  ul { @include inline-list; }
+  a {
+    @extend %banner-item;
+    display: inline-block;
+  }
+
+  .login-link {
+    @extend %button;
+    @include small-button;
+    @include button-color($blue);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Account Meta
+
+.meta {
+  @extend %metanav-base;
+
+  span, a {
+    @extend %icon;
+    @extend %icon-settings;
+    @extend %banner-item;
+    display: block;
+  }
+
+  .settingslink { @extend %ellipsis; }
+
+  [href*="edit"] { @extend %icon-settings; }
+  [href*="password"] { @extend %icon-key; }
+  button {
+    @extend %reset-button;
+    @extend %icon;
+    @extend %icon-exit;
+    @extend %banner-item;
+    @include link(light);
+    width: 100%;
+  }
+}
+
+$useraction-size          : $banner-size;
+$useraction-border-size   : 2px;
+$useraction-border-color  : $back;
+$useraction-background    : $base01;
+
+.useractions {
+  @include arrow(top rhythm(.5) $useraction-background);
+  @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
+  @include stretch-x;
+  top: 100%;
+  margin: - $useraction-border-size 0 0;
+  border: $useraction-border-size solid $useraction-border-color;
+  background: $useraction-background;
+  text-align: left;
+  z-index: 900;
+  display: none;
+
+  a, button {
+    @extend %ellipsis;
+    padding: rhythm(.5, $useraction-size);
+  }
+  .meta:hover & { display: block; }
+}

@@ -1,0 +1,19 @@
+// ---------------------------------------------------------------------------
+// Brand
+
+.brand {
+  @include adjust-font-size-to($banner-size);
+  @include span-columns(3);
+  color: $base3;
+  .wordmark {
+    @extend %icon;
+    @extend %icon-fire;
+    @extend %banner-item;
+    display: inline-block;
+    font-weight: bold;
+    &:before { line-height: 1; }
+  }
+
+  @include at-breakpoint($break) { @include span-columns($brand-width); }
+  .village-app & { @include span-columns($brand-width, $break-cols); }
+}
