@@ -519,6 +519,7 @@ class AddStudentForm(StudentForm):
         if not self.family_form.has_changed():
             for field in self.family_form.fields.values():
                 field.required = False
+                field.widget.is_required = False
 
 
     def is_valid(self):
