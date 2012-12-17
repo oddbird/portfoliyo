@@ -225,7 +225,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\3f";
 }
 
-.additem-link:before, .addelder-link:before {
+.additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before {
   content: "\2b";
 }
 
@@ -273,19 +273,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e005";
 }
 
-.group .listitem-select:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
   content: "\e006";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .helplink:before, .announcements .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .announcements .announce:before, .additem-link:before, .addelder-link:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
+#messages .close:before, .helplink:before, .announcements .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .announcements .announce:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .helplink:before, .announcements .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .announcements .announce:before, .additem-link:before, .addelder-link:before, .download-pdf:before, .group .listitem-select:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
+#messages .close:before, .helplink:before, .announcements .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .message:before, .activated:before, .brand .wordmark:before, .meta span:before, .meta a:before, .meta button:before, .announcements .announce:before, .additem-link:link:before, .addelder-link:link:before, .additem-link:visited:before, .addelder-link:visited:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
   margin-right: .4em;
 }
 
@@ -2192,7 +2192,7 @@ button {
   margin-left: 0;
 }
 
-.active.additem-link, .active.addelder-link, .active.listitem-select, .elder .active.vcard, .active.additem-link:link, .active.addelder-link:link, .active.listitem-select:link, .elder .active.vcard:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:visited, .elder .active.vcard:visited, .active.additem-link:focus, .active.addelder-link:focus, .active.listitem-select:focus, .elder .active.vcard:focus, .active.additem-link:hover, .active.addelder-link:hover, .active.listitem-select:hover, .elder .active.vcard:hover, .active.additem-link:active, .active.addelder-link:active, .active.listitem-select:active, .elder .active.vcard:active {
+.active.additem-link:link, .active.addelder-link:link, .active.listitem-select:link, .elder .active.vcard:link, .active.additem-link:visited, .active.addelder-link:visited, .active.listitem-select:visited, .elder .active.vcard:visited, .active.additem-link:focus, .active.addelder-link:focus, .active.listitem-select:focus, .elder .active.vcard:focus, .active.additem-link:hover, .active.addelder-link:hover, .active.listitem-select:hover, .elder .active.vcard:hover, .active.additem-link:active, .active.addelder-link:active, .active.listitem-select:active, .elder .active.vcard:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 9px inset;
@@ -2200,7 +2200,7 @@ button {
   color: #fdf6e3;
 }
 
-.additem-link, .addelder-link, .additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
+.additem-link:link, .addelder-link:link, .additem-link:visited, .addelder-link:visited {
   color: #657b83;
   background: rgba(133, 153, 0, 0.375);
   font-weight: bold;
@@ -2655,12 +2655,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 
-.title .listitem-select, .title .listitem-select:link, .title .listitem-select:visited {
+.title .listitem-select:link, .title .listitem-select:visited {
   color: #073642;
   background: rgba(38, 139, 210, 0.25);
   font-weight: bold;
 }
-.title .listitem-select.active, .title .listitem-select:link.active, .title .listitem-select:visited.active {
+.title .listitem-select:link.active, .title .listitem-select:visited.active {
   background: #93a1a1;
   color: #fdf6e3;
 }
@@ -2747,7 +2747,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .listitem-actions a, .listitem-actions button {
   margin-left: 0.63889rem;
 }
-.listitem-actions a, .listitem-actions a, .listitem-actions a:link, .listitem-actions a:visited, .listitem-actions button, .listitem-actions button, .listitem-actions button:link, .listitem-actions button:visited {
+.listitem-actions a, .listitem-actions a:link, .listitem-actions a:visited, .listitem-actions button, .listitem-actions button:link, .listitem-actions button:visited {
   color: #fdf6e3;
   text-decoration: none;
 }
