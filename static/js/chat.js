@@ -238,7 +238,7 @@ var PYO = (function (PYO, $) {
         if (response && response.posts && response.posts.length) {
             var feed = $('.village-feed');
             $.each(response.posts, function () {
-                feed.trigger('successful-post', {studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
+                feed.trigger('successful-post', {smsRecipients: this.meta.sms.length, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
                     var oldPost = feed.find('.post.mine.local[data-author-sequence="' + this.author_sequence_id + '"]');
                     if (oldPost.length) { PYO.replacePost(this, oldPost); }
