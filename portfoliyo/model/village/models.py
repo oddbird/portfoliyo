@@ -10,7 +10,7 @@ from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
 from portfoliyo.model.events import trigger
-from portfoliyo import notifications, sms
+from portfoliyo import sms
 from ..users import models as user_models
 from . import unread
 
@@ -153,25 +153,6 @@ class BasePost(models.Model):
         self.meta['highlights'] = meta_highlights
 
 
-    def notify_email(self, from_sms):
-        """Send email notifications to eligible users."""
-        # No email notifications on system-generated posts:
-        if not self.author:
-            return
-        filters = {
-            'user__email__isnull': False,
-            'user__is_active': True,
-            }
-        if from_sms:
-            filters['notify_parent_text'] = True
-        else:
-            filters['notify_teacher_post'] = True
-        send_to = self.elders_in_context.filter(
-            **filters).exclude(pk=self.author.pk)
-        for profile in send_to:
-            notifications.send_post_email_notification(profile, self)
-
-
     def get_relationship(self):
         return None
 
@@ -289,8 +270,6 @@ class BulkPost(BasePost):
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
 
-        post.notify_email(from_sms)
-
         for number, body in sms_to_send:
             sms.send(number, body)
 
@@ -339,8 +318,8 @@ class Post(BasePost):
         ``in_reply_to`` can be set to a phone number, in which case it will be
         assumed that an SMS was already sent to that number.
 
-        If ``email_notifications`` is ``False``, no email notifications of this
-        post will be sent.
+        If ``email_notifications`` is ``False``, this post will never trigger
+        an email notification.
 
         """
         html_text, highlights = process_text(
@@ -362,9 +341,6 @@ class Post(BasePost):
         for elder in student.elders:
             if elder.user.email and elder != author:
                 unread.mark_unread(post, elder)
-
-        if email_notifications:
-            post.notify_email(from_sms)
 
         post.send_event(
             'student_%s' % student.id,

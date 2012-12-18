@@ -1,7 +1,7 @@
 """Village SMS-handling."""
 import logging
 
-from portfoliyo import model, notifications
+from portfoliyo import model
 
 
 # The maximum expected length (in words) of a name or role
@@ -250,13 +250,10 @@ def handle_name_update(signup, body):
     parent.save()
     signup.state = model.TextSignup.STATE.done
     signup.save()
-    teacher = signup.teacher
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
             parent, rel.student, body, from_sms=True, email_notifications=False)
-        if teacher and teacher.notify_new_parent and teacher.user.email:
-            notifications.send_signup_email_notification(teacher, rel)
     return reply(
         parent.phone,
         parent.students,

@@ -1,7 +1,6 @@
 """Tests for village models and related functions."""
 import datetime
 
-from django.core import mail
 from django.core.urlresolvers import reverse
 from django.utils.timezone import utc
 import mock
@@ -174,116 +173,6 @@ class TestPostCreate(object):
 
         assert post.from_sms == True
         assert post.to_sms == False
-
-
-    def test_sms_sends_email_notification(self, db):
-        """SMS post sends email notifications to those who want them."""
-        # Will author the post (and has no email), thus no notification
-        rel = factories.RelationshipFactory.create(
-            from_profile__phone='+13216540987',
-            from_profile__notify_parent_text=True,
-            )
-        # Will get an email notification
-        rel2 = factories.RelationshipFactory.create(
-            from_profile__user__email='two@example.com',
-            from_profile__notify_parent_text=True,
-            to_profile=rel.student,
-            )
-        # Not related to student - no notification
-        factories.RelationshipFactory.create(
-            from_profile__user__email='three@example.com',
-            from_profile__notify_parent_text=True,
-            )
-        # Doesn't want email notifications
-        factories.RelationshipFactory.create(
-            from_profile__user__email='four@example.com',
-            from_profile__notify_parent_text=False,
-            to_profile=rel.student,
-            )
-        # Has no email - no notification
-        factories.RelationshipFactory.create(
-            from_profile__user__email=None,
-            from_profile__notify_parent_text=True,
-            to_profile=rel.student,
-            )
-
-        models.Post.create(rel.elder, rel.student, 'Foo', from_sms=True)
-
-        assert [m.to for m in mail.outbox] == [[rel2.elder.user.email]]
-
-
-    def test_web_post_sends_email_notification(self, db):
-        """Web post sends email notifications to those who want them."""
-        # Will author the post, thus no email notification
-        rel = factories.RelationshipFactory.create(
-            from_profile__user__email='one@example.com',
-            from_profile__notify_teacher_post=True,
-            )
-        # Will get an email notification
-        rel2 = factories.RelationshipFactory.create(
-            from_profile__user__email='two@example.com',
-            from_profile__notify_teacher_post=True,
-            to_profile=rel.student,
-            )
-        # Not related to student - no notification
-        factories.RelationshipFactory.create(
-            from_profile__user__email='three@example.com',
-            from_profile__notify_teacher_post=True,
-            )
-        # Doesn't want email notifications
-        factories.RelationshipFactory.create(
-            from_profile__user__email='four@example.com',
-            from_profile__notify_teacher_post=False,
-            to_profile=rel.student,
-            )
-        # Inactive - no notifications
-        factories.RelationshipFactory.create(
-            from_profile__user__email='five@example.com',
-            from_profile__user__is_active=False,
-            from_profile__notify_teacher_post=True,
-            to_profile=rel.student,
-            )
-        # Has no email - no notification
-        factories.RelationshipFactory.create(
-            from_profile__user__email=None,
-            from_profile__notify_teacher_post=True,
-            to_profile=rel.student,
-            )
-
-        models.Post.create(rel.elder, rel.student, 'Foo')
-
-        assert [m.to for m in mail.outbox] == [[rel2.elder.user.email]]
-
-
-    def test_no_email_notification_for_system_posts(self, db):
-        """No email notifications for system-generated posts."""
-        # Would otherwise get an email notification
-        rel = factories.RelationshipFactory.create(
-            from_profile__user__email='one@example.com',
-            from_profile__notify_parent_text=True,
-            from_profile__notify_teacher_post=True,
-            )
-
-        models.Post.create(None, rel.student, 'Foo')
-
-        assert len(mail.outbox) == 0
-
-
-    def test_create_post_without_email_notification(self, db):
-        """Can pass a flag to avoid email notifications."""
-        # Would otherwise get an email notification
-        rel = factories.RelationshipFactory.create(
-            from_profile__user__email='one@example.com',
-            from_profile__notify_parent_text=True,
-            from_profile__notify_teacher_post=True,
-            )
-        author_rel = factories.RelationshipFactory.create(
-            to_profile=rel.student)
-
-        models.Post.create(
-            author_rel.elder, rel.student, 'Foo', email_notifications=False)
-
-        assert len(mail.outbox) == 0
 
 
     def test_triggers_pusher_event(self, db):
@@ -529,27 +418,6 @@ class TestBulkPost(object):
         """Either group or author is required."""
         with pytest.raises(ValueError):
             models.BulkPost.create(None, None, '')
-
-
-    def test_only_one_email_notification(self, db):
-        """A bulk post sends only one email notification to a given user."""
-        author_rel = factories.RelationshipFactory.create()
-        other_rel = factories.RelationshipFactory.create(
-            to_profile=author_rel.student,
-            from_profile__notify_teacher_post=True,
-            from_profile__user__email='foo@example.com',
-            )
-        author_second = factories.RelationshipFactory.create(
-            from_profile=author_rel.elder)
-        factories.RelationshipFactory.create(
-            from_profile=other_rel.elder,
-            to_profile=author_second.student,
-            )
-
-        models.BulkPost.create(author_rel.elder, None, "Hello?")
-
-        assert len(mail.outbox) == 1
-        assert mail.outbox[0].to == ['foo@example.com']
 
 
     def test_notifies_selected_mobile_users(self, db):
