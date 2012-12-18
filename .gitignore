@@ -10,3 +10,4 @@ htmlcov/
 djangodb.sqlite
 __pycache__
 logfile
+.coverage

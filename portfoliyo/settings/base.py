@@ -217,8 +217,6 @@ SECURE_CHECKS = [
 ]
 
 
-INSTALLED_APPS += ["registration"]
-ACCOUNT_ACTIVATION_DAYS = 7
 LOGIN_URL = "/login/"
 AUTHENTICATION_BACKENDS = ["portfoliyo.model.users.auth_backend.EmailBackend"]
 LOGIN_REDIRECT_URL = "/"

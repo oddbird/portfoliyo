@@ -1,45 +1,7 @@
 // ---------------------------------------------------------------------------
-// Links
-
-@mixin link($light: false, $non-links: false) {
-  $color  : if($light, $base3, $alt);
-  $hover  : if($light, mix($base3,$accent), $accent);
-  $link   : if($non-links, '&, ' + $link, $link);
-  #{$link} {
-    color: $color;
-    text-decoration: none;
-  }
-  #{$focus} {
-    color: $hover;
-    cursor: pointer;
-  }
-}
-
-a {
-  &:hover, &:active { outline: none; }
-  @include link;
-}
-
-%camolink { @include camolink; }
-%ellipsis { @include ellipsis; }
-%gone { @include gone; }
-
-// ---------------------------------------------------------------------------
-// Images
-
-%img {
-  @include box-shadow($back 0 0 .125em);
-  max-width: 100%;
-  border: 1px solid $back;
-}
-
-// ---------------------------------------------------------------------------
-// Summary/Details
-
-.details .summary { cursor: pointer; }
-
-// ---------------------------------------------------------------------------
 // Typography
+
+%ellipsis { @include ellipsis; }
 
 %type {
 

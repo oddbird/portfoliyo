@@ -188,7 +188,7 @@ var PYO = (function (PYO, $) {
                 event.preventDefault();
                 if (textarea.val().length) {
                     var text = $.trim(textarea.val());
-                    var author_sequence_id = PYO.authorPosts + 1;
+                    var author_sequence_id = (PYO.authorPosts || 0) + 1;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
                     var postObj = PYO.createPostObj(author_sequence_id, count);
@@ -238,7 +238,7 @@ var PYO = (function (PYO, $) {
         if (response && response.posts && response.posts.length) {
             var feed = $('.village-feed');
             $.each(response.posts, function () {
-                feed.trigger('successful-post', {studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
+                feed.trigger('successful-post', {smsRecipients: this.meta.sms.length, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
                     var oldPost = feed.find('.post.mine.local[data-author-sequence="' + this.author_sequence_id + '"]');
                     if (oldPost.length) { PYO.replacePost(this, oldPost); }

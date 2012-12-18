@@ -110,7 +110,7 @@ $village-nav-action-color : $base03;
 
 .listitem-actions {
   @extend %actions-base;
-  @include css-arrow(left, rhythm($village-nav-rhythm,$village-list-size), $village-nav-action-color);
+  @include arrow(left .375rem $village-nav-action-color);
 
   form { display: inline; }
   a, button {

@@ -1,13 +1,12 @@
 Hello,
 
-{% if inviter.name %}{{ inviter.name }} ({{ inviter.user.email }}){% else %}{{ inviter.user.email }}{% endif %} has invited you to join {% if student %}{{ student }}'s Portfoliyo Village{% else %}{{ group }} on Portfoliyo{% endif %}!
+{% if inviter.name %}{{ inviter.name }} ({{ inviter.user.email }}){% else %}{{ inviter.user.email }}{% endif %} has invited you to talk with {% if student %}{{ student }}'s family members and teachers{% else %}the student family members and teachers in their {{ group }} group{% endif %} using Portfoliyo.
 
 To accept this invitation, visit
 
 {{ base_url }}{% url accept_email_invite uidb36=uidb36 token=token %}
 
-If you don't want to participate in {% if student %}{{ student }}'s education via {% endif %}Portfoliyo,
-you can simply ignore this email.
+Otherwise, simply ignore this email.
 
 Thanks!
 

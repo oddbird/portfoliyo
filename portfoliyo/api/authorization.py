@@ -1,4 +1,5 @@
 """API Authorization."""
+from django.db.models import Q
 from tastypie import authorization, http
 
 
@@ -34,10 +35,12 @@ class RelationshipAuthorization(PortfoliyoAuthorization):
 
 
 class ProfileAuthorization(PortfoliyoAuthorization):
-    """Only allow users to see same-school profiles."""
+    """Only allow users to see same-school or related profiles."""
     def apply_limits(self, request, object_list):
-        """Only allow users to see same-school profiles."""
-        return object_list.filter(school=request.user.profile.school_id)
+        """Only allow users to see same-school or related profiles."""
+        same_school = Q(school=request.user.profile.school_id)
+        my_student = Q(relationships_to__from_profile=request.user.profile)
+        return object_list.filter(same_school | my_student).distinct()
 
 
 

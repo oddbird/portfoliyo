@@ -1,20 +1,4 @@
 // ---------------------------------------------------------------------------
-// Error Pages
-
-[class^="errorpage-"] {
-  @extend %simple-page;
-  @extend %type;
-}
-
-.pjax-error {
-  @extend %village-solo-page;
-  p {
-    @extend %error;
-    padding: rhythm(1);
-  }
-}
-
-// ---------------------------------------------------------------------------
 // IE Warning
 
 .browser-warning {
@@ -24,12 +8,12 @@
   display: none;
   .lt-ie9 & { display: block; }
   .modal {
-    @include rgba-background(rgba($back,.75));
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    background: rgba($back,.75);
     z-index: 10;
   }
 
@@ -74,5 +58,3 @@
   li { @include span-columns(2,6); }
   li + li + li { @include omega; }
 }
-
-

@@ -75,13 +75,16 @@
 
     var postEvents = function (sel) {
         $('body').on('successful-post', sel, function (e, data) {
-            if (data.studentId) { mixpanel.track('posted', data); }
-            else { mixpanel.track('mass texted', data); }
+            data.massText = !data.studentId;
+            mixpanel.track('posted', data);
+            mixpanel.people.increment('posts');
         });
     };
 
     $(function () {
-        if (typeof(mixpanel) === 'undefined') { return false; }
+        if (typeof(mixpanel) === 'undefined') {
+            return false;
+        }
 
         // These two should come first so that all other events are tagged with
         // the appropriate user data. Registering a new user should come before
