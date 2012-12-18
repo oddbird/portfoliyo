@@ -18,7 +18,7 @@ Recent activity in Portfoliyo:
 {# 2. Requested Activity #}
 
 {% for student in students %}
-  {% include "activity/_new_student.txt" %}
+  {% include "activity/_new_parent.txt" %}
 {% endfor %}
 {% for village in villages %}
   {% include "activity/_added_to_village.txt" %}
@@ -39,7 +39,7 @@ Other activity:
   {% include "activity/_bulk_post_nonrequested.txt" %}
 {% endfor %}
 {% for student in students %}
-  {% include "activity/_new_student.txt" %}
+  {% include "activity/_new_parent.txt" %}
 {% endfor %}
 {% for village in villages %}
   {% include "activity/_added_to_village.txt" %}

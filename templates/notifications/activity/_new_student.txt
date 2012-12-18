@@ -1,1 +1,0 @@
-- {{ student }}'s village was created by {{ parent }} ({{ parent.role }}){% if group %} in the {{ group }} group{% endif %}. Start a conversation: {{ village_url }}
