@@ -19,7 +19,7 @@ def pending_profile_ids():
 
 
 
-def store(profile_id, name, triggering=False, **kwargs):
+def store(profile_id, name, triggering=False, data=None):
     """
     Store a notification for given profile ID.
 
@@ -28,12 +28,13 @@ def store(profile_id, name, triggering=False, **kwargs):
     If ``triggering`` is True, this notification will trigger a notification
     email for this user the next time they are sent out.
 
-    Arbitrary additional data about the notification can be passed as
-    additional keyword arguments.
+    ``data`` is a dictionary of arbitrary additional data about the
+    notification; all values should be strings.
 
     """
-    kwargs['triggering'] = '1' if triggering else '0'
-    kwargs['name'] = name
+    data = data or {}
+    data['triggering'] = '1' if triggering else '0'
+    data['name'] = name
 
     pending_key = make_pending_notifications_key(profile_id)
     notification_id = get_next_notification_id(profile_id)
@@ -46,7 +47,7 @@ def store(profile_id, name, triggering=False, **kwargs):
     p.zadd(pending_key, expiry_timestamp, notification_id)
     # Store data hash for the notification. Allow the data to exist for an
     # extra minute so we don't ever try to query expired data
-    p.hmset(key, kwargs).expireat(key, int(expiry_timestamp) + 60)
+    p.hmset(key, data).expireat(key, int(expiry_timestamp) + 60)
     if triggering:
         # Add user to the set of users with pending triggering notifications
         p.sadd(PENDING_PROFILES_KEY, profile_id)

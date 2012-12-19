@@ -44,10 +44,10 @@ celery.conf.update(
 def check_for_pending_notifications():
     """Deliver notification emails to all users with pending notifications."""
     for profile_id in notifications.pending_profile_ids():
-        send_notification_email.delay(profile_id)
+        send_notification.delay(profile_id)
 
 
 @celery.task
-def send_notification_email(profile_id):
-    """Send notification email to the user with the given profile ID."""
-    notifications.send_email(profile_id)
+def send_notification(profile_id):
+    """Send notification to the user with the given profile ID."""
+    notifications.send(profile_id)

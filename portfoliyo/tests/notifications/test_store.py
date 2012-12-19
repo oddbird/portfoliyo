@@ -18,7 +18,7 @@ def test_pending_profile_ids(redis):
 
 def test_get_and_clear_all(redis):
     """Gets all data from all pending notifications."""
-    store.store(1, 'some', foo='bar')
+    store.store(1, 'some', data={'foo': 'bar'})
     store.store(1, 'other', triggering=True)
     store.store(2, 'irrelevant')
 
