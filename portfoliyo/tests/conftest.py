@@ -53,3 +53,11 @@ def sms(request):
         base.backend.outbox.append(FakeSMSMessage(*a, **kw))
     monkeypatch.setattr(base.backend, 'send', replacement_send)
     return base.backend
+
+
+@pytest.fixture(autouse=True)
+def _clear_inmemory_redis(request):
+    """Clear the in-memory redis prior to each test."""
+    from portfoliyo.redis import client
+    client.data = {}
+    client.expiry = {}
