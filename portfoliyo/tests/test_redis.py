@@ -1,4 +1,6 @@
 """Tests for redis client config."""
+import mock
+
 from portfoliyo.redis import InMemoryRedis
 
 
@@ -67,3 +69,15 @@ def test_sorted_sets():
     assert c.zrangebyscore('foo', 3, 6) == ['three', 'five']
     assert c.zrangebyscore('foo', '-inf', '+inf') == [
         '0', 'three', 'five', 'eight']
+
+
+def test_expireat():
+    """Test in-memory implementation of expireat."""
+    c = InMemoryRedis()
+    with mock.patch('portfoliyo.redis.time') as mock_time:
+        mock_time.return_value = 5
+        c.hmset('foo', {'one': 'one'})
+        c.expireat('foo', 10)
+        mock_time.return_value = 11
+
+        assert c.hgetall('foo') == {}
