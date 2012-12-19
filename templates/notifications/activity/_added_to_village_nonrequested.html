@@ -1,10 +1,27 @@
 <li>
   {% if villages|length == 1 %}
-  {{ teacher }} added you to <a href="{{ village_url }}">{{ villages }}'s village</a>.
-  {% else %}
-  {{ teacher }} added you to {{ villages|length }} student villages:
-  {% for village in villages %}
-    {% if forloop.last %} and <a href="{{ village_url }}">{{ village }}</a>.{% else %} <a href="{{ village_url }}">{{ village }}</a>{% if villages|length > 2 %},{% endif %}{% endif %}
-  {% endfor %}
+    {{ teacher }} added you to <a href="{{ village_url }}">{{ villages }}'s village</a>.
+  {% endif %}
+
+  {% if villages|length == 2 %}
+    {{ teacher }} added you to {{ villages|length }} student villages:
+    {% for village in villages %}
+      {% if forloop.first %} <a href="{{ village_url }}">{{ village }}</a>{% else %} and <a href="{{ village_url }}">{{ village }}</a>.{% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if villages|length == 3 %}
+    {{ teacher }} added you to {{ villages|length }} student villages:
+    {% for village in villages %}
+      {% if forloop.last %} and <a href="{{ village_url }}">{{ village }}</a>.{% else %} <a href="{{ village_url }}">{{ village }}</a>,{% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if villages|length > 3 %}
+    {{ teacher }} added you to {{ villages|length }} student villages:
+    {% for village in villages %}
+      {% if forloop.counter < 4 %} <a href="{{ village_url }}">{{ village }}</a>,
+      {% endif %}
+    {% endfor %} and {{ villages|length - 3 }} more village{% if villages|length > 4 %}s{% endif %}.
   {% endif %}
 </li>
