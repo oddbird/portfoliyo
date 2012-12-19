@@ -51,6 +51,29 @@ class InMemoryRedis(object):
         return val in s
 
 
+    def incr(self, key):
+        val = self.data.get(key, 0)
+        val += 1
+        self.data[key] = val
+        return val
+
+
+    def pipeline(self):
+        """
+        Fake pipelining by just returning this instance.
+
+        This'll fail if we try to use the "chaining" feature of real redis.py
+        pipeline API. So we won't.
+
+        """
+        return self
+
+
+    def execute(self):
+        """Do nothing; pipelining is faked and the calls already happened."""
+        pass
+
+
 
 if settings.REDIS_URL: # pragma: no cover
     import redis # pragma: no cover

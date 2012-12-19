@@ -24,3 +24,19 @@ def test_redis_delete():
 
     assert not c.sismember('foo', 'bar')
 
+
+def test_redis_incr():
+    """Test in-memory implementation of Redis incr."""
+    c = InMemoryRedis()
+    assert c.incr('foo') == 1
+    assert c.incr('foo') == 2
+
+
+def test_redis_pipeline():
+    """Test in-memory faking of redis pipelining."""
+    c = InMemoryRedis()
+    p = c.pipeline()
+    p.incr('foo')
+    p.execute()
+
+    assert c.incr('foo') == 2
