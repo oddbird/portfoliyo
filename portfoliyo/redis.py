@@ -161,5 +161,5 @@ for method_name in dir(InMemoryRedis):
 
 if settings.REDIS_URL: # pragma: no cover
     client = redis.StrictRedis.from_url(settings.REDIS_URL) # pragma: no cover
-else:
-    client = InMemoryRedis()
+else: # pragma: no cover
+    client = InMemoryRedis() # pragma: no cover

@@ -1,5 +1,4 @@
-from datetime import timedelta
-
+"""Celery tasks."""
 from celery import Celery
 from celery.utils.log import get_task_logger
 from django.conf import settings
@@ -28,13 +27,10 @@ else:
     celery = Celery()
     celery.conf.update(CELERY_ALWAYS_EAGER=True)
 
+# use CELERYBEAT_SCHEDULE to schedule check_for_pending_notifications
 celery.conf.update(
     CELERY_DISABLE_RATE_LIMITS=True,
     CELERY_TIMEZONE=settings.TIME_ZONE,
-    CELERYBEAT_SCHEDULE={
-        'task': 'portfoliyo.tasks.check_for_pending_notifications',
-        'schedule': timedelta(hours=settings.EMAIL_NOTIFICATION_DELAY_HOURS),
-        },
     )
 
 
