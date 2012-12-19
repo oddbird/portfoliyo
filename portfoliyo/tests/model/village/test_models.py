@@ -196,7 +196,7 @@ class TestPostCreate(object):
             'mark_post_read', kwargs={'post_id': post.id})
 
 
-    def test_notifies_selected_mobile_users(self, db):
+    def test_texts_selected_mobile_users(self, db):
         """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
@@ -264,7 +264,7 @@ class TestPostCreate(object):
         assert utils.refresh(signup).state == 'done'
 
 
-    def test_only_notifies_active_mobile_users(self, db):
+    def test_only_texts_active_mobile_users(self, db):
         """Sends text only to active users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None,
@@ -289,7 +289,7 @@ class TestPostCreate(object):
         assert post.meta['sms'] == []
 
 
-    def test_only_notifies_mobile_users(self, db):
+    def test_only_texts_mobile_users(self, db):
         """Sends text only to users with phone numbers."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__phone=None)
@@ -314,7 +314,7 @@ class TestPostCreate(object):
 
 
     def test_can_create_autoreply_post(self, db):
-        """Auto-reply sends no notification to that phone."""
+        """Auto-reply sends no SMS to that phone."""
         rel = factories.RelationshipFactory.create(
             from_profile__phone="+13216540987",
             from_profile__user__is_active=True,
@@ -420,7 +420,7 @@ class TestBulkPost(object):
             models.BulkPost.create(None, None, '')
 
 
-    def test_notifies_selected_mobile_users(self, db):
+    def test_texts_selected_mobile_users(self, db):
         """Sends text to selected active mobile users."""
         rel1 = factories.RelationshipFactory.create(
             from_profile__name="John Doe",
@@ -655,18 +655,18 @@ def test_get_highlight_names(db):
 
 
 
-def test_notification_suffix():
-    """Text notification suffix is name_or_role preceded by ' --'."""
+def test_sms_suffix():
+    """SMS suffix is name_or_role preceded by ' --'."""
     rel = mock.Mock()
     rel.name_or_role = "Foo"
-    assert models.notification_suffix(rel) == " --Foo"
+    assert models.sms_suffix(rel) == " --Foo"
 
 
 
-@mock.patch('portfoliyo.model.village.models.notification_suffix')
-def test_post_char_limit(mock_notification_suffix):
+@mock.patch('portfoliyo.model.village.models.sms_suffix')
+def test_post_char_limit(mock_sms_suffix):
     """Char limit for a post is 160 - length of suffix."""
-    mock_notification_suffix.return_value = "a" * 10
+    mock_sms_suffix.return_value = "a" * 10
     rel = mock.Mock()
 
     assert models.post_char_limit(rel) == 150

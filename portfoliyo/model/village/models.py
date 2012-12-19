@@ -73,12 +73,11 @@ class BasePost(models.Model):
 
     def prepare_sms(self, profile_ids, in_reply_to=None):
         """
-        Prepare and return SMS notifications for this post.
+        Prepare and return SMSes for this post.
 
-        ``profile_ids`` is a list of Profile IDs who should receive
-        notifications. Only profiles in this list who also are active, have
-        phone numbers, and have not declined sms notifications, will receive
-        texts.
+        ``profile_ids`` is a list of Profile IDs who should receive SMSes. Only
+        profiles in this list who also are active, have phone numbers, and have
+        not declined SMSes, will receive texts.
 
         Sets self.to_sms to True if any texts were sent, False otherwise, and
         self.meta['sms'] to a list of dictionaries containing basic metadata
@@ -90,18 +89,18 @@ class BasePost(models.Model):
         meta_sms = []
         sms_sent = False
         if self.author:
-            suffix = notification_suffix(self.get_relationship() or self.author)
+            suffix = sms_suffix(self.get_relationship() or self.author)
         else:
             suffix = u""
         sms_body = self.original_text + suffix
 
-        to_notify = sms_eligible(self.elders_in_context).filter(
+        to_sms = sms_eligible(self.elders_in_context).filter(
             models.Q(pk__in=profile_ids) | models.Q(phone=in_reply_to))
 
         to_send = []
         to_mark_done = []
 
-        for elder in to_notify:
+        for elder in to_sms:
             sms_data = {
                 'id': elder.id,
                 'role': elder.role_in_context,
@@ -212,8 +211,8 @@ class BulkPost(BasePost):
 
         It is currently not allowed for both to be ``None``.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
-        notification of this post.
+        ``sms_profile_ids`` is a list of Profile IDs who should receive this
+        post as an SMS.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -304,10 +303,10 @@ class Post(BasePost):
                sms_profile_ids=None, sequence_id=None, from_sms=False,
                in_reply_to=None, email_notifications=True):
         """
-        Create/return a Post, triggering a Pusher event and SMS notifications.
+        Create/return a Post, triggering a Pusher event and SMSes.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
-        notification of this post.
+        ``sms_profile_ids`` is a list of Profile IDs who should receive this
+        post as an SMS.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -485,14 +484,14 @@ def normalize_name(name):
     return name.lower().replace(' ', '')
 
 
-def notification_suffix(elder_or_rel):
+def sms_suffix(elder_or_rel):
     """The suffix for texts sent out from this elder or relationship."""
     return u' --%s' % elder_or_rel.name_or_role
 
 
 def post_char_limit(elder_or_rel):
     """Max length for posts from this elder or relationship."""
-    return 160 - len(notification_suffix(elder_or_rel))
+    return 160 - len(sms_suffix(elder_or_rel))
 
 
 def post_dict(post, **extra):
