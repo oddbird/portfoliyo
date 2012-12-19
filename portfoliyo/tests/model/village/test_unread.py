@@ -5,7 +5,7 @@ from portfoliyo.tests import factories
 
 
 
-def test_read(db):
+def test_read(db, redis):
     """By default, a post is read."""
     post = factories.PostFactory.create()
     profile = factories.ProfileFactory.create()
@@ -14,7 +14,7 @@ def test_read(db):
 
 
 
-def test_unread(db):
+def test_unread(db, redis):
     """After marking a post unread, it shows up as unread."""
     post = factories.PostFactory.create()
     profile = factories.ProfileFactory.create()
@@ -25,7 +25,7 @@ def test_unread(db):
 
 
 
-def test_mark_read(db):
+def test_mark_read(db, redis):
     """Can mark a post as read."""
     post = factories.PostFactory.create()
     profile = factories.ProfileFactory.create()
@@ -37,7 +37,7 @@ def test_mark_read(db):
 
 
 
-def test_mark_village_read(db):
+def test_mark_village_read(db, redis):
     """Marks posts only in given village read."""
     post1 = factories.PostFactory.create()
     post2 = factories.PostFactory.create(student=post1.student)
@@ -55,7 +55,7 @@ def test_mark_village_read(db):
 
 
 
-def test_unread_count(db):
+def test_unread_count(db, redis):
     post1 = factories.PostFactory.create()
     factories.PostFactory.create(student=post1.student)
     other_village_post = factories.PostFactory.create()
@@ -68,7 +68,7 @@ def test_unread_count(db):
 
 
 
-def test_group_unread_count(db):
+def test_group_unread_count(db, redis):
     post1 = factories.PostFactory.create()
     factories.PostFactory.create(student=post1.student)
     post2 = factories.PostFactory.create()

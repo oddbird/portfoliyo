@@ -55,9 +55,22 @@ def sms(request):
     return base.backend
 
 
-@pytest.fixture(autouse=True)
-def _clear_inmemory_redis(request):
-    """Clear the in-memory redis prior to each test."""
-    from portfoliyo.redis import client
-    client.data = {}
-    client.expiry = {}
+@pytest.fixture
+def redis(request):
+    """Clear Redis prior to the test."""
+    from django.conf import settings
+    from portfoliyo.redis import client, InMemoryRedis
+    if isinstance(client, InMemoryRedis):
+        client.data = {}
+        client.expiry = {}
+    else:
+        if getattr(settings, 'TEST_DESTROY_REDIS_DATA', False):
+            client.flushdb()
+        else:
+            raise ValueError(
+                "To run tests with a real Redis, you must set the "
+                "TEST_DESTROY_REDIS_DATA setting to True. "
+                "All data in the db at REDIS_URL will be destroyed."
+                )
+
+    return client

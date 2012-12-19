@@ -46,7 +46,7 @@ def store(profile_id, name, triggering=False, **kwargs):
     p.zadd(pending_key, expiry_timestamp, notification_id)
     # Store data hash for the notification. Allow the data to exist for an
     # extra minute so we don't ever try to query expired data
-    p.hmset(key, kwargs).expireat(key, expiry_timestamp + 60)
+    p.hmset(key, kwargs).expireat(key, int(expiry_timestamp) + 60)
     if triggering:
         # Add user to the set of users with pending triggering notifications
         p.sadd(PENDING_PROFILES_KEY, profile_id)
@@ -62,12 +62,11 @@ def get_and_clear_all(profile_id):
 
     """
     pending_key = make_pending_notifications_key(profile_id)
-    now_ts = time.time()
-    earliest = now_ts - EXPIRY_SECONDS
+    now_ts = int(time.time())
 
     p = redis.pipeline()
-    # get pending notification IDs for this user stored within the last 48 hrs
-    p.zrangebyscore(pending_key, earliest, '+inf')
+    # get non-expired pending notifications for this user
+    p.zrangebyscore(pending_key, now_ts, '+inf')
     # clear the pending notifications list
     p.delete(pending_key)
     # remove this user from the set of users w/ pending triggering notifications

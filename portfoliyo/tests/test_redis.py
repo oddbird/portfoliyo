@@ -1,83 +1,101 @@
-"""Tests for redis client config."""
+"""
+Tests for redis in-memory implementation.
+
+These tests will also run against a real Redis, if configured, verifying the
+tests themselves.
+
+"""
 import mock
 
-from portfoliyo.redis import InMemoryRedis
+import pytest
+from redis.exceptions import ResponseError
 
 
 
-def test_sets():
+def test_sets(redis):
     """Test in-memory implementation of Redis sets."""
-    c = InMemoryRedis()
-    c.sadd('foo', 'bar')
-    c.sadd('foo', 'baz')
-    c.srem('foo', 'baz')
-    assert c.scard('foo') == 1
-    assert c.sismember('foo', 'bar')
-    assert not c.sismember('foo', 'baz')
-    assert c.smembers('foo') == {'bar'}
+    redis.sadd('foo', 'bar')
+    redis.sadd('foo', 'baz')
+    redis.srem('foo', 'baz')
+    assert redis.scard('foo') == 1
+    assert redis.sismember('foo', 'bar')
+    assert not redis.sismember('foo', 'baz')
+    assert redis.smembers('foo') == {'bar'}
 
 
-def test_delete():
+def test_sets_convert_to_str(redis):
+    """Set values are converted to strings."""
+    redis.sadd('foo', 3)
+    assert redis.sismember('foo', 3)
+    assert redis.sismember('foo', '3')
+    assert redis.smembers('foo') == {'3'}
+    redis.srem('foo', 3)
+    assert redis.smembers('foo') == set()
+
+
+def test_delete(redis):
     """Test in-memory implementation of Redis delete."""
-    c = InMemoryRedis()
-    c.delete('foo')
-    c.sadd('foo', 'bar')
-    c.delete('foo')
+    redis.delete('foo')
+    redis.sadd('foo', 'bar')
+    redis.delete('foo')
 
-    assert not c.sismember('foo', 'bar')
+    assert not redis.sismember('foo', 'bar')
 
 
-def test_incr():
+def test_incr(redis):
     """Test in-memory implementation of Redis incr."""
-    c = InMemoryRedis()
-    assert c.incr('foo') == 1
-    assert c.incr('foo') == 2
+    assert redis.incr('foo') == 1
+    assert redis.incr('foo') == 2
 
 
-def test_pipeline():
+def test_pipeline(redis):
     """Test in-memory implementation of Redis pipelining."""
-    c = InMemoryRedis()
-    p = c.pipeline()
+    p = redis.pipeline()
     p.incr('foo').incr('bar')
     p.incr('foo')
     res = p.execute()
 
     assert res == [1, 1, 2]
-    assert c.incr('foo') == 3
-    assert c.incr('bar') == 2
+    assert redis.incr('foo') == 3
+    assert redis.incr('bar') == 2
 
 
-def test_hashes():
+def test_hashes(redis):
     """Test in-memory implementation of Redis hashes."""
-    c = InMemoryRedis()
-    c.hmset('foo', {'one': 'two', 'two': 'three'})
-    c.hmset('foo', {'one': 'three', 'four': 'five'})
+    redis.hmset('foo', {'one': 'two', 'two': 2})
+    redis.hmset('foo', {'one': 'three', 'four': 'five'})
 
-    assert c.hgetall('foo') == {'one': 'three', 'two': 'three', 'four': 'five'}
+    assert redis.hgetall('foo') == {'one': 'three', 'two': '2', 'four': 'five'}
 
 
-def test_sorted_sets():
+def test_sorted_sets(redis):
     """Test in-memory implementation of Redis sorted sets."""
-    c = InMemoryRedis()
-    c.zadd('foo', 7, 'five')
-    c.zadd('foo', 5, 'five')
-    c.zadd('foo', 2, 'three')
-    c.zadd('foo', 3, 'three')
-    c.zadd('foo', 8, 'eight')
-    c.zadd('foo', 0, 0)
+    redis.zadd('foo', 7, 'five')
+    redis.zadd('foo', 5, 'five')
+    redis.zadd('foo', 2, 'three')
+    redis.zadd('foo', 3, 'three')
+    redis.zadd('foo', 8, 'eight')
+    redis.zadd('foo', 0, 0)
 
-    assert c.zrangebyscore('foo', 3, 6) == ['three', 'five']
-    assert c.zrangebyscore('foo', '-inf', '+inf') == [
+    assert redis.zrangebyscore('foo', 3, 6) == ['three', 'five']
+    assert redis.zrangebyscore('foo', '-inf', '+inf') == [
         '0', 'three', 'five', 'eight']
 
 
-def test_expireat():
+def test_expireat(redis):
     """Test in-memory implementation of expireat."""
-    c = InMemoryRedis()
     with mock.patch('portfoliyo.redis.time') as mock_time:
-        mock_time.return_value = 5
-        c.hmset('foo', {'one': 'one'})
-        c.expireat('foo', 10)
-        mock_time.return_value = 11
+        mock_time.return_value = 5.123
+        redis.hmset('foo', {'one': 'one'})
+        redis.expireat('foo', 10)
+        mock_time.return_value = 11.331
 
-        assert c.hgetall('foo') == {}
+        assert redis.hgetall('foo') == {}
+
+
+def test_expireat_timestamp_must_be_integer(redis):
+    """Expireat raises an error-"""
+    redis.hmset('foo', {'one': 'one'})
+
+    with pytest.raises(ResponseError):
+        redis.expireat('foo', 10.231)

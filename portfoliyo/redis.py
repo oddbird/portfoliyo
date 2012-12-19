@@ -1,8 +1,10 @@
 from __future__ import absolute_import
 
-from time import time
+import time
 
 from django.conf import settings
+import redis
+from redis.exceptions import ResponseError
 
 
 
@@ -31,12 +33,14 @@ class InMemoryRedis(object):
 
     def _check_expiry(self, key):
         expiry = self.expiry.get(key)
-        if expiry and time() > expiry:
+        if expiry and time.time() > expiry:
             del self.data[key]
             del self.expiry[key]
 
 
     def expireat(self, key, timestamp):
+        if not isinstance(timestamp, int):
+            raise ResponseError("value is not an integer or out of range")
         self.expiry[key] = timestamp
 
 
@@ -45,6 +49,7 @@ class InMemoryRedis(object):
 
 
     def sadd(self, key, val):
+        val = str(val)
         s = self._setdefault(key, set())
         ret = 1 if val in s else 0
         s.add(val)
@@ -52,6 +57,7 @@ class InMemoryRedis(object):
 
 
     def srem(self, key, val):
+        val = str(val)
         s = self._setdefault(key, set())
         ret = 1 if val in s else 0
         s.discard(val)
@@ -71,6 +77,7 @@ class InMemoryRedis(object):
 
 
     def sismember(self, key, val):
+        val = str(val)
         s = self._setdefault(key, set())
         return val in s
 
@@ -84,7 +91,7 @@ class InMemoryRedis(object):
 
     def hmset(self, key, mapping):
         d = self._setdefault(key, {})
-        d.update(mapping)
+        d.update((k, str(v)) for k, v in mapping.items())
         return True
 
 
@@ -153,7 +160,6 @@ for method_name in dir(InMemoryRedis):
 
 
 if settings.REDIS_URL: # pragma: no cover
-    import redis # pragma: no cover
     client = redis.StrictRedis.from_url(settings.REDIS_URL) # pragma: no cover
 else:
     client = InMemoryRedis()
