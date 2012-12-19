@@ -21,7 +21,7 @@
   {% for student in students %}
     {% include "activity/_new_parent.html" %}
   {% endfor %}
-  {% for village in villages %}
+  {% for teacher in teachers %}
     {% include "activity/_added_to_village.html" %}
   {% endfor %}
   {% for teacher in teachers %}
@@ -42,8 +42,8 @@
   {% for student in students %}
     {% include "activity/_new_parent.html" %}
   {% endfor %}
-  {% for village in villages %}
-    {% include "activity/_added_to_village.html" %}
+  {% for teacher in teachers %}
+    {% include "activity/_added_to_village_nonrequested.html" %}
   {% endfor %}
   {% for teacher in teachers %}
     {% include "activity/_new_teacher.html" %}

@@ -1,3 +1,12 @@
 <li>
-  {{ teacher }} added you to <a href="{{ village_url }}">{{ student }}'s village</a>.
+  {% if villages|length == 1 %}
+  {{ teacher }} added you to <a href="{{ village_url }}">{{ villages }}'s village</a>.
+  {% else %}
+  <ul>
+    {{ teacher }} added you to {{ villages|length }} student villages:
+    {% for village in villages %}
+      <li>{{ village }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
 </li>

@@ -1,0 +1,5 @@
+{% if villages|length == 1 %}
+- {{ teacher }} added you to {{ villages }}'s village. Start a conversation: {{ village_url }}
+{% else %}
+- {{ teacher }} added you to {{ villages|length }} student villages:{% for village in villages %}{% if forloop.last %} and {{ village }}.{% else %} {{ village }}{% if villages|length > 2 %},{% endif %}{% endif %}{% endfor %}
+{% endif %}
