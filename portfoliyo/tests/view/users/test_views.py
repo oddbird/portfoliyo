@@ -14,7 +14,7 @@ class TestLogin(object):
         return reverse('login')
 
 
-    def test_login(self, client, db):
+    def test_login(self, client):
         """Successful login redirects."""
         factories.UserFactory.create(
             email='test@example.com', password='sekrit')
@@ -27,7 +27,7 @@ class TestLogin(object):
         assert res['Location'] == utils.location(reverse('home'))
 
 
-    def test_login_failed(self, client, db):
+    def test_login_failed(self, client):
         """Failed login returns error message."""
         factories.UserFactory.create(
             email='test@example.com', password='sekrit')
@@ -40,7 +40,7 @@ class TestLogin(object):
         res.mustcontain("Please enter a correct username and password")
 
 
-    def test_display_captcha(self, client, db):
+    def test_display_captcha(self, client):
         """Sixth login attempt within a minute returns form with captcha."""
         res = client.get(self.url)
         for i in range(6):
@@ -51,7 +51,7 @@ class TestLogin(object):
         assert 'captcha' in form.fields
 
 
-    def test_bad_captcha(self, client, db):
+    def test_bad_captcha(self, client):
         """Bad value for captcha fails login, even with correct user/pw."""
         factories.UserFactory.create(
             email='test@example.com', password='sekrit')
@@ -73,7 +73,7 @@ class TestLogin(object):
         res.mustcontain("not the answer we were looking for")
 
 
-    def test_good_captcha(self, client, db):
+    def test_good_captcha(self, client):
         """Good value for captcha allows login."""
         factories.UserFactory.create(
             email='test@example.com', password='sekrit')
@@ -104,12 +104,12 @@ class TestLogout(object):
         return reverse('logout')
 
 
-    def test_get_405(self, client, db):
+    def test_get_405(self, client):
         """GETting the logout view results in HTTP 405 Method Not Allowed."""
         client.get(self.url, status=405)
 
 
-    def test_logout_redirect(self, client, db):
+    def test_logout_redirect(self, client):
         """Successful logout POST redirects to the home page."""
         user = factories.UserFactory.create()
 
@@ -134,7 +134,7 @@ class TestPasswordChange(object):
         return reverse('password_change')
 
 
-    def test_login_required(self, client, db):
+    def test_login_required(self, client):
         """Redirects to signup if user is unauthenticated."""
         res = client.get(self.url, status=302)
 
@@ -142,7 +142,7 @@ class TestPasswordChange(object):
             reverse('login') + '?next=' + self.url)
 
 
-    def test_change_password(self, client, db):
+    def test_change_password(self, client):
         """Get a confirmation message after changing password."""
         profile = factories.ProfileFactory.create(user__password='sekrit')
         form = client.get(
@@ -165,7 +165,7 @@ class TestPasswordReset(object):
         return reverse('password_reset')
 
 
-    def test_reset_password(self, client, db):
+    def test_reset_password(self, client):
         """Get a confirmation message and reset email."""
         factories.UserFactory.create(email='user@example.com')
 
@@ -179,7 +179,7 @@ class TestPasswordReset(object):
         assert mail.outbox[0].to == ['user@example.com']
 
 
-    def test_inactive_user(self, client, db):
+    def test_inactive_user(self, client):
         """An inactive user can get a password reset email."""
         factories.UserFactory.create(email='user@example.com', is_active=False)
 
@@ -193,7 +193,7 @@ class TestPasswordReset(object):
         assert mail.outbox[0].to == ['user@example.com']
 
 
-    def test_bad_email(self, client, db):
+    def test_bad_email(self, client):
         """Nonexistent user emails give no clue to an attacker."""
         form = client.get(self.url).forms['reset-password-form']
         form['email'] = 'doesnotexist@example.com'
@@ -221,7 +221,7 @@ class TestPasswordResetConfirm(object):
         assert False, "No password reset confirm URL found in reset email."
 
 
-    def test_reset_password_confirm(self, client, db):
+    def test_reset_password_confirm(self, client):
         """Get a confirmation message after resetting password."""
         user = factories.UserFactory.create(
             email='user@example.com', password='sekrit')
@@ -234,7 +234,7 @@ class TestPasswordResetConfirm(object):
         res.mustcontain("Password changed")
 
 
-    def test_inactive_user_becomes_active(self, client, db):
+    def test_inactive_user_becomes_active(self, client):
         """An inactive user who completes a reset becomes active."""
         user = factories.UserFactory.create(
             email='user@example.com', is_active=False)
@@ -256,7 +256,7 @@ class TestRegister(object):
         return reverse('register')
 
 
-    def test_register(self, client, db):
+    def test_register(self, client):
         """Get logged in and redirected to home after registering."""
         school = factories.SchoolFactory.create()
         form = client.get(self.url).forms['register-form']
@@ -273,7 +273,7 @@ class TestRegister(object):
         res.follow(status=200)
 
 
-    def test_register_failed(self, client, db):
+    def test_register_failed(self, client):
         """Form redisplayed with any errors."""
         school = factories.SchoolFactory.create()
         form = client.get(self.url).forms['register-form']
@@ -309,14 +309,14 @@ class TestConfirmEmail(object):
         assert False, "Email-confirm link not found in activation email."
 
 
-    def test_confirm(self, client, db):
+    def test_confirm(self, client):
         """Get a confirmation message after activating."""
         res = client.get(self.url(client), status=302).follow()
 
         res.mustcontain("address new@example.com confirmed")
 
 
-    def test_failed_confirm(self, client, db):
+    def test_failed_confirm(self, client):
         """Failed confirm returns a failure message."""
         res = client.get(
             reverse(
@@ -348,7 +348,7 @@ class TestAcceptEmailInvite(object):
         assert False, "No invite URL found in invite-elder email."
 
 
-    def test_accept_email_invite(self, client, db):
+    def test_accept_email_invite(self, client):
         """Accepting email invite sets is_active True."""
         profile = factories.ProfileFactory.create(school_staff=True)
         response = client.get(self.url(client, profile))
@@ -372,7 +372,7 @@ class TestEditProfile(object):
         return reverse('edit_profile')
 
 
-    def test_edit_profile(self, client, db):
+    def test_edit_profile(self, client):
         """Can edit profile."""
         profile = factories.ProfileFactory.create()
         form = client.get(self.url, user=profile.user).forms['edit-profile-form']
@@ -386,7 +386,7 @@ class TestEditProfile(object):
         assert profile.role == u'New Role'
 
 
-    def test_validation_error(self, client, db):
+    def test_validation_error(self, client):
         profile = factories.ProfileFactory.create()
         form = client.get(self.url, user=profile.user).forms['edit-profile-form']
         form['name'] = 'New Name'
@@ -396,7 +396,7 @@ class TestEditProfile(object):
         response.mustcontain('field is required')
 
 
-    def test_login_required(self, client, db):
+    def test_login_required(self, client):
         """Redirects to signup if user is unauthenticated."""
         res = client.get(self.url, status=302)
 
