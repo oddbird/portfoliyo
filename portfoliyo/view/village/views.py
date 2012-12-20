@@ -396,14 +396,15 @@ def json_posts(request, student_id=None, group_id=None):
                     ),
                 content_type='application/json',
                 )
-        # transactions are handled by create method
-        post = post_model.create(
-            request.user.profile,
-            target,
-            text,
-            sms_profile_ids=sms_profile_ids,
-            sequence_id=sequence_id,
-            )
+
+        with xact.xact():
+            post = post_model.create(
+                request.user.profile,
+                target,
+                text,
+                sms_profile_ids=sms_profile_ids,
+                sequence_id=sequence_id,
+                )
 
         data = {
             'success': True,
