@@ -10,7 +10,7 @@ from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
 from portfoliyo.model.events import trigger
-from portfoliyo import sms
+from portfoliyo import tasks
 from ..users import models as user_models
 from . import unread
 
@@ -270,7 +270,7 @@ class BulkPost(BasePost):
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
 
         for number, body in sms_to_send:
-            sms.send(number, body)
+            tasks.send_sms.delay(number, body)
 
         return post
 
@@ -349,7 +349,7 @@ class Post(BasePost):
             )
 
         for number, body in sms_to_send:
-            sms.send(number, body)
+            tasks.send_sms.delay(number, body)
 
         return post
 

@@ -537,7 +537,7 @@ class TestInviteFamily(GroupContextTests):
         form = response.forms['invite-family-form']
         form['phone'] = "312-456-1234"
         form['role'] = "Father"
-        with mock.patch('portfoliyo.sms.send') as mock_send:
+        with mock.patch('portfoliyo.tasks.send_sms.delay') as mock_send:
             response = form.submit(status=302)
 
         assert response['Location'] == utils.location(
@@ -802,7 +802,7 @@ class TestJsonPosts(object):
             from_profile__user__is_active=True,
             )
 
-        target = 'portfoliyo.model.village.models.sms.send'
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             response = no_csrf_client.post(
                 self.url(rel.student),

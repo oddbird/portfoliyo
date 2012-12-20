@@ -210,7 +210,7 @@ class TestPostCreate(object):
             description="Father",
             )
 
-        target = 'portfoliyo.model.village.models.sms.send'
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.Post.create(
                 rel1.elder,
@@ -250,7 +250,7 @@ class TestPostCreate(object):
             state='kidname',
             )
 
-        target = 'portfoliyo.model.village.models.sms.send'
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             models.Post.create(
                 rel1.elder,
@@ -275,7 +275,7 @@ class TestPostCreate(object):
             from_profile__user__is_active=False,
             )
 
-        target = 'portfoliyo.model.village.models.sms.send'
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.Post.create(
                 rel1.elder,
@@ -299,7 +299,7 @@ class TestPostCreate(object):
             from_profile__user__is_active=True,
             )
 
-        target = 'portfoliyo.model.village.models.sms.send'
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.Post.create(
                 rel1.elder,
@@ -321,7 +321,7 @@ class TestPostCreate(object):
             description="Father",
             )
 
-        target = 'portfoliyo.model.village.models.sms.send'
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.Post.create(
                 None,
@@ -436,7 +436,7 @@ class TestBulkPost(object):
         group = factories.GroupFactory.create()
         group.students.add(rel1.student)
 
-        target = 'portfoliyo.model.village.models.sms.send'
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.BulkPost.create(
                 rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])

@@ -51,3 +51,9 @@ def send_notification(profile_id):
     """Send notification to the user with the given profile ID."""
     from portfoliyo import notifications
     notifications.send(profile_id)
+
+
+@celery.task
+def send_sms(phone, body):
+    from portfoliyo import sms
+    sms.send(phone, body)
