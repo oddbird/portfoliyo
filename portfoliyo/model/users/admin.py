@@ -32,6 +32,7 @@ class ProfileAdmin(admin.ModelAdmin):
         'school_staff',
         ]
     list_filter=['school', 'school_staff', 'declined']
+    raw_id_fields = ['user']
 
 
     def email(self, profile):

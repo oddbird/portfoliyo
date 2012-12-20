@@ -18,6 +18,7 @@ def parse_database_url(database, environment_variable='DATABASE_URL'):
             'mysql': 'django.db.backends.mysql',
             'sqlite': 'django.db.backends.sqlite3',
         }[url.scheme],
+        'OPTIONS': {'autocommit': True},
     })
 parse_database_url(DATABASES['default'])
 del parse_database_url
@@ -141,10 +142,10 @@ LOGGING = {
 
 REDIS_URL = env('REDISTOGO_URL')
 
-GOOGLE_ANALYTICS_ID=env('GOOGLE_ANALYTICS_ID')
-USERVOICE_ID=env('USERVOICE_ID')
-SNAPENGAGE_ID=env('SNAPENGAGE_ID')
-MIXPANEL_ID=env('MIXPANEL_ID')
-CRAZYEGG_ID=env('CRAZYEGG_ID')
+GOOGLE_ANALYTICS_ID = env('GOOGLE_ANALYTICS_ID')
+USERVOICE_ID = env('USERVOICE_ID')
+SNAPENGAGE_ID = env('SNAPENGAGE_ID')
+MIXPANEL_ID = env('MIXPANEL_ID')
+CRAZYEGG_ID = env('CRAZYEGG_ID')
 
-PORTFOLIYO_BASE_URL=env('PORTFOLIYO_BASE_URL')
+PORTFOLIYO_BASE_URL = env('PORTFOLIYO_BASE_URL')

@@ -102,6 +102,20 @@ class TestProfileResource(object):
         assert set([p['id'] for p in objects]) == set([p1.pk, hero.pk])
 
 
+    def test_can_see_my_students_from_other_school(self, no_csrf_client, db):
+        """Can see students from other schools if they are my students."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        student = factories.ProfileFactory.create()
+        factories.RelationshipFactory.create(
+            from_profile=teacher, to_profile=student)
+
+        response = no_csrf_client.get(self.list_url(), user=teacher.user)
+        objects = response.json['objects']
+
+        assert len(objects) == 2
+        assert set([p['id'] for p in objects]) == set([teacher.pk, student.pk])
+
+
     def test_village_uri(self, no_csrf_client, db):
         """Each profile has a village_uri in the API response."""
         s = factories.ProfileFactory.create(school_staff=True)
@@ -121,7 +135,10 @@ class TestProfileResource(object):
 
         response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
 
-        assert response.json['objects'][0]['unread_count'] == 1
+        assert [
+            o for o in response.json['objects']
+            if o['id'] == rel.student.id
+            ][0]['unread_count'] == 1
 
 
     def test_edit_student_uri(self, no_csrf_client, db):

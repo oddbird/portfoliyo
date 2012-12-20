@@ -1,180 +1,26 @@
 // ---------------------------------------------------------------------------
 // Settings
 
-$banner-size    : $smallpx;
-$banner-rhythm  : .25;
-$banner-leading : 1 + $banner-rhythm*2;
+$banner-size      : $smallpx;
+$banner-rhythm    : .25;
 
-%banner-item {
-  @include padding-leader($banner-rhythm);
-  @include padding-trailer($banner-rhythm);
-}
+$brand-width      : $left;
+$meta-width       : $right + 1;
+$announce-width   : $break-cols - $brand-width - $meta-width;
+
+// ---------------------------------------------------------------------------
+// Guides
+
+%banner-item { @include rhythm-padding($banner-rhythm); }
 
 // ---------------------------------------------------------------------------
 // Banner
 
-[role="banner"] {
-  @extend %boilerplate;
-  color: mix($base1,$base2);
-}
-
-$brand-width: $left;
-$meta-width: $right + 1;
-$announce-width: $break-cols - $brand-width - $meta-width;
+[role="banner"] { @extend %boilerplate; }
 
 // ---------------------------------------------------------------------------
-// Brand
+// Modules
 
-.brand {
-  @include adjust-font-size-to($banner-size);
-  @include span-columns(3);
-  color: $base3;
-  .wordmark {
-    @extend %icon;
-    @extend %icon-fire;
-    @extend %banner-item;
-    display: inline-block;
-    font-weight: bold;
-    &:before { line-height: 1; }
-  }
-
-  @include at-breakpoint($break) { @include span-columns($brand-width); }
-  .village-app & { @include span-columns($brand-width, $break-cols); }
-}
-
-// ---------------------------------------------------------------------------
-// Announcements
-
-.announcements {
-  @extend %banner-item;
-  @include adjust-font-size-to($banner-size);
-  clear: both;
-  color: inherit;
-  .announce {
-    @extend %icon;
-    @extend %icon-warning;
-    @extend %button;
-    @include button-color($blue);
-    display: inline-block;
-    padding: 0 .5em;
-  }
-  a {
-    #{$link} { color: adjust-color($accent, $lightness: 35%); }
-    #{$focus} { color: adjust-color($accent, $lightness: 45%); }
-  }
-
-  .close {
-    @extend %icon-replace;
-    @extend %icon-x-alt;
-    margin-left: 1em;
-  }
-
-  @include at-breakpoint($break) {
-    @include span-columns($announce-width);
-    clear: none;
-  }
-  .village-app & {
-    @include span-columns($announce-width,$break-cols);
-    clear: none;
-  }
-}
-
-// ---------------------------------------------------------------------------
-// Meta
-%metanav-base {
-  @include adjust-font-size-to($banner-size);
-  @include span-columns(5 omega);
-  @include at-breakpoint($break) { @include span-columns($meta-width omega); }
-  .village-app & { @include span-columns($meta-width omega, $break-cols); }
-  position: relative;
-  text-align: right;
-}
-
-.helplink {
-  @extend %icon-replace;
-  @extend %icon-help;
-  @extend %button;
-  @include button-color($orange);
-  @include leader($banner-rhythm/2, $banner-size);
-  line-height: 1em;
-  float: right;
-  margin-left: 1em;
-  padding: 0 .5em;
-
-  @include box-sizing(content-box);
-  @include at-breakpoint($break) {
-    text-indent: 0;
-    width: auto;
-    &:before {
-      position: static;
-      padding: 0;
-      margin-right: .4em;
-    }
-  }
-}
-
-.meta {
-  @extend %metanav-base;
-
-  span, a {
-    @extend %icon;
-    @extend %icon-settings;
-    @extend %banner-item;
-    display: block;
-  }
-
-  .settingslink { @extend %ellipsis; }
-
-  [href*="edit"] { @extend %icon-settings; }
-  [href*="password"] { @extend %icon-key; }
-  button {
-    @extend %reset-button;
-    @extend %icon;
-    @extend %icon-exit;
-    @extend %banner-item;
-    @include link(light);
-    width: 100%;
-  }
-}
-
-$useraction-size          : $banner-size;
-$useraction-border-size   : 2px;
-$useraction-border-color  : $back;
-$useraction-background    : $base01;
-
-.useractions {
-  @include css-arrow(top, rhythm(.5), $useraction-background);
-  @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
-  @include stretch-x;
-  top: 100%;
-  margin: - $useraction-border-size 0 0;
-  border: $useraction-border-size solid $useraction-border-color;
-  background: $useraction-background;
-  text-align: left;
-  z-index: 900;
-  display: none;
-
-  a, button {
-    @extend %ellipsis;
-    padding: rhythm(.5, $useraction-size);
-  }
-  .meta:hover & { display: block; }
-}
-
-// ---------------------------------------------------------------------------
-// Login
-
-.login-nav {
-  @extend %metanav-base;
-  ul { @include inline-list; }
-  a {
-    @extend %banner-item;
-    display: inline-block;
-  }
-
-  .login-link {
-    @extend %button;
-    @include small-button;
-    @include button-color($blue);
-  }
-}
+@import "banner/brand";
+@import "banner/meta";
+@import "banner/announcements";

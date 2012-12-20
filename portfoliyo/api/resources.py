@@ -1,16 +1,14 @@
 """Portfoliyo API resources."""
 from django.core.urlresolvers import reverse
-from django.core.exceptions import ObjectDoesNotExist
 from tastypie import constants, fields
 from tastypie.authorization import ReadOnlyAuthorization
 from tastypie.bundle import Bundle
-from tastypie.exceptions import NotFound
 from tastypie.resources import ModelResource
 
 from portfoliyo.api.authentication import SessionAuthentication
 from portfoliyo.api.authorization import (
     ProfileAuthorization, RelationshipAuthorization, GroupAuthorization)
-from portfoliyo import model
+from portfoliyo import model, xact
 
 
 class PortfoliyoResource(ModelResource):
@@ -41,8 +39,8 @@ class PortfoliyoResource(ModelResource):
 
 
     def wrap_view(self, view):
-        """Undo csrf-exempt on view wrapper; we want session-csrf to run."""
-        wrapper = super(PortfoliyoResource, self).wrap_view(view)
+        """Wrap in transaction; undo csrf-exempt."""
+        wrapper = xact.xact(super(PortfoliyoResource, self).wrap_view(view))
         wrapper.csrf_exempt = False
         return wrapper
 
