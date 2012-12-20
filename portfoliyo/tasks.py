@@ -1,33 +1,11 @@
-from celery import Celery
+from __future__ import absolute_import
+
 from celery.utils.log import get_task_logger
-from django.conf import settings
-from raven.contrib.celery import register_signal
-from raven.contrib.django.models import client
+
+from portfoliyo.celery import celery
 
 
 logger = get_task_logger(__name__)
-
-
-
-# automatic logging of task failures to Sentry
-register_signal(client)
-
-
-
-if settings.REDIS_URL: # pragma: no cover
-    celery = Celery(
-        broker=settings.REDIS_URL,
-        backend=settings.REDIS_URL,
-        )  # pragma: no cover
-else:
-    celery = Celery()
-    celery.conf.update(CELERY_ALWAYS_EAGER=True)
-
-celery.conf.update(
-    CELERY_DISABLE_RATE_LIMITS=True,
-    CELERY_TIMEZONE=settings.TIME_ZONE,
-    CELERY_STORE_ERRORS_EVEN_IF_IGNORED=True,
-    )
 
 
 # set ignore_result=True for tasks where we don't care about the return value

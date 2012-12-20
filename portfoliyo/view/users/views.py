@@ -17,7 +17,7 @@ from django.views.decorators.http import require_POST
 from ratelimit.decorators import ratelimit
 from session_csrf import anonymous_csrf
 
-from portfoliyo import model, invites
+from portfoliyo import model, invites, xact
 from portfoliyo.view import tracking
 from ..decorators import login_required
 from ..home import redirect_home
@@ -27,6 +27,7 @@ from . import forms, tokens
 
 @anonymous_csrf
 @ratelimit(field='username', method='POST', rate='5/m')
+@xact.xact # auth_views.login sends user_logged_in signal, updates last_login
 def login(request):
     kwargs = {
         'template_name': 'users/login.html',
@@ -48,6 +49,7 @@ def logout(request):
 
 
 @login_required
+@xact.xact
 def password_change(request):
     response = auth_views.password_change(
         request,
@@ -87,6 +89,7 @@ def password_reset(request):
 
 
 @anonymous_csrf
+@xact.xact
 def password_reset_confirm(request, uidb36, token):
     response = auth_views.password_reset_confirm(
         request,
@@ -109,32 +112,33 @@ def register(request):
     if request.method == 'POST':
         form = forms.RegistrationForm(request.POST)
         if form.is_valid():
-            profile = form.save()
-            user = profile.user
-            user.backend = settings.AUTHENTICATION_BACKENDS[0]
-            auth.login(request, user)
-            token_generator = tokens.EmailConfirmTokenGenerator()
-            invites.send_invite_email(
-                profile,
-                'emails/welcome',
-                token_generator=token_generator,
-                )
-            messages.success(
-                request,
-                "Welcome to Portfoliyo! "
-                "Start by creating a group "
-                "and then add students and parents."
-                )
-            tracking.track(
-                request,
-                'registered',
-                email_notifications=(
-                    'yes'
-                    if form.cleaned_data.get('email_notifications')
-                    else 'no'
-                    ),
-                user_id=user.id,
-                )
+            with xact.xact():
+                profile = form.save()
+                user = profile.user
+                user.backend = settings.AUTHENTICATION_BACKENDS[0]
+                auth.login(request, user)
+                token_generator = tokens.EmailConfirmTokenGenerator()
+                invites.send_invite_email(
+                    profile,
+                    'emails/welcome',
+                    token_generator=token_generator,
+                    )
+                messages.success(
+                    request,
+                    "Welcome to Portfoliyo! "
+                    "Start by creating a group "
+                    "and then add students and parents."
+                    )
+                tracking.track(
+                    request,
+                    'registered',
+                    email_notifications=(
+                        'yes'
+                        if form.cleaned_data.get('email_notifications')
+                        else 'no'
+                        ),
+                    user_id=user.id,
+                    )
             return redirect(redirect_home(user))
     else:
         form = forms.RegistrationForm()
@@ -158,13 +162,14 @@ def confirm_email(request, uidb36, token):
     token_generator = tokens.EmailConfirmTokenGenerator()
 
     if user is not None and token_generator.check_token(user, token):
-        user.is_active = True
-        user.save()
-        profile = user.profile
-        profile.email_confirmed = True
-        profile.save()
-        messages.success(request, "Email address %s confirmed!" % user.email)
-        tracking.track(request, 'confirmed email')
+        with xact.xact():
+            user.is_active = True
+            user.save(force_update=True)
+            profile = user.profile
+            profile.email_confirmed = True
+            profile.save(force_update=True)
+            messages.success(request, "Email address %s confirmed!" % user.email)
+            tracking.track(request, 'confirmed email')
         return redirect(redirect_home(user))
 
     return TemplateResponse(request, 'users/confirmation_failed.html')
@@ -172,6 +177,7 @@ def confirm_email(request, uidb36, token):
 
 
 @anonymous_csrf
+@xact.xact
 def accept_email_invite(request, uidb36, token):
     response = auth_views.password_reset_confirm(
         request,
@@ -202,7 +208,8 @@ def edit_profile(request):
         form = forms.EditProfileForm(
             request.POST, instance=request.user.profile)
         if form.is_valid():
-            form.save()
+            with xact.xact():
+                form.save()
             messages.success(request, u"Profile changes saved!")
             return redirect(redirect_home(request.user))
     else:

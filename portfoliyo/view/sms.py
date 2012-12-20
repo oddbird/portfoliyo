@@ -9,6 +9,7 @@ from django.views.decorators import http, csrf
 from twilio import twiml
 from twilio.util import RequestValidator
 
+from portfoliyo import xact
 from portfoliyo.sms import hook
 from portfoliyo.sms.base import split_sms
 
@@ -50,7 +51,8 @@ def twilio_receive(request):
     source = request.POST['From']
     body = request.POST['Body']
 
-    reply = hook.receive_sms(source, body)
+    with xact.xact():
+        reply = hook.receive_sms(source, body)
 
     response = twiml.Response()
 

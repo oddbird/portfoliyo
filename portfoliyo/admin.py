@@ -5,10 +5,11 @@ Custom admin site with standard site login and no insecure logout.
 from django.conf import settings
 from django.shortcuts import redirect
 from django.views.decorators.cache import never_cache
-
 from django.contrib import admin, messages
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.contrib.auth.views import redirect_to_login
+
+from portfoliyo import xact
 
 
 
@@ -42,6 +43,12 @@ class AdminSite(admin.AdminSite):
 
         """
         return redirect("home")
+
+
+    def admin_view(self, *args, **kwargs):
+        """Wrap all admin views in a transaction."""
+        wrapped = super(AdminSite, self).admin_view(*args, **kwargs)
+        return xact.xact(wrapped)
 
 
 site = admin.site = AdminSite()
