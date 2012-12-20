@@ -29,6 +29,21 @@ def test_post(mock_record, requested, from_teacher):
 
 
 @pytest.mark.parametrize('requested', [True, False])
+def test_bulk_post(mock_record, requested):
+    mock_profile = mock.Mock(id=2, notify_teacher_post=requested)
+    mock_post = mock.Mock(id=3, author=mock.Mock(school_staff=True))
+    record.bulk_post(mock_profile, mock_post)
+
+    mock_record.assert_called_with(
+        mock_profile,
+        'bulk post',
+        triggering=requested,
+        data={'bulk-post-id': 3},
+        )
+
+
+
+@pytest.mark.parametrize('requested', [True, False])
 def test_new_parent(mock_record, requested):
     mock_profile = mock.Mock(id=2, notify_new_parent=requested)
     mock_signup = mock.Mock(id=3)
@@ -82,8 +97,8 @@ def mock_store(request):
 
 def test_record(mock_store):
     """Passes notification data on to ``store``."""
-    mock_profile = mock.Mock(id=2)
-    record._record(mock_profile, 'some', triggering=False, data={'foo': 'bar'})
+    record._record(
+        _profile(id=2), 'some', triggering=False, data={'foo': 'bar'})
 
     mock_store.assert_called_with(
         2, 'some', triggering=False, data={'foo': 'bar'})
@@ -92,11 +107,32 @@ def test_record(mock_store):
 
 def test_record_triggering(mock_store):
     """If triggering, triggers send_notification task."""
-    mock_profile = mock.Mock(id=2)
     target = 'portfoliyo.notifications.record.tasks.send_notification.delay'
     with mock.patch(target) as mock_task_delay:
-        record._record(mock_profile, 'some', triggering=True)
+        record._record(_profile(id=2), 'some', triggering=True)
 
     mock_task_delay.assert_called_with(2)
     mock_store.assert_called_with(
         2, 'some', triggering=True, data=None)
+
+
+
+def test_record_doesnt_store_if_user_inactive(mock_store):
+    """Doesn't store notifications for inactive users."""
+    record._record(_profile(id=2, is_active=False), 'some')
+
+    assert not mock_store.call_count
+
+
+
+def test_record_doesnt_store_if_no_email(mock_store):
+    """Doesn't store notifications for users without email addresses."""
+    record._record(_profile(id=2, email=None), 'some')
+
+    assert not mock_store.call_count
+
+
+
+def _profile(id, email="foo@example.com", is_active=True, **kwargs):
+    return mock.Mock(
+        id=id, user=mock.Mock(email=email, is_active=is_active), **kwargs)

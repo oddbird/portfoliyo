@@ -14,6 +14,14 @@ def post(profile, post):
 
 
 
+def bulk_post(profile, bulk_post):
+    """Notify ``profile`` that a teacher posted ``bulk_post``."""
+    triggering = profile.notify_teacher_post
+    data = {'bulk-post-id': bulk_post.id}
+    _record(profile, 'bulk post', triggering=triggering, data=data)
+
+
+
 def new_parent(profile, signup):
     """
     Notify ``profile`` that a parent signed up.
@@ -45,6 +53,8 @@ def new_teacher(profile, teacher, student):
 
 def _record(profile, name, triggering=False, data=None):
     """Record a notification for the given profile."""
+    if profile.user.email is None or not profile.user.is_active:
+        return
     store.store(profile.id, name, triggering=triggering, data=data)
     # @@@ later this will be only if user prefers instant notifications
     if triggering:
