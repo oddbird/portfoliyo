@@ -6,7 +6,7 @@ import base64
 import time
 from hashlib import sha1
 from django.contrib.auth import models as auth_models
-from django.db import models, transaction, IntegrityError
+from django.db import models, transaction, IntegrityError, connection
 from django.db.models import signals
 from django.utils import timezone
 
@@ -24,6 +24,10 @@ email_field.max_length = 255
 # monkeypatch User's __unicode__ method to be friendlier for no-username
 auth_models.User.__unicode__ = lambda self: (
     self.email or self.profile.name or self.profile.phone or u'<unknown>')
+
+# tell Django definitively that we do support transactions (db-level autocommit
+# makes it think otherwise)
+connection.features._supports_transactions = lambda: True
 
 
 

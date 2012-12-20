@@ -18,6 +18,7 @@ def parse_database_url(database, environment_variable='DATABASE_URL'):
             'mysql': 'django.db.backends.mysql',
             'sqlite': 'django.db.backends.sqlite3',
         }[url.scheme],
+        'OPTIONS': {'autocommit': True},
     })
 parse_database_url(DATABASES['default'])
 del parse_database_url
