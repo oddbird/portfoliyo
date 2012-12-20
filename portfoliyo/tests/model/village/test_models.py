@@ -337,6 +337,55 @@ class TestPostCreate(object):
         assert post.to_sms == True
 
 
+    def test_records_notifications(self, db):
+        """Records notification for users in village."""
+        rel1 = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create(
+            to_profile=rel1.student)
+
+        target = 'portfoliyo.model.village.models.notifications.post'
+        with mock.patch(target) as mock_notify_post:
+            post = models.Post.create(rel1.elder, rel1.student, "Hello")
+
+        mock_notify_post.assert_called_with(rel2.elder, post)
+
+
+    def test_can_prevent_notification(self, db):
+        """No notification if pass notifications=False."""
+        rel1 = factories.RelationshipFactory.create()
+        factories.RelationshipFactory.create(
+            to_profile=rel1.student)
+
+        target = 'portfoliyo.model.village.models.notifications.post'
+        with mock.patch(target) as mock_notify_post:
+            models.Post.create(
+                rel1.elder, rel1.student, "Hello", notifications=False)
+
+        assert mock_notify_post.call_count == 0
+
+
+    def test_no_notification_for_system_posts(self, db):
+        """No notification for system posts."""
+        rel = factories.RelationshipFactory.create()
+
+        target = 'portfoliyo.model.village.models.notifications.post'
+        with mock.patch(target) as mock_notify_post:
+            models.Post.create(None, rel.student, "Hello")
+
+        assert mock_notify_post.call_count == 0
+
+
+    def test_no_notification_for_author(self, db):
+        """No notification recorded for author."""
+        rel = factories.RelationshipFactory.create()
+
+        target = 'portfoliyo.model.village.models.notifications.post'
+        with mock.patch(target) as mock_notify_post:
+            models.Post.create(rel.elder, rel.student, "Hello")
+
+        assert mock_notify_post.call_count == 0
+
+
 
 class TestBulkPost(object):
     def test_create(self, db):
@@ -452,6 +501,23 @@ class TestBulkPost(object):
                 'phone': "+13216540987",
                 }
             ]
+
+
+    def test_records_notifications(self, db):
+        """Records notification for users in group."""
+        group = factories.GroupFactory.create()
+        rel = factories.RelationshipFactory.create(
+            from_profile=group.owner)
+        other = factories.ProfileFactory.create()
+        group.elders.add(other)
+        group.students.add(rel.student)
+
+        target = 'portfoliyo.model.village.models.notifications.bulk_post'
+        with mock.patch(target) as mock_notify_bulk_post:
+            bulk_post = models.BulkPost.create(
+                rel.elder, group, "Hello")
+
+        mock_notify_bulk_post.assert_called_with(other, bulk_post)
 
 
 class TestBasePost(object):
