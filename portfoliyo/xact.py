@@ -11,12 +11,16 @@ For full details, check the README.md file.
 
 (See https://github.com/Xof/xact)
 """
-
 from functools import wraps
 
+from django.db import transaction, DEFAULT_DB_ALIAS, connections
+from django.dispatch import Signal
 import psycopg2.extensions
 
-from django.db import transaction, DEFAULT_DB_ALIAS, connections
+
+post_commit = Signal()
+post_rollback = Signal()
+
 
 class _Transaction(object):
 
@@ -45,8 +49,10 @@ class.
                 # Outer transaction
                 try:
                     transaction.commit(self.using)
+                    post_commit.send(None)
                 except:
                     transaction.rollback(self.using)
+                    post_rollback.send(None)
                     raise
                 finally:
                     self._leave_transaction_management()
@@ -62,6 +68,7 @@ class.
             if self.sid is None:
                 # Outer transaction
                 transaction.rollback(self.using)
+                post_rollback.send(None)
                 self._leave_transaction_management()
             else:
                 # Inner savepoint
