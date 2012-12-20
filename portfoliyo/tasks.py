@@ -12,6 +12,7 @@ logger = get_task_logger(__name__)
 # set ignore_result=True for tasks where we don't care about the return value
 # set acks_late=True for tasks that are better executed twice than not at all
 
+
 @celery.task(ignore_result=True)
 def check_for_pending_notifications():
     """Trigger notifications to all users with pending notifications."""
@@ -20,11 +21,13 @@ def check_for_pending_notifications():
         send_notification.delay(profile_id)
 
 
+
 @celery.task(ignore_result=True)
 def send_notification(profile_id):
     """Send notification to the user with the given profile ID."""
     from portfoliyo import notifications
     notifications.send(profile_id)
+
 
 
 @celery.task(ignore_result=True, acks_late=True)

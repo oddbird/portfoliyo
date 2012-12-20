@@ -6,14 +6,15 @@ import threading
 from celery import Celery, Task
 from django.conf import settings
 from django.db import transaction
-from raven.contrib.celery import register_signal
-from raven.contrib.django.models import client
 
 from portfoliyo import xact
 
 
-# automatic logging of task failures to Sentry
-register_signal(client)
+if 'raven.contrib.django' in settings.INSTALLED_APPS: # pragma: no cover
+    from raven.contrib.celery import register_signal
+    from raven.contrib.django.models import client
+    # automatic logging of task failures to Sentry
+    register_signal(client)
 
 
 
@@ -105,7 +106,7 @@ if settings.REDIS_URL and not settings.CELERY_ALWAYS_EAGER: # pragma: no cover
     celery = TransactionCelery(
         broker=settings.REDIS_URL,
         backend=settings.REDIS_URL,
-        )  # pragma: no cover
+        )
 else:
     celery = TransactionCelery()
     celery.conf.update(CELERY_ALWAYS_EAGER=True)
