@@ -10,5 +10,6 @@ htmlcov/
 djangodb.sqlite
 __pycache__
 logfile
+chromedriver.log
 .coverage
 celerybeat-schedule
