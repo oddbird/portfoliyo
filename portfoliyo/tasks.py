@@ -26,16 +26,17 @@ else:
 celery.conf.update(
     CELERY_DISABLE_RATE_LIMITS=True,
     CELERY_TIMEZONE=settings.TIME_ZONE,
+    CELERY_STORE_ERRORS_EVEN_IF_IGNORED=True,
     )
 
 
-# set ignore_result=True for tasks where we don't care about the result
+# set ignore_result=True for tasks where we don't care about the return value
 # set acks_late=True for tasks that are better executed twice than not at all
 
 # if a task accesses DB rows created with the task, make sure the calling code
 # commits the transaction before creating the task
 
-@celery.task
+@celery.task(ignore_result=True, acks_late=True)
 def send_sms(phone, body):
     from portfoliyo import sms
     sms.send(phone, body)
