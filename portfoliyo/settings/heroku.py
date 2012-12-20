@@ -140,8 +140,6 @@ LOGGING = {
 }
 
 REDIS_URL = env('REDISTOGO_URL')
-# how many connections Celery will open to Redis
-CELERY_BROKER_POOL_LIMIT = env('CELERY_BROKER_POOL_LIMIT', int)
 
 GOOGLE_ANALYTICS_ID = env('GOOGLE_ANALYTICS_ID')
 USERVOICE_ID = env('USERVOICE_ID')
