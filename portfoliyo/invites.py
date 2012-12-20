@@ -4,7 +4,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.template import loader
 from django.utils.http import int_to_base36
 
-from portfoliyo import email, sms
+from portfoliyo import email, tasks
 
 
 
@@ -33,4 +33,4 @@ def send_invite_sms(profile, template_name, extra_context):
     else:
         messages = body.split("\n")
     for body in messages:
-        sms.send(profile.phone, body)
+        tasks.send_sms.delay(profile.phone, body)

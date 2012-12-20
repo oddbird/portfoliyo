@@ -11,3 +11,4 @@ djangodb.sqlite
 __pycache__
 logfile
 .coverage
+celerybeat-schedule

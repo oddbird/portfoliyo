@@ -10,7 +10,7 @@ from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
 from portfoliyo.model.events import trigger
-from portfoliyo import notifications, sms
+from portfoliyo import notifications, tasks
 from ..users import models as user_models
 from . import unread
 
@@ -292,7 +292,7 @@ class BulkPost(BasePost):
         post.notify_email(from_sms)
 
         for number, body in sms_to_send:
-            sms.send(number, body)
+            tasks.send_sms.delay(number, body)
 
         return post
 
@@ -374,7 +374,7 @@ class Post(BasePost):
             )
 
         for number, body in sms_to_send:
-            sms.send(number, body)
+            tasks.send_sms.delay(number, body)
 
         return post
 
