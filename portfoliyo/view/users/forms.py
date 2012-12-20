@@ -42,7 +42,6 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     email = forms.EmailField(max_length=255)
-    email_notifications = forms.BooleanField(initial=True, required=False)
     school = pyoforms.ModelChoiceField(
         queryset=model.School.objects.filter(auto=False).order_by('name'),
         empty_label=u"I'm not affiliated with a school",
@@ -119,7 +118,7 @@ class RegistrationForm(forms.Form):
             school_staff=True,
             email_confirmed=False,
             is_active=True,
-            email_notifications=self.cleaned_data['email_notifications'],
+            email_notifications=True,
             )
 
         return profile
