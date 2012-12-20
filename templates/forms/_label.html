@@ -2,5 +2,5 @@
 
 <label for="{{ id }}" class="type" title="{{ label_text }} ({% if field|optional %}optional{% else %}required{% endif %})">
   {{ label_text }}
-  {% if field|optional %}<span class="formfield-optional">[optional]</span>{% endif %}
+  {% if field|optional and not field|is_checkbox %}<span class="formfield-optional">[optional]</span>{% endif %}
 </label>
