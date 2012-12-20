@@ -6,14 +6,18 @@ import threading
 from celery import Celery, Task
 from django.conf import settings
 from django.db import transaction
-from raven.contrib.celery import register_signal
-from raven.contrib.django.models import client
 
 from portfoliyo import xact
 
 
-# automatic logging of task failures to Sentry
-register_signal(client)
+try:
+    from raven.contrib.celery import register_signal
+    from raven.contrib.django.models import client
+except ImportError: # Sentry/Raven aren't required in dev/test
+    pass
+else:
+    # automatic logging of task failures to Sentry
+    register_signal(client)
 
 
 
