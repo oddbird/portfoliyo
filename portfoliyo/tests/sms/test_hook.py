@@ -481,8 +481,10 @@ def test_code_signup_name(db):
         state=model.TextSignup.STATE.name,
         )
 
-    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "John Doe")
+    notify_new_parent_path = 'portfoliyo.sms.hook.notifications.new_parent'
+    with mock.patch(notify_new_parent_path) as mock_notify_new_parent:
+        with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+            reply = hook.receive_sms(phone, "John Doe")
 
     assert reply == (
         "All done, thank you! You can text this number "
@@ -498,6 +500,7 @@ def test_code_signup_name(db):
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
         None, student, reply, in_reply_to=phone, notifications=False)
+    mock_notify_new_parent.assert_called_with(teacher_rel.elder, signup)
 
 
 def test_code_signup_name_strips_extra_lines(db):
