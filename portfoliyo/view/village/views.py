@@ -12,7 +12,7 @@ from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 
-from portfoliyo import formats, model, pdf
+from portfoliyo import formats, model, pdf, xact
 from portfoliyo.view import tracking
 from ..ajax import ajax
 from ..decorators import school_staff_required, login_required
@@ -77,7 +77,8 @@ def add_student(request, group_id=None):
         form = forms.AddStudentForm(
             request.POST, elder=request.user.profile, group=group)
         if form.is_valid():
-            student = form.save()
+            with xact.xact():
+                student = form.save()
             tracking.track(request, 'added student')
             return redirect_to_village(student, group)
     else:
@@ -125,7 +126,8 @@ def edit_student(request, student_id):
         form = forms.StudentForm(
             request.POST, instance=rel.student, elder=rel.elder)
         if form.is_valid():
-            student = form.save()
+            with xact.xact():
+                student = form.save()
             tracking.track(request, 'edited student')
             return redirect_to_village(student, group)
     else:
@@ -150,7 +152,8 @@ def add_group(request):
     if request.method == 'POST':
         form = forms.AddGroupForm(request.POST, owner=request.user.profile)
         if form.is_valid():
-            group = form.save()
+            with xact.xact():
+                group = form.save()
             tracking.track(request, 'added group')
             if not group.students.exists():
                 return redirect(
@@ -182,7 +185,8 @@ def edit_group(request, group_id):
     if request.method == 'POST':
         form = forms.GroupForm(request.POST, instance=group)
         if form.is_valid():
-            group = form.save()
+            with xact.xact():
+                group = form.save()
             tracking.track(request, 'edited group')
             return redirect('group', group_id=group.id)
     else:
@@ -209,7 +213,8 @@ def invite_family(request, student_id):
     if request.method == 'POST':
         form = forms.InviteFamilyForm(request.POST, rel=rel)
         if form.is_valid():
-            form.save()
+            with xact.xact():
+                form.save()
             tracking.track(request, 'invited family')
             return redirect_to_village(rel.student, group)
     else:
@@ -242,7 +247,8 @@ def invite_teacher(request, student_id):
     if request.method == 'POST':
         form = forms.InviteTeacherForm(request.POST, rel=rel)
         if form.is_valid():
-            teacher = form.save()
+            with xact.xact():
+                teacher = form.save()
             tracking.track(
                 request,
                 'invited teacher',
@@ -271,7 +277,8 @@ def invite_teacher_to_group(request, group_id):
     if request.method == 'POST':
         form = forms.InviteTeacherForm(request.POST, group=group)
         if form.is_valid():
-            teacher = form.save()
+            with xact.xact():
+                teacher = form.save()
             tracking.track(
                 request,
                 'invited teacher to group',
@@ -389,6 +396,7 @@ def json_posts(request, student_id=None, group_id=None):
                     ),
                 content_type='application/json',
                 )
+        # transactions are handled by create method
         post = post_model.create(
             request.user.profile,
             target,
@@ -466,7 +474,8 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
     if request.method == 'POST':
         form = forms.EditFamilyForm(request.POST, instance=elder, rel=elder_rel)
         if form.is_valid():
-            form.save(editor=editor)
+            with xact.xact():
+                form.save(editor=editor)
             messages.success(request, u"Changes saved!")
             if elder_rel:
                 return redirect('village', student_id=student_id)
