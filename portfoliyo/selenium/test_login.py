@@ -1,4 +1,4 @@
-"""Selenium tests for home page."""
+"""Selenium tests for login page."""
 from .pages import login
 
 
