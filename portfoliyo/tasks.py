@@ -16,7 +16,7 @@ register_signal(client)
 
 
 
-if settings.REDIS_URL: # pragma: no cover
+if settings.REDIS_URL and not settings.CELERY_ALWAYS_EAGER: # pragma: no cover
     celery = Celery(
         broker=settings.REDIS_URL,
         backend=settings.REDIS_URL,
