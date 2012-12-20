@@ -43,7 +43,8 @@ class EventList(object):
     def events(self):
         if self._events is None:
             self._events = self.request.session.get('tracking', [])
-            self.request.session['tracking'] = []
+            if self._events: # avoid modifying the session unnecessarily
+                self.request.session['tracking'] = []
         return self._events
 
 
