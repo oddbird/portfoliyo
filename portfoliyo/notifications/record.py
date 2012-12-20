@@ -4,19 +4,13 @@ from . import store
 
 
 
-def parent_post(profile, post):
-    """Notify ``profile`` that a parent posted ``post``."""
-    triggering = profile.notify_parent_text
+def post(profile, post):
+    """Notify ``profile`` that a parent or teacher posted ``post``."""
+    pref = 'notify_%s' % (
+        'teacher_post' if post.author.school_staff else 'parent_text')
+    triggering = getattr(profile, pref)
     data = {'post-id': post.id}
-    _record(profile, 'parent post', triggering=triggering, data=data)
-
-
-
-def teacher_post(profile, post):
-    """Notify ``profile`` that a teacher posted ``post``."""
-    triggering = profile.notify_teacher_post
-    data = {'post-id': post.id}
-    _record(profile, 'teacher post', triggering=triggering, data=data)
+    _record(profile, 'post', triggering=triggering, data=data)
 
 
 

@@ -16,24 +16,15 @@ def mock_record(request):
 
 
 @pytest.mark.parametrize('requested', [True, False])
-def test_parent_post(mock_record, requested):
-    mock_profile = mock.Mock(id=2, notify_parent_text=requested)
-    mock_post = mock.Mock(id=3)
-    record.parent_post(mock_profile, mock_post)
+@pytest.mark.parametrize('from_teacher', [True, False])
+def test_post(mock_record, requested, from_teacher):
+    pref = 'notify_%s' % ('teacher_post' if from_teacher else 'parent_text')
+    mock_profile = mock.Mock(id=2, **{pref: requested})
+    mock_post = mock.Mock(id=3, author=mock.Mock(school_staff=from_teacher))
+    record.post(mock_profile, mock_post)
 
     mock_record.assert_called_with(
-        mock_profile, 'parent post', triggering=requested, data={'post-id': 3})
-
-
-
-@pytest.mark.parametrize('requested', [True, False])
-def test_teacher_post(mock_record, requested):
-    mock_profile = mock.Mock(id=2, notify_teacher_post=requested)
-    mock_post = mock.Mock(id=3)
-    record.teacher_post(mock_profile, mock_post)
-
-    mock_record.assert_called_with(
-        mock_profile, 'teacher post', triggering=requested, data={'post-id': 3})
+        mock_profile, 'post', triggering=requested, data={'post-id': 3})
 
 
 
