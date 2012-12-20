@@ -6,4 +6,3 @@ omit =
   */wsgi.py
   */tests/*
   */selenium/*
-  portfoliyo/xact.py

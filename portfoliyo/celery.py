@@ -10,7 +10,7 @@ from django.db import transaction
 from portfoliyo import xact
 
 
-if 'raven.contrib.django' in settings.INSTALLED_APPS:
+if 'raven.contrib.django' in settings.INSTALLED_APPS: # pragma: no cover
     from raven.contrib.celery import register_signal
     from raven.contrib.django.models import client
     # automatic logging of task failures to Sentry
@@ -106,7 +106,7 @@ if settings.REDIS_URL: # pragma: no cover
     celery = TransactionCelery(
         broker=settings.REDIS_URL,
         backend=settings.REDIS_URL,
-        )  # pragma: no cover
+        )
 else:
     celery = TransactionCelery()
     celery.conf.update(CELERY_ALWAYS_EAGER=True)
