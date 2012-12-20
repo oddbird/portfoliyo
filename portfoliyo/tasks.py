@@ -34,3 +34,8 @@ celery.conf.update(
 
 # if a task accesses DB rows created with the task, make sure the calling code
 # commits the transaction before creating the task
+
+@celery.task
+def send_sms(phone, body):
+    from portfoliyo import sms
+    sms.send(phone, body)
