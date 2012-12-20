@@ -227,5 +227,6 @@ PORTFOLIYO_SMS_BACKEND = "portfoliyo.sms.backends.console.ConsoleSMSBackend"
 PORTFOLIYO_SMS_DEFAULT_FROM = "+15555555555"
 
 REDIS_URL = None
+CELERY_BROKER_POOL_LIMIT = 5
 
 PORTFOLIYO_BASE_URL = 'http://localhost:8000'

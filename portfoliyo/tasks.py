@@ -26,6 +26,7 @@ else:
 celery.conf.update(
     CELERY_DISABLE_RATE_LIMITS=True,
     CELERY_TIMEZONE=settings.TIME_ZONE,
+    BROKER_POOL_LIMIT=settings.CELERY_BROKER_POOL_LIMIT,
     )
 
 
