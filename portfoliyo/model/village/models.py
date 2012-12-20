@@ -10,7 +10,7 @@ from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
 from portfoliyo.model.events import trigger
-from portfoliyo import tasks
+from portfoliyo import notifications, tasks
 from ..users import models as user_models
 from . import unread
 
@@ -50,6 +50,8 @@ class BasePost(models.Model):
     to_sms = models.BooleanField(default=False)
     # arbitrary additional metadata, currently just highlights and SMSes
     meta = JSONField(default={})
+
+    notification_type = None
 
 
     class Meta:
@@ -152,6 +154,16 @@ class BasePost(models.Model):
         self.meta['highlights'] = meta_highlights
 
 
+    def notify(self):
+        """Record notifications for eligible users."""
+        if not self.author:
+            return
+        notify = getattr(notifications, self.notification_type)
+        for profile in self.elders_in_context.exclude(pk=self.author.pk):
+            # @@@ race condition; transaction isn't committed yet
+            notify(profile, self)
+
+
     def get_relationship(self):
         return None
 
@@ -177,6 +189,9 @@ class BulkPost(BasePost):
     # the group this was posted to (null means all-students for this author)
     group = models.ForeignKey(
         user_models.Group, blank=True, null=True, related_name='bulk_posts')
+
+
+    notification_type = 'bulk_post'
 
 
     def extra_data(self):
@@ -269,6 +284,8 @@ class BulkPost(BasePost):
 
         post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
 
+        post.notify()
+
         for number, body in sms_to_send:
             tasks.send_sms.delay(number, body)
 
@@ -284,6 +301,9 @@ class Post(BasePost):
     # (optional) the bulk-post that triggered this post
     from_bulk = models.ForeignKey(
         BulkPost, blank=True, null=True, related_name='triggered')
+
+
+    notification_type = 'post'
 
 
     def extra_data(self):
@@ -347,6 +367,8 @@ class Post(BasePost):
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
             )
+
+        post.notify()
 
         for number, body in sms_to_send:
             tasks.send_sms.delay(number, body)
