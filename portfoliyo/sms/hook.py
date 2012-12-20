@@ -208,7 +208,7 @@ def handle_new_student(signup, body):
         student,
         body,
         from_sms=True,
-        email_notifications=False,
+        notifications=False,
         )
     return reply(
         signup.family.phone,
@@ -232,7 +232,7 @@ def handle_role_update(signup, body):
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, body, from_sms=True, email_notifications=False)
+            parent, rel.student, body, from_sms=True, notifications=False)
     return reply(
         parent.phone,
         parent.students,
@@ -253,7 +253,7 @@ def handle_name_update(signup, body):
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, body, from_sms=True, email_notifications=False)
+            parent, rel.student, body, from_sms=True, notifications=False)
     return reply(
         parent.phone,
         parent.students,
@@ -344,7 +344,7 @@ def reply(phone, students, body):
     """Save given reply to given students' villages before returning it."""
     for student in students:
         model.Post.create(
-            None, student, body, in_reply_to=phone, email_notifications=False)
+            None, student, body, in_reply_to=phone, notifications=False)
     return body
 
 

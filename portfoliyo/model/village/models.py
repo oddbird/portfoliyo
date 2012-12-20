@@ -160,7 +160,6 @@ class BasePost(models.Model):
             return
         notify = getattr(notifications, self.notification_type)
         for profile in self.elders_in_context.exclude(pk=self.author.pk):
-            # @@@ race condition; transaction isn't committed yet
             notify(profile, self)
 
 
@@ -321,7 +320,7 @@ class Post(BasePost):
     @classmethod
     def create(cls, author, student, text,
                sms_profile_ids=None, sequence_id=None, from_sms=False,
-               in_reply_to=None, email_notifications=True):
+               in_reply_to=None, notifications=True):
         """
         Create/return a Post, triggering a Pusher event and SMSes.
 
@@ -337,8 +336,8 @@ class Post(BasePost):
         ``in_reply_to`` can be set to a phone number, in which case it will be
         assumed that an SMS was already sent to that number.
 
-        If ``email_notifications`` is ``False``, this post will never trigger
-        an email notification.
+        If ``notifications`` is ``False``, this post won't be included in
+        activity notifications.
 
         """
         html_text, highlights = process_text(
@@ -368,7 +367,8 @@ class Post(BasePost):
                 'mark_post_read', kwargs={'post_id': post.id}),
             )
 
-        post.notify()
+        if notifications:
+            post.notify()
 
         for number, body in sms_to_send:
             tasks.send_sms.delay(number, body)

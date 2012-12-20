@@ -46,7 +46,7 @@ def test_activate_user(db):
 
     assert utils.refresh(profile.user).is_active
     mock_create.assert_any_call(
-        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
+        None, rel.student, reply, in_reply_to=phone, notifications=False)
     assert reply == (
         "Thank you! You can text this number "
         "to talk with Jimmy Doe's teachers."
@@ -71,7 +71,7 @@ def test_decline(db):
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
     mock_create.assert_any_call(
-        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
+        None, rel.student, reply, in_reply_to=phone, notifications=False)
 
 
 
@@ -92,7 +92,7 @@ def test_active_user_decline(db):
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
     mock_create.assert_any_call(
-        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
+        None, rel.student, reply, in_reply_to=phone, notifications=False)
 
 
 
@@ -222,10 +222,10 @@ def test_code_signup_student_name(db):
     assert signup.student == student
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(
-        parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
+        parent, student, "Jimmy Doe", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
+        None, student, reply, in_reply_to=phone, notifications=False)
 
 
 def test_code_signup_student_name_strips_extra_lines(db):
@@ -252,7 +252,7 @@ def test_code_signup_student_name_strips_extra_lines(db):
         student,
         "Jimmy Doe\nLook at me!",
         from_sms=True,
-        email_notifications=False,
+        notifications=False,
         )
 
 
@@ -319,10 +319,10 @@ def test_group_code_signup_student_name(db):
     assert signup.student == student
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(
-        parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
+        parent, student, "Jimmy Doe", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
+        None, student, reply, in_reply_to=phone, notifications=False)
 
 
 def test_code_signup_student_name_dupe_detection(db):
@@ -391,10 +391,10 @@ def test_code_signup_role(db):
     student = teacher_rel.student
     # and the role is sent on to the village chat as a post
     mock_create.assert_any_call(
-        parent, student, "father", from_sms=True, email_notifications=False)
+        parent, student, "father", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
+        None, student, reply, in_reply_to=phone, notifications=False)
 
 
 def test_code_signup_role_strips_extra_lines(db):
@@ -494,10 +494,10 @@ def test_code_signup_name(db):
     assert signup.state == model.TextSignup.STATE.done
     student = teacher_rel.student
     mock_create.assert_any_call(
-        parent, student, "John Doe", from_sms=True, email_notifications=False)
+        parent, student, "John Doe", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
+        None, student, reply, in_reply_to=phone, notifications=False)
 
 
 def test_code_signup_name_strips_extra_lines(db):
