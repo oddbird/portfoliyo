@@ -37,10 +37,16 @@ def new_parent(profile, signup):
 
 def village_additions(added_by, teachers, students):
     """Send appropriate notifications for ``teachers`` added to ``students``."""
-    for teacher in teachers:
-        if teacher != added_by:
-            for student in students:
-                added_to_village(teacher, added_by, student)
+    teachers = set(teachers)
+    teachers.discard(added_by)
+    for student in students:
+        for existing_teacher_rel in student.elder_relationships.filter(
+                from_profile__school_staff=True).exclude(
+                from_profile__in=teachers):
+            for teacher in teachers:
+                new_teacher(existing_teacher_rel.elder, teacher, student)
+        for teacher in teachers:
+            added_to_village(teacher, added_by, student)
 
 
 def added_to_village(profile, added_by, student):

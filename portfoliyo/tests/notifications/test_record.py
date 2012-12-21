@@ -4,15 +4,17 @@ import pytest
 
 from portfoliyo.notifications import record
 
+from portfoliyo.tests import factories
 
 
-def test_village_additions_calls_added_to_village():
+
+def test_village_additions_calls_added_to_village(db):
     """Calls added_to_village for all student/teacher combos."""
-    added_by = mock.Mock()
-    teacher1 = mock.Mock()
-    teacher2 = mock.Mock()
-    student1 = mock.Mock()
-    student2 = mock.Mock()
+    added_by = factories.ProfileFactory.create()
+    teacher1 = factories.ProfileFactory.create()
+    teacher2 = factories.ProfileFactory.create()
+    student1 = factories.ProfileFactory.create()
+    student2 = factories.ProfileFactory.create()
 
     added_to_village_target = 'portfoliyo.notifications.record.added_to_village'
     with mock.patch(added_to_village_target) as mock_added_to_village:
@@ -27,6 +29,30 @@ def test_village_additions_calls_added_to_village():
     mock_added_to_village.assert_any_call(teacher1, added_by, student2)
     mock_added_to_village.assert_any_call(teacher2, added_by, student1)
     mock_added_to_village.assert_any_call(teacher2, added_by, student2)
+
+
+
+def test_village_additions_calls_new_teacher(db):
+    """Calls new_teacher for each existing teacher in each village."""
+    added_by = factories.ProfileFactory.create()
+    teacher1 = factories.ProfileFactory.create()
+    student1 = factories.ProfileFactory.create()
+    student2 = factories.ProfileFactory.create()
+    rel1 = factories.RelationshipFactory.create(
+        to_profile=student1, from_profile__school_staff=True)
+    factories.RelationshipFactory.create(
+        to_profile=student1, from_profile__school_staff=False)
+
+    new_teacher_target = 'portfoliyo.notifications.record.new_teacher'
+    with mock.patch(new_teacher_target) as mock_new_teacher:
+        record.village_additions(
+            added_by,
+            [added_by, teacher1],
+            [student1, student2],
+            )
+
+    mock_new_teacher.assert_called_once_with(rel1.elder, teacher1, student1)
+
 
 
 @pytest.fixture
