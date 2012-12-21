@@ -16,5 +16,5 @@ def _send_email(profile, notifications):
     """Actually construct and send activity notification email."""
     # @@@ temporary development/debugging stub
     import pprint
-    print pprint.pprint(notifications)
+    print pprint.pprint(list(notifications))
     # log warning on unknown notification names
