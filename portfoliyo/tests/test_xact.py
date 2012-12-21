@@ -3,7 +3,9 @@ from django.db import transaction, IntegrityError
 import mock
 import pytest
 
-from portfoliyo import xact
+from portfoliyo import model, xact
+
+from portfoliyo.tests import factories
 
 
 def test_can_use_twice():
@@ -91,3 +93,17 @@ def test_savepoint_rollback(mock_transaction_methods):
 
     assert mock_transaction_methods['savepoint_rollback'].call_count == 1
     assert mock_transaction_methods['savepoint_commit'].call_count == 0
+
+
+def test_post_commit_listener_uses_db(transactional_db):
+    """Test that a post_commit listener can safely query the database."""
+    called = []
+    def _my_listener(**kwargs):
+        assert model.Profile.objects.count() == 1
+        called.append(True)
+    xact.post_commit.connect(_my_listener)
+
+    with xact.xact():
+        factories.ProfileFactory.create()
+
+    assert called == [True]

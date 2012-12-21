@@ -49,13 +49,14 @@ class.
                 # Outer transaction
                 try:
                     transaction.commit(self.using)
-                    post_commit.send(None)
+                    signal = post_commit
                 except:
                     transaction.rollback(self.using)
-                    post_rollback.send(None)
+                    signal = post_rollback
                     raise
                 finally:
                     self._leave_transaction_management()
+                    signal.send(None)
             else:
                 # Inner savepoint
                 try:
@@ -68,8 +69,8 @@ class.
             if self.sid is None:
                 # Outer transaction
                 transaction.rollback(self.using)
-                post_rollback.send(None)
                 self._leave_transaction_management()
+                post_rollback.send(None)
             else:
                 # Inner savepoint
                 transaction.savepoint_rollback(self.sid, self.using)
