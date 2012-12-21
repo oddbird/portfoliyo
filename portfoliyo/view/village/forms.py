@@ -486,7 +486,9 @@ class StudentForm(forms.ModelForm):
                 to_profile=student,
                 from_profile=elder,
                 )
-            if not created and not rel.direct:
+            if created:
+                notifications.added_to_village(elder, self.elder, student)
+            elif not rel.direct:
                 rel.direct = True
                 rel.save()
 
@@ -508,6 +510,10 @@ class StudentForm(forms.ModelForm):
         if remove:
             student.student_in_groups.remove(*remove)
         if add:
+            for elder in model.Profile.objects.filter(
+                    elder_in_groups__in=add).exclude(
+                    relationships_from__to_profile=student):
+                notifications.added_to_village(elder, self.elder, student)
             student.student_in_groups.add(*add)
 
 

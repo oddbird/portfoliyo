@@ -852,6 +852,51 @@ class TestStudentForms(object):
         assert profile.student_in_groups.get() == group
 
 
+    def test_add_student_with_teacher_sends_notification(self, db):
+        """Teacher added to new student is notified."""
+        elder = factories.ProfileFactory.create()
+        other_elder = factories.ProfileFactory.create(
+            school=elder.school, school_staff=True)
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'elders': [other_elder.id],
+                },
+            elder=elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            profile = form.save()
+
+        mock_notify_added_to_village.assert_called_once_with(
+            other_elder, elder, profile)
+
+
+    def test_add_student_with_group_sends_notifications(self, db):
+        """Teacher added via group to new student is notified."""
+        group = factories.GroupFactory.create()
+        other_elder = factories.ProfileFactory.create(
+            school=group.owner.school, school_staff=True)
+        group.elders.add(other_elder)
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'groups': [group.id],
+                },
+            elder=group.owner,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            profile = form.save()
+
+        mock_notify_added_to_village.assert_called_once_with(
+            other_elder, group.owner, profile)
+
+
     def test_edit_student_with_other_school_elder(self, db):
         """Can preserve cross-school elder relationship."""
         rel = factories.RelationshipFactory.create(
@@ -1175,6 +1220,58 @@ class TestStudentForms(object):
         profile = form.save()
 
         assert set(profile.elders) == {rel.elder, new_elder}
+
+
+    def test_edit_student_add_elder_sends_notification(self, db):
+        """Associating a student with a new teacher sends notification."""
+        rel = factories.RelationshipFactory.create()
+        new_elder = factories.ProfileFactory(
+            school=rel.elder.school, school_staff=True)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [new_elder.pk],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            form.save()
+
+        mock_notify_added_to_village.assert_called_once_with(
+            new_elder, rel.elder, rel.student)
+
+
+    def test_edit_student_add_group_sends_notification(self, db):
+        """Associating a student with new elder via group sends notification."""
+        rel = factories.RelationshipFactory.create()
+        new_elder = factories.ProfileFactory(
+            school=rel.elder.school, school_staff=True)
+        other_new_rel = factories.RelationshipFactory(
+            to_profile=rel.student, from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.elders.add(new_elder, other_new_rel.elder)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [group.pk],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            form.save()
+
+        mock_notify_added_to_village.assert_called_once_with(
+            new_elder, rel.elder, rel.student)
 
 
     def _assert_cannot_add(self, rel, elder=None, group=None):
