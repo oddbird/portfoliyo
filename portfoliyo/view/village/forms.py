@@ -350,6 +350,11 @@ class InviteTeacherForm(forms.Form):
                 rel.direct = True
                 rel.save()
 
+        for student in model.Profile.objects.filter(
+                student_in_groups__in=self.cleaned_data['groups']).exclude(
+                relationships_to__from_profile=profile):
+            notifications.added_to_village(profile, self.inviter, student)
+
         # inviting an elder never removes from groups, only adds
         profile.elder_in_groups.add(*self.cleaned_data['groups'])
 

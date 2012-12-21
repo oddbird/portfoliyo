@@ -470,6 +470,30 @@ class TestInviteTeacherForm(object):
         assert mock_notify_added_to_village.call_count == 0
 
 
+    def test_existing_user_notified_of_group(self, db):
+        """Existing teacher's notified of group addition (new students only)."""
+        inviter = factories.ProfileFactory.create()
+        invitee = factories.ProfileFactory.create(user__email='foo@example.com')
+        rel1 = factories.RelationshipFactory.create(from_profile=inviter)
+        rel2 = factories.RelationshipFactory.create(from_profile=inviter)
+        factories.RelationshipFactory.create(
+            from_profile=invitee, to_profile=rel2.student)
+        group = factories.GroupFactory.create(owner=inviter)
+        group.students.add(rel1.student, rel2.student)
+        form = forms.InviteTeacherForm(
+            self.data(contact='foo@example.COM', groups=[group.pk]),
+            group=group,
+            )
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            form.save()
+
+        # no notification for rel2.student b/c already had relationship
+        mock_notify_added_to_village.assert_called_once_with(
+            invitee, inviter, rel1.student)
+
+
 
 class TestInviteFamilyForm(object):
     """Tests for InviteFamilyForm."""
