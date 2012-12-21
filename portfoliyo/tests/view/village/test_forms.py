@@ -1363,6 +1363,35 @@ class TestGroupForms(object):
         assert set(group.elders.all()) == {elder}
 
 
+    def test_create_group_sends_notifications(self, db):
+        """Sends added-to-village notification for every student/elder combo."""
+        me = factories.ProfileFactory.create(school_staff=True)
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=me.school)
+        rel = factories.RelationshipFactory.create(from_profile=me)
+        other_elder_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student, from_profile__school_staff=True)
+
+        form = forms.AddGroupForm(
+            {
+                'name': 'New Group',
+                'elders': [elder.pk, other_elder_rel.elder.pk],
+                'students': [rel.student.pk],
+                },
+            owner=me,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            form.save()
+
+        # no notification for other_elder_rel.elder, because they already had a
+        # relationship with student
+        mock_notify_added_to_village.assert_called_once_with(
+            elder, me, rel.student)
+
+
     def test_edit_group_with_students_and_elders(self, db):
         """Can add/remove students and elders from group when editing."""
         group = factories.GroupFactory.create()
@@ -1388,6 +1417,35 @@ class TestGroupForms(object):
 
         assert len(group.students.all()) == 0
         assert set(group.elders.all()) == {elder}
+
+
+    def test_edit_group_sends_notifications(self, db):
+        """Sends notifications to new student/elder combos."""
+        group = factories.GroupFactory.create()
+        prev_elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+        rel = factories.RelationshipFactory.create(from_profile=group.owner)
+        group.students.add(rel.student)
+        group.elders.add(prev_elder)
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [rel.student.pk],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            form.save()
+
+        mock_notify_added_to_village.assert_called_once_with(
+            elder, group.owner, rel.student)
 
 
     def test_edit_group_with_cross_school_elder(self, db):

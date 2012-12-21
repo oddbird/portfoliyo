@@ -637,29 +637,44 @@ class GroupForm(forms.ModelForm):
         spurious delete/create signals.
 
         """
-        # handle students
-        selected = set(self.cleaned_data['students'])
-        current = set(self.instance.students.all())
+        # calculate students to add and remove
+        selected_s = set(self.cleaned_data['students'])
+        current_s = set(self.instance.students.all())
 
-        remove = current.difference(selected)
-        add = selected.difference(current)
+        remove_s = current_s.difference(selected_s)
+        add_s = selected_s.difference(current_s)
 
-        if remove:
-            self.instance.students.remove(*remove)
-        if add:
-            self.instance.students.add(*add)
+        # calculate elders to add and remove
+        selected_e = set(self.cleaned_data['elders'])
+        current_e = set(self.instance.elders.all())
 
-        # handle elders
-        selected = set(self.cleaned_data['elders'])
-        current = set(self.instance.elders.all())
+        remove_e = current_e.difference(selected_e)
+        add_e = selected_e.difference(current_e)
 
-        remove = current.difference(selected)
-        add = selected.difference(current)
+        # handle notifications for new student/elder combos
+        existing_filters = Q(from_profile__in=add_e) | Q(to_profile__in=add_s)
+        existing = set(
+            (r.student, r.elder) for r in
+            model.Relationship.objects.filter(existing_filters)
+            )
+        for student, elder in set([
+                (s, e) for s in add_s for e in selected_e
+                ] + [
+                (s, e) for e in add_e for s in selected_s
+                ]).difference(existing):
+            notifications.added_to_village(elder, self.owner, student)
 
-        if remove:
-            self.instance.elders.remove(*remove)
-        if add:
-            self.instance.elders.add(*add)
+        # actually add/remove students
+        if remove_s:
+            self.instance.students.remove(*remove_s)
+        if add_s:
+            self.instance.students.add(*add_s)
+
+        # actually add/remove elders
+        if remove_e:
+            self.instance.elders.remove(*remove_e)
+        if add_e:
+            self.instance.elders.add(*add_e)
 
 
 
