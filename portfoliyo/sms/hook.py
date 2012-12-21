@@ -143,7 +143,7 @@ def handle_subsequent_code(profile, teacher, group, signup):
         student=student,
         state=signup.state if signup else model.TextSignup.STATE.done,
         )
-    if student:
+    for student in profile.students:
         model.Relationship.objects.get_or_create(
             from_profile=teacher,
             to_profile=student,
@@ -151,6 +151,7 @@ def handle_subsequent_code(profile, teacher, group, signup):
             )
         if group:
             group.students.add(student)
+    notifications.village_additions(profile, [teacher], profile.students)
 
     msg = "Ok, thanks! You can text %s at this number too." % teacher.name
 

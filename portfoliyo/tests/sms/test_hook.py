@@ -577,7 +577,9 @@ def test_subsequent_signup(db):
     other_teacher = factories.ProfileFactory.create(
         code='ABCDEF', name='Ms. Doe')
 
-    reply = hook.receive_sms(phone, 'ABCDEF')
+    target = 'portfoliyo.sms.hook.notifications.village_additions'
+    with mock.patch(target) as mock_notify_village_additions:
+        reply = hook.receive_sms(phone, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -587,6 +589,9 @@ def test_subsequent_signup(db):
     assert new_signup.student == signup.student
     assert new_signup.group is None
     assert signup.student in other_teacher.students
+
+    mock_notify_village_additions.assert_called_once_with(
+        signup.family, [other_teacher], [signup.student])
 
 
 def test_subsequent_group_signup(db):
