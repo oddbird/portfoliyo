@@ -136,13 +136,14 @@ def handle_subsequent_code(profile, teacher, group, signup):
 
     """
     student = profile.students[0] if profile.students else None
-    model.TextSignup.objects.create(
+    new_signup = model.TextSignup.objects.create(
         family=profile,
         teacher=teacher,
         group=group,
         student=student,
         state=signup.state if signup else model.TextSignup.STATE.done,
         )
+    notifications.new_parent(teacher, new_signup)
     for student in profile.students:
         model.Relationship.objects.get_or_create(
             from_profile=teacher,
