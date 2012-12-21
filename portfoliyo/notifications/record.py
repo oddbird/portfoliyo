@@ -35,10 +35,19 @@ def new_parent(profile, signup):
 
 
 
-def added_to_village(profile, teacher, student):
-    """Notify ``profile`` that ``teacher`` added them to ``student`` village."""
+def village_additions(added_by, teachers, students):
+    """Send appropriate notifications for ``teachers`` added to ``students``."""
+    from portfoliyo import notifications
+    for student in students:
+        for teacher in teachers:
+            if teacher != added_by:
+                notifications.added_to_village(teacher, added_by, student)
+
+
+def added_to_village(profile, added_by, student):
+    """Notify ``profile`` that ``added_by`` added them to ``student`` village"""
     triggering = profile.notify_added_to_village
-    data = {'teacher-id': teacher.id, 'student-id': student.id}
+    data = {'teacher-id': added_by.id, 'student-id': student.id}
     _record(profile, 'added to village', triggering=triggering, data=data)
 
 

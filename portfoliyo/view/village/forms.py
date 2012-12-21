@@ -231,7 +231,7 @@ class InviteFamilyForm(FamilyForm):
                 invited_by=inviter,
                 )
 
-        # send invite notifications
+        # send invite SMSes
         invites.send_invite_sms(
             self.instance,
             template_name='sms/invite_elder.txt',
@@ -324,7 +324,7 @@ class InviteTeacherForm(forms.Form):
         else:
             created = False
 
-        # send invite notifications
+        # send invite emails
         if created:
             invites.send_invite_email(
                 profile,
@@ -336,6 +336,8 @@ class InviteTeacherForm(forms.Form):
                     },
                 )
 
+        students_added_to = set()
+
         for student in self.cleaned_data['students']:
             rel, created = model.Relationship.objects.get_or_create(
                 from_profile=profile,
@@ -345,15 +347,19 @@ class InviteTeacherForm(forms.Form):
                     }
                 )
             if created:
-                notifications.added_to_village(profile, self.inviter, student)
+                students_added_to.add(student)
             elif not rel.direct:
                 rel.direct = True
                 rel.save()
 
-        for student in model.Profile.objects.filter(
+        students_added_to.update(
+            model.Profile.objects.filter(
                 student_in_groups__in=self.cleaned_data['groups']).exclude(
-                relationships_to__from_profile=profile):
-            notifications.added_to_village(profile, self.inviter, student)
+                relationships_to__from_profile=profile)
+            )
+
+        notifications.village_additions(
+            self.inviter, [profile], students_added_to)
 
         # inviting an elder never removes from groups, only adds
         profile.elder_in_groups.add(*self.cleaned_data['groups'])
@@ -481,16 +487,20 @@ class StudentForm(forms.ModelForm):
                 ).update(direct=False)
             check_for_orphans = True
 
+        elders_added = set()
+
         for elder in add:
             rel, created = model.Relationship.objects.get_or_create(
                 to_profile=student,
                 from_profile=elder,
                 )
             if created:
-                notifications.added_to_village(elder, self.elder, student)
+                elders_added.add(elder)
             elif not rel.direct:
                 rel.direct = True
                 rel.save()
+
+        notifications.village_additions(self.elder, elders_added, [student])
 
         return check_for_orphans
 
@@ -510,10 +520,10 @@ class StudentForm(forms.ModelForm):
         if remove:
             student.student_in_groups.remove(*remove)
         if add:
-            for elder in model.Profile.objects.filter(
-                    elder_in_groups__in=add).exclude(
-                    relationships_from__to_profile=student):
-                notifications.added_to_village(elder, self.elder, student)
+            elders_added = model.Profile.objects.filter(
+                elder_in_groups__in=add).exclude(
+                relationships_from__to_profile=student)
+            notifications.village_additions(self.elder, elders_added, [student])
             student.student_in_groups.add(*add)
 
 
@@ -652,17 +662,28 @@ class GroupForm(forms.ModelForm):
         add_e = selected_e.difference(current_e)
 
         # handle notifications for new student/elder combos
+        #  find all existing relationships involving new elders and students
         existing_filters = Q(from_profile__in=add_e) | Q(to_profile__in=add_s)
         existing = set(
             (r.student, r.elder) for r in
             model.Relationship.objects.filter(existing_filters)
             )
-        for student, elder in set([
+        #  find all unique student/elder combos involving a new student or
+        #  elder, minus any combos that already had a relationship
+        new_combos = set([
                 (s, e) for s in add_s for e in selected_e
                 ] + [
                 (s, e) for e in add_e for s in selected_s
-                ]).difference(existing):
-            notifications.added_to_village(elder, self.owner, student)
+                ]).difference(existing)
+
+        #  regroup the combos we need to notify on by student
+        elders_by_student = {}
+        for student, elder in new_combos:
+            elders_by_student.setdefault(student, set()).add(elder)
+
+        #  actually perform notification for each student
+        for student, elders in elders_by_student.items():
+            notifications.village_additions(self.owner, elders, [student])
 
         # actually add/remove students
         if remove_s:

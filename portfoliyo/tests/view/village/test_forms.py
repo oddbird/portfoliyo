@@ -481,7 +481,11 @@ class TestInviteTeacherForm(object):
         group = factories.GroupFactory.create(owner=inviter)
         group.students.add(rel1.student, rel2.student)
         form = forms.InviteTeacherForm(
-            self.data(contact='foo@example.COM', groups=[group.pk]),
+            self.data(
+                contact='foo@example.COM',
+                groups=[group.pk],
+                students=[],
+                ),
             group=group,
             )
         assert form.is_valid(), dict(form.errors)
