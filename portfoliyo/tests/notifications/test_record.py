@@ -6,6 +6,29 @@ from portfoliyo.notifications import record
 
 
 
+def test_village_additions_calls_added_to_village():
+    """Calls added_to_village for all student/teacher combos."""
+    added_by = mock.Mock()
+    teacher1 = mock.Mock()
+    teacher2 = mock.Mock()
+    student1 = mock.Mock()
+    student2 = mock.Mock()
+
+    added_to_village_target = 'portfoliyo.notifications.record.added_to_village'
+    with mock.patch(added_to_village_target) as mock_added_to_village:
+        record.village_additions(
+            added_by,
+            [added_by, teacher1, teacher2],
+            [student1, student2],
+            )
+
+    assert mock_added_to_village.call_count == 4
+    mock_added_to_village.assert_any_call(teacher1, added_by, student1)
+    mock_added_to_village.assert_any_call(teacher1, added_by, student2)
+    mock_added_to_village.assert_any_call(teacher2, added_by, student1)
+    mock_added_to_village.assert_any_call(teacher2, added_by, student2)
+
+
 @pytest.fixture
 def mock_record(request):
     patcher = mock.patch('portfoliyo.notifications.record._record')

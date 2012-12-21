@@ -496,7 +496,7 @@ class StudentForm(forms.ModelForm):
                 )
             if created:
                 elders_added.add(elder)
-            elif not rel.direct:
+            else: # must not be direct, or wouldn't have been in ``add``
                 rel.direct = True
                 rel.save()
 
@@ -523,7 +523,8 @@ class StudentForm(forms.ModelForm):
             elders_added = model.Profile.objects.filter(
                 elder_in_groups__in=add).exclude(
                 relationships_from__to_profile=student)
-            notifications.village_additions(self.elder, elders_added, [student])
+            notifications.village_additions(
+                self.elder, set(elders_added), [student])
             student.student_in_groups.add(*add)
 
 

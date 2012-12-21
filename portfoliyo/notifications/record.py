@@ -37,11 +37,10 @@ def new_parent(profile, signup):
 
 def village_additions(added_by, teachers, students):
     """Send appropriate notifications for ``teachers`` added to ``students``."""
-    from portfoliyo import notifications
-    for student in students:
-        for teacher in teachers:
-            if teacher != added_by:
-                notifications.added_to_village(teacher, added_by, student)
+    for teacher in teachers:
+        if teacher != added_by:
+            for student in students:
+                added_to_village(teacher, added_by, student)
 
 
 def added_to_village(profile, added_by, student):

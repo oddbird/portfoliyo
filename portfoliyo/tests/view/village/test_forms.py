@@ -442,12 +442,12 @@ class TestInviteTeacherForm(object):
             rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             form.save()
 
-        mock_notify_added_to_village.assert_called_with(
-            invitee, rel.elder, rel.student)
+        mock_notify_village_additions.assert_called_once_with(
+            rel.elder, [invitee], {rel.student})
 
 
     def test_no_notification_if_relationship_exists(self, db):
@@ -459,15 +459,16 @@ class TestInviteTeacherForm(object):
             rel=rel,
             )
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             profile = form.save()
 
         assert rel.elder == profile
         assert len(profile.students) == 1
 
-        # no notification
-        assert mock_notify_added_to_village.call_count == 0
+        # no students notified
+        mock_notify_village_additions.assert_called_once_with(
+            rel.elder, [rel.elder], set())
 
 
     def test_existing_user_notified_of_group(self, db):
@@ -489,13 +490,13 @@ class TestInviteTeacherForm(object):
             group=group,
             )
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             form.save()
 
         # no notification for rel2.student b/c already had relationship
-        mock_notify_added_to_village.assert_called_once_with(
-            invitee, inviter, rel1.student)
+        mock_notify_village_additions.assert_called_once_with(
+            inviter, [invitee], {rel1.student})
 
 
 
@@ -870,12 +871,12 @@ class TestStudentForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             profile = form.save()
 
-        mock_notify_added_to_village.assert_called_once_with(
-            other_elder, elder, profile)
+        mock_notify_village_additions.assert_called_once_with(
+            elder, {other_elder}, [profile])
 
 
     def test_add_student_with_group_sends_notifications(self, db):
@@ -893,12 +894,15 @@ class TestStudentForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             profile = form.save()
 
-        mock_notify_added_to_village.assert_called_once_with(
-            other_elder, group.owner, profile)
+        assert mock_notify_village_additions.call_count == 2
+        mock_notify_village_additions.assert_any_call(
+            group.owner, set(), [profile])
+        mock_notify_village_additions.assert_any_call(
+            group.owner, {other_elder}, [profile])
 
 
     def test_edit_student_with_other_school_elder(self, db):
@@ -1242,12 +1246,12 @@ class TestStudentForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             form.save()
 
-        mock_notify_added_to_village.assert_called_once_with(
-            new_elder, rel.elder, rel.student)
+        mock_notify_village_additions.assert_called_once_with(
+            rel.elder, {new_elder}, [rel.student])
 
 
     def test_edit_student_add_group_sends_notification(self, db):
@@ -1270,12 +1274,15 @@ class TestStudentForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             form.save()
 
-        mock_notify_added_to_village.assert_called_once_with(
-            new_elder, rel.elder, rel.student)
+        assert mock_notify_village_additions.call_count == 2
+        mock_notify_village_additions.assert_any_call(
+            rel.elder, set(), [rel.student])
+        mock_notify_village_additions.assert_any_call(
+            rel.elder, {new_elder}, [rel.student])
 
 
     def _assert_cannot_add(self, rel, elder=None, group=None):
@@ -1386,14 +1393,14 @@ class TestGroupForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             form.save()
 
         # no notification for other_elder_rel.elder, because they already had a
         # relationship with student
-        mock_notify_added_to_village.assert_called_once_with(
-            elder, me, rel.student)
+        mock_notify_village_additions.assert_called_once_with(
+            me, {elder}, [rel.student])
 
 
     def test_edit_group_with_students_and_elders(self, db):
@@ -1444,12 +1451,12 @@ class TestGroupForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
-        with mock.patch(target) as mock_notify_added_to_village:
+        target = 'portfoliyo.view.village.forms.notifications.village_additions'
+        with mock.patch(target) as mock_notify_village_additions:
             form.save()
 
-        mock_notify_added_to_village.assert_called_once_with(
-            elder, group.owner, rel.student)
+        mock_notify_village_additions.assert_called_once_with(
+            group.owner, {elder}, [rel.student])
 
 
     def test_edit_group_with_cross_school_elder(self, db):
