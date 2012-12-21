@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 import floppyforms as forms
 
-from portfoliyo import model, invites, formats
+from portfoliyo import model, invites, formats, notifications
 from portfoliyo.model import events
 from .. import forms as pyoforms
 
@@ -344,7 +344,9 @@ class InviteTeacherForm(forms.Form):
                     'description': role,
                     }
                 )
-            if not created and not rel.direct:
+            if created:
+                notifications.added_to_village(profile, self.inviter, student)
+            elif not rel.direct:
                 rel.direct = True
                 rel.save()
 

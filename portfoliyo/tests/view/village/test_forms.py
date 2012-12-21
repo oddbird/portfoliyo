@@ -228,7 +228,7 @@ class TestInviteTeacherForm(object):
         return defaults
 
 
-    def test_creates_profile(self, db):
+    def test_invite_new_creates_profile(self, db):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(
             self.data(email='bar@EXAMPLE.com'), rel=rel)
@@ -239,7 +239,7 @@ class TestInviteTeacherForm(object):
         assert profile.school_staff
 
 
-    def test_sends_invite_email(self, db):
+    def test_invite_new_sends_invite_email(self, db):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(
             self.data(email='bar@EXAMPLE.com'), rel=rel)
@@ -374,7 +374,7 @@ class TestInviteTeacherForm(object):
         assert profile.invited_by == rel.elder
 
 
-    def test_user_inactive(self, db):
+    def test_new_user_inactive(self, db):
         """New user invited by email is inactive."""
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(self.data(), rel=rel)
@@ -433,17 +433,41 @@ class TestInviteTeacherForm(object):
         assert profile.role == u'something'
 
 
-    def test_relationship_exists(self, db):
+    def test_existing_user_notified(self, db):
+        """If a user with given email already exists, they are notified."""
+        invitee = factories.ProfileFactory.create(user__email='foo@example.com')
+        rel = factories.RelationshipFactory()
+        form = forms.InviteTeacherForm(
+            self.data(contact='foo@example.COM', students=[rel.student.pk]),
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            form.save()
+
+        mock_notify_added_to_village.assert_called_with(
+            invitee, rel.elder, rel.student)
+
+
+    def test_no_notification_if_relationship_exists(self, db):
         """If existing teacher is already teacher for student, no error."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
         form = forms.InviteTeacherForm(
-            self.data(contact=rel.elder.user.email), rel=rel)
+            self.data(contact=rel.elder.user.email, students=[rel.student.pk]),
+            rel=rel,
+            )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save()
+        target = 'portfoliyo.view.village.forms.notifications.added_to_village'
+        with mock.patch(target) as mock_notify_added_to_village:
+            profile = form.save()
 
         assert rel.elder == profile
         assert len(profile.students) == 1
+
+        # no notification
+        assert mock_notify_added_to_village.call_count == 0
 
 
 
