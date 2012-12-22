@@ -1,14 +1,12 @@
 // ---------------------------------------------------------------------------
 // User Messages
 
-.info { @extend %info-announce; }
-.success { @extend %success-announce; }
-.warning { @extend %warning-announce; }
-.error { @extend %error-announce; }
+#messages { @extend %announce-container; }
 
-.js .js-warning { display: none; }
-
-#messages {
-  @extend %announce-container;
-  p { margin: 0 rhythm(1); }
+.message {
+  @extend %info-announce;
+  &.success { @extend %success-announce; }
+  &.warning { @extend %warning-announce; }
+  &.error { @extend %error-announce; }
+  .js &.js-warning { display: none; }
 }
