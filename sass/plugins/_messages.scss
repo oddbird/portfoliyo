@@ -1,66 +1,14 @@
 // ---------------------------------------------------------------------------
 // User Messages
 
-@include keyframes(message-in) {
-  0% {
-    @include opacity(0);
-    @include translateY(rhythm(-10));
-  }
-  100% {
-    @include opacity(1);
-    @include translateY(0);
-  }
-}
+.info { @extend %info-announce; }
+.success { @extend %success-announce; }
+.warning { @extend %warning-announce; }
+.error { @extend %error-announce; }
 
-@mixin message($c: $blue, $i: info-circle) {
-  @extend %icon-#{$i};
-  background: $c;
-}
-
-$message-v-position: top;
-$message-h-position: right;
-
-.message {
-  @extend %icon;
-  @include animation(message-in 1s ease backwards);
-  @include rhythm-borders(1px,.5);
-  @include clearfix;
-  @include box-shadow($base03 0 0 rhythm(.25));
-  position: relative;
-  border-color: $back;
-  width: columns-width($right + 1);
-
-  &:before {
-    position: absolute;
-    top: rhythm(.5);
-    left: rhythm(.5);
-  }
-  &.info { @include message($blue, info-circle); }
-  &.success { @include message($green, checkmark); }
-  &.warning { @include message($yellow, warning); }
-  &.error { @include message($red, x); }
-
-  .js &.js-warning { display: none; }
-
-  p { margin: 0 rhythm(1); }
-}
+.js .js-warning { display: none; }
 
 #messages {
-  @include adjust-font-size-to($smallpx);
-  @include no-style-list;
-  position: fixed;
-  #{$message-v-position}: rhythm(2);
-  #{$message-h-position}: $grid-padding;
-  z-index: 999;
-  color: $base3;
-  .close {
-    @extend %icon-replace;
-    @extend %icon-x-alt;
-    position: absolute;
-    right: .125rem;
-    top: 0;
-    width: 1rem;
-    #{$link} { color: $back;}
-    #{$focus} { color: $base3; }
-  }
+  @extend %announce-container;
+  p { margin: 0 rhythm(1); }
 }
