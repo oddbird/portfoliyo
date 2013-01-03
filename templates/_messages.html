@@ -1,4 +1,5 @@
-{% load icanhaz %}
+{% load icanhaz announce %}
+{% load url from future %}
 
 {% icanhaz "message" %}
 
@@ -6,10 +7,20 @@
   <li class="message error js-warning">
     <p>Please enable JavaScript in your browser to use this site.</p>
   </li>
+
+  {% if user.is_authenticated %}
+  {% for announcement in user.profile|unread_announcements %}
+  <li class="announce" data-mark-read-url="{% url 'mark_announcement_read' annc_id=announcement.id %}">
+    <p class="body">{{ announcement.text|safe }}</p>
+    <a href="#" class="close">close</a>
+  </li>
+  {% endfor %}
+  {% endif %}
+
   {% for message in messages %}
   <li class="message{% if message.tags %} {{ message.tags }}{% endif %}">
-    <p>{{ message|safe }}</p>
-    <a href="#" class="close">dismiss this message</a>
+    <p class="body">{{ message|safe }}</p>
+    <a href="#" class="close">close</a>
   </li>
   {% endfor %}
 </ul>

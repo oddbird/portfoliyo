@@ -1,36 +1,98 @@
 // ---------------------------------------------------------------------------
-// Announcements
+// Settings
 
-.announcements {
-  @extend %banner-item;
-  @include adjust-font-size-to($banner-size);
-  clear: both;
-  color: inherit;
-  .announce {
-    @extend %icon;
-    @extend %icon-warning;
-    @extend %button;
-    @include button-color($blue);
-    display: inline-block;
-    padding: 0 .5em;
-  }
-  a {
-    #{$link} { color: adjust-color($accent, $lightness: 35%); }
-    #{$focus} { color: adjust-color($accent, $lightness: 45%); }
-  }
+$announce-v-position: top;
+$announce-h-position: right;
 
+// ---------------------------------------------------------------------------
+// Animations
+
+@include keyframes(announce-in) {
+  0% {
+    @include opacity(0);
+    @include translateY(rhythm(-10));
+  }
+  100% {
+    @include opacity(1);
+    @include translateY(0);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Basics
+
+%announce-container {
+  @include adjust-font-size-to($smallpx);
+  @include no-style-list;
+  position: fixed;
+  #{$announce-v-position}: rhythm(2);
+  #{$announce-h-position}: $grid-padding;
+  z-index: 999;
+  color: $base2;
   .close {
     @extend %icon-replace;
     @extend %icon-x-alt;
-    margin-left: 1em;
-  }
-
-  @include at-breakpoint($break) {
-    @include span-columns($announce-width);
-    clear: none;
-  }
-  .village-app & {
-    @include span-columns($announce-width,$break-cols);
-    clear: none;
+    position: absolute;
+    right: .125rem;
+    top: 0;
+    width: 1rem;
+    #{$link} { color: $back;}
+    #{$focus} { color: $base3; }
   }
 }
+
+%announce {
+  @extend %icon;
+  @include animation(announce-in 1s ease backwards);
+  @include rhythm-borders(1px,.5);
+  @include clearfix;
+  @include box-shadow($base03 0 0 rhythm(.25));
+  position: relative;
+  border-color: $back;
+  width: columns-width($right + 1);
+  &:before {
+    position: absolute;
+    top: rhythm(.5);
+    left: rhythm(.5);
+  }
+  .body {
+    margin: 0 rhythm(1);
+    a {
+      #{$link} {
+        color: $base3;
+        text-decoration: underline;
+      }
+      #{$focus} { color: color($accent lightest); }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Types
+
+@mixin announce-style($c: $blue, $i: info-circle) {
+  @extend %icon-#{$i};
+  background: $c;
+}
+
+%info-announce {
+  @extend %announce;
+  @include announce-style($blue, info-circle);
+}
+%success-announce {
+  @extend %announce;
+  @include announce-style($green, checkmark);
+}
+%warning-announce {
+  @extend %announce;
+  @include announce-style($yellow, warning);
+}
+%error-announce {
+  @extend %announce;
+  @include announce-style($red, x);
+}
+
+// ---------------------------------------------------------------------------
+// Announcements
+
+.announce { @extend %info-announce; }
