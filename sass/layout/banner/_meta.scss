@@ -10,30 +10,35 @@
   text-align: right;
 }
 
+%meta-button {
+  @extend %banner-item;
+  @include text-shadow(rgba(black,.75) 0 -1px 0);
+  padding: {
+    left: 1em;
+    right: 1em;
+  }
+  border: 1px solid $base03;
+  border-width: 0 2px;
+  background: mix($base01,$base02);
+  #{$link}, & { color: $base3; }
+  #{$focus} {
+    @include box-shadow($base3 0 0 1px inset);
+    @include background-image(linear-gradient(to bottom, rgba(white,.25), rgba(white,0) 50%));
+    color: $base3 !important;
+  }
+  &:active { @include box-shadow(rgba(black,.5) 0 0 1px inset); }
+}
+
 // ---------------------------------------------------------------------------
 // Help Link
 
 .helplink {
-  @extend %icon-replace;
+  @extend %icon;
   @extend %icon-help;
-  @extend %button;
-  @include button-color($orange);
-  @include leader($banner-rhythm/2, $banner-size);
-  line-height: 1em;
+  @extend %meta-button;
   float: right;
-  margin-left: 1em;
-  padding: 0 .5em;
-
-  @include box-sizing(content-box);
-  @include at-breakpoint($break) {
-    text-indent: 0;
-    width: auto;
-    &:before {
-      position: static;
-      padding: 0;
-      margin-right: .4em;
-    }
-  }
+  #{$focus} { background-color: $orange; }
+  .login-nav & { border-left-width: 0; }
 }
 
 // ---------------------------------------------------------------------------
@@ -41,16 +46,17 @@
 
 .login-nav {
   @extend %metanav-base;
+  white-space: nowrap;
+
   ul { @include inline-list; }
-  a {
-    @extend %banner-item;
-    display: inline-block;
-  }
+  a { display: inline-block; }
 
   .login-link {
-    @extend %button;
-    @include small-button;
-    @include button-color($blue);
+    @extend %icon;
+    @extend %icon-locked;
+    @extend %meta-button;
+    margin-left: .25em;
+    background: $blue;
   }
 }
 
@@ -62,14 +68,21 @@
 
   span, a {
     @extend %icon;
-    @extend %icon-settings;
     @extend %banner-item;
     display: block;
   }
 
-  .settingslink { @extend %ellipsis; }
+  .settingslink {
+    @extend %icon-settings;
+    @extend %ellipsis;
+    float: right;
+    padding: {
+      left: 1em;
+      right: .5em;
+    }
+  }
 
-  [href*="edit"] { @extend %icon-settings; }
+  [href*="profile"] { @extend %icon-settings; }
   [href*="password"] { @extend %icon-key; }
   button {
     @extend %reset-button;
@@ -81,17 +94,22 @@
   }
 }
 
+// ---------------------------------------------------------------------------
+// User Actions
+
 $useraction-size          : $banner-size;
 $useraction-border-size   : 2px;
 $useraction-border-color  : $back;
 $useraction-background    : $base01;
 
 .useractions {
-  @include arrow(top rhythm(.5) $useraction-background);
+  @include arrow(top rhythm(.25) $useraction-background);
   @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
-  @include stretch-x;
+  position: absolute;
   top: 100%;
-  margin: - $useraction-border-size 0 0;
+  right: 0%;
+  margin-top: - $useraction-border-size;
+  width: columns($right + 1, $meta-width);
   border: $useraction-border-size solid $useraction-border-color;
   background: $useraction-background;
   text-align: left;
@@ -102,5 +120,5 @@ $useraction-background    : $base01;
     @extend %ellipsis;
     padding: rhythm(.5, $useraction-size);
   }
-  .meta:hover & { display: block; }
+  .settingslink:hover ~ &, &:hover { display: block; }
 }
