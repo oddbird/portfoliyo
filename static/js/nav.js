@@ -40,7 +40,7 @@ var PYO = (function (PYO, $) {
         nav.on('click', '.groups.action-back', function (e) {
             e.preventDefault();
             $(this).blur();
-            PYO.fetchGroups();
+            PYO.fetchGroups(true);
         });
 
         nav.on('before-replace', function () {
@@ -112,7 +112,7 @@ var PYO = (function (PYO, $) {
         listitem.removeData('original');
     };
 
-    PYO.fetchGroups = function () {
+    PYO.fetchGroups = function (force) {
         var nav = $('.village-nav');
         var groups_url = nav.data('groups-url');
         var replaceNav = function (data) {
@@ -135,30 +135,34 @@ var PYO = (function (PYO, $) {
                         }
                     }
                 });
-                if (nav.data('is-staff') === 'True') { data.staff = true; }
-                data.add_group_url = nav.data('add-group-url');
-                data.add_student_url = add_student_url;
-                data.add_students_bulk_url = add_students_bulk_url;
-                var newGroups = ich.group_list(data);
-                PYO.updateNavActiveClasses(newGroups);
-                nav.trigger('before-replace').html(newGroups);
-                newGroups.find('.details').html5accordion();
-                newGroups.find('input[placeholder], textarea[placeholder]').placeholder();
-                PYO.listenForGroupPosts();
-                if (!newGroups) { PYO.fetchGroupsError(); }
-            } else { PYO.fetchGroupsError(); }
+                if (data.objects.length === 1 && all_students_group_obj && !force && !$('#add-group-form').length) {
+                    PYO.fetchStudents(all_students_group_obj);
+                } else {
+                    if (nav.data('is-staff') === 'True') { data.staff = true; }
+                    data.add_group_url = nav.data('add-group-url');
+                    data.add_student_url = add_student_url;
+                    data.add_students_bulk_url = add_students_bulk_url;
+                    var newGroups = ich.group_list(data);
+                    PYO.updateNavActiveClasses(newGroups);
+                    nav.trigger('before-replace').html(newGroups);
+                    newGroups.find('.details').html5accordion();
+                    newGroups.find('input[placeholder], textarea[placeholder]').placeholder();
+                    PYO.listenForGroupPosts();
+                    if (!newGroups) { PYO.fetchGroupsError(force); }
+                }
+            } else { PYO.fetchGroupsError(force); }
         };
 
         if (groups_url) {
             nav.loadingOverlay();
             $.get(groups_url, replaceNav).error(function () {
-                PYO.fetchGroupsError();
+                PYO.fetchGroupsError(force);
                 nav.loadingOverlay('remove');
             });
         }
     };
 
-    PYO.fetchGroupsError = function () {
+    PYO.fetchGroupsError = function (force) {
         var nav = $('.village-nav');
         var msg = ich.ajax_error_msg({
             error_class: 'nav-error',
@@ -167,7 +171,7 @@ var PYO = (function (PYO, $) {
         msg.find('.try-again').click(function (e) {
             e.preventDefault();
             msg.remove();
-            PYO.fetchGroups();
+            PYO.fetchGroups(force);
         });
         nav.prepend(msg);
     };
