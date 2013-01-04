@@ -13,6 +13,7 @@ from django.utils import timezone
 from model_utils import Choices
 
 from .. import events
+from . import codes
 
 
 # monkeypatch Django's User.email to be sufficiently long and unique/nullable
@@ -208,6 +209,28 @@ class TextSignup(models.Model):
         Profile, blank=True, null=True, related_name='family_signups')
     teacher = models.ForeignKey(Profile, related_name='signed_up')
     group = models.ForeignKey('Group', blank=True, null=True)
+
+
+
+class TeacherCode(models.Model):
+    """A teacher's text-signup code."""
+    teacher = models.ForeignKey(Profile)
+    # the simple text base, derived from teacher name
+    base = models.CharField(length=10)
+    # how many other codes with the same base already exist?
+    # - used as index into SUFFIXES array
+    index = models.IntegerField(default=0)
+    suffix = models.CharField(length=10, blank=True)
+    # base + suffix, must be unique
+    full = models.CharField(length=20, unique=True)
+
+
+    def save(self, *args, **kw):
+        if self.pk is None:
+            self.base = codes.base(self.teacher.name)
+            self.index = self.__class__.objects.filter(base=self.base).count()
+            self.full = self.base + codes.SUFFIXES[self.index]
+        return super(TeacherCode, self).save(*args, **kw)
 
 
 

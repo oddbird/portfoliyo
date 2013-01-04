@@ -1,0 +1,291 @@
+"""
+Construction of teacher and group codes.
+
+Every teacher has a code used for parent-initiated text-based signup. This code
+is built of two parts: a base and suffix. The base is a short textual code
+constructed from the teacher's name (using the ``base`` function). The first
+teacher with a given base code gets that base as their entire code; the second
+and all subsequent will have a numeric suffix appended, taken in order from the
+``SUFFIXES`` list. The suffixes are pre-generated in order to ensure minimum
+risk of a typo confusing one with another - all suffixes in the list have a
+minimum Damerau-Levenshtein distance of 2 from every other suffix in the list.
+
+For example, if there are three teachers named Patel, the first would get code
+PATEL, the second would get code PATEL23, and the third would get code PATEL87.
+
+Group codes are generated in the same way, based on the group name, except that
+group code uniqueness is only required within the groups of a particular
+teacher, because the group code is always used in conjunction with a teacher
+code.
+
+"""
+# The maximum length of a base code; e.g. if this is 5, a teacher named
+# Burdette would have base code BURDE (and then possibly a numeric suffix if
+# there are other teachers with base code BURDE)
+BASE_MAX_LENGTH = 7
+
+
+def base(name):
+    """
+    Return base code for a given teacher/group name.
+
+    The base code will have a maximum length of ``BASE_MAX_LENGTH``, will be all alphabetic and uppercase
+
+    """
+
+
+# List of numeric suffixes used to disambiguate teachers with same name.
+#
+# DO NOT EDIT THIS LIST, ONLY APPEND TO IT!
+#
+# This list of dissimilar numeric code suffixes was generated as follows:
+#
+# from portfoliyo.model.users import codegen
+# sorted(
+#     codegen.dissimilar_strings(
+#         num=1000,
+#         lengths=[2, 3, 4],
+#         alphabet='23456789',
+#         filter_func=lambda s: not s.startswith('5')
+#         ),
+#     key=len,
+#     )
+#
+# The alphabet excludes 0, 1, and initial 5 in order to avoid ambiguity with
+# the preceding text code.
+#
+# If more than 228 suffixes are ever needed, either re-run the above with
+# lengths [2, 3, 4, 5] and append the resulting length-5 suffixes to this list,
+# or modify ``dissimilar_strings`` to accept a set of already-existing strings
+# to include in its similarity-checking, and pass in this list as that set.
+SUFFIXES = ['',
+            '23',
+            '87',
+            '34',
+            '65',
+            '98',
+            '42',
+            '76',
+            '496',
+            '289',
+            '936',
+            '673',
+            '264',
+            '379',
+            '297',
+            '826',
+            '278',
+            '839',
+            '362',
+            '245',
+            '386',
+            '785',
+            '649',
+            '435',
+            '458',
+            '627',
+            '256',
+            '972',
+            '852',
+            '732',
+            '638',
+            '759',
+            '463',
+            '724',
+            '743',
+            '953',
+            '325',
+            '894',
+            '947',
+            '357',
+            '682',
+            '8254',
+            '8427',
+            '2653',
+            '2847',
+            '3648',
+            '8623',
+            '4573',
+            '8549',
+            '4723',
+            '6725',
+            '6843',
+            '3654',
+            '4786',
+            '7384',
+            '7456',
+            '4382',
+            '6579',
+            '2483',
+            '9834',
+            '9564',
+            '7692',
+            '3497',
+            '6329',
+            '3859',
+            '3489',
+            '7396',
+            '3764',
+            '7568',
+            '8634',
+            '2468',
+            '7963',
+            '4567',
+            '9823',
+            '4236',
+            '9246',
+            '4872',
+            '4738',
+            '3569',
+            '3247',
+            '6395',
+            '7523',
+            '6259',
+            '3845',
+            '7534',
+            '2398',
+            '2795',
+            '3827',
+            '2476',
+            '6592',
+            '8237',
+            '4893',
+            '7258',
+            '4327',
+            '3276',
+            '4837',
+            '6457',
+            '4652',
+            '8324',
+            '2543',
+            '9385',
+            '4287',
+            '6789',
+            '8347',
+            '3478',
+            '2985',
+            '9783',
+            '2387',
+            '9462',
+            '9865',
+            '4978',
+            '8735',
+            '7683',
+            '3582',
+            '6584',
+            '2763',
+            '9257',
+            '3742',
+            '9842',
+            '9578',
+            '8453',
+            '7862',
+            '4628',
+            '3268',
+            '2835',
+            '9486',
+            '8356',
+            '3465',
+            '8973',
+            '4298',
+            '6423',
+            '2574',
+            '7425',
+            '7235',
+            '2675',
+            '6472',
+            '7542',
+            '6374',
+            '4957',
+            '9263',
+            '4265',
+            '8746',
+            '3598',
+            '3756',
+            '9684',
+            '6537',
+            '7345',
+            '9876',
+            '6924',
+            '8469',
+            '9768',
+            '9637',
+            '3452',
+            '6248',
+            '7498',
+            '7269',
+            '4825',
+            '6932',
+            '4532',
+            '6283',
+            '6754',
+            '3892',
+            '8597',
+            '2365',
+            '7926',
+            '7293',
+            '8372',
+            '8495',
+            '3874',
+            '7952',
+            '6958',
+            '3524',
+            '3728',
+            '7482',
+            '9643',
+            '6528',
+            '3284',
+            '4376',
+            '9625',
+            '6485',
+            '4526',
+            '3685',
+            '4689',
+            '3967',
+            '8657',
+            '9238',
+            '8576',
+            '2354',
+            '2734',
+            '8432',
+            '2639',
+            '7286',
+            '9348',
+            '7938',
+            '2437',
+            '4368',
+            '4762',
+            '8563',
+            '6897',
+            '2948',
+            '9274',
+            '8275',
+            '6945',
+            '2346',
+            '4695',
+            '8962',
+            '9428',
+            '8925',
+            '3975',
+            '7836',
+            '2749',
+            '8679',
+            '4279',
+            '2873',
+            '9352',
+            '4253',
+            '7829',
+            '6342',
+            '6234',
+            '8243',
+            '8792',
+            '3546',
+            '9745',
+            '6875',
+            '3426',
+            '2538',
+            '4856',
+            '8642',
+            ]
+
+NUM_SUFFIXES = len(SUFFIXES)
