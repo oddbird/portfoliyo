@@ -10,7 +10,7 @@ GIT
 
 GIT
   remote: git://github.com/ericam/accoutrement
-  revision: 86b25e24bebd1ed67b15a8644d49ec7eb52a965e
+  revision: d6ef9b64686859859c883f0a219974d93f87e58c
   branch: master
   specs:
     accoutrement (0.0.4)
