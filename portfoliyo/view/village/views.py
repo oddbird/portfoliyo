@@ -282,7 +282,7 @@ def invite_teacher_to_group(request, group_id):
                 teacher = form.save()
             tracking.track(
                 request,
-                'invited teacher to group',
+                'invited teacher',
                 invitedEmail=teacher.user.email,
                 groupId=group_id,
                 )
