@@ -16,7 +16,10 @@
     {% if user.is_authenticated %}
     <nav class="meta">
       {% if SNAPENGAGE_ID %}
-      <a href="#" class="helplink" onClick="return SnapABug.startLink();">Help</a>
+      <a href="#" class="helplink" onClick="return SnapABug.startLink();">
+        <span aria-hidden="true" data-icon="&#x3f;"></span>
+        <span class="alt-text">Help</span>
+      </a>
       {% endif %}
       <a href="{% url 'edit_profile' %}" class="settingslink" data-user-id="{{ user.id }}" data-user-email="{{ user.email }}" data-user-name="{{ user.profile.name }}">{% firstof user.profile.name user.email %}</a>
       <ul class="useractions">
@@ -28,12 +31,16 @@
     {% else %}
     <nav class="login-nav">
       {% if SNAPENGAGE_ID %}
-      <a href="#" class="helplink" onClick="return SnapABug.startLink();">Help</a>
+      <a href="#" class="helplink" onClick="return SnapABug.startLink();">
+        <span aria-hidden="true" data-icon="&#x3f;"></span>
+        <span class="alt-text">Help</span>
+      </a>
       {% endif %}
-      <ul>
-        <li><a href="{% url 'register' %}" class="register-link">Get Started</a> or</li>
-        <li><a href="{% url 'login' %}" class="login-link">Login</a></li>
-      </ul>
+      <a href="{% url 'register' %}" class="register-link">Get Started</a>
+      <a href="{% url 'login' %}" class="login-link">
+        <span aria-hidden="true" data-icon="&#xe003;"></span>
+        <span class="alt-text">Login</span>
+      </a>
     </nav>
     {% endif %}
     {% endblock metanav %}
