@@ -5,11 +5,21 @@ from . import store
 
 
 def send(profile_id):
-    """Send activity notification(s) to user with given profile ID."""
-    profile = model.Profile.objects.select_related('user').get(pk=profile_id)
-    notifications = store.get_and_clear_all(profile_id)
+    """
+    Send activity notification(s) to user with given profile ID.
 
-    return _send_email(profile, notifications)
+    Return ``True`` if email was sent, ``False`` otherwise.
+
+    """
+    profile = model.Profile.objects.select_related('user').get(pk=profile_id)
+    user = profile.user
+    if user.email and user.is_active:
+        notifications = store.get_and_clear_all(profile_id)
+
+        if notifications:
+            return _send_email(profile, notifications)
+
+    return False
 
 
 
