@@ -135,7 +135,7 @@ var PYO = (function (PYO, $) {
                         }
                     }
                 });
-                if (data.objects.length === 1 && all_students_group_obj && !force && !$('#add-group-form').length) {
+                if (data.objects.length === 1 && all_students_group_obj && !force) {
                     PYO.fetchStudents(all_students_group_obj);
                 } else {
                     if (nav.data('is-staff') === 'True') { data.staff = true; }
@@ -695,7 +695,9 @@ var PYO = (function (PYO, $) {
             if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
                 PYO.fetchStudents();
             } else {
-                PYO.fetchGroups();
+                var force = false;
+                if ($('#add-group-form').length) { force = true; }
+                PYO.fetchGroups(force);
             }
         }
     };
