@@ -16,8 +16,8 @@ logger = get_task_logger(__name__)
 @celery.task(ignore_result=True)
 def check_for_pending_notifications():
     """Trigger notifications to all users with pending notifications."""
-    from portfoliyo import notifications
-    for profile_id in notifications.pending_profile_ids():
+    from portfoliyo.notifications import store
+    for profile_id in store.pending_profile_ids():
         send_notification.delay(profile_id)
 
 
@@ -25,8 +25,8 @@ def check_for_pending_notifications():
 @celery.task(ignore_result=True)
 def send_notification(profile_id):
     """Send notification to the user with the given profile ID."""
-    from portfoliyo import notifications
-    notifications.send(profile_id)
+    from portfoliyo.notifications import send
+    send.send(profile_id)
 
 
 
