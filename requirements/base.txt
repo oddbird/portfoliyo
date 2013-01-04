@@ -23,7 +23,7 @@ django-widget-tweaks==1.1.2
 django-secure==0.1.2
 
 django-icanhaz==0.2.1
-django-messages-ui==0.1.7
+django-messages-ui==0.1.8
 django-ajax-loading-overlay==0.1.2
 django-html5accordion==0.1.8
 
@@ -55,3 +55,5 @@ amqp==1.0.6
 billiard==2.7.3.19
 anyjson==0.3.3
 redis==2.7.2
+
+unidecode==0.04.10

@@ -4,9 +4,8 @@
 $banner-size      : $smallpx;
 $banner-rhythm    : .25;
 
-$brand-width      : $left;
-$meta-width       : $right + 1;
-$announce-width   : $break-cols - $brand-width - $meta-width;
+$brand-width      : floor($break-cols/2);
+$meta-width       : $brand-width;
 
 // ---------------------------------------------------------------------------
 // Guides

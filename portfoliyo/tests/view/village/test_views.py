@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Tests for village views."""
 import datetime
 
@@ -1162,6 +1163,21 @@ class TestPdfParentInstructions(object):
             'attachment; filename="Portfoliyo English - 1st Period Math.pdf"')
         assert resp.headers['Content-Disposition'] == content_disposition
         assert resp.headers['Content-Type'] == 'application/pdf'
+
+
+    def test_unicode_transliteration(self, client):
+        """Non-ASCII chars in group names translitered to ASCII filename."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True, name=u'1st Period—Math')
+        url = reverse(
+            'pdf_parent_instructions',
+            kwargs={'lang': 'en', 'group_id': group.id},
+            )
+        resp = client.get(url, user=group.owner.user, status=200)
+
+        content_disposition = (
+            'attachment; filename="Portfoliyo English - 1st Period--Math.pdf"')
+        assert resp.headers['Content-Disposition'] == content_disposition
 
 
     def test_must_own_group(self, client):

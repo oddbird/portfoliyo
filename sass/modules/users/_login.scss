@@ -10,10 +10,3 @@
   @extend %type;
   @extend %simple-page;
 }
-
-.activated {
-  @extend .message;
-  color: $base3;
-  p { width: 100%; }
-  + form { @include leader; }
-}

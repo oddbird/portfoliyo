@@ -2,6 +2,46 @@
 
     'use strict';
 
+
+    // hook function to call when an event of the given name is tracked
+    // function is called with event data as only argument
+    var eventHooks = {
+        'registered': function (data) {
+            mixpanel.people.set({$created: new Date()});
+        },
+        'posted': function (data) {
+            mixpanel.people.increment('posts');
+            mixpanel.people.set({lastPosted: new Date()});
+            mixpanel.people.increment('sentSMSes', data.smsRecipients);
+            if (data.groupPost) {
+                mixpanel.people.increment('groupPosts');
+                mixpanel.people.set({lastGroupPosted: new Date()});
+            } else {
+                mixpanel.people.increment('singlePosts');
+                mixpanel.people.set({lastSinglePosted: new Date()});
+            }
+        },
+        'added group': function (data) {
+            mixpanel.people.set({lastAddedGroup: new Date()});
+            mixpanel.people.increment('groupsAdded');
+        },
+        'invited teacher': function (data) {
+            mixpanel.people.set({lastInvitedTeacher: new Date()});
+            mixpanel.people.increment('teachersInvited');
+        }
+    };
+
+
+    var track = function (event, data) {
+        // call any registered hook, then send event to mixpanel
+        var hook = eventHooks[event];
+        if (hook) {
+            hook(data);
+        }
+        mixpanel.track(event, data);
+    };
+
+
     var registerNewUser = function (sel, dataAttr) {
         // If the user just registered, tell mixpanel that we'll be identifying
         // them by user ID from now on, but they should still be considered the
@@ -27,7 +67,7 @@
         var events = $(sel).data(dataAttr);
         if (events) {
             $.each(events, function (index, value) {
-                mixpanel.track(value[0], value[1]);
+                track(value[0], value[1]);
             });
         }
     };
@@ -35,7 +75,7 @@
     var existence = function (sel, eventName) {
         // Fire given event name if the given selector exists on the page.
         if ($(sel).length) {
-            mixpanel.track(eventName);
+            track(eventName);
         }
     };
 
@@ -75,9 +115,8 @@
 
     var postEvents = function (sel) {
         $('body').on('successful-post', sel, function (e, data) {
-            data.massText = !data.studentId;
-            mixpanel.track('posted', data);
-            mixpanel.people.increment('posts');
+            data.groupPost = !data.studentId;
+            track('posted', data);
         });
     };
 

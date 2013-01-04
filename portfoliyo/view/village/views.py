@@ -11,6 +11,7 @@ from django import http
 from django.shortcuts import redirect, get_object_or_404
 from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
+from unidecode import unidecode
 
 from portfoliyo import formats, model, pdf, xact
 from portfoliyo.view import tracking
@@ -281,7 +282,7 @@ def invite_teacher_to_group(request, group_id):
                 teacher = form.save()
             tracking.track(
                 request,
-                'invited teacher to group',
+                'invited teacher',
                 invitedEmail=teacher.user.email,
                 groupId=group_id,
                 )
@@ -511,11 +512,12 @@ def pdf_parent_instructions(request, lang, group_id=None):
 
     filename = "Portfoliyo {0}{1}.pdf".format(
             lang_verbose,
-            " - {0}".format(group.name) if group else "",
+            " - {0}".format(unidecode(group.name)) if group else u"",
             )
 
     response = http.HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="%s"' % filename
+    response['Content-Disposition'] = (
+        'attachment; filename="%s"' % filename.encode('utf-8'))
 
     pdf.generate_instructions_pdf(
         stream=response,

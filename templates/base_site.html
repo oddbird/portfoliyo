@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 
-{% load announce %}
 {% load url from future %}
 
 {% block body %}
@@ -28,6 +27,9 @@
     </nav>
     {% else %}
     <nav class="login-nav">
+      {% if SNAPENGAGE_ID %}
+      <a href="#" class="helplink" onClick="return SnapABug.startLink();">Help</a>
+      {% endif %}
       <ul>
         <li><a href="{% url 'register' %}" class="register-link">Get Started</a> or</li>
         <li><a href="{% url 'login' %}" class="login-link">Login</a></li>
@@ -35,19 +37,6 @@
     </nav>
     {% endif %}
     {% endblock metanav %}
-
-    {% block announce %}
-      <div class="announcements">
-        {% if user.is_authenticated %}
-        {% for announcement in user.profile|unread_announcements %}
-        <p class="announce" data-mark-read-url="{% url 'mark_announcement_read' annc_id=announcement.id %}">
-          {{ announcement.text|safe }}
-          <a href="#" class="close">close</a>
-        </p>
-        {% endfor %}
-        {% endif %}
-      </div>
-    {% endblock announce %}
   </div>
 
   {% block content %}
