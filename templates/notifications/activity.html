@@ -21,9 +21,7 @@
   {% for student in students %}
     {% include "activity/_new_parent.html" %}
   {% endfor %}
-  {% for teacher in teachers %}
-    {% include "activity/_added_to_village.html" %}
-  {% endfor %}
+  {% include "activity/_added_to_villages.html" %}
   {% for teacher in teachers %}
     {% include "activity/_new_teacher.html" %}
   {% endfor %}
@@ -42,9 +40,7 @@
   {% for student in students %}
     {% include "activity/_new_parent.html" %}
   {% endfor %}
-  {% for teacher in teachers %}
-    {% include "activity/_added_to_village_nonrequested.html" %}
-  {% endfor %}
+  {% include "activity/_added_to_villages_nonrequested.html" %}
   {% for teacher in teachers %}
     {% include "activity/_new_teacher.html" %}
   {% endfor %}

@@ -1,6 +1,6 @@
 """Record notifications."""
 from portfoliyo import tasks
-from . import store
+from . import store, types
 
 
 
@@ -10,7 +10,7 @@ def post(profile, post):
         'teacher_post' if post.author.school_staff else 'parent_text')
     triggering = getattr(profile, pref)
     data = {'post-id': post.id}
-    _record(profile, 'post', triggering=triggering, data=data)
+    _record(profile, types.POST, triggering=triggering, data=data)
 
 
 
@@ -18,7 +18,7 @@ def bulk_post(profile, bulk_post):
     """Notify ``profile`` that a teacher posted ``bulk_post``."""
     triggering = profile.notify_teacher_post
     data = {'bulk-post-id': bulk_post.id}
-    _record(profile, 'bulk post', triggering=triggering, data=data)
+    _record(profile, types.BULK_POST, triggering=triggering, data=data)
 
 
 
@@ -31,7 +31,7 @@ def new_parent(profile, signup):
     """
     triggering = profile.notify_new_parent
     data = {'signup-id': signup.id}
-    _record(profile, 'new parent', triggering=triggering, data=data)
+    _record(profile, types.NEW_PARENT, triggering=triggering, data=data)
 
 
 
@@ -52,8 +52,8 @@ def village_additions(added_by, teachers, students):
 def added_to_village(profile, added_by, student):
     """Notify ``profile`` that ``added_by`` added them to ``student`` village"""
     triggering = profile.notify_added_to_village
-    data = {'teacher-id': added_by.id, 'student-id': student.id}
-    _record(profile, 'added to village', triggering=triggering, data=data)
+    data = {'added-by-id': added_by.id, 'student-id': student.id}
+    _record(profile, types.ADDED_TO_VILLAGE, triggering=triggering, data=data)
 
 
 
@@ -61,7 +61,7 @@ def new_teacher(profile, teacher, student):
     """Notify ``profile`` that ``teacher`` joined ``student``s village."""
     triggering = profile.notify_joined_my_village
     data = {'teacher-id': teacher.id, 'student-id': student.id}
-    _record(profile, 'new teacher', triggering=triggering, data=data)
+    _record(profile, types.NEW_TEACHER, triggering=triggering, data=data)
 
 
 

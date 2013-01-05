@@ -20,9 +20,7 @@ Recent activity in Portfoliyo:
 {% for student in students %}
   {% include "activity/_new_parent.txt" %}
 {% endfor %}
-{% for teacher in teachers %}
-  {% include "activity/_added_to_village.txt" %}
-{% endfor %}
+{% include "activity/_added_to_villages.txt" %}
 {% for teacher in teachers %}
   {% include "activity/_new_teacher.txt" %}
 {% endfor %}
@@ -41,9 +39,7 @@ Other activity:
 {% for student in students %}
   {% include "activity/_new_parent.txt" %}
 {% endfor %}
-{% for teacher in teachers %}
-  {% include "activity/_added_to_village_nonrequested.txt" %}
-{% endfor %}
+{% include "activity/_added_to_villages_nonrequested.txt" %}
 {% for teacher in teachers %}
   {% include "activity/_new_teacher.txt" %}
 {% endfor %}

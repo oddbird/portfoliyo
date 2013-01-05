@@ -1,0 +1,5 @@
+{% if added_to_villages|length == 1 %}
+{{ added_to_villages.0.added_by }} added you to {{ added_to_villages.0.student }}'s village.
+{% else %}
+You have been added to {{ added_to_villages|length }} villages.
+{% endif %}

@@ -5,6 +5,7 @@ import threading
 
 from celery import Celery, Task
 from django.conf import settings
+from django.core.exceptions import ImproperlyConfigured
 from django.db import transaction
 
 from portfoliyo import xact
@@ -102,7 +103,10 @@ class TransactionCelery(Celery):
 
 
 
-if settings.REDIS_URL and not settings.CELERY_ALWAYS_EAGER: # pragma: no cover
+if not settings.CELERY_ALWAYS_EAGER: # pragma: no cover
+    if not settings.REDIS_URL:
+        raise ImproperlyConfigured(
+            "Must set REDIS_URL in order to turn CELERY_ALWAYS_EAGER off.")
     celery = TransactionCelery(
         broker=settings.REDIS_URL,
         backend=settings.REDIS_URL,

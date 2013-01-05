@@ -114,7 +114,7 @@ def test_added_to_village(mock_record, requested):
         mock_profile,
         'added to village',
         triggering=requested,
-        data={'teacher-id': 3, 'student-id': 4},
+        data={'added-by-id': 3, 'student-id': 4},
         )
 
 

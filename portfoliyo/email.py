@@ -56,7 +56,7 @@ def send_multipart(subject, text_part, html_part, recipients,
     sender = sender or settings.DEFAULT_FROM_EMAIL
 
     # collapse newlines in subject to spaces
-    subject = u" ".join(subject.splitlines())
+    subject = u" ".join(subject.splitlines()).strip()
     msg = EmailMultiAlternatives(subject, text_part, sender, recipients)
     msg.attach_alternative(html_part, "text/html")
     return msg.send(fail_silently)
