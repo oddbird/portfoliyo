@@ -9,8 +9,7 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 import floppyforms as forms
 
-from portfoliyo import model, invites, formats
-from portfoliyo.model import events
+from portfoliyo import model, invites, formats, tasks
 from .. import forms as pyoforms
 
 
@@ -418,7 +417,7 @@ class StudentForm(forms.ModelForm):
         # relevant to them). If name is changed, send to all elders so nav can
         # be updated.
         if self._old_name != self.instance.name:
-            events.student_edited(student, *student.elders)
+            tasks.push_event.delay('student_edited', student, *student.elders)
 
         return student
 
@@ -610,7 +609,7 @@ class GroupForm(forms.ModelForm):
             self.instance.save()
             self.save_m2m()
             if self._old_name != self.instance.name:
-                events.group_edited(self.instance)
+                tasks.push_event.delay('group_edited', self.instance)
         return self.instance
 
 

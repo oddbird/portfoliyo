@@ -12,7 +12,7 @@ from django.utils import timezone
 
 from model_utils import Choices
 
-from .. import events
+from portfoliyo import tasks
 
 
 # monkeypatch Django's User.email to be sufficiently long and unique/nullable
@@ -302,17 +302,13 @@ class AllStudentsGroup(GroupBase):
 
 
 def group_deleted(sender, instance, **kwargs):
-    try:
-        events.group_removed(instance)
-    except Profile.DoesNotExist:
-        # group was deleted in cascade from owner
-        pass
+    tasks.push_event.delay('group_removed', instance)
 
 
 
 def group_saved(sender, instance, created, **kwargs):
     if created:
-        events.group_added(instance)
+        tasks.push_event.delay('group_added', instance)
 
 
 
@@ -430,12 +426,12 @@ def send_student_group_event(
             students = Profile.objects.filter(pk__in=pk_set)
 
     if action in {'pre_clear', 'pre_remove'}:
-        event = events.student_removed_from_group
+        event = 'student_removed_from_group'
     else:
-        event = events.student_added_to_group
+        event = 'student_added_to_group'
 
     for owner, groups in groups_by_owner.items():
-        event(owner, list(students), list(groups))
+        tasks.push_event.delay(event, owner, list(students), list(groups))
 
 
 
@@ -514,7 +510,8 @@ class Relationship(models.Model):
 
 def relationship_saved(sender, instance, created, **kwargs):
     if created:
-        events.student_added(instance.student, instance.elder)
+        tasks.push_event.delay(
+            'student_added', instance.student, instance.elder)
 
 
 def relationship_deleted(sender, instance, **kwargs):
@@ -526,7 +523,7 @@ def relationship_deleted(sender, instance, **kwargs):
     except Profile.DoesNotExist:
         pass
     else:
-        events.student_removed(student, elder)
+        tasks.push_event.delay('student_removed', student, elder)
         # remove that student from all of that elder's groups
         for group in elder.owned_groups.all():
             group.students.remove(student)
