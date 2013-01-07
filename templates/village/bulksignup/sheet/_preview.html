@@ -22,6 +22,15 @@
     {% include note_tpl %}
     {% endwith %}
   </p>
+  <p class="signature">
+    {% with 'village/bulksignup/sheet/'|add:lang_code|add:'/signature.txt' as signature_tpl %}
+    {% include signature_tpl %}
+    {% endwith %}
+    <br />
+    {% with 'village/bulksignup/sheet/'|add:lang_code|add:'/date.txt' as date_tpl %}
+    {% include date_tpl %}
+    {% endwith %}
+  </p>
   <footer>
     <p>
       {% with 'village/bulksignup/sheet/'|add:lang_code|add:'/footer.txt' as footer_tpl %}

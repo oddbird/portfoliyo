@@ -25,9 +25,11 @@ SECTIONS = {
     'sample_to': ((135, 405), 'Helvetica-Bold', 20, None),
     'sample_message_label': ((120, 350), 'Helvetica', 20, None),
     'sample_message': ((135, 305), 'Helvetica-Bold', 20, None),
-    'note': ((350, 100), 'Helvetica', 16, 350),
+    'note': ((350, 160), 'Helvetica', 12, 350),
+    'signature': ((350, 125), 'Helvetica', 12, None),
+    'date': ((350, 105), 'Helvetica', 12, None),
     'footer': ((350, 65), 'Helvetica-Oblique', 10, 350),
-    'group': ((350, 50), 'Helvetica', 10, None),
+    'group': ((75, 50), 'Helvetica', 10, None),
     }
 
 
@@ -66,6 +68,8 @@ def generate_instructions_pdf(stream, lang, name, code, phone, group=None):
         'sample_message_label': 'Message: ',
         'sample_message': code,
         'note': get_text(lang, 'note'),
+        'signature': get_text(lang, 'signature'),
+        'date': get_text(lang, 'date'),
         'footer': get_text(lang, 'footer'),
         }
 
