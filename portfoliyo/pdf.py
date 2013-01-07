@@ -29,7 +29,7 @@ SECTIONS = {
     'signature': ((350, 125), 'Helvetica', 12, None),
     'date': ((350, 105), 'Helvetica', 12, None),
     'footer': ((350, 65), 'Helvetica-Oblique', 10, 350),
-    'group': ((350, 50), 'Helvetica', 10, None),
+    'group': ((75, 50), 'Helvetica', 10, None),
     }
 
 
