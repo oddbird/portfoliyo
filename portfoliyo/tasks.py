@@ -32,5 +32,15 @@ def send_notification(profile_id):
 
 @celery.task(ignore_result=True, acks_late=True)
 def send_sms(phone, body):
+    """Send an SMS message."""
     from portfoliyo import sms
     sms.send(phone, body)
+
+
+
+@celery.task(ignore_result=True)
+def push_event(name, *args, **kw):
+    """Send a Pusher event."""
+    from portfoliyo.model import events
+    event_function = getattr(events, name)
+    event_function(*args, **kw)

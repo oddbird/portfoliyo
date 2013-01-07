@@ -87,6 +87,7 @@
             var userId = elem.data('user-id');
             var userEmail = elem.data('user-email');
             var userName = elem.data('user-name');
+            var userCode = elem.data('user-code');
             if (userId) {
                 mixpanel.identify(userId);
                 if (userEmail) {
@@ -94,7 +95,8 @@
                     mixpanel.people.set({
                         $email: userEmail,
                         $name: userName,
-                        $last_login: new Date()
+                        $last_login: new Date(),
+                        'code': userCode
                     });
                     mixpanel.register({'email': userEmail});
                 }

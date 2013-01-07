@@ -1,14 +1,2 @@
 // ---------------------------------------------------------------------------
 // Utilities
-
-@mixin gone {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
-}
-
-@mixin here {
-  position: static;
-  top: auto;
-  left: auto;
-}
