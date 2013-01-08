@@ -1,5 +1,7 @@
 """Integration tests for email-sending."""
 from django.core import mail
+from django.core.urlresolvers import reverse
+from django.test import html
 import pytest
 
 from portfoliyo.notifications import record
@@ -75,24 +77,73 @@ class TestSend(object):
         assert mail.outbox[0].subject == "New activity in two of your villages."
 
 
+    def assert_multi_email(self,
+                           subject=None,
+                           html_snippets=None,
+                           text_snippets=None,
+                           snippet_context=None,
+                           ):
+        """
+        Make assertions about a multipart/alternatives email.
+
+        Assert that there is only one email in the testing outbox, that it's
+        subject is ``subject``, and that all the snippets in ``html_snippets``
+        and ``text_snippets`` (both lists) are found in the HTML and text
+        portions of the email body, respectively.
+
+        If ``snippet_context`` is set, it is used as the context for a % string
+        interpolation on each snippet.
+
+        """
+        assert len(mail.outbox) == 1
+        email = mail.outbox[0]
+
+        if subject is not None:
+            assert email.subject == subject
+
+        assert len(email.alternatives) == 1
+        assert email.alternatives[0][1] == 'text/html'
+        parsed_html_body = html.parse_html(email.alternatives[0][0])
+
+        for html_bit in html_snippets or []:
+            if snippet_context:
+                html_bit = html_bit % snippet_context
+            parsed_bit = html.parse_html(html_bit)
+            assert parsed_html_body.count(parsed_bit)
+
+        for text_bit in text_snippets or []:
+            if snippet_context:
+                text_bit = text_bit % snippet_context
+            assert text_bit in email.body
+
+
     @pytest.mark.parametrize('params', [
             (
                 [("Teacher1", "StudentX")],
-                 "Teacher1 added you to StudentX's village.",
+                "Teacher1 added you to StudentX's village.",
+                ['<li>Teacher1 added you to '
+                 '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'],
+                ["Teacher1 added you to StudentX's village. "
+                 "Start a conversation: %(StudentXUrl)s"]
                 ),
             (
                 [("Teacher1", "StudentX"), ("Teacher1", "StudentY")],
-                 "Teacher1 added you to two villages.",
+                "Teacher1 added you to two villages.",
+                [],
+                [],
                 ),
             (
                 [("Teacher1", "StudentX"), ("Teacher2", "StudentY")],
-                 "Two teachers added you to two villages.",
+                "Two teachers added you to two villages.",
+                [],
+                [],
                 ),
             ])
     def test_added_to_village(self, params, recip):
         """Test subject/body for added-to-village notifications."""
-        combos, expected = params
+        combos, expected_subject, expected_html, expected_text = params
         name_map = {}
+        context = {}
         for teacher_name, student_name in combos:
             if teacher_name not in name_map:
                 name_map[teacher_name] = factories.ProfileFactory.create(
@@ -100,6 +151,8 @@ class TestSend(object):
             if student_name not in name_map:
                 name_map[student_name] = factories.ProfileFactory.create(
                     name=student_name, school_staff=True)
+                context[student_name + 'Url'] = reverse(
+                    'village', kwargs={'student_id': name_map[student_name].id})
                 factories.RelationshipFactory.create(
                     from_profile=recip, to_profile=name_map[student_name])
             teacher = name_map[teacher_name]
@@ -109,8 +162,8 @@ class TestSend(object):
             record.added_to_village(recip, teacher, student)
 
         assert base.send(recip.id)
-        assert len(mail.outbox) == 1
-        assert mail.outbox[0].subject == expected
+        self.assert_multi_email(
+            expected_subject, expected_html, expected_text, context)
 
 
     @pytest.mark.parametrize('params', [
@@ -144,5 +197,4 @@ class TestSend(object):
                 record.new_teacher(recip, teacher, rel.student)
 
         assert base.send(recip.id)
-        assert len(mail.outbox) == 1
-        assert mail.outbox[0].subject == expected
+        self.assert_multi_email(expected)

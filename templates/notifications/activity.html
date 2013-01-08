@@ -5,45 +5,41 @@
 {# 1.1 Single Posts #}
 
 {% for village in villages %}
-  {% include "activity/_village_posts.html" %}
+  {% include "notifications/activity/_village_posts.html" %}
 {% endfor %}
 
 {# 1.2 Bulk Post #}
 {# only treat as bulk if it went to more than one of my villages #}
 
 {% for combo_of_villages in combos_of_villages %}
-  {% include "activity/_bulk_post.html" %}
+  {% include "notifications/activity/_bulk_post.html" %}
 {% endfor %}
 
 {# 2. Requested Activity #}
 
 <ul class="requested">
   {% for student in students %}
-    {% include "activity/_new_parent.html" %}
+    {% include "notifications/activity/_new_parent.html" %}
   {% endfor %}
-  {% include "activity/_added_to_villages.html" %}
-  {% for teacher in teachers %}
-    {% include "activity/_new_teacher.html" %}
-  {% endfor %}
+  {% include "notifications/activity/_added_to_villages.html" %}
+  {% include "notifications/activity/_new_teachers.html" %}
 </ul>
 
 {# 3. Non-Requested Posts + Activity - ordered by time #}
 
 <ul class="nonrequested">
   {% for village in villages %}
-    {% include "activity/_village_posts_nonrequested.html" %}
+    {% include "notifications/activity/_village_posts_nonrequested.html" %}
   {% endfor %}
   {# this should loop over each combination of villages for EACH posting teacher #}
   {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
-    {% include "activity/_bulk_post_nonrequested.html" %}
+    {% include "notifications/activity/_bulk_post_nonrequested.html" %}
   {% endfor %}
   {% for student in students %}
-    {% include "activity/_new_parent.html" %}
+    {% include "notifications/activity/_new_parent.html" %}
   {% endfor %}
-  {% include "activity/_added_to_villages_nonrequested.html" %}
-  {% for teacher in teachers %}
-    {% include "activity/_new_teacher.html" %}
-  {% endfor %}
+  {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
+  {% include "notifications/activity/_new_teachers.html" %}
 </ul>
 
 <p>

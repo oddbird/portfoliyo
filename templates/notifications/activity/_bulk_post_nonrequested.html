@@ -17,7 +17,7 @@
   {% for student in students %}
   {% if forloop.counter < 4 %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}
   {% endfor %}
-  and {{ students|length - 3 }} more village {% if students|length > 4 %}s {% endif %}
+  and {{ students|length|add:"-3" }} more village {% if students|length > 4 %}s {% endif %}
   {% endif %}
 
   have {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} from {{ teacher }}.

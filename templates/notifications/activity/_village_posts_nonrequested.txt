@@ -4,6 +4,6 @@
 {% if elders|length == 3 %}{% for elder in elders %}{% if forloop.last %} and {{ elder }}.{% else %} {{ elder }},{% endif %}{% endfor %}{% endif %}
 {% if elders|length > 3 %}
   {% for elder in elders %}
-    {% if forloop.counter < 4 %} {{ elder }},{% else %} and {{ elders|length - 3 }} more {% if elders|length == 4 %}person{% else %}people{% endif %}.{% endif %}
+    {% if forloop.counter < 4 %} {{ elder }},{% else %} and {{ elders|length|add:"-3" }} more {% if elders|length == 4 %}person{% else %}people{% endif %}.{% endif %}
   {% endfor %}
 {% endif %}

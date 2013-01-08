@@ -2,7 +2,7 @@ In {{ student }}'s village:
 
 {# posts should include context posts #}
 {% for post in posts %}
-  {% include "includes/_post.txt" %}
+  {% include "notifications/activity/includes/_post.txt" %}
 {% endfor %}
 
 Log in to reply: {{ village_url }}

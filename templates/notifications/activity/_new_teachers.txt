@@ -1,1 +1,4 @@
-- {{ teacher }} joined {{ student }}'s village. Start a conversation: {{ village_url }}
+{% load url from future %}
+{% for village in new_teacher_villages %}
+- {{ village.teacher }} joined {{ village.student }}'s village. Start a conversation: {% url 'village' student_id=village.student.id %}
+{% endfor %}

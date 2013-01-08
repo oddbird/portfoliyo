@@ -12,11 +12,11 @@
 
 {% if students|length > 3 %}
 <h2>
-  In {% for student in students %}{% if forloop.counter < 4 %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}{% endfor %}and {{ students|length - 3 }} more village{% if students|length > 4 %}s{% endif %}:
+  In {% for student in students %}{% if forloop.counter < 4 %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}{% endfor %}and {{ students|length|add:"-3" }} more village{% if students|length > 4 %}s{% endif %}:
 </h2>
 {% endif %}
 
 {# posts should NOT include context posts #}
 {% for post in posts %}
-  {% include "includes/_post.html" %}
+  {% include "notifications/activity/includes/_post.html" %}
 {% endfor %}

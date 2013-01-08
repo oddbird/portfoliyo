@@ -7,10 +7,10 @@ In {% for student in students %}{% if forloop.last %}and {{ student }}{% else %}
 {% endif %}
 
 {% if students|length > 3 %}
-In {% for student in students %}{% if forloop.counter < 4 %}{{ student }}, {% endif %}{% endfor %}and {{ students|length - 3 }} more village{% if students|length > 4 %}s{% endif %}:
+In {% for student in students %}{% if forloop.counter < 4 %}{{ student }}, {% endif %}{% endfor %}and {{ students|length|add:"-3" }} more village{% if students|length > 4 %}s{% endif %}:
 {% endif %}
 
 {# posts should NOT include context posts #}
 {% for post in posts %}
-  {% include "includes/_post.txt" %}
+  {% include "notifications/activity/includes/_post.txt" %}
 {% endfor %}

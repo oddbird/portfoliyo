@@ -27,6 +27,10 @@ class VillageList(object):
             self.students_by_teacher.setdefault(v.teacher, set()).add(v.student)
 
 
+    def __iter__(self):
+        return iter(self.villages)
+
+
 
 class NotificationTypeCollector(object):
     """

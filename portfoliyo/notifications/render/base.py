@@ -1,10 +1,18 @@
 """Rendering and sending of notifications."""
+import re
+
 from django.template.loader import render_to_string
 
 from portfoliyo import email
 from portfoliyo import model
 from . import collect
 
+
+HTML_TEMPLATE = 'notifications/activity.html'
+TEXT_TEMPLATE = 'notifications/activity.txt'
+
+
+consecutive_newlines = re.compile('\n+')
 
 
 def send(profile_id):
@@ -29,9 +37,9 @@ def send(profile_id):
     subject = render_to_string(
         collection.get_subject_template(), collection.context)
 
-    # @@@ strip consecutive newlines from textual templates
-    text = ''
-    html = ''
+    text = consecutive_newlines.sub(
+        '\n', render_to_string(TEXT_TEMPLATE, collection.context))
+    html = render_to_string(HTML_TEMPLATE, collection.context)
 
     email.send_multipart(subject, text, html, [profile.user.email])
 
