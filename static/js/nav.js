@@ -57,7 +57,7 @@ var PYO = (function (PYO, $) {
         var link = listitem.find('.listitem-select');
         var url = listitem.hasClass('student') ? relationshipsUrl + '?student=' + link.data('id') : link.data('group-resource-url');
         var name = listitem.hasClass('student') ? link.data('name') : link.data('group-name');
-        var removed = ich.remove_listitem({name: name});
+        var removed = $(Handlebars.templates.remove_listitem({name: name}));
         var removeItem = function () {
             listitem.hide();
             if (url) {
