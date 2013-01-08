@@ -251,7 +251,7 @@ var PYO = (function (PYO, $) {
 
     PYO.postAjaxError = function (post, author_sequence_id, status, xhr_count) {
         if (status !== 'abort' && status !== 'timeout') {
-            var msg = ich.post_timeout_msg();
+            var msg = $(Handlebars.templates.post_timeout_msg());
             msg.find('.resend').click(function (e) {
                 e.preventDefault();
                 var thisPost = $(this).closest('.post');

@@ -38,4 +38,10 @@ templates['flash_warning_msg'] = template(function (Handlebars,depth0,helpers,pa
 
 
   return "<li class=\"message warning\">\n  <p>\n    This site requires Flash Player version 10.0.0 or higher to display live updates. Refresh your browser page to see new posts, or <a href=\"http://get.adobe.com/flashplayer/\" target=\"_blank\">download Flash Player</a>.\n  </p>\n  <a href=\"#\" class=\"close\">dismiss this message</a>\n</li>\n";});
+templates['post_timeout_msg'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  
+
+
+  return "<p class=\"timeout\">This message was not sent. You may have lost your connection to the internet. <a class=\"resend\" href=\"#\">Try again?</a> Or <a class=\"cancel\" href=\"#\">cancel this post</a>.</p>\n";});
 })();
