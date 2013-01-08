@@ -34,8 +34,8 @@ def check_for_pending_notifications():
 @celery.task(ignore_result=True)
 def send_notification_email(profile_id):
     """Send notification email to the user with the given profile ID."""
-    from portfoliyo.notifications import send
-    send.send(profile_id)
+    from portfoliyo.notifications import render
+    render.send(profile_id)
 
 
 
