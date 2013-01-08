@@ -430,8 +430,8 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.showActiveItemRemovedMsg = function (item, disable_form) {
-        var msg = ich.active_item_removed_msg({item: item});
-        msg.appendTo($('#messages'));
+        var msg = Handlebars.templates.active_item_removed_msg({item: item});
+        $(msg).appendTo($('#messages'));
         $('#messages').messages();
         if (disable_form) { $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled'); }
     };
