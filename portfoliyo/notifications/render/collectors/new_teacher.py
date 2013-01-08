@@ -1,46 +1,17 @@
 """New-teacher notification collector."""
 from portfoliyo import model
 from portfoliyo.notifications import types
-from .base import NotificationTypeCollector
+from . import base
 
 
 
-class NewTeacherVillage(object):
-    """Encapsulates addition of a single teacher to a single village."""
-    def __init__(self, teacher, student):
-        self.teacher = teacher
-        self.student = student
-
-
-class NewTeacherVillageList(object):
-    """Provides summary data about a list of ``NewTeacherVillage`` instances."""
-    def __init__(self, villages):
-        self.villages = villages
-
-        self.teachers = set()
-        self.teachers_by_student = {}
-        self.students = set()
-        self.students_by_teacher = {}
-
-        for v in self.villages:
-            self.teachers.add(v.teacher)
-            self.students.add(v.student)
-            self.teachers_by_student.setdefault(v.student, set()).add(v.teacher)
-            self.students_by_teacher.setdefault(v.teacher, set()).add(v.student)
-
-
-
-class NewTeacherCollector(NotificationTypeCollector):
+class NewTeacherCollector(base.NotificationTypeCollector):
     """
     Collects new-teacher notifications.
 
     Template context provided:
 
-    ``new_teacher_villages`` is a ``NewTeacherVillageList``, which acts like a
-    list of ``NewTeacherVillage`` instances, each with a ``teacher`` and
-    ``student`` attribute, and also provides summary ``teachers``,
-    ``students``, ``teachers_by_student``, and ``students_by_teacher``
-    attributes.
+    ``new_teacher_villages`` is a ``VillageList``.
 
     """
     type_name = types.NEW_TEACHER
@@ -53,9 +24,9 @@ class NewTeacherCollector(NotificationTypeCollector):
 
     def get_context(self):
         return {
-            'new_teacher_villages': NewTeacherVillageList(
+            'new_teacher_villages': base.VillageList(
                 [
-                    NewTeacherVillage(n['teacher'], n['student'])
+                    base.Village(n['teacher'], n['student'])
                     for n in self.notifications
                     ]
                 )

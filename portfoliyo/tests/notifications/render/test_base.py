@@ -75,24 +75,42 @@ class TestSend(object):
         assert mail.outbox[0].subject == "New activity in two of your villages."
 
 
-    @pytest.mark.parametrize('village_count', [1, 2])
-    def test_only_added_to_village_subject(self, village_count, recip):
-        """Specific subject if all notifications are added-to-village."""
-        for i in range(village_count):
-            rel = factories.RelationshipFactory.create(
-                from_profile=recip, to_profile__name='S%s' % i)
-            other_rel = factories.RelationshipFactory.create(
-                from_profile__name='E%s' % i, to_profile=rel.student)
-            record.added_to_village(recip, other_rel.elder, rel.student)
-
-        if village_count == 1:
-            exp = "E0 added you to S0's village."
-        else:
-            exp = "You have been added to two villages."
+    @pytest.mark.parametrize('params', [
+            (
+                [("Teacher1", "StudentX")],
+                 "Teacher1 added you to StudentX's village.",
+                ),
+            (
+                [("Teacher1", "StudentX"), ("Teacher1", "StudentY")],
+                 "Teacher1 added you to two villages.",
+                ),
+            (
+                [("Teacher1", "StudentX"), ("Teacher2", "StudentY")],
+                 "Two teachers added you to two villages.",
+                ),
+            ])
+    def test_added_to_village(self, params, recip):
+        """Test subject/body for added-to-village notifications."""
+        combos, expected = params
+        name_map = {}
+        for teacher_name, student_name in combos:
+            if teacher_name not in name_map:
+                name_map[teacher_name] = factories.ProfileFactory.create(
+                    name=teacher_name, school_staff=True)
+            if student_name not in name_map:
+                name_map[student_name] = factories.ProfileFactory.create(
+                    name=student_name, school_staff=True)
+                factories.RelationshipFactory.create(
+                    from_profile=recip, to_profile=name_map[student_name])
+            teacher = name_map[teacher_name]
+            student = name_map[student_name]
+            factories.RelationshipFactory.create(
+                from_profile=teacher, to_profile=student)
+            record.added_to_village(recip, teacher, student)
 
         assert base.send(recip.id)
         assert len(mail.outbox) == 1
-        assert mail.outbox[0].subject == exp
+        assert mail.outbox[0].subject == expected
 
 
     @pytest.mark.parametrize('params', [
@@ -111,7 +129,7 @@ class TestSend(object):
                 ),
             ])
     def test_only_new_teachers_subject(self, params, recip):
-        """Specific subject if all notifications are new-teacher."""
+        """Test subject/body for new-teacher notifications."""
         student_names, teacher_names, expected = params
         teacher_profiles = []
         for teacher_name in teacher_names:

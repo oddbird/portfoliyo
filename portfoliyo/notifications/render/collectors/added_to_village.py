@@ -1,25 +1,17 @@
 """Added-to-village notification collector."""
 from portfoliyo import model
 from portfoliyo.notifications import types
-from .base import NotificationTypeCollector
+from . import base
 
 
 
-class AddedToVillage(object):
-    def __init__(self, added_by, student):
-        self.added_by = added_by
-        self.student = student
-
-
-
-class AddedToVillageCollector(NotificationTypeCollector):
+class AddedToVillageCollector(base.NotificationTypeCollector):
     """
     Collects added-to-village notifications.
 
     Template context provided:
 
-    ``added_to_village`` is a list of ``AddedToVillage`` instances, each with
-    an ``added_by`` and ``student`` attribute, sorted by ``added_by``.
+    ``added_to_village`` is a ``VillageList``.
 
     """
     type_name = types.ADDED_TO_VILLAGE
@@ -32,9 +24,11 @@ class AddedToVillageCollector(NotificationTypeCollector):
 
     def get_context(self):
         return {
-            'added_to_villages': [
-                AddedToVillage(n['added_by'], n['student'])
-                for n in sorted(
-                    self.notifications, key=lambda x: x['added_by'])
-                ],
+            'added_to_villages': base.VillageList(
+                [
+                    base.Village(n['added_by'], n['student'])
+                    for n in sorted(
+                        self.notifications, key=lambda x: x['added_by'])
+                    ],
+                )
             }

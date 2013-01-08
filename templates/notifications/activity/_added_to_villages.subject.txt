@@ -1,6 +1,2 @@
-{% load humanize %}
-{% if added_to_villages|length == 1 %}
-{{ added_to_villages.0.added_by }} added you to {{ added_to_villages.0.student }}'s village.
-{% else %}
-You have been added to {{ added_to_villages|length|apnumber }} villages.
-{% endif %}
+{% load summary %}
+{{ added_to_villages.teachers|summary:"unnamed=teachers"|capfirst }} added you to {{ added_to_villages.students|summary:"named='s village:unnamed=villages" }}.

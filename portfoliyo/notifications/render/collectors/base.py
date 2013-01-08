@@ -1,4 +1,33 @@
 """Collecting, re-hydrating, and aggregating notifications."""
+
+
+
+class Village(object):
+    """Encapsulates some event involving a single teacher & a single village."""
+    def __init__(self, teacher, student):
+        self.teacher = teacher
+        self.student = student
+
+
+
+class VillageList(object):
+    """Provides summary data about a list of ``Village`` instances."""
+    def __init__(self, villages):
+        self.villages = villages
+
+        self.teachers = set()
+        self.teachers_by_student = {}
+        self.students = set()
+        self.students_by_teacher = {}
+
+        for v in self.villages:
+            self.teachers.add(v.teacher)
+            self.students.add(v.student)
+            self.teachers_by_student.setdefault(v.student, set()).add(v.teacher)
+            self.students_by_teacher.setdefault(v.teacher, set()).add(v.student)
+
+
+
 class NotificationTypeCollector(object):
     """
     Base class for collections of notifications of the same type.
