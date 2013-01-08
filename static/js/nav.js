@@ -81,10 +81,10 @@ var PYO = (function (PYO, $) {
         };
         var ajaxError = function () {
             listitem.find('.undo-action-remove').click();
-            var msg = ich.ajax_error_msg({
+            var msg = $(Handlebars.templates.ajax_error_msg({
                 error_class: 'remove-error',
                 message: 'Unable to remove this item.'
-            });
+            }));
             msg.find('.try-again').click(function (e) {
                 e.preventDefault();
                 msg.remove();
@@ -164,10 +164,10 @@ var PYO = (function (PYO, $) {
 
     PYO.fetchGroupsError = function (force) {
         var nav = $('.village-nav');
-        var msg = ich.ajax_error_msg({
+        var msg = $(Handlebars.templates.ajax_error_msg({
             error_class: 'nav-error',
             message: 'Unable to load groups.'
-        });
+        }));
         msg.find('.try-again').click(function (e) {
             e.preventDefault();
             msg.remove();
@@ -200,10 +200,10 @@ var PYO = (function (PYO, $) {
             } else { fetchStudentsError(); }
         };
         var fetchStudentsError = function () {
-            var msg = ich.ajax_error_msg({
+            var msg = $(Handlebars.templates.ajax_error_msg({
                 error_class: 'nav-error',
                 message: 'Unable to load students.'
-            });
+            }));
             msg.find('.try-again').click(function (e) {
                 e.preventDefault();
                 msg.remove();

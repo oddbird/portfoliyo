@@ -325,10 +325,10 @@ var PYO = (function (PYO, $) {
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
-                            var msg = ich.ajax_error_msg({
+                            var msg = $(Handlebars.templates.ajax_error_msg({
                                 error_class: 'feed-error',
                                 message: 'Unable to load prior posts in this village.'
-                            });
+                            }));
                             msg.find('.try-again').click(function (e) {
                                 e.preventDefault();
                                 msg.remove();
