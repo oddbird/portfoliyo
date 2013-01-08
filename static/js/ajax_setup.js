@@ -9,7 +9,7 @@
 
     $(document).ajaxError(function (event, request, settings, error) {
         if (request && request.status === 403) {
-            ich.ajax_403_msg().appendTo('#messages');
+            $(Handlebars.templates.ajax_403_msg()).appendTo('#messages');
             $('#messages').messages();
         }
         var json;
