@@ -156,8 +156,8 @@ def test_record(mock_store):
 
 def test_record_triggering(mock_store):
     """If triggering, triggers send_notification task."""
-    target = 'portfoliyo.notifications.record.tasks.send_notification.delay'
-    with mock.patch(target) as mock_task_delay:
+    tgt = 'portfoliyo.notifications.record.tasks.send_notification_email.delay'
+    with mock.patch(tgt) as mock_task_delay:
         record._record(_profile(id=2), 'some', triggering=True)
 
     mock_task_delay.assert_called_with(2)

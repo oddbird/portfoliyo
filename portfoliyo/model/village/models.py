@@ -10,7 +10,7 @@ from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
 from portfoliyo.model.events import trigger
-from portfoliyo import notifications, tasks
+from portfoliyo import tasks
 from ..users import models as user_models
 from . import unread
 
@@ -51,7 +51,7 @@ class BasePost(models.Model):
     # arbitrary additional metadata, currently just highlights and SMSes
     meta = JSONField(default={})
 
-    notification_type = None
+    is_bulk = None
 
 
     class Meta:
@@ -156,11 +156,7 @@ class BasePost(models.Model):
 
     def notify(self):
         """Record notifications for eligible users."""
-        if not self.author:
-            return
-        notify = getattr(notifications, self.notification_type)
-        for profile in self.elders_in_context.exclude(pk=self.author.pk):
-            notify(profile, self)
+        tasks.record_notification('post_all', self)
 
 
     def get_relationship(self):
@@ -190,7 +186,7 @@ class BulkPost(BasePost):
         user_models.Group, blank=True, null=True, related_name='bulk_posts')
 
 
-    notification_type = 'bulk_post'
+    is_bulk = True
 
 
     def extra_data(self):
@@ -302,7 +298,7 @@ class Post(BasePost):
         BulkPost, blank=True, null=True, related_name='triggered')
 
 
-    notification_type = 'post'
+    is_bulk = False
 
 
     def extra_data(self):

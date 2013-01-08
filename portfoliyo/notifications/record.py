@@ -4,6 +4,16 @@ from . import store, types
 
 
 
+def post_all(p):
+    """Send all appropriate notifications for creation of given post."""
+    if not p.author:
+        return
+    record_func = bulk_post if p.is_bulk else post
+    for profile in p.elders_in_context.exclude(pk=p.author.pk):
+        record_func(profile, p)
+
+
+
 def post(profile, post):
     """Notify ``profile`` that a parent or teacher posted ``post``."""
     pref = 'notify_%s' % (
@@ -72,4 +82,4 @@ def _record(profile, name, triggering=False, data=None):
     store.store(profile.id, name, triggering=triggering, data=data)
     # @@@ later this will be only if user prefers instant notifications
     if triggering:
-        tasks.send_notification.delay(profile.id)
+        tasks.send_notification_email.delay(profile.id)

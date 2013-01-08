@@ -343,7 +343,7 @@ class TestPostCreate(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.student)
 
-        target = 'portfoliyo.model.village.models.notifications.post'
+        target = 'portfoliyo.notifications.record.post'
         with mock.patch(target) as mock_notify_post:
             post = models.Post.create(rel1.elder, rel1.student, "Hello")
 
@@ -356,7 +356,7 @@ class TestPostCreate(object):
         factories.RelationshipFactory.create(
             to_profile=rel1.student)
 
-        target = 'portfoliyo.model.village.models.notifications.post'
+        target = 'portfoliyo.notifications.record.post'
         with mock.patch(target) as mock_notify_post:
             models.Post.create(
                 rel1.elder, rel1.student, "Hello", notifications=False)
@@ -368,7 +368,7 @@ class TestPostCreate(object):
         """No notification for system posts."""
         rel = factories.RelationshipFactory.create()
 
-        target = 'portfoliyo.model.village.models.notifications.post'
+        target = 'portfoliyo.notifications.record.post'
         with mock.patch(target) as mock_notify_post:
             models.Post.create(None, rel.student, "Hello")
 
@@ -379,7 +379,7 @@ class TestPostCreate(object):
         """No notification recorded for author."""
         rel = factories.RelationshipFactory.create()
 
-        target = 'portfoliyo.model.village.models.notifications.post'
+        target = 'portfoliyo.notifications.record.post'
         with mock.patch(target) as mock_notify_post:
             models.Post.create(rel.elder, rel.student, "Hello")
 
@@ -512,7 +512,7 @@ class TestBulkPost(object):
         group.elders.add(other)
         group.students.add(rel.student)
 
-        target = 'portfoliyo.model.village.models.notifications.bulk_post'
+        target = 'portfoliyo.notifications.record.bulk_post'
         with mock.patch(target) as mock_notify_bulk_post:
             bulk_post = models.BulkPost.create(
                 rel.elder, group, "Hello")
