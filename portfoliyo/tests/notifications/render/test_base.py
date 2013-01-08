@@ -72,7 +72,7 @@ class TestSend(object):
 
         assert base.send(recip.id)
         assert len(mail.outbox) == 1
-        assert mail.outbox[0].subject == "New activity in 2 of your villages."
+        assert mail.outbox[0].subject == "New activity in two of your villages."
 
 
     @pytest.mark.parametrize('village_count', [1, 2])
@@ -88,12 +88,43 @@ class TestSend(object):
         if village_count == 1:
             exp = "E0 added you to S0's village."
         else:
-            exp = "You have been added to 2 villages."
+            exp = "You have been added to two villages."
 
         assert base.send(recip.id)
         assert len(mail.outbox) == 1
         assert mail.outbox[0].subject == exp
 
 
-    def test_only_new_teachers_subject(self, recip):
+    @pytest.mark.parametrize('params', [
+            (["StudentX"], ["Teacher1"], "Teacher1 joined StudentX's village."),
+            (
+                ["StudentX", "StudentY"], ["Teacher1"],
+                "Teacher1 joined two of your villages."
+                ),
+            (
+                ["StudentX"], ["Teacher1", "Teacher2"],
+                "Two teachers joined StudentX's village."
+                ),
+            (
+                ["StudentX", "StudentY"], ["Teacher1", "Teacher2"],
+                "Two teachers joined two of your villages."
+                ),
+            ])
+    def test_only_new_teachers_subject(self, params, recip):
         """Specific subject if all notifications are new-teacher."""
+        student_names, teacher_names, expected = params
+        teacher_profiles = []
+        for teacher_name in teacher_names:
+            teacher_profiles.append(
+                factories.ProfileFactory.create(name=teacher_name))
+        for student_name in student_names:
+            rel = factories.RelationshipFactory.create(
+                from_profile=recip, to_profile__name=student_name)
+            for teacher in teacher_profiles:
+                factories.RelationshipFactory.create(
+                    from_profile=teacher, to_profile=rel.student)
+                record.new_teacher(recip, teacher, rel.student)
+
+        assert base.send(recip.id)
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].subject == expected

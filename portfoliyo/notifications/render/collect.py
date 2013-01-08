@@ -83,8 +83,7 @@ class NotificationCollection(object):
             context.update(collector.get_context())
             students.update(collector.get_students())
 
-        # need to convert to list so it can be indexed into in template
-        context['students'] = list(students)
+        context['students'] = students
 
         self._collectors = collectors
         self._context = context

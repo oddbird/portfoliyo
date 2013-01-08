@@ -1,6 +1,7 @@
 """Tags and filters for displaying summaries of object collections."""
 from django import template
 from django.contrib.humanize.templatetags.humanize import apnumber
+from django.utils.safestring import mark_safe
 
 
 register = template.Library()
@@ -38,6 +39,8 @@ def summary(objects, options_string):
     if not objects:
         return 'nobody'
 
+    objects = list(objects)
+
     options = {}
     for option_string in options_string.split(':'):
         if option_string:
@@ -46,7 +49,8 @@ def summary(objects, options_string):
 
     max_show = int(options.get('max', 1))
     named = options.get('named', '')
-    unnamed = options.get('unnamed', objects[0].__class__.__name__.lower())
+    unnamed = options.get(
+        'unnamed', unicode(objects[0].__class__.__name__.lower() + "s"))
     use_apnumber = not (
         options.get('apnumber', 'true').lower() in {'no', 'false', '0'})
     apply_apnumber = apnumber if use_apnumber else lambda x: x
@@ -57,19 +61,22 @@ def summary(objects, options_string):
     if some_unnamed:
         num_unnamed = length - max_show + 1
         objects[max_show-1:] = [
-            u"%s%s %s%s" % (
+            u"%s%s %s" % (
                 apply_apnumber(num_unnamed),
                 u" other" if max_show > 1 else u"",
                 unnamed,
-                u"s" if num_unnamed > 1 else u"",
                 )
             ]
 
     objects = [unicode(o) for o in objects]
 
-    return u'%s%s%s%s' % (
-        u', '.join(objects[:-1]),
-        u" and " if max_show > 1 else u"",
-        objects[-1],
-        named if not some_unnamed else u"",
+    return mark_safe(
+        u'%s%s%s%s' % (
+            u', '.join(objects[:-1]),
+            u" and " if max_show > 1 else u"",
+            objects[-1],
+            named if not some_unnamed else u"",
+            )
         )
+
+summary.is_safe = True

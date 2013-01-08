@@ -46,7 +46,7 @@ def test_named():
 
 
 def test_unnamed():
-    assert s(["Foo", "Bar"], "unnamed=place") == "two places"
+    assert s(["Foo", "Bar"], "unnamed=places") == "two places"
 
 
 def test_max_two():
@@ -58,4 +58,4 @@ def test_max_two():
 def test_max_three_with_unnamed():
     assert s(
         ["Foo", "Bar", "Baz", "Bill"],
-        "max=3:unnamed=place") == "Foo, Bar and two other places"
+        "max=3:unnamed=places") == "Foo, Bar and two other places"
