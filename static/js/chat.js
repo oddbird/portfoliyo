@@ -87,7 +87,7 @@ var PYO = (function (PYO, $) {
                     if (recipients.length > 1) { this.plural_sms = 's'; }
                 }
             });
-            posts = ich.post(data);
+            posts = $(Handlebars.templates.post(data));
         }
         if (posts) {
             var nametag = posts.find('.nametag');
