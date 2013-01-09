@@ -4,6 +4,7 @@
 .brand {
   @include adjust-font-size-to($banner-size);
   @include span-columns(3);
+  padding-left: $box-padding;
   color: $base3;
   .wordmark {
     @extend %icon;
