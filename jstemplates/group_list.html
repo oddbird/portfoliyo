@@ -1,8 +1,10 @@
 <ul class="itemlist">
   {{> group_list_item }}
 </ul>
-{{# staff }}
 
+{{# staff }}
 <a href="{{ add_group_url }}" class="additem-group ajax-link">Add Group</a>
-<a href="{{# add_students_bulk_url }}{{ add_students_bulk_url }}{{/ add_students_bulk_url }}{{^ add_students_bulk_url }}{{ add_student_url }}{{/ add_students_bulk_url }}" class="additem-village ajax-link">Add Students & Parents</a>
+
+{{# add_students_bulk_url }}<a href="{{ add_students_bulk_url }}" class="action-addbulk ajax-link additem-village">Register Parents</a>{{/ add_students_bulk_url }}
+{{# add_student_url }}or <a href="{{ add_student_url }}" class="action-addsingle ajax-link">Create a Student by Hand »</a>{{/ add_student_url }}
 {{/ staff }}
