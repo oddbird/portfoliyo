@@ -1078,10 +1078,10 @@ button {
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  margin-left: -1rem;
-  padding-left: 1rem;
-  margin-right: -1rem;
-  padding-right: 1rem;
+  margin-left: 0%;
+  padding-left: 0%;
+  margin-right: 0%;
+  padding-right: 0%;
 }
 
 .initial-password {
@@ -1154,12 +1154,10 @@ button {
 }
 
 [role="banner"], [role="contentinfo"], [role="main"] .container {
-  max-width: 594px;
-  max-width: 33rem;
-  padding-left: 18px;
-  padding-left: 1rem;
-  padding-right: 18px;
-  padding-right: 1rem;
+  max-width: 558px;
+  max-width: 31rem;
+  padding-left: 0;
+  padding-right: 0;
   margin-left: auto;
   margin-right: auto;
   -webkit-background-origin: content;
@@ -1180,8 +1178,8 @@ button {
 }
 @media (min-width: 43.875em) {
   [role="banner"], [role="contentinfo"], [role="main"] .container {
-    max-width: 1458px;
-    max-width: 81rem;
+    max-width: 1422px;
+    max-width: 79rem;
   }
 }
 
@@ -1213,6 +1211,7 @@ button {
   width: 35.48387%;
   float: left;
   margin-right: 3.22581%;
+  padding-left: 0.31944rem;
   color: #fdf6e3;
 }
 .brand .wordmark {
@@ -1459,7 +1458,7 @@ button {
   list-style: none;
   position: fixed;
   top: 2.55556rem;
-  right: 1rem;
+  right: 0;
   z-index: 999;
   color: #eee8d5;
 }
@@ -1535,6 +1534,7 @@ button {
   color: #657b83;
   background: #fdf6e3;
   overflow: hidden;
+  padding: 0 0.31944rem;
 }
 
 [role="contentinfo"] {
@@ -1550,12 +1550,18 @@ button {
   padding-bottom: 0.31944rem;
   margin-bottom: 0px;
   margin-bottom: 0rem;
+  padding-left: 0.31944rem;
+  padding-right: 0.31944rem;
 }
 [role="contentinfo"] .author {
   text-transform: uppercase;
 }
 [role="contentinfo"] strong {
   font-weight: bold;
+}
+
+.village-landing [role="main"] {
+  padding: 0 0.31944rem;
 }
 
 .tagline, .feature-title, .dev .fn {
@@ -1747,7 +1753,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1351725897') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1357772648') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1867,8 +1873,8 @@ button {
 }
 
 .lt-ie9 .village-landing .container {
-  max-width: 594px;
-  max-width: 33rem;
+  max-width: 558px;
+  max-width: 31rem;
 }
 .lt-ie9 .village-landing .browser-warning {
   padding-bottom: 0px;
@@ -2056,12 +2062,10 @@ button {
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
-  max-width: 1458px;
-  max-width: 81rem;
-  padding-left: 18px;
-  padding-left: 1rem;
-  padding-right: 18px;
-  padding-right: 1rem;
+  max-width: 1422px;
+  max-width: 79rem;
+  padding-left: 0;
+  padding-right: 0;
   margin-left: auto;
   margin-right: auto;
   -webkit-background-origin: content;
@@ -2077,6 +2081,9 @@ button {
   content: "";
   display: table;
   clear: both;
+}
+.village-app [role="main"] {
+  padding: 0;
 }
 
 .village {
@@ -2172,6 +2179,10 @@ button {
   color: #fdf6e3;
 }
 
+.additems {
+  margin: 0.63889rem;
+}
+
 [class*="additem-"] {
   text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
   background: -webkit-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
@@ -2181,10 +2192,7 @@ button {
   background-color: #e6eacc;
   border-color: #769087;
   color: #657b83;
-  margin-top: 12px;
-  margin-top: 0.63889rem;
-  margin-bottom: 12px;
-  margin-bottom: 0.63889rem;
+  margin: 0.63889rem;
   display: block;
   font-weight: bold;
   text-align: left;
@@ -2192,8 +2200,8 @@ button {
 [class*="additem-"]:link, [class*="additem-"]:visited, [class*="additem-"]:focus, [class*="additem-"]:hover, [class*="additem-"]:active {
   color: #657b83;
 }
-[class*="additem-"][class*="-village"], [class*="additem-"][class*="-group"] {
-  margin-right: 1.27778rem;
+.additems [class*="additem-"] {
+  margin: 0.63889rem 0;
 }
 [class*="additem-"][class*="-group"] {
   text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
@@ -2627,11 +2635,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .listitem-select {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin-left: -1rem;
-  padding-left: 1rem;
   display: block;
   position: relative;
 }
@@ -2645,23 +2648,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   padding-top: 6px;
   padding-top: 0.31944rem;
   border-color: #93a1a1;
-}
-
-.nav-error, .remove-error {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin-left: -1rem;
-  padding-left: 1rem;
+  padding-left: 0.31944rem;
 }
 
 .village-nav {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  left: -1rem;
+  left: 0;
   width: 18.98734%;
-  padding-left: 1rem;
   border: 1px solid #93a1a1;
   border-width: 0 1px;
   z-index: 5;
@@ -2790,6 +2782,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   overflow: hidden;
   float: left;
   margin-right: .4rem;
+  margin-left: 0.31944rem;
   color: #fdf6e3;
   background: rgba(7, 54, 66, 0.5);
   z-index: 6;
@@ -3138,24 +3131,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .village-info {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  right: -1rem;
-  width: 23.80952%;
-  padding-right: 1rem;
-  padding-left: 1.5873%;
+  right: 0;
+  width: 25.39683%;
   height: 100%;
 }
 
 .elders-title, .elder .vcard {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin-left: -1rem;
-  padding-left: 1rem;
-  margin-right: -1rem;
-  padding-right: 1rem;
   padding-top: 6px;
   padding-top: 0.31944rem;
   border-bottom-width: 1px;
@@ -3163,6 +3144,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border-bottom-style: solid;
   padding-bottom: 5px;
   padding-bottom: 0.26389rem;
+  padding-left: 0.31944rem;
+  padding-right: 0.31944rem;
   position: relative;
   display: block;
   border-color: #eee8d5;
@@ -3182,7 +3165,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   position: relative;
 }
 .elder .listitem-actions {
-  right: -1rem;
+  right: 0;
 }
 .elder:focus .listitem-actions, .elder:hover .listitem-actions, .elder:active .listitem-actions {
   opacity: 1;
@@ -3194,11 +3177,11 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   color: #93a1a1;
 }
 .elder .vcard {
-  padding-left: 2rem;
+  padding-left: 1.27778rem;
 }
 .elder .vcard:before {
   position: relative;
-  margin-left: -1rem;
+  margin-left: -0.95833rem;
   margin-right: 0;
   color: #859900;
   z-index: 2;

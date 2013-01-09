@@ -4,10 +4,7 @@
 .village-info {
   @extend %village-lists;
   @extend %overflow-y;
-  @include box-sizing(content-box);
-  right: - $village-bleed;
-  width: columns($right, $content-width);
-  padding-right: $village-bleed;
-  padding-left: gutter($content-width);
+  right: 0;
+  width: space($right, $content-width);
   height: 100%;
 }

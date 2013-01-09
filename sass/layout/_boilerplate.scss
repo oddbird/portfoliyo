@@ -1,6 +1,8 @@
 // ---------------------------------------------------------------------------
 // Boilerplate
 
+$box-padding: rhythm(.25);
+
 %container {
   @include container($total-columns, $break);
   @include susy-grid-background;

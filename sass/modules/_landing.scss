@@ -1,6 +1,10 @@
 // ---------------------------------------------------------------------------
 // Landing Page
 
+.village-landing {
+  [role="main"] { padding: 0 $box-padding; }
+}
+
 %landing-title {
   @include serif;
   @include adjust-font-size-to($medpx);

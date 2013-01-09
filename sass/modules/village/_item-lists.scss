@@ -2,8 +2,6 @@
 // Village Lists
 
 $village-list-size      : $smallpx;
-$village-bleed          : $grid-padding;
-
 
 %village-lists {
   @include cond;
@@ -21,19 +19,20 @@ $village-bleed          : $grid-padding;
   }
 }
 
+.additems { margin: $box-padding*2; }
+
 [class*="additem-"] {
   @extend %button;
   @extend %icon;
   @extend %icon-plus;
   @include button-color(color($green lightest));
-  @include rhythm-margins(.5);
+  margin: $box-padding*2;
   display: block;
   font-weight: bold;
   text-align: left;
 
-  &[class*="-village"], &[class*="-group"] {
-    margin-right: rhythm(1);
-  }
+  .additems & { margin: $box-padding*2 0; }
+
   &[class*="-village"] { @extend %icon-users; }
   &[class*="-group"] {
     @extend %icon-addlist;
