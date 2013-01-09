@@ -1,0 +1,182 @@
+// ---------------------------------------------------------------------------
+// Placeholders
+
+@mixin placeholder {
+  ::-webkit-input-placeholder { @content; }
+  :-moz-placeholder { @content; }
+  .placeholder { @content; }
+}
+
+@include placeholder {
+  font-style: italic;
+}
+
+// ---------------------------------------------------------------------------
+// Inputs
+
+$input-font-size: $smallpx;
+$input-rhythm: .25;
+
+%input {
+  @include sans;
+  @include adjust-font-size-to($input-font-size);
+  @include rhythm-borders(1px,$input-rhythm,$input-font-size);
+  width: 100%;
+  color: inherit;
+  background: rgba(white,.25);
+  border-color: inherit;
+  vertical-align: top;
+  outline: 0;
+}
+
+.errorlist {
+  @include no-style-list;
+  color: $red;
+}
+
+.formfield {
+  @include pie-clearfix;
+  @include trailer(.5);
+  position: relative;
+}
+
+// ---------------------------------------------------------------------------
+// Inline Forms
+
+@mixin inline-form($label: $left, $input: $center - $label, $context: $center, $radio-check: false) {
+  .type {
+    @include ellipsis;
+    @include span-columns($label,$context);
+    @include rem(padding, rhythm($input-rhythm) 0);
+    text-align: right;
+    + .value { @include span-columns($input omega,$context); }
+  }
+  @if $radio-check { @include inline-radio-checkbox($label, $input, $context); }
+  .formfield-help { @include pre($label, $context); }
+}
+
+@mixin inline-radio-checkbox($label: $left, $input: $center - $label, $context: $center) {
+  [type="checkbox"], [type="radio"] {
+    + .type {
+      display: inline-block;
+      width: auto;
+      margin: 0;
+      padding: 0;
+      text-align: left;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Defaults
+
+%radio-check-defaults {
+  [type="checkbox"], [type="radio"] {
+    @include gone;
+    + .type {
+      @extend %icon;
+      display: block;
+      font-style: italic;
+      &:before {
+        @include adjust-font-size-to($smallpx);
+        margin-left: .4em;
+        color: $base01;
+      }
+    }
+    &[aria-checked="true"] + .type {
+      &:before { color: $blue; }
+    }
+    &:focus + .type { color: $base03; }
+  }
+
+  [type="checkbox"] {
+    + .type { @extend %icon-unchecked; }
+    &[aria-checked="true"] + .type { @extend %icon-checked; }
+  }
+
+  [type="radio"] {
+    + .type { @extend %icon-radio-unchecked; }
+    &[aria-checked="true"] + .type { @extend %icon-radio-checked; }
+  }
+}
+
+%formdefaults {
+  .type {
+    display: block;
+    color: $base01;
+  }
+
+  input {
+    &[type="text"], &[type="password"],
+    &[type="email"], &[type="url"], &[type="tel"],
+    &[type="date"], &[type="datetime"], &[type="datetime-local"],
+    &[type="month"], &[type="week"], &[type="time"],
+    &[type="number"], &[type="search"], &[type="color"] {
+      @extend %input;
+      @include rem(min-height, rhythm(1 + $input-rhythm*2, $input-font-size));
+      margin: 0;
+    }
+  }
+
+  textarea {
+    @extend %input;
+    @include transition(200ms min-height);
+    @include rem(min-height, rhythm(1 + $input-rhythm*2, $input-font-size));
+  }
+
+  fieldset {
+    @include box-shadow($back 0 0 .25em inset);
+    @include leader;
+    @include trailer;
+    padding: rhythm(1);
+    background: $base2;
+  }
+
+  .fieldset-header {
+    @include trailer;
+  }
+
+  .fieldset-help {
+    @include leader;
+    @include trailer(.5);
+    font-style: italic;
+  }
+
+  .formfield-help {
+    @include adjust-font-size-to($smallpx);
+    display: block;
+    clear: both;
+    margin: 0;
+    color: $base1;
+    font-style: italic;
+    text-align: right;
+  }
+
+  .formfield-optional, .fieldset-optional {
+    @include adjust-font-size-to($smallpx);
+    color: $base1;
+  }
+  .optional-fieldset { .formfield-optional { @include gone; } }
+
+  $form-action-note-size: $smallpx;
+
+  .form-actions {
+    @include rhythm(.5,0,0,.5);
+    position: relative;
+    clear: both;
+    text-align: right;
+    p {
+      @include adjust-font-size-to($form-action-note-size);
+      @include rem(margin, 0 .4em rhythm(.5,$form-action-note-size) 0);
+      display: inline-block;
+    }
+    button {
+      @extend %button;
+      text-transform: capitalize;
+    }
+  }
+}
+
+button { @include reset-button; }
+
+.linkaction { @extend %button; }

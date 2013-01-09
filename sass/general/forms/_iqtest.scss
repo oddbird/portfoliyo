@@ -1,0 +1,11 @@
+// ---------------------------------------------------------------------------
+// IQ Test
+
+.iqtest {
+  @include trailer(2);
+  > p {
+    @include leader;
+    @include leading-border(2px,1);
+    font-style: italic;
+  }
+}

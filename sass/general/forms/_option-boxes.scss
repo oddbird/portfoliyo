@@ -1,0 +1,76 @@
+// ---------------------------------------------------------------------------
+// Radio/Checkbox Options
+
+.options-header {
+  @include clearfix;
+  @include rem(padding, rhythm(.25));
+  background: $base;
+  color: $base3;
+  font-weight: bold;
+  ul { @include no-style-list; }
+  li {
+    @include span-columns(4,$center);
+    @include adjust-font-size-to($smallpx);
+  }
+}
+
+%check-option {
+  @include clearfix;
+  position: relative;
+}
+
+%check-value {
+  @include gone;
+  &[aria-checked="true"] + .type { @extend %options-checked; }
+  &.disabled + .type { @extend %options-disabled; }
+}
+
+%check-type {
+  display: block;
+  position: relative;
+  padding-right: 1em;
+  text-align: left;
+  #{$focus} { background: $base3; }
+  &:before { float: left; }
+}
+
+%check-options-base {
+  @include reset-box-model;
+  @include no-style-list;
+  overflow-y: scroll;
+}
+
+%check-options {
+  @extend %check-options-base;
+  @include adjust-font-size-to($input-font-size);
+  @include rem(max-height, rhythm(8,$input-font-size));
+  background: rgba(white,.25);
+  border: 1px solid;
+  .option {
+    @extend %check-option;
+    .type {
+      float: none;
+      width: auto;
+      margin: 0;
+    }
+  }
+  .value { @extend %check-value; }
+  .type {
+    @extend %check-type;
+    @include padding-leader(.125,$input-font-size);
+    @include trailing-border(1px,.125,$input-font-size);
+    @include rem(padding-left, rhythm(.125,$input-font-size));
+    border-color: $base1;
+    border-color: rgba($base1,.25);
+  }
+}
+
+%options-checked {
+  background: rgba($blue,.125);
+  font-weight: bold;
+}
+
+%options-disabled {
+  @extend %icon;
+  @extend %icon-locked;
+}

@@ -1,0 +1,116 @@
+// ---------------------------------------------------------------------------
+// Buttons
+//
+// - Settings
+// - Mixins
+// - Classes
+
+// ---------------------------------------------------------------------------
+// Settings
+
+$button-rhythm: .25;
+
+// ---------------------------------------------------------------------------
+// Mixins
+//
+// - button()
+// - button-color()
+// - button-size()
+// - reset-button()
+
+// Apply standard button styles to an element.
+//
+// button($color)
+// - $color     : The base color for the button.
+@mixin button(
+  $color: $green
+) {
+  @include border-radius(.25em);
+  @include rhythm-borders(1px,$button-rhythm);
+  @include button-color($color);
+  @include box-shadow(color(white,.5) 0 1px 1px inset);
+  display: inline-block;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-align: center;
+  &:active { @include inset; }
+}
+
+// Change button background and border colors.
+//
+// button-color($color)
+// - $color     : The base color for the button.
+@mixin button-color(
+  $color: $green
+) {
+  $light    : color($color light);
+  $dark     : color($color dark);
+  $contrast : contrast($color);
+  $shadow   : color(contrast($contrast, $back $base3), .5);
+
+  @include text-shadow($shadow 0 -1px 0);
+  @include background(
+    linear-gradient(top, rgba($light,.25), rgba($color,0), rgba($dark,.25))
+  );
+  background-color: $color;
+  border-color: mix($color,$back);
+  color: $contrast;
+
+  #{$link}, #{$focus} { color: $contrast; }
+}
+
+// Change button font size and rhythm.
+//
+// button-size([$size])
+// - $size  : Optional font size and rhythm adjustments.
+//          - Default: .125
+@mixin button-size(
+  $size: .125
+) {
+  $size: compact($size);
+  $rhythm: null;
+  $fontsize: null;
+
+  @each $arg in $size {
+    @if unitless($arg) { $rhythm: $arg; }
+    @else { $fontsize: $arg; }
+  }
+
+  @if $fontsize { @include adjust-font-size-to($fontsize); }
+  @if $rhythm { @include h-borders(1px,$rhythm); }
+}
+
+// Add inset shadow to an element.
+//
+// inset()
+@mixin inset {
+  @include box-shadow(color($back,.5) 0 0 .25em inset);
+}
+
+// Reset button styles
+//
+// reset-button()
+@mixin reset-button {
+  @include reset-box-model;
+  @include reset-font;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
+// ---------------------------------------------------------------------------
+// Classes
+//
+// - %button
+// - %reset-button
+
+%button { @include button; }
+
+%inset { @include inset; }
+
+%reset-button {
+  @include reset-button;
+  @include box-shadow(none);
+  @include text-shadow(none);
+}
