@@ -70,11 +70,5 @@
 .action-sms { @extend %icon-phone; }
 
 .addelder-link {
-  @extend %village-addlink;
-  @include bleed($village-bleed);
-  @include rhythm-borders(1px,.25,$village-list-size);
-  display: block;
-  padding-left: $village-bleed;
-  border-color: $village-border-color;
-  border-width: 1px 0;
+
 }

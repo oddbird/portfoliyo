@@ -1,0 +1,47 @@
+// ---------------------------------------------------------------------------
+// Village Lists
+
+$village-list-size      : $smallpx;
+$village-bleed          : $grid-padding;
+
+
+%village-lists {
+  @include cond;
+  @include adjust-font-size-to($village-list-size);
+  ul { @include no-style-list; }
+}
+
+%village-activenav {
+  &.active {
+    #{$link}, #{$focus} {
+      @extend %inset;
+      background: $base01;
+      color: $base3;
+    }
+  }
+}
+
+[class*="additem-"] {
+  @extend %button;
+  @extend %icon;
+  @extend %icon-plus;
+  @include button-color(color($green lightest));
+  @include rhythm-margins(.5);
+  display: block;
+  font-weight: bold;
+  text-align: left;
+
+  &[class*="-village"], &[class*="-group"] {
+    margin-right: rhythm(1);
+  }
+  &[class*="-village"] { @extend %icon-users; }
+  &[class*="-group"] {
+    @extend %icon-addlist;
+    @include button-color(color($blue lightest));
+  }
+
+  &.active {
+    @include button-color(color($base));
+    @include inset;
+  }
+}

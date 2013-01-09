@@ -147,16 +147,3 @@ $village-nav-action-color : $base03;
     background: $accent;
   }
 }
-
-.additem-link {
-  @extend %village-nav-item;
-  @extend %village-addlink;
-  .addgroup & {
-    @extend %icon-addlist;
-    background: rgba($blue,.25);
-    &:before {
-      @include adjust-font-size-to($normpx);
-      @include rem(margin-left, rhythm(-.18));
-    }
-  }
-}

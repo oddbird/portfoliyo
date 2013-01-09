@@ -205,7 +205,7 @@ $postaction-size: $smallpx;
     margin: 0;
     .action-post {
       @extend %button;
-      @include small-button($addnote-fontsize);
+      @include button-size($addnote-fontsize .125);
       text-transform: uppercase;
     }
   }
