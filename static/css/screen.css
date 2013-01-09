@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .alt-text {
   position: absolute;
   top: -9999px;
@@ -1568,35 +1569,24 @@ button {
 }
 
 .main-image {
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  position: relative;
+  height: 0;
+  padding-top: 56.25%;
+  width: 100%;
+  border: 1px solid #657b83;
   position: relative;
   overflow: hidden;
 }
-.main-image img {
-  -webkit-transition: all 400ms;
-  -moz-transition: all 400ms;
-  -o-transition: all 400ms;
-  transition: all 400ms;
-  max-width: 100%;
-}
-.main-image .girlimg {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0;
+.main-image > * {
+  display: block;
   position: absolute;
+  width: 100%;
+  height: 100%;
   top: 0;
-  left: 0;
-}
-.main-image:hover .deviceimg {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);
-  opacity: 0;
-  -webkit-transform: translateY(5%);
-  -moz-transform: translateY(5%);
-  -ms-transform: translateY(5%);
-  -o-transform: translateY(5%);
-  transform: translateY(5%);
-}
-.main-image:hover .girlimg {
-  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
-  opacity: 1;
+  margin: 0;
+  padding: 0;
 }
 
 .intro {
@@ -1619,6 +1609,8 @@ button {
   font-size: 1.94444rem;
   line-height: 46px;
   line-height: 2.55556rem;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
   -webkit-transition: all 300ms;
@@ -1652,7 +1644,20 @@ button {
     width: 44.3038%;
     float: left;
     margin-right: 1.26582%;
+    position: relative;
+    height: 0;
+    padding-top: 24.92089%;
+    width: 44.3038%;
     margin-left: 5.06329%;
+  }
+  .main-image > * {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    margin: 0;
+    padding: 0;
   }
 
   .intro-copy {
@@ -1661,11 +1666,6 @@ button {
     margin-right: 0;
     padding-left: 5.06329%;
     padding-right: 5.06329%;
-  }
-
-  .tagline {
-    padding-top: 69px;
-    padding-top: 3.83333rem;
   }
 }
 .feature, .team {
