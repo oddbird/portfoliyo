@@ -142,7 +142,7 @@ var PYO = (function (PYO, $) {
                     data.add_group_url = nav.data('add-group-url');
                     data.add_student_url = add_student_url;
                     data.add_students_bulk_url = add_students_bulk_url;
-                    var newGroups = ich.group_list(data);
+                    var newGroups = $(Handlebars.templates.group_list(data));
                     PYO.updateNavActiveClasses(newGroups);
                     nav.trigger('before-replace').html(newGroups);
                     newGroups.find('.details').html5accordion();
@@ -596,7 +596,7 @@ var PYO = (function (PYO, $) {
                     $.each(data.objects, function () {
                         if (nav.data('is-staff') === 'True') { this.staff = true; }
                         this.objects = true;
-                        var group = ich.group_list_item(this).hide();
+                        var group = $(Handlebars.templates.group_list_item(this)).hide();
                         var inserted = false;
                         nav.find('.group').not(':first').each(function () {
                             if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
