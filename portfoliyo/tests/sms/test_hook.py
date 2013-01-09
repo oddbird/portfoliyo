@@ -780,17 +780,18 @@ def test_bogus_signup_state_no_blowup(db):
     hook.receive_sms(phone, "Hello")
 
 
-class TestGetTeacherAndGroup(object):
+
+class TestParseCode(object):
     def test_basic(self, db):
         """Gets teacher if text starts with teacher code."""
         t = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
 
-        f = hook.get_teacher_and_group
-        assert f("abcdef foo") == (t, None)
-        assert f("ABCDEF") == (t, None)
-        assert f("ACDC bar") == (None, None)
-        assert f("ABCDEF. some name") == (t, None)
-        assert f("ABCDEF\nsome sig") == (t, None)
+        f = hook.parse_code
+        assert f("abcdef foo") == (t, None, 'en')
+        assert f("ABCDEF") == (t, None, 'en')
+        assert f("ACDC bar") == (None, None, None)
+        assert f("ABCDEF. some name") == (t, None, 'en')
+        assert f("ABCDEF\nsome sig") == (t, None, 'en')
 
 
     def test_group_code(self, db):
@@ -798,16 +799,29 @@ class TestGetTeacherAndGroup(object):
         g = factories.GroupFactory.create(
             code='ABCDEFG', owner__code='ABCDEF')
 
-        f = hook.get_teacher_and_group
-        assert f("ABCDEFG") == (g.owner, g)
-        assert f("ACDC foo") == (None, None)
-        assert f("ABCDEFG My Name") == (g.owner, g)
-        assert f("ABCDEF ") == (g.owner, None)
+        f = hook.parse_code
+        assert f("ABCDEFG") == (g.owner, g, 'en')
+        assert f("ACDC foo") == (None, None, None)
+        assert f("ABCDEFG My Name") == (g.owner, g, 'en')
+        assert f("ABCDEF ") == (g.owner, None, 'en')
 
 
     def test_empty(self):
         """Returns None on empty text, doesn't barf."""
-        assert hook.get_teacher_and_group('') == (None, None)
+        assert hook.parse_code('') == (None, None, None)
+
+
+    def test_lang(self, db):
+        """Can specify language with teacher or group code."""
+        g = factories.GroupFactory.create(
+            code='ABCDEFG', owner__code='ABCDEF')
+
+        f = hook.parse_code
+        assert f("ABCDEFG es") == (g.owner, g, 'es')
+        assert f("ABCDEF ES") == (g.owner, None, 'es')
+        assert f("ABCDEF es foo") == (g.owner, None, 'es')
+        assert f("ABCDEFG foo") == (g.owner, g, 'en')
+        assert f("ABCDEF es;") == (g.owner, None, 'es')
 
 
 

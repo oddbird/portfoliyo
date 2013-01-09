@@ -1,6 +1,8 @@
 """Village SMS-handling."""
 import logging
 
+from django.conf import settings
+
 from portfoliyo import model, notifications
 
 
@@ -61,7 +63,7 @@ def receive_sms(source, body):
     else:
         signup = None
 
-    teacher, group = get_teacher_and_group(body)
+    teacher, group, lang = parse_code(body)
     if teacher is not None:
         return handle_subsequent_code(profile, teacher, group, signup)
 
@@ -99,7 +101,7 @@ def receive_sms(source, body):
 
 def handle_unknown_source(source, body):
     """Handle a text from an unknown user."""
-    teacher, group = get_teacher_and_group(body)
+    teacher, group, lang = parse_code(body)
     if teacher is not None:
         family = model.Profile.create_with_user(
             school=teacher.school,
@@ -268,19 +270,27 @@ def handle_name_update(signup, body):
 
 
 
-def get_teacher_and_group(body):
+def parse_code(body):
     """
-    Return (teacher, group) tuple based on code found in text.
+    Return (teacher, group, lang) tuple based on code found in text.
 
-    If no valid code is found, both will be None. If a valid teacher code is
-    found, group will be None. If a valid group code is found, both will be
-    set (teacher will be set to group owner).
+    If no valid code is found, all will be None. If a valid teacher code is
+    found, group will be None. If a valid group code is found, both teacher and
+    group will be set (teacher will be set to group owner). If no valid
+    language code (i.e. one found in ``settings.LANGUAGES``) follows the code,
+    the default language code (``settings.LANGUAGE_CODE``) will be returned.
 
     """
-    try:
-        possible_code = body.strip().split()[0].rstrip('.,:;').upper()
-    except IndexError:
-        return (None, None)
+    bits = body.strip().split()
+    if not bits:
+        return (None, None, None)
+    elif len(bits) > 1:
+        lang = bits[1].lower().rstrip('.,:;')
+        if lang not in settings.LANGUAGE_DICT:
+            lang = settings.LANGUAGE_CODE
+    else:
+        lang = settings.LANGUAGE_CODE
+    possible_code = bits[0].rstrip('.,:;').upper()
     try:
         group = model.Group.objects.get(code=possible_code)
     except model.Group.DoesNotExist:
@@ -291,7 +301,9 @@ def get_teacher_and_group(body):
             teacher = None
     else:
         teacher = group.owner
-    return (teacher, group)
+    if teacher is None:
+        lang = None
+    return (teacher, group, lang)
 
 
 
