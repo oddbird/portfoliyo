@@ -1,0 +1,19 @@
+{{#objects}}
+<li class="listitem student">
+  <a href="{{village_uri}}{{^all_students}}?group={{group_id}}{{/all_students}}" class="ajax-link listitem-select" data-id="{{id}}" data-name="{{name}}">
+    <span class="listitem-name">{{name}}</span>
+    <span class="unread{{^unread_count}} zero{{/unread_count}}">
+      {{#unread_count}}{{unread_count}}{{/unread_count}}
+      {{^unread_count}}0{{/unread_count}}
+    </span>
+  </a>
+
+  {{#staff}}
+  <div class="listitem-actions">
+    {{#edit_student_uri}}<a href="{{edit_student_uri}}{{^all_students}}?group={{group_id}}{{/all_students}}" class="action-edit ajax-link" title="edit student">edit</a>{{/edit_student_uri}}
+    <button class="action-remove" title="remove student">remove</button>
+  </div>
+  {{/staff}}
+
+</li>
+{{/objects}}

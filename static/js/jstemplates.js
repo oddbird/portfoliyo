@@ -587,4 +587,283 @@ templates['remove_listitem'] = template(function (Handlebars,depth0,helpers,part
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   buffer += escapeExpression(stack1) + "\n</span>\n\n<div class=\"listitem-actions\">\n  <button class=\"undo-action-remove\" title=\"undo removal\">undo removal</button>\n</div>\n";
   return buffer;});
+templates['student_list'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers; partials = partials || Handlebars.partials;
+  var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this, blockHelperMissing=helpers.blockHelperMissing;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n  ";
+  foundHelper = helpers.group_edit_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(2, program2, data)}); }
+  else { stack1 = depth0.group_edit_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.group_edit_url) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(2, program2, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n  ";
+  return buffer;}
+function program2(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n  <div class=\"listitem-actions\">\n    <a href=\"";
+  foundHelper = helpers.group_edit_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_edit_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" class=\"action-edit ajax-link\" title=\"edit group\">edit</a>\n    ";
+  foundHelper = helpers.group_resource_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)}); }
+  else { stack1 = depth0.group_resource_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.group_resource_url) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(3, program3, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n  </div>\n  ";
+  return buffer;}
+function program3(depth0,data) {
+  
+  
+  return "<button class=\"action-remove\" title=\"remove group\" name=\"remove\" value=\"\">remove</button>";}
+
+function program5(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n<aside class=\"listitem additem addstudent\">\n  <a href=\"";
+  foundHelper = helpers.group_add_students_bulk_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(6, program6, data)}); }
+  else { stack1 = depth0.group_add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.group_add_students_bulk_url) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(6, program6, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  foundHelper = helpers.group_add_students_bulk_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.program(8, program8, data),fn:self.noop}); }
+  else { stack1 = depth0.group_add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.group_add_students_bulk_url) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(8, program8, data),fn:self.noop}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\" class=\"additem-link ajax-link\">Signup Parents</a>\n  <div class=\"listitem-actions\">\n    ";
+  foundHelper = helpers.group_add_students_bulk_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(10, program10, data)}); }
+  else { stack1 = depth0.group_add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.group_add_students_bulk_url) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(10, program10, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    ";
+  foundHelper = helpers.group_add_student_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(12, program12, data)}); }
+  else { stack1 = depth0.group_add_student_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.group_add_student_url) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(12, program12, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n  </div>\n</aside>\n";
+  return buffer;}
+function program6(depth0,data) {
+  
+  var stack1, foundHelper;
+  foundHelper = helpers.group_add_students_bulk_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  return escapeExpression(stack1);}
+
+function program8(depth0,data) {
+  
+  var stack1, foundHelper;
+  foundHelper = helpers.group_add_student_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_add_student_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  return escapeExpression(stack1);}
+
+function program10(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "<a href=\"";
+  foundHelper = helpers.group_add_students_bulk_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" class=\"action-addbulk ajax-link\" title=\"signup parents in bulk\">bulk signup</a>";
+  return buffer;}
+
+function program12(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "<a href=\"";
+  foundHelper = helpers.group_add_student_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_add_student_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" class=\"action-addsingle ajax-link\" title=\"signup a parent by hand\">single signup</a>";
+  return buffer;}
+
+  buffer += "<h2 class=\"listitem title grouptitle\">\n  <a href=\"#\" class=\"action-back groups\" title=\"Go back to group list\">Back</a>\n  <a href=\"";
+  foundHelper = helpers.group_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" class=\"group-link ajax-link listitem-select\" data-group-name=\"";
+  foundHelper = helpers.group_name;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-group-id=\"";
+  foundHelper = helpers.group_id;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-group-students-url=\"";
+  foundHelper = helpers.group_students_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_students_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-group-resource-url=\"";
+  foundHelper = helpers.group_resource_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_resource_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-group-edit-url=\"";
+  foundHelper = helpers.group_edit_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_edit_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-group-add-student-url=\"";
+  foundHelper = helpers.group_add_student_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_add_student_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-group-add-students-bulk-url=\"";
+  foundHelper = helpers.group_add_students_bulk_url;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\">\n    <span class=\"listitem-name\">";
+  foundHelper = helpers.group_name;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "</span>\n  </a>\n\n  ";
+  foundHelper = helpers.staff;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}); }
+  else { stack1 = depth0.staff; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.staff) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</h2>\n\n<ul class=\"itemlist\">\n  ";
+  stack1 = depth0;
+  stack1 = self.invokePartial(partials.student_list_item, 'student_list_item', stack1, helpers, partials);;
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n</ul>\n";
+  foundHelper = helpers.staff;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)}); }
+  else { stack1 = depth0.staff; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.staff) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(5, program5, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n";
+  return buffer;});
+templates['student_list_item'] = template(function (Handlebars,depth0,helpers,partials,data) {
+  helpers = helpers || Handlebars.helpers;
+  var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this, blockHelperMissing=helpers.blockHelperMissing;
+
+function program1(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n<li class=\"listitem student\">\n  <a href=\"";
+  foundHelper = helpers.village_uri;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.village_uri; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1);
+  foundHelper = helpers.all_students;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.program(2, program2, data),fn:self.noop}); }
+  else { stack1 = depth0.all_students; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.all_students) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(2, program2, data),fn:self.noop}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\" class=\"ajax-link listitem-select\" data-id=\"";
+  foundHelper = helpers.id;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\" data-name=\"";
+  foundHelper = helpers.name;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\">\n    <span class=\"listitem-name\">";
+  foundHelper = helpers.name;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "</span>\n    <span class=\"unread";
+  foundHelper = helpers.unread_count;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.program(4, program4, data),fn:self.noop}); }
+  else { stack1 = depth0.unread_count; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.unread_count) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.noop}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\">\n      ";
+  foundHelper = helpers.unread_count;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(6, program6, data)}); }
+  else { stack1 = depth0.unread_count; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.unread_count) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(6, program6, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n      ";
+  foundHelper = helpers.unread_count;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.program(8, program8, data),fn:self.noop}); }
+  else { stack1 = depth0.unread_count; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.unread_count) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(8, program8, data),fn:self.noop}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    </span>\n  </a>\n\n  ";
+  foundHelper = helpers.staff;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(10, program10, data)}); }
+  else { stack1 = depth0.staff; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.staff) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(10, program10, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n</li>\n";
+  return buffer;}
+function program2(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "?group=";
+  foundHelper = helpers.group_id;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1);
+  return buffer;}
+
+function program4(depth0,data) {
+  
+  
+  return " zero";}
+
+function program6(depth0,data) {
+  
+  var stack1, foundHelper;
+  foundHelper = helpers.unread_count;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.unread_count; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  return escapeExpression(stack1);}
+
+function program8(depth0,data) {
+  
+  
+  return "0";}
+
+function program10(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "\n  <div class=\"listitem-actions\">\n    ";
+  foundHelper = helpers.edit_student_uri;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(11, program11, data)}); }
+  else { stack1 = depth0.edit_student_uri; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.edit_student_uri) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(11, program11, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    <button class=\"action-remove\" title=\"remove student\">remove</button>\n  </div>\n  ";
+  return buffer;}
+function program11(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "<a href=\"";
+  foundHelper = helpers.edit_student_uri;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.edit_student_uri; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1);
+  foundHelper = helpers.all_students;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.program(12, program12, data),fn:self.noop}); }
+  else { stack1 = depth0.all_students; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.all_students) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.program(12, program12, data),fn:self.noop}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\" class=\"action-edit ajax-link\" title=\"edit student\">edit</a>";
+  return buffer;}
+function program12(depth0,data) {
+  
+  var buffer = "", stack1, foundHelper;
+  buffer += "?group=";
+  foundHelper = helpers.group_id;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_id; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1);
+  return buffer;}
+
+  foundHelper = helpers.objects;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}); }
+  else { stack1 = depth0.objects; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  if (!helpers.objects) { stack1 = blockHelperMissing.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(1, program1, data)}); }
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n";
+  return buffer;});
 })();
