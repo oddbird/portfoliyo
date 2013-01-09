@@ -2,6 +2,7 @@
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import html
+import mock
 import pytest
 
 from portfoliyo.notifications import record
@@ -13,16 +14,29 @@ from portfoliyo.tests import factories
 @pytest.fixture
 def recip(request, db):
     """A user who can receive notifications."""
-    # Turn all notification triggers off; we want to trigger sending manually
-    return factories.ProfileFactory.create(
-        user__email='foo@example.com',
-        user__is_active=True,
-        notify_new_parent=False,
-        notify_parent_text=False,
-        notify_added_to_village=False,
-        notify_joined_my_village=False,
-        notify_teacher_post=False,
-        )
+    kw = {
+        'user__email': 'foo@example.com',
+        'user__is_active': True,
+        'notify_new_parent': False,
+        'notify_parent_text': False,
+        'notify_added_to_village': False,
+        'notify_joined_my_village': False,
+        'notify_teacher_post': False,
+        }
+
+    if 'params' in request.funcargnames:
+        params = request.getfuncargvalue('params')
+        prefs = params.get('prefs', {})
+        kw.update(prefs)
+
+    # Temporarily patch the ``send_notification_email`` task to do nothing; we
+    # want to trigger the actual email-sending ourselves in these tests.
+    patcher = mock.patch('portfoliyo.tasks.send_notification_email')
+    patcher.start()
+
+    request.addfinalizer(patcher.stop)
+
+    return factories.ProfileFactory.create(**kw)
 
 
 
@@ -118,33 +132,38 @@ class TestSend(object):
 
 
     @pytest.mark.parametrize('params', [
-            (
-                [("Teacher1", "StudentX")],
-                "Teacher1 added you to StudentX's village.",
-                ['<li>Teacher1 added you to '
-                 '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'],
-                ["Teacher1 added you to StudentX's village. "
-                 "Start a conversation: %(StudentXUrl)s"]
-                ),
-            (
-                [("Teacher1", "StudentX"), ("Teacher1", "StudentY")],
-                "Teacher1 added you to two villages.",
-                [],
-                [],
-                ),
-            (
-                [("Teacher1", "StudentX"), ("Teacher2", "StudentY")],
-                "Two teachers added you to two villages.",
-                [],
-                [],
-                ),
+            {
+                'scenario': [("Teacher1", "StudentX")],
+                'subject': "Teacher1 added you to StudentX's village.",
+                'html': [
+                    '<li>Teacher1 added you to '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
+                    ],
+                'text': [
+                    "Teacher1 added you to StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s"
+                    ]
+                },
+            {
+                'scenario': [
+                    ("Teacher1", "StudentX"), ("Teacher1", "StudentY")],
+                'subject': "Teacher1 added you to two villages.",
+                'html': [],
+                'text': [],
+                },
+            {
+                'scenario': [
+                    ("Teacher1", "StudentX"), ("Teacher2", "StudentY")],
+                'subject': "Two teachers added you to two villages.",
+                'html': [],
+                'text': [],
+                },
             ])
     def test_added_to_village(self, params, recip):
         """Test subject/body for added-to-village notifications."""
-        combos, expected_subject, expected_html, expected_text = params
         name_map = {}
         context = {}
-        for teacher_name, student_name in combos:
+        for teacher_name, student_name in params['scenario']:
             if teacher_name not in name_map:
                 name_map[teacher_name] = factories.ProfileFactory.create(
                     name=teacher_name, school_staff=True)
@@ -163,27 +182,31 @@ class TestSend(object):
 
         assert base.send(recip.id)
         self.assert_multi_email(
-            expected_subject, expected_html, expected_text, context)
+            params['subject'], params['html'], params['text'], context)
 
 
     @pytest.mark.parametrize('params', [
-            (["StudentX"], ["Teacher1"], "Teacher1 joined StudentX's village."),
-            (
-                ["StudentX", "StudentY"], ["Teacher1"],
-                "Teacher1 joined two of your villages."
-                ),
-            (
-                ["StudentX"], ["Teacher1", "Teacher2"],
-                "Two teachers joined StudentX's village."
-                ),
-            (
-                ["StudentX", "StudentY"], ["Teacher1", "Teacher2"],
-                "Two teachers joined two of your villages."
-                ),
+            {
+                'scenario': (["StudentX"], ["Teacher1"]),
+                'subject': "Teacher1 joined StudentX's village."
+                },
+            {
+                'scenario': (["StudentX", "StudentY"], ["Teacher1"]),
+                'subject': "Teacher1 joined two of your villages."
+                },
+            {
+                'scenario': (["StudentX"], ["Teacher1", "Teacher2"]),
+                'subject': "Two teachers joined StudentX's village."
+                },
+            {
+                'scenario': (
+                    ["StudentX", "StudentY"], ["Teacher1", "Teacher2"]),
+                'subject': "Two teachers joined two of your villages."
+                },
             ])
     def test_only_new_teachers_subject(self, params, recip):
         """Test subject/body for new-teacher notifications."""
-        student_names, teacher_names, expected = params
+        student_names, teacher_names = params['scenario']
         teacher_profiles = []
         for teacher_name in teacher_names:
             teacher_profiles.append(
@@ -197,4 +220,4 @@ class TestSend(object):
                 record.new_teacher(recip, teacher, rel.student)
 
         assert base.send(recip.id)
-        self.assert_multi_email(expected)
+        self.assert_multi_email(params['subject'])
