@@ -17,12 +17,10 @@
 <ul class="itemlist">
   {{> student_list_item }}
 </ul>
+
 {{# staff }}
-<aside class="listitem additem addstudent">
-  <a href="{{# group_add_students_bulk_url }}{{ group_add_students_bulk_url }}{{/ group_add_students_bulk_url }}{{^ group_add_students_bulk_url }}{{ group_add_student_url }}{{/ group_add_students_bulk_url }}" class="additem-link ajax-link">Signup Parents</a>
-  <div class="listitem-actions">
-    {{# group_add_students_bulk_url }}<a href="{{ group_add_students_bulk_url }}" class="action-addbulk ajax-link" title="signup parents in bulk">bulk signup</a>{{/ group_add_students_bulk_url }}
-    {{# group_add_student_url }}<a href="{{ group_add_student_url }}" class="action-addsingle ajax-link" title="signup a parent by hand">single signup</a>{{/ group_add_student_url }}
-  </div>
-</aside>
+<div class="additems">
+  {{# group_add_students_bulk_url }}<a href="{{ group_add_students_bulk_url }}" class="action-addbulk ajax-link additem-village">Register Parents</a>{{/ group_add_students_bulk_url }}
+  {{# group_add_student_url }}or <a href="{{ group_add_student_url }}" class="action-addsingle ajax-link">add a student by hand »</a>{{/ group_add_student_url }}
+</div>
 {{/ staff }}
