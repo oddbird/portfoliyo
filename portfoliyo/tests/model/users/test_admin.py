@@ -3,6 +3,7 @@ import mock
 import pytest
 
 from portfoliyo.model.users import admin
+from portfoliyo.tests import factories, utils
 
 
 
@@ -29,6 +30,14 @@ class TestProfileAdmin(object):
 
         assert profile.phone is None
 
+
+    def test_delete_model(self, pa, db):
+        """Deleting a profile deletes the associated user, too."""
+        p = factories.ProfileFactory.create()
+        pa.delete_model(mock.Mock(), p)
+
+        assert utils.deleted(p)
+        assert utils.deleted(p.user)
 
 
 class TestUserChangeForm(object):

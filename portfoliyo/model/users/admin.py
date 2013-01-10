@@ -41,9 +41,14 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
     def save_model(self, request, obj, form, change):
-        # ensure phone is never empty string
+        """Save profile; ensure phone is never empty string."""
         obj.phone = obj.phone or None
         return super(ProfileAdmin, self).save_model(request, obj, form, change)
+
+
+    def delete_model(self, request, obj):
+        """Delete profile; also delete related User."""
+        obj.user.delete()
 
 
 admin.site.register(models.Profile, ProfileAdmin)
