@@ -2,9 +2,10 @@
 // Village Elders
 
 %elder-listitem {
-  @include bleed($village-bleed);
-  @include padding-leader(.25,$village-list-size);
-  @include trailing-border(1px,.25,$village-list-size);
+  @include padding-leader(.25);
+  @include trailing-border(1px,.25);
+  padding-left: $box-padding;
+  padding-right: $box-padding;
   position: relative;
   display: block;
   border-color: $base2;
@@ -21,7 +22,7 @@
 
 .elder {
   position: relative;
-  .listitem-actions { right: - $village-bleed; }
+  .listitem-actions { right: 0; }
   #{$focus} {
     .listitem-actions {
       @include opacity(1);
@@ -36,10 +37,10 @@
     @extend %icon-record;
     @extend %elder-listitem;
     @extend %village-activenav;
-    padding-left: $village-bleed + 1rem;
+    padding-left: rhythm(1);
     &:before {
       position: relative;
-      margin-left: -1rem;
+      margin-left: rhythm(-.75);
       margin-right: 0;
       color: $green;
       z-index: 2;

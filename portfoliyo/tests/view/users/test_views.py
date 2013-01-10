@@ -268,7 +268,7 @@ class TestRegister(object):
         form['school'] = str(school.id)
         res = form.submit(status=302)
 
-        assert res['Location'] == utils.location(reverse('add_group'))
+        assert res['Location'] == utils.location(reverse('add_students_bulk'))
 
         res.follow(status=200)
 

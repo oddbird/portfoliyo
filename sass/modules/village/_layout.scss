@@ -8,6 +8,7 @@
     min-width: $break-width;
     max-width: 100%;
   }
+  [role="main"] { padding: 0; }
 }
 
 .village {

@@ -6,7 +6,6 @@ $village-nav-rhythm   : .25;
 $village-nav-action-color : $base03;
 
 %village-nav-span {
-  @include bleed($village-bleed, left);
   display: block;
   position: relative;
 }
@@ -16,20 +15,18 @@ $village-nav-action-color : $base03;
   @include trailing-border(1px,$village-nav-rhythm,$village-list-size);
   @include padding-leader($village-nav-rhythm,$village-list-size);
   border-color: $village-border-color;
+  padding-left: $box-padding;
 }
 
 .nav-error, .remove-error {
   @extend %error;
-  @include bleed($village-bleed, left);
 }
 
 .village-nav {
   @extend %village-lists;
   @extend %overflow-y;
-  @include box-sizing(content-box);
-  left: - $village-bleed;
+  left: 0;
   width: columns($left);
-  padding-left: $village-bleed;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
   z-index: 5;
@@ -139,6 +136,7 @@ $village-nav-action-color : $base03;
   overflow: hidden;
   float: left;
   margin-right: .4rem;
+  margin-left: $box-padding;
   color: $base3;
   background: rgba($back,.5);
   z-index: 6;
