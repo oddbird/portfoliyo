@@ -4,6 +4,7 @@ import logging
 from django.conf import settings
 
 from portfoliyo import model, notifications
+from . import messages
 
 
 # The maximum expected length (in words) of a name or role
@@ -46,8 +47,7 @@ def receive_sms(source, body):
         return reply(
             source,
             profile.students,
-            "No problem! Sorry to have bothered you. "
-            "Text this number anytime to re-start."
+            messages.get('ACK_STOP', profile.lang_code)
             )
 
     activated = False
@@ -88,11 +88,7 @@ def receive_sms(source, body):
     if not students:
         logger.warning(
             "Text from %s (has no students): %s", source, body)
-        return (
-            "Sorry, we can't find any students connected to your number, "
-            "so we're not able to deliver your message. "
-            "Please contact your student's teacher for help."
-            )
+        return messages.get('NO_STUDENTS', profile.lang_code)
 
     for student in students:
         model.Post.create(profile, student, body, from_sms=True)
@@ -102,7 +98,7 @@ def receive_sms(source, body):
             source,
             students,
             interpolate_teacher_names(
-                "You can text this number to talk with %s.", profile)
+                messages.get('ACTIVATED', profile.lang_code), profile)
         )
 
 
@@ -122,18 +118,13 @@ def handle_unknown_source(source, body):
             group=group,
             state=model.TextSignup.STATE.kidname,
             )
-        return (
-            "Thanks! What is the name of your child in %s's class?"
-            % teacher.name
-            )
+        return messages.get('STUDENT_NAME', family.lang_code) % teacher.name
     else:
         logger.warning("Unknown text from %s: %s", source, body)
-        return (
-            "We don't recognize your phone number, "
-            "so we don't know who to send your text to! "
-            "If you are just signing up, "
-            "make sure your invite code is typed correctly."
-            )
+        # we don't know what language to use here, so we use the default. We
+        # still use messages.get just so this message is kept with all the
+        # others.
+        return messages.get('UNKNOWN', settings.LANGUAGE_CODE)
 
 
 def handle_subsequent_code(profile, body, teacher, group, signup):
@@ -172,16 +163,18 @@ def handle_subsequent_code(profile, body, teacher, group, signup):
         state=signup.state if signup else model.TextSignup.STATE.done,
         )
 
-    msg = "Ok, thanks! You can text %s at this number too." % teacher.name
+    msg = messages.get('SUBSEQUENT_CODE_DONE', profile.lang_code) % teacher.name
 
     if signup:
         follow_ups = {
-            model.TextSignup.STATE.kidname: " Now, what's the student's name?",
+            model.TextSignup.STATE.kidname:
+                messages.get('STUDENT_NAME_FOLLOWUP', profile.lang_code),
             model.TextSignup.STATE.relationship:
-            " Now, what's your relationship to the student?",
-            model.TextSignup.STATE.name: " Now, what's your name?",
+                messages.get('RELATIONSHIP_FOLLOWUP', profile.lang_code),
+            model.TextSignup.STATE.name:
+                messages.get('NAME_FOLLOWUP', profile.lang_code),
             }
-        msg = msg + follow_ups.get(signup.state, "")
+        msg = msg + " " + follow_ups.get(signup.state, "")
         signup.state = model.TextSignup.STATE.done
         signup.save()
 
@@ -233,7 +226,7 @@ def handle_new_student(signup, body):
     return reply(
         signup.family.phone,
         [student],
-        "And what is your relationship to that child (mother, father, ...)?",
+        messages.get('RELATIONSHIP', signup.family.lang_code),
         )
 
 
@@ -256,8 +249,7 @@ def handle_role_update(signup, body):
     return reply(
         parent.phone,
         parent.students,
-        "Last question: what is your name? (So %s knows who is texting.)"
-        % teacher,
+        messages.get('NAME', parent.lang_code) % teacher,
         )
 
 
@@ -281,7 +273,7 @@ def handle_name_update(signup, body):
         parent.phone,
         parent.students,
         interpolate_teacher_names(
-            "All done, thank you! You can text this number to talk with %s.",
+            messages.get('ALL_DONE', parent.lang_code),
             parent,
             )
         )
