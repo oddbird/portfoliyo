@@ -5,6 +5,8 @@
   @extend %boilerplate;
   @include adjust-font-size-to($xxsmallpx);
   @include rhythm(0,.25,.25,0);
+  padding-left: $box-padding;
+  padding-right: $box-padding;
 
   .author { text-transform: uppercase; }
   strong { font-weight: bold; }
