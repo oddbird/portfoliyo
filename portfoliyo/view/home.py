@@ -21,7 +21,7 @@ def redirect_home(user):
     students = user.profile.students
     if not students:
         if user.profile.school_staff:
-            return reverse('add_group')
+            return reverse('add_students_bulk')
         return reverse('no_students')
     return reverse('dashboard')
 

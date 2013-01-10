@@ -126,8 +126,8 @@ def register(request):
                 messages.success(
                     request,
                     "Welcome to Portfoliyo! "
-                    "Start by creating a group "
-                    "and then add students and parents."
+                    "Grab your phone and add yourself as a parent "
+                    "to see how it works!"
                     )
                 tracking.track(
                     request,

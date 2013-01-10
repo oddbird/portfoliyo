@@ -55,6 +55,10 @@ def receive_sms(source, body):
         profile.user.is_active = True
         profile.user.save()
         activated = True
+    if profile.declined:
+        profile.declined = False
+        profile.save()
+        activated = True
 
     active_signups = profile.signups.exclude(state=model.TextSignup.STATE.done)
 
@@ -69,7 +73,7 @@ def receive_sms(source, body):
 
     teacher, group, lang = parse_code(body)
     if teacher is not None:
-        return handle_subsequent_code(profile, teacher, group, signup)
+        return handle_subsequent_code(profile, body, teacher, group, signup)
 
     if signup is not None:
         if signup.state == model.TextSignup.STATE.kidname:
@@ -98,7 +102,7 @@ def receive_sms(source, body):
             source,
             students,
             interpolate_teacher_names(
-                "Thank you! You can text this number to talk with %s.", profile)
+                "You can text this number to talk with %s.", profile)
         )
 
 
@@ -132,7 +136,7 @@ def handle_unknown_source(source, body):
             )
 
 
-def handle_subsequent_code(profile, teacher, group, signup):
+def handle_subsequent_code(profile, body, teacher, group, signup):
     """
     Handle a second code from an already-signed-up parent.
 
@@ -142,6 +146,24 @@ def handle_subsequent_code(profile, teacher, group, signup):
 
     """
     student = profile.students[0] if profile.students else None
+
+    # This goes before the teacher-already-in-village check, because in any
+    # case we want to add student to group if this is a group code, and pass
+    # post on to village
+    if student:
+        rel, created = model.Relationship.objects.get_or_create(
+            from_profile=teacher,
+            to_profile=student,
+            defaults={'level': model.Relationship.LEVEL.owner},
+            )
+        if group:
+            group.students.add(student)
+        model.Post.create(profile, student, body, from_sms=True)
+
+    # don't reply if they already were connected to the teacher
+    if (signup and teacher == signup.teacher) or (student and not created):
+        return None
+
     model.TextSignup.objects.create(
         family=profile,
         teacher=teacher,
@@ -149,14 +171,6 @@ def handle_subsequent_code(profile, teacher, group, signup):
         student=student,
         state=signup.state if signup else model.TextSignup.STATE.done,
         )
-    if student:
-        model.Relationship.objects.get_or_create(
-            from_profile=teacher,
-            to_profile=student,
-            defaults={'level': model.Relationship.LEVEL.owner},
-            )
-        if group:
-            group.students.add(student)
 
     msg = "Ok, thanks! You can text %s at this number too." % teacher.name
 
