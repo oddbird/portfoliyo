@@ -18,6 +18,11 @@ MESSAGES = {
             u"No problem! Sorry to have bothered you. "
             u"Text this number anytime to re-start."
             ),
+        'es': (
+            u"No hay problema! Siento haberte molestado. "
+            u"Envía un texto a este número en cualquier momento "
+            u"para volver a empezar."
+            )
         },
     'ACTIVATED': {
         'en': u"You can text this number to talk with %s.",
@@ -29,6 +34,13 @@ MESSAGES = {
             u"so we're not able to deliver your message. "
             u"Please contact your student's teacher for help."
             ),
+        'es': (
+            u"Lo sentimos, no podemos encontrar ningún estudiante "
+            u"conectados a su número, "
+            u"por lo que no somos capaces de entregar su mensaje. "
+            u"Por favor comuníquese con el maestro de su hijo "
+            u"para obtener ayuda.",
+            )
         },
     'STUDENT_NAME': {
         'en': u"Thanks! What is the name of your child in %s's class?",
@@ -63,6 +75,7 @@ MESSAGES = {
         },
     'SUBSEQUENT_CODE_DONE': {
         'en': u"Ok, thanks! You can text %s at this number too.",
+        'es': u"¡Ok, gracias! Usted puede texto del %s en este número también.",
         },
     'STUDENT_NAME_FOLLOWUP': {
         'en': u"And what's the student's name?",
