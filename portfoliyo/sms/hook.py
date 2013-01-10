@@ -149,24 +149,18 @@ def handle_subsequent_code(profile, body, teacher, group, signup):
     # case we want to add student to group if this is a group code, and pass
     # post on to village
     if student:
+        rel, created = model.Relationship.objects.get_or_create(
+            from_profile=teacher,
+            to_profile=student,
+            defaults={'level': model.Relationship.LEVEL.owner},
+            )
         if group:
             group.students.add(student)
         model.Post.create(profile, student, body, from_sms=True)
 
     # don't reply if they already were connected to the teacher
-    if (signup and teacher == signup.teacher) or (
-        student and model.Relationship.objects.filter(
-            from_profile=teacher, to_profile=student).exists()):
+    if (signup and teacher == signup.teacher) or (student and not created):
         return None
-
-    # This must come after the teacher-already-in-village check, because it
-    # would make that check always true
-    if student:
-        model.Relationship.objects.get_or_create(
-            from_profile=teacher,
-            to_profile=student,
-            defaults={'level': model.Relationship.LEVEL.owner},
-            )
 
     model.TextSignup.objects.create(
         family=profile,
