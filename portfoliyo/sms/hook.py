@@ -71,7 +71,7 @@ def receive_sms(source, body):
 
     teacher, group = get_teacher_and_group(body)
     if teacher is not None:
-        return handle_subsequent_code(profile, teacher, group, signup)
+        return handle_subsequent_code(profile, body, teacher, group, signup)
 
     if signup is not None:
         if signup.state == model.TextSignup.STATE.kidname:
@@ -134,7 +134,7 @@ def handle_unknown_source(source, body):
             )
 
 
-def handle_subsequent_code(profile, teacher, group, signup):
+def handle_subsequent_code(profile, body, teacher, group, signup):
     """
     Handle a second code from an already-signed-up parent.
 
@@ -159,6 +159,7 @@ def handle_subsequent_code(profile, teacher, group, signup):
             )
         if group:
             group.students.add(student)
+        model.Post.create(profile, student, body, from_sms=True)
 
     msg = "Ok, thanks! You can text %s at this number too." % teacher.name
 
