@@ -42,7 +42,11 @@ def receive_sms(source, body):
         for student in profile.students:
             model.Post.create(profile, student, body, from_sms=True)
         return reply(
-            source, profile.students, "No problem! Sorry to have bothered you.")
+            source,
+            profile.students,
+            "No problem! Sorry to have bothered you. "
+            "Text this number anytime to re-start."
+            )
 
     activated = False
     if not profile.user.is_active:
@@ -79,7 +83,7 @@ def receive_sms(source, body):
         logger.warning(
             "Text from %s (has no students): %s", source, body)
         return (
-            "Sorry, we can't find find any students connected to your number, "
+            "Sorry, we can't find any students connected to your number, "
             "so we're not able to deliver your message. "
             "Please contact your student's teacher for help."
             )
