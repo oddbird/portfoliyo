@@ -641,6 +641,34 @@ def test_subsequent_signup(db):
         )
 
 
+def test_subsequent_signup_when_teacher_already_in_village(db):
+    """If parent sends a second code for a teacher already there, no reply."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        state=model.TextSignup.STATE.done,
+        student=factories.ProfileFactory.create(),
+        teacher__code='ABCDEF',
+        )
+    factories.RelationshipFactory.create(
+        from_profile=signup.teacher, to_profile=signup.student)
+    factories.RelationshipFactory.create(
+        from_profile=signup.family, to_profile=signup.student)
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+        reply = hook.receive_sms(phone, 'ABCDEF')
+
+    assert reply is None
+    assert signup.family.signups.count() == 1
+    # incoming text is recorded in village
+    mock_create.assert_called_with(
+        signup.family,
+        signup.student,
+        "ABCDEF",
+        from_sms=True,
+        )
+
+
 def test_subsequent_group_signup(db):
     """A parent can send a group code after completing first signup."""
     phone = '+13216430987'

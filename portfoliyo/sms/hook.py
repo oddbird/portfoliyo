@@ -144,6 +144,30 @@ def handle_subsequent_code(profile, body, teacher, group, signup):
 
     """
     student = profile.students[0] if profile.students else None
+
+    # This goes before the teacher-already-in-village check, because in any
+    # case we want to add student to group if this is a group code, and pass
+    # post on to village
+    if student:
+        if group:
+            group.students.add(student)
+        model.Post.create(profile, student, body, from_sms=True)
+
+    # don't reply if they already were connected to the teacher
+    if (signup and teacher == signup.teacher) or (
+        student and model.Relationship.objects.filter(
+            from_profile=teacher, to_profile=student).exists()):
+        return None
+
+    # This must come after the teacher-already-in-village check, because it
+    # would make that check always true
+    if student:
+        model.Relationship.objects.get_or_create(
+            from_profile=teacher,
+            to_profile=student,
+            defaults={'level': model.Relationship.LEVEL.owner},
+            )
+
     model.TextSignup.objects.create(
         family=profile,
         teacher=teacher,
@@ -151,15 +175,6 @@ def handle_subsequent_code(profile, body, teacher, group, signup):
         student=student,
         state=signup.state if signup else model.TextSignup.STATE.done,
         )
-    if student:
-        model.Relationship.objects.get_or_create(
-            from_profile=teacher,
-            to_profile=student,
-            defaults={'level': model.Relationship.LEVEL.owner},
-            )
-        if group:
-            group.students.add(student)
-        model.Post.create(profile, student, body, from_sms=True)
 
     msg = "Ok, thanks! You can text %s at this number too." % teacher.name
 
