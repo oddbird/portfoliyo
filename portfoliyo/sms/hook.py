@@ -53,6 +53,10 @@ def receive_sms(source, body):
         profile.user.is_active = True
         profile.user.save()
         activated = True
+    if profile.declined:
+        profile.declined = False
+        profile.save()
+        activated = True
 
     active_signups = profile.signups.exclude(state=model.TextSignup.STATE.done)
 
@@ -96,7 +100,7 @@ def receive_sms(source, body):
             source,
             students,
             interpolate_teacher_names(
-                "Thank you! You can text this number to talk with %s.", profile)
+                "You can text this number to talk with %s.", profile)
         )
 
 
