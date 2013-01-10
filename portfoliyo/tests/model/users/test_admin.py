@@ -40,6 +40,23 @@ class TestProfileAdmin(object):
         assert utils.deleted(p.user)
 
 
+    def test_get_actions(self, pa):
+        """No delete-selected action for profiles."""
+        req = mock.Mock()
+        req.GET = {}
+        pa.admin_site.actions = [('delete_selected', 'foo')]
+        assert 'delete_selected' not in pa.get_actions(req)
+
+
+    def test_get_actions_safe(self, pa):
+        """get_actions doesn't blow up if no global delete_selected action."""
+        req = mock.Mock()
+        req.GET = {}
+        pa.admin_site.actions = []
+        assert 'delete_selected' not in pa.get_actions(req)
+
+
+
 class TestUserChangeForm(object):
     def test_no_empty_string_email(self, db):
         form = admin.UserChangeForm(

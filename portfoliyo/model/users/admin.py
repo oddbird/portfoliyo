@@ -51,6 +51,15 @@ class ProfileAdmin(admin.ModelAdmin):
         obj.user.delete()
 
 
+    def get_actions(self, request):
+        """Disable delete-selected action; dangerous and doesn't delete user."""
+        actions = super(ProfileAdmin, self).get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
+
+
 admin.site.register(models.Profile, ProfileAdmin)
 admin.site.register(models.Group)
 admin.site.register(models.School)
