@@ -33,7 +33,12 @@ class ImpersonationMiddleware(object):
                     "Cannot impersonate %s; user not found." % email)
             request.session[SESSION_KEY] = impersonate.pk
         elif SESSION_KEY in request.session:
-            impersonate = model.User.objects.get(pk=request.session[SESSION_KEY])
+            try:
+                impersonate = model.User.objects.get(
+                    pk=request.session[SESSION_KEY])
+            except model.User.DoesNotExist:
+                del request.session[SESSION_KEY]
+                return None
         else:
             return None
 
