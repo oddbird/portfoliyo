@@ -1,6 +1,10 @@
-(function ($) {
+var PYO = (function (PYO, $) {
 
     'use strict';
+
+    PYO.tpl = function (template, data) {
+        return $(Handlebars.templates[template](data));
+    };
 
     $(function () {
         Handlebars.registerPartial('group_list_item', Handlebars.templates.group_list_item);
@@ -19,4 +23,6 @@
         // });
     });
 
-}(jQuery));
+    return PYO;
+
+}(PYO || {}, jQuery));
