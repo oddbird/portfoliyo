@@ -406,7 +406,7 @@ var PYO = (function (PYO, $) {
         obj.objects = [data];
         obj.all_students = all_students;
         obj.group_id = data.group_id;
-        var student = PYO.tpl('student_list_item', obj).hide();
+        var student = PYO.tpl('student_list_items', obj).hide();
         var inserted = false;
         nav.find('.student').each(function () {
             if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
@@ -599,7 +599,7 @@ var PYO = (function (PYO, $) {
                         var obj = {};
                         if (nav.data('is-staff') === 'True') { obj.staff = true; }
                         obj.objects = [this];
-                        var group = PYO.tpl('group_list_item', obj).hide();
+                        var group = PYO.tpl('group_list_items', obj).hide();
                         var inserted = false;
                         nav.find('.group').not(':first').each(function () {
                             if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {

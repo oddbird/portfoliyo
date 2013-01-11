@@ -81,7 +81,7 @@ function program4(depth0,data) {
 
   buffer += "<ul class=\"itemlist\">\n  ";
   stack1 = depth0;
-  stack1 = self.invokePartial(partials.group_list_item, 'group_list_item', stack1, helpers, partials);;
+  stack1 = self.invokePartial(partials.group_list_items, 'group_list_items', stack1, helpers, partials);;
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</ul>\n\n";
   stack1 = depth0.staff;
@@ -89,7 +89,7 @@ function program4(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   return buffer;});
-templates['group_list_item'] = template(function (Handlebars,depth0,helpers,partials,data) {
+templates['group_list_items'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
@@ -559,7 +559,7 @@ function program8(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</h2>\n\n<ul class=\"itemlist\">\n  ";
   stack1 = depth0;
-  stack1 = self.invokePartial(partials.student_list_item, 'student_list_item', stack1, helpers, partials);;
+  stack1 = self.invokePartial(partials.student_list_items, 'student_list_items', stack1, helpers, partials);;
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</ul>\n\n";
   stack1 = depth0.staff;
@@ -567,7 +567,7 @@ function program8(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   return buffer;});
-templates['student_list_item'] = template(function (Handlebars,depth0,helpers,partials,data) {
+templates['student_list_items'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 

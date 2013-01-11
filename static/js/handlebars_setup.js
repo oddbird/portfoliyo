@@ -7,8 +7,8 @@ var PYO = (function (PYO, $) {
     };
 
     $(function () {
-        Handlebars.registerPartial('group_list_item', Handlebars.templates.group_list_item);
-        Handlebars.registerPartial('student_list_item', Handlebars.templates.student_list_item);
+        Handlebars.registerPartial('group_list_items', Handlebars.templates.group_list_items);
+        Handlebars.registerPartial('student_list_items', Handlebars.templates.student_list_items);
 
         // Handlebars.registerHelper('debug', function(optionalValue) {
         //     console.log('Current Context');
