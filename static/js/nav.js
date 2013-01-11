@@ -401,10 +401,12 @@ var PYO = (function (PYO, $) {
 
     PYO.addStudentToList = function (data, all_students) {
         var nav = $('.village-nav');
-        if (nav.data('is-staff') === 'True') { data.staff = true; }
-        data.objects = true;
-        data.all_students = all_students;
-        var student = PYO.tpl('student_list_item', data).hide();
+        var obj = {};
+        if (nav.data('is-staff') === 'True') { obj.staff = true; }
+        obj.objects = [data];
+        obj.all_students = all_students;
+        obj.group_id = data.group_id;
+        var student = PYO.tpl('student_list_item', obj).hide();
         var inserted = false;
         nav.find('.student').each(function () {
             if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
@@ -594,9 +596,10 @@ var PYO = (function (PYO, $) {
                 // If viewing the groups-list
                 if (data && data.objects && data.objects.length && nav.find('.group').length) {
                     $.each(data.objects, function () {
-                        if (nav.data('is-staff') === 'True') { this.staff = true; }
-                        this.objects = true;
-                        var group = PYO.tpl('group_list_item', this).hide();
+                        var obj = {};
+                        if (nav.data('is-staff') === 'True') { obj.staff = true; }
+                        obj.objects = [this];
+                        var group = PYO.tpl('group_list_item', obj).hide();
                         var inserted = false;
                         nav.find('.group').not(':first').each(function () {
                             if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
