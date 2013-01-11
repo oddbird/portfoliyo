@@ -4,23 +4,23 @@
     <span class="listitem-name">{{group_name}}</span>
   </a>
 
-  {{#staff}}
-  {{#group_edit_url}}
+  {{#if staff}}
+  {{#if group_edit_url}}
   <div class="listitem-actions">
     <a href="{{group_edit_url}}" class="action-edit ajax-link" title="edit group">edit</a>
-    {{#group_resource_url}}<button class="action-remove" title="remove group" name="remove" value="">remove</button>{{/group_resource_url}}
+    {{#if group_resource_url}}<button class="action-remove" title="remove group" name="remove" value="">remove</button>{{/if}}
   </div>
-  {{/group_edit_url}}
-  {{/staff}}
+  {{/if}}
+  {{/if}}
 </h2>
 
 <ul class="itemlist">
-  {{> student_list_item }}
+  {{> student_list_item}}
 </ul>
 
-{{#staff}}
+{{#if staff}}
 <div class="additems">
-  {{#group_add_students_bulk_url}}<a href="{{group_add_students_bulk_url}}" class="action-addbulk ajax-link additem-village">Signup Parents</a>{{/group_add_students_bulk_url}}
-  {{#group_add_student_url}}or <a href="{{group_add_student_url}}" class="action-addsingle ajax-link">add a student by hand »</a>{{/group_add_student_url}}
+  {{#if group_add_students_bulk_url}}<a href="{{group_add_students_bulk_url}}" class="action-addbulk ajax-link additem-village">Signup Parents</a>{{/if}}
+  {{#if group_add_student_url}}or <a href="{{group_add_student_url}}" class="action-addsingle ajax-link">add a student by hand »</a>{{/if}}
 </div>
-{{/staff}}
+{{/if}}
