@@ -464,12 +464,12 @@ class TestGroup(object):
         g.students.add(rel.student)
         g.elders.add(e)
 
-        target = 'portfoliyo.model.events.student_removed'
+        target = 'portfoliyo.pusher.events.student_removed'
         with mock.patch(target) as mock_student_removed:
             rel.student.student_in_groups.clear()
 
         assert rel.student.relationships_to.get() == rel
-        mock_student_removed.assert_called_with(rel.student, e)
+        mock_student_removed.assert_called_with(rel.student.id, [e.id])
 
 
     def test_create_dupe_code(self, db):
@@ -513,20 +513,21 @@ class TestGroup(object):
     def test_delete_group_fires_event(self, db):
         """Pusher event is fired when group is deleted."""
         g = factories.GroupFactory.create()
-        target = 'portfoliyo.model.events.group_removed'
+        g_id = g.id
+        target = 'portfoliyo.pusher.events.group_removed'
         with mock.patch(target) as mock_group_removed:
             g.delete()
 
-        mock_group_removed.assert_called_with(g)
+        mock_group_removed.assert_called_with(g_id, g.owner.id)
 
 
     def test_create_group_fires_event(self, db):
         """Pusher event is fired when group is created."""
-        target = 'portfoliyo.model.events.group_added'
+        target = 'portfoliyo.pusher.events.group_added'
         with mock.patch(target) as mock_group_added:
             g = factories.GroupFactory.create()
 
-        mock_group_added.assert_called_with(g)
+        mock_group_added.assert_called_with(g.id, g.owner.id)
 
 
     def test_delete_relationship_removes_from_groups(self, db):
@@ -564,11 +565,12 @@ class TestGroup(object):
         g = factories.GroupFactory.create()
         s = factories.ProfileFactory.create()
 
-        target = 'portfoliyo.model.events.student_added_to_group'
+        target = 'portfoliyo.pusher.events.student_added_to_group'
         with mock.patch(target) as mock_student_added_to_group:
             g.students.add(s)
 
-        mock_student_added_to_group.assert_called_with(g.owner, [s], [g])
+        mock_student_added_to_group.assert_called_with(
+            g.owner.id, [s.id], [g.id])
 
 
     def test_add_student_to_group_reverse_event(self, db):
@@ -576,11 +578,12 @@ class TestGroup(object):
         g = factories.GroupFactory.create()
         s = factories.ProfileFactory.create()
 
-        target = 'portfoliyo.model.events.student_added_to_group'
+        target = 'portfoliyo.pusher.events.student_added_to_group'
         with mock.patch(target) as mock_student_added_to_group:
             s.student_in_groups.add(g)
 
-        mock_student_added_to_group.assert_called_with(g.owner, [s], [g])
+        mock_student_added_to_group.assert_called_with(
+            g.owner.id, [s.id], [g.id])
 
 
     def test_remove_student_from_group_event(self, db):
@@ -589,11 +592,12 @@ class TestGroup(object):
         s = factories.ProfileFactory.create()
         g.students.add(s)
 
-        target = 'portfoliyo.model.events.student_removed_from_group'
+        target = 'portfoliyo.pusher.events.student_removed_from_group'
         with mock.patch(target) as mock_student_removed_from_group:
             g.students.remove(s)
 
-        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
+        mock_student_removed_from_group.assert_called_with(
+            g.owner.id, [s.id], [g.id])
 
 
     def test_remove_student_from_group_reverse_event(self, db):
@@ -602,11 +606,12 @@ class TestGroup(object):
         s = factories.ProfileFactory.create()
         g.students.add(s)
 
-        target = 'portfoliyo.model.events.student_removed_from_group'
+        target = 'portfoliyo.pusher.events.student_removed_from_group'
         with mock.patch(target) as mock_student_removed_from_group:
             s.student_in_groups.remove(g)
 
-        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
+        mock_student_removed_from_group.assert_called_with(
+            g.owner.id, [s.id], [g.id])
 
 
     def test_clear_student_from_group_event(self, db):
@@ -615,11 +620,12 @@ class TestGroup(object):
         s = factories.ProfileFactory.create()
         g.students.add(s)
 
-        target = 'portfoliyo.model.events.student_removed_from_group'
+        target = 'portfoliyo.pusher.events.student_removed_from_group'
         with mock.patch(target) as mock_student_removed_from_group:
             g.students.clear()
 
-        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
+        mock_student_removed_from_group.assert_called_with(
+            g.owner.id, [s.id], [g.id])
 
 
     def test_clear_student_from_group_reverse_event(self, db):
@@ -628,11 +634,12 @@ class TestGroup(object):
         s = factories.ProfileFactory.create()
         g.students.add(s)
 
-        target = 'portfoliyo.model.events.student_removed_from_group'
+        target = 'portfoliyo.pusher.events.student_removed_from_group'
         with mock.patch(target) as mock_student_removed_from_group:
             s.student_in_groups.clear()
 
-        mock_student_removed_from_group.assert_called_with(g.owner, [s], [g])
+        mock_student_removed_from_group.assert_called_with(
+            g.owner.id, [s.id], [g.id])
 
 
     def test_profile_deletion(self, db):
