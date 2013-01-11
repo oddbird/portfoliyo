@@ -9,7 +9,7 @@ module.exports = function (grunt) {
     grunt.initConfig({
         shell: {
             handlebars_compile: {
-                command: 'node_modules/.bin/handlebars jstemplates/*.handlebars -f static/js/jstemplates.js',
+                command: 'node_modules/.bin/handlebars jstemplates/*.handlebars -f static/js/jstemplates.js -k each -k if -k unless',
                 stdout: true
             }
         },
