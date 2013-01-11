@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "devDependencies": {
     "grunt": "~0.4.0rc2",
+    "grunt-cli": "~0.1.6",
     "handlebars": "~1.0.7",
     "grunt-contrib-watch": "~0.1.4",
     "grunt-shell": "~0.1.4"
