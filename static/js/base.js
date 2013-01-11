@@ -89,7 +89,7 @@ var PYO = (function (PYO, $) {
 
     PYO.pageAjaxError = function (url) {
         var container = $('.village-content');
-        var msg = ich.ajax_error_msg({
+        var msg = PYO.tpl('ajax_error_msg', {
             error_class: 'pjax-error',
             message: 'Unable to load the requested page.'
         });
@@ -181,7 +181,7 @@ var PYO = (function (PYO, $) {
     PYO.detectFlashSupport = function (container) {
         if ($(container).length) {
             if (Pusher && Pusher.TransportType !== 'native' && FlashDetect && !FlashDetect.versionAtLeast(10)) {
-                ich.flash_warning_msg().appendTo('#messages');
+                PYO.tpl('flash_warning_msg').appendTo('#messages');
                 $('#messages').messages();
             }
         }

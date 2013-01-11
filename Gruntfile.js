@@ -4,12 +4,13 @@ module.exports = function (grunt) {
     'use strict';
 
     var SRC_JS_TEMPLATES = 'jstemplates/';
+    var DEST_JS_TEMPLATES = 'static/js/';
 
     // Project configuration.
     grunt.initConfig({
         shell: {
             handlebars_compile: {
-                command: 'echo "hello"',
+                command: 'node_modules/.bin/handlebars ' + SRC_JS_TEMPLATES + ' -f ' + DEST_JS_TEMPLATES + 'jstemplates.js -k each -k if -k unless',
                 stdout: true
             }
         },

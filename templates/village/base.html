@@ -2,8 +2,6 @@
 
 {% load url from future %}
 
-{% load icanhaz %}
-
 {% block bodyclasses %}{{ block.super }} village-app{% endblock bodyclasses %}
 
 {% block mobile-optimized %}{% endblock mobile-optimized %}
@@ -22,16 +20,5 @@
 {% block last %}
 
 {{ block.super }}
-{% icanhaz "post" %}
-{% icanhaz "post_timeout_msg" %}
-{% icanhaz "ajax_error_msg" %}
-{% icanhaz "flash_warning_msg" %}
-{% icanhaz "ajax_403_msg" %}
-{% icanhaz "remove_listitem" %}
-{% icanhaz "group_list" %}
-{% icanhaz "group_list_item" %}
-{% icanhaz "student_list" %}
-{% icanhaz "student_list_item" %}
-{% icanhaz "active_item_removed_msg" %}
 
 {% endblock %}

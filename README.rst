@@ -23,7 +23,7 @@ syncdb --migrate``, then ``./manage.py runserver`` and access the site
 in your browser at ``http://localhost:8000``.
 
 You can run the tests with ``py.test``, or the ``Selenium`` tests with
-``py.test portfoliyo/selenium``.
+``py.test portfoliyo/tests/selenium``.
 
 .. _virtualenv: http://www.virtualenv.org
 .. _Selenium: http://seleniumhq.org
@@ -31,6 +31,11 @@ You can run the tests with ``py.test``, or the ``Selenium`` tests with
 To install the necessary Ruby gems for Compass/Sass development (only
 necessary if you plan to modify Sass files and re-generate CSS), install
 Bundler (``gem install bundler``) and then run ``bundle install``.
+
+If you make changes to the client-side Handlebars templates in
+``jstemplates/``, run ``bin/grunt`` to recompile the templates.
+Alternatively, run ``bin/grunt watch`` (takes over a terminal) to watch for
+changes to the templates and recompile automatically.
 
 Deployment
 ----------
