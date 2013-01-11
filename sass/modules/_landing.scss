@@ -101,9 +101,9 @@
 }
 
 @include at-breakpoint($break) {
-  .two-way-feature { @include feature-background('landing/twoway.png', right, 85%); }
-  .elders-feature { @include feature-background('landing/elders.png', left, 85%); }
   .signup-feature { @include feature-background('landing/signup.png', right); }
+  .two-way-feature { @include feature-background('landing/twoway.png', left, 85%); }
+  .elders-feature { @include feature-background('landing/elders.png', right, 85%); }
 }
 
 // ---------------------------------------------------------------------------

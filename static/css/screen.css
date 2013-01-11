@@ -1594,8 +1594,19 @@ button {
 }
 
 @media (min-width: 43.875em) {
+  .signup-feature {
+    background: url('../images/landing/signup.png?1357934092') no-repeat scroll right;
+    -webkit-background-clip: padding;
+    -moz-background-clip: padding;
+    background-clip: padding-box;
+    -webkit-background-size: 44.3038% auto;
+    -moz-background-size: 44.3038% auto;
+    -o-background-size: 44.3038% auto;
+    background-size: 44.3038% auto;
+  }
+
   .two-way-feature {
-    background: url('../images/landing/twoway.png?1355776712') no-repeat scroll right 85%;
+    background: url('../images/landing/twoway.png?1355776712') no-repeat scroll left 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1606,18 +1617,7 @@ button {
   }
 
   .elders-feature {
-    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
-    -webkit-background-clip: padding;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    -webkit-background-size: 44.3038% auto;
-    -moz-background-size: 44.3038% auto;
-    -o-background-size: 44.3038% auto;
-    background-size: 44.3038% auto;
-  }
-
-  .signup-feature {
-    background: url('../images/landing/signup.png?1357860079') no-repeat scroll right;
+    background: url('../images/landing/elders.png?1351725897') no-repeat scroll right 85%;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
