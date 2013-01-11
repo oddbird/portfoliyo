@@ -1,20 +1,19 @@
-{{#objects}}
+{{#each objects}}
 <li class="listitem group">
-  <a href="{{group_uri}}" class="group-link ajax-link listitem-select" data-group-name="{{name}}" data-group-id="{{id}}" data-group-students-url="{{students_uri}}" data-group-resource-url="{{resource_uri}}" data-group-edit-url="{{edit_uri}}" data-group-add-student-url="{{add_student_uri}}" data-group-add-students-bulk-url="{{add_students_bulk_uri}}" data-students="{{#students}}{{id}} {{/students}}">
+  <a href="{{group_uri}}" class="group-link ajax-link listitem-select" data-group-name="{{name}}" data-group-id="{{id}}" data-group-students-url="{{students_uri}}" data-group-resource-url="{{resource_uri}}" data-group-edit-url="{{edit_uri}}" data-group-add-student-url="{{add_student_uri}}" data-group-add-students-bulk-url="{{add_students_bulk_uri}}" data-students="{{#each students}}{{id}} {{/each}}">
     <span class="listitem-name">{{name}}</span>
-    <span class="unread{{^unread_count}} zero{{/unread_count}}">
-      {{#unread_count}}{{unread_count}}{{/unread_count}}
-      {{^unread_count}}0{{/unread_count}}
+    <span class="unread{{#unless unread_count}} zero{{/unless}}">
+      {{#if unread_count}}{{unread_count}}{{else}}0{{/if}}
     </span>
   </a>
 
-  {{#staff}}
-  {{#edit_uri}}
+  {{#if ../staff}}
+  {{#if edit_uri}}
   <div class="listitem-actions">
     <a href="{{edit_uri}}" class="action-edit ajax-link" title="edit group">edit</a>
-    {{#resource_uri}}<button class="action-remove" title="remove group" name="remove" value="">remove</button>{{/resource_uri}}
+    {{#if resource_uri}}<button class="action-remove" title="remove group" name="remove" value="">remove</button>{{/if}}
   </div>
-  {{/edit_uri}}
-  {{/staff}}
+  {{/if}}
+  {{/if}}
 </li>
-{{/objects}}
+{{/each}}
