@@ -88,16 +88,21 @@
             var userEmail = elem.data('user-email');
             var userName = elem.data('user-name');
             var userCode = elem.data('user-code');
+            var userSchool = elem.data('user-school');
             if (userId) {
                 mixpanel.identify(userId);
                 if (userEmail) {
-                    mixpanel.name_tag(userEmail);
-                    mixpanel.people.set({
+                    var peopleData = {
                         $email: userEmail,
                         $name: userName,
                         $last_login: new Date(),
                         'code': userCode
-                    });
+                    };
+                    if (userSchool) {
+                        peopleData.school = userSchool;
+                    }
+                    mixpanel.name_tag(userEmail);
+                    mixpanel.people.set(peopleData);
                     mixpanel.register({'email': userEmail});
                 }
             }
