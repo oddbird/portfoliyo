@@ -204,7 +204,7 @@ def test_code_signup_student_name(db):
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch(
-                'portfoliyo.model.events.student_added') as mock_student_added:
+                'portfoliyo.pusher.events.student_added') as mock_student_added:
             reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
@@ -217,8 +217,8 @@ def test_code_signup_student_name(db):
     assert teacher.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
     student = parent.students[0]
-    mock_student_added.assert_any_call(student, teacher)
-    mock_student_added.assert_any_call(student, parent)
+    mock_student_added.assert_any_call(student.id, [teacher.id])
+    mock_student_added.assert_any_call(student.id, [parent.id])
     assert student.name == u"Jimmy Doe"
     assert student.invited_by == teacher
     assert student.school == teacher.school
@@ -300,7 +300,7 @@ def test_group_code_signup_student_name(db):
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch(
-                'portfoliyo.model.events.student_added') as mock_student_added:
+                'portfoliyo.pusher.events.student_added') as mock_student_added:
             reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
@@ -313,8 +313,8 @@ def test_group_code_signup_student_name(db):
     assert group.owner.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
     student = parent.students[0]
-    mock_student_added.assert_any_call(student, group.owner)
-    mock_student_added.assert_any_call(student, parent)
+    mock_student_added.assert_any_call(student.id, [group.owner.id])
+    mock_student_added.assert_any_call(student.id, [parent.id])
     assert set(student.student_in_groups.all()) == {group}
     assert student.name == u"Jimmy Doe"
     assert student.invited_by == group.owner

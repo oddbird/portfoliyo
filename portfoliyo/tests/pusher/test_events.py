@@ -2,7 +2,7 @@
 from django.core.urlresolvers import reverse
 import mock
 
-from portfoliyo.model import events
+from portfoliyo.pusher import events
 from portfoliyo.tests import factories
 
 
@@ -10,12 +10,12 @@ from portfoliyo.tests import factories
 def test_student_event(db):
     """Pusher event for adding/editing/removing a student."""
     rel = factories.RelationshipFactory.create()
-    with mock.patch('portfoliyo.model.events.get_pusher') as mock_get_pusher:
+    with mock.patch('portfoliyo.pusher.events.get_pusher') as mock_get_pusher:
         channel = mock.Mock()
         mock_get_pusher.return_value = {
             'private-students_of_%s' % rel.elder.id: channel,
             }
-        events.student_event('some_event', rel.student, rel.elder)
+        events.student_event('some_event', rel.student.id, [rel.elder.id])
 
     args = channel.trigger.call_args[0]
     assert args[0] == 'some_event'
@@ -38,12 +38,12 @@ def test_student_event(db):
 def test_group_event(db):
     """Pusher event for adding/editing/removing a group."""
     group = factories.GroupFactory.create()
-    with mock.patch('portfoliyo.model.events.get_pusher') as mock_get_pusher:
+    with mock.patch('portfoliyo.pusher.events.get_pusher') as mock_get_pusher:
         channel = mock.Mock()
         mock_get_pusher.return_value = {
             'private-groups_of_%s' % group.owner.id: channel,
             }
-        events.group_event('some_event', group)
+        events.group_event('some_event', group.id, group.owner.id)
 
     args = channel.trigger.call_args[0]
     assert args[0] == 'some_event'
@@ -67,8 +67,8 @@ def test_pusher_socket_error():
     """
     import socket
 
-    get_pusher_location = 'portfoliyo.model.events.get_pusher'
-    logger_warning_location = 'portfoliyo.model.events.logger.warning'
+    get_pusher_location = 'portfoliyo.pusher.events.get_pusher'
+    logger_warning_location = 'portfoliyo.pusher.events.logger.warning'
     with mock.patch(get_pusher_location) as mock_get_pusher:
         channel = mock_get_pusher.return_value['channel']
         channel.trigger.side_effect = socket.error('connection timed out')
@@ -90,8 +90,8 @@ def test_pusher_bad_response():
     Pusher is not critical enough to be worth causing an action to fail.
 
     """
-    get_pusher_location = 'portfoliyo.model.events.get_pusher'
-    logger_warning_location = 'portfoliyo.model.events.logger.warning'
+    get_pusher_location = 'portfoliyo.pusher.events.get_pusher'
+    logger_warning_location = 'portfoliyo.pusher.events.logger.warning'
     with mock.patch(get_pusher_location) as mock_get_pusher:
         channel = mock_get_pusher.return_value['channel']
         channel.trigger.side_effect = Exception(
