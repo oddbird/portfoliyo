@@ -73,7 +73,8 @@ def receive_sms(source, body):
 
     teacher, group, lang = parse_code(body)
     if teacher is not None:
-        return handle_subsequent_code(profile, body, teacher, group, signup)
+        return handle_subsequent_code(
+            profile, body, teacher, group, lang, signup)
 
     if signup is not None:
         if signup.state == model.TextSignup.STATE.kidname:
@@ -111,6 +112,7 @@ def handle_unknown_source(source, body):
             school=teacher.school,
             phone=source,
             invited_by=teacher,
+            lang_code=lang,
             )
         model.TextSignup.objects.create(
             family=family,
@@ -127,7 +129,7 @@ def handle_unknown_source(source, body):
         return messages.get('UNKNOWN', settings.LANGUAGE_CODE)
 
 
-def handle_subsequent_code(profile, body, teacher, group, signup):
+def handle_subsequent_code(profile, body, teacher, group, lang, signup):
     """
     Handle a second code from an already-signed-up parent.
 
@@ -150,6 +152,10 @@ def handle_subsequent_code(profile, body, teacher, group, signup):
         if group:
             group.students.add(student)
         model.Post.create(profile, student, body, from_sms=True)
+
+    if profile.lang_code != lang:
+        profile.lang_code = lang
+        profile.save()
 
     # don't reply if they already were connected to the teacher
     if (signup and teacher == signup.teacher) or (student and not created):

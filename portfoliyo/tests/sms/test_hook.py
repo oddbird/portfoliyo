@@ -1,4 +1,5 @@
-"""Tests for Village SMS code."""
+# -*- coding: utf-8 -*-
+"""Tests for SMS-handling code."""
 from django.core import mail
 import mock
 
@@ -163,6 +164,22 @@ def test_code_signup(db):
     assert signup.student is None
     assert signup.family == profile
     assert not mock_create.call_count
+
+
+def test_code_signup_with_language(db):
+    """Parent can include language code in starting code signup."""
+    phone = '+13216430987'
+    factories.ProfileFactory.create(
+        school_staff=True, name="Teacher Joe", code="ABCDEF")
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        reply = hook.receive_sms(phone, "abcdef ES")
+
+    assert reply == (
+        u"¡Gracias! ¿Cuál es el nombre de su hijo en la clase del Teacher Joe?")
+    profile = model.Profile.objects.get(phone=phone)
+    assert profile.lang_code == 'es'
+
 
 
 def test_group_code_signup(db):
@@ -639,6 +656,31 @@ def test_subsequent_signup(db):
         in_reply_to=u'+13216430987',
         email_notifications=False,
         )
+
+
+def test_subsequent_signup_with_language(db):
+    """A parent can update their language with their second code."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        family__lang_code='en',
+        state=model.TextSignup.STATE.done,
+        student=factories.ProfileFactory.create(),
+        )
+    factories.RelationshipFactory.create(
+        from_profile=signup.teacher, to_profile=signup.student)
+    factories.RelationshipFactory.create(
+        from_profile=signup.family, to_profile=signup.student)
+    factories.ProfileFactory.create(
+        code='ABCDEF', name='Ms. Doe')
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        reply = hook.receive_sms(phone, 'ABCDEF Es')
+
+    profile = utils.refresh(signup.family)
+    assert profile.lang_code == 'es'
+    assert reply == (
+        u"¡Ok, gracias! Usted puede texto del Ms. Doe en este número también.")
 
 
 def test_subsequent_signup_when_teacher_already_in_village(db):
