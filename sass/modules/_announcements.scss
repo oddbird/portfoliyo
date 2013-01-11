@@ -26,7 +26,7 @@ $announce-h-position: right;
   @include no-style-list;
   position: fixed;
   #{$announce-v-position}: rhythm(2);
-  #{$announce-h-position}: $grid-padding;
+  #{$announce-h-position}: rhythm(1);
   z-index: 999;
   color: $base2;
   .close {

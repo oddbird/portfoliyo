@@ -110,6 +110,20 @@ def test_bad_email(db):
     assert resp.status_code == 400
 
 
+def test_user_deleted_in_midst_of_impersonation(db):
+    """If user is deleted while being impersonated, no error."""
+    real_user = factories.UserFactory.create(is_superuser=True)
+    req = mock.Mock()
+    req.user = real_user
+    req.session = {impersonate.SESSION_KEY: 999}
+    req.GET = {}
+
+    resp = _call(req)
+
+    assert resp is None
+    assert req.session == {}
+
+
 def test_no_error_if_not_superuser(db):
     """No error response if not a superuser."""
     real_user = factories.UserFactory.create(is_superuser=False)

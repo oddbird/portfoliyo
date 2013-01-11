@@ -3,7 +3,7 @@
 
   <header class="post-meta">
     {{^local}}
-    <div class="sms-info details" title="{{#from_sms}}Received by text. {{/from_sms}}{{#to_sms}} Text{{plural_sms}} sent.{{/to_sms}}">
+    <div class="sms-info details" title="{{#from_sms}}Received by text. {{/from_sms}}{{^from_sms}}{{^to_sms}} No texts {{/to_sms}}{{#to_sms}} Text{{plural_sms}} {{/to_sms}} sent.{{/from_sms}}">
 
       <div class="details-body" id="sms-post-{{post_id}}-details">
         {{#from_sms}} Received by text. {{/from_sms}}
@@ -11,6 +11,12 @@
         {{#to_sms}}
         Text{{plural_sms}} sent {{#sms_recipients}} to {{sms_recipients}}{{/sms_recipients}}.
         {{/to_sms}}
+
+        {{^from_sms}}
+        {{^to_sms}}
+        No text messages sent.
+        {{/to_sms}}
+        {{/from_sms}}
       </div>
 
       <a href="#sms-post-{{post_id}}-details" class="summary">{{^sms}}no {{/sms}}text messages sent/received</a>

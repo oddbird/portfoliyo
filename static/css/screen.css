@@ -1365,6 +1365,7 @@ button {
   position: absolute;
   top: 100%;
   right: 0%;
+  margin-right: 0.63889rem;
   margin-top: -2px;
   width: 48.71795%;
   border: 2px solid #073642;
@@ -1391,143 +1392,6 @@ button {
 }
 .settingslink:hover ~ .useractions, .useractions:hover {
   display: block;
-}
-
-@-moz-keyframes announce-in {
-  0% {
-    opacity: 0;
-    -moz-transform: translateY(-12.77778rem);
-    transform: translateY(-12.77778rem);
-  }
-
-  100% {
-    opacity: 1;
-    -moz-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-
-@-webkit-keyframes announce-in {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(-12.77778rem);
-    transform: translateY(-12.77778rem);
-  }
-
-  100% {
-    opacity: 1;
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-
-@-o-keyframes announce-in {
-  0% {
-    opacity: 0;
-    -o-transform: translateY(-12.77778rem);
-    transform: translateY(-12.77778rem);
-  }
-
-  100% {
-    opacity: 1;
-    -o-transform: translateY(0);
-    transform: translateY(0);
-  }
-}
-
-@keyframes announce-in {
-  0% {
-    opacity: 0;
-    transform: translateY(-12.77778rem);
-  }
-
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-#messages {
-  font-size: 14px;
-  font-size: 0.77778rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  list-style: none;
-  position: fixed;
-  top: 2.55556rem;
-  right: 0;
-  z-index: 999;
-  color: #eee8d5;
-}
-#messages li {
-  list-style-image: none;
-  list-style-type: none;
-  margin-left: 0;
-}
-#messages .close {
-  position: absolute;
-  right: .125rem;
-  top: 0;
-  width: 1rem;
-}
-#messages .close:link, #messages .close:visited {
-  color: #073642;
-}
-#messages .close:focus, #messages .close:hover, #messages .close:active {
-  color: #fdf6e3;
-}
-
-.message, .announce, .message.success, .message.warning, .message.error {
-  -webkit-animation: announce-in 1s ease backwards;
-  -moz-animation: announce-in 1s ease backwards;
-  -o-animation: announce-in 1s ease backwards;
-  animation: announce-in 1s ease backwards;
-  border-width: 1px;
-  border-width: 0.05556rem;
-  border-style: solid;
-  padding: 11px;
-  padding: 0.58333rem;
-  overflow: hidden;
-  -webkit-box-shadow: #002b36 0 0 0.31944rem;
-  -moz-box-shadow: #002b36 0 0 0.31944rem;
-  box-shadow: #002b36 0 0 0.31944rem;
-  position: relative;
-  border-color: #073642;
-  width: 19rem;
-}
-.message:before, .announce:before {
-  position: absolute;
-  top: 0.63889rem;
-  left: 0.63889rem;
-}
-.message .body, .announce .body {
-  margin: 0 1.27778rem;
-}
-.message .body a:link, .announce .body a:link, .message .body a:visited, .announce .body a:visited {
-  color: #fdf6e3;
-  text-decoration: underline;
-}
-.message .body a:focus, .announce .body a:focus, .message .body a:hover, .announce .body a:hover, .message .body a:active, .announce .body a:active {
-  color: #f6d6e6;
-}
-
-.message, .announce {
-  background: #268bd2;
-}
-
-.message.success {
-  background: #859900;
-}
-
-.message.warning {
-  background: #b58900;
-}
-
-.message.error {
-  background: #dc322f;
 }
 
 [role="main"] {
@@ -1753,7 +1617,7 @@ button {
   }
 
   .signup-feature {
-    background: url('../images/landing/signup.png?1357772648') no-repeat scroll right;
+    background: url('../images/landing/signup.png?1357860079') no-repeat scroll right;
     -webkit-background-clip: padding;
     -moz-background-clip: padding;
     background-clip: padding-box;
@@ -1886,6 +1750,143 @@ button {
 }
 .lt-ie9 .login-nav, .lt-ie9 .main-register-link {
   display: none;
+}
+
+@-moz-keyframes announce-in {
+  0% {
+    opacity: 0;
+    -moz-transform: translateY(-12.77778rem);
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    -moz-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@-webkit-keyframes announce-in {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-12.77778rem);
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@-o-keyframes announce-in {
+  0% {
+    opacity: 0;
+    -o-transform: translateY(-12.77778rem);
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    -o-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+
+@keyframes announce-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-12.77778rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+#messages {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  list-style: none;
+  position: fixed;
+  top: 2.55556rem;
+  right: 1.27778rem;
+  z-index: 999;
+  color: #eee8d5;
+}
+#messages li {
+  list-style-image: none;
+  list-style-type: none;
+  margin-left: 0;
+}
+#messages .close {
+  position: absolute;
+  right: .125rem;
+  top: 0;
+  width: 1rem;
+}
+#messages .close:link, #messages .close:visited {
+  color: #073642;
+}
+#messages .close:focus, #messages .close:hover, #messages .close:active {
+  color: #fdf6e3;
+}
+
+.message, .announce, .message.success, .message.warning, .message.error {
+  -webkit-animation: announce-in 1s ease backwards;
+  -moz-animation: announce-in 1s ease backwards;
+  -o-animation: announce-in 1s ease backwards;
+  animation: announce-in 1s ease backwards;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 11px;
+  padding: 0.58333rem;
+  overflow: hidden;
+  -webkit-box-shadow: #002b36 0 0 0.31944rem;
+  -moz-box-shadow: #002b36 0 0 0.31944rem;
+  box-shadow: #002b36 0 0 0.31944rem;
+  position: relative;
+  border-color: #073642;
+  width: 19rem;
+}
+.message:before, .announce:before {
+  position: absolute;
+  top: 0.63889rem;
+  left: 0.63889rem;
+}
+.message .body, .announce .body {
+  margin: 0 1.27778rem;
+}
+.message .body a:link, .announce .body a:link, .message .body a:visited, .announce .body a:visited {
+  color: #fdf6e3;
+  text-decoration: underline;
+}
+.message .body a:focus, .announce .body a:focus, .message .body a:hover, .announce .body a:hover, .message .body a:active, .announce .body a:active {
+  color: #f6d6e6;
+}
+
+.message, .announce {
+  background: #268bd2;
+}
+
+.message.success {
+  background: #859900;
+}
+
+.message.warning {
+  background: #b58900;
+}
+
+.message.error {
+  background: #dc322f;
 }
 
 .browser-warning {
@@ -2084,6 +2085,9 @@ button {
 }
 .village-app [role="main"] {
   padding: 0;
+}
+.village-app [role="contentinfo"] {
+  padding: 0.31944rem;
 }
 
 .village {
