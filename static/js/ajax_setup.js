@@ -19,7 +19,7 @@ var PYO = (function (PYO, $) {
             json = false;
         }
         if (request && request.responseText && json && json.error) {
-            ich.message({ message: json.error, tags: "error" }).appendTo('#messages');
+            PYO.tpl('message.html', { message: json.error, tags: 'error' }).appendTo('#messages');
             $('#messages').messages();
         }
     });

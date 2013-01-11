@@ -141,8 +141,7 @@ INSTALLED_APPS = [
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-INSTALLED_APPS += ['icanhaz', 'messages_ui', 'ajax_loading_overlay', 'html5accordion']
-ICANHAZ_DIRS = [join(BASE_PATH, 'jstemplates')]
+INSTALLED_APPS += ['messages_ui', 'ajax_loading_overlay', 'html5accordion']
 MIDDLEWARE_CLASSES.insert(
     MIDDLEWARE_CLASSES.index(
         'django.contrib.messages.middleware.MessageMiddleware'
