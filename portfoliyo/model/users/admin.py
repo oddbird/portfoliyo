@@ -41,9 +41,23 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
     def save_model(self, request, obj, form, change):
-        # ensure phone is never empty string
+        """Save profile; ensure phone is never empty string."""
         obj.phone = obj.phone or None
         return super(ProfileAdmin, self).save_model(request, obj, form, change)
+
+
+    def delete_model(self, request, obj):
+        """Delete profile; also delete related User."""
+        obj.user.delete()
+
+
+    def get_actions(self, request):
+        """Disable delete-selected action; dangerous and doesn't delete user."""
+        actions = super(ProfileAdmin, self).get_actions(request)
+        if 'delete_selected' in actions:
+            del actions['delete_selected']
+        return actions
+
 
 
 admin.site.register(models.Profile, ProfileAdmin)

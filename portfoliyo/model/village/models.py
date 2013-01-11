@@ -9,7 +9,6 @@ from django.db import models
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
-from portfoliyo.model.events import trigger
 from portfoliyo import notifications, tasks
 from ..users import models as user_models
 from . import unread
@@ -176,21 +175,6 @@ class BasePost(models.Model):
         return None
 
 
-    def send_event(self, channel, **kwargs):
-        """
-        Send Pusher event for this Post, if Pusher is configured.
-
-        Catch all exceptions from Pusher and log them to Sentry, but proceed -
-        a Pusher failure is never worth aborting the post over.
-
-        """
-        trigger(
-            channel,
-            'message_posted',
-            {'posts': [post_dict(self, **kwargs)]},
-            )
-
-
 
 class BulkPost(BasePost):
     """A Post in multiple villages at once."""
@@ -276,8 +260,9 @@ class BulkPost(BasePost):
                 meta=post.meta,
                 from_bulk=post,
                 )
-            sub.send_event(
-                'student_%s' % student.id,
+            tasks.push_event.delay(
+                'posted',
+                sub.id,
                 author_sequence_id=sequence_id,
                 mark_read_url=reverse(
                     'mark_post_read', kwargs={'post_id': sub.id}),
@@ -287,7 +272,8 @@ class BulkPost(BasePost):
                 if elder.user.email and elder != author:
                     unread.mark_unread(sub, elder)
 
-        post.send_event('group_%s' % group.id, author_sequence_id=sequence_id)
+        tasks.push_event.delay(
+            'bulk_posted', post.id, author_sequence_id=sequence_id)
 
         post.notify_email(from_sms)
 
@@ -366,8 +352,9 @@ class Post(BasePost):
         if email_notifications:
             post.notify_email(from_sms)
 
-        post.send_event(
-            'student_%s' % student.id,
+        tasks.push_event.delay(
+            'posted',
+            post.id,
             author_sequence_id=sequence_id,
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),

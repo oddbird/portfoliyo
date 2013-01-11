@@ -112,6 +112,7 @@ $useraction-background    : $base01;
   position: absolute;
   top: 100%;
   right: 0%;
+  margin-right: rhythm(.5);
   margin-top: - $useraction-border-size;
   width: columns($right + 1, $meta-width);
   border: $useraction-border-size solid $useraction-border-color;
