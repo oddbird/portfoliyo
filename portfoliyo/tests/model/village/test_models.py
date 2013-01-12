@@ -179,7 +179,7 @@ class TestPostCreate(object):
         """Triggers a pusher event."""
         rel = factories.RelationshipFactory.create()
 
-        target = 'portfoliyo.model.village.models.trigger'
+        target = 'portfoliyo.pusher.events.trigger'
         with mock.patch(target) as mock_trigger:
             post = models.Post.create(
                 rel.elder, rel.student, 'Foo\n', sequence_id='33')
@@ -408,7 +408,7 @@ class TestBulkPost(object):
         """Triggers pusher events for both self and sub-posts."""
         rel = factories.RelationshipFactory.create()
 
-        target = 'portfoliyo.model.village.models.trigger'
+        target = 'portfoliyo.pusher.events.trigger'
         with mock.patch(target) as mock_trigger:
             models.BulkPost.create(rel.elder, None, 'Foo\n', sequence_id='33')
 

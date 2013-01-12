@@ -302,13 +302,13 @@ class AllStudentsGroup(GroupBase):
 
 
 def group_deleted(sender, instance, **kwargs):
-    tasks.push_event.delay('group_removed', instance)
+    tasks.push_event.delay('group_removed', instance.id, instance.owner_id)
 
 
 
 def group_saved(sender, instance, created, **kwargs):
     if created:
-        tasks.push_event.delay('group_added', instance)
+        tasks.push_event.delay('group_added', instance.id, instance.owner_id)
 
 
 
@@ -431,7 +431,8 @@ def send_student_group_event(
         event = 'student_added_to_group'
 
     for owner, groups in groups_by_owner.items():
-        tasks.push_event.delay(event, owner, list(students), list(groups))
+        tasks.push_event.delay(
+            event, owner.id, [s.id for s in students], [g.id for g in groups])
 
 
 
@@ -511,7 +512,7 @@ class Relationship(models.Model):
 def relationship_saved(sender, instance, created, **kwargs):
     if created:
         tasks.push_event.delay(
-            'student_added', instance.student, instance.elder)
+            'student_added', instance.to_profile_id, [instance.from_profile_id])
 
 
 def relationship_deleted(sender, instance, **kwargs):
@@ -523,7 +524,7 @@ def relationship_deleted(sender, instance, **kwargs):
     except Profile.DoesNotExist:
         pass
     else:
-        tasks.push_event.delay('student_removed', student, elder)
+        tasks.push_event.delay('student_removed', student.id, [elder.id])
         # remove that student from all of that elder's groups
         for group in elder.owned_groups.all():
             group.students.remove(student)

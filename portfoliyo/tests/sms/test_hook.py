@@ -37,18 +37,20 @@ def test_activate_user(db):
     """Receiving SMS from inactive user activates and gives them more info."""
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(
-        user__is_active=False, phone=phone)
+        user__is_active=False, phone=phone, declined=True)
     rel = factories.RelationshipFactory.create(
         from_profile=profile, to_profile__name="Jimmy Doe")
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         reply = hook.receive_sms(phone, 'foo')
 
-    assert utils.refresh(profile.user).is_active
+    profile = utils.refresh(profile)
+    assert profile.user.is_active
+    assert not profile.declined
     mock_create.assert_any_call(
         None, rel.student, reply, in_reply_to=phone, notifications=False)
     assert reply == (
-        "Thank you! You can text this number "
+        "You can text this number "
         "to talk with Jimmy Doe's teachers."
         )
 
@@ -67,7 +69,8 @@ def test_decline(db):
     assert not utils.refresh(profile.user).is_active
     assert utils.refresh(profile).declined
     assert reply == (
-        "No problem! Sorry to have bothered you."
+        "No problem! Sorry to have bothered you. "
+        "Text this number anytime to re-start."
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
     mock_create.assert_any_call(
@@ -88,7 +91,8 @@ def test_active_user_decline(db):
     assert not utils.refresh(profile.user).is_active
     assert utils.refresh(profile).declined
     assert reply == (
-        "No problem! Sorry to have bothered you."
+        "No problem! Sorry to have bothered you. "
+        "Text this number anytime to re-start."
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
     mock_create.assert_any_call(
@@ -131,7 +135,7 @@ def test_no_students(db):
     reply = hook.receive_sms(phone, 'foo')
 
     assert reply == (
-            "Sorry, we can't find find any students connected to your number, "
+            "Sorry, we can't find any students connected to your number, "
             "so we're not able to deliver your message. "
             "Please contact your student's teacher for help."
         )
@@ -199,7 +203,7 @@ def test_code_signup_student_name(db):
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch(
-                'portfoliyo.model.events.student_added') as mock_student_added:
+                'portfoliyo.pusher.events.student_added') as mock_student_added:
             reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
@@ -212,8 +216,8 @@ def test_code_signup_student_name(db):
     assert teacher.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
     student = parent.students[0]
-    mock_student_added.assert_any_call(student, teacher)
-    mock_student_added.assert_any_call(student, parent)
+    mock_student_added.assert_any_call(student.id, [teacher.id])
+    mock_student_added.assert_any_call(student.id, [parent.id])
     assert student.name == u"Jimmy Doe"
     assert student.invited_by == teacher
     assert student.school == teacher.school
@@ -295,7 +299,7 @@ def test_group_code_signup_student_name(db):
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch(
-                'portfoliyo.model.events.student_added') as mock_student_added:
+                'portfoliyo.pusher.events.student_added') as mock_student_added:
             reply = hook.receive_sms(phone, "Jimmy Doe")
 
     assert reply == (
@@ -308,8 +312,8 @@ def test_group_code_signup_student_name(db):
     assert group.owner.student_relationships[0].level == 'owner'
     assert len(parent.students) == 1
     student = parent.students[0]
-    mock_student_added.assert_any_call(student, group.owner)
-    mock_student_added.assert_any_call(student, parent)
+    mock_student_added.assert_any_call(student.id, [group.owner.id])
+    mock_student_added.assert_any_call(student.id, [parent.id])
     assert set(student.student_in_groups.all()) == {group}
     assert student.name == u"Jimmy Doe"
     assert student.invited_by == group.owner
@@ -577,11 +581,13 @@ def test_subsequent_signup(db):
     other_teacher = factories.ProfileFactory.create(
         code='ABCDEF', name='Ms. Doe')
 
-    target1 = 'portfoliyo.sms.hook.notifications.village_additions'
-    target2 = 'portfoliyo.sms.hook.notifications.new_parent'
-    with mock.patch(target1) as mock_notify_village_additions:
-        with mock.patch(target2) as mock_notify_new_parent:
-            reply = hook.receive_sms(phone, 'ABCDEF')
+    va_tgt = 'portfoliyo.sms.hook.notifications.village_additions'
+    np_tgt = 'portfoliyo.sms.hook.notifications.new_parent'
+    create_tgt = 'portfoliyo.sms.hook.model.Post.create'
+    with mock.patch(va_tgt) as mock_notify_village_additions:
+        with mock.patch(np_tgt) as mock_notify_new_parent:
+            with mock.patch(create_tgt) as mock_create:
+                reply = hook.receive_sms(phone, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -591,11 +597,62 @@ def test_subsequent_signup(db):
     assert new_signup.student == signup.student
     assert new_signup.group is None
     assert signup.student in other_teacher.students
-
+    # both incoming text and reply are recorded in village
+    assert mock_create.call_count == 2
+    mock_create.assert_any_call(
+        signup.family,
+        signup.student,
+        "ABCDEF",
+        from_sms=True,
+        )
+    mock_create.assert_any_call(
+        None,
+        signup.student,
+        reply,
+        in_reply_to=u'+13216430987',
+        notifications=False,
+        )
     mock_notify_village_additions.assert_called_once_with(
         signup.family, [other_teacher], [signup.student])
     mock_notify_new_parent.assert_called_once_with(
         other_teacher, new_signup)
+
+
+
+def test_subsequent_signup_when_teacher_already_in_village(db):
+    """If parent sends a second code for a teacher already there, no reply."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        state=model.TextSignup.STATE.done,
+        student=factories.ProfileFactory.create(),
+        teacher__code='ABCDEF',
+        )
+    factories.RelationshipFactory.create(
+        from_profile=signup.teacher, to_profile=signup.student)
+    factories.RelationshipFactory.create(
+        from_profile=signup.family, to_profile=signup.student)
+
+    va_tgt = 'portfoliyo.sms.hook.notifications.village_additions'
+    np_tgt = 'portfoliyo.sms.hook.notifications.new_parent'
+    create_tgt = 'portfoliyo.sms.hook.model.Post.create'
+    with mock.patch(va_tgt) as mock_notify_village_additions:
+        with mock.patch(np_tgt) as mock_notify_new_parent:
+            with mock.patch(create_tgt) as mock_create:
+                reply = hook.receive_sms(phone, 'ABCDEF')
+
+    assert reply is None
+    assert signup.family.signups.count() == 1
+    # incoming text is recorded in village
+    mock_create.assert_called_with(
+        signup.family,
+        signup.student,
+        "ABCDEF",
+        from_sms=True,
+        )
+    assert mock_notify_village_additions.call_count == 0
+    assert mock_notify_new_parent.call_count == 0
+
 
 
 def test_subsequent_group_signup(db):

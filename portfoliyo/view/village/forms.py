@@ -430,7 +430,7 @@ class StudentForm(forms.ModelForm):
         # relevant to them). If name is changed, send to all elders so nav can
         # be updated.
         if self._old_name != self.instance.name:
-            tasks.push_event.delay('student_edited', student, *student.elders)
+            tasks.push_event.delay('student_edited', student.id)
 
         return student
 
@@ -633,7 +633,8 @@ class GroupForm(forms.ModelForm):
             self.instance.save()
             self.save_m2m()
             if self._old_name != self.instance.name:
-                tasks.push_event.delay('group_edited', self.instance)
+                tasks.push_event.delay(
+                    'group_edited', self.instance.id, self.instance.owner_id)
         return self.instance
 
 

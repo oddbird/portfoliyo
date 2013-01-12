@@ -51,6 +51,6 @@ def record_notification(name, *args, **kw):
 @celery.task(ignore_result=True)
 def push_event(name, *args, **kw):
     """Send a Pusher event."""
-    from portfoliyo.model import events
+    from portfoliyo.pusher import events
     event_function = getattr(events, name)
     event_function(*args, **kw)

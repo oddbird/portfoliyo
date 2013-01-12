@@ -3,6 +3,7 @@ import mock
 import pytest
 
 from portfoliyo.model.users import admin
+from portfoliyo.tests import factories, utils
 
 
 
@@ -28,6 +29,31 @@ class TestProfileAdmin(object):
         pa.save_model(mock.Mock(), profile, mock.Mock(), mock.Mock())
 
         assert profile.phone is None
+
+
+    def test_delete_model(self, pa, db):
+        """Deleting a profile deletes the associated user, too."""
+        p = factories.ProfileFactory.create()
+        pa.delete_model(mock.Mock(), p)
+
+        assert utils.deleted(p)
+        assert utils.deleted(p.user)
+
+
+    def test_get_actions(self, pa):
+        """No delete-selected action for profiles."""
+        req = mock.Mock()
+        req.GET = {}
+        pa.admin_site.actions = [('delete_selected', 'foo')]
+        assert 'delete_selected' not in pa.get_actions(req)
+
+
+    def test_get_actions_safe(self, pa):
+        """get_actions doesn't blow up if no global delete_selected action."""
+        req = mock.Mock()
+        req.GET = {}
+        pa.admin_site.actions = []
+        assert 'delete_selected' not in pa.get_actions(req)
 
 
 
