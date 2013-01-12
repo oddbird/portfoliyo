@@ -1,0 +1,46 @@
+// ---------------------------------------------------------------------------
+// Features
+
+.features {
+  @include pie-clearfix;
+  @include rhythm-padding;
+  @include bleed(1);
+  background: $base2;
+  @include at-breakpoint($break) {
+    @include bleed(1);
+    @include pad(2,2);
+  }
+}
+
+.feature {
+  @include before(" ") {
+    @include background-size(contain);
+    @include fluid-ratio(1/1);
+    display: block;
+    position: relative;
+  }
+
+  @include at-breakpoint($break) {
+    @include span-columns(6,18);
+    @include nth-omega;
+    &:before { @include leader(-5); }
+    &:nth-child(1) { padding-right: gutter(); }
+    &:nth-child(3) { padding-left: gutter(); }
+    &:nth-child(2) {
+      @include bleed(gutter());
+      border: 1px dashed $base3;
+      border-width: 0 2px;
+    }
+  }
+}
+
+.feature-title {
+  @include serif;
+  font-weight: bold;
+}
+
+@mixin feature-image($img) { &:before { @include replace-text($img); } }
+
+.two-way-feature { @include feature-image('landing/twoway.png'); }
+.signup-feature { @include feature-image('landing/signup.png'); }
+.elders-feature { @include feature-image('landing/elders.png'); }
