@@ -108,6 +108,7 @@ def add_students_bulk(request, group_id=None):
         {
             'group': group,
             'code': group.code if group else request.user.profile.code,
+            'default_lang_code': settings.LANGUAGE_CODE,
             'pyo_phone': formats.display_phone(
                 settings.PORTFOLIYO_SMS_DEFAULT_FROM),
             'group_just_created': group and request.GET.get('created', None),

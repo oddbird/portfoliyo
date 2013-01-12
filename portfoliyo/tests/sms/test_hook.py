@@ -1,4 +1,5 @@
-"""Tests for Village SMS code."""
+# -*- coding: utf-8 -*-
+"""Tests for SMS-handling code."""
 from django.core import mail
 import mock
 
@@ -163,6 +164,22 @@ def test_code_signup(db):
     assert signup.student is None
     assert signup.family == profile
     assert not mock_create.call_count
+
+
+def test_code_signup_with_language(db):
+    """Parent can include language code in starting code signup."""
+    phone = '+13216430987'
+    factories.ProfileFactory.create(
+        school_staff=True, name="Teacher Joe", code="ABCDEF")
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        reply = hook.receive_sms(phone, "abcdef ES")
+
+    assert reply == (
+        u"¡Gracias! ¿Cuál es el nombre de su hijo en la clase del Teacher Joe?")
+    profile = model.Profile.objects.get(phone=phone)
+    assert profile.lang_code == 'es'
+
 
 
 def test_group_code_signup(db):
@@ -641,6 +658,31 @@ def test_subsequent_signup(db):
         )
 
 
+def test_subsequent_signup_with_language(db):
+    """A parent can update their language with their second code."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        family__lang_code='en',
+        state=model.TextSignup.STATE.done,
+        student=factories.ProfileFactory.create(),
+        )
+    factories.RelationshipFactory.create(
+        from_profile=signup.teacher, to_profile=signup.student)
+    factories.RelationshipFactory.create(
+        from_profile=signup.family, to_profile=signup.student)
+    factories.ProfileFactory.create(
+        code='ABCDEF', name='Ms. Doe')
+
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        reply = hook.receive_sms(phone, 'ABCDEF Es')
+
+    profile = utils.refresh(signup.family)
+    assert profile.lang_code == 'es'
+    assert reply == (
+        u"¡Ok, gracias! Usted puede texto del Ms. Doe en este número también.")
+
+
 def test_subsequent_signup_when_teacher_already_in_village(db):
     """If parent sends a second code for a teacher already there, no reply."""
     phone = '+13216430987'
@@ -711,7 +753,7 @@ def test_subsequent_signup_when_first_needs_student_name(db):
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
-        "Now, what's the student's name?"
+        "And what's the student's name?"
         )
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     signup = utils.refresh(signup)
@@ -736,7 +778,7 @@ def test_subsequent_group_signup_when_first_needs_student_name(db):
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
-        "Now, what's the student's name?"
+        "And what's the student's name?"
         )
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     signup = utils.refresh(signup)
@@ -766,7 +808,7 @@ def test_subsequent_signup_when_first_needs_role(db):
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
-        "Now, what's your relationship to the student?"
+        "And what's your relationship to the student?"
         )
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     signup = utils.refresh(signup)
@@ -796,7 +838,7 @@ def test_subsequent_signup_when_first_needs_name(db):
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
-        "Now, what's your name?"
+        "And what's your name?"
         )
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     signup = utils.refresh(signup)
@@ -828,17 +870,18 @@ def test_bogus_signup_state_no_blowup(db):
     hook.receive_sms(phone, "Hello")
 
 
-class TestGetTeacherAndGroup(object):
+
+class TestParseCode(object):
     def test_basic(self, db):
         """Gets teacher if text starts with teacher code."""
         t = factories.ProfileFactory.create(school_staff=True, code='ABCDEF')
 
-        f = hook.get_teacher_and_group
-        assert f("abcdef foo") == (t, None)
-        assert f("ABCDEF") == (t, None)
-        assert f("ACDC bar") == (None, None)
-        assert f("ABCDEF. some name") == (t, None)
-        assert f("ABCDEF\nsome sig") == (t, None)
+        f = hook.parse_code
+        assert f("abcdef foo") == (t, None, 'en')
+        assert f("ABCDEF") == (t, None, 'en')
+        assert f("ACDC bar") == (None, None, None)
+        assert f("ABCDEF. some name") == (t, None, 'en')
+        assert f("ABCDEF\nsome sig") == (t, None, 'en')
 
 
     def test_group_code(self, db):
@@ -846,16 +889,29 @@ class TestGetTeacherAndGroup(object):
         g = factories.GroupFactory.create(
             code='ABCDEFG', owner__code='ABCDEF')
 
-        f = hook.get_teacher_and_group
-        assert f("ABCDEFG") == (g.owner, g)
-        assert f("ACDC foo") == (None, None)
-        assert f("ABCDEFG My Name") == (g.owner, g)
-        assert f("ABCDEF ") == (g.owner, None)
+        f = hook.parse_code
+        assert f("ABCDEFG") == (g.owner, g, 'en')
+        assert f("ACDC foo") == (None, None, None)
+        assert f("ABCDEFG My Name") == (g.owner, g, 'en')
+        assert f("ABCDEF ") == (g.owner, None, 'en')
 
 
     def test_empty(self):
         """Returns None on empty text, doesn't barf."""
-        assert hook.get_teacher_and_group('') == (None, None)
+        assert hook.parse_code('') == (None, None, None)
+
+
+    def test_lang(self, db):
+        """Can specify language with teacher or group code."""
+        g = factories.GroupFactory.create(
+            code='ABCDEFG', owner__code='ABCDEF')
+
+        f = hook.parse_code
+        assert f("ABCDEFG es") == (g.owner, g, 'es')
+        assert f("ABCDEF ES") == (g.owner, None, 'es')
+        assert f("ABCDEF es foo") == (g.owner, None, 'es')
+        assert f("ABCDEFG foo") == (g.owner, g, 'en')
+        assert f("ABCDEF es;") == (g.owner, None, 'es')
 
 
 
