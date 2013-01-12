@@ -278,8 +278,8 @@ def test_code_signup_student_name_strips_extra_lines(db):
         )
 
 
-def test_unusually_long_student_name_logs_warning(db):
-    """If a student name is unusually long, a warning is logged."""
+def test_unusually_long_student_name_tracked(db):
+    """If a student name is unusually long, it is tracked."""
     phone = '+13216430987'
     teacher = factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF")
@@ -293,11 +293,10 @@ def test_unusually_long_student_name_logs_warning(db):
 
     msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+        with mock.patch('portfoliyo.sms.hook.track_sms') as mock_track:
             hook.receive_sms(phone, msg)
 
-    mock_logger.warning.assert_called_with(
-        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
+    mock_track.assert_called_with("long answer", phone, msg)
 
 
 
@@ -448,8 +447,8 @@ def test_code_signup_role_strips_extra_lines(db):
     assert parent.role == "father"
 
 
-def test_unusually_long_role_logs_warning(db):
-    """If a family member role is unusually long, a warning is logged."""
+def test_unusually_long_role_tracked(db):
+    """If a family member role is unusually long, it is tracked."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
@@ -473,11 +472,10 @@ def test_unusually_long_role_logs_warning(db):
 
     msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+        with mock.patch('portfoliyo.sms.hook.track_sms') as mock_track:
             hook.receive_sms(phone, msg)
 
-    mock_logger.warning.assert_called_with(
-        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
+    mock_track.assert_called_with('long answer', phone, msg)
 
 
 def test_code_signup_name(db):
@@ -553,8 +551,8 @@ def test_code_signup_name_strips_extra_lines(db):
     assert parent.name == "John Doe"
 
 
-def test_unusually_long_parent_name_logs_warning(db):
-    """If a family member name is unusually long, a warning is logged."""
+def test_unusually_long_parent_name_tracked(db):
+    """If a family member name is unusually long, it is tracked."""
     phone = '+13216430987'
     teacher_rel = factories.RelationshipFactory.create(
         from_profile__school_staff=True,
@@ -577,11 +575,10 @@ def test_unusually_long_parent_name_logs_warning(db):
 
     msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
+        with mock.patch('portfoliyo.sms.hook.track_sms') as mock_track:
             hook.receive_sms(phone, msg)
 
-    mock_logger.warning.assert_called_with(
-        "Unusually long SMS question answer: %s", msg, extra={'stack': True})
+    mock_track.assert_called_with('long answer', phone, msg)
 
 
 
