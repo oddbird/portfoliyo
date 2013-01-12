@@ -26,3 +26,10 @@ def push_event(name, *args, **kw):
     from portfoliyo.pusher import events
     event_function = getattr(events, name)
     event_function(*args, **kw)
+
+
+
+@celery.task(ignore_result=True)
+def mixpanel_track(event, properties):
+    from portfoliyo import mixpanel
+    mixpanel.track(event, properties)

@@ -3,7 +3,7 @@ import logging
 
 from django.conf import settings
 
-from portfoliyo import model, notifications
+from portfoliyo import model, notifications, tasks
 from . import messages
 
 
@@ -87,8 +87,7 @@ def receive_sms(source, body):
     students = profile.students
 
     if not students:
-        logger.warning(
-            "Text from %s (has no students): %s", source, body)
+        track_sms('no students', source, body)
         return messages.get('NO_STUDENTS', profile.lang_code)
 
     for student in students:
@@ -122,7 +121,7 @@ def handle_unknown_source(source, body):
             )
         return messages.get('STUDENT_NAME', family.lang_code) % teacher.name
     else:
-        logger.warning("Unknown text from %s: %s", source, body)
+        track_sms('unknown', source, body)
         # we don't know what language to use here, so we use the default. We
         # still use messages.get just so this message is kept with all the
         # others.
@@ -189,7 +188,7 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
 
 def handle_new_student(signup, body):
     """Handle addition of a student to a just-signing-up parent's account."""
-    student_name = get_answer(body)
+    student_name = get_answer(body, signup.family.phone)
 
     possible_dupes = model.Profile.objects.filter(
         name__iexact=student_name,
@@ -238,7 +237,7 @@ def handle_new_student(signup, body):
 
 def handle_role_update(signup, body):
     """Handle defining role of parent in relation to student."""
-    role = get_answer(body)
+    role = get_answer(body, signup.family.phone)
 
     parent = signup.family
     parent.relationships_from.filter(
@@ -261,7 +260,7 @@ def handle_role_update(signup, body):
 
 def handle_name_update(signup, body):
     """Handle defining name of parent."""
-    name = get_answer(body)
+    name = get_answer(body, signup.family.phone)
 
     parent = signup.family
     parent.name = name
@@ -380,7 +379,7 @@ def reply(phone, students, body):
 
 
 
-def get_answer(msg):
+def get_answer(msg, source):
     """
     Extract an answer to a question from an incoming text.
 
@@ -395,10 +394,19 @@ def get_answer(msg):
     answer = non_empty_lines[0] if non_empty_lines else ""
 
     if len(answer.split()) > MAX_EXPECTED_ANSWER_LENGTH:
-        logger.warning(
-            "Unusually long SMS question answer: %s",
-            answer,
-            extra={'stack': True},
-            )
+        track_sms('long answer', source, msg)
 
     return answer
+
+
+
+def track_sms(event, source, body, **extra):
+    """Track ``event`` regarding SMS ``body`` from ``source``."""
+    properties = {
+        'distinct_id': source,
+        'phone': source,
+        'message': body,
+        }
+    properties.update(extra)
+
+    tasks.mixpanel_track('sms: %s' % event, properties)
