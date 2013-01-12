@@ -6,6 +6,7 @@ import base64
 import time
 from hashlib import sha1
 from django.contrib.auth import models as auth_models
+from django.conf import settings
 from django.db import models, transaction, IntegrityError, connection
 from django.db.models import signals
 from django.utils import timezone
@@ -65,6 +66,8 @@ class Profile(models.Model):
     # True if user has declined/stopped SMS notifications
     declined = models.BooleanField(default=False)
     email_confirmed = models.BooleanField(default=False)
+    # language code for user's preferred language
+    lang_code = models.CharField(max_length=10, default=settings.LANGUAGE_CODE)
 
     # opt in/out to various types of email notifications
     NOTIFICATION_PREFS = [

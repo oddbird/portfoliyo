@@ -2,6 +2,7 @@
 import io
 import os
 
+from django.conf import settings
 from django.template.loader import render_to_string
 import pyPdf
 from reportlab.lib.colors import Color
@@ -56,6 +57,11 @@ def generate_instructions_pdf(stream, lang, name, code, phone, group=None):
         )
 
     display_phone = formats.display_phone(phone)
+
+    if lang != settings.LANGUAGE_CODE:
+        code += " " + lang
+
+    code = code.lower()
 
     sections = {
         'header': '%s %s' % (get_text(lang, 'action'), name),
