@@ -1,7 +1,10 @@
 """Village SMS-handling."""
 import logging
 
+from django.conf import settings
+
 from portfoliyo import model, notifications
+from . import messages
 
 
 # The maximum expected length (in words) of a name or role
@@ -44,8 +47,7 @@ def receive_sms(source, body):
         return reply(
             source,
             profile.students,
-            "No problem! Sorry to have bothered you. "
-            "Text this number anytime to re-start."
+            messages.get('ACK_STOP', profile.lang_code)
             )
 
     activated = False
@@ -69,9 +71,10 @@ def receive_sms(source, body):
     else:
         signup = None
 
-    teacher, group = get_teacher_and_group(body)
+    teacher, group, lang = parse_code(body)
     if teacher is not None:
-        return handle_subsequent_code(profile, body, teacher, group, signup)
+        return handle_subsequent_code(
+            profile, body, teacher, group, lang, signup)
 
     if signup is not None:
         if signup.state == model.TextSignup.STATE.kidname:
@@ -86,11 +89,7 @@ def receive_sms(source, body):
     if not students:
         logger.warning(
             "Text from %s (has no students): %s", source, body)
-        return (
-            "Sorry, we can't find any students connected to your number, "
-            "so we're not able to deliver your message. "
-            "Please contact your student's teacher for help."
-            )
+        return messages.get('NO_STUDENTS', profile.lang_code)
 
     for student in students:
         model.Post.create(profile, student, body, from_sms=True)
@@ -100,19 +99,20 @@ def receive_sms(source, body):
             source,
             students,
             interpolate_teacher_names(
-                "You can text this number to talk with %s.", profile)
+                messages.get('ACTIVATED', profile.lang_code), profile)
         )
 
 
 
 def handle_unknown_source(source, body):
     """Handle a text from an unknown user."""
-    teacher, group = get_teacher_and_group(body)
+    teacher, group, lang = parse_code(body)
     if teacher is not None:
         family = model.Profile.create_with_user(
             school=teacher.school,
             phone=source,
             invited_by=teacher,
+            lang_code=lang,
             )
         model.TextSignup.objects.create(
             family=family,
@@ -120,21 +120,16 @@ def handle_unknown_source(source, body):
             group=group,
             state=model.TextSignup.STATE.kidname,
             )
-        return (
-            "Thanks! What is the name of your child in %s's class?"
-            % teacher.name
-            )
+        return messages.get('STUDENT_NAME', family.lang_code) % teacher.name
     else:
         logger.warning("Unknown text from %s: %s", source, body)
-        return (
-            "We don't recognize your phone number, "
-            "so we don't know who to send your text to! "
-            "If you are just signing up, "
-            "make sure your invite code is typed correctly."
-            )
+        # we don't know what language to use here, so we use the default. We
+        # still use messages.get just so this message is kept with all the
+        # others.
+        return messages.get('UNKNOWN', settings.LANGUAGE_CODE)
 
 
-def handle_subsequent_code(profile, body, teacher, group, signup):
+def handle_subsequent_code(profile, body, teacher, group, lang, signup):
     """
     Handle a second code from an already-signed-up parent.
 
@@ -161,6 +156,10 @@ def handle_subsequent_code(profile, body, teacher, group, signup):
             group.students.add(student)
         model.Post.create(profile, student, body, from_sms=True)
 
+    if profile.lang_code != lang:
+        profile.lang_code = lang
+        profile.save()
+
     # don't reply if they already were connected to the teacher
     if (signup and teacher == signup.teacher) or (student and not created):
         return None
@@ -177,16 +176,18 @@ def handle_subsequent_code(profile, body, teacher, group, signup):
         notifications.new_parent(teacher, new_signup)
         notifications.village_additions(profile, [teacher], [student])
 
-    msg = "Ok, thanks! You can text %s at this number too." % teacher.name
+    msg = messages.get('SUBSEQUENT_CODE_DONE', profile.lang_code) % teacher.name
 
     if signup:
         follow_ups = {
-            model.TextSignup.STATE.kidname: " Now, what's the student's name?",
+            model.TextSignup.STATE.kidname:
+                messages.get('STUDENT_NAME_FOLLOWUP', profile.lang_code),
             model.TextSignup.STATE.relationship:
-            " Now, what's your relationship to the student?",
-            model.TextSignup.STATE.name: " Now, what's your name?",
+                messages.get('RELATIONSHIP_FOLLOWUP', profile.lang_code),
+            model.TextSignup.STATE.name:
+                messages.get('NAME_FOLLOWUP', profile.lang_code),
             }
-        msg = msg + follow_ups.get(signup.state, "")
+        msg = msg + " " + follow_ups.get(signup.state, "")
         signup.state = model.TextSignup.STATE.done
         signup.save()
 
@@ -238,7 +239,7 @@ def handle_new_student(signup, body):
     return reply(
         signup.family.phone,
         [student],
-        "And what is your relationship to that child (mother, father, ...)?",
+        messages.get('RELATIONSHIP', signup.family.lang_code),
         )
 
 
@@ -261,8 +262,7 @@ def handle_role_update(signup, body):
     return reply(
         parent.phone,
         parent.students,
-        "Last question: what is your name? (So %s knows who is texting.)"
-        % teacher,
+        messages.get('NAME', parent.lang_code) % teacher,
         )
 
 
@@ -284,26 +284,34 @@ def handle_name_update(signup, body):
         parent.phone,
         parent.students,
         interpolate_teacher_names(
-            "All done, thank you! You can text this number to talk with %s.",
+            messages.get('ALL_DONE', parent.lang_code),
             parent,
             )
         )
 
 
 
-def get_teacher_and_group(body):
+def parse_code(body):
     """
-    Return (teacher, group) tuple based on code found in text.
+    Return (teacher, group, lang) tuple based on code found in text.
 
-    If no valid code is found, both will be None. If a valid teacher code is
-    found, group will be None. If a valid group code is found, both will be
-    set (teacher will be set to group owner).
+    If no valid code is found, all will be None. If a valid teacher code is
+    found, group will be None. If a valid group code is found, both teacher and
+    group will be set (teacher will be set to group owner). If no valid
+    language code (i.e. one found in ``settings.LANGUAGES``) follows the code,
+    the default language code (``settings.LANGUAGE_CODE``) will be returned.
 
     """
-    try:
-        possible_code = body.strip().split()[0].rstrip('.,:;').upper()
-    except IndexError:
-        return (None, None)
+    bits = body.strip().split()
+    if not bits:
+        return (None, None, None)
+    elif len(bits) > 1:
+        lang = bits[1].lower().rstrip('.,:;')
+        if lang not in settings.LANGUAGE_DICT:
+            lang = settings.LANGUAGE_CODE
+    else:
+        lang = settings.LANGUAGE_CODE
+    possible_code = bits[0].rstrip('.,:;').upper()
     try:
         group = model.Group.objects.get(code=possible_code)
     except model.Group.DoesNotExist:
@@ -314,7 +322,9 @@ def get_teacher_and_group(body):
             teacher = None
     else:
         teacher = group.owner
-    return (teacher, group)
+    if teacher is None:
+        lang = None
+    return (teacher, group, lang)
 
 
 
