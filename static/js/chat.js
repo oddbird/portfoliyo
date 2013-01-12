@@ -87,7 +87,7 @@ var PYO = (function (PYO, $) {
                     if (recipients.length > 1) { this.plural_sms = 's'; }
                 }
             });
-            posts = ich.post(data);
+            posts = PYO.tpl('post', data);
         }
         if (posts) {
             var nametag = posts.find('.nametag');
@@ -251,7 +251,7 @@ var PYO = (function (PYO, $) {
 
     PYO.postAjaxError = function (post, author_sequence_id, status, xhr_count) {
         if (status !== 'abort' && status !== 'timeout') {
-            var msg = ich.post_timeout_msg();
+            var msg = PYO.tpl('post_timeout_msg');
             msg.find('.resend').click(function (e) {
                 e.preventDefault();
                 var thisPost = $(this).closest('.post');
@@ -325,7 +325,7 @@ var PYO = (function (PYO, $) {
                         feedAjax.XHR = null;
                     }).error(function (request, status, error) {
                         if (status !== 'abort') {
-                            var msg = ich.ajax_error_msg({
+                            var msg = PYO.tpl('ajax_error_msg', {
                                 error_class: 'feed-error',
                                 message: 'Unable to load prior posts in this village.'
                             });

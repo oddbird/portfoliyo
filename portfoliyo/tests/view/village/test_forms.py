@@ -732,11 +732,11 @@ class TestStudentForms(object):
         elder = factories.ProfileFactory.create()
         form = forms.AddStudentForm({'name': "Some Student"}, elder=elder)
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.model.events.student_added'
+        target = 'portfoliyo.pusher.events.student_added'
         with mock.patch(target) as mock_student_added:
             profile = form.save()
 
-        mock_student_added.assert_called_with(profile, elder)
+        mock_student_added.assert_called_with(profile.id, [elder.id])
 
 
     def test_add_student_in_group_context(self, db):
@@ -956,17 +956,16 @@ class TestStudentForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.model.events.student_removed'
+        target = 'portfoliyo.pusher.events.student_removed'
         with mock.patch(target) as mock_student_removed:
             profile = form.save()
 
-        mock_student_removed.assert_called_with(profile, other_rel.elder)
+        mock_student_removed.assert_called_with(profile.id, [other_rel.elder.id])
 
 
     def test_edit_student_sends_pusher_event(self, db):
         """Editing a student sends a pusher event to all their elders."""
         rel = factories.RelationshipFactory.create()
-        other_rel = factories.RelationshipFactory.create(to_profile=rel.student)
         form = forms.StudentForm(
             {
                 'name': "Some Student",
@@ -978,13 +977,11 @@ class TestStudentForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.model.events.student_edited'
+        target = 'portfoliyo.pusher.events.student_edited'
         with mock.patch(target) as mock_student_edited:
             profile = form.save()
 
-        args = mock_student_edited.call_args[0]
-        assert args[0] == profile
-        assert set(args[1:]) == {other_rel.elder, rel.elder}
+        mock_student_edited.assert_called_with(profile.id)
 
 
     def test_edit_student_only_sends_event_if_name_changed(self, db):
@@ -1002,7 +999,7 @@ class TestStudentForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.model.events.student_edited'
+        target = 'portfoliyo.pusher.events.student_edited'
         with mock.patch(target) as mock_student_edited:
             form.save()
 
@@ -1342,11 +1339,11 @@ class TestGroupForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.model.events.group_edited'
+        target = 'portfoliyo.pusher.events.group_edited'
         with mock.patch(target) as mock_group_edited:
             group = form.save()
 
-        mock_group_edited.assert_called_with(group)
+        mock_group_edited.assert_called_with(group.id, group.owner.id)
 
 
     def test_edit_group_fires_event_only_if_name_changed(self, db):
@@ -1363,7 +1360,7 @@ class TestGroupForms(object):
             )
 
         assert form.is_valid(), dict(form.errors)
-        target = 'portfoliyo.model.events.group_edited'
+        target = 'portfoliyo.pusher.events.group_edited'
         with mock.patch(target) as mock_group_edited:
             group = form.save()
 

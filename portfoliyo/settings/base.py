@@ -44,7 +44,18 @@ USE_TZ = True
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+# Even though we don't currently use gettext, we make use of LANGUAGES and
+# LANGUAGE_CODE for our own custom translation code for the parent signup
+gettext_noop = lambda s: s
+
+LANGUAGES = [
+    ('en', gettext_noop('English')),
+    ('es', gettext_noop('Spanish')),
+    ]
+
+LANGUAGE_DICT = dict(LANGUAGES)
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -141,8 +152,7 @@ INSTALLED_APPS = [
 
 MESSAGE_STORAGE = 'django.contrib.messages.storage.fallback.FallbackStorage'
 
-INSTALLED_APPS += ['icanhaz', 'messages_ui', 'ajax_loading_overlay', 'html5accordion']
-ICANHAZ_DIRS = [join(BASE_PATH, 'jstemplates')]
+INSTALLED_APPS += ['messages_ui', 'ajax_loading_overlay', 'html5accordion']
 MIDDLEWARE_CLASSES.insert(
     MIDDLEWARE_CLASSES.index(
         'django.contrib.messages.middleware.MessageMiddleware'

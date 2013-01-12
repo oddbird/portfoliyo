@@ -1,4 +1,4 @@
-(function ($) {
+var PYO = (function (PYO, $) {
 
     'use strict';
 
@@ -9,7 +9,7 @@
 
     $(document).ajaxError(function (event, request, settings, error) {
         if (request && request.status === 403) {
-            ich.ajax_403_msg().appendTo('#messages');
+            PYO.tpl('ajax_403_msg').appendTo('#messages');
             $('#messages').messages();
         }
         var json;
@@ -19,9 +19,11 @@
             json = false;
         }
         if (request && request.responseText && json && json.error) {
-            ich.message({ message: json.error, tags: "error" }).appendTo('#messages');
+            PYO.tpl('message.html', { message: json.error, tags: 'error' }).appendTo('#messages');
             $('#messages').messages();
         }
     });
 
-}(jQuery));
+    return PYO;
+
+}(PYO || {}, jQuery));

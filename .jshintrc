@@ -3,7 +3,8 @@
         "mixpanel": true,
         "ich": true,
         "Pusher": true,
-        "FlashDetect": true
+        "FlashDetect": true,
+        "Handlebars": true
     },
 
     "browser": true,
