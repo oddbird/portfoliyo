@@ -1,11 +1,5 @@
 (function() {
   var template = Handlebars.template, templates = Handlebars.templates = Handlebars.templates || {};
-templates['ajax_403_msg'] = template(function (Handlebars,depth0,helpers,partials,data) {
-  helpers = helpers || Handlebars.helpers;
-  
-
-
-  return "<li class=\"message error\">\n  <p class=\"body\">\n    Sorry, you don't have permission to access this page. Please <a href=\"/login/\">log in</a> with an account that does or visit a different page.\n  </p>\n  <a href=\"#\" class=\"close\">dismiss this message</a>\n</li>\n";});
 templates['ajax_error_msg'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers;
   var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
