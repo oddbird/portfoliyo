@@ -26,21 +26,22 @@ def track(event, properties=None):
     and content "1" (which is what Mixpanel's API returns for success).
 
     """
-    mixpanel_id = getattr(settings, 'MIXPANEL_ID', None)
-    if mixpanel_id is None:
-        return
-
-    properties = properties or {}
-    properties['token'] = mixpanel_id
-
-    params = {'event': event, 'properties': properties}
-
-    _send('track/', params)
+    _send('track/', {'event': event, 'properties': properties or {}})
 
 
 
 def _send(path, params):
     """Send ``params`` dict to ``path`` endpoint in Mixpanel API."""
+    mixpanel_id = getattr(settings, 'MIXPANEL_ID', None)
+    if mixpanel_id is None:
+        return
+
+    # Mixpanel API is not consistent about where token goes
+    if 'track' in path:
+        params['properties']['token'] = mixpanel_id
+    else: # engage/
+        params['$token'] = mixpanel_id
+
     data = base64.b64encode(json.dumps(params))
 
     url = "%s?%s" % (
