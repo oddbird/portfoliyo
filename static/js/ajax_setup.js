@@ -9,7 +9,11 @@ var PYO = (function (PYO, $) {
 
     $(document).ajaxError(function (event, request, settings, error) {
         if (request && request.status === 403) {
-            PYO.tpl('ajax_403_msg').appendTo('#messages');
+            PYO.tpl('message.html', {
+                tags: 'error',
+                message: "Sorry, you don't have permission to access this page. Please <a href='/login/'>log in</a> with an account that does or visit a different page.",
+                no_escape: true
+            }).appendTo('#messages');
             $('#messages').messages();
         }
         var json;
