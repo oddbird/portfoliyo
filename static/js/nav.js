@@ -435,9 +435,10 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.showActiveItemRemovedMsg = function (item, disable_form) {
-        var msg = PYO.tpl('active_item_removed_msg', {item: item});
-        msg.appendTo($('#messages'));
-        $('#messages').messages();
+        $('#messages').messages('add', {
+            tags: 'warning',
+            message: 'The ' + item + ' you are viewing has been removed. Any further changes will be lost. Please <a href="/">reload your page</a>.'
+        }, {escapeHTML: false});
         if (disable_form) { $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled'); }
     };
 
