@@ -181,12 +181,10 @@ var PYO = (function (PYO, $) {
     PYO.detectFlashSupport = function (container) {
         if ($(container).length) {
             if (Pusher && Pusher.TransportType !== 'native' && FlashDetect && !FlashDetect.versionAtLeast(10)) {
-                PYO.tpl('message.html', {
+                $('#messages').messages('add', {
                     tags: 'warning',
-                    message: 'This site requires Flash Player version 10.0.0 or higher to display live updates. Refresh your browser page to see new posts, or <a href="http://get.adobe.com/flashplayer/" target="_blank">download Flash Player</a>.',
-                    no_escape: true
-                }).appendTo('#messages');
-                $('#messages').messages();
+                    message: 'This site requires Flash Player version 10.0.0 or higher to display live updates. Refresh your browser page to see new posts, or <a href="http://get.adobe.com/flashplayer/" target="_blank">download Flash Player</a>.'
+                }, {escapeHTML: false});
             }
         }
     };
