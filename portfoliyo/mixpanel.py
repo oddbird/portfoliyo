@@ -1,32 +1,91 @@
-"""Tracking mixpanel events from Python code."""
+"""
+Tracking mixpanel events from Python code.
+
+This is a simple synchronous implementation; it should not be called directly
+from code in the request cycle, but only via the Celery task.
+
+"""
 import base64
 import json
+import logging
+import posixpath
+import urllib
 import urllib2
 
 from django.conf import settings
 
 
-MIXPANEL_BASE_URL = 'http://api.mixpanel.com/track/?data=%(data)s'
+logger = logging.getLogger(__name__)
+
+
+MIXPANEL_API_BASE = 'http://api.mixpanel.com/'
 
 
 def track(event, properties=None):
-    """
-    Track ``event`` with given dict of ``properties``.
+    """Track ``event`` with given dict of ``properties``."""
+    _send('track/', {'event': event, 'properties': properties or {}})
 
-    This is a simple synchronous implementation; it should not be called
-    directly from code in the request cycle, but only via the Celery task.
+
+
+def people_set(user_id, data):
+    """Set given mixpanel ``data`` (dict) for given ``user_id``."""
+    _send('engage/', {'$set': data, '$distinct_id': user_id, '$ip': 0})
+
+
+
+def people_increment(user_id, data):
+    """Increment given mixpanel ``data`` (dict) for given ``user_id``."""
+    _send('engage/', {'$add': data, '$distinct_id': user_id, '$ip': 0})
+
+
+
+def _send(path, params):
+    """
+    Send ``params`` dict to ``path`` endpoint in Mixpanel API.
+
+    Logs a warning if the response from Mixpanel does not have status code 200
+    and content "1" (which is what Mixpanel's API returns for success).
+
 
     """
     mixpanel_id = getattr(settings, 'MIXPANEL_ID', None)
     if mixpanel_id is None:
         return
 
-    properties = properties or {}
-    properties['token'] = mixpanel_id
+    # Mixpanel API is not consistent about where token goes
+    if 'track' in path:
+        params['properties']['token'] = mixpanel_id
+    else: # engage/
+        params['$token'] = mixpanel_id
 
-    params = {'event': event, 'properties': properties}
     data = base64.b64encode(json.dumps(params))
 
-    url = MIXPANEL_BASE_URL % {'data': data}
+    url = "%s?%s" % (
+        posixpath.join(MIXPANEL_API_BASE, path),
+        urllib.urlencode({'data': data}),
+        )
 
-    urllib2.urlopen(url)
+    resp = urllib2.urlopen(url)
+
+    code = resp.getcode()
+    body = resp.read()
+
+    if code != 200:
+        logger.warning(
+            "Mixpanel returned bad status code %s",
+            code,
+            extra={
+                'stack': True,
+                'body': body,
+                'params': params,
+                },
+            )
+    elif body != '1':
+        logger.warning(
+            "Mixpanel returned bad response %s",
+            body,
+            extra={
+                'stack': True,
+                'params': params,
+                },
+            )

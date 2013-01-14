@@ -2,6 +2,7 @@
 import logging
 
 from django.conf import settings
+from django.utils import timezone
 
 from portfoliyo import model, notifications, tasks
 from . import messages
@@ -119,6 +120,7 @@ def handle_unknown_source(source, body):
             group=group,
             state=model.TextSignup.STATE.kidname,
             )
+        track_signup(family, teacher, group)
         return messages.get('STUDENT_NAME', family.lang_code) % teacher.name
     else:
         track_sms('unknown', source, body)
@@ -159,6 +161,8 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
     # don't reply if they already were connected to the teacher
     if (signup and teacher == signup.teacher) or (student and not created):
         return None
+
+    track_signup(profile, teacher, group)
 
     model.TextSignup.objects.create(
         family=profile,
@@ -409,4 +413,30 @@ def track_sms(event, source, body, **extra):
         }
     properties.update(extra)
 
-    tasks.mixpanel_track('sms: %s' % event, properties)
+    tasks.mixpanel.delay('track', 'sms: %s' % event, properties)
+
+
+
+def track_signup(parent, teacher, group=None):
+    """Track that ``parent`` signed up with ``teacher`` (in ``group``)."""
+    properties = {
+        'distinct_id': teacher.user_id,
+        'phone': parent.phone,
+        }
+    if group is not None:
+        properties.update(
+            {
+                'groupId': group.id,
+                'groupName': group.name,
+                },
+            )
+
+    # Track it as a 'parent signup' event
+    tasks.mixpanel.delay('track', 'parent signup', properties)
+    # increment a parentSignups counter on the teacher
+    tasks.mixpanel.delay(
+        'people_increment', teacher.user_id, {'parentSignups': 1})
+    # ... and set a lastParentSignup date on the teacher
+    now = timezone.localtime(timezone.now()).strftime('%Y-%m-%dT%H:%M:%S')
+    tasks.mixpanel.delay(
+        'people_set', teacher.user_id, {'lastParentSignup': now})
