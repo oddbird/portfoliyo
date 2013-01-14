@@ -120,7 +120,7 @@ def handle_unknown_source(source, body):
             group=group,
             state=model.TextSignup.STATE.kidname,
             )
-        track_signup(teacher, family)
+        track_signup(family, teacher, group)
         return messages.get('STUDENT_NAME', family.lang_code) % teacher.name
     else:
         track_sms('unknown', source, body)
@@ -162,7 +162,7 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
     if (signup and teacher == signup.teacher) or (student and not created):
         return None
 
-    track_signup(teacher, profile)
+    track_signup(profile, teacher, group)
 
     model.TextSignup.objects.create(
         family=profile,
@@ -417,12 +417,19 @@ def track_sms(event, source, body, **extra):
 
 
 
-def track_signup(teacher, parent):
-    """Track that ``parent`` signed up with ``teacher``."""
+def track_signup(parent, teacher, group=None):
+    """Track that ``parent`` signed up with ``teacher`` (in ``group``)."""
     properties = {
         'distinct_id': teacher.user.id,
         'phone': parent.phone,
         }
+    if group is not None:
+        properties.update(
+            {
+                'groupId': group.id,
+                'groupName': group.name,
+                },
+            )
 
     # Track it as a 'parent signup' event
     tasks.mixpanel.delay('track', 'parent signup', properties)

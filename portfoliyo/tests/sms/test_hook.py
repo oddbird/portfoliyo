@@ -168,7 +168,7 @@ def test_code_signup(db):
     assert signup.student is None
     assert signup.family == profile
     assert not mock_create.call_count
-    mock_track.assert_called_with(teacher, profile)
+    mock_track.assert_called_with(profile, teacher, None)
 
 
 def test_code_signup_with_language(db):
@@ -194,7 +194,8 @@ def test_group_code_signup(db):
         owner__school_staff=True, owner__name="Teacher Jane", code="ABCDEFG")
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "abcdefg")
+        with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
+            reply = hook.receive_sms(phone, "abcdefg")
 
     assert reply == (
         "Thanks! What is the name of your child in Teacher Jane's class?"
@@ -209,6 +210,7 @@ def test_group_code_signup(db):
     assert signup.student is None
     assert signup.family == profile
     assert not mock_create.call_count
+    mock_track.assert_called_with(profile, group.owner, group)
 
 
 def test_code_signup_student_name(db):
@@ -659,7 +661,7 @@ def test_subsequent_signup(db):
         in_reply_to=u'+13216430987',
         email_notifications=False,
         )
-    mock_track.assert_called_with(other_teacher, signup.family)
+    mock_track.assert_called_with(signup.family, other_teacher, None)
 
 
 def test_subsequent_signup_with_language(db):
@@ -730,7 +732,8 @@ def test_subsequent_group_signup(db):
     group = factories.GroupFactory.create(
         code='ABCDEF', owner__name='Ms. Doe')
 
-    reply = hook.receive_sms(phone, 'ABCDEF')
+    with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
+        reply = hook.receive_sms(phone, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -741,6 +744,7 @@ def test_subsequent_group_signup(db):
     assert new_signup.group == group
     assert signup.student in group.owner.students
     assert group.students.filter(pk=signup.student.pk).exists()
+    mock_track.assert_called_with(signup.family, group.owner, group)
 
 
 def test_subsequent_signup_when_first_needs_student_name(db):
@@ -1145,10 +1149,30 @@ def test_track_signup(db):
                 with mock.patch('portfoliyo.sms.hook.timezone.now') as mock_now:
                     mock_now.return_value = datetime(
                         2013, 1, 14, 12, 2, 3, tzinfo=get_current_timezone())
-                    hook.track_signup(teacher, parent)
+                    hook.track_signup(parent, teacher)
 
     mock_track.assert_called_with(
         'parent signup', {'distinct_id': teacher.user.id, 'phone': phone})
     mock_incr.assert_called_with(teacher.user.id, {'parentSignups': 1})
     mock_set.assert_called_with(
         teacher.user.id, {'lastParentSignup': '2013-01-14T12:02:03'})
+
+
+
+def test_track_group_signup(db):
+    """Records extra data about parent signup in group."""
+    phone = '+13216540987'
+    parent = factories.ProfileFactory.create(phone=phone)
+    group = factories.GroupFactory.create()
+    with mock.patch('portfoliyo.mixpanel.track') as mock_track:
+        hook.track_signup(parent, group.owner, group)
+
+    mock_track.assert_called_with(
+        'parent signup',
+        {
+            'distinct_id': group.owner.user.id,
+            'phone': phone,
+            'groupId': group.id,
+            'groupName': group.name,
+            },
+        )
