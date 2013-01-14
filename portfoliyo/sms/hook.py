@@ -420,7 +420,7 @@ def track_sms(event, source, body, **extra):
 def track_signup(parent, teacher, group=None):
     """Track that ``parent`` signed up with ``teacher`` (in ``group``)."""
     properties = {
-        'distinct_id': teacher.user.id,
+        'distinct_id': teacher.user_id,
         'phone': parent.phone,
         }
     if group is not None:
@@ -435,8 +435,8 @@ def track_signup(parent, teacher, group=None):
     tasks.mixpanel.delay('track', 'parent signup', properties)
     # increment a parentSignups counter on the teacher
     tasks.mixpanel.delay(
-        'people_increment', teacher.user.id, {'parentSignups': 1})
+        'people_increment', teacher.user_id, {'parentSignups': 1})
     # ... and set a lastParentSignup date on the teacher
     now = timezone.localtime(timezone.now()).strftime('%Y-%m-%dT%H:%M:%S')
     tasks.mixpanel.delay(
-        'people_set', teacher.user.id, {'lastParentSignup': now})
+        'people_set', teacher.user_id, {'lastParentSignup': now})
