@@ -1,9 +1,13 @@
 """Tracking mixpanel events from Python code."""
 import base64
 import json
+import logging
 import urllib2
 
 from django.conf import settings
+
+
+logger = logging.getLogger(__name__)
 
 
 MIXPANEL_BASE_URL = 'http://api.mixpanel.com/track/?data=%(data)s'
@@ -15,6 +19,9 @@ def track(event, properties=None):
 
     This is a simple synchronous implementation; it should not be called
     directly from code in the request cycle, but only via the Celery task.
+
+    Logs a warning if the response from Mixpanel does not have status code 200
+    and content "1" (which is what Mixpanel's API returns for success).
 
     """
     mixpanel_id = getattr(settings, 'MIXPANEL_ID', None)
@@ -29,4 +36,27 @@ def track(event, properties=None):
 
     url = MIXPANEL_BASE_URL % {'data': data}
 
-    urllib2.urlopen(url)
+    resp = urllib2.urlopen(url)
+
+    code = resp.getcode()
+    body = resp.read()
+
+    if code != 200:
+        logger.warning(
+            "Mixpanel returned bad status code %s",
+            code,
+            extra={
+                'stack': True,
+                'body': body,
+                'params': params,
+                },
+            )
+    elif body != '1':
+        logger.warning(
+            "Mixpanel returned bad response %s",
+            body,
+            extra={
+                'stack': True,
+                'params': params,
+                },
+            )
