@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """Tests for SMS-handling code."""
+from datetime import datetime
+
 from django.core import mail
+from django.utils.timezone import get_current_timezone
 import mock
 
 from portfoliyo import model
@@ -150,7 +153,8 @@ def test_code_signup(db):
         school_staff=True, name="Teacher Jane", code="ABCDEF")
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "abcdef")
+        with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
+            reply = hook.receive_sms(phone, "abcdef")
 
     assert reply == (
         "Thanks! What is the name of your child in Teacher Jane's class?"
@@ -164,6 +168,7 @@ def test_code_signup(db):
     assert signup.student is None
     assert signup.family == profile
     assert not mock_create.call_count
+    mock_track.assert_called_with(teacher, profile)
 
 
 def test_code_signup_with_language(db):
@@ -628,7 +633,8 @@ def test_subsequent_signup(db):
         code='ABCDEF', name='Ms. Doe')
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, 'ABCDEF')
+        with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
+            reply = hook.receive_sms(phone, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -653,6 +659,7 @@ def test_subsequent_signup(db):
         in_reply_to=u'+13216430987',
         email_notifications=False,
         )
+    mock_track.assert_called_with(other_teacher, signup.family)
 
 
 def test_subsequent_signup_with_language(db):
@@ -1111,3 +1118,37 @@ class TestInterpolateTeacherNames(object):
             prefix + u"Mrs. Dodd & Mr. Todd",
             prefix + u"Mr. Todd & Mrs. Dodd",
             }
+
+
+
+def test_track_sms():
+    """Calls mixpanel.track with appropriate args."""
+    phone = '+13216540987'
+    with mock.patch('portfoliyo.mixpanel.track') as mock_track:
+        hook.track_sms('event', phone, 'body', foo='bar')
+
+    mock_track.assert_called_with(
+        'sms: event',
+        {'distinct_id': phone, 'phone': phone, 'message': 'body', 'foo': 'bar'},
+        )
+
+
+
+def test_track_signup(db):
+    """Records data about parent signup."""
+    phone = '+13216540987'
+    parent = factories.ProfileFactory.create(phone=phone)
+    teacher = factories.ProfileFactory.create()
+    with mock.patch('portfoliyo.mixpanel.track') as mock_track:
+        with mock.patch('portfoliyo.mixpanel.people_increment') as mock_incr:
+            with mock.patch('portfoliyo.mixpanel.people_set') as mock_set:
+                with mock.patch('portfoliyo.sms.hook.timezone.now') as mock_now:
+                    mock_now.return_value = datetime(
+                        2013, 1, 14, 12, 2, 3, tzinfo=get_current_timezone())
+                    hook.track_signup(teacher, parent)
+
+    mock_track.assert_called_with(
+        'parent signup', {'distinct_id': teacher.user.id, 'phone': phone})
+    mock_incr.assert_called_with(teacher.user.id, {'parentSignups': 1})
+    mock_set.assert_called_with(
+        teacher.user.id, {'lastParentSignup': '2013-01-14T12:02:03'})
