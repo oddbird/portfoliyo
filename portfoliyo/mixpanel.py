@@ -2,6 +2,8 @@
 import base64
 import json
 import logging
+import posixpath
+import urllib
 import urllib2
 
 from django.conf import settings
@@ -10,7 +12,7 @@ from django.conf import settings
 logger = logging.getLogger(__name__)
 
 
-MIXPANEL_BASE_URL = 'http://api.mixpanel.com/track/?data=%(data)s'
+MIXPANEL_API_BASE = 'http://api.mixpanel.com/'
 
 
 def track(event, properties=None):
@@ -32,9 +34,19 @@ def track(event, properties=None):
     properties['token'] = mixpanel_id
 
     params = {'event': event, 'properties': properties}
+
+    _send('track/', params)
+
+
+
+def _send(path, params):
+    """Send ``params`` dict to ``path`` endpoint in Mixpanel API."""
     data = base64.b64encode(json.dumps(params))
 
-    url = MIXPANEL_BASE_URL % {'data': data}
+    url = "%s?%s" % (
+        posixpath.join(MIXPANEL_API_BASE, path),
+        urllib.urlencode({'data': data}),
+        )
 
     resp = urllib2.urlopen(url)
 
