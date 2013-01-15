@@ -1,20 +1,11 @@
 {% load url from future %}
 <h1>Recent activity in Portfoliyo:</h1>
 
-{# 1. Requested Posts - parents then teachers, internally ordered by time #}
-
-{# 1.1 Single Posts #}
-
 {% include "notifications/activity/_village_posts.html" %}
-
-{# 1.2 Bulk Post #}
-{# only treat as bulk if it went to more than one of my villages #}
 
 {% for combo_of_villages in combos_of_villages %}
   {% include "notifications/activity/_bulk_post.html" %}
 {% endfor %}
-
-{# 2. Requested Activity #}
 
 <ul class="requested">
   {% if recipient.notify_new_parent %}
@@ -27,8 +18,6 @@
     {% include "notifications/activity/_new_teachers.html" %}
   {% endif %}
 </ul>
-
-{# 3. Non-Requested Posts + Activity - ordered by time #}
 
 <ul class="nonrequested">
   {% include "notifications/activity/_village_posts_nonrequested.html" %}
