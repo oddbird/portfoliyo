@@ -139,6 +139,28 @@ class TestSend(object):
                 text_bit, email.body)
 
 
+    def test_footer(self, recip):
+        """Footer links to profile."""
+        rel = factories.RelationshipFactory.create(
+            from_profile=recip, to_profile__name='A Student')
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student)
+
+        record.new_teacher(recip, other_rel.elder, rel.student)
+
+        assert base.send(recip.id)
+        self.assert_multi_email(
+            html_snippets=[
+                '<p>--<br />Don\'t want email notifications? '
+                '<a href="%(url)s">Edit your profile</a>.</p>'
+                ],
+            text_snippets=[
+                "--\nDon't want email notifications? Edit your profile: %(url)s"
+                ],
+            snippet_context={'url': base_url + reverse('edit_profile')},
+            )
+
+
     @pytest.mark.parametrize('params', [
             {
                 'scenario': [("Teacher1", "StudentX")],

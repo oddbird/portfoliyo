@@ -1,3 +1,4 @@
+{% load url from future %}
 <h1>Recent activity in Portfoliyo:</h1>
 
 {# 1. Requested Posts - parents then teachers, internally ordered by time #}
@@ -48,5 +49,5 @@
 
 <p>
 --<br />
-Don't want email notifications? <a href="{{ profile_url }}">Edit your profile</a>.
+Don't want email notifications? <a href="{{ BASE_URL }}{% url 'edit_profile' %}">Edit your profile</a>.
 </p>

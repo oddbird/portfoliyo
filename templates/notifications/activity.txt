@@ -1,3 +1,4 @@
+{% load url from future %}
 Recent activity in Portfoliyo:
 
 {# 1. Requested Posts - parents then teachers, internally ordered by time #}
@@ -51,4 +52,4 @@ Other activity:
 
 
 --
-Don't want email notifications? Edit your profile: {{ profile_url }}
+Don't want email notifications? Edit your profile: {{ BASE_URL }}{% url 'edit_profile' %}
