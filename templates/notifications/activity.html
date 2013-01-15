@@ -21,8 +21,12 @@
   {% for student in students %}
     {% include "notifications/activity/_new_parent.html" %}
   {% endfor %}
-  {% include "notifications/activity/_added_to_villages.html" %}
-  {% include "notifications/activity/_new_teachers.html" %}
+  {% if recipient.notify_added_to_village %}
+    {% include "notifications/activity/_added_to_villages.html" %}
+  {% endif %}
+  {% if recipient.notify_joined_my_village %}
+    {% include "notifications/activity/_new_teachers.html" %}
+  {% endif %}
 </ul>
 
 {# 3. Non-Requested Posts + Activity - ordered by time #}
@@ -38,8 +42,12 @@
   {% for student in students %}
     {% include "notifications/activity/_new_parent.html" %}
   {% endfor %}
-  {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
-  {% include "notifications/activity/_new_teachers.html" %}
+  {% if not recipient.notify_added_to_village %}
+    {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
+  {% endif %}
+  {% if not recipient.notify_joined_my_village %}
+    {% include "notifications/activity/_new_teachers.html" %}
+  {% endif %}
 </ul>
 
 <p>

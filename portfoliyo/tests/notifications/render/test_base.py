@@ -17,11 +17,11 @@ def recip(request, db):
     kw = {
         'user__email': 'foo@example.com',
         'user__is_active': True,
-        'notify_new_parent': False,
-        'notify_parent_text': False,
-        'notify_added_to_village': False,
-        'notify_joined_my_village': False,
-        'notify_teacher_post': False,
+        'notify_new_parent': True,
+        'notify_parent_text': True,
+        'notify_added_to_village': True,
+        'notify_joined_my_village': True,
+        'notify_teacher_post': True,
         }
 
     if 'params' in request.funcargnames:
@@ -123,12 +123,14 @@ class TestSend(object):
             if snippet_context:
                 html_bit = html_bit % snippet_context
             parsed_bit = html.parse_html(html_bit)
-            assert parsed_html_body.count(parsed_bit)
+            assert parsed_html_body.count(parsed_bit), "%s not in %s" % (
+                parsed_bit, parsed_html_body)
 
         for text_bit in text_snippets or []:
             if snippet_context:
                 text_bit = text_bit % snippet_context
-            assert text_bit in email.body
+            assert text_bit in email.body, "%s not in %s" % (
+                text_bit, email.body)
 
 
     @pytest.mark.parametrize('params', [
@@ -140,7 +142,7 @@ class TestSend(object):
                     '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
                     ],
                 'text': [
-                    "Teacher1 added you to StudentX's village. "
+                    "- Teacher1 added you to StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s"
                     ]
                 },
@@ -148,15 +150,72 @@ class TestSend(object):
                 'scenario': [
                     ("Teacher1", "StudentX"), ("Teacher1", "StudentY")],
                 'subject': "Teacher1 added you to two villages.",
-                'html': [],
-                'text': [],
+                'html': [
+                    '<li>Teacher1 added you to two student villages: <ul>'
+                    '<li><a href="%(StudentXUrl)s">StudentX</a></li>'
+                    '<li><a href="%(StudentYUrl)s">StudentY</a></li>'
+                    '</ul></li>'
+                    ],
+                'text': [
+                    '- Teacher1 added you to two student villages:\n'
+                    '-- StudentX: %(StudentXUrl)s\n'
+                    '-- StudentY: %(StudentYUrl)s\n'
+                    ],
                 },
             {
                 'scenario': [
                     ("Teacher1", "StudentX"), ("Teacher2", "StudentY")],
                 'subject': "Two teachers added you to two villages.",
-                'html': [],
-                'text': [],
+                'html': [
+                    '<li>Teacher1 added you to '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>',
+                    '<li>Teacher2 added you to '
+                    '<a href="%(StudentYUrl)s">StudentY\'s village</a>.</li>',
+                    ],
+                'text': [
+                    "- Teacher1 added you to StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s",
+                    "- Teacher2 added you to StudentY's village. "
+                    "Start a conversation: %(StudentYUrl)s",
+                    ],
+                },
+            {
+                'scenario': [
+                    ("Teacher1", "StudentX"), ("Teacher1", "StudentY")],
+                'prefs': {'notify_added_to_village': False},
+                'subject': "Teacher1 added you to two villages.",
+                'html': [
+                    '<li>Teacher1 added you to two student villages: '
+                    '<a href="%(StudentXUrl)s">StudentX</a>, '
+                    'and <a href="%(StudentYUrl)s">StudentY</a>.'
+                    '</li>'
+                    ],
+                'text': [
+                    '- Teacher1 added you to two student villages: '
+                    'StudentX, and StudentY.'
+                    ],
+                },
+            {
+                'scenario': [
+                    ("Teacher1", "StudentW"),
+                    ("Teacher1", "StudentX"),
+                    ("Teacher1", "StudentY"),
+                    ("Teacher1", "StudentZ"),
+                    ],
+                'prefs': {'notify_added_to_village': False},
+                'subject': "Teacher1 added you to four villages.",
+                'html': [
+                    '<li>Teacher1 added you to four student villages: '
+                    '<a href="%(StudentWUrl)s">StudentW</a>, '
+                    '<a href="%(StudentXUrl)s">StudentX</a>, '
+                    '<a href="%(StudentYUrl)s">StudentY</a>, '
+                    'and one more village.'
+                    '</li>'
+                    ],
+                'text': [
+                    '- Teacher1 added you to four student villages: '
+                    'StudentW, StudentX, StudentY, and one more village.'
+                    ],
                 },
             ])
     def test_added_to_village(self, params, recip):
@@ -204,7 +263,7 @@ class TestSend(object):
                 'subject': "Two teachers joined two of your villages."
                 },
             ])
-    def test_only_new_teachers_subject(self, params, recip):
+    def test_new_teachers(self, params, recip):
         """Test subject/body for new-teacher notifications."""
         student_names, teacher_names = params['scenario']
         teacher_profiles = []

@@ -1,4 +1,5 @@
 {% load url from future %}
+{% load humanize %}
 
 {% regroup added_to_villages by teacher as villages_grouped_by_adding_teacher %}
 
@@ -8,9 +9,9 @@
 - {{ teacher }} added you to {{ villages.0.student }}'s village. Start a conversation: {% url 'village' student_id=villages.0.student.id %}
 {% else %}
 {% if villages|length > 3 %}
-- {{ teacher }} added you to {{ villages|length }} student villages: {% for village in villages %}{% if forloop.counter < 4 %} <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>,{% endif %}{% endfor %} and {{ villages|length|add:"-3" }} more village{% if villages|length > 4 %}s{% endif %}.
+- {{ teacher }} added you to {{ villages|length|apnumber }} student villages:{% for village in villages %}{% if forloop.counter < 4 %} {{ village.student }},{% endif %}{% endfor %} and {{ villages|length|add:"-3"|apnumber }} more village{% if villages|length > 4 %}s{% endif %}.
 {% else %}
-- {{ teacher }} added you to {{ villages|length }} student villages: {% for village in villages %}{% if forloop.last %} and <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>.{% else %} <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>{% if not forloop.first %},{% endif %}{% endif %}{% endfor %}
+- {{ teacher }} added you to {{ villages|length|apnumber }} student villages:{% for village in villages %}{% if not forloop.last %} {{ village.student }},{% else %} and {{ village.student }}.{% endif %}{% endfor %}
 {% endif %}
 {% endif %}
 {% endwith %}

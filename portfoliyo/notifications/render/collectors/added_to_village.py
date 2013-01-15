@@ -28,7 +28,9 @@ class AddedToVillageCollector(base.NotificationTypeCollector):
                 [
                     base.Village(n['added_by'], n['student'])
                     for n in sorted(
-                        self.notifications, key=lambda x: x['added_by'])
+                        self.notifications,
+                        key=lambda x: (x['added_by'].name, x['student'].name)
+                        )
                     ],
                 )
             }

@@ -20,10 +20,13 @@ Recent activity in Portfoliyo:
 {% for student in students %}
   {% include "notifications/activity/_new_parent.txt" %}
 {% endfor %}
-{% include "notifications/activity/_added_to_villages.txt" %}
-{% for teacher in teachers %}
+{% if recipient.notify_added_to_village %}
+  {% include "notifications/activity/_added_to_villages.txt" %}
+{% endif %}
+{% if recipient.notify_joined_my_village %}
   {% include "notifications/activity/_new_teachers.txt" %}
-{% endfor %}
+{% endif %}
+
 
 {# 3. Non-Requested Posts + Activity - ordered by time #}
 
@@ -39,10 +42,12 @@ Other activity:
 {% for student in students %}
   {% include "notifications/activity/_new_parent.txt" %}
 {% endfor %}
-{% include "notifications/activity/_added_to_villages_nonrequested.txt" %}
-{% for teacher in teachers %}
+{% if not recipient.notify_added_to_village %}
+  {% include "notifications/activity/_added_to_villages_nonrequested.txt" %}
+{% endif %}
+{% if not recipient.notify_joined_my_village %}
   {% include "notifications/activity/_new_teachers.txt" %}
-{% endfor %}
+{% endif %}
 
 
 --

@@ -28,7 +28,7 @@ def send(profile_id):
     if not (user.email and user.is_active):
         return False
 
-    collection = collect.NotificationCollection(profile_id)
+    collection = collect.NotificationCollection(profile)
 
     # bail out if there's nothing to do
     if not collection:

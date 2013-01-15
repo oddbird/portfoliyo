@@ -19,7 +19,8 @@ class TestNotificationCollection(object):
     def test_invalid_notification_type(self):
         """An invalid notification type is logged and ignored."""
         logger = 'portfoliyo.notifications.render.collect.logger'
-        collection = collect.NotificationCollection(1)
+        profile = mock.Mock(id=1)
+        collection = collect.NotificationCollection(profile)
         with mock.patch(logger) as mock_logger:
             with mock_store([{'name': 'foo'}]):
                 assert not collection
@@ -30,6 +31,7 @@ class TestNotificationCollection(object):
 
     def test_invalid_data(self):
         """Evaluates to false if no notifications have valid data."""
-        collection = collect.NotificationCollection(1)
+        profile = mock.Mock(id=1)
+        collection = collect.NotificationCollection(profile)
         with mock_store([{'name': types.ADDED_TO_VILLAGE}]):
             assert not collection

@@ -16,8 +16,8 @@ DEFAULT_SUBJECT_TEMPLATE = 'notifications/activity.subject.txt'
 
 class NotificationCollection(object):
     """Collects and aggregates all pending notifications for a given profile."""
-    def __init__(self, profile_id):
-        self.profile_id = profile_id
+    def __init__(self, profile):
+        self.profile = profile
 
         self._notification_data = None
         self._hydrated = False
@@ -29,7 +29,7 @@ class NotificationCollection(object):
     def notification_data(self):
         """Raw notification data from storage."""
         if self._notification_data is None:
-            self._notification_data = store.get_and_clear_all(self.profile_id)
+            self._notification_data = store.get_and_clear_all(self.profile.id)
         return self._notification_data
 
 
@@ -84,6 +84,8 @@ class NotificationCollection(object):
             students.update(collector.get_students())
 
         context['students'] = students
+
+        context['recipient'] = self.profile
 
         self._collectors = collectors
         self._context = context
