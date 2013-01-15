@@ -5,6 +5,7 @@
   @include pie-clearfix;
   @include rhythm-padding;
   @include bleed(1);
+  @include inset;
   background: $base2;
   @include at-breakpoint($break) {
     @include bleed(1);
@@ -13,34 +14,105 @@
 }
 
 .feature {
-  @include before(" ") {
-    @include background-size(contain);
-    @include fluid-ratio(1/1);
-    display: block;
-    position: relative;
-  }
+  @include trailer;
+  strong { font-weight: bold; }
 
   @include at-breakpoint($break) {
-    @include span-columns(6,18);
-    @include nth-omega;
-    &:before { @include leader(-5); }
-    &:nth-child(1) { padding-right: gutter(); }
-    &:nth-child(3) { padding-left: gutter(); }
+    float: left;
+
+    &:nth-child(1), &:nth-child(3) {
+      width: percentage(1/3) - 1.5%;
+    }
+    &:nth-child(1) {
+      padding-right: 4%;
+      border-width: 0 2px 0 0;
+    }
     &:nth-child(2) {
-      @include bleed(gutter());
-      border: 1px dashed $base3;
+      width: percentage(1/3) + 3%;
+      padding: 0 4%;
+      border: 2px dashed $base3;
       border-width: 0 2px;
+    }
+    &:nth-child(3) {
+      float: right;
+      padding-left: 4%;
+      margin-left: -2%;
     }
   }
 }
 
 .feature-title {
   @include serif;
+  @include trailer(.5);
   font-weight: bold;
+  text-align: center;
 }
 
-@mixin feature-image($img) { &:before { @include replace-text($img); } }
+.feature-details { @include adjust-font-size-to($smallpx); }
 
-.two-way-feature { @include feature-image('landing/twoway.png'); }
-.signup-feature { @include feature-image('landing/signup.png'); }
-.elders-feature { @include feature-image('landing/elders.png'); }
+// ---------------------------------------------------------------------------
+// Feature Info
+
+$feature-info-color: color($base1,.25);
+$feature-info-border: color($feature-info-color,1);
+$feature-info-padding: .5;
+$feature-info-arrow: $xxxsmallpx $feature-info-border;
+
+%feature-info-base {
+  @include rhythm-borders(1px,$feature-info-padding);
+  @include inset;
+  position: relative;
+  background: $feature-info-color;
+  color: contrast(mix($feature-info-color, $base2));
+  border-color: $feature-info-border;
+  z-index: 5;
+}
+
+// ---------------------------------------------------------------------------
+// Text Messages
+
+%text-message {
+  @include trailer(.25);
+  @include rhythm-borders(1px,.25);
+  @include border-radius(.5rem);
+  @include box-shadow(white 0px 4px 2px inset);
+  display: inline-block;
+  clear: both;
+  padding-left: rhythm(.5);
+  padding-right: rhythm(.5);
+}
+
+%text-parent {
+  @extend %text-message;
+  @include border-bottom-right-radius(0);
+  background-color: color($blue lightest);
+  border-color: color($blue darker, .5);
+  margin-left: rhythm(3);
+  float: right;
+}
+
+%text-pyo {
+  @extend %text-message;
+  @include border-bottom-left-radius(0);
+  background-color: color($green lightest);
+  border-color: color($green darker, .5);
+  margin-right: rhythm(3);
+}
+
+// ---------------------------------------------------------------------------
+// Signup
+
+.signup-top-info {
+  @extend %feature-info-base;
+  @include arrow(join(bottom rhythm(-1.25), $feature-info-arrow));
+  @include trailer(.5);
+}
+
+.signup-parent { @extend %text-parent; }
+.signup-pyo { @extend %text-pyo; }
+
+.signup-bottom-info {
+  @extend %feature-info-base;
+  @include arrow(join(top, $feature-info-arrow));
+  @include leader(.25);
+}
