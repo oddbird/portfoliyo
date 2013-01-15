@@ -141,8 +141,6 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
     """
     students = profile.students
     student = students[0] if students else None
-    if len(students) > 1:
-        logger.warning("%s has more than one student!", profile)
 
     # This goes before the teacher-already-in-village check, because in any
     # case we want to add student to group if this is a group code, and pass
