@@ -9,8 +9,10 @@ var PYO = (function (PYO, $) {
 
     $(document).ajaxError(function (event, request, settings, error) {
         if (request && request.status === 403) {
-            PYO.tpl('ajax_403_msg').appendTo('#messages');
-            $('#messages').messages();
+            $('#messages').messages('add', {
+                tags: 'error',
+                message: "Sorry, you don't have permission to access this page. Please <a href='/login/'>log in</a> with an account that does or visit a different page."
+            }, {escapeHTML: false});
         }
         var json;
         try {
@@ -19,8 +21,7 @@ var PYO = (function (PYO, $) {
             json = false;
         }
         if (request && request.responseText && json && json.error) {
-            PYO.tpl('message.html', { message: json.error, tags: 'error' }).appendTo('#messages');
-            $('#messages').messages();
+            $('#messages').messages('add', {message: json.error, tags: 'error'});
         }
     });
 
