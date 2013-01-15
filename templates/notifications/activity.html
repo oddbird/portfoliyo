@@ -4,9 +4,7 @@
 
 {# 1.1 Single Posts #}
 
-{% for village in villages %}
-  {% include "notifications/activity/_village_posts.html" %}
-{% endfor %}
+{% include "notifications/activity/_village_posts.html" %}
 
 {# 1.2 Bulk Post #}
 {# only treat as bulk if it went to more than one of my villages #}
@@ -32,9 +30,7 @@
 {# 3. Non-Requested Posts + Activity - ordered by time #}
 
 <ul class="nonrequested">
-  {% for village in villages %}
-    {% include "notifications/activity/_village_posts_nonrequested.html" %}
-  {% endfor %}
+  {% include "notifications/activity/_village_posts_nonrequested.html" %}
   {# this should loop over each combination of villages for EACH posting teacher #}
   {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
     {% include "notifications/activity/_bulk_post_nonrequested.html" %}

@@ -1,8 +1,10 @@
-In {{ student }}'s village:
+{% load url from future %}
+{% for village in villages %}
+In {{ village.student }}'s village:
 
-{# posts should include context posts #}
-{% for post in posts %}
+{% for post in village.posts %}
   {% include "notifications/activity/includes/_post.txt" %}
 {% endfor %}
 
-Log in to reply: {{ village_url }}
+Log in to reply: {{ BASE_URL }}{% url 'village' student_id=village.student.id %}
+{% endfor %}

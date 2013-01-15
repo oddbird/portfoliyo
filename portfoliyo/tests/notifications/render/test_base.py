@@ -1,8 +1,11 @@
 """Integration tests for email-sending."""
+from datetime import datetime, timedelta
+
 from django.conf import settings
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import html
+from django.utils import timezone
 import mock
 import pytest
 
@@ -403,6 +406,60 @@ class TestSend(object):
                 'village', kwargs={'student_id': ts.student_id})
 
             record.new_parent(recip, ts)
+
+        assert base.send(recip.id)
+        self.assert_multi_email(
+            params['subject'], params['html'], params['text'], context)
+
+
+    @pytest.mark.parametrize('params', [
+            {
+                'scenario': [
+                    ('StX', 'PaX', 'Dad', 'hello', timedelta()),
+                    ],
+                'subject': "New message in StX's village.",
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Dad:</b>'
+                    '<span class="fn">PaX</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>'
+                    ],
+                'text': [],
+                },
+            ])
+    def test_posts(self, params, recip):
+        context = {}
+        name_map = {}
+        now = datetime(2013, 1, 15, tzinfo=timezone.utc)
+        for student_name, author_name, role, text, ago in params['scenario']:
+            if student_name not in name_map:
+                name_map[student_name] = factories.RelationshipFactory.create(
+                    from_profile=recip, to_profile__name=student_name).student
+                context['%sUrl' % student_name] = base_url + reverse(
+                    'village', kwargs={'student_id': name_map[student_name].id})
+            if author_name not in name_map:
+                name_map[author_name] = factories.ProfileFactory.create(
+                    name=author_name)
+            student = name_map[student_name]
+            author = name_map[author_name]
+            factories.RelationshipFactory.create(
+                from_profile=author, to_profile=student, description=role)
+            post = factories.PostFactory.create(
+                author=author,
+                student=student,
+                original_text=text,
+                html_text='html: %s' % text,
+                timestamp=now - ago,
+                )
+            record.post(recip, post)
 
         assert base.send(recip.id)
         self.assert_multi_email(

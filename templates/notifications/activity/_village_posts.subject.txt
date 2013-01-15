@@ -1,5 +1,6 @@
-{% if students|length == 1 %}
-New message{% if posts|length > 1 %}s{% endif %} in {{ students }}'s village.
+{% load humanize %}
+{% if villages|length == 1 %}
+New message{{ villages.0.new_posts|length|pluralize }} in {{ villages.0.student }}'s village.
 {% else %}
-New messages in {{ students|length }} of your villages.
+New messages in {{ villages|length|apnumber }} of your villages.
 {% endif %}

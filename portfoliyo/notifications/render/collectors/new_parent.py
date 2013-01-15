@@ -39,7 +39,7 @@ class NewParentCollector(base.NotificationTypeCollector):
     ``signups`` is a list of ``Signup`` objects.
 
     """
-    type_name = types.NEW_TEACHER
+    type_name = types.NEW_PARENT
     subject_template = 'notifications/activity/_new_parents.subject.txt'
     db_lookup = {'signup-id': (model.TextSignup, 'signup')}
 

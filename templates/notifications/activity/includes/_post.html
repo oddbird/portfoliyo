@@ -1,4 +1,4 @@
-<article class="post">
+<article class="post{% if post.new %} new{% endif %}">
 
   <header class="post-meta">
     <h3 class="byline vcard">
@@ -9,7 +9,7 @@
   </header>
 
   <p class="post-text">
-    {{ post.html_text }}
+    {{ post.text|safe }}
   </p>
 
 </article>
