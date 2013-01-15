@@ -432,7 +432,11 @@ class TestSend(object):
                     '<p class="post-text">html: hello</p>'
                     '</article>'
                     ],
-                'text': [],
+                'text': [
+                    'In StX\'s village:\n'
+                    '  "hello" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
+                    'Log in to reply: %(StXUrl)s'
+                    ],
                 },
             ])
     def test_posts(self, params, recip):
