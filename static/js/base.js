@@ -114,7 +114,7 @@ var PYO = (function (PYO, $) {
 
             pageAjax.XHR = $.get(url, function (response) {
                 if (response && response.html && pageAjax.count === count) {
-                    var newPage = $(response.html);
+                    var newPage = $($.parseHTML(response.html));
                     container.replaceWith(newPage);
                     newPage.find('.details').html5accordion();
                     newPage.find('input[placeholder], textarea[placeholder]').placeholder();
