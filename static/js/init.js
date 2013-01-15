@@ -12,9 +12,6 @@ var PYO = (function (PYO, $) {
         $('.details:not(html)').html5accordion();
         $('.email').defuscate();
 
-        // landing.js
-        PYO.ajaxifyForm('.village-landing .membership form', '.village-landing .membership');
-
         // base.js
         PYO.activeUserId = $('.village').data('user-id');
         PYO.ieInputBootstrapHandler();
