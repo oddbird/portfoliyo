@@ -345,3 +345,65 @@ class TestSend(object):
         assert base.send(recip.id)
         self.assert_multi_email(
             params['subject'], params['html'], params['text'], context)
+
+
+    @pytest.mark.parametrize('params', [
+            {
+                'scenario': [("StudentX", "ParentX", "Dad", None),],
+                'subject': "StudentX's Dad (ParentX) just signed up.",
+                'html': [
+                    '<li>ParentX signed up as '
+                    '<a href="%(StudentXUrl)s">StudentX</a>\'s Dad.</li>'
+                    ],
+                'text': [
+                    "- ParentX signed up as StudentX's Dad. "
+                    "Start a conversation: %(StudentXUrl)s"
+                    ],
+                },
+            {
+                'scenario': [
+                    ("StudentX", "ParentX", "Dad", None),
+                    ("StudentY", "ParentY", "Mom", "Math"),
+                    ],
+                'subject': "You have two new signups.",
+                'html': [
+                    '<ul class="requested">'
+                    '<li>ParentX signed up as '
+                    '<a href="%(StudentXUrl)s">StudentX</a>\'s Dad.</li>'
+                    '<li>ParentY signed up as '
+                    '<a href="%(StudentYUrl)s">StudentY</a>\'s Mom '
+                    'in the <a href="%(MathUrl)s">Math</a> group.</li>'
+                    '</ul>'
+                    ],
+                'text': [
+                    "- ParentX signed up as StudentX's Dad. "
+                    "Start a conversation: %(StudentXUrl)s\n"
+                    "- ParentY signed up as StudentY's Mom in the Math group. "
+                    "Start a conversation: %(StudentYUrl)s"
+                    ],
+                },
+            ])
+    def test_new_parents(self, params, recip):
+        context = {}
+        for student_name, parent_name, role, group_name in params['scenario']:
+            ts = factories.TextSignupFactory.create(
+                teacher=recip, family__name=parent_name, family__role=role)
+
+            ts.student = factories.RelationshipFactory.create(
+                from_profile=ts.family, to_profile__name=student_name).student
+
+            if group_name is not None:
+                ts.group = factories.GroupFactory.create(name=group_name)
+                context['%sUrl' % group_name] = base_url + reverse(
+                    'group', kwargs={'group_id': ts.group_id})
+
+            ts.save()
+
+            context['%sUrl' % student_name] = base_url + reverse(
+                'village', kwargs={'student_id': ts.student_id})
+
+            record.new_parent(recip, ts)
+
+        assert base.send(recip.id)
+        self.assert_multi_email(
+            params['subject'], params['html'], params['text'], context)

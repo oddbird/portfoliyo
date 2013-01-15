@@ -32,6 +32,11 @@ class VillageList(object):
 
 
 
+class RehydrationFailed(Exception):
+    pass
+
+
+
 class NotificationTypeCollector(object):
     """
     Base class for collections of notifications of the same type.
@@ -67,13 +72,28 @@ class NotificationTypeCollector(object):
         """
         Rehydrate given notification data and add to internal list.
 
+        If rehydration fails (``hydrate`` method raises ``RehydrationFailed``),
+        don't add anything and return ``False``.
+
+        """
+        try:
+            self.notifications.append(self.hydrate(data))
+        except RehydrationFailed:
+            return False
+        return True
+
+
+    def hydrate(self, data):
+        """
+        Rehydrate given notification data.
+
         Rehydrating means to take any database object IDs in the given
         notification data, and query for the actual database objects needed.
 
         If any needed objects aren't found (as defined in the ``db_lookup``
         class attribute, which maps a key in the source ``data`` to a tuple of
-        model class and key for the hydrated data), return ``False`` and don't
-        add this notification.
+        model class and key for the hydrated data), raise
+        ``RehydrationFailed``.
 
         """
         hydrated = {}
@@ -81,9 +101,9 @@ class NotificationTypeCollector(object):
             try:
                 hydrated[dest_key] = model_class.objects.get(pk=data[src_key])
             except (KeyError, model_class.DoesNotExist):
-                return False
-        self.notifications.append(hydrated)
-        return True
+                raise RehydrationFailed()
+
+        return hydrated
 
 
     def get_context(self):
@@ -92,4 +112,4 @@ class NotificationTypeCollector(object):
 
 
     def get_students(self):
-        return [n['student'] for n in self.notifications]
+        return [n['student'] for n in self.notifications if 'student' in n]

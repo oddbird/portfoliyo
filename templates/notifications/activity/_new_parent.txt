@@ -1,1 +1,0 @@
-- {{ parent }} signed up as {{ student }}'s {{ parent.role }}{% if group %} in the {{ group }} group{% endif %}. Start a conversation: {{ village_url }}

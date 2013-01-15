@@ -18,8 +18,8 @@
 {# 2. Requested Activity #}
 
 <ul class="requested">
-  {% if 0 %}
-    {% include "notifications/activity/_new_parent.html" %}
+  {% if recipient.notify_new_parent %}
+    {% include "notifications/activity/_new_parents.html" %}
   {% endif %}
   {% if recipient.notify_added_to_village %}
     {% include "notifications/activity/_added_to_villages.html" %}
@@ -39,8 +39,8 @@
   {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
     {% include "notifications/activity/_bulk_post_nonrequested.html" %}
   {% endfor %}
-  {% if 0 %}
-    {% include "notifications/activity/_new_parent.html" %}
+  {% if not recipient.notify_new_parent %}
+    {% include "notifications/activity/_new_parents.html" %}
   {% endif %}
   {% if not recipient.notify_added_to_village %}
     {% include "notifications/activity/_added_to_villages_nonrequested.html" %}

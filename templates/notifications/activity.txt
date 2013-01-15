@@ -17,8 +17,8 @@ Recent activity in Portfoliyo:
 
 {# 2. Requested Activity #}
 
-{% if 0 %}
-  {% include "notifications/activity/_new_parent.txt" %}
+{% if recipient.notify_new_parent %}
+  {% include "notifications/activity/_new_parents.txt" %}
 {% endif %}
 {% if recipient.notify_added_to_village %}
   {% include "notifications/activity/_added_to_villages.txt" %}
@@ -28,7 +28,7 @@ Recent activity in Portfoliyo:
 {% endif %}
 
 
-{# 3. Non-Requested Posts + Activity - ordered by time #}
+{# 3. Non-Requested Posts + Activity #}
 
 Other activity:
 
@@ -39,8 +39,8 @@ Other activity:
 {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
   {% include "notifications/activity/_bulk_post_nonrequested.txt" %}
 {% endfor %}
-{% if 0 %}
-  {% include "notifications/activity/_new_parent.txt" %}
+{% if not recipient.notify_new_parent %}
+  {% include "notifications/activity/_new_parents.txt" %}
 {% endif %}
 {% if not recipient.notify_added_to_village %}
   {% include "notifications/activity/_added_to_villages_nonrequested.txt" %}

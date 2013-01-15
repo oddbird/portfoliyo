@@ -1,0 +1,4 @@
+{% load url from future %}
+{% for signup in signups %}
+- {{ signup.family }} signed up as {{ signup.student }}'s {{ signup.role }}{% if signup.group %} in the {{ signup.group }} group{% endif %}. Start a conversation: {{ BASE_URL }}{% url 'village' student_id=signup.student.id %}
+{% endfor %}
