@@ -1,4 +1,5 @@
 """Integration tests for email-sending."""
+from django.conf import settings
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import html
@@ -9,6 +10,8 @@ from portfoliyo.notifications import record
 from portfoliyo.notifications.render import base
 from portfoliyo.tests import factories
 
+
+base_url = settings.PORTFOLIYO_BASE_URL
 
 
 @pytest.fixture
@@ -229,7 +232,7 @@ class TestSend(object):
             if student_name not in name_map:
                 name_map[student_name] = factories.ProfileFactory.create(
                     name=student_name, school_staff=True)
-                context[student_name + 'Url'] = reverse(
+                context[student_name + 'Url'] = base_url + reverse(
                     'village', kwargs={'student_id': name_map[student_name].id})
                 factories.RelationshipFactory.create(
                     from_profile=recip, to_profile=name_map[student_name])
@@ -332,7 +335,7 @@ class TestSend(object):
         for student_name in student_names:
             rel = factories.RelationshipFactory.create(
                 from_profile=recip, to_profile__name=student_name)
-            context[student_name + 'Url'] = reverse(
+            context[student_name + 'Url'] = base_url + reverse(
                 'village', kwargs={'student_id': rel.to_profile_id})
             for teacher in teacher_profiles:
                 factories.RelationshipFactory.create(
