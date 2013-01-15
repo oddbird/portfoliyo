@@ -2,7 +2,7 @@
 
     'use strict';
 
-    $('html').ajaxSend(
+    $(document).ajaxSend(
         function (event, xhr, settings) {
             function getToken() {
                 return document.getElementsByName('csrfmiddlewaretoken')[0].value;
