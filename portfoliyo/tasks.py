@@ -3,7 +3,7 @@ from __future__ import absolute_import
 
 from celery.utils.log import get_task_logger
 
-from portfoliyo.celery import celery
+from portfoliyo.celery import celery, ModelTask
 
 
 logger = get_task_logger(__name__)
@@ -39,7 +39,7 @@ def send_notification_email(profile_id):
 
 
 
-@celery.task(ignore_result=True)
+@celery.task(base=ModelTask, ignore_result=True)
 def record_notification(name, *args, **kw):
     """Record a notification (to later be incorporated in an email)."""
     from portfoliyo.notifications import record

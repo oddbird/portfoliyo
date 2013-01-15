@@ -155,7 +155,7 @@ class BasePost(models.Model):
 
     def notify(self):
         """Record notifications for eligible users."""
-        tasks.record_notification('post_all', self)
+        tasks.record_notification.delay('post_all', self)
 
 
     def get_relationship(self):
