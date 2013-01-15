@@ -9,7 +9,7 @@ from django.db.models import Q
 from django.utils.safestring import mark_safe
 import floppyforms as forms
 
-from portfoliyo import model, invites, formats, notifications, tasks
+from portfoliyo import model, invites, formats, tasks
 from .. import forms as pyoforms
 
 
@@ -357,8 +357,8 @@ class InviteTeacherForm(forms.Form):
                 relationships_to__from_profile=profile)
             )
 
-        notifications.village_additions(
-            self.inviter, [profile], students_added_to)
+        tasks.record_notification.delay(
+            'village_additions', self.inviter, [profile], students_added_to)
 
         # inviting an elder never removes from groups, only adds
         profile.elder_in_groups.add(*self.cleaned_data['groups'])
@@ -499,7 +499,8 @@ class StudentForm(forms.ModelForm):
                 rel.direct = True
                 rel.save()
 
-        notifications.village_additions(self.elder, elders_added, [student])
+        tasks.record_notification.delay(
+            'village_additions', self.elder, elders_added, [student])
 
         return check_for_orphans
 
@@ -522,8 +523,8 @@ class StudentForm(forms.ModelForm):
             elders_added = model.Profile.objects.filter(
                 elder_in_groups__in=add).exclude(
                 relationships_from__to_profile=student)
-            notifications.village_additions(
-                self.elder, set(elders_added), [student])
+            tasks.record_notification.delay(
+                'village_additions', self.elder, set(elders_added), [student])
             student.student_in_groups.add(*add)
 
 
@@ -684,7 +685,8 @@ class GroupForm(forms.ModelForm):
 
         #  actually perform notification for each student
         for student, elders in elders_by_student.items():
-            notifications.village_additions(self.owner, elders, [student])
+            tasks.record_notification.delay(
+                'village_additions', self.owner, elders, [student])
 
         # actually add/remove students
         if remove_s:

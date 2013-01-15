@@ -9,7 +9,7 @@ from django.db import models
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
-from portfoliyo import notifications, tasks
+from portfoliyo import tasks
 from ..users import models as user_models
 from . import unread
 

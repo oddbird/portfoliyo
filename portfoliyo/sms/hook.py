@@ -4,7 +4,7 @@ import logging
 from django.conf import settings
 from django.utils import timezone
 
-from portfoliyo import model, notifications, tasks
+from portfoliyo import model, tasks
 from . import messages
 
 
@@ -174,8 +174,9 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
         )
 
     if student and created:
-        notifications.new_parent(teacher, new_signup)
-        notifications.village_additions(profile, [teacher], [student])
+        tasks.record_notification.delay('new_parent', teacher, new_signup)
+        tasks.record_notification.delay(
+            'village_additions', profile, [teacher], [student])
 
     msg = messages.get('SUBSEQUENT_CODE_DONE', profile.lang_code) % teacher.name
 
@@ -280,7 +281,7 @@ def handle_name_update(signup, body):
     for rel in student_rels:
         model.Post.create(
             parent, rel.student, body, from_sms=True, notifications=False)
-    notifications.new_parent(signup.teacher, signup)
+    tasks.record_notification.delay('new_parent', signup.teacher, signup)
     return reply(
         parent.phone,
         parent.students,

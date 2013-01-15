@@ -507,8 +507,8 @@ def test_code_signup_name(db):
         state=model.TextSignup.STATE.name,
         )
 
-    notify_new_parent_path = 'portfoliyo.sms.hook.notifications.new_parent'
-    with mock.patch(notify_new_parent_path) as mock_notify_new_parent:
+    record_notification_path = 'portfoliyo.tasks.record_notification.delay'
+    with mock.patch(record_notification_path) as mock_record_notification:
         with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
             reply = hook.receive_sms(phone, "John Doe")
 
@@ -526,7 +526,7 @@ def test_code_signup_name(db):
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
         None, student, reply, in_reply_to=phone, notifications=False)
-    mock_notify_new_parent.assert_called_with(teacher_rel.elder, signup)
+    mock_record_notification.assert_called_with('new_parent', teacher_rel.elder, signup)
 
 
 def test_code_signup_name_strips_extra_lines(db):
@@ -602,14 +602,12 @@ def test_subsequent_signup(db):
     other_teacher = factories.ProfileFactory.create(
         code='ABCDEF', name='Ms. Doe')
 
-    va_tgt = 'portfoliyo.sms.hook.notifications.village_additions'
-    np_tgt = 'portfoliyo.sms.hook.notifications.new_parent'
+    rn_tgt = 'portfoliyo.tasks.record_notification.delay'
     create_tgt = 'portfoliyo.sms.hook.model.Post.create'
     with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
-        with mock.patch(va_tgt) as mock_notify_village_additions:
-            with mock.patch(np_tgt) as mock_notify_new_parent:
-                with mock.patch(create_tgt) as mock_create:
-                    reply = hook.receive_sms(phone, 'ABCDEF')
+        with mock.patch(rn_tgt) as mock_record_notification:
+            with mock.patch(create_tgt) as mock_create:
+                reply = hook.receive_sms(phone, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -634,10 +632,11 @@ def test_subsequent_signup(db):
         in_reply_to=u'+13216430987',
         notifications=False,
         )
-    mock_notify_village_additions.assert_called_once_with(
-        signup.family, [other_teacher], [signup.student])
-    mock_notify_new_parent.assert_called_once_with(
-        other_teacher, new_signup)
+    assert mock_record_notification.call_count == 2
+    mock_record_notification.assert_any_call(
+        'village_additions', signup.family, [other_teacher], [signup.student])
+    mock_record_notification.assert_any_call(
+        'new_parent', other_teacher, new_signup)
     mock_track.assert_called_with(signup.family, other_teacher, None)
 
 
@@ -681,13 +680,11 @@ def test_subsequent_signup_when_teacher_already_in_village(db):
     factories.RelationshipFactory.create(
         from_profile=signup.family, to_profile=signup.student)
 
-    va_tgt = 'portfoliyo.sms.hook.notifications.village_additions'
-    np_tgt = 'portfoliyo.sms.hook.notifications.new_parent'
+    rn_tgt = 'portfoliyo.tasks.record_notification.delay'
     create_tgt = 'portfoliyo.sms.hook.model.Post.create'
-    with mock.patch(va_tgt) as mock_notify_village_additions:
-        with mock.patch(np_tgt) as mock_notify_new_parent:
-            with mock.patch(create_tgt) as mock_create:
-                reply = hook.receive_sms(phone, 'ABCDEF')
+    with mock.patch(rn_tgt) as mock_record_notification:
+        with mock.patch(create_tgt) as mock_create:
+            reply = hook.receive_sms(phone, 'ABCDEF')
 
     assert reply is None
     assert signup.family.signups.count() == 1
@@ -698,8 +695,7 @@ def test_subsequent_signup_when_teacher_already_in_village(db):
         "ABCDEF",
         from_sms=True,
         )
-    assert mock_notify_village_additions.call_count == 0
-    assert mock_notify_new_parent.call_count == 0
+    assert mock_record_notification.call_count == 0
 
 
 
