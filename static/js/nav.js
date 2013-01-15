@@ -401,25 +401,28 @@ var PYO = (function (PYO, $) {
 
     PYO.addStudentToList = function (data, all_students) {
         var nav = $('.village-nav');
-        var obj = {};
-        if (nav.data('is-staff') === 'True') { obj.staff = true; }
-        obj.objects = [data];
-        obj.all_students = all_students;
-        obj.group_id = data.group_id;
-        var student = PYO.tpl('student_list_items', obj).hide();
-        var inserted = false;
-        nav.find('.student').each(function () {
-            if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
-                student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
-                inserted = true;
+        // Check that a student with this ID is not already in the list
+        if (nav.find('.student .listitem-select[data-id="' + data.id + '"]').length === 0) {
+            var obj = {};
+            if (nav.data('is-staff') === 'True') { obj.staff = true; }
+            obj.objects = [data];
+            obj.all_students = all_students;
+            obj.group_id = data.group_id;
+            var student = PYO.tpl('student_list_items', obj).hide();
+            var inserted = false;
+            nav.find('.student').each(function () {
+                if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                    student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
+                    inserted = true;
+                }
+            });
+            if (!inserted) {
+                student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
             }
-        });
-        if (!inserted) {
-            student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+            student.find('.details').html5accordion();
+            student.find('input[placeholder], textarea[placeholder]').placeholder();
+            PYO.listenForPosts(student);
         }
-        student.find('.details').html5accordion();
-        student.find('input[placeholder], textarea[placeholder]').placeholder();
-        PYO.listenForPosts(student);
     };
 
     PYO.removeStudentFromList = function (id) {
@@ -432,9 +435,10 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.showActiveItemRemovedMsg = function (item, disable_form) {
-        var msg = PYO.tpl('active_item_removed_msg', {item: item});
-        msg.appendTo($('#messages'));
-        $('#messages').messages();
+        $('#messages').messages('add', {
+            tags: 'warning',
+            message: 'The ' + item + ' you are viewing has been removed. Any further changes will be lost. Please <a href="/">reload your page</a>.'
+        }, {escapeHTML: false});
         if (disable_form) { $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled'); }
     };
 
@@ -596,22 +600,25 @@ var PYO = (function (PYO, $) {
                 // If viewing the groups-list
                 if (data && data.objects && data.objects.length && nav.find('.group').length) {
                     $.each(data.objects, function () {
-                        var obj = {};
-                        if (nav.data('is-staff') === 'True') { obj.staff = true; }
-                        obj.objects = [this];
-                        var group = PYO.tpl('group_list_items', obj).hide();
-                        var inserted = false;
-                        nav.find('.group').not(':first').each(function () {
-                            if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
-                                group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
-                                inserted = true;
+                        // Check that a group with this ID is not already in the list
+                        if (nav.find('.group .listitem-select[data-group-id="' + this.id + '"]').length === 0) {
+                            var obj = {};
+                            if (nav.data('is-staff') === 'True') { obj.staff = true; }
+                            obj.objects = [this];
+                            var group = PYO.tpl('group_list_items', obj).hide();
+                            var inserted = false;
+                            nav.find('.group').not(':first').each(function () {
+                                if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
+                                    group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
+                                    inserted = true;
+                                }
+                            });
+                            if (!inserted) {
+                                group.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
                             }
-                        });
-                        if (!inserted) {
-                            group.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+                            group.find('.details').html5accordion();
+                            group.find('input[placeholder], textarea[placeholder]').placeholder();
                         }
-                        group.find('.details').html5accordion();
-                        group.find('input[placeholder], textarea[placeholder]').placeholder();
                     });
                 }
             });

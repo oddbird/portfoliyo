@@ -54,3 +54,12 @@ def push_event(name, *args, **kw):
     from portfoliyo.pusher import events
     event_function = getattr(events, name)
     event_function(*args, **kw)
+
+
+
+@celery.task(ignore_result=True)
+def mixpanel(func, *args, **kw):
+    """Record something in Mixpanel."""
+    from portfoliyo import mixpanel
+    record_function = getattr(mixpanel, func)
+    record_function(*args, **kw)
