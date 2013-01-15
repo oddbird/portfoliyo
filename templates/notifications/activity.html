@@ -18,9 +18,9 @@
 {# 2. Requested Activity #}
 
 <ul class="requested">
-  {% for student in students %}
+  {% if 0 %}
     {% include "notifications/activity/_new_parent.html" %}
-  {% endfor %}
+  {% endif %}
   {% if recipient.notify_added_to_village %}
     {% include "notifications/activity/_added_to_villages.html" %}
   {% endif %}
@@ -39,9 +39,9 @@
   {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
     {% include "notifications/activity/_bulk_post_nonrequested.html" %}
   {% endfor %}
-  {% for student in students %}
+  {% if 0 %}
     {% include "notifications/activity/_new_parent.html" %}
-  {% endfor %}
+  {% endif %}
   {% if not recipient.notify_added_to_village %}
     {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
   {% endif %}

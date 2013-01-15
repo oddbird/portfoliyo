@@ -247,36 +247,98 @@ class TestSend(object):
     @pytest.mark.parametrize('params', [
             {
                 'scenario': (["StudentX"], ["Teacher1"]),
-                'subject': "Teacher1 joined StudentX's village."
+                'subject': "Teacher1 joined StudentX's village.",
+                'html': [
+                    '<li>Teacher1 joined '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
+                    ],
+                'text': [
+                    "- Teacher1 joined StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s"
+                    ],
                 },
             {
                 'scenario': (["StudentX", "StudentY"], ["Teacher1"]),
-                'subject': "Teacher1 joined two of your villages."
+                'subject': "Teacher1 joined two of your villages.",
+                'html': [
+                    '<ul class="requested">'
+                    '<li>Teacher1 joined '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
+                    '<li>Teacher1 joined '
+                    '<a href="%(StudentYUrl)s">StudentY\'s village</a>.</li>'
+                    '</ul>'
+                    ],
+                'text': [
+                    "- Teacher1 joined StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s\n"
+                    "- Teacher1 joined StudentY's village. "
+                    "Start a conversation: %(StudentYUrl)s\n"
+                    ],
                 },
             {
                 'scenario': (["StudentX"], ["Teacher1", "Teacher2"]),
-                'subject': "Two teachers joined StudentX's village."
+                'subject': "Two teachers joined StudentX's village.",
+                'html': [
+                    '<ul class="requested">'
+                    '<li>Teacher1 joined '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
+                    '<li>Teacher2 joined '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
+                    '</ul>'
+                    ],
+                'text': [
+                    "- Teacher1 joined StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s\n"
+                    "- Teacher2 joined StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s\n"
+                    ],
                 },
             {
                 'scenario': (
                     ["StudentX", "StudentY"], ["Teacher1", "Teacher2"]),
-                'subject': "Two teachers joined two of your villages."
+                'subject': "Two teachers joined two of your villages.",
+                'html': [
+                    '<ul class="requested">'
+                    '<li>Teacher1 joined '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
+                    '<li>Teacher2 joined '
+                    '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
+                    '<li>Teacher1 joined '
+                    '<a href="%(StudentYUrl)s">StudentY\'s village</a>.</li>'
+                    '<li>Teacher2 joined '
+                    '<a href="%(StudentYUrl)s">StudentY\'s village</a>.</li>'
+                    '</ul>'
+                    ],
+                'text': [
+                    "- Teacher1 joined StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s\n"
+                    "- Teacher2 joined StudentX's village. "
+                    "Start a conversation: %(StudentXUrl)s\n"
+                    "- Teacher1 joined StudentY's village. "
+                    "Start a conversation: %(StudentYUrl)s\n"
+                    "- Teacher2 joined StudentY's village. "
+                    "Start a conversation: %(StudentYUrl)s\n"
+                    ],
                 },
             ])
     def test_new_teachers(self, params, recip):
         """Test subject/body for new-teacher notifications."""
         student_names, teacher_names = params['scenario']
         teacher_profiles = []
+        context = {}
         for teacher_name in teacher_names:
             teacher_profiles.append(
                 factories.ProfileFactory.create(name=teacher_name))
         for student_name in student_names:
             rel = factories.RelationshipFactory.create(
                 from_profile=recip, to_profile__name=student_name)
+            context[student_name + 'Url'] = reverse(
+                'village', kwargs={'student_id': rel.to_profile_id})
             for teacher in teacher_profiles:
                 factories.RelationshipFactory.create(
                     from_profile=teacher, to_profile=rel.student)
                 record.new_teacher(recip, teacher, rel.student)
 
         assert base.send(recip.id)
-        self.assert_multi_email(params['subject'])
+        self.assert_multi_email(
+            params['subject'], params['html'], params['text'], context)
