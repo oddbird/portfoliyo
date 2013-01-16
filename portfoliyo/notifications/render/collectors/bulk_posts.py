@@ -2,6 +2,7 @@
 from portfoliyo import model
 from portfoliyo.notifications import types
 from . import base
+from .posts import serialize_post
 
 
 
@@ -9,7 +10,7 @@ class VillageSet(object):
     """A set of villages that all received the same bulk posts."""
     def __init__(self, students):
         self.students = students
-        # bulk-post objects, in unspecified order
+        # serialized bulk-posts, in unspecified order
         self._posts = []
         # teachers who authored the bulk posts
         self.teachers = []
@@ -17,13 +18,22 @@ class VillageSet(object):
 
     def add(self, bulk_post):
         """Add ``bulk_post``."""
-        self._posts.append(bulk_post)
+        self._posts.append(serialize_post(bulk_post, new=True))
         if bulk_post.author not in self.teachers:
             self.teachers.append(bulk_post.author)
 
 
     def __len__(self):
         return len(self._posts)
+
+
+    @property
+    def posts(self):
+        """Posts in chronological order."""
+        return sorted(
+            self._posts,
+            key=lambda p: p['original_timestamp']
+            )
 
 
 
@@ -85,7 +95,7 @@ class BulkPostCollector(base.NotificationTypeCollector):
         collection = BulkPostCollection()
         for n in self.notifications:
             collection.add(n['bulk-post'], n['students'])
-        return {'bulk_post_villagesets': collection}
+        return {'bulk_posts': collection}
 
 
     def hydrate(self, data):

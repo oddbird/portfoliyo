@@ -1,8 +1,10 @@
-{% for combo_of_villages in combos_of_villages %}
+{% load url from future %}
+{% load humanize %}
+{% for village_set in bulk_posts.village_sets.values %}
 
-{% if students|length == 2 %}
+{% if village_set.students|length == 2 %}
 <h2>
-  In {% for student in students %}{% if forloop.first %}<a href="{{ village_url }}">{{ student }}</a> and {% else %}<a href="{{ village_url }}">{{ student }}</a>{% endif %}{% endfor %} villages:
+  In <a href="{{ BASE_URL }}{% url 'village' student_id=village_set.students.0.id %}">{{ village_set.students.0 }}</a> and <a href="{{ BASE_URL }}{% url 'village' student_id=village_set.students.1.id %}">{{ village_set.students.1 }}</a>'s villages:
 </h2>
 {% endif %}
 
@@ -19,7 +21,7 @@
 {% endif %}
 
 {# posts should NOT include context posts #}
-{% for post in posts %}
+{% for post in village_set.posts %}
   {% include "notifications/activity/includes/_post.html" %}
 {% endfor %}
 

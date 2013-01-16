@@ -691,6 +691,7 @@ class TestSend(object):
 
     @pytest.mark.parametrize('params', [
             { # one bulk post by one teacher, seen in one of my villages
+              # (this is treated exactly like a non-bulk post)
                 'scenario': [
                     ("Teacher1", ["StX"], ["StY"], "hello", timedelta())
                     ],
@@ -713,6 +714,31 @@ class TestSend(object):
                     'In StX\'s village:\n'
                     '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
                     'Log in to reply: %(StXUrl)s'
+                    ],
+                },
+            { # one bulk post by one teacher, seen in two of my villages
+                'scenario': [
+                    ("Teacher1", ["StX", "StY"], [], "hello", timedelta())
+                    ],
+                'subject': "Teacher1 sent a message in two of your villages.",
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teacher1</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>'
+                    ],
+                'text': [
+                    'In StX and StY\'s villages:\n'
+                    '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
                     ],
                 },
             ])

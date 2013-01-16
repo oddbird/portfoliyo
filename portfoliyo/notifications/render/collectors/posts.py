@@ -9,6 +9,14 @@ from . import base
 
 
 
+def serialize_post(post, **extra):
+    """Transform ``Post`` instance into its serialized representation."""
+    extra['plain_text'] = post.original_text
+    extra['original_timestamp'] = post.timestamp
+    return model.post_dict(post, **extra)
+
+
+
 class Village(object):
     """
     Encapsulates a village with posts (some new, some context).
@@ -42,7 +50,7 @@ class Village(object):
         if notification['triggering']:
             self.requested = True
         self.new_posts.append(
-            self._serialize(notification['post'], new=True))
+            serialize_post(notification['post'], new=True))
         author = notification['post'].author
         if author not in self.new_authors:
             self.new_authors.append(author)
@@ -65,15 +73,8 @@ class Village(object):
             # if there are posts but they are all old, keep one
             if latest and not ctx:
                 ctx = list(latest)[-1:]
-            self._context_posts = [self._serialize(p, new=False) for p in ctx]
+            self._context_posts = [serialize_post(p, new=False) for p in ctx]
         return self._context_posts
-
-
-    def _serialize(self, post, **extra):
-        """Transform ``Post`` instance into its serialized representation."""
-        extra['plain_text'] = post.original_text
-        extra['original_timestamp'] = post.timestamp
-        return model.post_dict(post, **extra)
 
 
 

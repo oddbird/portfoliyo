@@ -1,7 +1,7 @@
-{% for combo_of_villages in combos_of_villages %}
+{% for village_set in bulk_posts.village_sets.values %}
 
-{% if students|length == 2 %}
-In {% for student in students %}{% if forloop.first %}{{ student }} and {% else %}{{ student }}{% endif %}{% endfor %} villages:
+{% if village_set.students|length == 2 %}
+In {{ village_set.students.0 }} and {{ village_set.students.1 }}'s villages:
 {% endif %}
 
 {% if students|length == 3 %}
@@ -12,8 +12,7 @@ In {% for student in students %}{% if forloop.last %}and {{ student }}{% else %}
 In {% for student in students %}{% if forloop.counter < 4 %}{{ student }}, {% endif %}{% endfor %}and {{ students|length|add:"-3" }} more village{% if students|length > 4 %}s{% endif %}:
 {% endif %}
 
-{# posts should NOT include context posts #}
-{% for post in posts %}
+{% for post in village_set.posts %}
   {% include "notifications/activity/includes/_post.txt" %}
 {% endfor %}
 
