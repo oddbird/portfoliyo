@@ -58,6 +58,7 @@
 }
 
 @include at-breakpoint(50rem $break-cols) {
+  .intro { @include padding-leader; }
   .main-image {
     @include span-columns(9);
     @include fluid-ratio(16/9, columns(9));
@@ -67,4 +68,8 @@
     @include span-columns(10 omega);
     @include suffix(1);
   }
+}
+
+@include at-breakpoint($break-cols) {
+  .tagline { @include adjust-font-size-to($xlargepx); }
 }

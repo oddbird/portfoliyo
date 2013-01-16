@@ -267,7 +267,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
-[class*="additem-"][class*="-village"]:before {
+.elders-feature .feature-title:before {
+  content: "\e01b";
+}
+
+.signup-feature .feature-title:before, [class*="additem-"][class*="-village"]:before {
   content: "\e01c";
 }
 
@@ -283,15 +287,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e020";
 }
 
+.twoway-feature .feature-title:before {
+  content: "\e01f";
+}
+
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
+#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .feature-title:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .message:before, .announce:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
+#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .feature-title:before, .message:before, .announce:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
   margin-right: .4em;
 }
 
@@ -1558,6 +1566,11 @@ button {
   }
 }
 @media (min-width: 56.25em) {
+  .intro {
+    padding-top: 23px;
+    padding-top: 1.27778rem;
+  }
+
   .main-image {
     width: 44.3038%;
     float: left;
@@ -1583,6 +1596,14 @@ button {
     float: right;
     margin-right: 0;
     padding-right: 5.06329%;
+  }
+}
+@media (min-width: 88.875em) {
+  .tagline {
+    font-size: 44px;
+    font-size: 2.44444rem;
+    line-height: 58px;
+    line-height: 3.19444rem;
   }
 }
 .features {
@@ -1617,6 +1638,32 @@ button {
   }
 }
 
+.feature {
+  padding-top: 12px;
+  padding-top: 0.63889rem;
+  border-bottom-width: 2px;
+  border-bottom-width: 0.11111rem;
+  border-bottom-style: solid;
+  padding-bottom: 10px;
+  padding-bottom: 0.52778rem;
+  border-style: dashed;
+  border-color: #fdf6e3;
+}
+.feature:nth-child(3) {
+  border: none;
+}
+@media (min-width: 20em) {
+  .feature {
+    padding-left: 12.90323%;
+    padding-right: 12.90323%;
+  }
+}
+@media (min-width: 25em) {
+  .feature {
+    padding-left: 25.80645%;
+    padding-right: 25.80645%;
+  }
+}
 @media (min-width: 43.875em) {
   .feature {
     margin-top: 23px;
@@ -1626,6 +1673,8 @@ button {
     padding-bottom: 23px;
     padding-bottom: 1.27778rem;
     float: left;
+    padding-left: 0;
+    padding-right: 0;
   }
   .feature:nth-child(1), .feature:nth-child(3) {
     width: 31.83333%;
@@ -1654,6 +1703,22 @@ button {
   margin-bottom: 0.63889rem;
   font-weight: bold;
   text-align: center;
+}
+.feature-title:before {
+  font-size: 44px;
+  font-size: 2.44444rem;
+  line-height: 58px;
+  line-height: 3.19444rem;
+  display: block;
+  margin: 0;
+}
+@media (min-width: 43.875em) {
+  .feature-title:before {
+    font-size: 107px;
+    font-size: 5.94444rem;
+    line-height: 115px;
+    line-height: 6.38889rem;
+  }
 }
 
 .feature-details {
