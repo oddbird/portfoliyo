@@ -18,7 +18,7 @@
       {% if nav_elder|elder_status:request.user.profile == 'mobile' %}
       <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
       {% else %}
-      <span class="no-sms">{{ nav_elder|elder_status_description:request.user.profile }}</span>
+      <span class="no-sms" title="{{ nav_elder|elder_status_description:request.user.profile }}">{{ nav_elder|elder_status_description:request.user.profile }}</span>
       {% endif %}
 
       {% if request.user.profile.school_staff %}
