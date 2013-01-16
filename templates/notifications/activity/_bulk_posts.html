@@ -1,3 +1,5 @@
+{% for combo_of_villages in combos_of_villages %}
+
 {% if students|length == 2 %}
 <h2>
   In {% for student in students %}{% if forloop.first %}<a href="{{ village_url }}">{{ student }}</a> and {% else %}<a href="{{ village_url }}">{{ student }}</a>{% endif %}{% endfor %} villages:
@@ -19,4 +21,6 @@
 {# posts should NOT include context posts #}
 {% for post in posts %}
   {% include "notifications/activity/includes/_post.html" %}
+{% endfor %}
+
 {% endfor %}

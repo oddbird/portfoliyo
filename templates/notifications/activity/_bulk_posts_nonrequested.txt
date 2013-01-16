@@ -1,3 +1,5 @@
+{% for combo_of_villages in combos_of_villages_per_teacher %}
+
 {% if students|length == 2 %}
 - {% for student in students %}
 {% if forloop.first %}{{ student }} and {% else %}{{ student }} {% endif %}
@@ -18,3 +20,5 @@ and {{ students|length|add:"-3" }} more village {% if students|length > 4 %}s {%
 {% endif %}
 
 have {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} from {{ teacher }}.
+
+{% endfor %}

@@ -3,9 +3,9 @@
 
 {% include "notifications/activity/_village_posts.html" %}
 
-{% for combo_of_villages in combos_of_villages %}
-  {% include "notifications/activity/_bulk_post.html" %}
-{% endfor %}
+{% if recipient.notify_teacher_post %}
+  {% include "notifications/activity/_bulk_posts.html" %}
+{% endif %}
 
 <ul class="requested">
   {% if recipient.notify_new_parent %}
@@ -21,10 +21,11 @@
 
 <ul class="nonrequested">
   {% include "notifications/activity/_village_posts_nonrequested.html" %}
-  {# this should loop over each combination of villages for EACH posting teacher #}
-  {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
-    {% include "notifications/activity/_bulk_post_nonrequested.html" %}
-  {% endfor %}
+
+  {% if not recipient.notify_teacher_post %}
+    {% include "notifications/activity/_bulk_posts_nonrequested.html" %}
+  {% endif %}
+
   {% if not recipient.notify_new_parent %}
     {% include "notifications/activity/_new_parents.html" %}
   {% endif %}
