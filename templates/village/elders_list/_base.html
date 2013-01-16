@@ -11,27 +11,35 @@
   {% if elder_type.elders %}
   <ul>
     {% for nav_elder in elder_type.elders %}
-    <li class="elder" title="{{ nav_elder|elder_status_description:request.user.profile }}">
+    {% if not nav_elder.school_staff %}
+
+    {# Parents ----------------------------------------- #}
+    <li class="elder parent">
+      {% if nav_elder|elder_status:request.user.profile == 'mobile' %}
+      <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
+      {% else %}
+      <span class="no-sms" title="{{ nav_elder|elder_status_description:request.user.profile }}">{{ nav_elder|elder_status_description:request.user.profile }}</span>
+      {% endif %}
+
+      {% if request.user.profile.school_staff %}
+      <a href="{% block edit-elder-url %}{% endblock %}" class="vcard listitem-select action-edit ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="edit {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">
+        {% include "village/elders_list/_elder_info.html" %}
+      </a>
+      {% else %}
       <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
-        <b class="title">{{ nav_elder.role_in_context }}:</b>
-        <span class="fn">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
-        {% if nav_elder.name and not nav_elder.user.email %}
-          <div class="tel">
-            <b class="type">Phone:</b>
-            <span class="value">{{ nav_elder.phone }}</span>
-          </div>
-        {% endif %}
+        {% include "village/elders_list/_elder_info.html" %}
       </span>
-      {% if not nav_elder.school_staff %}
-        <div class="listitem-actions">
-          {% if request.user.profile.school_staff %}
-          <a href="{% block edit-elder-url %}{% endblock %}" class="action-edit ajax-link" title="edit {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">edit</a>
-          {# <button class="action-remove" title="remove {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">remove</button> #}
-          {% endif %}
-          <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
-        </div>
       {% endif %}
     </li>
+    {% else %}
+
+    {# Teachers ----------------------------------------- #}
+    <li class="elder teacher" title="{{ nav_elder|elder_status_description:request.user.profile }}">
+      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
+        {% include "village/elders_list/_elder_info.html" %}
+      </span>
+    </li>
+    {% endif %}
     {% endfor %}
   </ul>
   {% endif %}

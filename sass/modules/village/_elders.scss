@@ -20,45 +20,37 @@
   + .addelder-link { border-top: 0; }
 }
 
+%parent-status-icon {
+  display: block;
+  position: absolute;
+  top: $box-padding;
+  right: $box-padding;
+  z-index: 5;
+}
+
 .elder {
   position: relative;
-  .listitem-actions { right: 0; }
-  #{$focus} {
-    .listitem-actions {
-      @include opacity(1);
-    }
-  }
 
   .title, .type { font-weight: bold; }
   .fn, .value { color: $base1; }
 
   .vcard {
-    @extend %icon;
-    @extend %icon-circle;
     @extend %elder-listitem;
     @extend %village-activenav;
-    padding-left: rhythm(1);
     &:before {
-      position: relative;
-      margin-left: rhythm(-.75);
-      margin-right: 0;
-      color: $green;
-      z-index: 2;
-    }
-    &.offline { &:before { color: $yellow; } }
-    &.inactive {
-      @extend %icon-warning;
-      background: lighten($yellow,50);
-      &:before { color: $base1; }
-    }
-    &.mobile {
-      @extend %icon-phone;
-      &:before { color: $base; }
+      position: absolute;
+      right: 0;
+      z-index: 5;
     }
     &.declined {
-      @extend %icon-close;
-      background: rgba($red,.125);
-      &:before { color: $red; }
+      background: lighten($red,40);
+    }
+    &.inactive {
+      @extend %icon;
+      @extend %icon-warning;
+      padding-right: ($box-padding*2) + rhythm(1);
+      background: lighten($yellow,50);
+      &:before { color: $base1; }
     }
     &.active {
       background: $base01;
@@ -66,10 +58,25 @@
       &:before, .fn, .value { color: $base2; }
     }
   }
+
+  .no-sms {
+    @extend %parent-status-icon;
+    @extend %icon-replace;
+    @extend %icon-close;
+    &:before { color: $red; }
+  }
 }
 
-.action-sms { @extend %icon-phone; }
-
-.addelder-link {
-
+.parent .vcard {
+  padding-right: ($box-padding*2) + rhythm(1);
+  color: $base;
 }
+
+.action-sms {
+  @extend %parent-status-icon;
+  @extend %button-icon;
+  @extend %icon-bubble;
+  @include button-color(color($green lightest));
+  // #{$focus} { background-color: ; }
+}
+
