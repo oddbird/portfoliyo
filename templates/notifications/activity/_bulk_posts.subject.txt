@@ -1,5 +1,6 @@
-{% if teachers|length == 1 %}
-{{ teachers }} sent {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} in {{ villages|length }} of your villages.
+{% load humanize %}
+{% if bulk_posts.teachers|length == 1 %}
+{{ bulk_posts.teachers.0 }} sent {% if bulk_posts|length == 1 %}a message{% else %}{{ bulk_posts|length|apnumber }} messages{% endif %} in {{ bulk_posts.students|length|apnumber }} of your villages.
 {% else %}
-{{ teachers|length }} teachers sent {{ posts|length }} messages in {{ villages|length }} of your villages.
+{{ bulk_posts.teachers|length|apnumber }} teachers sent {{ bulk_posts|length|apnumber }} messages in {{ bulk_posts.students|length|apnumber }} of your villages.
 {% endif %}

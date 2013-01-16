@@ -687,3 +687,79 @@ class TestSend(object):
         assert base.send(recip.id)
         self.assert_multi_email(
             params['subject'], params['html'], params['text'], context)
+
+
+    @pytest.mark.parametrize('params', [
+            { # one bulk post by one teacher, seen in one of my villages
+                'scenario': [
+                    ("Teacher1", ["StX"], ["StY"], "hello", timedelta())
+                    ],
+                'subject': "New message in StX's village.",
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teacher1</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>'
+                    ],
+                'text': [
+                    'In StX\'s village:\n'
+                    '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    'Log in to reply: %(StXUrl)s'
+                    ],
+                },
+            ])
+    def test_bulk_posts(self, params, recip):
+        context = {}
+        name_map = {}
+        now = datetime(2013, 1, 15, tzinfo=timezone.utc)
+        for teacher_name, my_sts, other_sts, msg, ago in params['scenario']:
+            if teacher_name not in name_map:
+                name_map[teacher_name] = factories.ProfileFactory.create(
+                    school_staff=True, name=teacher_name, role="Teacher")
+            teacher = name_map[teacher_name]
+            all_students = []
+            for st_name in my_sts:
+                if st_name not in name_map:
+                    name_map[st_name] = factories.RelationshipFactory.create(
+                        to_profile__name=st_name, from_profile=recip).student
+                all_students.append(name_map[st_name])
+            for st_name in other_sts:
+                if st_name not in name_map:
+                    name_map[st_name] = factories.ProfileFactory.create(
+                        name=st_name)
+                all_students.append(name_map[st_name])
+            group = factories.GroupFactory.create(owner=teacher)
+            group.students.add(*all_students)
+            html_text = "html: %s" % msg
+            timestamp = now - ago
+            bulk_post = factories.BulkPostFactory.create(
+                author=teacher,
+                group=group,
+                original_text=msg,
+                html_text=html_text,
+                timestamp=timestamp,
+                )
+            for student in all_students:
+                context['%sUrl' % student.name] = base_url + reverse(
+                    'village', kwargs={'student_id': student.id})
+                factories.PostFactory.create(
+                    author=teacher,
+                    student=student,
+                    from_bulk=bulk_post,
+                    original_text=msg,
+                    html_text=html_text,
+                    timestamp=timestamp,
+                    )
+            record.bulk_post(recip, bulk_post)
+
+        assert base.send(recip.id)
+        self.assert_multi_email(
+            params['subject'], params['html'], params['text'], context)

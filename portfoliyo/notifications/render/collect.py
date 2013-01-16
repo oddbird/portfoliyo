@@ -3,7 +3,7 @@ import logging
 
 from django.conf import settings
 
-from portfoliyo.notifications import store
+from .. import store
 from .collectors import COLLECTOR_CLASSES
 
 
@@ -13,6 +13,22 @@ logger = logging.getLogger(__name__)
 
 
 DEFAULT_SUBJECT_TEMPLATE = 'notifications/activity.subject.txt'
+
+
+
+class SwitchType(Exception):
+    """
+    Indicate that a notification should be considered of a different type.
+
+    Raised by collectors' add/hydrate methods to tell the
+    ``NotificationCollection`` to instead add this notification to a different
+    type collection.
+
+    """
+    def __init__(self, new_type, new_data):
+        self.new_type = new_type
+        self.new_data = new_data
+        super(SwitchType, self).__init__("Switch to %s" % new_type)
 
 
 
@@ -31,7 +47,8 @@ class NotificationCollection(object):
     def notification_data(self):
         """Raw notification data from storage."""
         if self._notification_data is None:
-            self._notification_data = store.get_and_clear_all(self.profile.id)
+            self._notification_data = list(
+                store.get_and_clear_all(self.profile.id))
         return self._notification_data
 
 
@@ -71,9 +88,14 @@ class NotificationCollection(object):
             except KeyError:
                 logger.warning("Unknown notification type '%s'", name)
                 continue
-            # @@@ transform bulk posts that I only see in one village to single post
-            collector = collectors.setdefault(name, collector_class())
-            collector.add(data)
+            collector = collectors.setdefault(
+                name, collector_class(self.profile))
+            try:
+                collector.add(data)
+            except SwitchType as switch:
+                data = switch.new_data
+                data['name'] = switch.new_type
+                self.notification_data.append(data)
 
         # - clear out any empty collectors (e.g. from invalid data)
         # - populate template-rendering context and set of affected students

@@ -33,6 +33,7 @@ class VillageList(object):
 
 
 class RehydrationFailed(Exception):
+    """Exception raised when rehydration of notification data fails."""
     pass
 
 
@@ -60,7 +61,8 @@ class NotificationTypeCollector(object):
 
 
     """Base class for notification types."""
-    def __init__(self):
+    def __init__(self, profile):
+        self.profile = profile
         self.notifications = []
 
 
