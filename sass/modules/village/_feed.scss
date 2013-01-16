@@ -153,7 +153,7 @@ $instruction-height: rhythm(5.5);
     float: left;
     margin-right: .2em;
     .sms & { @extend %icon-phone; }
-    .no-sms & { @extend %icon-no-phone; }
+    .no-sms & { @extend %icon-phone-x; }
   }
 
   .details-body {

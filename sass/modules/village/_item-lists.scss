@@ -33,9 +33,9 @@ $village-list-size      : $smallpx;
 
   .additems & { margin: $box-padding*2 0; }
 
-  &[class*="-village"] { @extend %icon-users; }
+  &[class*="-village"] { @extend %icon-user-plus; }
   &[class*="-group"] {
-    @extend %icon-addlist;
+    @extend %icon-users-plus;
     @include button-color(color($blue lightest));
   }
 

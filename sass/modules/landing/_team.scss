@@ -1,0 +1,53 @@
+// ---------------------------------------------------------------------------
+// Team
+
+.team {
+  @include padding-leader(2);
+}
+
+.dev {
+  @include trailer(2);
+  @include prefix(3);
+  @include rem(min-height, rhythm(6));
+  position: relative;
+  .fn { @extend %landing-title; }
+  .no-backgroundsize & { border: 1px solid $base2; }
+
+  &:before {
+    @include background(image-url('landing/harsh.png') no-repeat scroll center top);
+    @include background-size(contain);
+    @include stretch-y;
+    display: block;
+    width: columns(3);
+    left: 0;
+    content: " ";
+    .no-backgroundsize & { background-position: center; }
+  }
+
+  @include breakpoint(max-width 25em) {
+    padding-left: 0;
+    .fn {
+      @include trailing-border(1px,.25);
+      @include trailer(.25);
+      border-color: $base2;
+      text-align: center;
+    }
+    &:before {
+      @include rem(height, rhythm(6));
+      position: static;
+      width: 100%;
+    }
+  }
+
+  @include at-breakpoint($break) {
+    @include prefix(3);
+    @include span-columns(10);
+    &:nth-child(2), &:last-child { @include omega; }
+    &:nth-child(3), &:nth-child(4) { clear: both; }
+    &:nth-child(3) { @include pre(5); }
+    &:before { width: columns(3,10); }
+  }
+}
+
+$names: peter carl eric jonny;
+@each $name in $names { ##{$name}:before { background-image: image-url('landing/#{$name}.png'); } }

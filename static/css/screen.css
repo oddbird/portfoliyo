@@ -170,133 +170,136 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 @font-face {
   font-family: "pyo";
-  src: url('../fonts/pyo.eot');
-  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('../fonts/pyo.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
-.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
-  content: "\2610";
-}
-
-.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
-  content: "\2611";
-}
-
-.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
-  content: "\25c9";
-}
-
 .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
-  content: "\25ef";
-}
-
-.listitem-actions .action-addsingle:before {
-  content: "\265f";
-}
-
-[class*="additem-"][class*="-village"]:before, .listitem-actions .action-addbulk:before {
-  content: "\265b";
-}
-
-.meta .settingslink:before, .meta [href*="profile"]:before {
-  content: "\2731";
-}
-
-.meta button:before {
-  content: "\261b";
-}
-
-.meta [href*="password"]:before {
-  content: "\2762";
-}
-
-.listitem-actions .action-edit:before {
-  content: "\270e";
-}
-
-.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before, .listitem-actions .action-save:before {
-  content: "\2713";
-}
-
-.ui-multiselect-none:before, .message.error:before, .listitem-select.removed:before, .elder .vcard.declined:before {
-  content: "\2717";
-}
-
-#messages .close:before {
-  content: "\2718";
-}
-
-.message:before, .announce:before {
-  content: "\69";
-}
-
-.message.warning:before, .elder .vcard.inactive:before {
-  content: "\26a0";
-}
-
-[class*="additem-"]:before {
-  content: "\2b";
-}
-
-.elder .vcard:before {
-  content: "\25cf";
-}
-
-.brand .wordmark:before {
-  content: "\2668";
-}
-
-.listitem-actions .action-remove:before {
-  content: "\27f0";
-}
-
-.sms .sms-info .summary:before, .elder .vcard.mobile:before, .action-sms:before {
   content: "\e000";
 }
 
-.no-sms .sms-info .summary:before {
+.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
   content: "\e001";
 }
 
-.listitem-actions .undo-action-remove:before {
-  content: "\21ba";
-}
-
-.ui-multiselect:before {
-  content: "\2193";
-}
-
-.action-back.groups:focus:before, .action-back.groups:hover:before, .action-back.groups:active:before {
-  content: "\2190";
-}
-
-.download-pdf:before {
+.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
   content: "\e002";
 }
 
-.school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
   content: "\e003";
 }
 
-[class*="additem-"][class*="-group"]:before {
+.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before, .listitem-actions .action-save:before {
   content: "\e005";
 }
 
-.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+.ui-multiselect-none:before, .message.error:before, .listitem-select.removed:before, .elder .vcard.declined:before {
   content: "\e006";
 }
 
+[class*="additem-"]:before {
+  content: "\e007";
+}
+
+#messages .close:before {
+  content: "\e008";
+}
+
+.ui-multiselect:before {
+  content: "\e00c";
+}
+
+.action-back.groups:focus:before, .action-back.groups:hover:before, .action-back.groups:active:before {
+  content: "\e00d";
+}
+
+.message:before, .announce:before {
+  content: "\e00e";
+}
+
+.message.warning:before, .elder .vcard.inactive:before {
+  content: "\e00f";
+}
+
+.meta .settingslink:before, .meta [href*="profile"]:before {
+  content: "\e010";
+}
+
+.listitem-actions .action-edit:before {
+  content: "\f071";
+}
+
+.listitem-actions .action-remove:before {
+  content: "\e011";
+}
+
+.listitem-actions .undo-action-remove:before {
+  content: "\e012";
+}
+
+.school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before {
+  content: "\e013";
+}
+
+.meta [href*="password"]:before {
+  content: "\e014";
+}
+
+.meta button:before {
+  content: "\e016";
+}
+
+.download-pdf:before {
+  content: "\e009";
+}
+
+.elder .vcard:before {
+  content: "\e017";
+}
+
+.sms .sms-info .summary:before, .elder .vcard.mobile:before, .action-sms:before {
+  content: "\e018";
+}
+
+.no-sms .sms-info .summary:before {
+  content: "\e019";
+}
+
+.elders-feature .feature-title:before {
+  content: "\e01b";
+}
+
+.signup-feature .feature-title:before, [class*="additem-"][class*="-village"]:before {
+  content: "\e01c";
+}
+
+[class*="additem-"][class*="-group"]:before {
+  content: "\e01d";
+}
+
+.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+  content: "\e01e";
+}
+
+.brand .wordmark:before {
+  content: "\e020";
+}
+
+.twoway-feature .feature-title:before {
+  content: "\e01f";
+}
+
 /* Use the following CSS code if you want to have a class per icon */
-#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
+#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .feature-title:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .message:before, .announce:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
+#messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .meta button:before, .feature-title:before, .message:before, .announce:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard:before {
   margin-right: .4em;
 }
 
@@ -591,7 +594,6 @@ optgroup {
 }
 .ui-multiselect-checkboxes [type="checkbox"] + .type, .email_notifications-field [type="checkbox"] + .type, .fieldset.notifications [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .ui-multiselect-checkboxes [type="radio"] + .type, .email_notifications-field [type="radio"] + .type, .fieldset.notifications [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
   display: block;
-  font-style: italic;
 }
 .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
   font-size: 14px;
@@ -882,7 +884,6 @@ button {
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
   background: rgba(38, 139, 210, 0.125);
-  font-weight: bold;
 }
 
 .multiselect-dropdown {
@@ -902,8 +903,12 @@ button {
   border: 1px solid #93a1a1;
 }
 .ui-multiselect:before {
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   position: absolute;
-  right: 0;
+  right: 0.15972rem;
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
@@ -1428,13 +1433,49 @@ button {
   padding: 0 0.31944rem;
 }
 
-.tagline, .feature-title, .dev .fn {
+@media (min-width: 43.875em) {
+  .village-landing [role="contentinfo"] .author {
+    width: 39.24051%;
+    float: left;
+    margin-right: 1.26582%;
+  }
+  .village-landing [role="contentinfo"] .nonprofit {
+    width: 59.49367%;
+    float: right;
+    margin-right: 0;
+    text-align: right;
+  }
+}
+
+.lt-ie9 .village-landing .container {
+  max-width: 558px;
+  max-width: 31rem;
+}
+.lt-ie9 .village-landing .browser-warning {
+  padding-bottom: 0px;
+  padding-bottom: 0rem;
+  position: relative;
+}
+.lt-ie9 .village-landing .browser-warning .modal {
+  display: none;
+}
+.lt-ie9 .login-nav, .lt-ie9 .main-register-link {
+  display: none;
+}
+
+.tagline, .dev .fn {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 23px;
   font-size: 1.27778rem;
   line-height: 35px;
   line-height: 1.91667rem;
-  color: #073642;
+}
+
+.intro {
+  overflow: hidden;
+  margin-bottom: 46px;
+  margin-bottom: 2.55556rem;
+  text-align: center;
 }
 
 .main-image {
@@ -1456,13 +1497,6 @@ button {
   top: 0;
   margin: 0;
   padding: 0;
-}
-
-.intro {
-  overflow: hidden;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-  text-align: center;
 }
 
 .intro-copy {
@@ -1508,7 +1542,35 @@ button {
   padding-right: 1em;
 }
 
-@media (min-width: 43.875em) {
+@media (min-width: 43.875em) and (max-width: 56.25em) {
+  .main-image {
+    margin-left: 5.06329%;
+    position: relative;
+    height: 0;
+    padding-top: 50.5538%;
+    width: 89.87342%;
+  }
+  .main-image > * {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  .intro-copy {
+    margin-left: 5.06329%;
+    width: 89.87342%;
+  }
+}
+@media (min-width: 56.25em) {
+  .intro {
+    padding-top: 23px;
+    padding-top: 1.27778rem;
+  }
+
   .main-image {
     width: 44.3038%;
     float: left;
@@ -1533,105 +1595,234 @@ button {
     width: 49.36709%;
     float: right;
     margin-right: 0;
-    padding-left: 5.06329%;
     padding-right: 5.06329%;
   }
 }
-.feature, .team {
-  overflow: hidden;
-  border-top-width: 12px;
-  border-top-width: 0.66667rem;
-  border-top-style: solid;
-  padding-top: 11px;
-  padding-top: 0.61111rem;
-  -moz-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  -webkit-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  -o-border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  border-image: url('../images/landing/line.png?1351725897') 100% 0 repeat;
-  padding-bottom: 23px;
-  padding-bottom: 1.27778rem;
+@media (min-width: 88.875em) {
+  .tagline {
+    font-size: 44px;
+    font-size: 2.44444rem;
+    line-height: 58px;
+    line-height: 3.19444rem;
+  }
+}
+.features {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin-left: -12.90323%;
+  padding-left: 12.90323%;
+  margin-right: -12.90323%;
+  padding-right: 12.90323%;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  background: #eee8d5;
+}
+.features:after {
+  content: "";
+  display: table;
   clear: both;
 }
-.no-borderimage .feature, .no-borderimage .team {
-  border-top-width: 1px;
-  border-top-width: 0.05556rem;
-  border-top-style: solid;
-  padding-top: 22px;
-  padding-top: 1.22222rem;
-}
 @media (min-width: 43.875em) {
-  .feature, .team {
-    border-top-width: 12px;
-    border-top-width: 0.66667rem;
-    border-top-style: solid;
-    padding-top: 57px;
-    padding-top: 3.16667rem;
-    padding-bottom: 69px;
-    padding-bottom: 3.83333rem;
-    min-height: 276px;
-    min-height: 15.33333rem;
-  }
-}
-
-@media (min-width: 43.875em) {
-  .feature {
+  .features {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    margin-left: -5.06329%;
+    padding-left: 5.06329%;
+    margin-right: -5.06329%;
+    padding-right: 5.06329%;
     padding-left: 10.12658%;
-    padding-right: 45.56962%;
-  }
-  .feature:nth-child(even) {
-    padding-left: 45.56962%;
     padding-right: 10.12658%;
   }
 }
 
-@media (min-width: 43.875em) {
-  .feature-title {
-    font-size: 35px;
-    font-size: 1.94444rem;
-    line-height: 46px;
-    line-height: 2.55556rem;
+.feature {
+  padding-top: 12px;
+  padding-top: 0.63889rem;
+  border-bottom-width: 2px;
+  border-bottom-width: 0.11111rem;
+  border-bottom-style: solid;
+  padding-bottom: 10px;
+  padding-bottom: 0.52778rem;
+  border-style: dashed;
+  border-color: #fdf6e3;
+}
+.feature:nth-child(3) {
+  border: none;
+}
+@media (min-width: 20em) {
+  .feature {
+    padding-left: 12.90323%;
+    padding-right: 12.90323%;
   }
 }
-
-@media (min-width: 43.875em) {
-  .two-way-feature {
-    background: url('../images/landing/twoway.png?1355776712') no-repeat scroll right 85%;
-    -webkit-background-clip: padding;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    -webkit-background-size: 44.3038% auto;
-    -moz-background-size: 44.3038% auto;
-    -o-background-size: 44.3038% auto;
-    background-size: 44.3038% auto;
-  }
-
-  .elders-feature {
-    background: url('../images/landing/elders.png?1351725897') no-repeat scroll left 85%;
-    -webkit-background-clip: padding;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    -webkit-background-size: 44.3038% auto;
-    -moz-background-size: 44.3038% auto;
-    -o-background-size: 44.3038% auto;
-    background-size: 44.3038% auto;
-  }
-
-  .signup-feature {
-    background: url('../images/landing/signup.png?1357860079') no-repeat scroll right;
-    -webkit-background-clip: padding;
-    -moz-background-clip: padding;
-    background-clip: padding-box;
-    -webkit-background-size: 44.3038% auto;
-    -moz-background-size: 44.3038% auto;
-    -o-background-size: 44.3038% auto;
-    background-size: 44.3038% auto;
+@media (min-width: 25em) {
+  .feature {
+    padding-left: 25.80645%;
+    padding-right: 25.80645%;
   }
 }
 @media (min-width: 43.875em) {
-  .team {
-    padding-bottom: 0px;
-    padding-bottom: 0rem;
+  .feature {
+    margin-top: 23px;
+    margin-top: 1.27778rem;
+    margin-bottom: 23px;
+    margin-bottom: 1.27778rem;
+    padding-bottom: 23px;
+    padding-bottom: 1.27778rem;
+    float: left;
+    padding-left: 0;
+    padding-right: 0;
   }
+  .feature:nth-child(1), .feature:nth-child(3) {
+    width: 31.83333%;
+  }
+  .feature:nth-child(1) {
+    padding-right: 4%;
+    border-width: 0 2px 0 0;
+  }
+  .feature:nth-child(2) {
+    width: 36.33333%;
+    padding-left: 4%;
+    padding-right: 4%;
+    border: 2px dashed #fdf6e3;
+    border-width: 0 2px;
+  }
+  .feature:nth-child(3) {
+    float: right;
+    padding-left: 4%;
+    margin-left: -2%;
+  }
+}
+
+.feature-title {
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+  font-weight: bold;
+  text-align: center;
+}
+.feature-title:before {
+  font-size: 44px;
+  font-size: 2.44444rem;
+  line-height: 58px;
+  line-height: 3.19444rem;
+  display: block;
+  margin: 0;
+}
+@media (min-width: 43.875em) {
+  .feature-title:before {
+    font-size: 107px;
+    font-size: 5.94444rem;
+    line-height: 115px;
+    line-height: 6.38889rem;
+  }
+}
+
+.feature-details {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+}
+
+.signup-top-info, .signup-bottom-info {
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 11px;
+  padding: 0.58333rem;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  position: relative;
+  background: rgba(147, 161, 161, 0.25);
+  color: #657b83;
+  border-color: #93a1a1;
+  z-index: 5;
+}
+
+.signup-parent, .signup-pyo {
+  margin-bottom: 6px;
+  margin-bottom: 0.31944rem;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 5px;
+  padding: 0.26389rem;
+  -webkit-border-radius: 0.5rem;
+  -moz-border-radius: 0.5rem;
+  border-radius: 0.5rem;
+  -webkit-box-shadow: white 0px 4px 2px inset;
+  -moz-box-shadow: white 0px 4px 2px inset;
+  box-shadow: white 0px 4px 2px inset;
+  display: inline-block;
+  clear: both;
+  padding-left: 0.63889rem;
+  padding-right: 0.63889rem;
+}
+
+.signup-parent {
+  -moz-border-radius-bottomright: 0;
+  -webkit-border-bottom-right-radius: 0;
+  border-bottom-right-radius: 0;
+  background-color: #d3e7f6;
+  border-color: rgba(22, 83, 126, 0.5);
+  margin-left: 3.83333rem;
+  float: right;
+}
+
+.signup-pyo {
+  -moz-border-radius-bottomleft: 0;
+  -webkit-border-bottom-left-radius: 0;
+  border-bottom-left-radius: 0;
+  background-color: #e6eacc;
+  border-color: rgba(79, 91, 0, 0.5);
+  margin-right: 3.83333rem;
+}
+
+.signup-top-info {
+  position: relative;
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+}
+.signup-top-info:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  top: 100%;
+  border-top-color: #93a1a1;
+  border-width: 9px;
+  right: 1.59722rem;
+}
+
+.signup-bottom-info {
+  position: relative;
+  margin-top: 6px;
+  margin-top: 0.31944rem;
+}
+.signup-bottom-info:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  bottom: 100%;
+  border-bottom-color: #93a1a1;
+  border-width: 9px;
+  left: 50%;
+  margin-left: -9px;
+}
+
+.team {
+  padding-top: 46px;
+  padding-top: 2.55556rem;
 }
 
 .dev {
@@ -1720,36 +1911,6 @@ button {
 
 #jonny:before {
   background-image: url('../images/landing/jonny.png?1351725897');
-}
-
-@media (min-width: 43.875em) {
-  .village-landing [role="contentinfo"] .author {
-    width: 39.24051%;
-    float: left;
-    margin-right: 1.26582%;
-  }
-  .village-landing [role="contentinfo"] .nonprofit {
-    width: 59.49367%;
-    float: right;
-    margin-right: 0;
-    text-align: right;
-  }
-}
-
-.lt-ie9 .village-landing .container {
-  max-width: 558px;
-  max-width: 31rem;
-}
-.lt-ie9 .village-landing .browser-warning {
-  padding-bottom: 0px;
-  padding-bottom: 0rem;
-  position: relative;
-}
-.lt-ie9 .village-landing .browser-warning .modal {
-  display: none;
-}
-.lt-ie9 .login-nav, .lt-ie9 .main-register-link {
-  display: none;
 }
 
 @-moz-keyframes announce-in {

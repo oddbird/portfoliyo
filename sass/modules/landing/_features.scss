@@ -1,0 +1,143 @@
+// ---------------------------------------------------------------------------
+// Features
+
+.features {
+  @include pie-clearfix;
+  @include bleed(1);
+  @include inset;
+  background: $base2;
+  @include at-breakpoint($break) {
+    @include bleed(1);
+    @include pad(2,2);
+  }
+}
+
+.feature {
+  @include padding-leader(.5);
+  @include trailing-border(2px,.5);
+  border-style: dashed;
+  border-color: $base3;
+  &:nth-child(3) { border: none; }
+
+  @include breakpoint(20em) { @include pad(1,1); }
+  @include breakpoint(25em) { @include pad(2,2); }
+
+  @include at-breakpoint($break) {
+    @include rhythm-margins;
+    @include padding-trailer;
+    float: left;
+    padding-left: 0;
+    padding-right: 0;
+
+    &:nth-child(1), &:nth-child(3) {
+      width: percentage(1/3) - 1.5%;
+    }
+    &:nth-child(1) {
+      padding-right: 4%;
+      border-width: 0 2px 0 0;
+    }
+    &:nth-child(2) {
+      width: percentage(1/3) + 3%;
+      padding-left: 4%;
+      padding-right: 4%;
+      border: 2px dashed $base3;
+      border-width: 0 2px;
+    }
+    &:nth-child(3) {
+      float: right;
+      padding-left: 4%;
+      margin-left: -2%;
+    }
+  }
+}
+
+.feature-title {
+  @extend %icon;
+  @include serif;
+  @include trailer(.5);
+  font-weight: bold;
+  text-align: center;
+
+  &:before {
+    @include adjust-font-size-to($xlargepx);
+    display: block;
+    margin: 0;
+    @include at-breakpoint($break) {
+      @include adjust-font-size-to($xxlargepx);
+    }
+  }
+  .signup-feature & { @extend %icon-user-plus; }
+  .twoway-feature & { @extend %icon-loop; }
+  .elders-feature & { @extend %icon-users; }
+}
+
+.feature-details {
+  @include adjust-font-size-to($smallpx);
+}
+
+// ---------------------------------------------------------------------------
+// Feature Info
+
+$feature-info-color: color($base1,.25);
+$feature-info-border: color($feature-info-color,1);
+$feature-info-padding: .5;
+$feature-info-arrow: $xxxsmallpx $feature-info-border;
+
+%feature-info-base {
+  @include rhythm-borders(1px,$feature-info-padding);
+  @include inset;
+  position: relative;
+  background: $feature-info-color;
+  color: contrast(mix($feature-info-color, $base2));
+  border-color: $feature-info-border;
+  z-index: 5;
+}
+
+// ---------------------------------------------------------------------------
+// Text Messages
+
+%text-message {
+  @include trailer(.25);
+  @include rhythm-borders(1px,.25);
+  @include border-radius(.5rem);
+  @include box-shadow(white 0px 4px 2px inset);
+  display: inline-block;
+  clear: both;
+  padding-left: rhythm(.5);
+  padding-right: rhythm(.5);
+}
+
+%text-parent {
+  @extend %text-message;
+  @include border-bottom-right-radius(0);
+  background-color: color($blue lightest);
+  border-color: color($blue darker, .5);
+  margin-left: rhythm(3);
+  float: right;
+}
+
+%text-pyo {
+  @extend %text-message;
+  @include border-bottom-left-radius(0);
+  background-color: color($green lightest);
+  border-color: color($green darker, .5);
+  margin-right: rhythm(3);
+}
+
+// ---------------------------------------------------------------------------
+// Signup
+
+.signup-top-info {
+  @extend %feature-info-base;
+  @include arrow(join(bottom rhythm(-1.25), $feature-info-arrow));
+  @include trailer(.5);
+}
+
+.signup-parent { @extend %text-parent; }
+.signup-pyo { @extend %text-pyo; }
+
+.signup-bottom-info {
+  @extend %feature-info-base;
+  @include arrow(join(top, $feature-info-arrow));
+  @include leader(.25);
+}

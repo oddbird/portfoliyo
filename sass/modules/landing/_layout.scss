@@ -1,0 +1,34 @@
+// ---------------------------------------------------------------------------
+// Landing layout
+
+.village-landing {
+  [role="main"] { padding: 0 $box-padding; }
+}
+
+// ---------------------------------------------------------------------------
+// Content Info
+
+.village-landing [role="contentinfo"] {
+  @include at-breakpoint($break) {
+    .author { @include span-columns($left + $right); }
+    .nonprofit {
+      @include span-columns($center omega);
+      text-align: right;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// IE Fallback
+
+.lt-ie9 {
+  .village-landing {
+    .container { @include set-container-width; }
+    .browser-warning {
+      @include padding-trailer(0);
+      position: relative;
+      .modal { display: none; }
+    }
+  }
+  .login-nav, .main-register-link { display: none; }
+}
