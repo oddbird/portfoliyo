@@ -76,7 +76,6 @@ $input-rhythm: .25;
     + .type {
       @extend %icon;
       display: block;
-      font-style: italic;
       &:before {
         @include adjust-font-size-to($smallpx);
         margin-left: .4em;
@@ -90,8 +89,8 @@ $input-rhythm: .25;
   }
 
   [type="checkbox"] {
-    + .type { @extend %icon-unchecked; }
-    &[aria-checked="true"] + .type { @extend %icon-checked; }
+    + .type { @extend %icon-checkbox-unchecked; }
+    &[aria-checked="true"] + .type { @extend %icon-checkbox-checked; }
   }
 
   [type="radio"] {

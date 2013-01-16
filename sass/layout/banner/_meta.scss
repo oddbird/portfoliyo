@@ -77,7 +77,7 @@
   }
 
   .settingslink {
-    @extend %icon-settings;
+    @extend %icon-cog;
     @extend %ellipsis;
     float: right;
     padding: {
@@ -86,7 +86,7 @@
     }
   }
 
-  [href*="profile"] { @extend %icon-settings; }
+  [href*="profile"] { @extend %icon-cog; }
   [href*="password"] { @extend %icon-key; }
   button {
     @extend %reset-button;

@@ -67,10 +67,9 @@
 
 %options-checked {
   background: rgba($blue,.125);
-  font-weight: bold;
 }
 
 %options-disabled {
   @extend %icon;
-  @extend %icon-locked;
+  @extend %icon-lock;
 }

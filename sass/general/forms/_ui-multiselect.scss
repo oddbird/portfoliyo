@@ -17,8 +17,9 @@
   background: rgba(white,.5);
   border: 1px solid $base1;
   &:before {
+    @include adjust-font-size-to($xsmallpx);
     position: absolute;
-    right: 0;
+    right: rhythm(.125);
     margin: 0;
   }
   #{$focus} {
@@ -75,6 +76,6 @@
   text-align: center;
 }
 .ui-multiselect-none {
-  @extend %icon-x;
+  @extend %icon-close;
   @include button-color($red);
 }
