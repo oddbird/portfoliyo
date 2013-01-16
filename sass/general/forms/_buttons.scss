@@ -9,6 +9,7 @@
 // Settings
 
 $button-rhythm: .25;
+$button-border: 1px;
 
 // ---------------------------------------------------------------------------
 // Mixins
@@ -26,7 +27,7 @@ $button-rhythm: .25;
   $color: $green
 ) {
   @include border-radius(.25em);
-  @include rhythm-borders(1px,$button-rhythm);
+  @include rhythm-borders($button-border,$button-rhythm);
   @include button-color($color);
   @include box-shadow(color(white,.5) 0 1px 1px inset);
   display: inline-block;
@@ -106,6 +107,14 @@ $button-rhythm: .25;
 // - %reset-button
 
 %button { @include button; }
+
+%button-icon {
+  @extend %button;
+  @extend %icon-replace;
+  padding: 0;
+  width: rhythm(1.25);
+  line-height: $base-line-height - ($button-border*2);
+}
 
 %inset { @include inset; }
 

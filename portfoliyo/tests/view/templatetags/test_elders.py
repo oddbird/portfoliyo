@@ -21,14 +21,9 @@ class TestElderStatus(object):
         assert elders.elder_status(p, None) == 'mobile'
 
 
-    def test_offline(self):
-        p = factories.ProfileFactory.build()
-        assert elders.elder_status(p, None) == 'offline'
-
-
-    def test_current(self):
-        p = factories.ProfileFactory.build()
-        assert elders.elder_status(p, p) == ''
+    def test_online(self):
+        p = factories.ProfileFactory.build(school_staff=True)
+        assert elders.elder_status(p, None) == 'online'
 
 
 
@@ -45,17 +40,11 @@ class TestElderStatusDescription(object):
             'Foo has declined to receive SMS notifications.')
 
 
-    def test_no_phone(self):
-        p = factories.ProfileFactory.build(name='Foo', phone=None)
-        assert elders.elder_status_description(p, None) == (
-            'Foo has no phone number on their account.')
-
-
     def test_inactive(self):
         p = factories.ProfileFactory.build(
             name='Foo', phone='+13216540987', user__is_active=False)
         assert elders.elder_status_description(p, None) == (
-            'Foo is inactive and will not receive SMS notifications.')
+            'Foo is not yet active.')
 
 
     def test_active(self):

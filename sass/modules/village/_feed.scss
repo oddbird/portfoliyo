@@ -152,8 +152,8 @@ $instruction-height: rhythm(5.5);
     @extend %icon-replace;
     float: left;
     margin-right: .2em;
-    .sms & { @extend %icon-phone; }
-    .no-sms & { @extend %icon-phone-x; }
+    .sms & { @extend %icon-bubble-check; }
+    .no-sms & { @extend %icon-bubble-notification; }
   }
 
   .details-body {

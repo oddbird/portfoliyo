@@ -10,15 +10,13 @@ register = template.Library()
 @register.filter
 def elder_status(elder, current):
     """Return short CSS class describing this elder's status."""
-    status = ''
+    status = 'online'
     if elder.declined:
         status = 'declined'
     elif not elder.user.is_active:
         status = 'inactive'
-    elif elder.phone:
+    elif not elder.school_staff:
         status = 'mobile'
-    elif elder != current:
-        status = 'offline' # @@@ this should use Pusher presence-detection
     return status
 
 
@@ -31,10 +29,8 @@ def elder_status_description(elder, current):
     elif elder.declined:
         desc = '%s has declined to receive SMS notifications.' % elder
     elif not elder.user.is_active:
-        desc = '%s is inactive and will not receive SMS notifications.' % elder
-    elif not elder.phone:
-        desc = '%s has no phone number on their account.' % elder
-    else:
+        desc = '%s is not yet active.' % elder
+    elif elder.phone:
         desc = '%s receives SMS notifications.' % elder
     return desc
 
