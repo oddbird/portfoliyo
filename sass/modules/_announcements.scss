@@ -31,7 +31,7 @@ $announce-h-position: right;
   color: $base2;
   .close {
     @extend %icon-replace;
-    @extend %icon-x-alt;
+    @extend %icon-cancel-circle;
     position: absolute;
     right: .125rem;
     top: 0;
@@ -70,14 +70,14 @@ $announce-h-position: right;
 // ---------------------------------------------------------------------------
 // Types
 
-@mixin announce-style($c: $blue, $i: info-circle) {
+@mixin announce-style($c: $blue, $i: info) {
   @extend %icon-#{$i};
   background: $c;
 }
 
 %info-announce {
   @extend %announce;
-  @include announce-style($blue, info-circle);
+  @include announce-style($blue, info);
 }
 %success-announce {
   @extend %announce;
@@ -89,7 +89,7 @@ $announce-h-position: right;
 }
 %error-announce {
   @extend %announce;
-  @include announce-style($red, x);
+  @include announce-style($red, close);
 }
 
 // ---------------------------------------------------------------------------

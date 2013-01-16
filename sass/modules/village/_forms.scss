@@ -173,7 +173,7 @@ $preview-columns: $center - $phone-columns;
 
 .download-pdf {
   @extend %icon;
-  @extend %icon-file-download;
+  @extend %icon-download;
   @include adjust-font-size-to($smallpx);
   display: block;
   position: absolute;
