@@ -1,6 +1,6 @@
 {% load url from future %}
 
-{% for village in villages %}
+{% for village in requested_villages %}
 
   <h2>In <a href="{{ BASE_URL }}{% url 'village' student_id=village.student.id%}">{{ village.student }}'s village</a>:</h2>
 

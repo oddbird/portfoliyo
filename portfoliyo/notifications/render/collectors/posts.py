@@ -24,7 +24,7 @@ class Village(object):
         self.student = student
         self.new_posts = []
         self._context_posts = None
-        self._new_authors = []
+        self.new_authors = []
         self.requested = False
 
 
@@ -44,8 +44,8 @@ class Village(object):
         self.new_posts.append(
             self._serialize(notification['post'], new=True))
         author = notification['post'].author
-        if author not in self._new_authors:
-            self._new_authors.append(author)
+        if author not in self.new_authors:
+            self.new_authors.append(author)
         self._context_posts = None
 
 
@@ -83,11 +83,14 @@ class PostCollector(base.NotificationTypeCollector):
 
     Template context provided:
 
-    ``villages`` is a list of ``Village`` objects containing at least one
-    triggering (requested) notification.
+    ``requested_villages`` is a list of ``Village`` objects containing at least
+    one triggering (requested) notification.
 
     ``nonrequested_villages`` is a list of ``Village`` objects containing no
     triggering notifications.
+
+    ``villages`` is the union of ``requested_villages`` and
+    ``nonrequested_villages``.
 
     """
     type_name = types.POST
@@ -102,20 +105,25 @@ class PostCollector(base.NotificationTypeCollector):
             village = villages.setdefault(student, Village(student))
             village.add(notification)
 
+        villages = villages.values()
         requested = []
         nonrequested = []
-        for village in villages.values():
+        for village in villages:
             if village.requested:
                 requested.append(village)
             else:
                 nonrequested.append(village)
 
-        return {'villages': requested, 'nonrequested_villages': nonrequested}
+        return {
+            'villages': villages,
+            'requested_villages': requested,
+            'nonrequested_villages': nonrequested,
+            }
 
 
     def hydrate(self, data):
         """Add 'triggering' and 'student' keys to hydrated data."""
         hydrated = super(PostCollector, self).hydrate(data)
         hydrated['student'] = hydrated['post'].student
-        hydrated['triggering'] = bool(data.get('triggering', False))
+        hydrated['triggering'] = bool(int(data.get('triggering', False)))
         return hydrated

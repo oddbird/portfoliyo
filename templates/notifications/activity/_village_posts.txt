@@ -1,5 +1,5 @@
 {% load url from future %}
-{% for village in villages %}
+{% for village in requested_villages %}
 In {{ village.student }}'s village:
 
 {% for post in village.posts %}

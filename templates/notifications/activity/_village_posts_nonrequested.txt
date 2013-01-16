@@ -2,7 +2,7 @@
 {% load humanize %}
 {% for village in nonrequested_villages %}
 {% with village.new_authors as elders %}
-- {{ village.student }}'s village has new messages from{% if elders|length == 1 %} {{ elders.0 }}.{% endif %}{% if elders|length == 2 %} {{ elders.0 }} and {{ elders.1 }}.{% endif %}{% if elders|length == 3 %} {{ elders.0 }}, {{ elders.1 }} and {{ elders.2 }}.{% endif %}{% if elders|length > 3 %}{% for elder in elders %}{% if forloop.counter < 4 %} {{ elder }},{% else %} and {{ elders|length|add:"-3"|apnumber }} more {% if elders|length == 4 %}person{% else %}people{% endif %}.{% endif %}{% endfor %}
+- {{ village.student }}'s village has new messages from{% if elders|length == 1 %} {{ elders.0 }}.{% endif %}{% if elders|length == 2 %} {{ elders.0 }} and {{ elders.1 }}.{% endif %}{% if elders|length == 3 %} {{ elders.0 }}, {{ elders.1 }} and {{ elders.2 }}.{% endif %}{% if elders|length > 3 %}{% for elder in elders %}{% if forloop.counter < 4 %} {{ elder }},{% elif forloop.counter == 4 %} and {{ elders|length|add:"-3"|apnumber }} more {% if elders|length == 4 %}person{% else %}people{% endif %}.{% endif %}{% endfor %}
 {% endif %}
 {% endwith %}
 {% endfor %}

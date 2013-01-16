@@ -19,9 +19,8 @@ Recent activity in Portfoliyo:
 
 Other activity:
 
-{% for village in villages %}
-  {% include "notifications/activity/_village_posts_nonrequested.txt" %}
-{% endfor %}
+{% include "notifications/activity/_village_posts_nonrequested.txt" %}
+
 {# this should loop over each combination of villages for EACH posting teacher #}
 {% for combo_of_villages_per_teacher in combos_of_villages_per_teacher %}
   {% include "notifications/activity/_bulk_post_nonrequested.txt" %}
@@ -35,6 +34,8 @@ Other activity:
 {% if not recipient.notify_joined_my_village %}
   {% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
+
+
 
 
 --

@@ -435,9 +435,9 @@ class TestSend(object):
 
 
     @pytest.mark.parametrize('params', [
-            {
+            { # simple case with a single post
                 'scenario': [
-                    ('StX', 'PaX', 'Dad', 'hello', timedelta()),
+                    ('StX', 'PaX', 'Dad', 'hello', timedelta(), True),
                     ],
                 'subject': "New message in StX's village.",
                 'html': [
@@ -460,24 +460,220 @@ class TestSend(object):
                     'Log in to reply: %(StXUrl)s'
                     ],
                 },
+            { # two new posts in a village
+                'scenario': [
+                    ('StX', 'PaX', 'Dad', 'hello', timedelta(hours=1), True),
+                    ('StX', 'PaX', 'Dad', 'again', timedelta(), True),
+                    ],
+                'subject': "New messages in StX's village.",
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Dad:</b>'
+                    '<span class="fn">PaX</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
+                    '1/14/2013 at 6 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Dad:</b>'
+                    '<span class="fn">PaX</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: again</p>'
+                    '</article>'
+                    ],
+                'text': [
+                    'In StX\'s village:\n'
+                    '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
+                    '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
+                    'Log in to reply: %(StXUrl)s'
+                    ],
+                },
+            { # one new post and one context post; note "new" class gone
+                'scenario': [
+                    ('StX', 'PaX', 'Dad', 'hello', timedelta(hours=1), False),
+                    ('StX', 'PaX', 'Dad', 'again', timedelta(), True),
+                    ],
+                'subject': "New message in StX's village.",
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
+                    '<article class="post">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Dad:</b>'
+                    '<span class="fn">PaX</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
+                    '1/14/2013 at 6 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Dad:</b>'
+                    '<span class="fn">PaX</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: again</p>'
+                    '</article>'
+                    ],
+                'text': [
+                    'In StX\'s village:\n'
+                    '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
+                    '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
+                    'Log in to reply: %(StXUrl)s'
+                    ],
+                },
+            { # new posts in two different villages
+                'scenario': [
+                    ('StX', 'PaX', 'Dad', 'hello', timedelta(hours=1), True),
+                    ('StY', 'PaY', 'Mom', 'hey', timedelta(), True),
+                    ],
+                'subject': "New messages in two of your villages.",
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
+                    '<h2>In <a href="%(StYUrl)s">StY\'s village</a>:</h2>',
+                    ],
+                'text': [
+                    'In StX\'s village:\n',
+                    'Log in to reply: %(StXUrl)s',
+                    'In StY\'s village:\n',
+                    'Log in to reply: %(StYUrl)s',
+                    ],
+                },
+            { # non-requested post by single author
+                'scenario': [
+                    ('StX', 'PaX', 'Dad', 'hello', timedelta(hours=1), True),
+                    ],
+                'prefs': {'notify_parent_text': False},
+                'subject': "New message in StX's village.",
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX\'s village</a> has new '
+                    'messages from PaX.</li>'
+                    ],
+                'text': [
+                    '- StX\'s village has new messages from PaX.'
+                    ],
+                },
+            { # non-requested posts by two authors
+                'scenario': [
+                    ('StX', 'Pa1', 'Dad', 'hello', timedelta(hours=1), True),
+                    ('StX', 'Pa2', 'Mom', 'hey', timedelta(), True),
+                    ],
+                'prefs': {'notify_parent_text': False},
+                'subject': "New messages in StX's village.",
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX\'s village</a> has new '
+                    'messages from Pa1 and Pa2.</li>'
+                    ],
+                'text': [
+                    '- StX\'s village has new messages from Pa1 and Pa2.'
+                    ],
+                },
+            { # non-requested posts by three authors
+                'scenario': [
+                    ('StX', 'Pa1', 'Dad', 'hello', timedelta(hours=2), True),
+                    ('StX', 'Pa2', 'Mom', 'hey', timedelta(hours=1), True),
+                    ('StX', 'Pa3', 'Sis', 'yo', timedelta(), True),
+                    ],
+                'prefs': {'notify_parent_text': False},
+                'subject': "New messages in StX's village.",
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX\'s village</a> has new '
+                    'messages from Pa1, Pa2 and Pa3.</li>'
+                    ],
+                'text': [
+                    '- StX\'s village has new messages from Pa1, Pa2 and Pa3.'
+                    ],
+                },
+            { # non-requested posts by four authors
+                'scenario': [
+                    ('StX', 'Pa1', 'Dad', 'hello', timedelta(hours=3), True),
+                    ('StX', 'Pa2', 'Mom', 'hey', timedelta(hours=2), True),
+                    ('StX', 'Pa3', 'Sis', 'yo', timedelta(hours=1), True),
+                    ('StX', 'Pa4', 'Bro', 'sup', timedelta(), True),
+                    ],
+                'prefs': {'notify_parent_text': False},
+                'subject': "New messages in StX's village.",
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX\'s village</a> has new '
+                    'messages from Pa1, Pa2, Pa3, and one more person.</li>'
+                    ],
+                'text': [
+                    "- StX's village has new messages from Pa1, Pa2, Pa3, "
+                    "and one more person."
+                    ],
+                },
+            { # non-requested posts by five authors
+                'scenario': [
+                    ('StX', 'Pa1', 'Dad', 'hello', timedelta(hours=4), True),
+                    ('StX', 'Pa2', 'Mom', 'hey', timedelta(hours=3), True),
+                    ('StX', 'Pa3', 'Sis', 'yo', timedelta(hours=2), True),
+                    ('StX', 'Pa4', 'Bro', 'sup', timedelta(hours=1), True),
+                    ('StX', 'Pa5', 'Toad', 'burp', timedelta(), True),
+                    ],
+                'prefs': {'notify_parent_text': False},
+                'subject': "New messages in StX's village.",
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX\'s village</a> has new '
+                    'messages from Pa1, Pa2, Pa3, and two more people.</li>'
+                    ],
+                'text': [
+                    "- StX's village has new messages from Pa1, Pa2, Pa3, "
+                    "and two more people."
+                    ],
+                },
+            { # non-requested posts in two villages
+                'scenario': [
+                    ('StX', 'PaX', 'Dad', 'hello', timedelta(hours=1), True),
+                    ('StY', 'PaY', 'Mom', 'hey', timedelta(hours=1), True),
+                    ],
+                'prefs': {'notify_parent_text': False},
+                'subject': "New messages in two of your villages.",
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX\'s village</a> has new '
+                    'messages from PaX.</li>',
+                    '<li><a href="%(StYUrl)s">StY\'s village</a> has new '
+                    'messages from PaY.</li>',
+                    ],
+                'text': [
+                    "- StX's village has new messages from PaX.\n"
+                    "- StY's village has new messages from PaY."
+                    ],
+                },
             ])
     def test_posts(self, params, recip):
         context = {}
         name_map = {}
+        rels = set()
         now = datetime(2013, 1, 15, tzinfo=timezone.utc)
-        for student_name, author_name, role, text, ago in params['scenario']:
-            if student_name not in name_map:
-                name_map[student_name] = factories.RelationshipFactory.create(
-                    from_profile=recip, to_profile__name=student_name).student
-                context['%sUrl' % student_name] = base_url + reverse(
-                    'village', kwargs={'student_id': name_map[student_name].id})
+        for st_name, author_name, role, text, ago, new in params['scenario']:
+            if st_name not in name_map:
+                name_map[st_name] = factories.RelationshipFactory.create(
+                    from_profile=recip, to_profile__name=st_name).student
+                context['%sUrl' % st_name] = base_url + reverse(
+                    'village', kwargs={'student_id': name_map[st_name].id})
             if author_name not in name_map:
                 name_map[author_name] = factories.ProfileFactory.create(
-                    name=author_name)
-            student = name_map[student_name]
+                    name=author_name, school_staff=False)
+            student = name_map[st_name]
             author = name_map[author_name]
-            factories.RelationshipFactory.create(
-                from_profile=author, to_profile=student, description=role)
+            if (student, author) not in rels:
+                factories.RelationshipFactory.create(
+                    from_profile=author, to_profile=student, description=role)
+                rels.add((student, author))
             post = factories.PostFactory.create(
                 author=author,
                 student=student,
@@ -485,7 +681,8 @@ class TestSend(object):
                 html_text='html: %s' % text,
                 timestamp=now - ago,
                 )
-            record.post(recip, post)
+            if new:
+                record.post(recip, post)
 
         assert base.send(recip.id)
         self.assert_multi_email(
