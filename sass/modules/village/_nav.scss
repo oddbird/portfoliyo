@@ -122,8 +122,6 @@ $village-nav-action-color : $base03;
   }
   .action-remove { @extend %icon-remove; }
   .undo-action-remove { @extend %icon-undo; }
-  .action-addbulk { @extend %icon-users; }
-  .action-addsingle { @extend %icon-user; }
 }
 
 .action-back.groups {

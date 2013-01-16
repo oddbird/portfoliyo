@@ -267,12 +267,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
-.listitem-actions .action-addsingle:before {
-  content: "\f111";
-}
-
-[class*="additem-"][class*="-village"]:before, .listitem-actions .action-addbulk:before {
-  content: "\e01b";
+[class*="additem-"][class*="-village"]:before {
+  content: "\e01c";
 }
 
 [class*="additem-"][class*="-group"]:before {
