@@ -35,7 +35,7 @@ $village-list-size      : $smallpx;
 
   &[class*="-village"] { @extend %icon-users; }
   &[class*="-group"] {
-    @extend %icon-addlist;
+    @extend %icon-users-plus;
     @include button-color(color($blue lightest));
   }
 

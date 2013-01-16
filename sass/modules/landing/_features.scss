@@ -3,7 +3,6 @@
 
 .features {
   @include pie-clearfix;
-  @include rhythm-padding;
   @include bleed(1);
   @include inset;
   background: $base2;
@@ -14,10 +13,9 @@
 }
 
 .feature {
-  @include trailer;
-  strong { font-weight: bold; }
-
   @include at-breakpoint($break) {
+    @include rhythm-margins;
+    @include padding-trailer;
     float: left;
 
     &:nth-child(1), &:nth-child(3) {
@@ -29,7 +27,8 @@
     }
     &:nth-child(2) {
       width: percentage(1/3) + 3%;
-      padding: 0 4%;
+      padding-left: 4%;
+      padding-right: 4%;
       border: 2px dashed $base3;
       border-width: 0 2px;
     }
@@ -48,7 +47,9 @@
   text-align: center;
 }
 
-.feature-details { @include adjust-font-size-to($smallpx); }
+.feature-details {
+  @include adjust-font-size-to($smallpx);
+}
 
 // ---------------------------------------------------------------------------
 // Feature Info

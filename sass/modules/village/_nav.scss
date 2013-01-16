@@ -52,7 +52,7 @@ $village-nav-action-color : $base03;
     }
     .group & {
       @extend %icon;
-      @extend %icon-list;
+      @extend %icon-users-list;
     }
   }
   #{$focus} {
@@ -80,7 +80,7 @@ $village-nav-action-color : $base03;
   }
   &.removed {
     @extend %icon;
-    @extend %icon-x;
+    @extend %icon-close;
     @include box-shadow($back 0 0 3px inset);
     color: $red;
     background: lighten($red,40);
@@ -120,7 +120,7 @@ $village-nav-action-color : $base03;
     @extend %icon-checkmark;
     display: none;
   }
-  .action-remove { @extend %icon-trashcan; }
+  .action-remove { @extend %icon-remove; }
   .undo-action-remove { @extend %icon-undo; }
   .action-addbulk { @extend %icon-users; }
   .action-addsingle { @extend %icon-user; }
@@ -128,7 +128,7 @@ $village-nav-action-color : $base03;
 
 .action-back.groups {
   @extend %icon-replace;
-  @extend %icon-list;
+  @extend %icon-users-list;
   @include leader($village-nav-rhythm);
   @include border-radius(.125em);
   @include rem(width, rhythm(1));

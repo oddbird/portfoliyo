@@ -170,122 +170,121 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 @font-face {
   font-family: "pyo";
-  src: url('../fonts/pyo.eot');
-  src: url('../fonts/pyo.eot?#iefix') format('eot'), url('../fonts/pyo.svg#pyo') format('svg'), url('../fonts/pyo.woff') format('woff'), url('../fonts/pyo.ttf') format('truetype');
+  src: url('../fonts/pyo.woff') format('woff');
   font-weight: normal;
   font-style: normal;
 }
 
-.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
-  content: "\2610";
-}
-
-.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
-  content: "\2611";
-}
-
-.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
-  content: "\25c9";
-}
-
 .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
-  content: "\25ef";
-}
-
-.listitem-actions .action-addsingle:before {
-  content: "\265f";
-}
-
-[class*="additem-"][class*="-village"]:before, .listitem-actions .action-addbulk:before {
-  content: "\265b";
-}
-
-.meta .settingslink:before, .meta [href*="profile"]:before {
-  content: "\2731";
-}
-
-.meta button:before {
-  content: "\261b";
-}
-
-.meta [href*="password"]:before {
-  content: "\2762";
-}
-
-.listitem-actions .action-edit:before {
-  content: "\270e";
-}
-
-.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before, .listitem-actions .action-save:before {
-  content: "\2713";
-}
-
-.ui-multiselect-none:before, .message.error:before, .listitem-select.removed:before, .elder .vcard.declined:before {
-  content: "\2717";
-}
-
-#messages .close:before {
-  content: "\2718";
-}
-
-.message:before, .announce:before {
-  content: "\69";
-}
-
-.message.warning:before, .elder .vcard.inactive:before {
-  content: "\26a0";
-}
-
-[class*="additem-"]:before {
-  content: "\2b";
-}
-
-.elder .vcard:before {
-  content: "\25cf";
-}
-
-.brand .wordmark:before {
-  content: "\2668";
-}
-
-.listitem-actions .action-remove:before {
-  content: "\27f0";
-}
-
-.sms .sms-info .summary:before, .elder .vcard.mobile:before, .action-sms:before {
   content: "\e000";
 }
 
-.no-sms .sms-info .summary:before {
+.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
   content: "\e001";
 }
 
-.listitem-actions .undo-action-remove:before {
-  content: "\21ba";
-}
-
-.ui-multiselect:before {
-  content: "\2193";
-}
-
-.action-back.groups:focus:before, .action-back.groups:hover:before, .action-back.groups:active:before {
-  content: "\2190";
-}
-
-.download-pdf:before {
+.ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before {
   content: "\e002";
 }
 
-.school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
   content: "\e003";
 }
 
-[class*="additem-"][class*="-group"]:before {
+.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before, .listitem-actions .action-save:before {
   content: "\e005";
 }
 
-.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+.ui-multiselect-none:before, .message.error:before, .listitem-select.removed:before, .elder .vcard.declined:before {
   content: "\e006";
+}
+
+[class*="additem-"]:before {
+  content: "\e007";
+}
+
+#messages .close:before {
+  content: "\e008";
+}
+
+.ui-multiselect:before {
+  content: "\e00c";
+}
+
+.action-back.groups:focus:before, .action-back.groups:hover:before, .action-back.groups:active:before {
+  content: "\e00d";
+}
+
+.message:before, .announce:before {
+  content: "\e00e";
+}
+
+.message.warning:before, .elder .vcard.inactive:before {
+  content: "\e00f";
+}
+
+.meta .settingslink:before, .meta [href*="profile"]:before {
+  content: "\e010";
+}
+
+.listitem-actions .action-edit:before {
+  content: "\f071";
+}
+
+.listitem-actions .action-remove:before {
+  content: "\e011";
+}
+
+.listitem-actions .undo-action-remove:before {
+  content: "\e012";
+}
+
+.school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before {
+  content: "\e013";
+}
+
+.meta [href*="password"]:before {
+  content: "\e014";
+}
+
+.meta button:before {
+  content: "\e016";
+}
+
+.download-pdf:before {
+  content: "\e009";
+}
+
+.elder .vcard:before {
+  content: "\e017";
+}
+
+.sms .sms-info .summary:before, .elder .vcard.mobile:before, .action-sms:before {
+  content: "\e018";
+}
+
+.no-sms .sms-info .summary:before {
+  content: "\e019";
+}
+
+.listitem-actions .action-addsingle:before {
+  content: "\f111";
+}
+
+[class*="additem-"][class*="-village"]:before, .listitem-actions .action-addbulk:before {
+  content: "\e01b";
+}
+
+[class*="additem-"][class*="-group"]:before {
+  content: "\e01d";
+}
+
+.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+  content: "\e01e";
+}
+
+.brand .wordmark:before {
+  content: "\e020";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -591,7 +590,6 @@ optgroup {
 }
 .ui-multiselect-checkboxes [type="checkbox"] + .type, .email_notifications-field [type="checkbox"] + .type, .fieldset.notifications [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .ui-multiselect-checkboxes [type="radio"] + .type, .email_notifications-field [type="radio"] + .type, .fieldset.notifications [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
   display: block;
-  font-style: italic;
 }
 .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before {
   font-size: 14px;
@@ -882,7 +880,6 @@ button {
 
 .school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
   background: rgba(38, 139, 210, 0.125);
-  font-weight: bold;
 }
 
 .multiselect-dropdown {
@@ -902,8 +899,12 @@ button {
   border: 1px solid #93a1a1;
 }
 .ui-multiselect:before {
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   position: absolute;
-  right: 0;
+  right: 0.15972rem;
   margin: 0;
 }
 .ui-multiselect:focus, .ui-multiselect:hover, .ui-multiselect:active {
@@ -1589,10 +1590,6 @@ button {
   }
 }
 .features {
-  padding-top: 23px;
-  padding-top: 1.27778rem;
-  padding-bottom: 23px;
-  padding-bottom: 1.27778rem;
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
@@ -1624,15 +1621,14 @@ button {
   }
 }
 
-.feature {
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-}
-.feature strong {
-  font-weight: bold;
-}
 @media (min-width: 43.875em) {
   .feature {
+    margin-top: 23px;
+    margin-top: 1.27778rem;
+    margin-bottom: 23px;
+    margin-bottom: 1.27778rem;
+    padding-bottom: 23px;
+    padding-bottom: 1.27778rem;
     float: left;
   }
   .feature:nth-child(1), .feature:nth-child(3) {
@@ -1644,7 +1640,8 @@ button {
   }
   .feature:nth-child(2) {
     width: 36.33333%;
-    padding: 0 4%;
+    padding-left: 4%;
+    padding-right: 4%;
     border: 2px dashed #fdf6e3;
     border-width: 0 2px;
   }

@@ -34,7 +34,7 @@
 
   .vcard {
     @extend %icon;
-    @extend %icon-record;
+    @extend %icon-circle;
     @extend %elder-listitem;
     @extend %village-activenav;
     padding-left: rhythm(1);
@@ -56,7 +56,7 @@
       &:before { color: $base; }
     }
     &.declined {
-      @extend %icon-x;
+      @extend %icon-close;
       background: rgba($red,.125);
       &:before { color: $red; }
     }
