@@ -266,7 +266,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
-.elders-feature .feature-title:before {
+.elders-feature .feature-title:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\e01b";
 }
 
@@ -278,7 +278,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01d";
 }
 
-.group .listitem-select:link:before, .group .listitem-select:visited:before, .action-back.groups:before {
+.action-back.groups:before {
   content: "\e01e";
 }
 
