@@ -17,8 +17,6 @@ Recent activity in Portfoliyo:
   {% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
 
-Other activity:
-
 {% include "notifications/activity/_village_posts_nonrequested.txt" %}
 
 {% if not recipient.notify_teacher_post %}
