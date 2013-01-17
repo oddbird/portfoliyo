@@ -7,7 +7,7 @@ $post-time-size   : $xsmallpx;
 $post-v-padding   : .25;
 $post-h-padding   : gutter($center);
 
-$background       : lighten($base3,3);
+$background       : $base2;
 
 // ---------------------------------------------------------------------------
 // Village Feed
@@ -42,10 +42,11 @@ $instruction-height: rhythm(5.5);
   border: 0;
   background: $base3;
   .starthead {
-    @include adjust-font-size-to($largepx);
     @include serif;
+    @include adjust-font-size-to($medpx);
+    color: $base1;
   }
-  &:last-child { background: $background; }
+  &:last-child { background: transparent; }
   + .post { border-top: 1px solid; }
 }
 
@@ -102,6 +103,10 @@ $instruction-height: rhythm(5.5);
 // ---------------------------------------------------------------------------
 // Posts
 
+.feed-posts {
+  @include inset;
+}
+
 .post {
   @include pie-clearfix;
   @include adjust-font-size-to($post-size);
@@ -113,7 +118,7 @@ $instruction-height: rhythm(5.5);
 
   &.old {
     color: $base1;
-    background: $background;
+    background: color($base3 lighter);
     .title, .summary { color: $base1; }
   }
   &.mine { background: lighten($blue,45); }
@@ -123,6 +128,8 @@ $instruction-height: rhythm(5.5);
     @extend %error;
     @include bleed($post-h-padding);
   }
+
+  &:last-child { @include box-shadow($base 0 .25rem .25rem); }
 }
 
 .post-meta {

@@ -2,33 +2,15 @@
 // Village Pages
 
 %overflow-y {
-  @include stretch-y;
+  height: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
   &.loading { position: absolute; }
 }
 
 %village-page {
   @extend %formdefaults;
-  height: 100%;
-  padding: rhythm();
-  overflow-y: scroll;
+  @extend %overflow-y;
+  padding: rhythm(.5);
   > :last-child { @include trailer(2); }
-  h2 {
-    @include adjust-font-size-to($largepx);
-    @include trailer(1,$largepx);
-    @include serif;
-  }
-}
-
-%village-solo-page {
-  @extend %village-page;
-  @extend .village-main;
-  @include span-columns($center omega, $content-width);
-  @include post($right, $content-width);
-  margin-left: gutter($content-width);
-}
-
-%village-main-page {
-  @extend %village-page;
-  margin-left: gutter($center);
 }
