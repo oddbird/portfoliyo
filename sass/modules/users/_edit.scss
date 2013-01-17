@@ -18,6 +18,11 @@
   .fieldset-header { @include trailer(.5); }
 }
 
+.changepassword-link {
+  @extend %icon;
+  @extend %icon-lock;
+}
+
 .initial-password {
   @extend %notice;
   @extend %simple-inline-form;
