@@ -48,7 +48,8 @@ $content-width          : $center + $right;
   .village-title {
     @include serif;
     @include adjust-font-size-to($medpx);
-    @include span-columns($center, $content-width);
+    float: left;
+    max-width: columns($center, $content-width);
   }
 }
 
