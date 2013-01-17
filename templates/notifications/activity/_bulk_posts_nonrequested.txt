@@ -1,24 +1,10 @@
-{% for combo_of_villages in combos_of_villages_per_teacher %}
+{% load url from future %}
+{% load humanize %}
 
-{% if students|length == 2 %}
-- {% for student in students %}
-{% if forloop.first %}{{ student }} and {% else %}{{ student }} {% endif %}
-{% endfor %}
-villages {% endif %}
+{% for village_set in bulk_posts.village_sets.values %}
+{% with village_set.students as students %}
 
-{% if students|length == 3 %}
-- {% for student in students %}
-{% if forloop.last %}and {{ student }} {% else %}{{ student }}, {% endif %}
-{% endfor %}
-villages {% endif %}
+{% if students|length == 2 %}- {{ students.0 }} and {{ students.1 }}'s villages{% endif %}{% if students|length == 3 %}- {{ students.0 }}, {{ students.1 }}, and {{ students.2 }}'s villages{% endif %}{% if students|length > 3 %}- {% for student in students %}{% if forloop.counter < 4 %}{{ student }}, {% endif %}{% endfor %}and {{ students|length|add:"-3"|apnumber }} more village{% if students|length > 4 %}s{% endif %}{% endif %} have {% if village_set.posts|length == 1 %}a message{% else %}{{ village_set.posts|length|apnumber }} messages{% endif %} from {% if village_set.teachers|length == 1 %}{{ village_set.teachers.0 }}{% elif village_set.teachers|length == 2 %}{{ village_set.teachers.0 }} and {{ village_set.teachers.1 }}{% else %}{{ village_set.teachers|length|apnumber }} teachers{% endif %}.
 
-{% if students|length > 3 %}
-- {% for student in students %}
-{% if forloop.counter < 4 %}{{ student }}, {% endif %}
-{% endfor %}
-and {{ students|length|add:"-3" }} more village {% if students|length > 4 %}s {% endif %}
-{% endif %}
-
-have {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} from {{ teacher }}.
-
+{% endwith %}
 {% endfor %}

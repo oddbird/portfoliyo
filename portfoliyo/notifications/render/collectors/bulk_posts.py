@@ -42,11 +42,10 @@ class BulkPostCollection(object):
     def __init__(self):
         # VillageSets by set of students
         self.village_sets = {}
-        # VillageSets by teacher and set of students
-        self.by_teacher = {}
 
         self.num_posts = 0
         self.students = set()
+        self._teacher_set = set()
         self._teachers = None
 
 
@@ -54,21 +53,19 @@ class BulkPostCollection(object):
         student_set = frozenset(students)
         village_set = self.village_sets.setdefault(
             student_set, VillageSet(students))
-        teacher_village_set = self.by_teacher.setdefault(
-            bulk_post.author, {}).setdefault(student_set, VillageSet(students))
 
         self.students.update(student_set)
         self.num_posts += 1
         self._teachers = None
 
         village_set.add(bulk_post)
-        teacher_village_set.add(bulk_post)
+        self._teacher_set.add(bulk_post.author)
 
 
     @property
     def teachers(self):
         if self._teachers is None:
-            self._teachers = list(self.by_teacher)
+            self._teachers = sorted(self._teacher_set, key=lambda t: t.name)
         return self._teachers
 
 

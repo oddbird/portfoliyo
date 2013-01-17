@@ -929,6 +929,121 @@ class TestSend(object):
                     'In StW, StX, StY, and two more villages:\n'
                     ],
                 },
+            { # nonrequested bulk posts by two teachers
+                'scenario': [
+                    ("Teach1", ["StX", "StY"], [], "hello", timedelta(hours=1)),
+                    ("Teach2", ["StX", "StY"], [], "hi", timedelta()),
+                    ],
+                'prefs': {'notify_teacher_post': False},
+                'subject': (
+                    "Two teachers sent two messages in "
+                    "two of your villages."
+                    ),
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX</a> and '
+                    '<a href="%(StYUrl)s">StY</a>\'s villages '
+                    'have two messages from '
+                    'Teach1 and Teach2.</li>',
+                    ],
+                'text': [
+                    '- StX and StY\'s villages have two messages '
+                    'from Teach1 and Teach2.'
+                    ],
+                },
+            { # nonrequested bulk posts by three teachers
+                'scenario': [
+                    ("Teach1", ["StX", "StY"], [], "hello", timedelta(hours=2)),
+                    ("Teach2", ["StX", "StY"], [], "hi", timedelta(hours=1)),
+                    ("Teach3", ["StX", "StY"], [], "sup", timedelta()),
+                    ],
+                'prefs': {'notify_teacher_post': False},
+                'subject': (
+                    "Three teachers sent three messages in "
+                    "two of your villages."
+                    ),
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX</a> and '
+                    '<a href="%(StYUrl)s">StY</a>\'s villages '
+                    'have three messages from three teachers.</li>',
+                    ],
+                'text': [
+                    '- StX and StY\'s villages have three messages '
+                    'from three teachers.'
+                    ],
+                },
+            { # a nonrequested bulk post in three villages
+                'scenario': [
+                    (
+                        "Teach1",
+                        ["StX", "StY", "StZ"],
+                        [],
+                        "hello",
+                        timedelta(hours=1)),
+                    ],
+                'prefs': {'notify_teacher_post': False},
+                'subject': (
+                    "Teach1 sent a message in three of your villages."
+                    ),
+                'html': [
+                    '<li><a href="%(StXUrl)s">StX</a>, '
+                    '<a href="%(StYUrl)s">StY</a> and '
+                    '<a href="%(StZUrl)s">StZ</a>\'s villages '
+                    'have a message from Teach1.</li>'
+                    ],
+                'text': [
+                    'StX, StY, and StZ\'s villages have a message from Teach1.'
+                    ],
+                },
+            { # a nonrequested bulk post in four villages
+                'scenario': [
+                    (
+                        "Teach1",
+                        ["StW", "StX", "StY", "StZ"],
+                        [],
+                        "hello",
+                        timedelta(hours=1)),
+                    ],
+                'prefs': {'notify_teacher_post': False},
+                'subject': (
+                    "Teach1 sent a message in four of your villages."
+                    ),
+                'html': [
+                    '<li><a href="%(StWUrl)s">StW</a>, '
+                    '<a href="%(StXUrl)s">StX</a>, '
+                    '<a href="%(StYUrl)s">StY</a>, '
+                    'and one more village '
+                    'have a message from Teach1.</li>'
+                    ],
+                'text': [
+                    'StW, StX, StY, and one more village '
+                    'have a message from Teach1.'
+                    ],
+                },
+            { # a nonrequested bulk post in five villages
+                'scenario': [
+                    (
+                        "Teach1",
+                        ["StW", "StX", "StY", "StZ", "StZZ"],
+                        [],
+                        "hello",
+                        timedelta(hours=1)),
+                    ],
+                'prefs': {'notify_teacher_post': False},
+                'subject': (
+                    "Teach1 sent a message in five of your villages."
+                    ),
+                'html': [
+                    '<li><a href="%(StWUrl)s">StW</a>, '
+                    '<a href="%(StXUrl)s">StX</a>, '
+                    '<a href="%(StYUrl)s">StY</a>, '
+                    'and two more villages '
+                    'have a message from Teach1.</li>'
+                    ],
+                'text': [
+                    'StW, StX, StY, and two more villages '
+                    'have a message from Teach1.'
+                    ],
+                },
             ])
     def test_bulk_posts(self, params, recip):
         context = {}

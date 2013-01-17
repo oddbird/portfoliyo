@@ -1,28 +1,35 @@
-{% for combo_of_villages in combos_of_villages_per_teacher %}
+{% load url from future %}
+{% load humanize %}
+
+{% for village_set in bulk_posts.village_sets.values %}
+{% with village_set.students as students %}
 
 <li>
   {% if students|length == 2 %}
-  {% for student in students %}
-  {% if forloop.first %}
-  <a href="{{ village_url }}">{{ student }}</a> and {% else %}<a href="{{ village_url }}">{{ student }} </a>
-  {% endif %}
-  {% endfor %}
+  <a href="{{ BASE_URL }}{% url 'village' student_id=students.0.id %}">{{ students.0 }}</a> and <a href="{{ BASE_URL }}{% url 'village' student_id=students.1.id %}">{{ students.1 }}</a>'s
   villages {% endif %}
 
   {% if students|length == 3 %}
-  {% for student in students %}
-  {% if forloop.last %}and <a href="{{ village_url }}">{{ student }} </a>{% else %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}
-  {% endfor %}
+  <a href="{{ BASE_URL }}{% url 'village' student_id=students.0.id %}">{{ students.0 }}</a>, <a href="{{ BASE_URL }}{% url 'village' student_id=students.1.id %}">{{ students.1 }}</a> and <a href="{{ BASE_URL }}{% url 'village' student_id=students.2.id %}">{{ students.2 }}</a>'s
   villages {% endif %}
 
   {% if students|length > 3 %}
   {% for student in students %}
-  {% if forloop.counter < 4 %}<a href="{{ village_url }}">{{ student }}</a>, {% endif %}
+  {% if forloop.counter < 4 %}<a href="{{ BASE_URL }}{% url 'village' student_id=student.id %}">{{ student }}</a>, {% endif %}
   {% endfor %}
-  and {{ students|length|add:"-3" }} more village {% if students|length > 4 %}s {% endif %}
+  and {{ students|length|add:"-3"|apnumber }} more village{% if students|length > 4 %}s {% endif %}
   {% endif %}
 
-  have {% if posts|length == 1 %}a message{% else %}{{ posts|length }} messages{% endif %} from {{ teacher }}.
+  have {% if village_set.posts|length == 1 %}a message{% else %}{{ village_set.posts|length|apnumber }} messages{% endif %} from
+
+{% if village_set.teachers|length == 1 %}
+  {{ village_set.teachers.0 }}.
+{% elif village_set.teachers|length == 2 %}
+  {{ village_set.teachers.0 }} and {{ village_set.teachers.1 }}.
+{% else %}
+  {{ village_set.teachers|length|apnumber }} teachers.
+{% endif %}
 </li>
 
+{% endwith %}
 {% endfor %}
