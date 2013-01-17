@@ -18,7 +18,7 @@
     right: 1em;
   }
   border: 1px solid $base03;
-  border-width: 0 2px;
+  border-width: 0 0 0 2px;
   background: mix($base01,$base02);
   #{$link}, & { color: $base3; }
   #{$focus} {
@@ -38,7 +38,6 @@
   @extend %meta-button;
   float: right;
   #{$focus} { background-color: $orange; }
-  .login-nav & { border-left-width: 0; }
 }
 
 // ---------------------------------------------------------------------------
@@ -86,44 +85,11 @@
     }
   }
 
-  [href*="profile"] { @extend %icon-cog; }
-  [href*="password"] { @extend %icon-key; }
-  button {
+  .action-logout {
     @extend %reset-button;
-    @extend %icon;
-    @extend %icon-exit;
-    @extend %banner-item;
+    @extend %meta-button;
     @include link(light);
-    width: 100%;
+    float: right;
+    #{$focus} { background-color: $red; }
   }
-}
-
-// ---------------------------------------------------------------------------
-// User Actions
-
-$useraction-size          : $banner-size;
-$useraction-border-size   : 2px;
-$useraction-border-color  : $back;
-$useraction-background    : $base01;
-
-.useractions {
-  @include arrow(top rhythm(.25) $useraction-background);
-  @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
-  position: absolute;
-  top: 100%;
-  right: 0%;
-  margin-right: rhythm(.5);
-  margin-top: - $useraction-border-size;
-  width: columns($right + 1, $meta-width);
-  border: $useraction-border-size solid $useraction-border-color;
-  background: $useraction-background;
-  text-align: left;
-  z-index: 900;
-  display: none;
-
-  a, button {
-    @extend %ellipsis;
-    padding: rhythm(.5, $useraction-size);
-  }
-  .settingslink:hover ~ &, &:hover { display: block; }
 }
