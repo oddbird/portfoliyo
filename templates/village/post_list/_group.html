@@ -3,6 +3,8 @@
 
 {% block village-title %}{{ group.name }} village{% endblock %}
 
+{% block edit-url %}{% url 'edit_group' group_id=group.id %}{% endblock %}
+
 {% block village-feed-attrs %}{% if group.is_all %} data-backlog-url="{% url 'json_posts' %}" data-post-url="{% url 'json_posts' %}"{% else %} data-backlog-url="{% url 'json_posts' group_id=group.id %}" data-post-url="{% url 'json_posts' group_id=group.id %}"{% endif %}{% endblock %}
 
 {% block getting-started-header %}Post messages for all parents & teachers in the {{ group.name }} group.{% endblock %}

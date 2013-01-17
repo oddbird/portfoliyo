@@ -3,7 +3,7 @@
 {% block village-header %}
   {{ block.super }}
   <div class="page-actions">
-    <a href="#@@@" class="action-edit ajax-link">Edit</a>
+    <a href="{% block edit-url %}{% endblock %}" class="action-edit">Edit</a>
   </div>
 {% endblock village-header %}
 
