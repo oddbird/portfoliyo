@@ -52,7 +52,7 @@ $village-nav-action-color : $base03;
     }
     .group & {
       @extend %icon;
-      @extend %icon-users-list;
+      @extend %icon-users;
     }
   }
   #{$focus} {
