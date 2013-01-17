@@ -1,5 +1,6 @@
 {% extends "base_site.html" %}
 {% load widget_tweaks %}
+{% load url from future %}
 
 {% block maincontent %}
 
@@ -28,6 +29,7 @@
     </div>
 
     <div class="form-actions">
+      <p><a href="{% url 'password_change' %}" class="changepassword-link">Change password</a> or</p>
       <button type="submit">Save changes</button>
     </div>
   </form>
