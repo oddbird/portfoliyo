@@ -15,9 +15,12 @@ TEXT_TEMPLATE = 'notifications/activity.txt'
 consecutive_newlines = re.compile('\n+')
 
 
-def send(profile_id):
+def send(profile_id, clear=True):
     """
     Send activity notification(s) to user with given profile ID.
+
+    If ``clear`` is ``True`` (the default), clear all notifications for this
+    profile ID.
 
     Return ``True`` if email was sent, ``False`` otherwise.
 
@@ -28,7 +31,7 @@ def send(profile_id):
     if not (user.email and user.is_active):
         return False
 
-    collection = collect.NotificationCollection(profile)
+    collection = collect.NotificationCollection(profile, clear=clear)
 
     # bail out if there's nothing to do
     if not collection:

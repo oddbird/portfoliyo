@@ -8,7 +8,7 @@ from portfoliyo.notifications.render import collect
 
 @contextlib.contextmanager
 def mock_store(notification_data):
-    get_all = 'portfoliyo.notifications.store.get_and_clear_all'
+    get_all = 'portfoliyo.notifications.store.get_all'
     with mock.patch(get_all) as mock_get_all:
         mock_get_all.return_value = notification_data
         yield

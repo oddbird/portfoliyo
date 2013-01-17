@@ -34,8 +34,9 @@ class SwitchType(Exception):
 
 class NotificationCollection(object):
     """Collects and aggregates all pending notifications for a given profile."""
-    def __init__(self, profile):
+    def __init__(self, profile, clear=True):
         self.profile = profile
+        self.clear = clear
 
         self._notification_data = None
         self._hydrated = False
@@ -48,7 +49,7 @@ class NotificationCollection(object):
         """Raw notification data from storage."""
         if self._notification_data is None:
             self._notification_data = list(
-                store.get_and_clear_all(self.profile.id))
+                store.get_all(self.profile.id, clear=self.clear))
         return self._notification_data
 
 

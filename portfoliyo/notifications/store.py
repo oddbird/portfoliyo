@@ -55,11 +55,13 @@ def store(profile_id, name, triggering=False, data=None):
 
 
 
-def get_and_clear_all(profile_id):
+def get_all(profile_id, clear=False):
     """
-    Get and clear all pending notifications for given profile ID.
+    Get all pending notifications for given profile ID.
 
-    Does not return expired notifications (those older than EXPIRY_SECONDS).
+    Do not return expired notifications (those older than EXPIRY_SECONDS).
+
+    If ``clear`` is ``True``, also clear all pending notifications.
 
     """
     pending_key = make_pending_notifications_key(profile_id)
@@ -68,11 +70,12 @@ def get_and_clear_all(profile_id):
     p = redis.pipeline()
     # get non-expired pending notifications for this user
     p.zrangebyscore(pending_key, now_ts, '+inf')
-    # clear the pending notifications list
-    p.delete(pending_key)
-    # remove this user from the set of users w/ pending triggering notifications
-    p.srem(PENDING_PROFILES_KEY, profile_id)
-    # we don't clear out individual notification data; redis expiration will
+    if clear:
+        # clear the pending notifications list
+        p.delete(pending_key)
+        # remove user from the set of users w/ pending triggering notifications
+        p.srem(PENDING_PROFILES_KEY, profile_id)
+        # don't clear out individual notification data; redis expiration will
     ids = p.execute()[0]
 
     for notification_id in ids:
