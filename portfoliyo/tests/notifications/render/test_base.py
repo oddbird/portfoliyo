@@ -741,6 +741,194 @@ class TestSend(object):
                     '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
                     ],
                 },
+            { # two bulk posts by same teacher, seen in two of my villages
+                'scenario': [
+                    ("Teach1", ["StX", "StY"], [], "hello", timedelta(hours=1)),
+                    ("Teach1", ["StX", "StY"], [], "again", timedelta()),
+                    ],
+                'subject': "Teach1 sent two messages in two of your villages.",
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teach1</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
+                    '1/14/2013 at 6 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teach1</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: again</p>'
+                    '</article>'
+                    ],
+                'text': [
+                    'In StX and StY\'s villages:\n'
+                    '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n'
+                    '  "again" - Teach1 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    ],
+                },
+            { # bulk posts by two teachers in the same two villages
+                'scenario': [
+                    ("Teach1", ["StX", "StY"], [], "hello", timedelta(hours=1)),
+                    ("Teach2", ["StX", "StY"], [], "hi", timedelta()),
+                    ],
+                'subject': (
+                    "Two teachers sent two messages in "
+                    "two of your villages."
+                    ),
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teach1</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
+                    '1/14/2013 at 6 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teach2</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hi</p>'
+                    '</article>'
+                    ],
+                'text': [
+                    'In StX and StY\'s villages:\n'
+                    '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n'
+                    '  "hi" - Teach2 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    ],
+                },
+            { # bulk posts by two teachers in different sets of villages
+                'scenario': [
+                    ("Teach1", ["StX", "StY"], [], "hello", timedelta(hours=1)),
+                    ("Teach2", ["StX", "StZ"], [], "hi", timedelta()),
+                    ],
+                'subject': (
+                    "Two teachers sent two messages in "
+                    "three of your villages."
+                    ),
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teach1</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
+                    '1/14/2013 at 6 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hello</p>'
+                    '</article>',
+                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<a href="%(StZUrl)s">StZ</a>\'s villages:</h2>',
+                    '<article class="post new">'
+                    '<header class="post-meta">'
+                    '<h3 class="byline vcard">'
+                    '<b class="title">Teacher:</b>'
+                    '<span class="fn">Teach2</span>'
+                    '</h3>'
+                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
+                    '1/14/2013 at 7 p.m.</time>'
+                    '</header>'
+                    '<p class="post-text">html: hi</p>'
+                    '</article>'
+                    ],
+                'text': [
+                    'In StX and StY\'s villages:\n'
+                    '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n',
+                    'In StX and StZ\'s villages:\n'
+                    '  "hi" - Teach2 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    ],
+                },
+            { # a bulk post in three villages
+                'scenario': [
+                    (
+                        "Teach1",
+                        ["StX", "StY", "StZ"],
+                        [],
+                        "hello",
+                        timedelta(hours=1)),
+                    ],
+                'subject': (
+                    "Teach1 sent a message in three of your villages."
+                    ),
+                'html': [
+                    '<h2>In <a href="%(StXUrl)s">StX</a>, '
+                    '<a href="%(StYUrl)s">StY</a> and '
+                    '<a href="%(StZUrl)s">StZ</a>\'s villages:</h2>',
+                    ],
+                'text': [
+                    'In StX, StY and StZ\'s villages:\n'
+                    ],
+                },
+            { # a bulk post in four villages
+                'scenario': [
+                    (
+                        "Teach1",
+                        ["StW", "StX", "StY", "StZ"],
+                        [],
+                        "hello",
+                        timedelta(hours=1)),
+                    ],
+                'subject': (
+                    "Teach1 sent a message in four of your villages."
+                    ),
+                'html': [
+                    '<h2>In <a href="%(StWUrl)s">StW</a>, '
+                    '<a href="%(StXUrl)s">StX</a>, '
+                    '<a href="%(StYUrl)s">StY</a>, '
+                    'and one more village:</h2>',
+                    ],
+                'text': [
+                    'In StW, StX, StY, and one more village:\n'
+                    ],
+                },
+            { # a bulk post in five villages
+                'scenario': [
+                    (
+                        "Teach1",
+                        ["StW", "StX", "StY", "StZ", "StZZ"],
+                        [],
+                        "hello",
+                        timedelta(hours=1)),
+                    ],
+                'subject': (
+                    "Teach1 sent a message in five of your villages."
+                    ),
+                'html': [
+                    '<h2>In <a href="%(StWUrl)s">StW</a>, '
+                    '<a href="%(StXUrl)s">StX</a>, '
+                    '<a href="%(StYUrl)s">StY</a>, '
+                    'and two more villages:</h2>',
+                    ],
+                'text': [
+                    'In StW, StX, StY, and two more villages:\n'
+                    ],
+                },
             ])
     def test_bulk_posts(self, params, recip):
         context = {}
