@@ -1,4 +1,6 @@
 """Record notifications."""
+from django.conf import settings
+
 from portfoliyo import tasks
 from . import store, types
 
@@ -81,5 +83,5 @@ def _record(profile, name, triggering=False, data=None):
         return
     store.store(profile.id, name, triggering=triggering, data=data)
     # @@@ later this will be only if user prefers instant notifications
-    if triggering:
+    if triggering and not getattr(settings, 'PORTFOLIYO_NO_EMAILS', False):
         tasks.send_notification_email.delay(profile.id)
