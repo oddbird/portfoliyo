@@ -7,6 +7,7 @@ from ..api.versions import api_v1
 from ..pusher import auth as pusher_views
 from .decorators import login_required
 from . import home as home_views
+from . import notifications as notifications_views
 from . import sms as sms_views
 
 admin.autodiscover()
@@ -40,6 +41,7 @@ if settings.DEBUG: # pragma: no cover
         url(r'^_debug/403/$', direct_to_template, {'template': '403.html'}),
         url(r'^_debug/404/$', direct_to_template, {'template': '404.html'}),
         url(r'^_debug/500/$', direct_to_template, {'template': '500.html'}),
+        url(r'^_debug/email/$', notifications_views.send_email),
         )
 
 

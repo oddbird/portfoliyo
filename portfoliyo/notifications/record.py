@@ -83,5 +83,5 @@ def _record(profile, name, triggering=False, data=None):
         return
     store.store(profile.id, name, triggering=triggering, data=data)
     # @@@ later this will be only if user prefers instant notifications
-    if triggering and not getattr(settings, 'PORTFOLIYO_NO_EMAILS', False):
+    if triggering and settings.PORTFOLIYO_NOTIFICATION_EMAILS:
         tasks.send_notification_email.delay(profile.id)
