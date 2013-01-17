@@ -1,7 +1,7 @@
 {% extends "village/_base.html" %}
 
 {% block village-header %}
-  <h2 class="village-title">{% block village-title %}{% endblock village-title %}</h2>
+  {{ block.super }}
   <div class="page-actions">
     <a href="#@@@" class="action-edit ajax-link">Edit</a>
   </div>
