@@ -16,17 +16,19 @@
     {% if user.is_authenticated %}
     <nav class="meta">
       {% if SNAPENGAGE_ID %}
-      <a href="#" class="helplink" onClick="return SnapABug.startLink();">
+      <a href="#" class="helplink" onClick="return SnapABug.startLink();" title="Help">
         <span aria-hidden="true" data-icon="&#xf059;"></span>
         <span class="alt-text">Help</span>
       </a>
       {% endif %}
-      <a href="{% url 'edit_profile' %}" class="settingslink" data-user-id="{{ user.id }}" data-user-email="{{ user.email }}" data-user-name="{{ user.profile.name }}" data-user-code="{{ user.profile.code }}"{% if not user.profile.school.auto %} data-user-school="{{ user.profile.school }}"{% endif %}>{% firstof user.profile.name user.email %}</a>
-      <ul class="useractions">
-        <li><a href="{% url 'edit_profile' %}">Edit profile</a></li>
-        <li><a href="{% url 'password_change' %}">Change password</a></li>
-        <li><form action="{% url 'logout' %}" method="POST" class="signout" id="logoutform">{% csrf_token %}<button type="submit">Sign Out</button></form></li>
-      </ul>
+      <form action="{% url 'logout' %}" method="POST" id="logoutform">
+        {% csrf_token %}
+        <button type="submit" class="action-logout" title="Logout">
+          <span aria-hidden="true" data-icon="&#xe016;"></span>
+          <span class="alt-text">Logout</span>
+        </button>
+      </form>
+      <a href="{% url 'edit_profile' %}" class="settingslink" title="Edit profile" data-user-id="{{ user.id }}" data-user-email="{{ user.email }}" data-user-name="{{ user.profile.name }}" data-user-code="{{ user.profile.code }}"{% if not user.profile.school.auto %} data-user-school="{{ user.profile.school }}"{% endif %}>{% firstof user.profile.name user.email %}</a>
     </nav>
     {% else %}
     <nav class="login-nav">
