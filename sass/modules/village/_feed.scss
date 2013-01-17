@@ -7,23 +7,24 @@ $post-time-size   : $xsmallpx;
 $post-v-padding   : .25;
 $post-h-padding   : gutter($center);
 
-$background       : lighten($base3,3);
+$background       : $base2;
 
 // ---------------------------------------------------------------------------
 // Village Feed
 
 .village-feed {
   @extend %overflow-y;
-  left: 0;
-  right: 0;
+  @include stretch;
   bottom: rhythm(4.75);
-  background: $background;
+  height: auto;
 }
 
 $instruction-height: rhythm(5.5);
 
 .feed-posts {
+  @include inset;
   min-height: 100%;
+  background: $base2;
   .stickyhack {
     clear: both;
     display: block;
@@ -37,15 +38,16 @@ $instruction-height: rhythm(5.5);
 .getting-started {
   @include padding-leader;
   @include trailing-border(1px,1);
+  @include box-shadow($inset-color 0 $inset-size $inset-size);
   padding-left: $post-h-padding;
   padding-right: $post-h-padding;
   border: 0;
   background: $base3;
   .starthead {
-    @include adjust-font-size-to($largepx);
     @include serif;
+    @include adjust-font-size-to($medpx);
+    color: $base1;
   }
-  &:last-child { background: $background; }
   + .post { border-top: 1px solid; }
 }
 
@@ -76,12 +78,12 @@ $instruction-height: rhythm(5.5);
 [class^="howto-"] {
   @include rhythm-borders(1px,.75);
   @include border-radius(.25em);
-  @include arrow(bottom $base-size/2 $background, 1.5px $orange);
+  @include arrow(bottom $base-size/2 $base3, 1.5px $orange);
   @include box-shadow($back 0 0 .25em);
   position: relative;
   float: right;
   width: columns(6,$center);
-  background: $background;
+  background: $base3;
   color: $orange;
   font-style: italic;
   counter-increment: howto;
@@ -102,6 +104,8 @@ $instruction-height: rhythm(5.5);
 // ---------------------------------------------------------------------------
 // Posts
 
+.feed-posts { @include inset; }
+
 .post {
   @include pie-clearfix;
   @include adjust-font-size-to($post-size);
@@ -113,7 +117,7 @@ $instruction-height: rhythm(5.5);
 
   &.old {
     color: $base1;
-    background: $background;
+    background: color($base3 lighter);
     .title, .summary { color: $base1; }
   }
   &.mine { background: lighten($blue,45); }
@@ -123,6 +127,8 @@ $instruction-height: rhythm(5.5);
     @extend %error;
     @include bleed($post-h-padding);
   }
+
+  &:last-of-type { @include box-shadow($inset-color 0 $inset-size $inset-size); }
 }
 
 .post-meta {
@@ -190,6 +196,7 @@ $postaction-size: $smallpx;
 .post-add-form {
   @extend %formdefaults;
   @include stretch-x;
+  @include box-shadow($inset-color 0 0 $inset-size);
   bottom: 0;
   padding: rhythm(.5) gutter();
   border-top: 1px solid $base;

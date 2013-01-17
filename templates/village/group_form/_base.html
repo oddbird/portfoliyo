@@ -1,13 +1,15 @@
 {% extends "village/_base.html" %}
 {% load widget_tweaks %}
 
+{% block village-title %}
+  {% block form-header %}{% endblock %}
+{% endblock village-title %}
+
 {% block village-content %}
 <form method="POST" action="{% block form-action %}{% endblock %}" class="{% block form-class %}{% endblock %}" id="{% block form-id %}{% endblock %}">
   {% csrf_token %}
 
   {% block form-steps %}{% endblock form-steps %}
-
-  <h2>{% block form-header %}{% endblock %}</h2>
 
   {{ form.non_field_errors }}
 

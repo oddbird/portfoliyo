@@ -19,19 +19,57 @@
   height: rhythm(24);
 }
 
-.village-content {
-  position: relative;
-  height: 100%;
-  margin-left: columns($left);
-}
+// ---------------------------------------------------------------------------
+// Village Content
 
 $village-border-color   : $base1;
 $content-width          : $center + $right;
 
+.village-content {
+  float: right;
+  width: space($center + $right);
+  height: 100%;
+}
+
+// ---------------------------------------------------------------------------
+// Village Header
+
+.village-header {
+  @include pie-clearfix;
+  @include padding-leader(.25);
+  @include trailing-border(1px,.25);
+  @include box-shadow($base 0 0 .25rem);
+  position: relative;
+  padding-left: rhythm(.5);
+  padding-right: $box-padding;
+  background: color($base3 lighter);
+  border-color: $village-border-color;
+  z-index: 10;
+  .village-title {
+    @include serif;
+    @include adjust-font-size-to($medpx);
+    @include span-columns($center, $content-width);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Village Main
+
 .village-main {
   position: relative;
   float: left;
-  width: columns($center, $content-width);
+  width: space($center, $content-width);
   height: 100%;
   border-right: 1px solid $village-border-color;
+}
+
+// ---------------------------------------------------------------------------
+// Village Info
+
+.village-info {
+  @extend %village-lists;
+  @extend %overflow-y;
+  @include span-columns($right omega, $content-width);
+  margin: 0;
+  height: 100%;
 }
