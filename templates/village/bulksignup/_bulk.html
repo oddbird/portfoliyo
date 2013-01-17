@@ -1,6 +1,10 @@
 {% extends "village/_base.html" %}
 {% load url from future %}
 
+{% block village-title %}
+  Signup parents{% if group %} in the {{ group.name }} group{% endif %}:
+{% endblock village-title %}
+
 {% block village-content %}
 <div class="bulk-signup">
 
@@ -13,7 +17,6 @@
 
   {% if code %}
   <div class="parent-instructions">
-    <h2>Signup parents{% if group %} for {{ group.name }}{% endif %}:</h2>
     <div class="pdf-instructions">
       <p class="one-line">
         Text <strong>{{ code }}</strong> to <strong>{{ pyo_phone }}</strong>

@@ -111,8 +111,8 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 // ---------------------------------------------------------------------------
 // Add/Edit Village
 
-.group-add-form, .group-edit-form { @extend %village-solo-page; }
-.village-add-form, .village-edit-form, .bulk-signup { @extend %village-solo-page; }
+.group-add-form, .group-edit-form { @extend %village-page; }
+.village-add-form, .village-edit-form, .bulk-signup { @extend %village-page; }
 
 @include tab-defaults;
 @include tabs(english spanish);
@@ -214,7 +214,7 @@ $preview-columns: $center - $phone-columns;
 // ---------------------------------------------------------------------------
 // Add/Edit Elder
 
-.elder-invite-form, .elder-edit-form { @extend %village-main-page; }
+.elder-invite-form, .elder-edit-form { @extend %village-page; }
 
 .school_staff-field {
   @extend %radio-check-defaults;

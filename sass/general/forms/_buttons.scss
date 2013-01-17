@@ -82,11 +82,14 @@ $button-border: 1px;
   @if $rhythm { @include h-borders(1px,$rhythm); }
 }
 
+$inset-color: color($back,.5);
+$inset-size: rhythm(.125);
+
 // Add inset shadow to an element.
 //
 // inset()
 @mixin inset {
-  @include box-shadow(color($back,.5) 0 0 .25em inset);
+  @include box-shadow($inset-color 0 0 $inset-size inset);
 }
 
 // Reset button styles

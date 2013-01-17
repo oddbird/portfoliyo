@@ -2,7 +2,7 @@
 // Pjax Error
 
 .pjax-error {
-  @extend %village-solo-page;
+  @extend %village-page;
   p {
     @extend %error;
     padding: rhythm(1);

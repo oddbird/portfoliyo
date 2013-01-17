@@ -2,13 +2,12 @@
 {% load url from future %}
 {% load widget_tweaks %}
 
+{% block form-title %}Add a Student:{% endblock %}
+
 {% block form-action %}{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
 
-{% block form-class %}village-add-form details-body{% endblock %}
-
 {% block form-id %}add-student-form{% endblock %}
-
-{% block form-header %}Add a Student:{% endblock %}
+{% block form-class %}village-add-form details-body{% endblock %}
 
 {% block add-family %}
 <fieldset class="invite-family-fieldset optional-fieldset">

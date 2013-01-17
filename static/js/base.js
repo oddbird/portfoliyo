@@ -81,9 +81,20 @@ var PYO = (function (PYO, $) {
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
                     updateHeight(true);
+                    PYO.updateVillageHeight();
                     PYO.updateFeedHeights();
                 });
             });
+        }
+    };
+
+    PYO.updateVillageHeight = function () {
+        if ($('.village-content').length) {
+            var container = $('.village-content');
+            var header = container.find('.village-header');
+            var body = container.find('.village-body');
+            var newHeight = container.height() - header.outerHeight();
+            body.height(newHeight);
         }
     };
 
@@ -411,6 +422,7 @@ var PYO = (function (PYO, $) {
     PYO.initializePage = function () {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');
+        PYO.updateVillageHeight();
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
         if ($('#invite-teacher-form').length) { PYO.disablePreselectedAssociations('#invite-teacher-form'); }
