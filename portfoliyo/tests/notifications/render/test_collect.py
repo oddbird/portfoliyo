@@ -35,3 +35,19 @@ class TestNotificationCollection(object):
         collection = collect.NotificationCollection(profile)
         with mock_store([{'name': types.ADDED_TO_VILLAGE}]):
             assert not collection
+
+
+    def test_context(self):
+        """Accessing context attr forces hydration."""
+        def fake_hydrate(self_):
+            self_._hydrated = True
+            self_._context = {'foo': 'bar'}
+        collect.NotificationCollection._hydrate = fake_hydrate
+
+        collection = collect.NotificationCollection(mock.Mock())
+
+        assert not collection._hydrated
+        assert collection._context == None
+
+        assert collection.context == {'foo': 'bar'}
+        assert collection._hydrated

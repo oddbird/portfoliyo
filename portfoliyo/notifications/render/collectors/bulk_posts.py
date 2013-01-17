@@ -23,10 +23,6 @@ class VillageSet(object):
             self.teachers.append(bulk_post.author)
 
 
-    def __len__(self):
-        return len(self._posts)
-
-
     @property
     def posts(self):
         """Posts in chronological order."""
