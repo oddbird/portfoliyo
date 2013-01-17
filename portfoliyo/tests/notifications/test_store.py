@@ -1,4 +1,5 @@
 """Tests for notification storage/retrieval."""
+from django.conf import settings
 import mock
 
 from portfoliyo.notifications import store
@@ -57,7 +58,7 @@ def test_get_all_clear(redis):
 def test_get_all_excludes_expired(redis):
     """Does not return expired notifications."""
     initial_time = 123456.789
-    expired_time = initial_time + store.EXPIRY_SECONDS + 120
+    expired_time = initial_time + settings.NOTIFICATION_EXPIRY_SECONDS + 120
 
     with mock.patch('portfoliyo.notifications.store.time.time') as mock_time:
         mock_time.return_value = initial_time

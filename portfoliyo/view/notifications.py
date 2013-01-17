@@ -12,9 +12,9 @@ def send_email(request):
     email repeatedly after updating the templates/styles. Pass the querystring
     parameter ?clear=1 to erase notifications.
 
-    Most likely useful in conjunction with ``PORTFOLIYO_NOTIFICATION_EMAILS =
-    False`` in settings, to suppress the normal sending of notification emails
-    immediately upon receipt of a triggering notification.
+    Most likely useful in conjunction with ``NOTIFICATION_EMAILS = False`` in
+    settings, to suppress the normal sending of notification emails immediately
+    upon receipt of a triggering notification.
 
     """
     clear = request.GET.get('clear', False) == '1'

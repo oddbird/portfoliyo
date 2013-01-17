@@ -167,12 +167,12 @@ def test_record_triggering(mock_store):
 
 
 def test_record_triggering_disabled(mock_store):
-    """If PORTFOLIYO_NOTIFICATION_EMAILS is ``False``, no email sent."""
+    """If NOTIFICATION_EMAILS setting is ``False``, no email sent."""
     settings_tgt = 'portfoliyo.notifications.record.settings'
     tgt = 'portfoliyo.notifications.record.tasks.send_notification_email.delay'
     with mock.patch(settings_tgt) as mock_settings:
         with mock.patch(tgt) as mock_task_delay:
-            mock_settings.PORTFOLIYO_NOTIFICATION_EMAILS = False
+            mock_settings.NOTIFICATION_EMAILS = False
             record._record(_profile(id=2), 'some', triggering=True)
 
     assert mock_task_delay.call_count == 0

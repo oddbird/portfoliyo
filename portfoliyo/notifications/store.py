@@ -1,10 +1,10 @@
 """Notification storage and retrieval."""
 import time
 
+from django.conf import settings
+
 from portfoliyo.redis import client as redis
 
-# notifications last 48 hours
-EXPIRY_SECONDS = 48 * 60 * 60
 
 PENDING_PROFILES_KEY = 'notify:pending:profile-ids'
 NEXT_NOTIFICATION_ID_KEY_PATTERN = 'notify:profiles:%s:next-notification-id'
@@ -40,7 +40,7 @@ def store(profile_id, name, triggering=False, data=None):
     notification_id = get_next_notification_id(profile_id)
     key = make_notification_key(profile_id, notification_id)
 
-    expiry_timestamp = time.time() + EXPIRY_SECONDS
+    expiry_timestamp = time.time() + settings.NOTIFICATION_EXPIRY_SECONDS
 
     p = redis.pipeline()
     # add the notification ID to the list of pending notifications for this user
@@ -59,7 +59,8 @@ def get_all(profile_id, clear=False):
     """
     Get all pending notifications for given profile ID.
 
-    Do not return expired notifications (those older than EXPIRY_SECONDS).
+    Do not return expired notifications (those older than
+    NOTIFICATION_EXPIRY_SECONDS).
 
     If ``clear`` is ``True``, also clear all pending notifications.
 
