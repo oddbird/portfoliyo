@@ -321,8 +321,6 @@ var PYO = (function (PYO, $) {
     PYO.initializeNav = function () {
         if ($('.village-nav').length) {
             PYO.navHandlers();
-            PYO.listenForStudentChanges();
-            PYO.listenForGroupChanges();
             if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
                 PYO.fetchStudents();
             } else {
