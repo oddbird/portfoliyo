@@ -504,9 +504,9 @@ optgroup {
   color: #fdf6e3;
 }
 .action-sms:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, .pjax-error .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .dashboard .form-actions button:active, .post-add-form .form-actions button:active, .linkaction:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, [class*="additem-"]:active, .post-add-form .form-actions .action-post:active {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
 }
 
 .action-sms {
@@ -516,9 +516,9 @@ optgroup {
 }
 
 .active.listitem-select:link, .elder .active.vcard:link, .active.listitem-select:visited, .elder .active.vcard:visited, .active.listitem-select:focus, .elder .active.vcard:focus, .active.listitem-select:hover, .elder .active.vcard:hover, .active.listitem-select:active, .elder .active.vcard:active {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
 }
 
 .meta button {
@@ -1619,9 +1619,9 @@ button {
   padding-left: 12.90323%;
   margin-right: -12.90323%;
   padding-right: 12.90323%;
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   background: #eee8d5;
 }
 .features:after {
@@ -1739,9 +1739,9 @@ button {
   border-style: solid;
   padding: 11px;
   padding: 0.58333rem;
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   position: relative;
   background: rgba(147, 161, 161, 0.25);
   color: #657b83;
@@ -2413,9 +2413,9 @@ button {
   background-color: #657b83;
   border-color: #365862;
   color: #fdf6e3;
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
 }
 [class*="additem-"].active:link, [class*="additem-"].active:visited, [class*="additem-"].active:focus, [class*="additem-"].active:hover, [class*="additem-"].active:active {
   color: #fdf6e3;
@@ -2975,14 +2975,21 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .village-feed {
+  position: absolute;
+  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   bottom: 6.06944rem;
-  background: #eee8d5;
+  height: auto;
 }
 
 .feed-posts {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   min-height: 100%;
+  background: #eee8d5;
 }
 .feed-posts .stickyhack {
   clear: both;
@@ -2998,6 +3005,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border-bottom-style: solid;
   padding-bottom: 22px;
   padding-bottom: 1.22222rem;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
   padding-left: 2.12766%;
   padding-right: 2.12766%;
   border: 0;
@@ -3010,9 +3020,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   line-height: 35px;
   line-height: 1.91667rem;
   color: #93a1a1;
-}
-.getting-started:last-child {
-  background: transparent;
 }
 .getting-started + .post {
   border-top: 1px solid;
@@ -3061,7 +3068,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   position: relative;
   float: right;
   width: 48.93617%;
-  background: #eee8d5;
+  background: #fdf6e3;
   color: #cb4b16;
   font-style: italic;
   counter-increment: howto;
@@ -3074,7 +3081,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border: solid transparent;
   pointer-events: none;
   top: 100%;
-  border-top-color: #eee8d5;
+  border-top-color: #fdf6e3;
   border-width: 9px;
   left: 50%;
   margin-left: -9px;
@@ -3102,9 +3109,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .feed-posts {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.25em inset;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
 }
 
 .post {
@@ -3149,10 +3156,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-right: -2.12766%;
   padding-right: 2.12766%;
 }
-.post:last-child {
-  -webkit-box-shadow: #657b83 0 0.25rem 0.25rem;
-  -moz-box-shadow: #657b83 0 0.25rem 0.25rem;
-  box-shadow: #657b83 0 0.25rem 0.25rem;
+.post:last-of-type {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
 }
 
 .post-meta {
@@ -3247,6 +3254,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   position: absolute;
   left: 0;
   right: 0;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   bottom: 0;
   padding: 0.63889rem 1.26582%;
   border-top: 1px solid #657b83;
