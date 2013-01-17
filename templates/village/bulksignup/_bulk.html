@@ -1,9 +1,9 @@
 {% extends "village/_base.html" %}
 {% load url from future %}
 
-{% block village-header %}
-  <h2 class="village-title">Signup parents{% if group %} in the {{ group.name }} group{% endif %}:</h2>
-{% endblock village-header %}
+{% block village-title %}
+  Signup parents{% if group %} in the {{ group.name }} group{% endif %}:
+{% endblock village-title %}
 
 {% block village-content %}
 <div class="bulk-signup">
