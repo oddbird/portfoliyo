@@ -9,7 +9,7 @@ from .posts import serialize_post
 class VillageSet(object):
     """A set of villages that all received the same bulk posts."""
     def __init__(self, students):
-        self.students = students
+        self.students = sorted(students, key=lambda s: s.name)
         # serialized bulk-posts, in unspecified order
         self._posts = []
         # teachers who authored the bulk posts
