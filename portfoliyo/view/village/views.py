@@ -15,6 +15,7 @@ from unidecode import unidecode
 
 from portfoliyo import formats, model, pdf, xact
 from portfoliyo.view import tracking
+from .. import home
 from ..ajax import ajax
 from ..decorators import school_staff_required, login_required
 from . import forms
@@ -125,6 +126,14 @@ def edit_student(request, student_id):
     group = get_querystring_group(request, rel.student)
 
     if request.method == 'POST':
+        if request.POST.get('remove', False):
+            with xact.xact():
+                rel.delete()
+            messages.success(request, "Student '%s' removed." % rel.student)
+            if group:
+                return redirect('group', group_id=group.id)
+            else:
+                return redirect('all_students')
         form = forms.StudentForm(
             request.POST, instance=rel.student, elder=rel.elder)
         if form.is_valid():
@@ -185,6 +194,11 @@ def edit_group(request, group_id):
         raise http.Http404
 
     if request.method == 'POST':
+        if request.POST.get('remove', False):
+            with xact.xact():
+                group.delete()
+            messages.success(request, "Group '%s' removed." % group)
+            return redirect(home.redirect_home(request.user))
         form = forms.GroupForm(request.POST, instance=group)
         if form.is_valid():
             with xact.xact():
