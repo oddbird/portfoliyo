@@ -34,13 +34,12 @@ MESSAGES = {
         'en': (
             u"Sorry, we can't find any students connected to your number, "
             u"so we can't deliver your message. "
-            u"Please contact your student's teacher for help."
+            u"Text a teacher code to connect with that teacher."
             ),
         'es': (
             u"No encontramos ningún estudiante conectados a su número, "
             u"por lo que no se puede entregar su mensaje. "
-            u"Comuníquese con el maestro de su hijo "
-            u"para obtener ayuda."
+            u"Texto maestro código para conectarse con ese maestro."
             ),
         },
 
