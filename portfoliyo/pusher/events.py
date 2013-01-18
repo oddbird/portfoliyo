@@ -12,26 +12,23 @@ logger = logging.getLogger(__name__)
 
 def posted(post_id, **extra_data):
     """Send ``message_posted`` event for ``post_id`` with ``extra_data``."""
-    post = model.Post.objects.get(pk=post_id)
-    channel = 'student_%s' % post.student.id
-    trigger(
-        channel,
-        'message_posted',
-        {'posts': [model.post_dict(post, **extra_data)]}
-        )
+    posted_event(model.Post.objects.get(pk=post_id), **extra_data)
 
 
 
 def bulk_posted(bulk_post_id, **extra_data):
     """Send ``message_posted`` event for ``post_id`` with ``extra_data``."""
-    bulkpost = model.BulkPost.objects.get(pk=bulk_post_id)
-    group = bulkpost.group or model.AllStudentsGroup(bulkpost.author)
-    channel = 'group_%s' % group.id
-    trigger(
-        channel,
-        'message_posted',
-        {'posts': [model.post_dict(bulkpost, **extra_data)]}
-        )
+    posted_event(model.BulkPost.objects.get(pk=bulk_post_id), **extra_data)
+
+
+
+def posted_event(post, **extra_data):
+    data = {'posts': [model.post_dict(post, **extra_data)]}
+    teacher_ids = post.elders_in_context.filter(
+        school_staff=True).values_list('pk', flat=True)
+    for teacher_id in teacher_ids:
+        channel = 'user_%s' % teacher_id
+        trigger(channel, 'message_posted', data)
 
 
 
@@ -74,7 +71,7 @@ def student_event(event, student_id, elder_ids=None, full_data=True):
         elder_ids = model.Relationship.objects.filter(
             to_profile=student_id).values_list('from_profile', flat=True)
     for elder_id in elder_ids:
-        trigger('students_of_%s' % elder_id, event, {'objects': [data]})
+        trigger('user_%s' % elder_id, event, {'objects': [data]})
 
 
 
@@ -108,7 +105,7 @@ def group_event(event, group_id, owner_id, full_data=True):
         data = group_resource._meta.serializer.to_simple(b, None)
     else:
         data = {'id': group_id}
-    trigger('groups_of_%s' % owner_id, event, {'objects': [data]})
+    trigger('user_%s' % owner_id, event, {'objects': [data]})
 
 
 
@@ -125,7 +122,7 @@ def student_added_to_group(owner_id, student_ids, group_ids):
         data['groups'] = group_ids
         objects.append(data)
     trigger(
-        'groups_of_%s' % owner_id,
+        'user_%s' % owner_id,
         'student_added_to_group',
         {
             'objects': objects
@@ -137,7 +134,7 @@ def student_added_to_group(owner_id, student_ids, group_ids):
 def student_removed_from_group(owner_id, student_ids, group_ids):
     """Tell ``owner_id`` that ``student_ids`` were removed from ``group_ids``"""
     trigger(
-        'groups_of_%s' % owner_id,
+        'user_%s' % owner_id,
         'student_removed_from_group',
         {
             'objects': [

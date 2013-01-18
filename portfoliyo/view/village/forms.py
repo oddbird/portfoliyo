@@ -189,10 +189,13 @@ class InviteFamilyForm(FamilyForm):
         except model.Profile.DoesNotExist:
             self.instance = None
         else:
-            students = set(self.instance.students)
-            if self.rel is not None:
-                students.discard(self.rel.student)
-            if students:
+            # is this parent connected to any other (non-orphan) students?
+            students = model.Profile.objects.filter(
+                relationships_to__from_profile=self.instance,
+                ).filter(relationships_to__from_profile__school_staff=True)
+            if self.rel:
+                students = students.exclude(pk=self.rel.to_profile_id)
+            if students.exists():
                 raise forms.ValidationError(
                     u"This person is already connected to a different student. "
                     u"Portfoliyo doesn't support family members in multiple "
@@ -229,6 +232,12 @@ class InviteFamilyForm(FamilyForm):
                 school_staff=False,
                 invited_by=inviter,
                 )
+        else:
+            # remove other existing relationships with teacher-less students
+            model.Relationship.objects.filter(
+                from_profile=self.instance).exclude(
+                from_profile__school_staff=True).exclude(
+                    to_profile=self.rel.student).delete()
 
         # send invite SMSes
         invites.send_invite_sms(
