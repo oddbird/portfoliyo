@@ -730,6 +730,16 @@ class TestContextualizedElders(object):
         assert list(qs) == [rel2.elder, rel1.elder]
 
 
+    def test_can_values_list(self, db):
+        """Can get values_list from contextualized elders."""
+        rel1 = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create()
+        qs = model.contextualized_elders(model.Relationship.objects.all())
+
+        assert set(qs.values_list('id', flat=True)) == {
+            rel1.from_profile_id, rel2.from_profile_id}
+
+
 
 class TestGenerateCode(object):
     def test_too_many_ambiguous(self):
