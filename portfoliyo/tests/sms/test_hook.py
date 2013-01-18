@@ -154,7 +154,7 @@ def test_no_students(db):
     assert reply == (
         "Sorry, we can't find any students connected to your number, "
         "so we can't deliver your message. "
-        "Text a teacher code to connect with that teacher."
+        "Please text a teacher code to connect with that teacher."
         )
 
 
@@ -167,9 +167,9 @@ def test_orphan_student(db):
     reply = hook.receive_sms(phone, 'foo')
 
     assert reply == (
-        "We can't find any teachers connected to your number, "
+        "Sorry, we can't find any teachers connected to your number, "
         "so we can't deliver your message. "
-        "Text a teacher code to connect with that teacher."
+        "Please text a teacher code to connect with that teacher."
         )
 
 

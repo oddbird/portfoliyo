@@ -34,7 +34,7 @@ MESSAGES = {
         'en': (
             u"Sorry, we can't find any students connected to your number, "
             u"so we can't deliver your message. "
-            u"Text a teacher code to connect with that teacher."
+            u"Please text a teacher code to connect with that teacher."
             ),
         'es': (
             u"No encontramos ningún estudiante conectados a su número, "
@@ -45,9 +45,9 @@ MESSAGES = {
 
     'NO_TEACHERS': {
         'en': (
-            u"We can't find any teachers connected to your number, "
+            u"Sorry, we can't find any teachers connected to your number, "
             u"so we can't deliver your message. "
-            u"Text a teacher code to connect with that teacher."
+            u"Please text a teacher code to connect with that teacher."
             ),
         'es': (
             u"No encontramos ningún maestro conectados a su número, "
