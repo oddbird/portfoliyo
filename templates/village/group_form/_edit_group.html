@@ -1,16 +1,23 @@
 {% extends "village/group_form/_base.html" %}
 
+{% block form-header %}
+  <span aria-hidden="true" class="icon-edit"></span>
+  <b>Edit</b> {{ group }}
+{% endblock %}
+
 {% block form-action %}{% url edit_group group_id=group.id %}{% endblock %}
 
 {% block form-class %}group-edit-form{% endblock %}
 
 {% block form-id %}edit-group-form{% endblock %}
 
-{% block form-header %}
-  <span aria-hidden="true" class="icon-edit"></span>
-  <b>Edit</b> {{ group }}
-{% endblock %}
-
 {% block groupdetailsopen %}open{% endblock groupdetailsopen %}
 
+{% block action-remove %}
+  <p class="remove-item">
+    <button class="action-remove secondary" type="submit" name="remove" value="1">
+      Delete {{ group }}
+    </button>
+  </p>
+{% endblock action-remove %}
 {% block form-button-text %}save{% endblock %}

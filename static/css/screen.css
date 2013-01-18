@@ -2808,6 +2808,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: none;
 }
 
+.remove-item {
+  float: left;
+}
+
 .school_staff-field {
   margin-top: 23px;
   margin-top: 1.27778rem;

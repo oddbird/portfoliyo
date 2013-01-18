@@ -10,4 +10,12 @@
 {% block form-id %}edit-student-form{% endblock %}
 {% block form-class %}village-edit-form{% endblock %}
 
+{% block action-remove %}
+  <p class="remove-item">
+    <button class="action-remove secondary" type="submit" name="remove" value="1">
+      Remove {{ student.name }}
+    </button>
+  </p>
+{% endblock action-remove %}
+
 {% block form-button-text %}save{% endblock %}

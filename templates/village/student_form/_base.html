@@ -23,9 +23,7 @@
   </div>
 
   <div class="form-actions">
-    {% block action-remove %}
-    <p><button class="action-remove secondary" type="submit" name="remove" value="1">Remove</button> or</p>
-    {% endblock action-remove %}
+    {% block action-remove %}{% endblock %}
     <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>
   </div>
 </form>
