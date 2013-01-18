@@ -604,6 +604,11 @@ class QuerySetWrapper(object):
         return self.__class__(self.queryset.order_by(*args))
 
 
+    def values_list(self, *args, **kw):
+        args = [self._mangle_fieldname(fn) for fn in args]
+        return self.queryset.values_list(*args, **kw)
+
+
 
 class EldersForRelationships(QuerySetWrapper):
     """Relationship queryset wrapper; emulates QS of contextualized elders."""
