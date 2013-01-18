@@ -1,6 +1,9 @@
 {% extends "village/student_form/_base.html" %}
 
-{% block form-title %}Edit '{{ student.name }}'{% endblock %}
+{% block form-title %}
+  <span aria-hidden="true" class="icon-edit"></span>
+  <b>Edit</b> {{ student.name }}
+{% endblock %}
 
 {% block form-action %}{% url edit_student student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}{% endblock %}
 

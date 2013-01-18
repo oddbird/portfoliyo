@@ -6,7 +6,10 @@
 
 {% block form-id %}invite-teacher-form{% endblock %}
 
-{% block form-header %}Invite Teacher of {{ student }}{% endblock %}
+{% block form-header %}
+  <span aria-hidden="true" class="icon-add"></span>
+  Invite Teacher <b>of</b> {{ student }}
+{% endblock %}
 
 {% block form-fields %}
   {% include "forms/_field.html" with field=form.email|attr:"placeholder: teacher@example.com" %}

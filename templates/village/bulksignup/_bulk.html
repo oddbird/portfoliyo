@@ -2,7 +2,8 @@
 {% load url from future %}
 
 {% block village-title %}
-  Signup parents{% if group %} in the {{ group.name }} group{% endif %}:
+  <span aria-hidden="true" class="icon-add-student"></span>
+  Signup parents{% if group %} <b>in the</b> {{ group.name }} <b>group</b>{% endif %}
 {% endblock village-title %}
 
 {% block village-content %}
