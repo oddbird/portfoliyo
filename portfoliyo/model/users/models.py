@@ -177,9 +177,13 @@ class Profile(models.Model):
 
     @property
     def elder_relationships(self):
-        return self.relationships_to.filter(
-            kind=Relationship.KIND.elder).order_by(
-            'from_profile__name').select_related("from_profile")
+        rels = getattr(self, '_cached_elder_relationships', None)
+        if rels is None:
+            rels = self.relationships_to.filter(
+                kind=Relationship.KIND.elder).order_by(
+                'from_profile__name').select_related('from_profile')
+            self._cached_elder_relationships = rels
+        return rels
 
 
     @property
@@ -189,9 +193,13 @@ class Profile(models.Model):
 
     @property
     def student_relationships(self):
-        return self.relationships_from.filter(
-            kind=Relationship.KIND.elder).order_by(
-            'to_profile__name').select_related("to_profile")
+        rels = getattr(self, '_cached_student_relationships', None)
+        if rels is None:
+            rels = self.relationships_from.filter(
+                kind=Relationship.KIND.elder).order_by(
+                'to_profile__name').select_related('to_profile')
+            self._cached_student_relationships = rels
+        return rels
 
 
     @property
@@ -612,8 +620,17 @@ class QuerySetWrapper(object):
 
 class EldersForRelationships(QuerySetWrapper):
     """Relationship queryset wrapper; emulates QS of contextualized elders."""
+    def __init__(self, queryset):
+        # Avoid performing an unnecessary select_related call, because this
+        # will clone the queryset and empty the result cache.
+        sr = queryset.query.select_related
+        if not sr or (sr != True and 'from_profile' not in sr):
+            queryset = queryset.select_related('from_profile')
+        super(EldersForRelationships, self).__init__(queryset)
+
+
     def __iter__(self):
-        for rel in self.queryset.select_related('from_profile'):
+        for rel in self.queryset:
             rel.elder.role_in_context = rel.description_or_role
             yield rel.elder
 

@@ -163,11 +163,29 @@ class TestProfile(object):
         assert list(rel.student.elders) == [rel.elder]
 
 
+    def test_elders_cached(self, db):
+        """elders property is cached to avoid redundant queries."""
+        s = factories.RelationshipFactory.create().student
+
+        with utils.assert_num_queries(1):
+            list(s.elders)
+            list(s.elders)
+
+
     def test_students(self, db):
         """student_relationships property is list of profiles."""
         rel = factories.RelationshipFactory.create()
 
         assert rel.elder.students == [rel.student]
+
+
+    def test_students_cached(self, db):
+        """students property is cached to avoid redundant queries."""
+        e = factories.RelationshipFactory.create().elder
+
+        with utils.assert_num_queries(1):
+            list(e.students)
+            list(e.students)
 
 
     def test_create_dupe_code(self, db):
