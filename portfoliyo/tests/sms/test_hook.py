@@ -154,7 +154,7 @@ def test_no_students(db):
     assert reply == (
         "Sorry, we can't find any students connected to your number, "
         "so we can't deliver your message. "
-        "Please contact your student's teacher for help."
+        "Text a teacher code to connect with that teacher."
         )
 
 
