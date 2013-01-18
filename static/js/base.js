@@ -80,7 +80,7 @@ var PYO = (function (PYO, $) {
 
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
-                    updateHeight(true);
+                    updateHeight();
                     PYO.updateVillageHeight();
                     PYO.updateFeedHeights();
                 });
