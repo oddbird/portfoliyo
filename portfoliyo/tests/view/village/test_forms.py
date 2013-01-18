@@ -598,6 +598,8 @@ class TestInviteFamilyForm(object):
         """For now, it's an error to add a family member to a 2nd village."""
         parent_rel = factories.RelationshipFactory(
             from_profile__phone='+13216541234')
+        factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile=parent_rel.student)
         teacher_rel = factories.RelationshipFactory.create()
         form = forms.InviteFamilyForm(
             self.data(phone=parent_rel.elder.phone),
@@ -610,6 +612,23 @@ class TestInviteFamilyForm(object):
             u"Portfoliyo doesn't support family members in multiple villages "
             u"yet, but we're working on it!"
             ]
+
+
+    def test_can_invite_to_second_student_if_first_orphaned(self, sms, db):
+        """A student w/ no teachers doesn't prevent invite to a new student."""
+        parent_rel = factories.RelationshipFactory(
+            from_profile__phone='+13216541234')
+        teacher_rel = factories.RelationshipFactory.create()
+        form = forms.InviteFamilyForm(
+            self.data(phone=parent_rel.elder.phone),
+            rel=teacher_rel,
+            )
+        assert form.is_valid()
+        parent = form.save()
+
+        # parent is removed from orphaned village and added to new one
+        assert utils.deleted(parent_rel)
+        assert parent in teacher_rel.student.elders
 
 
     def test_relationship_exists(self, db):
@@ -681,11 +700,14 @@ class TestStudentForms(object):
 
 
     def test_add_student_with_family_that_already_has_student(self, db):
-        """Saves a student and adds a family member."""
+        """Can't add student with family that already has one (with teacher)."""
         teacher = factories.ProfileFactory.create()
         phone = "+13216540987"
-        factories.RelationshipFactory.create(
+        parent_rel = factories.RelationshipFactory.create(
             from_profile__phone=phone)
+        # the student only prevents adding a new one if they have a teacher
+        factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile=parent_rel.student)
         form = forms.AddStudentForm(
             {
                 'name': "Some Student",
