@@ -6,7 +6,10 @@
 
 {% block form-id %}edit-group-form{% endblock %}
 
-{% block form-header %}Edit '{{ group }}'{% endblock %}
+{% block form-header %}
+  <span aria-hidden="true" class="icon-edit"></span>
+  <b>Edit</b> {{ group }}
+{% endblock %}
 
 {% block groupdetailsopen %}open{% endblock groupdetailsopen %}
 

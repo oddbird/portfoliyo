@@ -45,11 +45,18 @@ $content-width          : $center + $right;
   background: color($base3 lighter);
   border-color: $village-border-color;
   z-index: 10;
-  .village-title {
-    @include serif;
-    @include adjust-font-size-to($medpx);
-    @include span-columns($center, $content-width);
+}
+
+.village-title {
+  @include serif;
+  @include adjust-font-size-to($largepx);
+  @include span-columns($center, $content-width);
+  font-weight: bold;
+  [class^="icon-"] {
+    color: color($base,.5);
+    &:before { margin: 0; }
   }
+  b { font-weight: normal; }
 }
 
 // ---------------------------------------------------------------------------
