@@ -405,11 +405,6 @@ var PYO = (function (PYO, $) {
         PYO.initializeMultiselect();
     };
 
-    PYO.initializePusher = function () {
-        PYO.pusherKey = $('.village').data('pusher-key');
-        if (PYO.pusherKey) { PYO.pusher = new Pusher(PYO.pusherKey, {encrypted: true}); }
-    };
-
     PYO.initializePage = function () {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');

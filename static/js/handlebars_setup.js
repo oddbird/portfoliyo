@@ -3,7 +3,7 @@ var PYO = (function (PYO, $) {
     'use strict';
 
     PYO.tpl = function (template, data) {
-        return $($.parseHTML(Handlebars.templates[template](data)));
+        return $($.parseHTML(Handlebars.templates[template](data))).filter('*');
     };
 
     $(function () {

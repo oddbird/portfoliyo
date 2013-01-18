@@ -16,7 +16,6 @@ var PYO = (function (PYO, $) {
         PYO.activeUserId = $('.village').data('user-id');
         PYO.ieInputBootstrapHandler();
         PYO.announcements('#messages .announce');
-        PYO.initializePusher();
         PYO.updatePageHeight('.village');
         PYO.ajaxifyVillages('.village');
         PYO.detectFlashSupport('.village');
@@ -24,6 +23,9 @@ var PYO = (function (PYO, $) {
 
         // nav.js
         PYO.initializeNav();
+
+        // pusher.js
+        PYO.initializePusher();
 
         // user.js
         PYO.addSchool('#register-form');
