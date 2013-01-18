@@ -79,15 +79,15 @@ MESSAGES = {
             ),
         'es': (
             u"Última pregunta: ¿Cuál es su nombre? "
-            u"(Así que el %s sabe quién está enviando mensajes de texto)."
+            u"(Para que el %s sepa quién está enviando mensajes de texto)."
             ),
         },
 
     'ALL_DONE': {
         'en': u"All done, thank you! You can text this number to talk with %s.",
         'es': (
-            u"Resuelto, gracias! "
-            u"Usted puede enviar un texto a este número para hablar con %s.",
+            u"Listo, gracias! "
+            u"Ahora puede textear a este número para hablar con %s.",
             )
         },
 
