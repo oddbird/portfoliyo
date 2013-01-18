@@ -1,9 +1,14 @@
 {% extends "village/_base.html" %}
 
-{% block village-title %}
-  <span aria-hidden="true" class="icon-edit"></span>
-  <b>Edit</b> {% firstof elder.name elder.user.email elder.phone "Family Member" %}
-{% endblock village-title %}
+{% block village-header %}
+  <h2 class="village-title">
+    <span aria-hidden="true" class="icon-edit"></span>
+    <b>Edit</b> {% firstof elder.name elder.user.email elder.phone "Family Member" %}
+  </h2>
+  <div class="page-actions">
+    <a href="#@@@" class="action-back">Back to {% firstof student group %}</a>
+  </div>
+{% endblock %}
 
 {% block village-content %}
 <div class="village-main">
@@ -15,6 +20,7 @@
     {% include "forms/_field.html" with field=form.phone helpinclude="village/elder_form/_sms_preview.html" %}
 
     <div class="form-actions">
+      <p><a href="#@@@" class="cancel">Cancel</a> or</p>
       <button type="submit">Save changes</button>
     </div>
   </form>

@@ -1,8 +1,13 @@
 {% extends "village/group_form/_base.html" %}
 
 {% block form-header %}
-  <span aria-hidden="true" class="icon-edit"></span>
-  <b>Edit</b> {{ group }}
+  <h2 class="village-title">
+    <span aria-hidden="true" class="icon-edit"></span>
+    <b>Edit</b> {{ group }}
+  </h2>
+  <div class="page-actions">
+    <a href="#@@@" class="action-back">Back to {{ group }}</a>
+  </div>
 {% endblock %}
 
 {% block form-action %}{% url edit_group group_id=group.id %}{% endblock %}
@@ -13,11 +18,12 @@
 
 {% block groupdetailsopen %}open{% endblock groupdetailsopen %}
 
-{% block action-remove %}
+{% block more-actions %}
   <p class="remove-item">
     <button class="action-remove secondary" type="submit" name="remove" value="1">
       Delete {{ group }}
     </button>
   </p>
-{% endblock action-remove %}
+  <p><a href="#@@@" class="cancel">Cancel</a> or</p>
+{% endblock %}
 {% block form-button-text %}save{% endblock %}

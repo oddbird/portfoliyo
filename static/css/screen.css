@@ -266,10 +266,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e020";
 }
 
-.action-back.groups:before {
-  content: "\e01e";
-}
-
 .twoway-feature .feature-title:before {
   content: "\e01f";
 }
@@ -280,6 +276,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 
 .no-sms .sms-info .summary:before {
   content: "\e019";
+}
+
+.action-back.groups:before {
+  content: "\f0c9";
+}
+
+.page-actions .action-back:before {
+  content: "\e01e";
 }
 
 /* Use the following CSS code if you want to have a class per icon */

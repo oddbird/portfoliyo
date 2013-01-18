@@ -42,7 +42,6 @@
     @include button-color($base3);
   }
 
-  .action-edit {
-    @extend %icon-pencil;
-  }
+  .action-edit { @extend %icon-pencil; }
+  .action-back { @extend %icon-undo-2; }
 }
