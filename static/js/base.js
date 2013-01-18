@@ -54,27 +54,18 @@ var PYO = (function (PYO, $) {
             var headerHeight = $('div[role="banner"]').outerHeight();
             var footerHeight = $('footer').outerHeight();
             var pageHeight, transition;
-            var updateHeight = function (animate) {
+            var updateHeight = function () {
                 var scroll = PYO.scrolledToBottom();
                 pageHeight = $(window).height() - headerHeight - footerHeight;
-                if (animate) {
-                    page.css('height', pageHeight.toString() + 'px');
-                    if (scroll) {
-                        $.doTimeout('page_height_scroll', 250, function () {
-                            PYO.scrollToBottom();
-                        });
-                    }
-                } else {
-                    transition = page.css('transition');
-                    page.css({
-                        'transition': 'none',
-                        'height': pageHeight.toString() + 'px'
-                    });
-                    $(window).load(function () {
-                        page.css('transition', transition);
-                    });
-                    if (scroll) { PYO.scrollToBottom(); }
-                }
+                transition = page.css('transition');
+                page.css({
+                    'transition': 'none',
+                    'height': pageHeight.toString() + 'px'
+                });
+                $(window).load(function () {
+                    page.css('transition', transition);
+                });
+                if (scroll) { PYO.scrollToBottom(); }
             };
             updateHeight();
 

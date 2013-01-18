@@ -33,15 +33,27 @@ MESSAGES = {
     'NO_STUDENTS': {
         'en': (
             u"Sorry, we can't find any students connected to your number, "
-            u"so we're not able to deliver your message. "
+            u"so we can't deliver your message. "
             u"Text a teacher code to connect with that teacher."
             ),
         'es': (
-            u"Lo sentimos, no podemos encontrar ningún estudiante "
-            u"conectados a su número, "
-            u"por lo que no somos capaces de entregar su mensaje. "
+            u"No encontramos ningún estudiante conectados a su número, "
+            u"por lo que no se puede entregar su mensaje. "
             u"Texto maestro código para conectarse con ese maestro."
-            )
+            ),
+        },
+
+    'NO_TEACHERS': {
+        'en': (
+            u"We can't find any teachers connected to your number, "
+            u"so we can't deliver your message. "
+            u"Text a teacher code to connect with that teacher."
+            ),
+        'es': (
+            u"No encontramos ningún maestro conectados a su número, "
+            u"por lo que no se puede entregar su mensaje. "
+            u"Texto maestro código para conectarse con ese maestro."
+            ),
         },
 
     'STUDENT_NAME': {

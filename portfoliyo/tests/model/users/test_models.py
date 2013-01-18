@@ -275,15 +275,6 @@ class TestRelationship(object):
         rel.elder.delete()
 
 
-    def test_deletes_orphaned_student(self, db):
-        """If deleting rel leaves student w/ no teachers, delete the student."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
-        rel.delete()
-
-        assert utils.deleted(rel.student)
-
-
 
 class TestGroup(object):
     """Tests for Group model."""
