@@ -146,38 +146,20 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
     """
     student = profile.students[0] if profile.students else None
 
-    # This goes before the teacher-already-in-village check, because in any
-    # case we want to add student to group if this is a group code, and pass
-    # post on to village
-    if student:
-        rel, created = model.Relationship.objects.get_or_create(
-            from_profile=teacher,
-            to_profile=student,
-            defaults={'level': model.Relationship.LEVEL.owner},
-            )
-        if group:
-            group.students.add(student)
-        model.Post.create(profile, student, body, from_sms=True)
-
     if profile.lang_code != lang:
         profile.lang_code = lang
         profile.save()
 
-    # don't reply if they already were connected to the teacher
-    if (signup and teacher == signup.teacher) or (student and not created):
-        return None
-
-    track_signup(profile, teacher, group)
-
-    model.TextSignup.objects.create(
-        family=profile,
-        teacher=teacher,
-        group=group,
-        student=student,
-        state=signup.state if signup else model.TextSignup.STATE.done,
-        )
-
-    msg = messages.get('SUBSEQUENT_CODE_DONE', profile.lang_code) % teacher.name
+    # This goes before the teacher-already-in-village check, because in any
+    # case we want to add student to group if this is a group code, and pass
+    # post on to village
+    if student or signup:
+        next_state = signup.state if signup else model.TextSignup.STATE.done
+        msg = messages.get(
+            'SUBSEQUENT_CODE_DONE', profile.lang_code) % teacher.name
+    else:
+        next_state = model.TextSignup.STATE.kidname
+        msg = messages.get('STUDENT_NAME', profile.lang_code) % teacher.name
 
     if signup:
         follow_ups = {
@@ -191,6 +173,30 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
         msg = msg + " " + follow_ups.get(signup.state, "")
         signup.state = model.TextSignup.STATE.done
         signup.save()
+
+    if student:
+        rel, created = model.Relationship.objects.get_or_create(
+            from_profile=teacher,
+            to_profile=student,
+            defaults={'level': model.Relationship.LEVEL.owner},
+            )
+        if group:
+            group.students.add(student)
+        model.Post.create(profile, student, body, from_sms=True)
+
+    # don't reply, track, or create new signup if already connected to teacher
+    if (signup and teacher == signup.teacher) or (student and not created):
+        return None
+
+    track_signup(profile, teacher, group)
+
+    model.TextSignup.objects.create(
+        family=profile,
+        teacher=teacher,
+        group=group,
+        student=student,
+        state=next_state,
+        )
 
     return reply(profile.phone, [student] if student else [], msg)
 

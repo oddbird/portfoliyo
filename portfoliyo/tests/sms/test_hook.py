@@ -885,6 +885,26 @@ def test_subsequent_signup_when_first_needs_name(db):
     assert new_signup.group is None
 
 
+def test_subsequent_signup_when_no_students(db):
+    """If a parent has no students they can text a code to start over."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        teacher__code='ABCDEF',
+        teacher__name='Ms. Doe',
+        state=model.TextSignup.STATE.done,
+        )
+
+    reply = hook.receive_sms(phone, 'ABCDEF')
+
+    assert reply == (
+        "Thanks! What is the name of your child in Ms. Doe's class?")
+    new_signup = signup.family.signups.exclude(pk=signup.pk).get()
+    assert new_signup.state == model.TextSignup.STATE.kidname
+    assert new_signup.teacher == signup.teacher
+    assert new_signup.group is None
+
+
 def test_multiple_active_signups_logs_warning(db):
     """If a user has multiple active signups, a warning is logged."""
     phone = '+13216430987'
