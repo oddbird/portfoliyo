@@ -1,5 +1,5 @@
 // ---------------------------------------------------------------------------
-// Icons
+// Icon Setup
 
 /* Use the following CSS code if you want to have a class per icon */
 %icon-content {
@@ -39,3 +39,18 @@
   @extend %icon-content;
   content: attr(data-icon);
 }
+
+[class^="icon-"] { @extend %icon; }
+
+// ---------------------------------------------------------------------------
+// Icons
+
+.icon-edit { @extend %icon-pencil; }
+.icon-add { @extend %icon-plus; }
+
+.icon-student { @extend %icon-user; }
+.icon-add-student { @extend %icon-user-plus; }
+
+.icon-group { @extend %icon-users; }
+.icon-add-group { @extend %icon-users-plus; }
+

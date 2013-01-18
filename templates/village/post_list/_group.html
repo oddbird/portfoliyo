@@ -1,7 +1,10 @@
 {% extends "village/post_list/_base.html" %}
 {% load url from future %}
 
-{% block village-title %}{{ group.name }}{% endblock %}
+{% block village-title %}
+  <span aria-hidden="true" class="icon-group"></span>
+  {{ group.name }}
+{% endblock %}
 
 {% block page-actions %}
 {% if not group.is_all %}{{ block.super }}{% endif %}

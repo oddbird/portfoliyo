@@ -1,7 +1,10 @@
 {% extends "village/post_list/_base.html" %}
 {% load url from future %}
 
-{% block village-title %}{{ student.name }}{% endblock %}
+{% block village-title %}
+  <span aria-hidden="true" class="icon-student"></span>
+  {{ student.name }}
+{% endblock %}
 
 {% block edit-url %}{% url 'edit_student' student_id=student.id %}{% endblock %}
 

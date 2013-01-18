@@ -2,7 +2,10 @@
 {% load url from future %}
 {% load widget_tweaks %}
 
-{% block form-title %}Add a Student:{% endblock %}
+{% block form-title %}
+  <span aria-hidden="true" class="icon-add-student"></span>
+  Add a Student
+{% endblock %}
 
 {% block form-action %}{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
 

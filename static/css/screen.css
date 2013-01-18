@@ -198,7 +198,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e006";
 }
 
-[class*="additem-"]:before {
+.icon-add:before, [class*="additem-"]:before {
   content: "\e007";
 }
 
@@ -226,7 +226,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e010";
 }
 
-.page-actions .action-edit:before, .listitem-actions .action-edit:before {
+.icon-edit:before, .page-actions .action-edit:before, .listitem-actions .action-edit:before {
   content: "\f071";
 }
 
@@ -246,15 +246,19 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01a";
 }
 
-.elders-feature .feature-title:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
+.icon-student:before {
+  content: "\f111";
+}
+
+.icon-group:before, .elders-feature .feature-title:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\e01b";
 }
 
-.signup-feature .feature-title:before, [class*="additem-"][class*="-village"]:before {
+.icon-add-student:before, .signup-feature .feature-title:before, [class*="additem-"][class*="-village"]:before {
   content: "\e01c";
 }
 
-[class*="additem-"][class*="-group"]:before {
+.icon-add-group:before, [class*="additem-"][class*="-group"]:before {
   content: "\e01d";
 }
 
@@ -283,14 +287,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.action-sms:before, #messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .login form .form-actions [class~="secondary"].action-remove:before, .register form .form-actions [class~="secondary"].action-remove:before, .edit-profile form .form-actions [class~="secondary"].action-remove:before, .reset-password form .form-actions [class~="secondary"].action-remove:before, .change-password form .form-actions [class~="secondary"].action-remove:before, .set-password form .form-actions [class~="secondary"].action-remove:before, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:before, .activationfailed form .form-actions [class~="secondary"].action-remove:before, .awaiting-activation form .form-actions [class~="secondary"].action-remove:before, .no-students form .form-actions [class~="secondary"].action-remove:before, .pjax-error .form-actions [class~="secondary"].action-remove:before, .group-add-form .form-actions [class~="secondary"].action-remove:before, .group-edit-form .form-actions [class~="secondary"].action-remove:before, .village-add-form .form-actions [class~="secondary"].action-remove:before, .village-edit-form .form-actions [class~="secondary"].action-remove:before, .bulk-signup .form-actions [class~="secondary"].action-remove:before, .elder-invite-form .form-actions [class~="secondary"].action-remove:before, .elder-edit-form .form-actions [class~="secondary"].action-remove:before, .dashboard .form-actions [class~="secondary"].action-remove:before, .post-add-form .form-actions [class~="secondary"].action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard.inactive:before, [data-icon]:before {
+.action-sms:before, #messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, [class^="icon-"]:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .login form .form-actions [class~="secondary"].action-remove:before, .register form .form-actions [class~="secondary"].action-remove:before, .edit-profile form .form-actions [class~="secondary"].action-remove:before, .reset-password form .form-actions [class~="secondary"].action-remove:before, .change-password form .form-actions [class~="secondary"].action-remove:before, .set-password form .form-actions [class~="secondary"].action-remove:before, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:before, .activationfailed form .form-actions [class~="secondary"].action-remove:before, .awaiting-activation form .form-actions [class~="secondary"].action-remove:before, .no-students form .form-actions [class~="secondary"].action-remove:before, .pjax-error .form-actions [class~="secondary"].action-remove:before, .group-add-form .form-actions [class~="secondary"].action-remove:before, .group-edit-form .form-actions [class~="secondary"].action-remove:before, .village-add-form .form-actions [class~="secondary"].action-remove:before, .village-edit-form .form-actions [class~="secondary"].action-remove:before, .bulk-signup .form-actions [class~="secondary"].action-remove:before, .elder-invite-form .form-actions [class~="secondary"].action-remove:before, .elder-edit-form .form-actions [class~="secondary"].action-remove:before, .dashboard .form-actions [class~="secondary"].action-remove:before, .post-add-form .form-actions [class~="secondary"].action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.action-sms:before, #messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .login form .form-actions [class~="secondary"].action-remove:before, .register form .form-actions [class~="secondary"].action-remove:before, .edit-profile form .form-actions [class~="secondary"].action-remove:before, .reset-password form .form-actions [class~="secondary"].action-remove:before, .change-password form .form-actions [class~="secondary"].action-remove:before, .set-password form .form-actions [class~="secondary"].action-remove:before, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:before, .activationfailed form .form-actions [class~="secondary"].action-remove:before, .awaiting-activation form .form-actions [class~="secondary"].action-remove:before, .no-students form .form-actions [class~="secondary"].action-remove:before, .pjax-error .form-actions [class~="secondary"].action-remove:before, .group-add-form .form-actions [class~="secondary"].action-remove:before, .group-edit-form .form-actions [class~="secondary"].action-remove:before, .village-add-form .form-actions [class~="secondary"].action-remove:before, .village-edit-form .form-actions [class~="secondary"].action-remove:before, .bulk-signup .form-actions [class~="secondary"].action-remove:before, .elder-invite-form .form-actions [class~="secondary"].action-remove:before, .elder-edit-form .form-actions [class~="secondary"].action-remove:before, .dashboard .form-actions [class~="secondary"].action-remove:before, .post-add-form .form-actions [class~="secondary"].action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard.inactive:before {
+.action-sms:before, #messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, [class^="icon-"]:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .login form .form-actions [class~="secondary"].action-remove:before, .register form .form-actions [class~="secondary"].action-remove:before, .edit-profile form .form-actions [class~="secondary"].action-remove:before, .reset-password form .form-actions [class~="secondary"].action-remove:before, .change-password form .form-actions [class~="secondary"].action-remove:before, .set-password form .form-actions [class~="secondary"].action-remove:before, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:before, .activationfailed form .form-actions [class~="secondary"].action-remove:before, .awaiting-activation form .form-actions [class~="secondary"].action-remove:before, .no-students form .form-actions [class~="secondary"].action-remove:before, .pjax-error .form-actions [class~="secondary"].action-remove:before, .group-add-form .form-actions [class~="secondary"].action-remove:before, .group-edit-form .form-actions [class~="secondary"].action-remove:before, .village-add-form .form-actions [class~="secondary"].action-remove:before, .village-edit-form .form-actions [class~="secondary"].action-remove:before, .bulk-signup .form-actions [class~="secondary"].action-remove:before, .elder-invite-form .form-actions [class~="secondary"].action-remove:before, .elder-edit-form .form-actions [class~="secondary"].action-remove:before, .dashboard .form-actions [class~="secondary"].action-remove:before, .post-add-form .form-actions [class~="secondary"].action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
@@ -2245,6 +2249,22 @@ button {
   height: 100%;
 }
 
+.village-main {
+  position: relative;
+  float: left;
+  width: 76.19048%;
+  height: 100%;
+  border-right: 1px solid #93a1a1;
+}
+
+.village-info {
+  width: 23.80952%;
+  float: right;
+  margin-right: 0;
+  margin: 0;
+  height: 100%;
+}
+
 .village-header {
   padding-top: 6px;
   padding-top: 0.31944rem;
@@ -2268,30 +2288,50 @@ button {
   display: table;
   clear: both;
 }
-.village-header .village-title {
+
+.village-title {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-size: 23px;
-  font-size: 1.27778rem;
-  line-height: 35px;
-  line-height: 1.91667rem;
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+  width: 74.60317%;
+  float: left;
+  margin-right: 1.5873%;
   float: left;
   max-width: 74.60317%;
+  font-weight: bold;
 }
-
-.village-main {
-  position: relative;
-  float: left;
-  width: 76.19048%;
-  height: 100%;
-  border-right: 1px solid #93a1a1;
+.village-title [class^="icon-"] {
+  color: rgba(101, 123, 131, 0.5);
 }
-
-.village-info {
-  width: 23.80952%;
-  float: right;
-  margin-right: 0;
+.village-title [class^="icon-"]:before {
   margin: 0;
-  height: 100%;
+}
+.village-title b {
+  font-weight: normal;
+}
+
+.page-actions {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  padding-top: 0.31944rem;
+  text-align: right;
+}
+.page-actions [class*="action-"] {
+  text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background: -moz-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background: -o-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background: linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background-color: #fdf6e3;
+  border-color: #829692;
+  color: #657b83;
+}
+.page-actions [class*="action-"]:link, .page-actions [class*="action-"]:visited, .page-actions [class*="action-"]:focus, .page-actions [class*="action-"]:hover, .page-actions [class*="action-"]:active {
+  color: #657b83;
 }
 
 .village-info, .pjax-error, .group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .elder-invite-form, .elder-edit-form, .dashboard, .village-nav, .village-feed {
@@ -2309,27 +2349,6 @@ button {
 .pjax-error > :last-child, .group-add-form > :last-child, .group-edit-form > :last-child, .village-add-form > :last-child, .village-edit-form > :last-child, .bulk-signup > :last-child, .elder-invite-form > :last-child, .elder-edit-form > :last-child, .dashboard > :last-child {
   margin-bottom: 46px;
   margin-bottom: 2.55556rem;
-}
-
-.page-actions {
-  font-size: 14px;
-  font-size: 0.77778rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
-  text-align: right;
-}
-.page-actions [class*="action-"] {
-  text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
-  background: -webkit-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
-  background: -moz-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
-  background: -o-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
-  background: linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
-  background-color: #fdf6e3;
-  border-color: #829692;
-  color: #657b83;
-}
-.page-actions [class*="action-"]:link, .page-actions [class*="action-"]:visited, .page-actions [class*="action-"]:focus, .page-actions [class*="action-"]:hover, .page-actions [class*="action-"]:active {
-  color: #657b83;
 }
 
 .village-info, .village-nav {

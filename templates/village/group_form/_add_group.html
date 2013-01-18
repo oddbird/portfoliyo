@@ -1,5 +1,10 @@
 {% extends "village/group_form/_base.html" %}
 
+{% block form-header %}
+  <span aria-hidden="true" class="icon-add-group"></span>
+  Create a new group
+{% endblock %}
+
 {% block form-steps %}
 <ol class="form-steps">
   <li class="active">Give your group a name</li>
@@ -12,8 +17,6 @@
 {% block form-class %}group-add-form{% endblock %}
 
 {% block form-id %}add-group-form{% endblock %}
-
-{% block form-header %}Create a new group{% endblock %}
 
 {% block action-remove %}{% endblock action-remove %}
 {% block form-button-text %}Next: Signup Parents!{% endblock %}
