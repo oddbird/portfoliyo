@@ -101,4 +101,7 @@ $preview-columns: $center - $phone-columns;
   }
 }
 
-.remove-item { float: left; }
+.remove-item {
+  @include padding-leader(.25);
+  float: left;
+}

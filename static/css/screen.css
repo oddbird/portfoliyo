@@ -2813,6 +2813,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .remove-item {
+  padding-top: 6px;
+  padding-top: 0.31944rem;
   float: left;
 }
 
