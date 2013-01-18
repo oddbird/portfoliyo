@@ -17,6 +17,9 @@ def test_create_post(db):
     phone = '+13216430987'
     profile = factories.ProfileFactory.create(phone=phone)
     rel = factories.RelationshipFactory.create(from_profile=profile)
+    # prevent this from being a "no teachers" situation
+    factories.RelationshipFactory.create(
+        from_profile__school_staff=True, to_profile=rel.student)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         reply = hook.receive_sms(phone, 'foo')
@@ -45,6 +48,12 @@ def test_activate_user(db):
         user__is_active=False, phone=phone, declined=True)
     rel = factories.RelationshipFactory.create(
         from_profile=profile, to_profile__name="Jimmy Doe")
+    # prevent this from being a "no teachers" situation
+    factories.RelationshipFactory.create(
+        from_profile__school_staff=True,
+        from_profile__name='Ms. Johns',
+        to_profile=rel.student,
+        )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         reply = hook.receive_sms(phone, 'foo')
@@ -56,7 +65,7 @@ def test_activate_user(db):
         None, rel.student, reply, in_reply_to=phone, email_notifications=False)
     assert reply == (
         "You can text this number "
-        "to talk with Jimmy Doe's teachers."
+        "to talk with Ms. Johns."
         )
 
 
@@ -123,6 +132,9 @@ def test_multiple_students(db):
     profile = factories.ProfileFactory.create(phone=phone)
     rel1 = factories.RelationshipFactory.create(from_profile=profile)
     rel2 = factories.RelationshipFactory.create(from_profile=profile)
+    # prevent this from being a "no teachers" situation
+    factories.RelationshipFactory.create(
+        from_profile__school_staff=True, to_profile=rel1.student)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         reply = hook.receive_sms(phone, 'foo')
@@ -140,10 +152,26 @@ def test_no_students(db):
     reply = hook.receive_sms(phone, 'foo')
 
     assert reply == (
-            "Sorry, we can't find any students connected to your number, "
-            "so we're not able to deliver your message. "
-            "Please contact your student's teacher for help."
+        "Sorry, we can't find any students connected to your number, "
+        "so we can't deliver your message. "
+        "Please contact your student's teacher for help."
         )
+
+
+def test_orphan_student(db):
+    """Reply if no student has a teacher."""
+    phone = '+13216430987'
+    factories.RelationshipFactory.create(
+        from_profile__phone=phone)
+
+    reply = hook.receive_sms(phone, 'foo')
+
+    assert reply == (
+        "We can't find any teachers connected to your number, "
+        "so we can't deliver your message. "
+        "Text a teacher code to connect with that teacher."
+        )
+
 
 
 def test_code_signup(db):
@@ -854,6 +882,26 @@ def test_subsequent_signup_when_first_needs_name(db):
     assert new_signup.state == model.TextSignup.STATE.name
     assert new_signup.teacher == other_teacher
     assert new_signup.student == signup.student
+    assert new_signup.group is None
+
+
+def test_subsequent_signup_when_no_students(db):
+    """If a parent has no students they can text a code to start over."""
+    phone = '+13216430987'
+    signup = factories.TextSignupFactory.create(
+        family__phone=phone,
+        teacher__code='ABCDEF',
+        teacher__name='Ms. Doe',
+        state=model.TextSignup.STATE.done,
+        )
+
+    reply = hook.receive_sms(phone, 'ABCDEF')
+
+    assert reply == (
+        "Thanks! What is the name of your child in Ms. Doe's class?")
+    new_signup = signup.family.signups.exclude(pk=signup.pk).get()
+    assert new_signup.state == model.TextSignup.STATE.kidname
+    assert new_signup.teacher == signup.teacher
     assert new_signup.group is None
 
 

@@ -58,35 +58,39 @@ var PYO = (function (PYO, $) {
                 $.ajax(url, {
                     type: 'DELETE',
                     success: function () {
-                        if (link.hasClass('active')) {
-                            window.location.href = '/';
-                        } else if (listitem.hasClass('grouptitle')) {
-                            PYO.fetchStudents(all_students_group_obj);
-                        }
-                        listitem.remove();
-                    },
-                    error: function () {
-                        ajaxError();
+                        ajaxSuccess();
                     }
-                });
+                }).fail(ajaxError);
             } else {
                 ajaxError();
             }
         };
-        var ajaxError = function () {
-            listitem.find('.undo-action-remove').click();
-            var msg = PYO.tpl('ajax_error_msg', {
-                error_class: 'remove-error',
-                message: 'Unable to remove this item.'
-            });
-            msg.find('.try-again').click(function (e) {
-                e.preventDefault();
-                msg.remove();
-                removeItem();
-            });
-            listitem.before(msg).show();
-            if (msg.parent().is('ul, ol')) {
-                msg.wrap('<li />');
+        var ajaxSuccess = function () {
+            if (link.hasClass('active')) {
+                window.location.href = '/';
+            } else if (listitem.hasClass('grouptitle')) {
+                PYO.fetchStudents(all_students_group_obj);
+            }
+            listitem.remove();
+        };
+        var ajaxError = function (xhr, status, error) {
+            if (xhr.status === 204) {
+                ajaxSuccess();
+            } else {
+                listitem.find('.undo-action-remove').click();
+                var msg = PYO.tpl('ajax_error_msg', {
+                    error_class: 'remove-error',
+                    message: 'Unable to remove this item.'
+                });
+                msg.find('.try-again').click(function (e) {
+                    e.preventDefault();
+                    msg.remove();
+                    removeItem();
+                });
+                listitem.before(msg).show();
+                if (msg.parent().is('ul, ol')) {
+                    msg.wrap('<li />');
+                }
             }
         };
 

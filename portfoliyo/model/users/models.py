@@ -531,11 +531,6 @@ def relationship_deleted(sender, instance, **kwargs):
         # remove that student from all of that elder's groups
         for group in elder.owned_groups.all():
             group.students.remove(student)
-        # if student is orphan, delete them
-        related_teachers = student.relationships_to.filter(
-            from_profile__school_staff=True)
-        if not related_teachers.exists():
-            student.delete()
 
 
 signals.post_save.connect(relationship_saved, sender=Relationship)
