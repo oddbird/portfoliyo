@@ -287,8 +287,9 @@ class TestPostCreate(object):
 
 
     def test_triggers_pusher_event(self, db):
-        """Triggers a pusher event."""
-        rel = factories.RelationshipFactory.create()
+        """Triggers a pusher event for each teacher."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
 
         target = 'portfoliyo.pusher.events.trigger'
         with mock.patch(target) as mock_trigger:
@@ -298,11 +299,11 @@ class TestPostCreate(object):
         args = mock_trigger.call_args[0]
         post_data = args[2]['posts'][0]
 
-        assert args[0] == 'student_%s' % rel.student.id
+        assert args[0] == 'user_%s' % rel.from_profile_id
         assert args[1] == 'message_posted'
         assert post_data['author_sequence_id'] == '33'
-        assert post_data['author_id'] == rel.elder.id
-        assert post_data['student_id'] == rel.student.id
+        assert post_data['author_id'] == rel.from_profile_id
+        assert post_data['student_id'] == rel.to_profile_id
         assert post_data['mark_read_url'] == reverse(
             'mark_post_read', kwargs={'post_id': post.id})
 
@@ -468,7 +469,8 @@ class TestBulkPost(object):
 
     def test_triggers_pusher_event(self, db):
         """Triggers pusher events for both self and sub-posts."""
-        rel = factories.RelationshipFactory.create()
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
 
         target = 'portfoliyo.pusher.events.trigger'
         with mock.patch(target) as mock_trigger:
@@ -479,15 +481,15 @@ class TestBulkPost(object):
         group_args = mock_trigger.call_args_list[1][0]
         group_post_data = group_args[2]['posts'][0]
 
-        assert student_args[0] == 'student_%s' % rel.student.id
-        assert group_args[0] == 'group_all%s' % rel.elder.id
+        assert student_args[0] == 'user_%s' % rel.from_profile_id
+        assert group_args[0] == 'user_%s' % rel.from_profile_id
         assert student_args[1] == group_args[1] == 'message_posted'
         assert student_post_data['author_sequence_id'] == '33'
-        assert student_post_data['author_id'] == rel.elder.id
+        assert student_post_data['author_id'] == rel.from_profile_id
         assert group_post_data['author_sequence_id'] == '33'
-        assert group_post_data['author_id'] == rel.elder.id
-        assert student_post_data['student_id'] == rel.student.id
-        assert group_post_data['group_id'] == 'all%s' % rel.elder.id
+        assert group_post_data['author_id'] == rel.from_profile_id
+        assert student_post_data['student_id'] == rel.to_profile_id
+        assert group_post_data['group_id'] == 'all%s' % rel.from_profile_id
 
 
     def test_new_post_unread_for_all_web_users_in_village_but_author(self, db):

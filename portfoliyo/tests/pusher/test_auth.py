@@ -8,69 +8,17 @@ from portfoliyo.tests import factories
 
 
 class TestAllow(object):
-    def test_all_group_success(self, db):
-        """Can join channel for their own all-group."""
+    def test_success(self, db):
+        """Can join their own private channel."""
         p = factories.ProfileFactory.create()
-        assert allow(p, 'private-group_all%s' % p.id)
+        assert allow(p, 'private-user_%s' % p.id)
 
 
-    def test_all_group_failure(self, db):
-        """Cannot join channel for someone else's all-group."""
-        p = factories.ProfileFactory.create()
-        other = factories.ProfileFactory.create()
-        assert not allow(p, 'private-group_all%s' % other.id)
-
-
-    def test_students_of_success(self, db):
-        """Can join channel for their own students."""
-        p = factories.ProfileFactory.create()
-        assert allow(p, 'private-students_of_%s' % p.id)
-
-
-    def test_students_of_failure(self, db):
-        """Cannot join channel for someone else's students."""
-        p = factories.ProfileFactory.create()
-        other = factories.ProfileFactory.create()
-        assert not allow(p, 'private-students_of_%s' % other.id)
-
-
-    def test_groups_of_success(self, db):
-        """Can join channel for their own students."""
-        p = factories.ProfileFactory.create()
-        assert allow(p, 'private-groups_of_%s' % p.id)
-
-
-    def test_groups_of_failure(self, db):
-        """Cannot join channel for someone else's students."""
-        p = factories.ProfileFactory.create()
-        other = factories.ProfileFactory.create()
-        assert not allow(p, 'private-groups_of_%s' % other.id)
-
-
-    def test_student_success(self, db):
-        """Can join channel for a student they are elder of."""
-        rel = factories.RelationshipFactory.create()
-        assert allow(rel.elder, 'private-student_%s' % rel.student.id)
-
-
-    def test_student_failure(self, db):
-        """Cannot join channel for a student they are not elder of."""
-        e = factories.ProfileFactory.create()
-        s = factories.ProfileFactory.create()
-        assert not allow(e, 'private-student_%s' % s.id)
-
-
-    def test_group_success(self, db):
-        """Can join channel for a group they own."""
-        g = factories.GroupFactory.create()
-        assert allow(g.owner, 'private-group_%s' % g.id)
-
-
-    def test_group_failure(self, db):
-        """Cannot join channel for a group they do not own."""
-        p = factories.ProfileFactory.create()
-        g = factories.GroupFactory.create()
-        assert not allow(p, 'private-group_%s' % g.id)
+    def test_failure(self, db):
+        """Cannot join someone else's private channel."""
+        p1 = factories.ProfileFactory.create()
+        p2 = factories.ProfileFactory.create()
+        assert not allow(p1, 'private-user_%s' % p2.id)
 
 
     def test_not_private(self, db):

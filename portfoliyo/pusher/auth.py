@@ -21,27 +21,8 @@ def allow(profile, channel):
         # if channel isn't private, any access is allowed
         return True
 
-    if channel_type == 'group' and channel_id.startswith('all'):
-        channel_type = 'group_all'
-        channel_id = channel_id[len('all'):]
-
-    try:
-        channel_id = int(channel_id)
-    except (ValueError, TypeError):
-        return False
-
-    if (channel_type in {'students_of', 'groups_of'} and
-            channel_id == profile.id):
+    if channel_type == 'user' and channel_id == str(profile.id):
         return True
-
-    if channel_type == 'group_all' and channel_id == profile.id:
-        return True
-
-    if channel_type == 'group':
-        return profile.owned_groups.filter(pk=channel_id).exists()
-
-    if channel_type == 'student':
-        return profile.relationships_from.filter(to_profile=channel_id).exists()
 
     return False
 

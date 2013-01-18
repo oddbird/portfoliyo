@@ -13,7 +13,7 @@ def test_student_event(db):
     with mock.patch('portfoliyo.pusher.events.get_pusher') as mock_get_pusher:
         channel = mock.Mock()
         mock_get_pusher.return_value = {
-            'private-students_of_%s' % rel.elder.id: channel,
+            'private-user_%s' % rel.elder.id: channel,
             }
         events.student_event('some_event', rel.student.id, [rel.elder.id])
 
@@ -41,7 +41,7 @@ def test_group_event(db):
     with mock.patch('portfoliyo.pusher.events.get_pusher') as mock_get_pusher:
         channel = mock.Mock()
         mock_get_pusher.return_value = {
-            'private-groups_of_%s' % group.owner.id: channel,
+            'private-user_%s' % group.owner.id: channel,
             }
         events.group_event('some_event', group.id, group.owner.id)
 
