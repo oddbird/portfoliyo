@@ -1,4 +1,5 @@
 {% extends "village/group_form/_base.html" %}
+{% load url from future %}
 
 {% block form-header %}
   <h2 class="village-title">
@@ -6,11 +7,11 @@
     <b>Edit</b> {{ group }}
   </h2>
   <div class="page-actions">
-    <a href="#@@@" class="action-back">Back to {{ group }}</a>
+    <a href="{% url 'group' group_id=group.id %}" class="action-back">Back to {{ group }}</a>
   </div>
 {% endblock %}
 
-{% block form-action %}{% url edit_group group_id=group.id %}{% endblock %}
+{% block form-action %}{% url 'edit_group' group_id=group.id %}{% endblock %}
 
 {% block form-class %}group-edit-form{% endblock %}
 
@@ -24,6 +25,6 @@
       Delete {{ group }}
     </button>
   </p>
-  <p><a href="#@@@" class="cancel">Cancel</a> or</p>
+  <p><a href="{% url 'group' group_id=group.id %}" class="cancel">Cancel</a> or</p>
 {% endblock %}
 {% block form-button-text %}save{% endblock %}
