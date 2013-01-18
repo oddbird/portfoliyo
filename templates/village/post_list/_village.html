@@ -1,11 +1,11 @@
 {% extends "village/post_list/_base.html" %}
 {% load url from future %}
 
-{% block village-title %}{{ student.name }}'s Village{% endblock %}
+{% block village-title %}{{ student.name }}{% endblock %}
 
 {% block village-feed-attrs %}data-backlog-url="{% url 'json_posts' student_id=student.id %}" data-post-url="{% url 'json_posts' student_id=student.id %}"{% endblock %}
 
-{% block getting-started-header %}Post messages for {{ student.name }}'s parents & teachers.{% endblock %}
+{% block getting-started-header %}Send messages to {{ student.name }}'s parents & teachers.{% endblock %}
 
 {% block addpost-classes %}village-posts{% endblock %}
 {% block form-action %}{% url 'json_posts' student_id=student.id %}{% endblock %}
