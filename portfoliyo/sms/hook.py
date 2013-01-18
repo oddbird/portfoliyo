@@ -94,6 +94,11 @@ def receive_sms(source, body):
     for student in students:
         model.Post.create(profile, student, body, from_sms=True)
 
+    teachers = model.Profile.objects.filter(
+        school_staff=True, relationships_from__to_profile__in=students)
+    if not teachers.exists():
+        return messages.get('NO_TEACHERS', profile.lang_code)
+
     if activated:
         return reply(
             source,
