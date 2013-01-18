@@ -5,7 +5,9 @@
 
 {% block village-feed-attrs %}{% if group.is_all %} data-backlog-url="{% url 'json_posts' %}" data-post-url="{% url 'json_posts' %}"{% else %} data-backlog-url="{% url 'json_posts' group_id=group.id %}" data-post-url="{% url 'json_posts' group_id=group.id %}"{% endif %}{% endblock %}
 
-{% block getting-started-header %}Send messages to all parents & teachers in {{ group.name }}.{% endblock %}
+{% block getting-started-header %}
+  Send messages to all parents & teachers{% if group.is_all %}.{% else %} in {{ group.name }}.{% endif %}
+{% endblock %}
 
 {% block addpost-classes %}group-posts{% endblock %}
 {% block form-action %}{% if group.is_all %}{% url 'json_posts' %}{% else %}{% url 'json_posts' group_id=group.id %}{% endif %}{% endblock %}
