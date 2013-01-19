@@ -2,6 +2,6 @@
 
 {% for signup in signups %}
 <li>
-  {{ signup.family }} signed up as <a href="{{ BASE_URL }}{% url 'village' student_id=signup.student.id %}">{{ signup.student }}</a>'s {{ signup.role }}{% if signup.group %} in the <a href="{{ BASE_URL }}{% url 'group' group_id=signup.group.id %}">{{ signup.group }}</a> group{% endif %}.
+  {{ signup.family }} signed up as <a href="{% url 'village' student_id=signup.student.id %}">{{ signup.student }}</a>'s {{ signup.role }}{% if signup.group %} in the <a href="{% url 'group' group_id=signup.group.id %}">{{ signup.group }}</a> group{% endif %}.
 </li>
 {% endfor %}

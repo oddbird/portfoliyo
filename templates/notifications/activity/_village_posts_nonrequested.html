@@ -4,7 +4,7 @@
 {% for village in nonrequested_villages %}
 
 <li>
-  <a href="{{ BASE_URL }}{% url 'village' student_id=village.student.id %}">{{ village.student }}'s village</a> has new messages from
+  <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}'s village</a> has new messages from
   {% with village.new_authors as elders %}
   {% if elders|length == 1 %} {{ elders.0 }}.{% endif %}
   {% if elders|length == 2 %} {{ elders.0 }} and {{ elders.1 }}.{% endif %}

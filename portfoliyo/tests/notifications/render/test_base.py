@@ -1,7 +1,6 @@
 """Integration tests for email-sending."""
 from datetime import datetime, timedelta
 
-from django.conf import settings
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import html
@@ -13,8 +12,6 @@ from portfoliyo.notifications import record
 from portfoliyo.notifications.render import base
 from portfoliyo.tests import factories
 
-
-base_url = settings.PORTFOLIYO_BASE_URL
 
 
 @pytest.fixture
@@ -43,7 +40,7 @@ def recip(request, db):
 
     # Temporarily patch premailer to be a no-op; our tests assert against the
     # HTML that's in the templates, not as mangled by premailer.
-    patcher2 = mock.patch('premailer.transform', lambda x: x)
+    patcher2 = mock.patch('premailer.transform', lambda x, base_url=None: x)
     patcher2.start()
     request.addfinalizer(patcher2.stop)
 
@@ -162,7 +159,7 @@ class TestSend(object):
             text_snippets=[
                 "--\nDon't want email notifications? Edit your profile: %(url)s"
                 ],
-            snippet_context={'url': base_url + reverse('edit_profile')},
+            snippet_context={'url': reverse('edit_profile')},
             )
 
 
@@ -262,7 +259,7 @@ class TestSend(object):
             if student_name not in name_map:
                 name_map[student_name] = factories.ProfileFactory.create(
                     name=student_name, school_staff=True)
-                context[student_name + 'Url'] = base_url + reverse(
+                context[student_name + 'Url'] = reverse(
                     'village', kwargs={'student_id': name_map[student_name].id})
                 factories.RelationshipFactory.create(
                     from_profile=recip, to_profile=name_map[student_name])
@@ -365,7 +362,7 @@ class TestSend(object):
         for student_name in student_names:
             rel = factories.RelationshipFactory.create(
                 from_profile=recip, to_profile__name=student_name)
-            context[student_name + 'Url'] = base_url + reverse(
+            context[student_name + 'Url'] = reverse(
                 'village', kwargs={'student_id': rel.to_profile_id})
             for teacher in teacher_profiles:
                 factories.RelationshipFactory.create(
@@ -424,12 +421,12 @@ class TestSend(object):
 
             if group_name is not None:
                 ts.group = factories.GroupFactory.create(name=group_name)
-                context['%sUrl' % group_name] = base_url + reverse(
+                context['%sUrl' % group_name] = reverse(
                     'group', kwargs={'group_id': ts.group_id})
 
             ts.save()
 
-            context['%sUrl' % student_name] = base_url + reverse(
+            context['%sUrl' % student_name] = reverse(
                 'village', kwargs={'student_id': ts.student_id})
 
             record.new_parent(recip, ts)
@@ -668,7 +665,7 @@ class TestSend(object):
             if st_name not in name_map:
                 name_map[st_name] = factories.RelationshipFactory.create(
                     from_profile=recip, to_profile__name=st_name).student
-                context['%sUrl' % st_name] = base_url + reverse(
+                context['%sUrl' % st_name] = reverse(
                     'village', kwargs={'student_id': name_map[st_name].id})
             if author_name not in name_map:
                 name_map[author_name] = factories.ProfileFactory.create(
@@ -1082,7 +1079,7 @@ class TestSend(object):
                 timestamp=timestamp,
                 )
             for student in all_students:
-                context['%sUrl' % student.name] = base_url + reverse(
+                context['%sUrl' % student.name] = reverse(
                     'village', kwargs={'student_id': student.id})
                 factories.PostFactory.create(
                     author=teacher,

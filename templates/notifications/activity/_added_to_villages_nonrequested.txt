@@ -6,7 +6,7 @@
 {% for village_group in villages_grouped_by_adding_teacher %}
 {% with village_group.grouper as teacher and village_group.list as villages %}
 {% if villages|length == 1 %}
-- {{ teacher }} added you to {{ villages.0.student }}'s village. Start a conversation: {{ BASE_URL }}{% url 'village' student_id=villages.0.student.id %}
+- {{ teacher }} added you to {{ villages.0.student }}'s village. Start a conversation: {% url 'village' student_id=villages.0.student.id %}
 {% else %}
 {% if villages|length > 3 %}
 - {{ teacher }} added you to {{ villages|length|apnumber }} student villages:{% for village in villages %}{% if forloop.counter < 4 %} {{ village.student }},{% endif %}{% endfor %} and {{ villages|length|add:"-3"|apnumber }} more village{% if villages|length > 4 %}s{% endif %}.

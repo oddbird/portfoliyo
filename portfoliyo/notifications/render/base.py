@@ -1,6 +1,7 @@
 """Rendering and sending of notifications."""
 import re
 
+from django.conf import settings
 from django.template.loader import render_to_string
 import premailer
 
@@ -70,6 +71,8 @@ def render(profile, clear=True):
     text = consecutive_newlines.sub(
         '\n\n', render_to_string(TEXT_TEMPLATE, collection.context))
     html = premailer.transform(
-        render_to_string(HTML_TEMPLATE, collection.context))
+        render_to_string(HTML_TEMPLATE, collection.context),
+        base_url=settings.PORTFOLIYO_BASE_URL,
+        )
 
     return subject, text, html

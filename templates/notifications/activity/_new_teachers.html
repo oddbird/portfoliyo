@@ -1,6 +1,6 @@
 {% load url from future %}
 {% for village in new_teacher_villages %}
 <li>
-  {{ village.teacher }} joined <a href="{{ BASE_URL }}{% url 'village' student_id=village.student.id %}">{{ village.student }}'s village</a>.
+  {{ village.teacher }} joined <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}'s village</a>.
 </li>
 {% endfor %}

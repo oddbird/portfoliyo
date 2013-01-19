@@ -1,8 +1,6 @@
 """Collect notifications and provide rendering info (templates and context)."""
 import logging
 
-from django.conf import settings
-
 from .. import store
 from .collectors import COLLECTOR_CLASSES
 
@@ -110,7 +108,6 @@ class NotificationCollection(object):
 
         context['students'] = students
         context['recipient'] = self.profile
-        context['BASE_URL'] = settings.PORTFOLIYO_BASE_URL
 
         self._collectors = collectors
         self._context = context
