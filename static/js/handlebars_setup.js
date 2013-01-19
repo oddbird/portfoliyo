@@ -3,6 +3,8 @@ var PYO = (function (PYO, $) {
     'use strict';
 
     PYO.tpl = function (template, data) {
+        // This will remove any top-level text nodes from rendered templates.
+        // ...see http://bugs.jquery.com/ticket/12462 and https://github.com/wycats/handlebars.js/issues/162
         return $($.parseHTML(Handlebars.templates[template](data))).filter('*');
     };
 

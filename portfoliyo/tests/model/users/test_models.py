@@ -163,11 +163,29 @@ class TestProfile(object):
         assert list(rel.student.elders) == [rel.elder]
 
 
+    def test_elders_cached(self, db):
+        """elders property is cached to avoid redundant queries."""
+        s = factories.RelationshipFactory.create().student
+
+        with utils.assert_num_queries(1):
+            list(s.elders)
+            list(s.elders)
+
+
     def test_students(self, db):
         """student_relationships property is list of profiles."""
         rel = factories.RelationshipFactory.create()
 
         assert rel.elder.students == [rel.student]
+
+
+    def test_students_cached(self, db):
+        """students property is cached to avoid redundant queries."""
+        e = factories.RelationshipFactory.create().elder
+
+        with utils.assert_num_queries(1):
+            list(e.students)
+            list(e.students)
 
 
     def test_create_dupe_code(self, db):
@@ -728,6 +746,16 @@ class TestContextualizedElders(object):
         qs = qs.order_by('name')
 
         assert list(qs) == [rel2.elder, rel1.elder]
+
+
+    def test_can_values_list(self, db):
+        """Can get values_list from contextualized elders."""
+        rel1 = factories.RelationshipFactory.create()
+        rel2 = factories.RelationshipFactory.create()
+        qs = model.contextualized_elders(model.Relationship.objects.all())
+
+        assert set(qs.values_list('id', flat=True)) == {
+            rel1.from_profile_id, rel2.from_profile_id}
 
 
 

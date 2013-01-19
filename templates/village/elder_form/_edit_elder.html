@@ -1,7 +1,8 @@
 {% extends "village/_base.html" %}
 
 {% block village-title %}
-  Edit {% firstof elder.name elder.user.email elder.phone "Family Member" %}
+  <span aria-hidden="true" class="icon-edit"></span>
+  <b>Edit</b> {% firstof elder.name elder.user.email elder.phone "Family Member" %}
 {% endblock village-title %}
 
 {% block village-content %}

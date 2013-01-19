@@ -244,3 +244,5 @@ PORTFOLIYO_BASE_URL = 'http://localhost:8000'
 NOTIFICATION_EMAILS = True
 # notifications last 48 hours by default
 NOTIFICATION_EXPIRY_SECONDS = 48 * 60 * 60
+
+DEBUG_TOOLBAR = False
