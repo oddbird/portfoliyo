@@ -1,9 +1,11 @@
 from django.http import HttpResponse
 
 from portfoliyo.notifications import render
+from portfoliyo.view.decorators import login_required
 
 
 
+@login_required
 def send_email(request):
     """
     Debug view to force sending of notification email.
@@ -34,6 +36,7 @@ def send_email(request):
 
 
 
+@login_required
 def show_email(request):
     """
     Debug view to show notification email in browser.

@@ -7,7 +7,6 @@ from portfoliyo.view.notifications import send_email, show_email
 
 
 
-
 class TestSendEmail(object):
     @pytest.fixture
     def response(self, request):
