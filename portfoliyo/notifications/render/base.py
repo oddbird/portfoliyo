@@ -15,6 +15,12 @@ TEXT_TEMPLATE = 'notifications/activity.txt'
 consecutive_newlines = re.compile('\n+')
 
 
+
+class NothingToDo(Exception):
+    pass
+
+
+
 def send(profile_id, clear=True):
     """
     Send activity notification(s) to user with given profile ID.
@@ -31,19 +37,37 @@ def send(profile_id, clear=True):
     if not (user.email and user.is_active):
         return False
 
+    try:
+        subject, text, html = render(profile, clear=clear)
+    except NothingToDo:
+        return False
+
+    email.send_multipart(subject, text, html, [profile.user.email])
+
+    return True
+
+
+
+def render(profile, clear=True):
+    """
+    Render notification email for given profile; return (subject, text, html).
+
+    If ``clear`` is set to ``False``, will not clear rendered notifications.
+
+    Raise ``NothingToDo`` if there are no notifications to render.
+
+    """
     collection = collect.NotificationCollection(profile, clear=clear)
 
     # bail out if there's nothing to do
     if not collection:
-        return False
+        raise NothingToDo()
 
     subject = render_to_string(
         collection.get_subject_template(), collection.context)
 
     text = consecutive_newlines.sub(
-        '\n', render_to_string(TEXT_TEMPLATE, collection.context))
+        '\n\n', render_to_string(TEXT_TEMPLATE, collection.context))
     html = render_to_string(HTML_TEMPLATE, collection.context)
 
-    email.send_multipart(subject, text, html, [profile.user.email])
-
-    return True
+    return subject, text, html

@@ -132,11 +132,11 @@ class TestSend(object):
             assert parsed_html_body.count(parsed_bit), "%s not in %s" % (
                 parsed_bit, parsed_html_body)
 
+        body = email.body.replace('\n\n', '\n')
         for text_bit in text_snippets or []:
             if snippet_context:
                 text_bit = text_bit % snippet_context
-            assert text_bit in email.body, "%s not in %s" % (
-                text_bit, email.body)
+            assert text_bit in body, "%s not in %s" % (text_bit, body)
 
 
     def test_footer(self, recip):

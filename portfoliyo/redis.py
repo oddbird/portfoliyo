@@ -96,7 +96,7 @@ class InMemoryRedis(object):
 
 
     def hgetall(self, key):
-        return self._get(key, {})
+        return self._get(key, {}).copy()
 
 
     def zadd(self, key, score, val):

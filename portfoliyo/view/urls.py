@@ -41,7 +41,8 @@ if settings.DEBUG: # pragma: no cover
         url(r'^_debug/403/$', direct_to_template, {'template': '403.html'}),
         url(r'^_debug/404/$', direct_to_template, {'template': '404.html'}),
         url(r'^_debug/500/$', direct_to_template, {'template': '500.html'}),
-        url(r'^_debug/email/$', notifications_views.send_email),
+        url(r'^_debug/email/send/$', notifications_views.send_email),
+        url(r'^_debug/email/show/$', notifications_views.show_email),
         )
 
 

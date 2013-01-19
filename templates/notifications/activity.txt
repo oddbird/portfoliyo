@@ -1,38 +1,36 @@
-{% load url from future %}
-Recent activity in Portfoliyo:
+{% load url from future %}Recent activity in Portfoliyo:
 
 {% include "notifications/activity/_village_posts.txt" %}
 
 {% if recipient.notify_teacher_post %}
-  {% include "notifications/activity/_bulk_posts.txt" %}
+{% include "notifications/activity/_bulk_posts.txt" %}
 {% endif %}
 
 {% if recipient.notify_new_parent %}
-  {% include "notifications/activity/_new_parents.txt" %}
+{% include "notifications/activity/_new_parents.txt" %}
 {% endif %}
 {% if recipient.notify_added_to_village %}
-  {% include "notifications/activity/_added_to_villages.txt" %}
+{% include "notifications/activity/_added_to_villages.txt" %}
 {% endif %}
 {% if recipient.notify_joined_my_village %}
-  {% include "notifications/activity/_new_teachers.txt" %}
+{% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
 
 {% include "notifications/activity/_village_posts_nonrequested.txt" %}
 
 {% if not recipient.notify_teacher_post %}
-  {% include "notifications/activity/_bulk_posts_nonrequested.txt" %}
+{% include "notifications/activity/_bulk_posts_nonrequested.txt" %}
 {% endif %}
 
 {% if not recipient.notify_new_parent %}
-  {% include "notifications/activity/_new_parents.txt" %}
+{% include "notifications/activity/_new_parents.txt" %}
 {% endif %}
 {% if not recipient.notify_added_to_village %}
-  {% include "notifications/activity/_added_to_villages_nonrequested.txt" %}
+{% include "notifications/activity/_added_to_villages_nonrequested.txt" %}
 {% endif %}
 {% if not recipient.notify_joined_my_village %}
-  {% include "notifications/activity/_new_teachers.txt" %}
+{% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
-
 
 --
 Don't want email notifications? Edit your profile: {{ BASE_URL }}{% url 'edit_profile' %}

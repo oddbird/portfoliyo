@@ -99,3 +99,12 @@ def test_expireat_timestamp_must_be_integer(redis):
 
     with pytest.raises(ResponseError):
         redis.expireat('foo', 10.231)
+
+
+def test_copies(redis):
+    """hgetall returned dictionaries are copies of stored data."""
+    redis.hmset('foo', {'one': 'one'})
+    d = redis.hgetall('foo')
+    d.pop('one')
+
+    assert redis.hgetall('foo') == {'one': 'one'}
