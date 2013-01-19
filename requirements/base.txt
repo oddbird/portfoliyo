@@ -56,3 +56,6 @@ anyjson==0.3.3
 redis==2.7.2
 
 unidecode==0.04.10
+
+premailer==1.12
+cssselect==0.7.1

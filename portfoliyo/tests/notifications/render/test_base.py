@@ -39,8 +39,13 @@ def recip(request, db):
     # want to trigger the actual email-sending ourselves in these tests.
     patcher = mock.patch('portfoliyo.tasks.send_notification_email')
     patcher.start()
-
     request.addfinalizer(patcher.stop)
+
+    # Temporarily patch premailer to be a no-op; our tests assert against the
+    # HTML that's in the templates, not as mangled by premailer.
+    patcher2 = mock.patch('premailer.transform', lambda x: x)
+    patcher2.start()
+    request.addfinalizer(patcher2.stop)
 
     return factories.ProfileFactory.create(**kw)
 

@@ -2,6 +2,7 @@
 import re
 
 from django.template.loader import render_to_string
+import premailer
 
 from portfoliyo import email
 from portfoliyo import model
@@ -68,6 +69,7 @@ def render(profile, clear=True):
 
     text = consecutive_newlines.sub(
         '\n\n', render_to_string(TEXT_TEMPLATE, collection.context))
-    html = render_to_string(HTML_TEMPLATE, collection.context)
+    html = premailer.transform(
+        render_to_string(HTML_TEMPLATE, collection.context))
 
     return subject, text, html
