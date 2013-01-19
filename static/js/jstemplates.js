@@ -388,17 +388,6 @@ templates['post_timeout_msg'] = template(function (Handlebars,depth0,helpers,par
 
 
   return "<p class=\"timeout\">This message was not sent. You may have lost your connection to the internet. <a class=\"resend\" href=\"#\">Try again?</a> Or <a class=\"cancel\" href=\"#\">cancel this post</a>.</p>\n";});
-templates['remove_listitem'] = template(function (Handlebars,depth0,helpers,partials,data) {
-  helpers = helpers || Handlebars.helpers;
-  var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression;
-
-
-  buffer += "<span class=\"listitem-select removed\">\n  ";
-  foundHelper = helpers.name;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-  else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\n</span>\n\n<div class=\"listitem-actions\">\n  <button class=\"undo-action-remove\" title=\"undo removal\">undo removal</button>\n</div>\n";
-  return buffer;});
 templates['student_list'] = template(function (Handlebars,depth0,helpers,partials,data) {
   helpers = helpers || Handlebars.helpers; partials = partials || Handlebars.partials;
   var buffer = "", stack1, foundHelper, functionType="function", escapeExpression=this.escapeExpression, self=this;
