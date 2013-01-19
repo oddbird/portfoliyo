@@ -35,7 +35,7 @@ urlpatterns = patterns(
     )
 
 
-if settings.DEBUG: # pragma: no cover
+if settings.DEBUG_URLS: # pragma: no cover
     urlpatterns += patterns( # pragma: no cover
         '',
         url(r'^_debug/403/$', direct_to_template, {'template': '403.html'}),
