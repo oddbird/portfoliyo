@@ -10,10 +10,10 @@ from django.conf import settings
 from django.db import models, transaction, IntegrityError, connection
 from django.db.models import signals
 from django.utils import timezone
-
 from model_utils import Choices
 
 from portfoliyo import tasks
+from . import managers
 
 
 # monkeypatch Django's User.email to be sufficiently long and unique/nullable
@@ -82,6 +82,9 @@ class Profile(models.Model):
     notify_added_to_village = models.BooleanField(default=True)
     notify_joined_my_village = models.BooleanField(default=True)
     notify_teacher_post = models.BooleanField(default=True)
+
+
+    objects = managers.ProfileManager()
 
 
     def __unicode__(self):

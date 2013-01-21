@@ -172,6 +172,37 @@ class TestProfile(object):
             list(s.elders)
 
 
+    def test_prefetch_elders(self, db):
+        """Can prefetch elders to avoid N queries."""
+        r1 = factories.RelationshipFactory.create()
+        r2 = factories.RelationshipFactory.create()
+
+        # one query for profiles and one for elder relationships
+        with utils.assert_num_queries(2):
+            qs = model.Profile.objects.prefetch_elders()
+            assert set(
+                tuple(p.elders) for p in qs
+                ) == {(r1.elder,), (r2.elder,), ()}
+
+
+    def test_prefetch_with_already_populated_result_cache(self, db):
+        """Can prefetch on an already-populated queryset."""
+        r1 = factories.RelationshipFactory.create()
+        r2 = factories.RelationshipFactory.create()
+
+        qs = model.Profile.objects.all()
+        # populate its result cache
+        len(qs)
+        # set it to prefetch without triggering a clone
+        qs._prefetch_elders = True
+
+        # just one query for elder relationships
+        with utils.assert_num_queries(1):
+            assert set(
+                tuple(p.elders) for p in qs
+                ) == {(r1.elder,), (r2.elder,), ()}
+
+
     def test_students(self, db):
         """student_relationships property is list of profiles."""
         rel = factories.RelationshipFactory.create()
