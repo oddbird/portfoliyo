@@ -174,7 +174,9 @@ class TestProfile(object):
 
     def test_prefetch_elders(self, db):
         """Can prefetch elders to avoid N queries."""
-        r1 = factories.RelationshipFactory.create()
+        r1b = factories.RelationshipFactory.create(from_profile__name='B')
+        r1a = factories.RelationshipFactory.create(
+            to_profile=r1b.student, from_profile__name='A')
         r2 = factories.RelationshipFactory.create()
 
         # one query for profiles and one for elder relationships
@@ -182,7 +184,7 @@ class TestProfile(object):
             qs = model.Profile.objects.prefetch_elders()
             assert set(
                 tuple(p.elders) for p in qs
-                ) == {(r1.elder,), (r2.elder,), ()}
+                ) == {(r1a.elder, r1b.elder), (r2.elder,), ()}
 
 
     def test_prefetch_with_already_populated_result_cache(self, db):
@@ -217,6 +219,37 @@ class TestProfile(object):
         with utils.assert_num_queries(1):
             list(e.students)
             list(e.students)
+
+
+    def test_prefetch_students(self, db):
+        """Can prefetch students to avoid N queries."""
+        r1b = factories.RelationshipFactory.create(to_profile__name='B')
+        r1a = factories.RelationshipFactory.create(
+            from_profile=r1b.elder, to_profile__name='A')
+        r2 = factories.RelationshipFactory.create()
+
+        # one query for profiles and one for student relationships
+        with utils.assert_num_queries(2):
+            qs = model.Profile.objects.prefetch_students()
+            assert set(
+                tuple(p.students) for p in qs
+                ) == {(r1a.student, r1b.student), (r2.student,), ()}
+
+
+    def test_prefetch_relationships(self, db):
+        """Can prefetch students and elders in a single query."""
+        r1 = factories.RelationshipFactory.create()
+        r2 = factories.RelationshipFactory.create()
+
+        # one query for profiles and one for relationships
+        with utils.assert_num_queries(2):
+            qs = model.Profile.objects.prefetch_relationships()
+            assert set(
+                tuple(p.students) for p in qs
+                ) == {(r1.student,), (r2.student,), ()}
+            assert set(
+                tuple(p.elders) for p in qs
+                ) == {(r1.elder,), (r2.elder,), ()}
 
 
     def test_create_dupe_code(self, db):

@@ -12,10 +12,19 @@ class ProfileManager(models.Manager):
         return self.get_query_set().prefetch_elders()
 
 
+    def prefetch_students(self):
+        return self.get_query_set().prefetch_students()
+
+
+    def prefetch_relationships(self):
+        return self.get_query_set().prefetch_relationships()
+
+
 
 class ProfileQuerySet(query.QuerySet):
     def __init__(self, *args, **kw):
         self._prefetch_elders = False
+        self._prefetch_students = False
         self._prefetch_done = False
         super(ProfileQuerySet, self).__init__(*args, **kw)
 
@@ -24,29 +33,56 @@ class ProfileQuerySet(query.QuerySet):
         return self._clone(_prefetch_elders=True)
 
 
+    def prefetch_students(self):
+        return self._clone(_prefetch_students=True)
+
+
+    def prefetch_relationships(self):
+        return self._clone(_prefetch_elders=True, _prefetch_students=True)
+
+
     def _do_prefetch(self):
-        if self._prefetch_done or not self._prefetch_elders:
+        if self._prefetch_done or not (
+                self._prefetch_elders or self._prefetch_students):
             # nothing to do
             return
 
-        # result cache must be filled
+        # result cache must be filled first if it is not already
         if self._result_cache is None:
-            # efficient way to populate the result cache
+            # easy efficient way to populate the result cache
             len(self)
 
         Relationship = self.model._meta.get_field_by_name(
             'relationships_to')[0].model
-        elder_rels = Relationship.objects.filter(
-            to_profile__in=self._result_cache).order_by(
-            'from_profile__name').select_related(
+
+        filters = models.Q()
+        if self._prefetch_elders:
+            filters = filters | models.Q(to_profile__in=self._result_cache)
+        if self._prefetch_elders:
+            filters = filters | models.Q(from_profile__in=self._result_cache)
+
+        elder_rels = Relationship.objects.filter(filters).select_related(
             'from_profile__user', 'to_profile__user')
-        by_student = {}
+        elders_by_student = {}
+        students_by_elder = {}
         for rel in elder_rels:
-            by_student.setdefault(rel.student, []).append(rel)
-        for student in self._result_cache:
-            qs = student.elder_relationships
-            qs._result_cache = by_student.get(student, [])
-            student._cached_elder_relationships = qs
+            elders_by_student.setdefault(rel.student, []).append(rel)
+            students_by_elder.setdefault(rel.elder, []).append(rel)
+        for profile in self._result_cache:
+            if self._prefetch_elders:
+                qs = profile.elder_relationships
+                qs._result_cache = sorted(
+                    elders_by_student.get(profile, []),
+                    key=lambda er: er.elder.name,
+                    )
+                profile._cached_elder_relationships = qs
+            if self._prefetch_students:
+                qs = profile.student_relationships
+                qs._result_cache = sorted(
+                    students_by_elder.get(profile, []),
+                    key=lambda sr: sr.student.name,
+                    )
+                profile._cached_student_relationships = qs
 
         self._prefetch_done = True
 
