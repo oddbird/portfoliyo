@@ -74,55 +74,6 @@ $village-nav-action-color : $base03;
     text-align: center;
     &.zero { display: none; }
   }
-  &.editing {
-    @include mono;
-    min-height: rhythm(1,$village-list-size);
-    background: lighten($orange,40);
-  }
-  &.removed {
-    @extend %icon;
-    @extend %icon-close;
-    @include box-shadow($back 0 0 3px inset);
-    color: $red;
-    background: lighten($red,40);
-  }
-}
-
-%actions-base {
-  @include transition(all 400ms);
-  position: absolute !important;
-  top: 0;
-  right: 0;
-  bottom: 1px;
-  padding: rhythm($village-nav-rhythm,$village-list-size);
-  padding-right: rhythm(.5,$village-list-size);
-  background: $village-nav-action-color;
-  color: $back;
-
-  @include opacity(0);
-  .listitem:hover &, .removed + &, .editing + & {
-    @include opacity(1);
-    z-index: 100;
-  }
-}
-
-.listitem-actions {
-  @extend %actions-base;
-  @include arrow(left .375rem $village-nav-action-color);
-
-  form { display: inline; }
-  a, button {
-    @extend %icon-replace;
-    @include link(light,true);
-    margin-left: rhythm(.5);
-  }
-  .action-edit { @extend %icon-pencil; }
-  .action-save {
-    @extend %icon-checkmark;
-    display: none;
-  }
-  .action-remove { @extend %icon-remove; }
-  .undo-action-remove { @extend %icon-undo; }
 }
 
 .action-back.groups {

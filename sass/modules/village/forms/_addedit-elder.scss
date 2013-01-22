@@ -1,0 +1,10 @@
+// ---------------------------------------------------------------------------
+// Add/Edit Elder
+
+.elder-invite-form, .elder-edit-form { @extend %village-page; }
+
+.school_staff-field {
+  @extend %radio-check-defaults;
+  @include leader;
+}
+
