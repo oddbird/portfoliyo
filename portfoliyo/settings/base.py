@@ -242,3 +242,4 @@ REDIS_URL = None
 PORTFOLIYO_BASE_URL = 'http://localhost:8000'
 
 DEBUG_TOOLBAR = False
+SPEED_TRACER = False
