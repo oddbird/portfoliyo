@@ -400,77 +400,70 @@ def group(request, group_id=None):
 
 
 
+# @@@ This should be integrated into the API
 @login_required
-def json_posts(request, student_id=None, group_id=None):
-    """Get backlog of up to 100 latest posts, or POST a post."""
+@require_POST
+def create_post(request, student_id=None, group_id=None):
+    """Create a post."""
+    if 'text' not in request.POST:
+        return http.HttpResponseBadRequest(
+            json.dumps(
+                {
+                    'error': "Must provide a 'text' querystring parameter.",
+                    'success': False,
+                    }
+                ),
+            content_type='application/json',
+            )
+
     group = None
     rel = None
     post_model = model.BulkPost
-    can_be_unread = False
     if student_id is not None:
-        try:
-            rel = get_relationship_or_404(student_id, request.user.profile)
-        except http.Http404:
-            if not request.user.is_superuser:
-                raise
-            student = get_object_or_404(model.Profile, pk=student_id)
-        else:
-            student = rel.student
+        rel = get_relationship_or_404(student_id, request.user.profile)
         post_model = model.Post
-        target = student
-        queryset = student.posts_in_village
-        can_be_unread = True
+        target = rel.student
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
         target = group
-        queryset = group.bulk_posts
     else:
         target = None
-        queryset = request.user.profile.authored_bulkposts.filter(group=None)
 
-    if request.method == 'POST' and 'text' in request.POST:
-        text = request.POST['text']
-        sms_profile_ids = request.POST.getlist('sms-target')
-        sequence_id = request.POST.get('author_sequence_id')
-        limit = model.post_char_limit(rel or request.user.profile)
-        if len(text) > limit:
-            return http.HttpResponseBadRequest(
-                json.dumps(
-                    {
-                        'error': 'Posts are limited to %s characters.' % limit,
-                        'success': False,
-                        }
-                    ),
-                content_type='application/json',
-                )
+    text = request.POST['text']
+    sms_profile_ids = request.POST.getlist('sms-target')
+    sequence_id = request.POST.get('author_sequence_id')
+    limit = model.post_char_limit(rel or request.user.profile)
+    if len(text) > limit:
+        return http.HttpResponseBadRequest(
+            json.dumps(
+                {
+                    'error': 'Posts are limited to %s characters.' % limit,
+                    'success': False,
+                    }
+                ),
+            content_type='application/json',
+            )
 
-        with xact.xact():
-            post = post_model.create(
-                request.user.profile,
-                target,
-                text,
-                sms_profile_ids=sms_profile_ids,
-                sequence_id=sequence_id,
-                )
+    with xact.xact():
+        post = post_model.create(
+            request.user.profile,
+            target,
+            text,
+            sms_profile_ids=sms_profile_ids,
+            sequence_id=sequence_id,
+            )
 
-        data = {
-            'success': True,
-            'posts': [
-                model.post_dict(
-                    post, author_sequence_id=sequence_id, unread=False)
-                ],
-            }
+    data = {
+        'success': True,
+        'posts': [
+            model.post_dict(
+                post, author_sequence_id=sequence_id, unread=False)
+            ],
+        }
 
-        return http.HttpResponse(
-            json.dumps(data), content_type='application/json')
-
-    data = _get_posts(queryset, request.user.profile if can_be_unread else None)
-
-    if rel:
-        model.unread.mark_village_read(rel.student, rel.elder)
-
-    return http.HttpResponse(json.dumps(data), content_type='application/json')
+    return http.HttpResponse(
+        json.dumps(data), content_type='application/json')
 
 
 
