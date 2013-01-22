@@ -7,7 +7,7 @@
     <b>Edit</b> {{ group }}
   </h2>
   <div class="page-actions">
-    <a href="{% url 'group' group_id=group.id %}" class="action-back">Back to {{ group }}</a>
+    <a href="{% url 'group' group_id=group.id %}" class="action-back ajax-link">Back to {{ group }}</a>
   </div>
 {% endblock %}
 
@@ -25,6 +25,6 @@
       Delete {{ group }}
     </button>
   </p>
-  <p><a href="{% url 'group' group_id=group.id %}" class="cancel">Cancel</a> or</p>
+  <p><a href="{% url 'group' group_id=group.id %}" class="cancel ajax-link">Cancel</a> or</p>
 {% endblock %}
 {% block form-button-text %}save{% endblock %}

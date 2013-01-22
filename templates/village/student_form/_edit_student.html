@@ -7,7 +7,7 @@
     <b>Edit</b> {{ student.name }}
   </h2>
   <div class="page-actions">
-    <a href="{% url 'village' student_id=student.id %}" class="action-back">Back to {{ student.name }}</a>
+    <a href="{% url 'village' student_id=student.id %}" class="action-back ajax-link">Back to {{ student.name }}</a>
   </div>
 {% endblock %}
 
@@ -22,7 +22,7 @@
       Remove {{ student.name }}
     </button>
   </p>
-  <p><a href="{% url 'village' student_id=student.id %}" class="cancel">Cancel</a> or</p>
+  <p><a href="{% url 'village' student_id=student.id %}" class="cancel ajax-link">Cancel</a> or</p>
 {% endblock %}
 
 {% block form-button-text %}save{% endblock %}
