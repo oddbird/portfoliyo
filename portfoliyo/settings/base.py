@@ -212,6 +212,7 @@ LOGGING = {
 INSTALLED_APPS += ['compressor']
 COMPRESS_CSS_FILTERS = ['compressor.filters.css_default.CssAbsoluteFilter',
                         'compressor.filters.cssmin.CSSMinFilter']
+COMPRESS_PARSER = 'compressor.parser.LxmlParser'
 
 INSTALLED_APPS += ['djangosecure']
 SESSION_COOKIE_HTTPONLY = True
@@ -241,3 +242,4 @@ REDIS_URL = None
 PORTFOLIYO_BASE_URL = 'http://localhost:8000'
 
 DEBUG_TOOLBAR = False
+SPEED_TRACER = False
