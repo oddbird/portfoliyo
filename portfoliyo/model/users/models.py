@@ -184,7 +184,7 @@ class Profile(models.Model):
         if rels is None:
             rels = self.relationships_to.filter(
                 kind=Relationship.KIND.elder).order_by(
-                'from_profile__name').select_related('from_profile')
+                'from_profile__name').select_related('from_profile__user')
             self._cached_elder_relationships = rels
         return rels
 
@@ -200,7 +200,7 @@ class Profile(models.Model):
         if rels is None:
             rels = self.relationships_from.filter(
                 kind=Relationship.KIND.elder).order_by(
-                'to_profile__name').select_related('to_profile')
+                'to_profile__name').select_related('to_profile__user')
             self._cached_student_relationships = rels
         return rels
 

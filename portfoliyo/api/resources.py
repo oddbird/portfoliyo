@@ -261,12 +261,13 @@ class SlimGroupResource(PortfoliyoResource):
 
 
 class GroupResource(SlimGroupResource):
-    owner = fields.ForeignKey(ProfileResource, 'owner')
+    owner = fields.ForeignKey(SlimProfileResource, 'owner')
     students = fields.ToManyField(SlimProfileResource, 'students', full=True)
 
 
     class Meta(SlimGroupResource.Meta):
-        queryset = SlimGroupResource.Meta.queryset.prefetch_related('students')
+        queryset = SlimGroupResource.Meta.queryset.prefetch_related(
+            'students__user').select_related('owner__user')
         fields = SlimGroupResource.Meta.fields + ['owner', 'students']
 
 
