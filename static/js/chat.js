@@ -6,10 +6,7 @@ var PYO = (function (PYO, $) {
         XHR: {},
         count: 0
     };
-    var feedAjax = {
-        XHR: null,
-        count: 0
-    };
+
     var smsDetailsOpened = function (trigger) {
         trigger.css('overflow', '');
         if (trigger.closest('.post').is(':last-child')) {
@@ -288,48 +285,6 @@ var PYO = (function (PYO, $) {
         PYO.addPostTimeout(post, author_sequence_id, count);
     };
 
-    PYO.fetchBacklog = function (container) {
-        if (feedAjax.XHR) { feedAjax.XHR.abort(); }
-        if ($(container).length) {
-            var feed = $(container);
-            var context = feed.closest('.village-main');
-            var url = feed.data('backlog-url');
-            var count = ++feedAjax.count;
-            var loadFeed = function () {
-                if (url) {
-                    context.loadingOverlay();
-                    feedAjax.XHR = $.get(url, function (response) {
-                        context.loadingOverlay('remove');
-                        if (response && response.posts && response.posts.length && feedAjax.count === count) {
-                            PYO.addPost(response);
-                            feed.find('.post.unread').removeClass('unread');
-                            PYO.updateFeedHeights();
-                            PYO.scrollToBottom();
-                        }
-                        feedAjax.XHR = null;
-                    }).error(function (request, status, error) {
-                        if (status !== 'abort') {
-                            var msg = PYO.tpl('ajax_error_msg', {
-                                error_class: 'feed-error',
-                                message: 'Unable to load prior posts in this village.'
-                            });
-                            msg.find('.try-again').click(function (e) {
-                                e.preventDefault();
-                                msg.remove();
-                                loadFeed();
-                            });
-                            feed.prepend(msg);
-                        }
-                        context.loadingOverlay('remove');
-                        feedAjax.XHR = null;
-                    });
-                }
-            };
-
-            loadFeed();
-        }
-    };
-
     PYO.characterCount = function (container) {
         if ($(container).length) {
             var context = $(container);
@@ -433,6 +388,22 @@ var PYO = (function (PYO, $) {
                 }
             });
         });
+    };
+
+    PYO.initializeFeed = function () {
+        var feed = $('.village-feed');
+        var posts = feed.find('.post');
+
+        posts.find('.details').html5accordion({ openCallback: smsDetailsOpened });
+        PYO.authorPosts = posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine').length;
+        posts.filter('.unread').removeClass('unread');
+
+        PYO.initializeMultiselect();
+        PYO.watchForReadPosts();
+        PYO.submitPost('.village-feed');
+        PYO.characterCount('.village-main');
+        PYO.updateFeedHeights();
+        PYO.scrollToBottom();
     };
 
     return PYO;
