@@ -32,34 +32,6 @@ $content-width          : $center + $right;
 }
 
 // ---------------------------------------------------------------------------
-// Village Header
-
-.village-header {
-  @include pie-clearfix;
-  @include padding-leader(.25);
-  @include trailing-border(1px,.25);
-  @include box-shadow($base 0 0 .25rem);
-  position: relative;
-  padding-left: rhythm(.5);
-  padding-right: $box-padding;
-  background: color($base3 lighter);
-  border-color: $village-border-color;
-  z-index: 10;
-}
-
-.village-title {
-  @include serif;
-  @include adjust-font-size-to($largepx);
-  @include span-columns($center, $content-width);
-  font-weight: bold;
-  [class^="icon-"] {
-    color: color($base,.5);
-    &:before { margin: 0; }
-  }
-  b { font-weight: normal; }
-}
-
-// ---------------------------------------------------------------------------
 // Village Main
 
 .village-main {
