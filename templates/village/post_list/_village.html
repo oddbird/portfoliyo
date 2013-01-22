@@ -6,7 +6,7 @@
   {{ student.name }}
 {% endblock %}
 
-{% block edit-url %}{% url 'edit_student' student_id=student.id %}{% endblock %}
+{% block edit-url %}{% url 'edit_student' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% endblock %}
 
 {% block village-feed-attrs %}data-backlog-url="{% url 'json_posts' student_id=student.id %}" data-post-url="{% url 'json_posts' student_id=student.id %}"{% endblock %}
 

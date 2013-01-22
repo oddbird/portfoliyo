@@ -7,7 +7,7 @@
     <b>Edit</b> {% firstof elder.name elder.user.email elder.phone "Family Member" %}
   </h2>
   <div class="page-actions">
-    <a href="{% if student %}{% url 'village' student_id=student.id %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="action-back ajax-link">Back to {% firstof student group %}</a>
+    <a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="action-back ajax-link">Back to {% firstof student group %}</a>
   </div>
 {% endblock %}
 
@@ -21,7 +21,7 @@
     {% include "forms/_field.html" with field=form.phone helpinclude="village/elder_form/_sms_preview.html" %}
 
     <div class="form-actions">
-      <p><a href="{% if student %}{% url 'village' student_id=student.id %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="cancel ajax-link">Cancel</a> or</p>
+      <p><a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="cancel ajax-link">Cancel</a> or</p>
       <button type="submit">Save changes</button>
     </div>
   </form>
