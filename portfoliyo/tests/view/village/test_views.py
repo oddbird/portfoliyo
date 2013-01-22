@@ -215,6 +215,40 @@ class TestEditStudent(GroupContextTests):
 
         assert response['Location'] == utils.location(
             reverse('village', kwargs={'student_id': rel.student.id}))
+        assert utils.refresh(rel.student).name == "Some Student"
+
+
+    def test_remove_student(self, client, db):
+        """User can remove a student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile__name="Some Student")
+        form = client.get(
+            self.url(rel.student),
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        response = form.submit('remove', status=302)
+
+        assert response['Location'] == utils.location(reverse('all_students'))
+        response.follow().mustcontain("Student 'Some Student' removed.")
+        assert utils.deleted(rel)
+
+
+    def test_remove_student_in_group(self, client, db):
+        """User can remove a student."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        form = client.get(
+            self.url(rel.student) + '?group=%s' % group.id,
+            user=rel.elder.user,
+            ).forms['edit-student-form']
+        response = form.submit('remove', status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('group', kwargs={'group_id': group.id}))
+        assert utils.deleted(rel)
 
 
     def test_maintain_group_context_on_redirect(self, client, db):
@@ -342,6 +376,21 @@ class TestEditGroup(object):
 
         assert response['Location'] == utils.location(
             reverse('group', kwargs={'group_id': group.id}))
+        assert utils.refresh(group).name == "Some Group"
+
+
+    def test_remove_group(self, client, db):
+        """User can remove a group."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True, name="Some Group")
+        form = client.get(
+            self.url(group),
+            user=group.owner.user,
+            ).forms['edit-group-form']
+        response = form.submit('remove', status=302)
+
+        response.follow().mustcontain("Group 'Some Group' removed.")
+        assert utils.deleted(group)
 
 
     def test_validation_error(self, client, db):

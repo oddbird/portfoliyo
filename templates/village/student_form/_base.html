@@ -1,9 +1,9 @@
 {% extends "village/_base.html" %}
 {% load widget_tweaks %}
 
-{% block village-title %}
-  {% block form-title %}{% endblock %}
-{% endblock village-title %}
+{% block village-header %}
+  {% block form-header %}{% endblock %}
+{% endblock %}
 
 {% block village-content %}
 <form method="POST" action="{% block form-action %}{% endblock %}" class="{% block form-class %}{% endblock %}" id="{% block form-id %}{% endblock %}">
@@ -23,6 +23,7 @@
   </div>
 
   <div class="form-actions">
+    {% block more-actions %}{% endblock %}
     <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>
   </div>
 </form>

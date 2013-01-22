@@ -6,13 +6,5 @@
       {{#if unread_count}}{{unread_count}}{{else}}0{{/if}}
     </span>
   </a>
-
-  {{#if ../staff}}
-  <div class="listitem-actions">
-    {{#if edit_student_uri}}<a href="{{edit_student_uri}}{{#unless ../../../all_students}}?group={{../../../../group_id}}{{/unless}}" class="action-edit ajax-link" title="edit student">edit</a>{{/if}}
-    <button class="action-remove" title="remove student">remove</button>
-  </div>
-  {{/if}}
-
 </li>
 {{/each}}

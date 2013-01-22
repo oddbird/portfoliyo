@@ -8,18 +8,6 @@ var PYO = (function (PYO, $) {
         var nav = $('.village-nav');
         var History = window.History;
 
-        nav.on('click', '.action-remove', function (e) {
-            e.preventDefault();
-            $(this).blur();
-            PYO.removeListitem($(this));
-        });
-
-        nav.on('click', '.undo-action-remove', function (e) {
-            e.preventDefault();
-            $(this).blur();
-            PYO.undoRemoveListitem($(this));
-        });
-
         if (History.enabled) {
             nav.on('click', '.group-link', function () {
                 var trigger = $(this).blur();
@@ -42,72 +30,6 @@ var PYO = (function (PYO, $) {
             $(this).blur();
             PYO.fetchGroups(true);
         });
-    };
-
-    PYO.removeListitem = function (trigger) {
-        var relationshipsUrl = $('.village').data('relationships-url');
-        var remove = trigger;
-        var listitem = remove.closest('.listitem');
-        var link = listitem.find('.listitem-select');
-        var url = listitem.hasClass('student') ? relationshipsUrl + '?student=' + link.data('id') : link.data('group-resource-url');
-        var name = listitem.hasClass('student') ? link.data('name') : link.data('group-name');
-        var removed = PYO.tpl('remove_listitem', {name: name});
-        var removeItem = function () {
-            listitem.hide();
-            if (url) {
-                $.ajax(url, {
-                    type: 'DELETE',
-                    success: function () {
-                        ajaxSuccess();
-                    }
-                }).fail(ajaxError);
-            } else {
-                ajaxError();
-            }
-        };
-        var ajaxSuccess = function () {
-            if (link.hasClass('active')) {
-                window.location.href = '/';
-            } else if (listitem.hasClass('grouptitle')) {
-                PYO.fetchStudents(all_students_group_obj);
-            }
-            listitem.remove();
-        };
-        var ajaxError = function (xhr, status, error) {
-            if (xhr.status === 204) {
-                ajaxSuccess();
-            } else {
-                listitem.find('.undo-action-remove').click();
-                var msg = PYO.tpl('ajax_error_msg', {
-                    error_class: 'remove-error',
-                    message: 'Unable to remove this item.'
-                });
-                msg.find('.try-again').click(function (e) {
-                    e.preventDefault();
-                    msg.remove();
-                    removeItem();
-                });
-                listitem.before(msg).show();
-                if (msg.parent().is('ul, ol')) {
-                    msg.wrap('<li />');
-                }
-            }
-        };
-
-        listitem.data('original', listitem.html());
-        listitem.html(removed);
-        listitem.find('.listitem-select.removed').fadeOut(5000, function () {
-            removeItem();
-        });
-    };
-
-    PYO.undoRemoveListitem = function (trigger) {
-        var undo = trigger;
-        var listitem = undo.closest('.listitem');
-        var original = listitem.data('original');
-        listitem.find('.listitem-select.removed').stop();
-        listitem.html(original);
-        listitem.removeData('original');
     };
 
     PYO.fetchGroups = function (force) {
@@ -297,7 +219,7 @@ var PYO = (function (PYO, $) {
 
     PYO.updateNavActiveClasses = function (container) {
         var context = container ? container : $('.village-nav');
-        var links = context.find('.ajax-link').not('.action-edit').removeClass('active');
+        var links = context.find('.ajax-link').removeClass('active');
 
         if (links.length) {
             var url = window.location.pathname;

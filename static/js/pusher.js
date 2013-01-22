@@ -288,6 +288,12 @@ var PYO = (function (PYO, $) {
         });
     };
 
+    PYO.preventPusherOnRemove = function () {
+        $('.village').on('click', '.village-content .action-remove', function () {
+            PYO.pusher.unsubscribe('private-user_' + PYO.activeUserId);
+        });
+    };
+
     PYO.initializePusher = function () {
         PYO.pusherKey = $('.village').data('pusher-key');
         if (PYO.pusherKey) {
@@ -297,6 +303,7 @@ var PYO = (function (PYO, $) {
                 PYO.listenForPosts();
                 PYO.listenForStudentChanges();
                 PYO.listenForGroupChanges();
+                PYO.preventPusherOnRemove();
             }
         }
     };
