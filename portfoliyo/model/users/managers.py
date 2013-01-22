@@ -41,6 +41,12 @@ class ProfileQuerySet(query.QuerySet):
         return self._clone(_prefetch_elders=True, _prefetch_students=True)
 
 
+    def _clone(self, *args, **kw):
+        kw.setdefault('_prefetch_elders', self._prefetch_elders)
+        kw.setdefault('_prefetch_students', self._prefetch_students)
+        return super(ProfileQuerySet, self)._clone(*args, **kw)
+
+
     def _do_prefetch(self):
         if self._prefetch_done or not (
                 self._prefetch_elders or self._prefetch_students):

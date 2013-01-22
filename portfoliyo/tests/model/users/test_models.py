@@ -174,6 +174,7 @@ class TestProfile(object):
 
     def test_prefetch_elders(self, db):
         """Can prefetch elders to avoid N queries."""
+        # A and B demonstrate that relationship lists are ordered by name
         r1b = factories.RelationshipFactory.create(from_profile__name='B')
         r1a = factories.RelationshipFactory.create(
             to_profile=r1b.student, from_profile__name='A')
@@ -223,6 +224,7 @@ class TestProfile(object):
 
     def test_prefetch_students(self, db):
         """Can prefetch students to avoid N queries."""
+        # A and B demonstrate that relationship lists are ordered by name
         r1b = factories.RelationshipFactory.create(to_profile__name='B')
         r1a = factories.RelationshipFactory.create(
             from_profile=r1b.elder, to_profile__name='A')
@@ -243,7 +245,8 @@ class TestProfile(object):
 
         # one query for profiles and one for relationships
         with utils.assert_num_queries(2):
-            qs = model.Profile.objects.prefetch_relationships()
+            # order_by call demonstrates persistence after a clone
+            qs = model.Profile.objects.prefetch_relationships().order_by('name')
             assert set(
                 tuple(p.students) for p in qs
                 ) == {(r1.student,), (r2.student,), ()}
