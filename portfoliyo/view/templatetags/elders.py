@@ -50,7 +50,7 @@ def elder_types(qs):
     """
     staff = []
     non = []
-    for elder in model.contextualized_elders(qs).order_by('school_staff', 'name'):
+    for elder in qs:
         if elder.school_staff:
             staff.append(elder)
         else:
@@ -65,3 +65,10 @@ def elder_types(qs):
             'elders': staff,
             },
         ]
+
+
+
+@register.filter
+def sms_eligible(elders):
+    """Filter iterable of elders to only those who are SMS-eligible."""
+    return filter(model.is_sms_eligible, elders)

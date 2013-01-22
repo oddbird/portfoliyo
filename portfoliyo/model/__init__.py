@@ -14,5 +14,5 @@ from .users.models import (
     School, Profile, TextSignup, Relationship, Group, AllStudentsGroup,
     elder_in_context, contextualized_elders)
 from .village.models import (
-    BulkPost, Post, post_char_limit, post_dict, sms_eligible)
+    BulkPost, Post, post_char_limit, post_dict, sms_eligible, is_sms_eligible)
 from .village import unread
