@@ -1,4 +1,5 @@
 import debug_toolbar.middleware
+import debug_toolbar.urls
 from django.http import HttpResponse
 from django.test.client import RequestFactory
 
@@ -33,5 +34,6 @@ class DebugToolbarMiddleware(debug_toolbar.middleware.DebugToolbarMiddleware):
     def process_response(self, request, response):
         response = super(DebugToolbarMiddleware, self).process_response(
             request, response)
-        response.no_messages = True
+        if request.path.startswith(debug_toolbar.urls._PREFIX):
+            response.no_messages = True
         return response
