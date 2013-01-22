@@ -5,6 +5,7 @@ $initial-cols   : $total-columns;
 $total-columns  : $break-cols;
 
 @import "village/layout";
+@import "village/village-header";
 @import "village/pages";
 @import "village/item-lists";
 @import "village/forms";

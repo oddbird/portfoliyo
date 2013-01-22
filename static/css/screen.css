@@ -190,11 +190,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e003";
 }
 
-.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before, .listitem-actions .action-save:before {
+.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before {
   content: "\e005";
 }
 
-.ui-multiselect-none:before, .message.error:before, .listitem-select.removed:before, .elder .no-sms:before {
+.ui-multiselect-none:before, .message.error:before, .elder .no-sms:before {
   content: "\e006";
 }
 
@@ -226,11 +226,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e010";
 }
 
-.icon-edit:before, .listitem-actions .action-edit:before {
+.icon-edit:before, .page-actions .action-edit:before {
   content: "\f071";
 }
 
-.listitem-actions .action-remove:before {
+.login form .form-actions [class~="secondary"].action-remove:before, .register form .form-actions [class~="secondary"].action-remove:before, .edit-profile form .form-actions [class~="secondary"].action-remove:before, .reset-password form .form-actions [class~="secondary"].action-remove:before, .change-password form .form-actions [class~="secondary"].action-remove:before, .set-password form .form-actions [class~="secondary"].action-remove:before, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:before, .activationfailed form .form-actions [class~="secondary"].action-remove:before, .awaiting-activation form .form-actions [class~="secondary"].action-remove:before, .no-students form .form-actions [class~="secondary"].action-remove:before, .pjax-error .form-actions [class~="secondary"].action-remove:before, .group-add-form .form-actions [class~="secondary"].action-remove:before, .group-edit-form .form-actions [class~="secondary"].action-remove:before, .village-add-form .form-actions [class~="secondary"].action-remove:before, .village-edit-form .form-actions [class~="secondary"].action-remove:before, .bulk-signup .form-actions [class~="secondary"].action-remove:before, .elder-invite-form .form-actions [class~="secondary"].action-remove:before, .elder-edit-form .form-actions [class~="secondary"].action-remove:before, .dashboard .form-actions [class~="secondary"].action-remove:before, .post-add-form .form-actions [class~="secondary"].action-remove:before {
   content: "\e011";
 }
 
@@ -266,10 +266,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e020";
 }
 
-.action-back.groups:before {
-  content: "\e01e";
-}
-
 .twoway-feature .feature-title:before {
   content: "\e01f";
 }
@@ -282,36 +278,40 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
-.listitem-actions .undo-action-remove:before {
-  content: "\f0e2";
+.action-back.groups:before {
+  content: "\f0c9";
+}
+
+.page-actions .action-back:before {
+  content: "\e01e";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.action-sms:before, #messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, [class^="icon-"]:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard.inactive:before, [data-icon]:before {
+.action-sms:before, #messages .close:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, [class^="icon-"]:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .login form .form-actions [class~="secondary"].action-remove:before, .register form .form-actions [class~="secondary"].action-remove:before, .edit-profile form .form-actions [class~="secondary"].action-remove:before, .reset-password form .form-actions [class~="secondary"].action-remove:before, .change-password form .form-actions [class~="secondary"].action-remove:before, .set-password form .form-actions [class~="secondary"].action-remove:before, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:before, .activationfailed form .form-actions [class~="secondary"].action-remove:before, .awaiting-activation form .form-actions [class~="secondary"].action-remove:before, .no-students form .form-actions [class~="secondary"].action-remove:before, .pjax-error .form-actions [class~="secondary"].action-remove:before, .group-add-form .form-actions [class~="secondary"].action-remove:before, .group-edit-form .form-actions [class~="secondary"].action-remove:before, .village-add-form .form-actions [class~="secondary"].action-remove:before, .village-edit-form .form-actions [class~="secondary"].action-remove:before, .bulk-signup .form-actions [class~="secondary"].action-remove:before, .elder-invite-form .form-actions [class~="secondary"].action-remove:before, .elder-edit-form .form-actions [class~="secondary"].action-remove:before, .dashboard .form-actions [class~="secondary"].action-remove:before, .post-add-form .form-actions [class~="secondary"].action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.action-sms:before, #messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, [class^="icon-"]:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .changepassword-link:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .listitem-select.removed:before, .elder .vcard.inactive:before {
+.action-sms:before, #messages .close:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before, [class^="icon-"]:before, .ui-multiselect-checkboxes [type="checkbox"] + .type:before, .email_notifications-field [type="checkbox"] + .type:before, .fieldset.notifications [type="checkbox"] + .type:before, .school_staff-field [type="checkbox"] + .type:before, .ui-multiselect-checkboxes [type="radio"] + .type:before, .email_notifications-field [type="radio"] + .type:before, .fieldset.notifications [type="radio"] + .type:before, .school_staff-field [type="radio"] + .type:before, .login form .form-actions [class~="secondary"].action-remove:before, .register form .form-actions [class~="secondary"].action-remove:before, .edit-profile form .form-actions [class~="secondary"].action-remove:before, .reset-password form .form-actions [class~="secondary"].action-remove:before, .change-password form .form-actions [class~="secondary"].action-remove:before, .set-password form .form-actions [class~="secondary"].action-remove:before, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:before, .activationfailed form .form-actions [class~="secondary"].action-remove:before, .awaiting-activation form .form-actions [class~="secondary"].action-remove:before, .no-students form .form-actions [class~="secondary"].action-remove:before, .pjax-error .form-actions [class~="secondary"].action-remove:before, .group-add-form .form-actions [class~="secondary"].action-remove:before, .group-edit-form .form-actions [class~="secondary"].action-remove:before, .village-add-form .form-actions [class~="secondary"].action-remove:before, .village-edit-form .form-actions [class~="secondary"].action-remove:before, .bulk-signup .form-actions [class~="secondary"].action-remove:before, .elder-invite-form .form-actions [class~="secondary"].action-remove:before, .elder-edit-form .form-actions [class~="secondary"].action-remove:before, .dashboard .form-actions [class~="secondary"].action-remove:before, .post-add-form .form-actions [class~="secondary"].action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect-checkboxes input.disabled + .type:before, .ui-multiselect:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .feature-title:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, [class*="additem-"]:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
-.action-sms, #messages .close, .listitem-actions a, .listitem-actions button, .action-back.groups, .sms-info .summary, .elder .no-sms {
+.action-sms, #messages .close, .action-back.groups, .sms-info .summary, .elder .no-sms {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.action-sms:focus, #messages .close:focus, .listitem-actions a:focus, .listitem-actions button:focus, .action-back.groups:focus, .sms-info .summary:focus, .elder .no-sms:focus {
+.action-sms:focus, #messages .close:focus, .action-back.groups:focus, .sms-info .summary:focus, .elder .no-sms:focus {
   outline: 0;
 }
-.action-sms:focus:before, #messages .close:focus:before, .listitem-actions a:focus:before, .listitem-actions button:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, .elder .no-sms:focus:before {
+.action-sms:focus:before, #messages .close:focus:before, .action-back.groups:focus:before, .sms-info .summary:focus:before, .elder .no-sms:focus:before {
   outline: 1px dotted;
 }
-.action-sms:before, #messages .close:before, .listitem-actions a:before, .listitem-actions button:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before {
+.action-sms:before, #messages .close:before, .action-back.groups:before, .sms-info .summary:before, .elder .no-sms:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -470,7 +470,7 @@ optgroup {
   border: 0;
 }
 
-.action-sms, .login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, [class^="errorpage-"] form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, .pjax-error .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .village-add-form .form-actions button, .village-edit-form .form-actions button, .bulk-signup .form-actions button, .elder-invite-form .form-actions button, .elder-edit-form .form-actions button, .dashboard .form-actions button, .post-add-form .form-actions button, .linkaction, .ui-multiselect-all, .ui-multiselect-none, .main-register-link, [class*="additem-"], .post-add-form .form-actions .action-post {
+.action-sms, .login form .form-actions button:not([class~="secondary"]), .register form .form-actions button:not([class~="secondary"]), .edit-profile form .form-actions button:not([class~="secondary"]), .reset-password form .form-actions button:not([class~="secondary"]), .change-password form .form-actions button:not([class~="secondary"]), .set-password form .form-actions button:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:not([class~="secondary"]), .activationfailed form .form-actions button:not([class~="secondary"]), .awaiting-activation form .form-actions button:not([class~="secondary"]), .no-students form .form-actions button:not([class~="secondary"]), .pjax-error .form-actions button:not([class~="secondary"]), .group-add-form .form-actions button:not([class~="secondary"]), .group-edit-form .form-actions button:not([class~="secondary"]), .village-add-form .form-actions button:not([class~="secondary"]), .village-edit-form .form-actions button:not([class~="secondary"]), .bulk-signup .form-actions button:not([class~="secondary"]), .elder-invite-form .form-actions button:not([class~="secondary"]), .elder-edit-form .form-actions button:not([class~="secondary"]), .dashboard .form-actions button:not([class~="secondary"]), .post-add-form .form-actions button:not([class~="secondary"]), .linkaction, .ui-multiselect-all, .ui-multiselect-none, .main-register-link, .page-actions [class*="action-"], [class*="additem-"], .post-add-form .form-actions .action-post {
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
   border-radius: 0.25em;
@@ -496,10 +496,10 @@ optgroup {
   padding-right: 1em;
   text-align: center;
 }
-.action-sms:link, .login form .form-actions button:link, .register form .form-actions button:link, .edit-profile form .form-actions button:link, .reset-password form .form-actions button:link, .change-password form .form-actions button:link, .set-password form .form-actions button:link, [class^="errorpage-"] form .form-actions button:link, .activationfailed form .form-actions button:link, .awaiting-activation form .form-actions button:link, .no-students form .form-actions button:link, .pjax-error .form-actions button:link, .group-add-form .form-actions button:link, .group-edit-form .form-actions button:link, .village-add-form .form-actions button:link, .village-edit-form .form-actions button:link, .bulk-signup .form-actions button:link, .elder-invite-form .form-actions button:link, .elder-edit-form .form-actions button:link, .dashboard .form-actions button:link, .post-add-form .form-actions button:link, .linkaction:link, .ui-multiselect-all:link, .ui-multiselect-none:link, .main-register-link:link, [class*="additem-"]:link, .post-add-form .form-actions .action-post:link, .action-sms:visited, .login form .form-actions button:visited, .register form .form-actions button:visited, .edit-profile form .form-actions button:visited, .reset-password form .form-actions button:visited, .change-password form .form-actions button:visited, .set-password form .form-actions button:visited, [class^="errorpage-"] form .form-actions button:visited, .activationfailed form .form-actions button:visited, .awaiting-activation form .form-actions button:visited, .no-students form .form-actions button:visited, .pjax-error .form-actions button:visited, .group-add-form .form-actions button:visited, .group-edit-form .form-actions button:visited, .village-add-form .form-actions button:visited, .village-edit-form .form-actions button:visited, .bulk-signup .form-actions button:visited, .elder-invite-form .form-actions button:visited, .elder-edit-form .form-actions button:visited, .dashboard .form-actions button:visited, .post-add-form .form-actions button:visited, .linkaction:visited, .ui-multiselect-all:visited, .ui-multiselect-none:visited, .main-register-link:visited, [class*="additem-"]:visited, .post-add-form .form-actions .action-post:visited, .action-sms:focus, .login form .form-actions button:focus, .register form .form-actions button:focus, .edit-profile form .form-actions button:focus, .reset-password form .form-actions button:focus, .change-password form .form-actions button:focus, .set-password form .form-actions button:focus, [class^="errorpage-"] form .form-actions button:focus, .activationfailed form .form-actions button:focus, .awaiting-activation form .form-actions button:focus, .no-students form .form-actions button:focus, .pjax-error .form-actions button:focus, .group-add-form .form-actions button:focus, .group-edit-form .form-actions button:focus, .village-add-form .form-actions button:focus, .village-edit-form .form-actions button:focus, .bulk-signup .form-actions button:focus, .elder-invite-form .form-actions button:focus, .elder-edit-form .form-actions button:focus, .dashboard .form-actions button:focus, .post-add-form .form-actions button:focus, .linkaction:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .main-register-link:focus, [class*="additem-"]:focus, .post-add-form .form-actions .action-post:focus, .action-sms:hover, .login form .form-actions button:hover, .register form .form-actions button:hover, .edit-profile form .form-actions button:hover, .reset-password form .form-actions button:hover, .change-password form .form-actions button:hover, .set-password form .form-actions button:hover, [class^="errorpage-"] form .form-actions button:hover, .activationfailed form .form-actions button:hover, .awaiting-activation form .form-actions button:hover, .no-students form .form-actions button:hover, .pjax-error .form-actions button:hover, .group-add-form .form-actions button:hover, .group-edit-form .form-actions button:hover, .village-add-form .form-actions button:hover, .village-edit-form .form-actions button:hover, .bulk-signup .form-actions button:hover, .elder-invite-form .form-actions button:hover, .elder-edit-form .form-actions button:hover, .dashboard .form-actions button:hover, .post-add-form .form-actions button:hover, .linkaction:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .main-register-link:hover, [class*="additem-"]:hover, .post-add-form .form-actions .action-post:hover, .action-sms:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, .pjax-error .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .dashboard .form-actions button:active, .post-add-form .form-actions button:active, .linkaction:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, [class*="additem-"]:active, .post-add-form .form-actions .action-post:active {
+.action-sms:link, .login form .form-actions button:link:not([class~="secondary"]), .register form .form-actions button:link:not([class~="secondary"]), .edit-profile form .form-actions button:link:not([class~="secondary"]), .reset-password form .form-actions button:link:not([class~="secondary"]), .change-password form .form-actions button:link:not([class~="secondary"]), .set-password form .form-actions button:link:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:link:not([class~="secondary"]), .activationfailed form .form-actions button:link:not([class~="secondary"]), .awaiting-activation form .form-actions button:link:not([class~="secondary"]), .no-students form .form-actions button:link:not([class~="secondary"]), .pjax-error .form-actions button:link:not([class~="secondary"]), .group-add-form .form-actions button:link:not([class~="secondary"]), .group-edit-form .form-actions button:link:not([class~="secondary"]), .village-add-form .form-actions button:link:not([class~="secondary"]), .village-edit-form .form-actions button:link:not([class~="secondary"]), .bulk-signup .form-actions button:link:not([class~="secondary"]), .elder-invite-form .form-actions button:link:not([class~="secondary"]), .elder-edit-form .form-actions button:link:not([class~="secondary"]), .dashboard .form-actions button:link:not([class~="secondary"]), .post-add-form .form-actions button:link:not([class~="secondary"]), .linkaction:link, .ui-multiselect-all:link, .ui-multiselect-none:link, .main-register-link:link, .page-actions [class*="action-"]:link, [class*="additem-"]:link, .post-add-form .form-actions .action-post:link, .action-sms:visited, .login form .form-actions button:visited:not([class~="secondary"]), .register form .form-actions button:visited:not([class~="secondary"]), .edit-profile form .form-actions button:visited:not([class~="secondary"]), .reset-password form .form-actions button:visited:not([class~="secondary"]), .change-password form .form-actions button:visited:not([class~="secondary"]), .set-password form .form-actions button:visited:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:visited:not([class~="secondary"]), .activationfailed form .form-actions button:visited:not([class~="secondary"]), .awaiting-activation form .form-actions button:visited:not([class~="secondary"]), .no-students form .form-actions button:visited:not([class~="secondary"]), .pjax-error .form-actions button:visited:not([class~="secondary"]), .group-add-form .form-actions button:visited:not([class~="secondary"]), .group-edit-form .form-actions button:visited:not([class~="secondary"]), .village-add-form .form-actions button:visited:not([class~="secondary"]), .village-edit-form .form-actions button:visited:not([class~="secondary"]), .bulk-signup .form-actions button:visited:not([class~="secondary"]), .elder-invite-form .form-actions button:visited:not([class~="secondary"]), .elder-edit-form .form-actions button:visited:not([class~="secondary"]), .dashboard .form-actions button:visited:not([class~="secondary"]), .post-add-form .form-actions button:visited:not([class~="secondary"]), .linkaction:visited, .ui-multiselect-all:visited, .ui-multiselect-none:visited, .main-register-link:visited, .page-actions [class*="action-"]:visited, [class*="additem-"]:visited, .post-add-form .form-actions .action-post:visited, .action-sms:focus, .login form .form-actions button:focus:not([class~="secondary"]), .register form .form-actions button:focus:not([class~="secondary"]), .edit-profile form .form-actions button:focus:not([class~="secondary"]), .reset-password form .form-actions button:focus:not([class~="secondary"]), .change-password form .form-actions button:focus:not([class~="secondary"]), .set-password form .form-actions button:focus:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:focus:not([class~="secondary"]), .activationfailed form .form-actions button:focus:not([class~="secondary"]), .awaiting-activation form .form-actions button:focus:not([class~="secondary"]), .no-students form .form-actions button:focus:not([class~="secondary"]), .pjax-error .form-actions button:focus:not([class~="secondary"]), .group-add-form .form-actions button:focus:not([class~="secondary"]), .group-edit-form .form-actions button:focus:not([class~="secondary"]), .village-add-form .form-actions button:focus:not([class~="secondary"]), .village-edit-form .form-actions button:focus:not([class~="secondary"]), .bulk-signup .form-actions button:focus:not([class~="secondary"]), .elder-invite-form .form-actions button:focus:not([class~="secondary"]), .elder-edit-form .form-actions button:focus:not([class~="secondary"]), .dashboard .form-actions button:focus:not([class~="secondary"]), .post-add-form .form-actions button:focus:not([class~="secondary"]), .linkaction:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .main-register-link:focus, .page-actions [class*="action-"]:focus, [class*="additem-"]:focus, .post-add-form .form-actions .action-post:focus, .action-sms:hover, .login form .form-actions button:hover:not([class~="secondary"]), .register form .form-actions button:hover:not([class~="secondary"]), .edit-profile form .form-actions button:hover:not([class~="secondary"]), .reset-password form .form-actions button:hover:not([class~="secondary"]), .change-password form .form-actions button:hover:not([class~="secondary"]), .set-password form .form-actions button:hover:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:hover:not([class~="secondary"]), .activationfailed form .form-actions button:hover:not([class~="secondary"]), .awaiting-activation form .form-actions button:hover:not([class~="secondary"]), .no-students form .form-actions button:hover:not([class~="secondary"]), .pjax-error .form-actions button:hover:not([class~="secondary"]), .group-add-form .form-actions button:hover:not([class~="secondary"]), .group-edit-form .form-actions button:hover:not([class~="secondary"]), .village-add-form .form-actions button:hover:not([class~="secondary"]), .village-edit-form .form-actions button:hover:not([class~="secondary"]), .bulk-signup .form-actions button:hover:not([class~="secondary"]), .elder-invite-form .form-actions button:hover:not([class~="secondary"]), .elder-edit-form .form-actions button:hover:not([class~="secondary"]), .dashboard .form-actions button:hover:not([class~="secondary"]), .post-add-form .form-actions button:hover:not([class~="secondary"]), .linkaction:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .main-register-link:hover, .page-actions [class*="action-"]:hover, [class*="additem-"]:hover, .post-add-form .form-actions .action-post:hover, .action-sms:active, .login form .form-actions button:active:not([class~="secondary"]), .register form .form-actions button:active:not([class~="secondary"]), .edit-profile form .form-actions button:active:not([class~="secondary"]), .reset-password form .form-actions button:active:not([class~="secondary"]), .change-password form .form-actions button:active:not([class~="secondary"]), .set-password form .form-actions button:active:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:active:not([class~="secondary"]), .activationfailed form .form-actions button:active:not([class~="secondary"]), .awaiting-activation form .form-actions button:active:not([class~="secondary"]), .no-students form .form-actions button:active:not([class~="secondary"]), .pjax-error .form-actions button:active:not([class~="secondary"]), .group-add-form .form-actions button:active:not([class~="secondary"]), .group-edit-form .form-actions button:active:not([class~="secondary"]), .village-add-form .form-actions button:active:not([class~="secondary"]), .village-edit-form .form-actions button:active:not([class~="secondary"]), .bulk-signup .form-actions button:active:not([class~="secondary"]), .elder-invite-form .form-actions button:active:not([class~="secondary"]), .elder-edit-form .form-actions button:active:not([class~="secondary"]), .dashboard .form-actions button:active:not([class~="secondary"]), .post-add-form .form-actions button:active:not([class~="secondary"]), .linkaction:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, .page-actions [class*="action-"]:active, [class*="additem-"]:active, .post-add-form .form-actions .action-post:active {
   color: #fdf6e3;
 }
-.action-sms:active, .login form .form-actions button:active, .register form .form-actions button:active, .edit-profile form .form-actions button:active, .reset-password form .form-actions button:active, .change-password form .form-actions button:active, .set-password form .form-actions button:active, [class^="errorpage-"] form .form-actions button:active, .activationfailed form .form-actions button:active, .awaiting-activation form .form-actions button:active, .no-students form .form-actions button:active, .pjax-error .form-actions button:active, .group-add-form .form-actions button:active, .group-edit-form .form-actions button:active, .village-add-form .form-actions button:active, .village-edit-form .form-actions button:active, .bulk-signup .form-actions button:active, .elder-invite-form .form-actions button:active, .elder-edit-form .form-actions button:active, .dashboard .form-actions button:active, .post-add-form .form-actions button:active, .linkaction:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, [class*="additem-"]:active, .post-add-form .form-actions .action-post:active {
+.action-sms:active, .login form .form-actions button:active:not([class~="secondary"]), .register form .form-actions button:active:not([class~="secondary"]), .edit-profile form .form-actions button:active:not([class~="secondary"]), .reset-password form .form-actions button:active:not([class~="secondary"]), .change-password form .form-actions button:active:not([class~="secondary"]), .set-password form .form-actions button:active:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:active:not([class~="secondary"]), .activationfailed form .form-actions button:active:not([class~="secondary"]), .awaiting-activation form .form-actions button:active:not([class~="secondary"]), .no-students form .form-actions button:active:not([class~="secondary"]), .pjax-error .form-actions button:active:not([class~="secondary"]), .group-add-form .form-actions button:active:not([class~="secondary"]), .group-edit-form .form-actions button:active:not([class~="secondary"]), .village-add-form .form-actions button:active:not([class~="secondary"]), .village-edit-form .form-actions button:active:not([class~="secondary"]), .bulk-signup .form-actions button:active:not([class~="secondary"]), .elder-invite-form .form-actions button:active:not([class~="secondary"]), .elder-edit-form .form-actions button:active:not([class~="secondary"]), .dashboard .form-actions button:active:not([class~="secondary"]), .post-add-form .form-actions button:active:not([class~="secondary"]), .linkaction:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, .page-actions [class*="action-"]:active, [class*="additem-"]:active, .post-add-form .form-actions .action-post:active {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
@@ -696,8 +696,22 @@ optgroup {
   margin: 0 0.4em 0.63889rem 0;
   display: inline-block;
 }
-.login form .form-actions button, .register form .form-actions button, .edit-profile form .form-actions button, .reset-password form .form-actions button, .change-password form .form-actions button, .set-password form .form-actions button, [class^="errorpage-"] form .form-actions button, .activationfailed form .form-actions button, .awaiting-activation form .form-actions button, .no-students form .form-actions button, .pjax-error .form-actions button, .group-add-form .form-actions button, .group-edit-form .form-actions button, .village-add-form .form-actions button, .village-edit-form .form-actions button, .bulk-signup .form-actions button, .elder-invite-form .form-actions button, .elder-edit-form .form-actions button, .dashboard .form-actions button, .post-add-form .form-actions button {
+.login form .form-actions button:not([class~="secondary"]), .register form .form-actions button:not([class~="secondary"]), .edit-profile form .form-actions button:not([class~="secondary"]), .reset-password form .form-actions button:not([class~="secondary"]), .change-password form .form-actions button:not([class~="secondary"]), .set-password form .form-actions button:not([class~="secondary"]), [class^="errorpage-"] form .form-actions button:not([class~="secondary"]), .activationfailed form .form-actions button:not([class~="secondary"]), .awaiting-activation form .form-actions button:not([class~="secondary"]), .no-students form .form-actions button:not([class~="secondary"]), .pjax-error .form-actions button:not([class~="secondary"]), .group-add-form .form-actions button:not([class~="secondary"]), .group-edit-form .form-actions button:not([class~="secondary"]), .village-add-form .form-actions button:not([class~="secondary"]), .village-edit-form .form-actions button:not([class~="secondary"]), .bulk-signup .form-actions button:not([class~="secondary"]), .elder-invite-form .form-actions button:not([class~="secondary"]), .elder-edit-form .form-actions button:not([class~="secondary"]), .dashboard .form-actions button:not([class~="secondary"]), .post-add-form .form-actions button:not([class~="secondary"]) {
   text-transform: capitalize;
+}
+.login form .form-actions [class~="secondary"], .register form .form-actions [class~="secondary"], .edit-profile form .form-actions [class~="secondary"], .reset-password form .form-actions [class~="secondary"], .change-password form .form-actions [class~="secondary"], .set-password form .form-actions [class~="secondary"], [class^="errorpage-"] form .form-actions [class~="secondary"], .activationfailed form .form-actions [class~="secondary"], .awaiting-activation form .form-actions [class~="secondary"], .no-students form .form-actions [class~="secondary"], .pjax-error .form-actions [class~="secondary"], .group-add-form .form-actions [class~="secondary"], .group-edit-form .form-actions [class~="secondary"], .village-add-form .form-actions [class~="secondary"], .village-edit-form .form-actions [class~="secondary"], .bulk-signup .form-actions [class~="secondary"], .elder-invite-form .form-actions [class~="secondary"], .elder-edit-form .form-actions [class~="secondary"], .dashboard .form-actions [class~="secondary"], .post-add-form .form-actions [class~="secondary"], .login form .form-actions [class~="secondary"]:link, .register form .form-actions [class~="secondary"]:link, .edit-profile form .form-actions [class~="secondary"]:link, .reset-password form .form-actions [class~="secondary"]:link, .change-password form .form-actions [class~="secondary"]:link, .set-password form .form-actions [class~="secondary"]:link, [class^="errorpage-"] form .form-actions [class~="secondary"]:link, .activationfailed form .form-actions [class~="secondary"]:link, .awaiting-activation form .form-actions [class~="secondary"]:link, .no-students form .form-actions [class~="secondary"]:link, .pjax-error .form-actions [class~="secondary"]:link, .group-add-form .form-actions [class~="secondary"]:link, .group-edit-form .form-actions [class~="secondary"]:link, .village-add-form .form-actions [class~="secondary"]:link, .village-edit-form .form-actions [class~="secondary"]:link, .bulk-signup .form-actions [class~="secondary"]:link, .elder-invite-form .form-actions [class~="secondary"]:link, .elder-edit-form .form-actions [class~="secondary"]:link, .dashboard .form-actions [class~="secondary"]:link, .post-add-form .form-actions [class~="secondary"]:link, .login form .form-actions [class~="secondary"]:visited, .register form .form-actions [class~="secondary"]:visited, .edit-profile form .form-actions [class~="secondary"]:visited, .reset-password form .form-actions [class~="secondary"]:visited, .change-password form .form-actions [class~="secondary"]:visited, .set-password form .form-actions [class~="secondary"]:visited, [class^="errorpage-"] form .form-actions [class~="secondary"]:visited, .activationfailed form .form-actions [class~="secondary"]:visited, .awaiting-activation form .form-actions [class~="secondary"]:visited, .no-students form .form-actions [class~="secondary"]:visited, .pjax-error .form-actions [class~="secondary"]:visited, .group-add-form .form-actions [class~="secondary"]:visited, .group-edit-form .form-actions [class~="secondary"]:visited, .village-add-form .form-actions [class~="secondary"]:visited, .village-edit-form .form-actions [class~="secondary"]:visited, .bulk-signup .form-actions [class~="secondary"]:visited, .elder-invite-form .form-actions [class~="secondary"]:visited, .elder-edit-form .form-actions [class~="secondary"]:visited, .dashboard .form-actions [class~="secondary"]:visited, .post-add-form .form-actions [class~="secondary"]:visited {
+  color: #268bd2;
+  text-decoration: none;
+}
+.login form .form-actions [class~="secondary"]:focus, .register form .form-actions [class~="secondary"]:focus, .edit-profile form .form-actions [class~="secondary"]:focus, .reset-password form .form-actions [class~="secondary"]:focus, .change-password form .form-actions [class~="secondary"]:focus, .set-password form .form-actions [class~="secondary"]:focus, [class^="errorpage-"] form .form-actions [class~="secondary"]:focus, .activationfailed form .form-actions [class~="secondary"]:focus, .awaiting-activation form .form-actions [class~="secondary"]:focus, .no-students form .form-actions [class~="secondary"]:focus, .pjax-error .form-actions [class~="secondary"]:focus, .group-add-form .form-actions [class~="secondary"]:focus, .group-edit-form .form-actions [class~="secondary"]:focus, .village-add-form .form-actions [class~="secondary"]:focus, .village-edit-form .form-actions [class~="secondary"]:focus, .bulk-signup .form-actions [class~="secondary"]:focus, .elder-invite-form .form-actions [class~="secondary"]:focus, .elder-edit-form .form-actions [class~="secondary"]:focus, .dashboard .form-actions [class~="secondary"]:focus, .post-add-form .form-actions [class~="secondary"]:focus, .login form .form-actions [class~="secondary"]:hover, .register form .form-actions [class~="secondary"]:hover, .edit-profile form .form-actions [class~="secondary"]:hover, .reset-password form .form-actions [class~="secondary"]:hover, .change-password form .form-actions [class~="secondary"]:hover, .set-password form .form-actions [class~="secondary"]:hover, [class^="errorpage-"] form .form-actions [class~="secondary"]:hover, .activationfailed form .form-actions [class~="secondary"]:hover, .awaiting-activation form .form-actions [class~="secondary"]:hover, .no-students form .form-actions [class~="secondary"]:hover, .pjax-error .form-actions [class~="secondary"]:hover, .group-add-form .form-actions [class~="secondary"]:hover, .group-edit-form .form-actions [class~="secondary"]:hover, .village-add-form .form-actions [class~="secondary"]:hover, .village-edit-form .form-actions [class~="secondary"]:hover, .bulk-signup .form-actions [class~="secondary"]:hover, .elder-invite-form .form-actions [class~="secondary"]:hover, .elder-edit-form .form-actions [class~="secondary"]:hover, .dashboard .form-actions [class~="secondary"]:hover, .post-add-form .form-actions [class~="secondary"]:hover, .login form .form-actions [class~="secondary"]:active, .register form .form-actions [class~="secondary"]:active, .edit-profile form .form-actions [class~="secondary"]:active, .reset-password form .form-actions [class~="secondary"]:active, .change-password form .form-actions [class~="secondary"]:active, .set-password form .form-actions [class~="secondary"]:active, [class^="errorpage-"] form .form-actions [class~="secondary"]:active, .activationfailed form .form-actions [class~="secondary"]:active, .awaiting-activation form .form-actions [class~="secondary"]:active, .no-students form .form-actions [class~="secondary"]:active, .pjax-error .form-actions [class~="secondary"]:active, .group-add-form .form-actions [class~="secondary"]:active, .group-edit-form .form-actions [class~="secondary"]:active, .village-add-form .form-actions [class~="secondary"]:active, .village-edit-form .form-actions [class~="secondary"]:active, .bulk-signup .form-actions [class~="secondary"]:active, .elder-invite-form .form-actions [class~="secondary"]:active, .elder-edit-form .form-actions [class~="secondary"]:active, .dashboard .form-actions [class~="secondary"]:active, .post-add-form .form-actions [class~="secondary"]:active {
+  color: #d33682;
+  cursor: pointer;
+}
+.login form .form-actions [class~="secondary"].action-remove, .register form .form-actions [class~="secondary"].action-remove, .edit-profile form .form-actions [class~="secondary"].action-remove, .reset-password form .form-actions [class~="secondary"].action-remove, .change-password form .form-actions [class~="secondary"].action-remove, .set-password form .form-actions [class~="secondary"].action-remove, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove, .activationfailed form .form-actions [class~="secondary"].action-remove, .awaiting-activation form .form-actions [class~="secondary"].action-remove, .no-students form .form-actions [class~="secondary"].action-remove, .pjax-error .form-actions [class~="secondary"].action-remove, .group-add-form .form-actions [class~="secondary"].action-remove, .group-edit-form .form-actions [class~="secondary"].action-remove, .village-add-form .form-actions [class~="secondary"].action-remove, .village-edit-form .form-actions [class~="secondary"].action-remove, .bulk-signup .form-actions [class~="secondary"].action-remove, .elder-invite-form .form-actions [class~="secondary"].action-remove, .elder-edit-form .form-actions [class~="secondary"].action-remove, .dashboard .form-actions [class~="secondary"].action-remove, .post-add-form .form-actions [class~="secondary"].action-remove {
+  color: #dc322f;
+}
+.login form .form-actions [class~="secondary"].action-remove:focus, .register form .form-actions [class~="secondary"].action-remove:focus, .edit-profile form .form-actions [class~="secondary"].action-remove:focus, .reset-password form .form-actions [class~="secondary"].action-remove:focus, .change-password form .form-actions [class~="secondary"].action-remove:focus, .set-password form .form-actions [class~="secondary"].action-remove:focus, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:focus, .activationfailed form .form-actions [class~="secondary"].action-remove:focus, .awaiting-activation form .form-actions [class~="secondary"].action-remove:focus, .no-students form .form-actions [class~="secondary"].action-remove:focus, .pjax-error .form-actions [class~="secondary"].action-remove:focus, .group-add-form .form-actions [class~="secondary"].action-remove:focus, .group-edit-form .form-actions [class~="secondary"].action-remove:focus, .village-add-form .form-actions [class~="secondary"].action-remove:focus, .village-edit-form .form-actions [class~="secondary"].action-remove:focus, .bulk-signup .form-actions [class~="secondary"].action-remove:focus, .elder-invite-form .form-actions [class~="secondary"].action-remove:focus, .elder-edit-form .form-actions [class~="secondary"].action-remove:focus, .dashboard .form-actions [class~="secondary"].action-remove:focus, .post-add-form .form-actions [class~="secondary"].action-remove:focus, .login form .form-actions [class~="secondary"].action-remove:hover, .register form .form-actions [class~="secondary"].action-remove:hover, .edit-profile form .form-actions [class~="secondary"].action-remove:hover, .reset-password form .form-actions [class~="secondary"].action-remove:hover, .change-password form .form-actions [class~="secondary"].action-remove:hover, .set-password form .form-actions [class~="secondary"].action-remove:hover, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:hover, .activationfailed form .form-actions [class~="secondary"].action-remove:hover, .awaiting-activation form .form-actions [class~="secondary"].action-remove:hover, .no-students form .form-actions [class~="secondary"].action-remove:hover, .pjax-error .form-actions [class~="secondary"].action-remove:hover, .group-add-form .form-actions [class~="secondary"].action-remove:hover, .group-edit-form .form-actions [class~="secondary"].action-remove:hover, .village-add-form .form-actions [class~="secondary"].action-remove:hover, .village-edit-form .form-actions [class~="secondary"].action-remove:hover, .bulk-signup .form-actions [class~="secondary"].action-remove:hover, .elder-invite-form .form-actions [class~="secondary"].action-remove:hover, .elder-edit-form .form-actions [class~="secondary"].action-remove:hover, .dashboard .form-actions [class~="secondary"].action-remove:hover, .post-add-form .form-actions [class~="secondary"].action-remove:hover, .login form .form-actions [class~="secondary"].action-remove:active, .register form .form-actions [class~="secondary"].action-remove:active, .edit-profile form .form-actions [class~="secondary"].action-remove:active, .reset-password form .form-actions [class~="secondary"].action-remove:active, .change-password form .form-actions [class~="secondary"].action-remove:active, .set-password form .form-actions [class~="secondary"].action-remove:active, [class^="errorpage-"] form .form-actions [class~="secondary"].action-remove:active, .activationfailed form .form-actions [class~="secondary"].action-remove:active, .awaiting-activation form .form-actions [class~="secondary"].action-remove:active, .no-students form .form-actions [class~="secondary"].action-remove:active, .pjax-error .form-actions [class~="secondary"].action-remove:active, .group-add-form .form-actions [class~="secondary"].action-remove:active, .group-edit-form .form-actions [class~="secondary"].action-remove:active, .village-add-form .form-actions [class~="secondary"].action-remove:active, .village-edit-form .form-actions [class~="secondary"].action-remove:active, .bulk-signup .form-actions [class~="secondary"].action-remove:active, .elder-invite-form .form-actions [class~="secondary"].action-remove:active, .elder-edit-form .form-actions [class~="secondary"].action-remove:active, .dashboard .form-actions [class~="secondary"].action-remove:active, .post-add-form .form-actions [class~="secondary"].action-remove:active {
+  color: #268bd2;
 }
 
 button {
@@ -2235,6 +2249,22 @@ button {
   height: 100%;
 }
 
+.village-main {
+  position: relative;
+  float: left;
+  width: 76.19048%;
+  height: 100%;
+  border-right: 1px solid #93a1a1;
+}
+
+.village-info {
+  width: 23.80952%;
+  float: right;
+  margin-right: 0;
+  margin: 0;
+  height: 100%;
+}
+
 .village-header {
   padding-top: 6px;
   padding-top: 0.31944rem;
@@ -2268,6 +2298,8 @@ button {
   width: 74.60317%;
   float: left;
   margin-right: 1.5873%;
+  float: left;
+  max-width: 74.60317%;
   font-weight: bold;
 }
 .village-title [class^="icon-"] {
@@ -2280,20 +2312,26 @@ button {
   font-weight: normal;
 }
 
-.village-main {
-  position: relative;
-  float: left;
-  width: 76.19048%;
-  height: 100%;
-  border-right: 1px solid #93a1a1;
+.page-actions {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  padding-top: 0.31944rem;
+  text-align: right;
 }
-
-.village-info {
-  width: 23.80952%;
-  float: right;
-  margin-right: 0;
-  margin: 0;
-  height: 100%;
+.page-actions [class*="action-"] {
+  text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background: -moz-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background: -o-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background: linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  background-color: #fdf6e3;
+  border-color: #829692;
+  color: #657b83;
+}
+.page-actions [class*="action-"]:link, .page-actions [class*="action-"]:visited, .page-actions [class*="action-"]:focus, .page-actions [class*="action-"]:hover, .page-actions [class*="action-"]:active {
+  color: #657b83;
 }
 
 .village-info, .pjax-error, .group-add-form, .group-edit-form, .village-add-form, .village-edit-form, .bulk-signup, .elder-invite-form, .elder-edit-form, .dashboard, .village-nav, .village-feed {
@@ -2774,6 +2812,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: none;
 }
 
+.remove-item {
+  padding-top: 6px;
+  padding-top: 0.31944rem;
+  float: left;
+}
+
 .school_staff-field {
   margin-top: 23px;
   margin-top: 1.27778rem;
@@ -2854,72 +2898,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   text-align: center;
 }
 .listitem-select .unread.zero {
-  display: none;
-}
-.listitem-select.editing {
-  font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-  min-height: 1.27778rem;
-  background: #f7c9b6;
-}
-.listitem-select.removed {
-  -webkit-box-shadow: #073642 0 0 3px inset;
-  -moz-box-shadow: #073642 0 0 3px inset;
-  box-shadow: #073642 0 0 3px inset;
-  color: #dc322f;
-  background: #f9dede;
-}
-
-.listitem-actions {
-  -webkit-transition: all 400ms;
-  -moz-transition: all 400ms;
-  -o-transition: all 400ms;
-  transition: all 400ms;
-  position: absolute !important;
-  top: 0;
-  right: 0;
-  bottom: 1px;
-  padding: 0.31944rem;
-  padding-right: 0.63889rem;
-  background: #002b36;
-  color: #073642;
-  opacity: 0;
-}
-.listitem:hover .listitem-actions, .removed + .listitem-actions, .editing + .listitem-actions {
-  opacity: 1;
-  z-index: 100;
-}
-
-.listitem-actions {
-  position: relative;
-}
-.listitem-actions:before {
-  content: " ";
-  position: absolute;
-  height: 0;
-  width: 0;
-  border: solid transparent;
-  pointer-events: none;
-  right: 100%;
-  border-right-color: #002b36;
-  border-width: 0.375rem;
-  top: 50%;
-  margin-top: -0.375rem;
-}
-.listitem-actions form {
-  display: inline;
-}
-.listitem-actions a, .listitem-actions button {
-  margin-left: 0.63889rem;
-}
-.listitem-actions a, .listitem-actions a:link, .listitem-actions a:visited, .listitem-actions button, .listitem-actions button:link, .listitem-actions button:visited {
-  color: #fdf6e3;
-  text-decoration: none;
-}
-.listitem-actions a:focus, .listitem-actions a:hover, .listitem-actions a:active, .listitem-actions button:focus, .listitem-actions button:hover, .listitem-actions button:active {
-  color: #e896b2;
-  cursor: pointer;
-}
-.listitem-actions .action-save {
   display: none;
 }
 

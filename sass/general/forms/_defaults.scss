@@ -169,9 +169,18 @@ $input-rhythm: .25;
       @include rem(margin, 0 .4em rhythm(.5,$form-action-note-size) 0);
       display: inline-block;
     }
-    button {
+    button:not([class~="secondary"]) {
       @extend %button;
       text-transform: capitalize;
+    }
+    [class~="secondary"] {
+      @include link($non-links: true);
+      &.action-remove {
+        @extend %icon;
+        @extend %icon-remove;
+        color: $red;
+        #{$focus} { color: $alt; }
+      }
     }
   }
 }
