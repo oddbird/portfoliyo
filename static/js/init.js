@@ -9,7 +9,7 @@ var PYO = (function (PYO, $) {
             handleAjax: true,
             transientFadeSpeed: 2000
         });
-        $('.details:not(html)').html5accordion();
+        $('.details:not(html)').not('.post .details').html5accordion();
         $('.email').defuscate();
 
         // base.js

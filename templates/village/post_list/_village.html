@@ -8,12 +8,12 @@
 
 {% block edit-url %}{% url 'edit_student' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% endblock %}
 
-{% block village-feed-attrs %}data-backlog-url="{% url 'json_posts' student_id=student.id %}" data-post-url="{% url 'json_posts' student_id=student.id %}"{% endblock %}
+{% block village-feed-attrs %} data-post-url="{% url 'create_post' student_id=student.id %}"{% endblock %}
 
 {% block getting-started-header %}Send messages to {{ student.name }}'s parents & teachers.{% endblock %}
 
 {% block addpost-classes %}village-posts{% endblock %}
-{% block form-action %}{% url 'json_posts' student_id=student.id %}{% endblock %}
+{% block form-action %}{% url 'create_post' student_id=student.id %}{% endblock %}
 
 {% block info-bar %}
 {% include "village/post_list/_village_info.html" %}
