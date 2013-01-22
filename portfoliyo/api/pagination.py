@@ -9,7 +9,6 @@ class NoCountPaginator(paginator.Paginator):
 
     def page(self):
         output = super(NoCountPaginator, self).page()
-        if 'total_count' in output:
-            del output['total_count']
+        del output['meta']['total_count']
         return output
 
