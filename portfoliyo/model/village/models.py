@@ -1,7 +1,6 @@
 """Village models."""
 from __future__ import absolute_import
 
-from collections import defaultdict
 import re
 
 from django.core.urlresolvers import reverse
@@ -46,13 +45,13 @@ class BasePost(models.Model):
     timestamp = models.DateTimeField(default=now)
     # the original text as entered by a user
     original_text = models.TextField()
-    # the parsed text as HTML, with highlights wrapped in <b>
+    # the parsed text as HTML
     html_text = models.TextField()
     # message was received via SMS
     from_sms = models.BooleanField(default=False)
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
-    # arbitrary additional metadata, currently just highlights and SMSes
+    # arbitrary additional metadata, currently just SMSes
     meta = JSONField(default={})
 
 
@@ -132,29 +131,6 @@ class BasePost(models.Model):
 
         return to_send
 
-
-    def store_highlights(self, highlights):
-        """
-        Store info from given highlights dict to self.meta['highlights'].
-
-        ``highlights`` should be dictionary mapping highlighted relationships
-        to list of names highlighted as (i.e. as returned by ``process_text``).
-
-        """
-        meta_highlights = []
-        for elder, mentioned_as in highlights.items():
-            meta_highlights.append(
-                {
-                    'id': elder.id,
-                    'mentioned_as': mentioned_as,
-                    'role': elder.role_in_context,
-                    'name': elder.name,
-                    'email': elder.user.email,
-                    'phone': elder.phone,
-                    }
-                )
-
-        self.meta['highlights'] = meta_highlights
 
 
     def notify_email(self, from_sms):
@@ -237,8 +213,7 @@ class BulkPost(BasePost):
         if group is None:
             group = user_models.AllStudentsGroup(author)
 
-        html_text, highlights = process_text(
-            text, user_models.contextualized_elders(group.all_elders))
+        html_text = text2html(text)
 
         post = cls(
             author=author,
@@ -249,8 +224,6 @@ class BulkPost(BasePost):
             )
 
         sms_to_send = post.prepare_sms(sms_profile_ids or [])
-
-        post.store_highlights(highlights)
 
         post.save()
 
@@ -334,8 +307,7 @@ class Post(BasePost):
         post will be sent.
 
         """
-        html_text, highlights = process_text(
-            text, user_models.contextualized_elders(student.elder_relationships))
+        html_text = text2html(text)
 
         post = cls(
             author=author,
@@ -346,7 +318,6 @@ class Post(BasePost):
             )
 
         sms_to_send = post.prepare_sms(sms_profile_ids or [], in_reply_to)
-        post.store_highlights(highlights)
         post.save()
 
         # mark the post unread by all web users in village (except the author)
@@ -394,111 +365,10 @@ class Post(BasePost):
 
 
 
-def process_text(text, elders_in_context):
-    """
-    Process given post text in context of given (contextualized) elders.
+def text2html(text):
+    """Process given post text to HTML."""
+    return html.escape(text).replace('\n', '<br>')
 
-    Escape HTML, replace newlines with <br>, replace highlights.
-
-    Return tuple of (rendered-text,
-    dict-mapping-highlighted-relationships-to-list-of-names-highlighted-as).
-
-    """
-    name_map = get_highlight_names(elders_in_context)
-    html_text, highlights = replace_highlights(html.escape(text), name_map)
-    html_text = html_text.replace('\n', '<br>')
-    return html_text, highlights
-
-
-
-# The ending delimiter here must use a lookahead assertion rather than a simple
-# match, otherwise adjacent highlights separated by a single space fail to
-# match the second highlight, because re.finditer returns only non-overlapping
-# matches, and without the lookahead both highlight matches would want to grab
-# that same intervening space. We could use lookbehind for the initial
-# delimiter as well, except that lookbehind requires a fixed-width pattern, and
-# our delimiter pattern is not fixed-width (it's zero or one).
-highlight_re = re.compile(
-    r"""(\A|[\s[(])          # string-start or whitespace/punctuation
-        (@(\S+?))            # @ followed by (non-greedy) non-whitespace
-        (?=\Z|[\s,;:)\]?])  # string-end or whitespace/punctuation
-    """,
-    re.VERBOSE,
-    )
-
-
-
-def replace_highlights(text, name_map):
-    """
-    Detect highlights and wrap with HTML element.
-
-    Returns a tuple of (rendered-text,
-    dict-mapping-highlighted-elders-to-list-of-names-highlighted-as).
-
-    ``name_map`` should be a mapping of highlightable names to contextualized
-    elders (such as the map returned by ``get_highlight_names``).
-
-    """
-    highlighted = {}
-    offset = 0 # how much we've increased the length of ``text``
-    for match in highlight_re.finditer(text):
-        full_highlight = match.group(2)
-        highlight_name = match.group(3)
-        # special handling for period (rather than putting it into the regex as
-        # highlight-terminating punctuation) so that we can support highlights
-        # with internal periods (i.e. email addresses)
-        stripped = 0
-        while highlight_name.endswith('.'):
-            highlight_name = highlight_name[:-1]
-            full_highlight = full_highlight[:-1]
-            stripped += 1
-        highlight_elders = name_map.get(normalize_name(highlight_name))
-        if highlight_elders:
-            replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
-                u' all me' if highlight_name == 'all' else u'',
-                u','.join([unicode(e.id) for e in highlight_elders]),
-                full_highlight,
-                )
-            start, end = match.span(2)
-            end -= stripped
-            text = text[:start+offset] + replace_with + text[end+offset:]
-            offset += len(replace_with) - (end - start)
-            for elder in highlight_elders:
-                highlighted.setdefault(elder, []).append(highlight_name)
-    return text, highlighted
-
-
-
-def get_highlight_names(elders_in_context):
-    """
-    Get highlightable names in context of given contextualized elders.
-
-    Returns dictionary mapping names to sets of elders.
-
-    """
-    name_map = defaultdict(set)
-
-    for elder in elders_in_context:
-        possible_names = []
-        if elder.name:
-            possible_names.append(normalize_name(elder.name))
-        if elder.phone:
-            possible_names.append(normalize_name(elder.phone))
-            possible_names.append(
-                normalize_name(elder.phone.lstrip('+').lstrip('1')))
-        if elder.user.email:
-            possible_names.append(normalize_name(elder.user.email))
-        possible_names.append(normalize_name(elder.role_in_context))
-        for name in possible_names:
-            name_map[name].add(elder)
-        name_map['all'].add(elder)
-    return name_map
-
-
-
-def normalize_name(name):
-    """Normalize a name for highlight detection (lower-case, strip spaces)."""
-    return name.lower().replace(' ', '')
 
 
 def notification_suffix(elder_or_rel):
@@ -506,9 +376,11 @@ def notification_suffix(elder_or_rel):
     return u' --%s' % elder_or_rel.name_or_role
 
 
+
 def post_char_limit(elder_or_rel):
     """Max length for posts from this elder or relationship."""
     return 160 - len(notification_suffix(elder_or_rel))
+
 
 
 def post_dict(post, **extra):
