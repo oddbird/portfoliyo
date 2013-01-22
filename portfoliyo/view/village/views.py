@@ -430,7 +430,8 @@ def json_posts(request, student_id=None, group_id=None):
                     ) if (post_model is model.Post) else False,
                 )
             for post in reversed(
-                manager.order_by('-timestamp')[:BACKLOG_POSTS])
+                manager.order_by(
+                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
             ],
         }
 
