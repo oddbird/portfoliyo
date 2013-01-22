@@ -364,7 +364,7 @@ def group(request, group_id=None):
     """The main chat view for a group."""
     if group_id is None:
         group = model.AllStudentsGroup(request.user.profile)
-        posts = request.user.profile.authored_bulkposts
+        posts = request.user.profile.authored_bulkposts.filter(group=None)
     else:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile),
@@ -404,16 +404,16 @@ def json_posts(request, student_id=None, group_id=None):
             student = rel.student
         post_model = model.Post
         target = student
-        manager = student.posts_in_village
+        queryset = student.posts_in_village
         can_be_unread = True
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
         target = group
-        manager = group.bulk_posts
+        queryset = group.bulk_posts
     else:
         target = None
-        manager = request.user.profile.authored_bulkposts
+        queryset = request.user.profile.authored_bulkposts.filter(group=None)
 
     if request.method == 'POST' and 'text' in request.POST:
         text = request.POST['text']
@@ -451,7 +451,7 @@ def json_posts(request, student_id=None, group_id=None):
         return http.HttpResponse(
             json.dumps(data), content_type='application/json')
 
-    data = _get_posts(manager, request.user.profile if can_be_unread else None)
+    data = _get_posts(queryset, request.user.profile if can_be_unread else None)
 
     if rel:
         model.unread.mark_village_read(rel.student, rel.elder)

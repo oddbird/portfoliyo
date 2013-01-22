@@ -702,6 +702,25 @@ class TestVillage(GroupContextTests):
         assert not unread.is_unread(post2, rel.elder)
 
 
+    def test_posts(self, client, db):
+        """Shows posts in village."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        # this post is in the village and should show up
+        factories.PostFactory.create(
+            author=rel.elder, student=rel.student, html_text="I am here.")
+        # this is not in this village, and should not show up
+        factories.PostFactory.create(
+            author=rel.elder, html_text="I am not here.")
+
+        response = client.get(
+            self.url(rel.student), user=rel.elder.user, status=200)
+
+        response.mustcontain("I am here.")
+        assert "I am not here." not in response.content
+
+
 
 class TestAllStudents(object):
     def url(self):
@@ -709,9 +728,20 @@ class TestAllStudents(object):
 
 
     def test_all_students(self, client, db):
-        """Can view an all-students page."""
+        """Shows all-students group posts."""
         teacher = factories.ProfileFactory.create(school_staff=True)
-        client.get(self.url(), user=teacher.user, status=200)
+        group = factories.GroupFactory.create(owner=teacher)
+        # this post is all-students and should show up
+        factories.BulkPostFactory.create(
+            author=teacher, group=None, html_text="I am here.")
+        # this is not all-students, and should not.
+        factories.BulkPostFactory.create(
+            author=teacher, group=group, html_text="I am not here.")
+
+        response = client.get(self.url(), user=teacher.user, status=200)
+
+        response.mustcontain("I am here.")
+        assert "I am not here." not in response.content
 
 
 
@@ -724,11 +754,21 @@ class TestGroupDetail(object):
 
 
     def test_group_detail(self, client, db):
-        """Can view a group detail page."""
+        """Group detail page lists posts in group."""
         group = factories.GroupFactory.create(
             owner__school_staff=True)
+        # this post is in the group and should show up
+        factories.BulkPostFactory.create(
+            author=group.owner, group=group, html_text="I am here.")
+        # this is not in the group, and should not.
+        factories.BulkPostFactory.create(
+            author=group.owner, group=None, html_text="I am not here.")
 
-        client.get(self.url(group), user=group.owner.user, status=200)
+        response = client.get(
+            self.url(group), user=group.owner.user, status=200)
+
+        response.mustcontain("I am here.")
+        assert "I am not here." not in response.content
 
 
     def test_requires_ownership(self, client, db):
@@ -969,7 +1009,7 @@ class TestJsonPosts(object):
             html_text='post2',
             )
         # not in all-students group, shouldn't be returned
-        factories.BulkPostFactory()
+        factories.BulkPostFactory(author=elder)
 
         response = client.get(self.url(), user=elder.user)
 
