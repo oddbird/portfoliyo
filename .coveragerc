@@ -6,4 +6,4 @@ omit =
   */wsgi.py
   */tests/*
   */selenium/*
-  portfoliyo/view/debug.py
+  portfoliyo/view/debug/*
