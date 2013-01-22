@@ -5,9 +5,10 @@ from tastypie.authorization import ReadOnlyAuthorization
 from tastypie.bundle import Bundle
 from tastypie.resources import ModelResource
 
-from portfoliyo.api.authentication import SessionAuthentication
-from portfoliyo.api.authorization import (
+from .authentication import SessionAuthentication
+from .authorization import (
     ProfileAuthorization, RelationshipAuthorization, GroupAuthorization)
+from .pagination import NoCountPaginator
 from portfoliyo import model, xact
 
 
@@ -32,10 +33,9 @@ class PortfoliyoResource(ModelResource):
         authentication = SessionAuthentication()
         authorization = ReadOnlyAuthorization()
         allowed_methods = ['get']
-        # @@@ this should be high enough to never cause pagination in our use
-        # cases, but we should have a better solution here than a magic number
-        # (like maybe a custom paginator class that doesn't paginate?)
-        limit = 200
+        paginator_class = NoCountPaginator
+        # @@@ things will break if a user has more than 500 groups or students
+        limit = 500
 
 
     def wrap_view(self, view):
@@ -130,7 +130,6 @@ class SimpleToManyField(fields.ToManyField):
 
 
 class SlimProfileResource(PortfoliyoResource):
-    invited_by = fields.ForeignKey('self', 'invited_by', blank=True, null=True)
     email = fields.CharField()
 
 
@@ -145,7 +144,6 @@ class SlimProfileResource(PortfoliyoResource):
             'role',
             'school_staff',
             'code',
-            'invited_by',
             'declined',
             ]
         filtering = {
@@ -203,8 +201,7 @@ class ProfileResource(SlimProfileResource):
 
 
     class Meta(SlimProfileResource.Meta):
-        queryset = SlimProfileResource.Meta.queryset.prefetch_related(
-            'relationships_from', 'relationships_to')
+        queryset = SlimProfileResource.Meta.queryset.prefetch_relationships()
 
 
 
@@ -264,12 +261,13 @@ class SlimGroupResource(PortfoliyoResource):
 
 
 class GroupResource(SlimGroupResource):
-    owner = fields.ForeignKey(ProfileResource, 'owner')
+    owner = fields.ForeignKey(SlimProfileResource, 'owner')
     students = fields.ToManyField(SlimProfileResource, 'students', full=True)
 
 
     class Meta(SlimGroupResource.Meta):
-        queryset = SlimGroupResource.Meta.queryset.prefetch_related('students')
+        queryset = SlimGroupResource.Meta.queryset.prefetch_related(
+            'students__user').select_related('owner__user')
         fields = SlimGroupResource.Meta.fields + ['owner', 'students']
 
 
