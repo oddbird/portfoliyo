@@ -1,5 +1,5 @@
 {% extends "village/_base.html" %}
-{% load elders %}
+{% load elders handlebars %}
 
 {% block village-content %}
 <div class="village-main">
@@ -10,7 +10,7 @@
           <h3 class="starthead">{% block getting-started-header %}Welcome!{% endblock %}</h3>
       </article>
 
-      {# Posts are inserted here via Ajax, using jstemplates/post.html #}
+      {{ posts|handlebars:"posts" }}
 
       {% if not request.user.profile.authored_posts.exists %}
         <div class="stickyhack"> </div>

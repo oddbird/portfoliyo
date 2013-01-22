@@ -298,6 +298,29 @@ def invite_teacher_to_group(request, group_id):
         )
 
 
+def _get_posts(queryset, profile=None):
+    """
+    Return post data for handlebars posts.html template render.
+
+    Get all posts from given manager/queryset; render them as read/unread by
+    given ``profile`` (if given).
+
+    """
+    return {
+        'posts':
+            [
+            model.post_dict(
+                post,
+                unread=model.unread.is_unread(
+                    post, profile) if profile else False,
+                )
+            for post in reversed(
+                queryset.order_by(
+                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
+            ],
+        }
+
+
 
 @login_required
 @ajax('village/post_list/_village.html')
@@ -315,6 +338,9 @@ def village(request, student_id):
 
     group = get_querystring_group(request, student)
 
+    if rel:
+        model.unread.mark_village_read(rel.student, rel.elder)
+
     return TemplateResponse(
         request,
         'village/post_list/village.html',
@@ -325,6 +351,7 @@ def village(request, student_id):
             'elders': model.contextualized_elders(
                 student.elder_relationships).order_by('school_staff', 'name'),
             'read_only': rel is None,
+            'posts': _get_posts(student.posts_in_village, request.user.profile),
             'post_char_limit': model.post_char_limit(rel) if rel else 0,
             },
         )
@@ -337,11 +364,13 @@ def group(request, group_id=None):
     """The main chat view for a group."""
     if group_id is None:
         group = model.AllStudentsGroup(request.user.profile)
+        posts = request.user.profile.authored_bulkposts
     else:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile),
             id=group_id,
             )
+        posts = group.bulk_posts
 
     return TemplateResponse(
         request,
@@ -350,6 +379,7 @@ def group(request, group_id=None):
             'group': group,
             'elders': model.contextualized_elders(
                 group.all_elders).order_by('school_staff', 'name'),
+            'posts': _get_posts(posts),
             'post_char_limit': model.post_char_limit(request.user.profile),
             },
         )
@@ -362,6 +392,7 @@ def json_posts(request, student_id=None, group_id=None):
     group = None
     rel = None
     post_model = model.BulkPost
+    can_be_unread = False
     if student_id is not None:
         try:
             rel = get_relationship_or_404(student_id, request.user.profile)
@@ -374,6 +405,7 @@ def json_posts(request, student_id=None, group_id=None):
         post_model = model.Post
         target = student
         manager = student.posts_in_village
+        can_be_unread = True
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
@@ -419,21 +451,7 @@ def json_posts(request, student_id=None, group_id=None):
         return http.HttpResponse(
             json.dumps(data), content_type='application/json')
 
-    data = {
-        'posts':
-            [
-            model.post_dict(
-                post,
-                unread=model.unread.is_unread(
-                    post,
-                    request.user.profile
-                    ) if (post_model is model.Post) else False,
-                )
-            for post in reversed(
-                manager.order_by(
-                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
-            ],
-        }
+    data = _get_posts(manager, request.user.profile if can_be_unread else None)
 
     if rel:
         model.unread.mark_village_read(rel.student, rel.elder)

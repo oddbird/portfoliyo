@@ -685,6 +685,23 @@ class TestVillage(GroupContextTests):
         client.get(self.url(student), user=sup.user)
 
 
+    def test_marks_posts_read(self, client, db):
+        """Loading the village marks all posts in village as read."""
+        rel = factories.RelationshipFactory.create()
+        post = factories.PostFactory.create(student=rel.student)
+        post2 = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(post2, rel.elder)
+
+        assert unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post2, rel.elder)
+
+        client.get(self.url(rel.student), user=rel.elder.user)
+
+        assert not unread.is_unread(post, rel.elder)
+        assert not unread.is_unread(post2, rel.elder)
+
+
 
 class TestAllStudents(object):
     def url(self):
@@ -800,6 +817,7 @@ class TestJsonPosts(object):
         other_rel = factories.RelationshipFactory.create(
             to_profile=rel.student,
             from_profile__phone='+13216540987',
+            from_profile__name='Recipient',
             from_profile__user__is_active=True,
             )
 
@@ -812,7 +830,7 @@ class TestJsonPosts(object):
                 )
 
         post = response.json['posts'][0]
-        assert post['meta']['sms'][0]['id'] == other_rel.elder.id
+        assert post['sms_recipients'] == 'Recipient'
         mock_send_sms.assert_called_with("+13216540987", "foo --Mr. Doe")
 
 

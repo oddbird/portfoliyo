@@ -530,6 +530,8 @@ def post_dict(post, **extra):
 
     timestamp = timezone.localtime(post.timestamp)
 
+    sms_recipients = [s['name'] or s['role'] for s in post.meta.get('sms', [])]
+
     data = {
         'post_id': post.id,
         'author_id': post.author_id if post.author else 0,
@@ -542,13 +544,9 @@ def post_dict(post, **extra):
         'sms': post.sms,
         'to_sms': post.to_sms,
         'from_sms': post.from_sms,
-        # strip SMS metadata down to minimal size
-        'meta': {
-            'sms': [
-                {'id': s['id'], 'display': s['name'] or s['role']}
-                for s in post.meta.get('sms', [])
-                ]
-            },
+        'sms_recipients': ', '.join(sms_recipients),
+        'num_sms_recipients': len(sms_recipients),
+        'plural_sms': 's' if len(sms_recipients) > 1 else '',
         }
 
     data.update(post.extra_data())

@@ -399,7 +399,6 @@ var PYO = (function (PYO, $) {
     PYO.initializeFeed = function () {
         PYO.activeUserId = $('.village-feed').data('user-id');
         PYO.watchForReadPosts();
-        PYO.fetchBacklog('.village-feed');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
         PYO.initializeMultiselect();

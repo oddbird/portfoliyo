@@ -58,7 +58,9 @@ def test_post_dict(db):
         'sms': False,
         'to_sms': False,
         'from_sms': False,
-        'meta': {'sms': []},
+        'sms_recipients': '',
+        'plural_sms': '',
+        'num_sms_recipients': 0,
         }
 
 
