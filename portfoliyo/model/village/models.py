@@ -30,6 +30,11 @@ def sms_eligible(elders):
         )
 
 
+def is_sms_eligible(elder):
+    """Return True if given elder is eligible to receive SMSes."""
+    return elder.phone and not elder.declined and elder.user.is_active
+
+
 
 class BasePost(models.Model):
     """Common Post fields and methods."""

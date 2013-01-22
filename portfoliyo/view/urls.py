@@ -38,6 +38,7 @@ urlpatterns = patterns(
 if settings.DEBUG_URLS: # pragma: no cover
     urlpatterns += patterns( # pragma: no cover
         '',
+        url(r'^_debug/api/$', 'portfoliyo.view.debug.api'),
         url(r'^_debug/403/$', direct_to_template, {'template': '403.html'}),
         url(r'^_debug/404/$', direct_to_template, {'template': '404.html'}),
         url(r'^_debug/500/$', direct_to_template, {'template': '500.html'}),

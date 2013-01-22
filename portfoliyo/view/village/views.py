@@ -322,8 +322,8 @@ def village(request, student_id):
             'student': student,
             'group': group,
             'relationship': rel,
-            'sms_elders': model.sms_eligible(
-                model.contextualized_elders(student.elder_relationships)),
+            'elders': model.contextualized_elders(
+                student.elder_relationships).order_by('school_staff', 'name'),
             'read_only': rel is None,
             'post_char_limit': model.post_char_limit(rel) if rel else 0,
             },
@@ -348,8 +348,8 @@ def group(request, group_id=None):
         'village/post_list/group.html',
         {
             'group': group,
-            'sms_elders': model.sms_eligible(
-                model.contextualized_elders(group.all_elders)),
+            'elders': model.contextualized_elders(
+                group.all_elders).order_by('school_staff', 'name'),
             'post_char_limit': model.post_char_limit(request.user.profile),
             },
         )
@@ -430,7 +430,8 @@ def json_posts(request, student_id=None, group_id=None):
                     ) if (post_model is model.Post) else False,
                 )
             for post in reversed(
-                manager.order_by('-timestamp')[:BACKLOG_POSTS])
+                manager.order_by(
+                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
             ],
         }
 
