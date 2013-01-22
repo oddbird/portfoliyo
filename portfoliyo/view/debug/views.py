@@ -1,7 +1,5 @@
 import json
 
-import debug_toolbar.middleware
-import debug_toolbar.urls
 from django.http import HttpResponse
 from django.test.client import RequestFactory
 
@@ -40,14 +38,3 @@ def api(request):
         '<html><body><h1>API Debugger</h1><pre>%s</pre></body></html>'
         % json.dumps(data, sort_keys=True, indent=2)
         )
-
-
-
-class DebugToolbarMiddleware(debug_toolbar.middleware.DebugToolbarMiddleware):
-    """Avoid conflict with AjaxMessagesMiddleware."""
-    def process_response(self, request, response):
-        response = super(DebugToolbarMiddleware, self).process_response(
-            request, response)
-        if request.path.startswith(debug_toolbar.urls._PREFIX):
-            response.no_messages = True
-        return response
