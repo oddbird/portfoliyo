@@ -3,7 +3,7 @@
 
 <div class="village-elders">
 
-  {% with nav_elders|elder_types as elder_types %}
+  {% with elders|elder_types as elder_types %}
   {% for elder_type in elder_types %}
 
   <h2 class="elders-title">{% if elder_type.school_staff %}Teachers{% else %}Family Members{% endif %}</h2>
