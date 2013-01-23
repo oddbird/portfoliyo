@@ -472,7 +472,8 @@ def create_post(request, student_id=None, group_id=None):
 def mark_post_read(request, post_id):
     post = get_object_or_404(model.Post, pk=post_id)
     model.unread.mark_read(post, request.user.profile)
-    return http.HttpResponse(status=202)
+    return http.HttpResponse(
+        json.dumps({'success': True}), content_type='application/json')
 
 
 

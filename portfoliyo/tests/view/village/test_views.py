@@ -995,7 +995,7 @@ class TestMarkPostRead(object):
         no_csrf_client.post(
             self.url(post),
             user=rel.elder.user,
-            status=202)
+            status=200)
 
         assert not unread.is_unread(post, rel.elder)
 
