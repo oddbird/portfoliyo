@@ -57,7 +57,9 @@ def test_post_dict(db):
         'sms': False,
         'to_sms': False,
         'from_sms': False,
-        'meta': {'sms': []},
+        'sms_recipients': '',
+        'plural_sms': '',
+        'num_sms_recipients': 0,
         }
 
 
@@ -120,31 +122,7 @@ class TestPostCreate(object):
         assert post.html_text == 'Foo<br>'
         assert post.from_sms == False
         assert post.to_sms == False
-        assert post.meta == {'sms': [], 'highlights': []}
-
-
-    def test_highlights(self, db):
-        """Highlight info is stored in meta['highlights']."""
-        rel = factories.RelationshipFactory.create()
-        rel2 = factories.RelationshipFactory.create(
-            description="Father",
-            from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
-            to_profile=rel.student,
-            )
-
-        post = models.Post.create(rel.elder, rel.student, 'Hello @father')
-
-        assert post.meta['highlights'] == [
-            {
-                'id': rel2.elder.id,
-                'mentioned_as': ['father'],
-                'role': "Father",
-                'name': "John Doe",
-                'email': "john@example.com",
-                'phone': None,
-                },
-            ]
+        assert post.meta == {'sms': []}
 
 
     def test_new_post_unread_for_all_web_users_in_village(self, db):
@@ -528,198 +506,15 @@ class TestBasePost(object):
 
 
 
-class TestProcessText(object):
-    @mock.patch('portfoliyo.model.village.models.get_highlight_names')
-    @mock.patch(
-        'portfoliyo.model.village.models.replace_highlights',
-        lambda text, student: (text, set()))
-    def call_simple(self, text, mock_get_highlight_names):
-        """Call process_text mocking out highlight handling."""
-        html, _ = models.process_text(text, None)
-        return html
-
-
+class TestText2Html(object):
     def test_escapes_html(self, monkeypatch):
         """Escapes any HTML in the original text."""
-        assert self.call_simple('<b>') == '&lt;b&gt;'
+        assert models.text2html('<b>') == '&lt;b&gt;'
 
 
     def test_replaces_newlines(self):
         """Replaces newlines with <br>."""
-        assert self.call_simple('foo\nbar') == 'foo<br>bar'
-
-
-    def test_full(self, db):
-        """End-to-end test with highlights, newlines, HTML."""
-        rel1 = factories.RelationshipFactory.create(
-            from_profile__name="John Doe",
-            from_profile__user__email="john@example.com",
-            from_profile__phone=None,
-            description="Math Teacher")
-        rel2 = factories.RelationshipFactory.create(
-            to_profile=rel1.to_profile,
-            from_profile__name="Max Dad",
-            from_profile__user__email=None,
-            from_profile__phone="+13216540987",
-            description="Father")
-
-        html, highlights = models.process_text(
-            "<b>Hi</b> there @johndoe, @father\nHow's it?",
-            contextualized_elders(rel1.to_profile.elder_relationships))
-
-        assert html == (
-            '&lt;b&gt;Hi&lt;/b&gt; there '
-            '<b class="nametag" data-user-id="%s">@johndoe</b>, '
-            '<b class="nametag" data-user-id="%s">@father</b><br>'
-            "How&#39;s it?" % (rel1.elder.id, rel2.elder.id)
-            )
-
-        assert highlights == {rel1.elder: ['johndoe'], rel2.elder: ['father']}
-
-
-
-class TestReplaceHighlights(object):
-    class MockElder(object):
-        """A mock elder."""
-        def __init__(self, id):
-            self.id = id
-
-
-    elder1 = MockElder(1)
-    elder2 = MockElder(2)
-    elder3 = MockElder(3)
-    name_map = {
-        'one': set([elder1]),
-        'two': set([elder2]),
-        'foo@example.com': set([elder3]),
-        'all': set([elder1, elder2]),
-        }
-
-
-    def call(self, text):
-        """Shortcut to call replace_highlights with self.name_map."""
-        return models.replace_highlights(text, self.name_map)
-
-
-    def test_wrap(self):
-        """Wraps highlights with b.nametag and returns in set."""
-        html, highlights = self.call("Hello @one")
-
-        assert html == 'Hello <b class="nametag" data-user-id="1">@one</b>'
-        assert highlights == {self.elder1: ["one"]}
-
-
-    def test_all(self):
-        """Can highlight all users with @all."""
-        html, highlights = self.call("Hello @all")
-
-        assert re.match(
-            'Hello <b class="nametag all me" data-user-id="(1,2|2,1)">@all</b>',
-            html)
-        assert highlights == {self.elder1: ["all"], self.elder2: ["all"]}
-
-
-    def test_email(self):
-        """Can highlight a user by email address."""
-        _, highlights = self.call("Hello @foo@example.com")
-
-        assert highlights == {self.elder3: ["foo@example.com"]}
-
-
-    def test_false_alarm(self):
-        """If it looks like a highlight but isn't in the map, ignore it."""
-        html, highlights = self.call("Hello @foo")
-
-        assert html == 'Hello @foo'
-        assert not highlights
-
-
-    def test_no_embedded(self):
-        """Highlights have to be delimited by whitespace or punctuation."""
-        _, highlights = self.call("example@one.com")
-
-        assert len(highlights) == 0
-
-
-    def test_multiple_highlights(self):
-        """Can find multiple highlights in a text."""
-        _, highlights = self.call("Hello @one and @two")
-
-        assert len(highlights) == 2
-
-
-    def test_multiple_adjacent_highlights(self):
-        """Can find multiple adjacent highlights in a text."""
-        _, highlights = self.call("Hello @one @two")
-
-        assert len(highlights) == 2
-
-
-    def test_multiple_highlights_same_name(self):
-        """If multiple highlights of same name, no double-replace."""
-        html, highlights = self.call("Hello @one and @one")
-
-        assert len(highlights) == 1
-        assert html.count('data-user-id') == 2
-
-
-    def assert_finds(self, text):
-        """Assert that 'one' is found as highlight in text."""
-        _, highlights = self.call(text)
-
-        assert self.elder1 in highlights
-
-
-    @pytest.mark.parametrize(
-        'symbol', ['.', '?', ',', ';', ':', ')', ']', ' ', '', '...'])
-    def test_followed_by(self, symbol):
-        """Can detect a highlight immediately followed by some punctuation."""
-        self.assert_finds("Hey @one%s" % symbol)
-
-
-    @pytest.mark.parametrize(
-        'symbol', ['(', '[', ' ', ''])
-    def test_preceded_by(self, symbol):
-        """Can detect a highlight immediately preceded by some punctuation."""
-        self.assert_finds("%s@one" % symbol)
-
-
-
-
-def test_get_highlight_names(db):
-    """Returns dict mapping highlightable names to elders-in-context."""
-    rel1 = factories.RelationshipFactory.create(
-        from_profile__name="John Doe",
-        from_profile__user__email="john@example.com",
-        from_profile__phone=None,
-        description="Math Teacher")
-    rel2 = factories.RelationshipFactory.create(
-        to_profile=rel1.to_profile,
-        from_profile__name="Max Dad",
-        from_profile__user__email=None,
-        from_profile__phone="+13216540987",
-        description="Father")
-    rel3 = factories.RelationshipFactory.create(
-        to_profile=rel1.to_profile,
-        from_profile__name="",
-        from_profile__user__email=None,
-        from_profile__phone="+15671234567",
-        description="Father")
-
-    name_map = models.get_highlight_names(
-        contextualized_elders(rel1.to_profile.elder_relationships))
-
-    assert len(name_map) == 10
-    assert name_map['johndoe'] == set([rel1.elder])
-    assert name_map['john@example.com'] == set([rel1.elder])
-    assert name_map['mathteacher'] == set([rel1.elder])
-    assert name_map['maxdad'] == set([rel2.elder])
-    assert name_map['+13216540987'] == set([rel2.elder])
-    assert name_map['3216540987'] == set([rel2.elder])
-    assert name_map['father'] == set([rel2.elder, rel3.elder])
-    assert name_map['+15671234567'] == set([rel3.elder])
-    assert name_map['5671234567'] == set([rel3.elder])
-    assert name_map['all'] == set([rel1.elder, rel2.elder, rel3.elder])
+        assert models.text2html('foo\nbar') == 'foo<br>bar'
 
 
 

@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 """Tests for village views."""
-import datetime
-
 from django.core import mail
 from django.core.urlresolvers import reverse
-from django.utils.timezone import utc
 import mock
 import pytest
 
 from portfoliyo.model import unread
-from portfoliyo.view.village import views
 
 from portfoliyo.tests import factories, utils
 
@@ -218,7 +214,7 @@ class TestEditStudent(GroupContextTests):
         assert utils.refresh(rel.student).name == "Some Student"
 
 
-    def test_remove_student(self, client, db):
+    def test_remove_student(self, client):
         """User can remove a student."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True, to_profile__name="Some Student")
@@ -233,7 +229,7 @@ class TestEditStudent(GroupContextTests):
         assert utils.deleted(rel)
 
 
-    def test_remove_student_in_group(self, client, db):
+    def test_remove_student_in_group(self, client):
         """User can remove a student."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -379,7 +375,7 @@ class TestEditGroup(object):
         assert utils.refresh(group).name == "Some Group"
 
 
-    def test_remove_group(self, client, db):
+    def test_remove_group(self, client):
         """User can remove a group."""
         group = factories.GroupFactory.create(
             owner__school_staff=True, name="Some Group")
@@ -694,7 +690,7 @@ class TestVillage(GroupContextTests):
 
 
     @pytest.mark.parametrize('link_target', ['invite_teacher', 'invite_family'])
-    def test_link_only_if_staff(self, client, link_target, db):
+    def test_link_only_if_staff(self, client, link_target):
         """Link with given target is only present for school staff."""
         parent_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=False)
@@ -734,67 +730,8 @@ class TestVillage(GroupContextTests):
         client.get(self.url(student), user=sup.user)
 
 
-
-class TestAllStudents(object):
-    def url(self):
-        return reverse('all_students')
-
-
-    def test_all_students(self, client):
-        """Can view an all-students page."""
-        teacher = factories.ProfileFactory.create(school_staff=True)
-        client.get(self.url(), user=teacher.user, status=200)
-
-
-
-class TestGroupDetail(object):
-    """Tests for group chat view."""
-    def url(self, group=None):
-        if group is None:
-            group = factories.GroupFactory.create()
-        return reverse('group', kwargs=dict(group_id=group.id))
-
-
-    def test_group_detail(self, client):
-        """Can view a group detail page."""
-        group = factories.GroupFactory.create(
-            owner__school_staff=True)
-
-        client.get(self.url(group), user=group.owner.user, status=200)
-
-
-    def test_requires_ownership(self, client):
-        """Only the owner of a group can view it."""
-        group = factories.GroupFactory.create()
-        someone = factories.ProfileFactory.create(
-            school_staff=True, school=group.owner.school)
-
-        client.get(self.url(group), user=someone.user, status=404)
-
-
-
-class TestJsonPosts(object):
-    """Tests for json_posts view."""
-    def url(self, student=None, group=None):
-        kwargs = {}
-        if student is not None:
-            kwargs['student_id'] = student.id
-        elif group is not None:
-            kwargs['group_id'] = group.id
-        return reverse('json_posts', kwargs=kwargs)
-
-
-    def test_superuser_readonly_view(self, client):
-        """Superuser can get read-only view of other villages."""
-        sup = factories.ProfileFactory.create(
-            user__is_superuser=True)
-        post = factories.PostFactory.create()
-
-        client.get(self.url(post.student), user=sup.user)
-
-
     def test_marks_posts_read(self, client):
-        """Loading the backlog marks all posts in village as read."""
+        """Loading the village marks all posts in village as read."""
         rel = factories.RelationshipFactory.create()
         post = factories.PostFactory.create(student=rel.student)
         post2 = factories.PostFactory.create(student=rel.student)
@@ -810,20 +747,94 @@ class TestJsonPosts(object):
         assert not unread.is_unread(post2, rel.elder)
 
 
-    def test_requires_relationship(self, client):
-        """Only an elder of that student can get posts."""
-        elder = factories.ProfileFactory.create(school_staff=True)
-        student = factories.ProfileFactory.create()
+    def test_posts(self, client):
+        """Shows posts in village."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
 
-        client.get(self.url(student=student), user=elder.user, status=404)
+        # this post is in the village and should show up
+        factories.PostFactory.create(
+            author=rel.elder, student=rel.student, html_text="I am here.")
+        # this is not in this village, and should not show up
+        factories.PostFactory.create(
+            author=rel.elder, html_text="I am not here.")
+
+        response = client.get(
+            self.url(rel.student), user=rel.elder.user, status=200)
+
+        response.mustcontain("I am here.")
+        assert "I am not here." not in response.content
 
 
-    def test_requires_group_owner(self, client):
-        """Only the owner of a group can get its posts."""
-        elder = factories.ProfileFactory.create(school_staff=True)
+
+class TestAllStudents(object):
+    def url(self):
+        return reverse('all_students')
+
+
+    def test_all_students(self, client):
+        """Shows all-students group posts."""
+        teacher = factories.ProfileFactory.create(school_staff=True)
+        group = factories.GroupFactory.create(owner=teacher)
+        # this post is all-students and should show up
+        factories.BulkPostFactory.create(
+            author=teacher, group=None, html_text="I am here.")
+        # this is not all-students, and should not.
+        factories.BulkPostFactory.create(
+            author=teacher, group=group, html_text="I am not here.")
+
+        response = client.get(self.url(), user=teacher.user, status=200)
+
+        response.mustcontain("I am here.")
+        assert "I am not here." not in response.content
+
+
+
+class TestGroupDetail(object):
+    """Tests for group chat view."""
+    def url(self, group=None):
+        if group is None:
+            group = factories.GroupFactory.create()
+        return reverse('group', kwargs=dict(group_id=group.id))
+
+
+    def test_group_detail(self, client):
+        """Group detail page lists posts in group."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True)
+        # this post is in the group and should show up
+        factories.BulkPostFactory.create(
+            author=group.owner, group=group, html_text="I am here.")
+        # this is not in the group, and should not.
+        factories.BulkPostFactory.create(
+            author=group.owner, group=None, html_text="I am not here.")
+
+        response = client.get(
+            self.url(group), user=group.owner.user, status=200)
+
+        response.mustcontain("I am here.")
+        assert "I am not here." not in response.content
+
+
+    def test_requires_ownership(self, client):
+        """Only the owner of a group can view it."""
         group = factories.GroupFactory.create()
+        someone = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
 
-        client.get(self.url(group=group), user=elder.user, status=404)
+        client.get(self.url(group), user=someone.user, status=404)
+
+
+
+class TestCreatePost(object):
+    """Tests for create_post view."""
+    def url(self, student=None, group=None):
+        kwargs = {}
+        if student is not None:
+            kwargs['student_id'] = student.id
+        elif group is not None:
+            kwargs['group_id'] = group.id
+        return reverse('create_post', kwargs=kwargs)
 
 
     def test_create_post(self, no_csrf_client):
@@ -842,6 +853,43 @@ class TestJsonPosts(object):
         assert post['student_id'] == rel.student.id
 
 
+    def test_requires_relationship(self, no_csrf_client):
+        """Only an elder of that student can post."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        student = factories.ProfileFactory.create()
+
+        no_csrf_client.post(
+            self.url(student=student),
+            {'text': 'foo'},
+            user=elder.user,
+            status=404,
+            )
+
+
+    def test_requires_group_owner(self, no_csrf_client):
+        """Only the owner of a group can post to it."""
+        elder = factories.ProfileFactory.create(school_staff=True)
+        group = factories.GroupFactory.create()
+
+        no_csrf_client.post(
+            self.url(group=group),
+            {'text': 'foo'},
+            user=elder.user,
+            status=404,
+            )
+
+
+    def test_requires_POST(self, client):
+        """Cannot GET this URL."""
+        client.get(self.url(), user=factories.UserFactory.create(), status=405)
+
+
+    def test_requires_text(self, no_csrf_client):
+        """Bad request error if no text given."""
+        no_csrf_client.post(
+            self.url(), {}, user=factories.UserFactory.create(), status=400)
+
+
     def test_create_post_with_sms_notifications(self, no_csrf_client):
         """Creates a post and sends SMSes."""
         rel = factories.RelationshipFactory.create(
@@ -849,6 +897,7 @@ class TestJsonPosts(object):
         other_rel = factories.RelationshipFactory.create(
             to_profile=rel.student,
             from_profile__phone='+13216540987',
+            from_profile__name='Recipient',
             from_profile__user__is_active=True,
             )
 
@@ -861,7 +910,7 @@ class TestJsonPosts(object):
                 )
 
         post = response.json['posts'][0]
-        assert post['meta']['sms'][0]['id'] == other_rel.elder.id
+        assert post['sms_recipients'] == 'Recipient'
         mock_send_sms.assert_called_with("+13216540987", "foo --Mr. Doe")
 
 
@@ -927,110 +976,6 @@ class TestJsonPosts(object):
             'success': False,
             'error': "Posts are limited to 153 characters."
             }
-
-
-    def test_get_posts(self, client):
-        """Get backlog posts in chronological order."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__name='Fred')
-
-        post2 = factories.PostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
-            author=rel.elder,
-            student=rel.student,
-            html_text='post2',
-            )
-        unread.mark_unread(post2, rel.elder)
-        factories.PostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
-            author=rel.elder,
-            student=rel.student,
-            html_text='post1',
-            )
-        # not in same village, shouldn't be returned
-        factories.PostFactory()
-
-        response = client.get(self.url(rel.student), user=rel.elder.user)
-
-        posts = response.json['posts']
-        assert [p['text'] for p in posts] == ['post1', 'post2']
-        assert [p['unread'] for p in posts] == [False, True]
-
-
-    def test_get_group_posts(self, client):
-        """Get backlog group posts in chronological order."""
-        group = factories.GroupFactory.create(
-            owner__name='Fred')
-
-        factories.BulkPostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
-            author=group.owner,
-            group=group,
-            html_text='post1',
-            )
-        factories.BulkPostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
-            author=group.owner,
-            group=group,
-            html_text='post2',
-            )
-        # not in same group, shouldn't be returned
-        factories.BulkPostFactory()
-
-        response = client.get(self.url(group=group), user=group.owner.user)
-
-        posts = response.json['posts']
-        assert [p['text'] for p in posts] == ['post2', 'post1']
-
-
-    def test_get_all_student_posts(self, client):
-        """Get backlog all-student posts in chronological order."""
-        elder = factories.ProfileFactory.create()
-
-        factories.BulkPostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
-            author=elder,
-            group=None,
-            html_text='post1',
-            )
-        factories.BulkPostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
-            author=elder,
-            group=None,
-            html_text='post2',
-            )
-        # not in all-students group, shouldn't be returned
-        factories.BulkPostFactory()
-
-        response = client.get(self.url(), user=elder.user)
-
-        posts = response.json['posts']
-        assert [p['text'] for p in posts] == ['post2', 'post1']
-
-
-    def test_backlog_limit(self, client, monkeypatch, db):
-        """There's a limit on number of posts returned."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__name='Fred')
-
-        factories.PostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 8, tzinfo=utc),
-            author=rel.elder,
-            student=rel.student,
-            html_text='post1',
-            )
-        factories.PostFactory(
-            timestamp=datetime.datetime(2012, 9, 17, 3, 5, tzinfo=utc),
-            author=rel.elder,
-            student=rel.student,
-            html_text='post2',
-            )
-
-        monkeypatch.setattr(views, "BACKLOG_POSTS", 1)
-        response = client.get(self.url(rel.student), user=rel.elder.user)
-
-        posts = response.json['posts']
-        assert [p['text'] for p in posts] == ['post1']
 
 
 

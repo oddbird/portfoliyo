@@ -12,7 +12,7 @@ per_student_patterns = patterns(
         name='edit_elder',
         ),
     url(r'^$', views.village, name='village'),
-    url(r'^_posts/$', views.json_posts, name='json_posts'),
+    url(r'^_post/$', views.create_post, name='create_post'),
     )
 
 
@@ -30,7 +30,7 @@ per_group_patterns = patterns(
         ),
     url(r'^add/$', views.add_student, name='add_student'),
     url(r'^add/bulk/$', views.add_students_bulk, name='add_students_bulk'),
-    url(r'^_posts/$', views.json_posts, name='json_posts'),
+    url(r'^_post/$', views.create_post, name='create_post'),
     url(r'^instructions-(?P<lang>en|es).pdf$',
         views.pdf_parent_instructions,
         name='pdf_parent_instructions',
@@ -45,7 +45,7 @@ urlpatterns = patterns(
     url(r'^add/bulk/$', views.add_students_bulk, name='add_students_bulk'),
     url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
     url(r'^all/$', views.group, name='all_students'),
-    url(r'^all/_posts/$', views.json_posts, name='json_posts'),
+    url(r'^all/_post/$', views.create_post, name='create_post'),
     url(r'^elder/(?P<elder_id>\d+)/$', views.edit_elder, name='edit_elder'),
     url(r'^group/add/$', views.add_group, name='add_group'),
     url(r'^group/(?P<group_id>\d+)/', include(per_group_patterns)),
