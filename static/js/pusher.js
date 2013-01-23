@@ -288,8 +288,8 @@ var PYO = (function (PYO, $) {
         });
     };
 
-    PYO.preventPusherOnRemove = function () {
-        $('.village').on('click', '.village-content .action-remove', function () {
+    PYO.preventPusherAfterFormSubmit = function () {
+        $('.village').on('submit', 'form', function () {
             PYO.pusher.unsubscribe('private-user_' + PYO.activeUserId);
         });
     };
@@ -303,7 +303,7 @@ var PYO = (function (PYO, $) {
                 PYO.listenForPosts();
                 PYO.listenForStudentChanges();
                 PYO.listenForGroupChanges();
-                PYO.preventPusherOnRemove();
+                PYO.preventPusherAfterFormSubmit();
             }
         }
     };
