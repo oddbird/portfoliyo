@@ -374,7 +374,7 @@ var PYO = (function (PYO, $) {
                 if (url) {
                     $.post(url, function () {
                         thisPost.removeClass('unread');
-                    }, 'html');
+                    });
                 }
             });
         }
