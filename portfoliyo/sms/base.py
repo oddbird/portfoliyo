@@ -13,10 +13,16 @@ def get_backend(path):
 backend = get_backend(settings.PORTFOLIYO_SMS_BACKEND)()
 
 
-def send(phone, body):
-    """Sends sms to ``phone`` with text ``body``."""
+def send(phone, source, body):
+    """
+    Sends sms from ``source`` to ``phone`` with text ``body``.
+
+    If ``body`` is longer than 160 characters, the text will be sent as
+    multiple texts.
+
+    """
     for chunk in split_sms(body):
-        backend.send(phone, settings.DEFAULT_NUMBER, chunk)
+        backend.send(phone, source, chunk)
 
 
 def split_sms(text, joiner='...'):

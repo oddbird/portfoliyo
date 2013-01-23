@@ -897,6 +897,7 @@ class TestCreatePost(object):
         other_rel = factories.RelationshipFactory.create(
             to_profile=rel.student,
             from_profile__phone='+13216540987',
+            from_profile__source_phone='+13336660000',
             from_profile__name='Recipient',
             from_profile__user__is_active=True,
             )
@@ -911,7 +912,8 @@ class TestCreatePost(object):
 
         post = response.json['posts'][0]
         assert post['sms_recipients'] == 'Recipient'
-        mock_send_sms.assert_called_with("+13216540987", "foo --Mr. Doe")
+        mock_send_sms.assert_called_with(
+            "+13216540987", "+13336660000", "foo --Mr. Doe")
 
 
     def test_create_group_post(self, no_csrf_client, db):

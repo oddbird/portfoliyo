@@ -296,6 +296,29 @@ class TestProfile(object):
                 model.Profile.create_with_user(school, school_staff=True)
 
 
+    def test_send_sms(self):
+        """Send_sms method triggers SMS-sending tasks with correct phone #s."""
+        phone = '+13216540987'
+        source_phone = '+13336660000'
+        p = factories.ProfileFactory.build(
+            phone=phone, source_phone=source_phone)
+
+        with mock.patch('portfoliyo.tasks.send_sms.delay') as mock_send_sms:
+            p.send_sms('foo')
+
+        mock_send_sms.assert_called_once_with(phone, source_phone, 'foo')
+
+
+    def test_send_sms_no_phone(self):
+        """Send_sms method does nothing if user has no phone."""
+        p = factories.ProfileFactory.build(phone=None)
+
+        with mock.patch('portfoliyo.tasks.send_sms.delay') as mock_send_sms:
+            p.send_sms('foo')
+
+        assert mock_send_sms.call_count == 0
+
+
 
 class TestRelationship(object):
     """Tests for Relationship model."""

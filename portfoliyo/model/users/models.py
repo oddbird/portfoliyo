@@ -218,6 +218,12 @@ class Profile(models.Model):
         return [rel.to_profile for rel in self.student_relationships]
 
 
+    def send_sms(self, body):
+        """Send an SMS to this user, or do nothing if they have no phone."""
+        if self.phone:
+            tasks.send_sms.delay(self.phone, self.source_phone, body)
+
+
 
 class TextSignup(models.Model):
     """An in-progress or completed family-member SMS signup."""

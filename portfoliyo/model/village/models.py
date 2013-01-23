@@ -1,8 +1,6 @@
 """Village models."""
 from __future__ import absolute_import
 
-import re
-
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import dateformat, html, timezone
@@ -74,9 +72,9 @@ class BasePost(models.Model):
         return {}
 
 
-    def prepare_sms(self, profile_ids, in_reply_to=None):
+    def send_sms(self, profile_ids, in_reply_to=None):
         """
-        Prepare and return SMS notifications for this post.
+        Send SMS notifications for this post.
 
         ``profile_ids`` is a list of Profile IDs who should receive
         notifications. Only profiles in this list who also are active, have
@@ -86,8 +84,6 @@ class BasePost(models.Model):
         Sets self.to_sms to True if any texts were sent, False otherwise, and
         self.meta['sms'] to a list of dictionaries containing basic metadata
         about each SMS sent.
-
-        Return a list of (phone, sms-body) tuples to be sent.
 
         """
         meta_sms = []
@@ -101,7 +97,6 @@ class BasePost(models.Model):
         to_notify = sms_eligible(self.elders_in_context).filter(
             models.Q(pk__in=profile_ids) | models.Q(phone=in_reply_to))
 
-        to_send = []
         to_mark_done = []
 
         for elder in to_notify:
@@ -113,7 +108,7 @@ class BasePost(models.Model):
                 }
             # with in_reply_to we assume caller sent SMS
             if elder.phone != in_reply_to:
-                to_send.append((elder.phone, sms_body))
+                elder.send_sms(sms_body)
                 to_mark_done.append(elder)
             sms_sent = True
 
@@ -128,8 +123,6 @@ class BasePost(models.Model):
 
         self.to_sms = sms_sent
         self.meta['sms'] = meta_sms
-
-        return to_send
 
 
 
@@ -223,7 +216,7 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        sms_to_send = post.prepare_sms(sms_profile_ids or [])
+        post.send_sms(sms_profile_ids or [])
 
         post.save()
 
@@ -254,9 +247,6 @@ class BulkPost(BasePost):
             'bulk_posted', post.id, author_sequence_id=sequence_id)
 
         post.notify_email(from_sms)
-
-        for number, body in sms_to_send:
-            tasks.send_sms.delay(number, body)
 
         return post
 
@@ -317,7 +307,7 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        sms_to_send = post.prepare_sms(sms_profile_ids or [], in_reply_to)
+        post.send_sms(sms_profile_ids or [], in_reply_to)
         post.save()
 
         # mark the post unread by all web users in village (except the author)
@@ -335,9 +325,6 @@ class Post(BasePost):
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
             )
-
-        for number, body in sms_to_send:
-            tasks.send_sms.delay(number, body)
 
         return post
 
