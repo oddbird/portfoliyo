@@ -1,15 +1,11 @@
 # -*- coding: utf-8 -*-
 """Tests for village views."""
-import datetime
-
 from django.core import mail
 from django.core.urlresolvers import reverse
-from django.utils.timezone import utc
 import mock
 import pytest
 
 from portfoliyo.model import unread
-from portfoliyo.view.village import views
 
 from portfoliyo.tests import factories, utils
 
@@ -999,7 +995,7 @@ class TestMarkPostRead(object):
         no_csrf_client.post(
             self.url(post),
             user=rel.elder.user,
-            status=202)
+            status=200)
 
         assert not unread.is_unread(post, rel.elder)
 
