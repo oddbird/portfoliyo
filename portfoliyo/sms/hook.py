@@ -117,7 +117,6 @@ def handle_unknown_source(source, body):
             school=teacher.school,
             phone=source,
             invited_by=teacher,
-            country_code=teacher.country_code,
             lang_code=lang,
             )
         model.TextSignup.objects.create(

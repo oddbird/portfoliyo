@@ -231,7 +231,6 @@ class InviteFamilyForm(FamilyForm):
                 is_active=True,
                 school_staff=False,
                 invited_by=inviter,
-                country_code=inviter.country_code,
                 )
         else:
             # remove other existing relationships with teacher-less students
@@ -328,7 +327,6 @@ class InviteTeacherForm(forms.Form):
                 is_active=False,
                 school_staff=True,
                 invited_by=self.inviter,
-                country_code=self.inviter.country_code,
                 )
             created = True
         else:
