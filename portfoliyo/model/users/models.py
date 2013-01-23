@@ -156,6 +156,10 @@ class Profile(models.Model):
                 'code': code,
                 }
             )
+        country_code = kwargs.get('country_code', settings.DEFAULT_COUNTRY_CODE)
+        kwargs['source_phone'] = settings.PORTFOLIYO_NUMBERS.get(
+            country_code, settings.DEFAULT_NUMBER)
+
         for pref in cls.NOTIFICATION_PREFS:
             kwargs[pref] = email_notifications
         profile = cls(**kwargs)

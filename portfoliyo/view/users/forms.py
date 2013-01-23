@@ -117,17 +117,12 @@ class RegistrationForm(forms.Form):
         if school.id is None:
             school.save()
 
-        country = self.cleaned_data['country_code']
-        source_phone = settings.PORTFOLIYO_NUMBERS.get(
-            country, settings.DEFAULT_NUMBER)
-
         profile = model.Profile.create_with_user(
             name=self.cleaned_data['name'],
             email=self.cleaned_data['email'],
             password=self.cleaned_data['password'],
             role=self.cleaned_data['role'],
-            country_code=country,
-            source_phone=source_phone,
+            country_code=self.cleaned_data['country_code'],
             school=school,
             school_staff=True,
             email_confirmed=False,

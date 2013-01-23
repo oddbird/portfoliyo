@@ -1,5 +1,6 @@
 """Tests for user models."""
 from django.db import IntegrityError
+from django.test.utils import override_settings
 import mock
 import pytest
 
@@ -318,6 +319,15 @@ class TestProfile(object):
 
         assert mock_send_sms.call_count == 0
 
+
+    def test_create_with_user_sets_source_phone_by_country_code(self, db):
+        """Creating user sets source phone based on country code."""
+        school = factories.SchoolFactory()
+        ca_phone = '+13216543987'
+        with override_settings(PORTFOLIYO_NUMBERS={'ca': ca_phone}):
+            p = model.Profile.create_with_user(school, country_code='ca')
+
+        assert p.source_phone == ca_phone
 
 
 class TestRelationship(object):
