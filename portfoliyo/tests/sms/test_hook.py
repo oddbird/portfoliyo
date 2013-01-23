@@ -2,6 +2,7 @@
 """Tests for SMS-handling code."""
 from datetime import datetime
 
+from django.conf import settings
 from django.core import mail
 from django.utils.timezone import get_current_timezone
 import mock
@@ -22,7 +23,7 @@ def test_create_post(db):
         from_profile__school_staff=True, to_profile=rel.student)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, 'foo')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'foo')
 
     assert reply is None
     mock_create.assert_called_once_with(
@@ -32,7 +33,7 @@ def test_create_post(db):
 
 def test_easter_egg():
     phone = '+3216430987'
-    reply = hook.receive_sms(phone, 'xjgdlw')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'xjgdlw')
 
     assert reply == (
         "Woah! You actually tried it out? A cookie for you! "
@@ -56,7 +57,7 @@ def test_activate_user(db):
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, 'foo')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'foo')
 
     profile = utils.refresh(profile)
     assert profile.user.is_active
@@ -78,7 +79,7 @@ def test_decline(db):
     rel = factories.RelationshipFactory.create(from_profile=profile)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, 'stop')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'stop')
 
     assert not utils.refresh(profile.user).is_active
     assert utils.refresh(profile).declined
@@ -100,7 +101,7 @@ def test_active_user_decline(db):
     rel = factories.RelationshipFactory.create(from_profile=profile)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, 'stop')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'stop')
 
     assert not utils.refresh(profile.user).is_active
     assert utils.refresh(profile).declined
@@ -116,7 +117,7 @@ def test_active_user_decline(db):
 
 def test_unknown_profile(db):
     """Reply if profile is unknown."""
-    reply = hook.receive_sms('123', 'foo')
+    reply = hook.receive_sms('123', settings.DEFAULT_NUMBER, 'foo')
 
     assert reply == (
         "We don't recognize your phone number, "
@@ -137,7 +138,7 @@ def test_multiple_students(db):
         from_profile__school_staff=True, to_profile=rel1.student)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, 'foo')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'foo')
 
     mock_create.assert_any_call(profile, rel1.student, 'foo', from_sms=True)
     mock_create.assert_any_call(profile, rel2.student, 'foo', from_sms=True)
@@ -149,7 +150,7 @@ def test_no_students(db):
     phone = '+13216430987'
     factories.ProfileFactory.create(phone=phone)
 
-    reply = hook.receive_sms(phone, 'foo')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'foo')
 
     assert reply == (
         "Sorry, we can't find any students connected to your number, "
@@ -164,7 +165,7 @@ def test_orphan_student(db):
     factories.RelationshipFactory.create(
         from_profile__phone=phone)
 
-    reply = hook.receive_sms(phone, 'foo')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'foo')
 
     assert reply == (
         "Sorry, we can't find any teachers connected to your number, "
@@ -177,12 +178,13 @@ def test_orphan_student(db):
 def test_code_signup(db):
     """Parent can create account by texting teacher code."""
     phone = '+13216430987'
+    source_phone = '+13336660000'
     teacher = factories.ProfileFactory.create(
         school_staff=True, name="Teacher Jane", code="ABCDEF", country_code='ca')
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
-            reply = hook.receive_sms(phone, "abcdef")
+            reply = hook.receive_sms(phone, source_phone, "abcdef")
 
     assert reply == (
         "Thanks! What is the name of your child in Teacher Jane's class?"
@@ -191,6 +193,7 @@ def test_code_signup(db):
     signup = profile.signups.get()
     assert profile.name == ""
     assert profile.country_code == 'ca'
+    assert profile.source_phone == source_phone
     assert signup.state == model.TextSignup.STATE.kidname
     assert profile.invited_by == teacher
     assert signup.teacher == teacher
@@ -207,7 +210,7 @@ def test_code_signup_with_language(db):
         school_staff=True, name="Teacher Joe", code="ABCDEF")
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        reply = hook.receive_sms(phone, "abcdef ES")
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "abcdef ES")
 
     assert reply == (
         u"¡Gracias! ¿Cuál es el nombre de su hijo en la clase del Teacher Joe?")
@@ -224,7 +227,7 @@ def test_group_code_signup(db):
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
-            reply = hook.receive_sms(phone, "abcdefg")
+            reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "abcdefg")
 
     assert reply == (
         "Thanks! What is the name of your child in Teacher Jane's class?"
@@ -258,7 +261,7 @@ def test_code_signup_student_name(db):
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch(
                 'portfoliyo.pusher.events.student_added') as mock_student_added:
-            reply = hook.receive_sms(phone, "Jimmy Doe")
+            reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "Jimmy Doe")
 
     assert reply == (
         "And what is your relationship to that child "
@@ -300,7 +303,7 @@ def test_code_signup_student_name_strips_extra_lines(db):
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        hook.receive_sms(phone, "Jimmy Doe\nLook at me!")
+        hook.receive_sms(phone, settings.DEFAULT_NUMBER, "Jimmy Doe\nLook at me!")
 
     parent = model.Profile.objects.get(phone=phone)
     student = parent.students[0]
@@ -330,7 +333,7 @@ def test_unusually_long_student_name_tracked(db):
     msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
         with mock.patch('portfoliyo.sms.hook.track_sms') as mock_track:
-            hook.receive_sms(phone, msg)
+            hook.receive_sms(phone, settings.DEFAULT_NUMBER, msg)
 
     mock_track.assert_called_with("long answer", phone, msg)
 
@@ -353,7 +356,7 @@ def test_group_code_signup_student_name(db):
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch(
                 'portfoliyo.pusher.events.student_added') as mock_student_added:
-            reply = hook.receive_sms(phone, "Jimmy Doe")
+            reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "Jimmy Doe")
 
     assert reply == (
         "And what is your relationship to that child "
@@ -397,7 +400,7 @@ def test_code_signup_student_name_dupe_detection(db):
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        reply = hook.receive_sms(phone, "Jimmy Doe")
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "Jimmy Doe")
 
     assert reply == (
         "And what is your relationship to that child "
@@ -435,7 +438,7 @@ def test_code_signup_role(db):
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "father")
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "father")
 
     assert reply == (
         "Last question: what is your name? (So Jane Doe knows who is texting.)")
@@ -477,7 +480,7 @@ def test_code_signup_role_strips_extra_lines(db):
         state=model.TextSignup.STATE.relationship,
         )
 
-    hook.receive_sms(phone, "father\nI'm a sig!")
+    hook.receive_sms(phone, settings.DEFAULT_NUMBER, "father\nI'm a sig!")
 
     parent = model.Profile.objects.get(phone=phone)
     assert parent.role == "father"
@@ -509,7 +512,7 @@ def test_unusually_long_role_tracked(db):
     msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
         with mock.patch('portfoliyo.sms.hook.track_sms') as mock_track:
-            hook.receive_sms(phone, msg)
+            hook.receive_sms(phone, settings.DEFAULT_NUMBER, msg)
 
     mock_track.assert_called_with('long answer', phone, msg)
 
@@ -538,7 +541,7 @@ def test_code_signup_name(db):
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, "John Doe")
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "John Doe")
 
     assert reply == (
         "All done, thank you! You can text this number "
@@ -581,7 +584,7 @@ def test_code_signup_name_strips_extra_lines(db):
         state=model.TextSignup.STATE.name,
         )
 
-    hook.receive_sms(phone, "\n John Doe\nI'm a sig too!")
+    hook.receive_sms(phone, settings.DEFAULT_NUMBER, "\n John Doe\nI'm a sig too!")
 
     parent = model.Profile.objects.get(phone=phone)
     assert parent.name == "John Doe"
@@ -612,7 +615,7 @@ def test_unusually_long_parent_name_tracked(db):
     msg = "Hi there Ms. Waggoner this is Joe Smith how is Jimmy doing?"
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
         with mock.patch('portfoliyo.sms.hook.track_sms') as mock_track:
-            hook.receive_sms(phone, msg)
+            hook.receive_sms(phone, settings.DEFAULT_NUMBER, msg)
 
     mock_track.assert_called_with('long answer', phone, msg)
 
@@ -642,7 +645,7 @@ def test_code_signup_name_no_notification(db):
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        hook.receive_sms(phone, "father")
+        hook.receive_sms(phone, settings.DEFAULT_NUMBER, "father")
 
     # no email notification of the signup is sent
     assert not len(mail.outbox)
@@ -665,7 +668,7 @@ def test_subsequent_signup(db):
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
-            reply = hook.receive_sms(phone, 'ABCDEF')
+            reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -710,7 +713,7 @@ def test_subsequent_signup_with_language(db):
         code='ABCDEF', name='Ms. Doe')
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        reply = hook.receive_sms(phone, 'ABCDEF Es')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF Es')
 
     profile = utils.refresh(signup.family)
     assert profile.lang_code == 'es'
@@ -733,7 +736,7 @@ def test_subsequent_signup_when_teacher_already_in_village(db):
         from_profile=signup.family, to_profile=signup.student)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, 'ABCDEF')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply is None
     assert signup.family.signups.count() == 1
@@ -762,7 +765,7 @@ def test_subsequent_group_signup(db):
         code='ABCDEF', owner__name='Ms. Doe')
 
     with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
-        reply = hook.receive_sms(phone, 'ABCDEF')
+        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -786,7 +789,7 @@ def test_subsequent_signup_when_first_needs_student_name(db):
     other_teacher = factories.ProfileFactory.create(
         code='ABCDEF', name='Ms. Doe')
 
-    reply = hook.receive_sms(phone, 'ABCDEF')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
@@ -811,7 +814,7 @@ def test_subsequent_group_signup_when_first_needs_student_name(db):
     group = factories.GroupFactory.create(
         code='ABCDEF', owner__name='Ms. Doe')
 
-    reply = hook.receive_sms(phone, 'ABCDEF')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
@@ -841,7 +844,7 @@ def test_subsequent_signup_when_first_needs_role(db):
     other_teacher = factories.ProfileFactory.create(
         code='ABCDEF', name='Ms. Doe')
 
-    reply = hook.receive_sms(phone, 'ABCDEF')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
@@ -871,7 +874,7 @@ def test_subsequent_signup_when_first_needs_name(db):
     other_teacher = factories.ProfileFactory.create(
         code='ABCDEF', name='Ms. Doe')
 
-    reply = hook.receive_sms(phone, 'ABCDEF')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
@@ -896,7 +899,7 @@ def test_subsequent_signup_when_no_students(db):
         state=model.TextSignup.STATE.done,
         )
 
-    reply = hook.receive_sms(phone, 'ABCDEF')
+    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Thanks! What is the name of your child in Ms. Doe's class?")
@@ -913,7 +916,7 @@ def test_multiple_active_signups_logs_warning(db):
     factories.TextSignupFactory.create(family=signup.family)
 
     with mock.patch('portfoliyo.sms.hook.logger') as mock_logger:
-        hook.receive_sms(phone, "Jimmy Doe")
+        hook.receive_sms(phone, settings.DEFAULT_NUMBER, "Jimmy Doe")
 
     mock_logger.warning.assert_called_with(
         "User %s has multiple active signups!", phone)
@@ -924,7 +927,7 @@ def test_bogus_signup_state_no_blowup(db):
     phone = '+13216430987'
     factories.TextSignupFactory.create(family__phone=phone, state='foo')
 
-    hook.receive_sms(phone, "Hello")
+    hook.receive_sms(phone, settings.DEFAULT_NUMBER, "Hello")
 
 
 
