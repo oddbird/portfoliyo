@@ -16,7 +16,7 @@ backend = get_backend(settings.PORTFOLIYO_SMS_BACKEND)()
 def send(phone, body):
     """Sends sms to ``phone`` with text ``body``."""
     for chunk in split_sms(body):
-        backend.send(phone, settings.PORTFOLIYO_SMS_DEFAULT_FROM, chunk)
+        backend.send(phone, settings.DEFAULT_NUMBER, chunk)
 
 
 def split_sms(text, joiner='...'):

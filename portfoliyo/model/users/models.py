@@ -68,6 +68,14 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
     # language code for user's preferred language
     lang_code = models.CharField(max_length=10, default=settings.LANGUAGE_CODE)
+    country_code = models.CharField(
+        max_length=10,
+        choices=settings.PORTFOLIYO_COUNTRIES,
+        default=settings.DEFAULT_COUNTRY_CODE,
+        )
+    # the number we should text them from
+    source_phone = models.CharField(
+        max_length=20, default=settings.DEFAULT_NUMBER)
 
     # opt in/out to various types of email notifications
     NOTIFICATION_PREFS = [

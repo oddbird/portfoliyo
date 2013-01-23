@@ -1,7 +1,8 @@
 """Tests for user-related forms."""
-from portfoliyo.view.users import forms
+from django.test.utils import override_settings
 
 from portfoliyo.tests import factories, utils
+from portfoliyo.view.users import forms
 
 
 class TestRegistrationForm(object):
@@ -12,6 +13,7 @@ class TestRegistrationForm(object):
         'password': 'sekrit',
         'password_confirm': 'sekrit',
         'role': 'Some Role',
+        'country_code': 'us',
         }
 
 
@@ -24,6 +26,21 @@ class TestRegistrationForm(object):
         assert not profile.email_confirmed
         assert profile.school_staff
         assert profile.user.is_active
+        assert profile.country_code == 'us'
+
+
+    def test_source_phone(self, db):
+        """Source phone is set according to country code."""
+        data = self.base_data.copy()
+        data['country_code'] = 'ca'
+        ca_phone = '+13216543987'
+        with override_settings(PORTFOLIYO_NUMBERS={'ca': ca_phone}):
+            form = forms.RegistrationForm(data)
+            assert form.is_valid()
+            profile = form.save()
+
+        assert profile.country_code == 'ca'
+        assert profile.source_phone == ca_phone
 
 
     def test_unmatched_passwords(self, db):

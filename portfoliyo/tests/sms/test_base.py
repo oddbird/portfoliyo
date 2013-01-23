@@ -13,6 +13,6 @@ def test_split_sms():
 
     mock_send = mock_backend.send
     mock_send.assert_any_call(
-        phone, settings.PORTFOLIYO_SMS_DEFAULT_FROM, ('a' * 157) + '...')
+        phone, settings.DEFAULT_NUMBER, ('a' * 157) + '...')
     mock_send.assert_any_call(
-        phone, settings.PORTFOLIYO_SMS_DEFAULT_FROM, '...' + ('a' * 4))
+        phone, settings.DEFAULT_NUMBER, '...' + ('a' * 4))
