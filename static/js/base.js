@@ -118,7 +118,7 @@ var PYO = (function (PYO, $) {
                 if (response && response.html && pageAjax.count === count) {
                     var newPage = $($.parseHTML(response.html));
                     container.replaceWith(newPage);
-                    newPage.find('.details').html5accordion();
+                    newPage.find('.details').not('.post .details').html5accordion();
                     newPage.find('input[placeholder], textarea[placeholder]').placeholder();
                     PYO.initializePage();
                 }
@@ -394,15 +394,6 @@ var PYO = (function (PYO, $) {
                 if (url) { $.post(url); }
             });
         }
-    };
-
-    PYO.initializeFeed = function () {
-        PYO.activeUserId = $('.village-feed').data('user-id');
-        PYO.watchForReadPosts();
-        PYO.fetchBacklog('.village-feed');
-        PYO.submitPost('.village-feed');
-        PYO.characterCount('.village-main');
-        PYO.initializeMultiselect();
     };
 
     PYO.initializePage = function () {

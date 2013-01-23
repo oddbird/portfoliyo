@@ -312,6 +312,29 @@ def invite_teacher_to_group(request, group_id):
         )
 
 
+def _get_posts(queryset, profile=None):
+    """
+    Return post data for handlebars posts.html template render.
+
+    Get all posts from given manager/queryset; render them as read/unread by
+    given ``profile`` (if given).
+
+    """
+    return {
+        'posts':
+            [
+            model.post_dict(
+                post,
+                unread=model.unread.is_unread(
+                    post, profile) if profile else False,
+                )
+            for post in reversed(
+                queryset.order_by(
+                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
+            ],
+        }
+
+
 
 @login_required
 @ajax('village/post_list/_village.html')
@@ -329,6 +352,9 @@ def village(request, student_id):
 
     group = get_querystring_group(request, student)
 
+    if rel:
+        model.unread.mark_village_read(rel.student, rel.elder)
+
     return TemplateResponse(
         request,
         'village/post_list/village.html',
@@ -339,6 +365,7 @@ def village(request, student_id):
             'elders': model.contextualized_elders(
                 student.elder_relationships).order_by('school_staff', 'name'),
             'read_only': rel is None,
+            'posts': _get_posts(student.posts_in_village, request.user.profile),
             'post_char_limit': model.post_char_limit(rel) if rel else 0,
             },
         )
@@ -351,11 +378,13 @@ def group(request, group_id=None):
     """The main chat view for a group."""
     if group_id is None:
         group = model.AllStudentsGroup(request.user.profile)
+        posts = request.user.profile.authored_bulkposts.filter(group=None)
     else:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile),
             id=group_id,
             )
+        posts = group.bulk_posts
 
     return TemplateResponse(
         request,
@@ -364,95 +393,77 @@ def group(request, group_id=None):
             'group': group,
             'elders': model.contextualized_elders(
                 group.all_elders).order_by('school_staff', 'name'),
+            'posts': _get_posts(posts),
             'post_char_limit': model.post_char_limit(request.user.profile),
             },
         )
 
 
 
+# @@@ This should be integrated into the API
 @login_required
-def json_posts(request, student_id=None, group_id=None):
-    """Get backlog of up to 100 latest posts, or POST a post."""
+@require_POST
+def create_post(request, student_id=None, group_id=None):
+    """Create a post."""
+    if 'text' not in request.POST:
+        return http.HttpResponseBadRequest(
+            json.dumps(
+                {
+                    'error': "Must provide a 'text' querystring parameter.",
+                    'success': False,
+                    }
+                ),
+            content_type='application/json',
+            )
+
     group = None
     rel = None
     post_model = model.BulkPost
     if student_id is not None:
-        try:
-            rel = get_relationship_or_404(student_id, request.user.profile)
-        except http.Http404:
-            if not request.user.is_superuser:
-                raise
-            student = get_object_or_404(model.Profile, pk=student_id)
-        else:
-            student = rel.student
+        rel = get_relationship_or_404(student_id, request.user.profile)
         post_model = model.Post
-        target = student
-        manager = student.posts_in_village
+        target = rel.student
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
         target = group
-        manager = group.bulk_posts
     else:
         target = None
-        manager = request.user.profile.authored_bulkposts
 
-    if request.method == 'POST' and 'text' in request.POST:
-        text = request.POST['text']
-        sms_profile_ids = request.POST.getlist('sms-target')
-        sequence_id = request.POST.get('author_sequence_id')
-        limit = model.post_char_limit(rel or request.user.profile)
-        if len(text) > limit:
-            return http.HttpResponseBadRequest(
-                json.dumps(
-                    {
-                        'error': 'Posts are limited to %s characters.' % limit,
-                        'success': False,
-                        }
-                    ),
-                content_type='application/json',
-                )
+    text = request.POST['text']
+    sms_profile_ids = request.POST.getlist('sms-target')
+    sequence_id = request.POST.get('author_sequence_id')
+    limit = model.post_char_limit(rel or request.user.profile)
+    if len(text) > limit:
+        return http.HttpResponseBadRequest(
+            json.dumps(
+                {
+                    'error': 'Posts are limited to %s characters.' % limit,
+                    'success': False,
+                    }
+                ),
+            content_type='application/json',
+            )
 
-        with xact.xact():
-            post = post_model.create(
-                request.user.profile,
-                target,
-                text,
-                sms_profile_ids=sms_profile_ids,
-                sequence_id=sequence_id,
-                )
-
-        data = {
-            'success': True,
-            'posts': [
-                model.post_dict(
-                    post, author_sequence_id=sequence_id, unread=False)
-                ],
-            }
-
-        return http.HttpResponse(
-            json.dumps(data), content_type='application/json')
+    with xact.xact():
+        post = post_model.create(
+            request.user.profile,
+            target,
+            text,
+            sms_profile_ids=sms_profile_ids,
+            sequence_id=sequence_id,
+            )
 
     data = {
-        'posts':
-            [
+        'success': True,
+        'posts': [
             model.post_dict(
-                post,
-                unread=model.unread.is_unread(
-                    post,
-                    request.user.profile
-                    ) if (post_model is model.Post) else False,
-                )
-            for post in reversed(
-                manager.order_by(
-                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
+                post, author_sequence_id=sequence_id, unread=False)
             ],
         }
 
-    if rel:
-        model.unread.mark_village_read(rel.student, rel.elder)
-
-    return http.HttpResponse(json.dumps(data), content_type='application/json')
+    return http.HttpResponse(
+        json.dumps(data), content_type='application/json')
 
 
 
