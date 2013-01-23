@@ -111,7 +111,7 @@ def add_students_bulk(request, group_id=None):
             'code': group.code if group else request.user.profile.code,
             'default_lang_code': settings.LANGUAGE_CODE,
             'pyo_phone': formats.display_phone(
-                settings.DEFAULT_NUMBER),
+                request.user.profile.source_phone),
             'group_just_created': group and request.GET.get('created', None),
             },
         )
@@ -552,7 +552,7 @@ def pdf_parent_instructions(request, lang, group_id=None):
         lang=lang,
         name=request.user.profile.name or "Your Child's Teacher",
         code=group.code if group else request.user.profile.code or '',
-        phone=settings.DEFAULT_NUMBER,
+        phone=request.user.profile.source_phone,
         group=group,
         )
 
