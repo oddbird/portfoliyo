@@ -178,7 +178,7 @@ def test_code_signup(db):
     """Parent can create account by texting teacher code."""
     phone = '+13216430987'
     teacher = factories.ProfileFactory.create(
-        school_staff=True, name="Teacher Jane", code="ABCDEF")
+        school_staff=True, name="Teacher Jane", code="ABCDEF", country_code='ca')
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
         with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
@@ -190,6 +190,7 @@ def test_code_signup(db):
     profile = model.Profile.objects.get(phone=phone)
     signup = profile.signups.get()
     assert profile.name == ""
+    assert profile.country_code == 'ca'
     assert signup.state == model.TextSignup.STATE.kidname
     assert profile.invited_by == teacher
     assert signup.teacher == teacher
