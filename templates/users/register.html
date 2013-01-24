@@ -17,7 +17,6 @@
       {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
       {% include "forms/_field.html" with field=form.email %}
       {% include "forms/_field.html" with field=form.email_notifications label="E-mail me when I have unread messages." %}
-      {% include "forms/_field.html" with field=form.country_code label="Country" %}
     </div>
 
     <div class="fieldset initial-password">
@@ -25,6 +24,7 @@
       {% include "forms/_field.html" with field=form.password_confirm %}
     </div>
 
+    {% include "forms/_field.html" with field=form.country_code label="Country" select="true" %}
     {% include "forms/_field.html" with field=form.school helptext="Don't see your school listed? <a href='#add-school' class='add-school-link'>Add a new school</a>." %}
 
     <div class="fieldset add-school">
