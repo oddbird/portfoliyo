@@ -51,7 +51,7 @@ $select-radius    : rhythm(.25);
 $select-angle     : to bottom;
 $select-gradient  : color($base,0), color($base,.125);
 
-.select {
+.formselect {
   @extend %icon;
   @extend %icon-arrow-down;
   @extend %input;

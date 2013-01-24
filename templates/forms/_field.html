@@ -11,10 +11,10 @@
     {% include "forms/field/_label.html" %}
   {% else %}
     {% include "forms/field/_label.html" %}
-    {% if select %}
-      <div class="select">
-        {% include "forms/field/_input.html" %}
-      </div>
+
+    {# @@@ field|is_select and not field|is_multiple #}
+    {% if select and not field|is_multiple %}
+      <div class="formselect">{% include "forms/field/_input.html" %}</div>
     {% else %}
       {% include "forms/field/_input.html" %}
     {% endif %}
