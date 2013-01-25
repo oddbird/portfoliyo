@@ -117,8 +117,10 @@ class PostCollector(base.NotificationTypeCollector):
 
         return {
             'villages': villages,
-            'requested_villages': requested,
-            'nonrequested_villages': nonrequested,
+            'requested_villages': sorted(
+                requested, key=lambda v: v.student.name),
+            'nonrequested_villages': sorted(
+                nonrequested, key=lambda v: v.student.name),
             }
 
 

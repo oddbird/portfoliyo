@@ -659,7 +659,7 @@ class TestSend(object):
     def test_posts(self, params, recip):
         context = {}
         name_map = {}
-        rels = set()
+        rels = {}
         now = datetime(2013, 1, 15, tzinfo=timezone.utc)
         for st_name, author_name, role, text, ago, new in params['scenario']:
             if st_name not in name_map:
@@ -673,12 +673,15 @@ class TestSend(object):
             student = name_map[st_name]
             author = name_map[author_name]
             if (student, author) not in rels:
-                factories.RelationshipFactory.create(
+                rel = factories.RelationshipFactory.create(
                     from_profile=author, to_profile=student, description=role)
-                rels.add((student, author))
+                rels[(student, author)] = rel
+            else:
+                rel = rels[(student, author)]
             post = factories.PostFactory.create(
                 author=author,
                 student=student,
+                relationship=rel,
                 original_text=text,
                 html_text='html: %s' % text,
                 timestamp=now - ago,
