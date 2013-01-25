@@ -121,6 +121,7 @@ class TestPostCreate(object):
         assert post.from_sms == False
         assert post.to_sms == False
         assert post.meta == {'sms': []}
+        assert utils.refresh(rel.elder).has_posted
 
 
     def test_new_post_unread_for_all_web_users_in_village(self, db):
@@ -441,6 +442,7 @@ class TestBulkPost(object):
         exp = set([p.student for p in subs])
         assert set([rel.student, rel2.student]) == exp
         assert {rel, rel2} == set([p.relationship for p in subs])
+        assert utils.refresh(rel.elder).has_posted
 
 
     def test_triggers_pusher_event(self, db):
