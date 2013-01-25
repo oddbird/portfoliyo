@@ -1,8 +1,6 @@
 """Village models."""
 from __future__ import absolute_import
 
-import re
-
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import dateformat, html, timezone
