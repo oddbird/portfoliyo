@@ -19,6 +19,16 @@
   border-color: $base3;
   &:nth-child(3) { border: none; }
 
+  [data-icon] {
+    @include adjust-font-size-to($xlargepx);
+    display: block;
+    margin: 0;
+    text-align: center;
+    @include at-breakpoint($break) {
+      @include adjust-font-size-to($xxlargepx);
+    }
+  }
+
   @include breakpoint(20em) { @include pad(1,1); }
   @include breakpoint(25em) { @include pad(2,2); }
 
@@ -52,23 +62,10 @@
 }
 
 .feature-title {
-  @extend %icon;
   @include serif;
   @include trailer(.5);
   font-weight: bold;
   text-align: center;
-
-  &:before {
-    @include adjust-font-size-to($xlargepx);
-    display: block;
-    margin: 0;
-    @include at-breakpoint($break) {
-      @include adjust-font-size-to($xxlargepx);
-    }
-  }
-  .signup-feature & { @extend %icon-user-plus; }
-  .twoway-feature & { @extend %icon-loop; }
-  .elders-feature & { @extend %icon-users; }
 }
 
 .feature-details {
