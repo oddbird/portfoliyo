@@ -1,10 +1,9 @@
 """Village models."""
 from __future__ import absolute_import
 
-import re
-
 from django.core.urlresolvers import reverse
 from django.db import models
+from django.db.models import query
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
@@ -227,10 +226,20 @@ class BulkPost(BasePost):
 
         post.save()
 
+        students = list(group.students.all())
+
+        relationships = user_models.Relationship.objects.filter(
+            from_profile=author, to_profile__in=students).select_related(
+            'to_profile')
+        rels_by_student = {}
+        for rel in relationships:
+            rels_by_student[rel.student] = rel
+
         for student in group.students.all():
             sub = Post.objects.create(
                 author=author,
                 student=student,
+                relationship=rels_by_student.get(student, None),
                 original_text=text,
                 html_text=html_text,
                 from_sms=from_sms,
@@ -267,6 +276,9 @@ class Post(BasePost):
     # the student in whose village this was posted
     student = models.ForeignKey(
         user_models.Profile, related_name='posts_in_village')
+    # relationship between author and student (nullable b/c might be deleted)
+    relationship = models.ForeignKey(
+        user_models.Relationship, related_name='posts', blank=True, null=True)
     # (optional) the bulk-post that triggered this post
     from_bulk = models.ForeignKey(
         BulkPost, blank=True, null=True, related_name='triggered')
@@ -309,9 +321,16 @@ class Post(BasePost):
         """
         html_text = text2html(text)
 
+        try:
+            rel = user_models.Relationship.objects.get(
+                from_profile=author, to_profile=student)
+        except user_models.Relationship.DoesNotExist:
+            rel = None
+
         post = cls(
             author=author,
             student=student,
+            relationship=rel,
             original_text=text,
             html_text=html_text,
             from_sms=from_sms,
@@ -344,19 +363,7 @@ class Post(BasePost):
 
     def get_relationship(self):
         """Return Relationship between author and student, or None."""
-        try:
-            return self._rel
-        except AttributeError:
-            try:
-                self._rel = user_models.Relationship.objects.select_related(
-                    ).get(
-                    kind=user_models.Relationship.KIND.elder,
-                    from_profile=self.author,
-                    to_profile=self.student,
-                    )
-            except user_models.Relationship.DoesNotExist:
-                self._rel = None
-        return self._rel
+        return self.relationship
 
 
     def get_absolute_url(self):

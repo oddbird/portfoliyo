@@ -312,27 +312,41 @@ def invite_teacher_to_group(request, group_id):
         )
 
 
-def _get_posts(queryset, profile=None):
+def _get_posts(profile, student=None, group=None):
     """
     Return post data for handlebars posts.html template render.
 
-    Get all posts from given manager/queryset; render them as read/unread by
-    given ``profile`` (if given).
+    Get all posts for given student/group; list them as read/unread by given
+    ``profile``.
 
     """
-    return {
-        'posts':
-            [
+    all_unread = set()
+    if student:
+        all_unread = model.unread.all_unread(student, profile)
+        queryset = student.posts_in_village.select_related(
+            'author__user', 'student', 'relationship')
+    elif group:
+        if group.is_all:
+            queryset = profile.authored_bulkposts.filter(
+                group=None).select_related('author__user')
+        else:
+            queryset = group.bulk_posts.select_related('author__user')
+    else:
+        queryset = None
+
+    post_data = []
+    if queryset is not None:
+        post_data = [
             model.post_dict(
                 post,
-                unread=model.unread.is_unread(
-                    post, profile) if profile else False,
+                unread=post.id in all_unread,
                 )
             for post in reversed(
                 queryset.order_by(
-                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
-            ],
-        }
+                    '-timestamp')[:BACKLOG_POSTS])
+            ]
+
+    return {'posts': post_data}
 
 
 
@@ -365,7 +379,7 @@ def village(request, student_id):
             'elders': model.contextualized_elders(
                 student.elder_relationships).order_by('school_staff', 'name'),
             'read_only': rel is None,
-            'posts': _get_posts(student.posts_in_village, request.user.profile),
+            'posts': _get_posts(request.user.profile, student=student),
             'post_char_limit': model.post_char_limit(rel) if rel else 0,
             },
         )
@@ -378,13 +392,11 @@ def group(request, group_id=None):
     """The main chat view for a group."""
     if group_id is None:
         group = model.AllStudentsGroup(request.user.profile)
-        posts = request.user.profile.authored_bulkposts.filter(group=None)
     else:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile),
             id=group_id,
             )
-        posts = group.bulk_posts
 
     return TemplateResponse(
         request,
@@ -393,7 +405,7 @@ def group(request, group_id=None):
             'group': group,
             'elders': model.contextualized_elders(
                 group.all_elders).order_by('school_staff', 'name'),
-            'posts': _get_posts(posts),
+            'posts': _get_posts(request.user.profile, group=group),
             'post_char_limit': model.post_char_limit(request.user.profile),
             },
         )
