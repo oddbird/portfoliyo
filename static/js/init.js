@@ -7,7 +7,11 @@ var PYO = (function (PYO, $) {
         $('input[placeholder], textarea[placeholder]').placeholder();
         $('#messages').messages({
             handleAjax: true,
-            transientFadeSpeed: 2000
+            transientDelay: 15000,
+            transientCallback: function (el) {
+                el.addClass('removing');
+                $.doTimeout(2000, function () { el.remove(); });
+            }
         });
         $('.details:not(html)').not('.post .details').html5accordion();
         $('.email').defuscate();
