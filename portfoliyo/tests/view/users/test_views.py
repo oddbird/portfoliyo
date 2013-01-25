@@ -16,8 +16,8 @@ class TestLogin(object):
 
     def test_login(self, client, db):
         """Successful login redirects."""
-        factories.UserFactory.create(
-            email='test@example.com', password='sekrit')
+        factories.ProfileFactory.create(
+            user__email='test@example.com', user__password='sekrit')
 
         form = client.get(self.url).forms['loginform']
         form['username'] = 'test@example.com'
@@ -29,8 +29,8 @@ class TestLogin(object):
 
     def test_login_failed(self, client, db):
         """Failed login returns error message."""
-        factories.UserFactory.create(
-            email='test@example.com', password='sekrit')
+        factories.ProfileFactory.create(
+            user__email='test@example.com', user__password='sekrit')
 
         form = client.get(self.url).forms['loginform']
         form['username'] = 'test@example.com'
@@ -75,8 +75,8 @@ class TestLogin(object):
 
     def test_good_captcha(self, client, db):
         """Good value for captcha allows login."""
-        factories.UserFactory.create(
-            email='test@example.com', password='sekrit')
+        factories.ProfileFactory.create(
+            user__email='test@example.com', user__password='sekrit')
 
         session_data = {}
 
