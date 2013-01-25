@@ -445,6 +445,14 @@ class TestBulkPost(object):
         assert utils.refresh(rel.elder).has_posted
 
 
+    def test_create_no_author(self, db):
+        """Can create an authorless (system) bulk post."""
+        g = factories.GroupFactory()
+        post = models.BulkPost.create(None, g, "Hallo")
+
+        assert post.author is None
+
+
     def test_triggers_pusher_event(self, db):
         """Triggers pusher events for both self and sub-posts."""
         rel = factories.RelationshipFactory.create(

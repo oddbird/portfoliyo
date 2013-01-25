@@ -29,8 +29,8 @@ class TestLogin(object):
 
     def test_login_failed(self, client, db):
         """Failed login returns error message."""
-        factories.UserFactory.create(
-            email='test@example.com', password='sekrit')
+        factories.ProfileFactory.create(
+            user__email='test@example.com', user__password='sekrit')
 
         form = client.get(self.url).forms['loginform']
         form['username'] = 'test@example.com'
