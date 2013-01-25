@@ -21,11 +21,11 @@
 
       {{ posts|handlebars:"posts" }}
 
-      {% if not request.user.profile.authored_posts.exists %}
+      {% if not user.profile.has_posted %}
         <div class="stickyhack"> </div>
       {% endif %}
     </div>
-    {% if not request.user.profile.authored_posts.exists %}
+    {% if not user.profile.has_posted %}
     <article class="instructions">
       <ol class="howto">
         <li class="howto-post"><p>Write a message for teachers and family members.</p></li>
