@@ -16,7 +16,7 @@ Markdown==2.2.1
 
 django-floppyforms==1.0
 
-django-form-utils==0.2.0.post93
+django-form-utils==0.2.0.post94
 
 django-widget-tweaks==1.1.2
 

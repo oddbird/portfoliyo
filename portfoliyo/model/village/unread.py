@@ -20,6 +20,12 @@ def is_unread(post, profile):
 
 
 
+def all_unread(student, profile):
+    """Return set of post IDs in ``student`` village unread by ``profile``."""
+    return client.smembers(make_key(student, profile))
+
+
+
 def unread_count(student, profile):
     """Return count of profile's unread posts in given student's village."""
     return client.scard(make_key(student, profile))

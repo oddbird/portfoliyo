@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
 """Tests for village views."""
+import datetime
+
 from django.core import mail
 from django.core.urlresolvers import reverse
 import mock
 import pytest
 
+from portfoliyo import model
 from portfoliyo.model import unread
-
 from portfoliyo.tests import factories, utils
-
+from portfoliyo.view.village import views
 
 
 
@@ -662,6 +664,92 @@ class TestInviteFamily(GroupContextTests):
         student = factories.ProfileFactory.create()
 
         client.get(self.url(student), user=elder.user, status=404)
+
+
+
+class TestGetPosts(object):
+    """Tests for _get_posts utility method."""
+    def assert_posts(self, data, posts):
+        """Given posts (only) are listed in given order in ``data``."""
+        assert [p.id for p in posts] == [p['post_id'] for p in data['posts']]
+
+
+    def test_student(self, db):
+        """Given student, returns posts in student village."""
+        profile = factories.ProfileFactory.create()
+        post1 = factories.PostFactory.create()
+        post2 = factories.PostFactory.create(student=post1.student)
+
+        with utils.assert_num_queries(1):
+            self.assert_posts(
+                views._get_posts(profile, student=post1.student),
+                [post1, post2],
+                )
+
+
+    def test_group(self, db):
+        """Given group, returns posts in group."""
+        post1 = factories.BulkPostFactory.create()
+        post2 = factories.BulkPostFactory.create(group=post1.group)
+
+        with utils.assert_num_queries(1):
+            self.assert_posts(
+                views._get_posts(post1.group.owner, group=post1.group),
+                [post1, post2],
+                )
+
+
+    def test_all_students_group(self, db):
+        """Given all-students group, returns posts in group."""
+        post1 = factories.BulkPostFactory.create(group=None)
+        post2 = factories.BulkPostFactory.create(
+            group=None, author=post1.author)
+
+        with utils.assert_num_queries(1):
+            self.assert_posts(
+                views._get_posts(
+                    post1.author, group=model.AllStudentsGroup(post1.author)),
+                [post1, post2],
+                )
+
+
+    def test_neither(self, db):
+        """Given neither, returns no posts."""
+        profile = factories.ProfileFactory.create()
+
+        self.assert_posts(views._get_posts(profile), [])
+
+
+    def test_ordering(self, db):
+        """Posts are ordered by timestamp."""
+        profile = factories.ProfileFactory.create()
+        second_post = factories.PostFactory.create(
+            timestamp=datetime.datetime(2013, 1, 25, 12))
+        first_post = factories.PostFactory.create(
+            student=second_post.student,
+            timestamp=datetime.datetime(2013, 1, 25, 11),
+            )
+
+        self.assert_posts(
+            views._get_posts(profile, student=first_post.student),
+            [first_post, second_post],
+            )
+
+
+    def test_unread(self, db):
+        """Marks posts in student village correctly as read/unread."""
+        profile = factories.ProfileFactory.create()
+        read_post = factories.PostFactory.create()
+        unread_post = factories.PostFactory.create(
+            student=read_post.student)
+        model.unread.mark_unread(unread_post, profile)
+
+        expected = [(read_post.id, False), (unread_post.id, True)]
+        data = views._get_posts(profile, student=read_post.student)
+        found = [(p['post_id'], p['unread']) for p in data['posts']]
+
+        assert expected == found
+
 
 
 

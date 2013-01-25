@@ -25,6 +25,17 @@ def test_unread(db, redis):
 
 
 
+def test_all_unread(db, redis):
+    """After marking a post unread, it shows up in all_unread set."""
+    post = factories.PostFactory.create()
+    profile = factories.ProfileFactory.create()
+
+    unread.mark_unread(post, profile)
+
+    assert unread.all_unread(post.student, profile) == {post.id}
+
+
+
 def test_mark_read(db, redis):
     """Can mark a post as read."""
     post = factories.PostFactory.create()

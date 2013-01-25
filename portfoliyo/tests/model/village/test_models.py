@@ -5,10 +5,7 @@ from django.core.urlresolvers import reverse
 from django.utils.timezone import utc
 import mock
 import pytest
-import re
 
-
-from portfoliyo.model.users.models import contextualized_elders
 from portfoliyo.model.village import models, unread
 
 from portfoliyo.tests import factories, utils
@@ -39,6 +36,7 @@ def test_post_dict(db):
     post = factories.PostFactory.create(
         author=rel.elder,
         student=rel.student,
+        relationship=rel,
         timestamp=datetime.datetime(2012, 9, 17, 5, 30, tzinfo=utc),
         html_text='Foo',
         )
@@ -117,6 +115,7 @@ class TestPostCreate(object):
 
         assert post.author == rel.elder
         assert post.student == rel.student
+        assert post.relationship == rel
         assert post.timestamp == mock_now.return_value
         assert post.original_text == 'Foo\n'
         assert post.html_text == 'Foo<br>'
@@ -376,11 +375,10 @@ class TestBulkPost(object):
         g.students.add(rel.student, rel2.student)
         post = models.BulkPost.create(rel.elder, g, "Hallo")
 
-        exp = set([
-                p.student for p in
-                models.Post.objects.filter(from_bulk=post)
-                ])
+        subs = models.Post.objects.filter(from_bulk=post)
+        exp = set([p.student for p in subs])
         assert set([rel.student, rel2.student]) == exp
+        assert {rel, rel2} == set([p.relationship for p in subs])
 
 
     def test_triggers_pusher_event(self, db):
