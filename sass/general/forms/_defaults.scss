@@ -72,7 +72,7 @@ $input-rhythm: .25;
 
 %radio-check-defaults {
   [type="checkbox"], [type="radio"] {
-    visibility: hidden;
+    display: none;
     + .type {
       @extend %icon;
       display: block;
