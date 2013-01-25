@@ -20,8 +20,8 @@
 }
 
 %check-value {
-  @include gone;
-  &[aria-checked="true"] + .type { @extend %options-checked; }
+  display: none;
+  &:checked + .type { @extend %options-checked; }
   &.disabled + .type { @extend %options-disabled; }
 }
 

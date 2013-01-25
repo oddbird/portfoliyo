@@ -3,7 +3,6 @@ from __future__ import absolute_import
 
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import query
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
@@ -259,6 +258,10 @@ class BulkPost(BasePost):
 
         post.notify_email(from_sms)
 
+        if author and not author.has_posted:
+            user_models.Profile.objects.filter(pk=author.pk).update(
+                has_posted=True)
+
         return post
 
 
@@ -346,6 +349,10 @@ class Post(BasePost):
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
             )
+
+        if author and not author.has_posted:
+            user_models.Profile.objects.filter(pk=author.pk).update(
+                has_posted=True)
 
         return post
 

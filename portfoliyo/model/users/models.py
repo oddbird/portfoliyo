@@ -76,6 +76,8 @@ class Profile(models.Model):
     # the number we should text them from
     source_phone = models.CharField(
         max_length=20, default=settings.DEFAULT_NUMBER)
+    # True if user has ever posted
+    has_posted = models.BooleanField(default=False)
 
     # opt in/out to various types of email notifications
     NOTIFICATION_PREFS = [
