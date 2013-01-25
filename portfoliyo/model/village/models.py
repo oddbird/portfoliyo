@@ -3,7 +3,6 @@ from __future__ import absolute_import
 
 from django.core.urlresolvers import reverse
 from django.db import models
-from django.db.models import query
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
@@ -254,6 +253,10 @@ class BulkPost(BasePost):
 
         post.notify()
 
+        if author and not author.has_posted:
+            user_models.Profile.objects.filter(pk=author.pk).update(
+                has_posted=True)
+
         for number, body in sms_to_send:
             tasks.send_sms.delay(number, body)
 
@@ -347,6 +350,10 @@ class Post(BasePost):
 
         if notifications:
             post.notify()
+
+        if author and not author.has_posted:
+            user_models.Profile.objects.filter(pk=author.pk).update(
+                has_posted=True)
 
         for number, body in sms_to_send:
             tasks.send_sms.delay(number, body)

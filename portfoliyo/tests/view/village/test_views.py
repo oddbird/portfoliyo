@@ -764,10 +764,12 @@ class TestVillage(GroupContextTests):
     def test_instructions_only_if_never_posted(self, client):
         "Posting instructions appear only if you've never posted."""
         rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True)
-        factories.PostFactory.create(author=rel.elder, student=rel.student)
+            from_profile__school_staff=True, from_profile__has_posted=True)
         newbie_rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True, to_profile=rel.student)
+            from_profile__school_staff=True,
+            from_profile__has_posted=False,
+            to_profile=rel.student,
+            )
 
         url = self.url(rel.student)
         response = client.get(url, user=rel.elder.user)

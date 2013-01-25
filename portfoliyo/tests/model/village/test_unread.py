@@ -32,7 +32,7 @@ def test_all_unread(db, redis):
 
     unread.mark_unread(post, profile)
 
-    assert unread.all_unread(post.student, profile) == {post.id}
+    assert unread.all_unread(post.student, profile) == {str(post.id)}
 
 
 
