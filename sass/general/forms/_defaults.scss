@@ -115,7 +115,7 @@ $select-gradient  : color($base,0), color($base,.125);
 
 %radio-check-defaults {
   [type="checkbox"], [type="radio"] {
-    visibility: hidden;
+    display: none;
     + .type {
       @extend %icon;
       display: block;

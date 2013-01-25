@@ -20,7 +20,7 @@
 }
 
 %check-value {
-  @include gone;
+  display: none;
   &:checked + .type { @extend %options-checked; }
   &.disabled + .type { @extend %options-disabled; }
 }

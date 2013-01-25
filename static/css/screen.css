@@ -636,7 +636,7 @@ optgroup {
 }
 
 .ui-multiselect-checkboxes [type="checkbox"], .email_notifications-field [type="checkbox"], .fieldset.notifications [type="checkbox"], .school_staff-field [type="checkbox"], .ui-multiselect-checkboxes [type="radio"], .email_notifications-field [type="radio"], .fieldset.notifications [type="radio"], .school_staff-field [type="radio"] {
-  visibility: hidden;
+  display: none;
 }
 .ui-multiselect-checkboxes [type="checkbox"] + .type, .email_notifications-field [type="checkbox"] + .type, .fieldset.notifications [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .ui-multiselect-checkboxes [type="radio"] + .type, .email_notifications-field [type="radio"] + .type, .fieldset.notifications [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
   display: block;
@@ -879,9 +879,7 @@ button {
 }
 
 .school-field .radio-options .value, .students-field .check-options .value, .elders-field .check-options .value, .groups-field .check-options .value, .ui-multiselect-checkboxes input {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
+  display: none;
 }
 
 .school-field .radio-options .type, .students-field .check-options .type, .elders-field .check-options .type, .groups-field .check-options .type, .ui-multiselect-checkboxes label {
