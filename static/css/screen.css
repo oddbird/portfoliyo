@@ -178,7 +178,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e000";
 }
 
-.ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="radio"]:checked + .type:before, .email_notifications-field [type="radio"]:checked + .type:before, .fieldset.notifications [type="radio"]:checked + .type:before, .school_staff-field [type="radio"]:checked + .type:before {
   content: "\e001";
 }
 
@@ -186,7 +186,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e002";
 }
 
-.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"]:checked + .type:before, .email_notifications-field [type="checkbox"]:checked + .type:before, .fieldset.notifications [type="checkbox"]:checked + .type:before, .school_staff-field [type="checkbox"]:checked + .type:before {
   content: "\e003";
 }
 
@@ -589,9 +589,7 @@ optgroup {
 }
 
 .ui-multiselect-checkboxes [type="checkbox"], .email_notifications-field [type="checkbox"], .fieldset.notifications [type="checkbox"], .school_staff-field [type="checkbox"], .ui-multiselect-checkboxes [type="radio"], .email_notifications-field [type="radio"], .fieldset.notifications [type="radio"], .school_staff-field [type="radio"] {
-  position: absolute;
-  top: -9999px;
-  left: -9999px;
+  visibility: hidden;
 }
 .ui-multiselect-checkboxes [type="checkbox"] + .type, .email_notifications-field [type="checkbox"] + .type, .fieldset.notifications [type="checkbox"] + .type, .school_staff-field [type="checkbox"] + .type, .ui-multiselect-checkboxes [type="radio"] + .type, .email_notifications-field [type="radio"] + .type, .fieldset.notifications [type="radio"] + .type, .school_staff-field [type="radio"] + .type {
   display: block;
@@ -604,7 +602,7 @@ optgroup {
   margin-left: .4em;
   color: #586e75;
 }
-.ui-multiselect-checkboxes [type="checkbox"][aria-checked="true"] + .type:before, .email_notifications-field [type="checkbox"][aria-checked="true"] + .type:before, .fieldset.notifications [type="checkbox"][aria-checked="true"] + .type:before, .school_staff-field [type="checkbox"][aria-checked="true"] + .type:before, .ui-multiselect-checkboxes [type="radio"][aria-checked="true"] + .type:before, .email_notifications-field [type="radio"][aria-checked="true"] + .type:before, .fieldset.notifications [type="radio"][aria-checked="true"] + .type:before, .school_staff-field [type="radio"][aria-checked="true"] + .type:before {
+.ui-multiselect-checkboxes [type="checkbox"]:checked + .type:before, .email_notifications-field [type="checkbox"]:checked + .type:before, .fieldset.notifications [type="checkbox"]:checked + .type:before, .school_staff-field [type="checkbox"]:checked + .type:before, .ui-multiselect-checkboxes [type="radio"]:checked + .type:before, .email_notifications-field [type="radio"]:checked + .type:before, .fieldset.notifications [type="radio"]:checked + .type:before, .school_staff-field [type="radio"]:checked + .type:before {
   color: #268bd2;
 }
 .ui-multiselect-checkboxes [type="checkbox"]:focus + .type, .email_notifications-field [type="checkbox"]:focus + .type, .fieldset.notifications [type="checkbox"]:focus + .type, .school_staff-field [type="checkbox"]:focus + .type, .ui-multiselect-checkboxes [type="radio"]:focus + .type, .email_notifications-field [type="radio"]:focus + .type, .fieldset.notifications [type="radio"]:focus + .type, .school_staff-field [type="radio"]:focus + .type {
@@ -897,7 +895,7 @@ button {
   border-color: rgba(147, 161, 161, 0.25);
 }
 
-.school-field .radio-options [aria-checked="true"].value + .type, .students-field .check-options [aria-checked="true"].value + .type, .elders-field .check-options [aria-checked="true"].value + .type, .groups-field .check-options [aria-checked="true"].value + .type, .ui-multiselect-checkboxes input[aria-checked="true"] + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
+.school-field .radio-options .value:checked + .type, .students-field .check-options .value:checked + .type, .elders-field .check-options .value:checked + .type, .groups-field .check-options .value:checked + .type, .ui-multiselect-checkboxes input:checked + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
   background: rgba(38, 139, 210, 0.125);
 }
 

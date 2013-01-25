@@ -21,7 +21,7 @@
 
 %check-value {
   @include gone;
-  &[aria-checked="true"] + .type { @extend %options-checked; }
+  &:checked + .type { @extend %options-checked; }
   &.disabled + .type { @extend %options-disabled; }
 }
 
