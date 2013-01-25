@@ -11,13 +11,7 @@
     {% include "forms/field/_label.html" %}
   {% else %}
     {% include "forms/field/_label.html" %}
-
-    {% if field|is_select and not field|is_multiple and not field|is_radio %}
-      <div class="formselect">{% include "forms/field/_input.html" %}</div>
-    {% else %}
-      {% include "forms/field/_input.html" %}
-    {% endif %}
-
+    {% include "forms/field/_input.html" %}
   {% endif %}
 
   {% if helptext or helpinclude %}
@@ -26,7 +20,6 @@
       {% if helpinclude %}{% include helpinclude %}{% endif %}
     </div>
   {% endif %}
-
 
   {% if errorslast %}
     {{ field.errors }}

@@ -47,7 +47,7 @@ class RegistrationForm(forms.Form):
     country_code = forms.TypedChoiceField(
         choices=model.Profile._meta.get_field('country_code').choices,
         initial=model.Profile._meta.get_field('country_code').default,
-        widget=forms.Select(),
+        widget=forms.RadioSelect(),
         )
     school = pyoforms.ModelChoiceField(
         queryset=model.School.objects.filter(auto=False).order_by('name'),
