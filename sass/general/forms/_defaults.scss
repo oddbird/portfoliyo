@@ -115,7 +115,7 @@ $select-gradient  : color($base,0), color($base,.125);
 
 %radio-check-defaults {
   [type="checkbox"], [type="radio"] {
-    @include gone;
+    visibility: hidden;
     + .type {
       @extend %icon;
       display: block;
@@ -125,7 +125,7 @@ $select-gradient  : color($base,0), color($base,.125);
         color: $base01;
       }
     }
-    &[aria-checked="true"] + .type {
+    &:checked + .type {
       &:before { color: $blue; }
     }
     &:focus + .type { color: $base03; }
@@ -133,12 +133,12 @@ $select-gradient  : color($base,0), color($base,.125);
 
   [type="checkbox"] {
     + .type { @extend %icon-checkbox-unchecked; }
-    &[aria-checked="true"] + .type { @extend %icon-checkbox-checked; }
+    &:checked + .type { @extend %icon-checkbox-checked; }
   }
 
   [type="radio"] {
     + .type { @extend %icon-radio-unchecked; }
-    &[aria-checked="true"] + .type { @extend %icon-radio-checked; }
+    &:checked + .type { @extend %icon-radio-checked; }
   }
 }
 
