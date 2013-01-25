@@ -323,17 +323,19 @@ def _get_posts(profile, student=None, group=None):
     all_unread = set()
     if student:
         all_unread = model.unread.all_unread(student, profile)
-        queryset = student.posts_in_village
+        queryset = student.posts_in_village.select_related(
+            'author__user', 'student', 'relationship')
     elif group:
         if group.is_all:
-            queryset = profile.authored_bulkposts.filter(group=None)
+            queryset = profile.authored_bulkposts.filter(
+                group=None).select_related('author__user')
         else:
-            queryset = group.bulk_posts
+            queryset = group.bulk_posts.select_related('author__user')
     else:
         queryset = None
 
     post_data = []
-    if queryset:
+    if queryset is not None:
         post_data = [
             model.post_dict(
                 post,
@@ -341,7 +343,7 @@ def _get_posts(profile, student=None, group=None):
                 )
             for post in reversed(
                 queryset.order_by(
-                    '-timestamp').select_related('author')[:BACKLOG_POSTS])
+                    '-timestamp')[:BACKLOG_POSTS])
             ]
 
     return {'posts': post_data}

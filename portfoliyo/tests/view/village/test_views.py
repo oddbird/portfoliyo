@@ -677,33 +677,40 @@ class TestGetPosts(object):
     def test_student(self, db):
         """Given student, returns posts in student village."""
         profile = factories.ProfileFactory.create()
-        post = factories.PostFactory.create()
+        post1 = factories.PostFactory.create()
+        post2 = factories.PostFactory.create(student=post1.student)
 
-        self.assert_posts(
-            views._get_posts(profile, student=post.student),
-            [post],
-            )
+        with utils.assert_num_queries(1):
+            self.assert_posts(
+                views._get_posts(profile, student=post1.student),
+                [post1, post2],
+                )
 
 
     def test_group(self, db):
         """Given group, returns posts in group."""
-        post = factories.BulkPostFactory.create()
+        post1 = factories.BulkPostFactory.create()
+        post2 = factories.BulkPostFactory.create(group=post1.group)
 
-        self.assert_posts(
-            views._get_posts(post.group.owner, group=post.group),
-            [post],
-            )
+        with utils.assert_num_queries(1):
+            self.assert_posts(
+                views._get_posts(post1.group.owner, group=post1.group),
+                [post1, post2],
+                )
 
 
     def test_all_students_group(self, db):
         """Given all-students group, returns posts in group."""
-        post = factories.BulkPostFactory.create(group=None)
+        post1 = factories.BulkPostFactory.create(group=None)
+        post2 = factories.BulkPostFactory.create(
+            group=None, author=post1.author)
 
-        self.assert_posts(
-            views._get_posts(
-                post.author, group=model.AllStudentsGroup(post.author)),
-            [post],
-            )
+        with utils.assert_num_queries(1):
+            self.assert_posts(
+                views._get_posts(
+                    post1.author, group=model.AllStudentsGroup(post1.author)),
+                [post1, post2],
+                )
 
 
     def test_neither(self, db):
