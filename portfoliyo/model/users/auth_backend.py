@@ -10,7 +10,7 @@ class EmailBackend(ModelBackend):
     """
     def authenticate(self, username=None, password=None):
         """
-        Authenticate user by email address. Pre-select profile.
+        Authenticate user by email address. Pre-select profile and school.
 
         Credential argument is still named ``username`` to be compatible with
         default ``AuthenticationForm`` (we could override its ``clean`` method
@@ -19,7 +19,8 @@ class EmailBackend(ModelBackend):
 
         """
         try:
-            user = User.objects.select_related("profile").get(email=username)
+            user = User.objects.select_related(
+                'profile__school').get(email=username)
             if user.check_password(password):
                 return user
         except User.DoesNotExist:
@@ -27,8 +28,9 @@ class EmailBackend(ModelBackend):
 
 
     def get_user(self, user_id):
-        """Get user by ID. Pre-select profile."""
+        """Get user by ID. Pre-select profile and school."""
         try:
-            return User.objects.select_related("profile").get(pk=user_id)
+            return User.objects.select_related(
+                'profile__school').get(pk=user_id)
         except User.DoesNotExist:
             return None
