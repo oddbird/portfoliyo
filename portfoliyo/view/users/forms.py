@@ -6,7 +6,6 @@ import operator
 import random
 import time
 
-from django.conf import settings
 from django.contrib.auth import forms as auth_forms
 
 import floppyforms as forms

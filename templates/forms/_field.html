@@ -12,8 +12,7 @@
   {% else %}
     {% include "forms/field/_label.html" %}
 
-    {# @@@ field|is_select and not field|is_multiple #}
-    {% if select and not field|is_multiple %}
+    {% if field|is_select and not field|is_multiple and not field|is_radio %}
       <div class="formselect">{% include "forms/field/_input.html" %}</div>
     {% else %}
       {% include "forms/field/_input.html" %}
