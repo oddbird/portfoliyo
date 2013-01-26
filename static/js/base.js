@@ -24,30 +24,6 @@ var PYO = (function (PYO, $) {
         DOWN: 40
     };
 
-    PYO.ieInputBootstrap = function (input) {
-        if (input.is(':checked')) {
-            input.attr('aria-checked', true);
-        } else {
-            input.removeAttr('aria-checked');
-        }
-    };
-
-    PYO.ieInputBootstrapHandler = function () {
-        $('body').on('change', 'input:radio, input:checkbox', function () {
-            var el = $(this);
-
-            if (el.is(':radio')) {
-                var form = el.closest('form');
-                var name = el.attr('name');
-                form.find('input:radio[name="' + name + '"]').each(function () {
-                    PYO.ieInputBootstrap($(this));
-                });
-            } else {
-                PYO.ieInputBootstrap(el);
-            }
-        });
-    };
-
     PYO.updatePageHeight = function (container) {
         if ($(container).length) {
             var page = $(container);
@@ -412,9 +388,6 @@ var PYO = (function (PYO, $) {
         if ($('#edit-elder-form').length) { PYO.setPhoneChangedClass('#edit-elder-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
-        $('body').find('input:radio, input:checkbox').each(function () {
-            PYO.ieInputBootstrap($(this));
-        });
     };
 
     return PYO;
