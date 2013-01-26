@@ -11,7 +11,7 @@ def test_unicode():
     assert unicode(a) == u"foobar"
 
 
-def test_read_unread(db):
+def test_read_unread(db, redis):
     """Test announce_to_all, get_unread_announcements, mark_read_by."""
     p1 = factories.ProfileFactory.create(user__email='one@example.com')
     p2 = factories.ProfileFactory.create(user__email='two@example.com')

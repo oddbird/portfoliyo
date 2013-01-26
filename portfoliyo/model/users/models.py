@@ -68,6 +68,8 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
     # language code for user's preferred language
     lang_code = models.CharField(max_length=10, default=settings.LANGUAGE_CODE)
+    # True if user has ever posted
+    has_posted = models.BooleanField(default=False)
 
     # opt in/out to various types of email notifications
     NOTIFICATION_PREFS = [
