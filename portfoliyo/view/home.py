@@ -3,8 +3,6 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-from session_csrf import anonymous_csrf
-
 
 
 def redirect_home(user):
@@ -26,7 +24,6 @@ def redirect_home(user):
     return reverse('dashboard')
 
 
-@anonymous_csrf
 def home(request):
     """Home view. Redirects appropriately or displays landing page."""
     if request.user.is_authenticated():
