@@ -999,7 +999,7 @@ button {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  background: #eee8d5;
+  background: #d3e7f6;
 }
 
 .multiselect-dropdown {
@@ -2257,6 +2257,20 @@ button {
   .initial-password label {
     padding-left: 1.27778rem;
   }
+}
+
+.country_code-field .radio-type:before {
+  content: " ";
+  display: inline-block;
+  min-width: 16px;
+  min-height: 11px;
+  margin-right: .4em;
+}
+.country_code-field [value="ca"] + .radio-type:before {
+  background-image: url('../images/flags/ca.png?1125322800');
+}
+.country_code-field [value="us"] + .radio-type:before {
+  background-image: url('../images/flags/us.png?1125322680');
 }
 
 .school-field {

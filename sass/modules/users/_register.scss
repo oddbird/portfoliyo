@@ -20,6 +20,16 @@
 
 .country_code-field {
   @extend %select-buttons;
+  .radio-type {
+    @include before(" ") {
+      display: inline-block;
+      min-width: image-width('flags/us.png');
+      min-height: image-height('flags/us.png');
+      margin-right: .4em;
+    }
+  }
+  [value="ca"] + .radio-type:before { background-image: image-url('flags/ca.png'); }
+  [value="us"] + .radio-type:before { background-image: image-url('flags/us.png'); }
 }
 
 .school-field {

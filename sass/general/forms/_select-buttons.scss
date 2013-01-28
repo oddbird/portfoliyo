@@ -17,7 +17,7 @@
     }
     &:checked + .radio-type {
       @include inset;
-      background: $base2;
+      background: color($blue lightest);
     }
   }
 }
