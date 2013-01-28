@@ -1920,7 +1920,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1352308919') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1359150462') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -1981,19 +1981,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1352308919');
+  background-image: url('../images/landing/peter.png?1359150462');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1352308919');
+  background-image: url('../images/landing/carl.png?1359150462');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1352308919');
+  background-image: url('../images/landing/eric.png?1359150462');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1352308919');
+  background-image: url('../images/landing/jonny.png?1359150462');
 }
 
 @-moz-keyframes announce-in {
@@ -2114,8 +2114,8 @@ button {
   border: 0;
   list-style: none;
   position: fixed;
-  top: 2.55556rem;
-  right: 1.27778rem;
+  top: 2.23611rem;
+  right: 0.31944rem;
   z-index: 999;
   color: #eee8d5;
 }
@@ -2357,10 +2357,10 @@ button {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1359410306');
+  background-image: url('../images/flags/ca.png?1359415512');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1359410306');
+  background-image: url('../images/flags/us.png?1359415512');
 }
 
 .school-field {
@@ -2903,7 +2903,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: #073642 0 0 0.31944rem inset;
   box-shadow: #073642 0 0 0.31944rem inset;
   position: relative;
-  background: url('../images/handmadepaper.png?1358884359') repeat scroll;
+  background: url('../images/handmadepaper.png?1359150462') repeat scroll;
 }
 .pdf-previews .tab-title {
   font-size: 14px;
