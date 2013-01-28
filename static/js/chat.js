@@ -188,7 +188,7 @@ var PYO = (function (PYO, $) {
                     if (url) {
                         postAjax.XHR[count] = $.post(url, postData, function (response) {
                             PYO.postAjaxSuccess(response, author_sequence_id, count);
-                        }).error(function (request, status, error) {
+                        }).error(function (request, status) {
                             PYO.postAjaxError(post, author_sequence_id, status, count);
                             postAjax.XHR[count] = null;
                         });
@@ -274,7 +274,7 @@ var PYO = (function (PYO, $) {
         if (url) {
             postAjax.XHR[count] = $.post(url, postData, function (response) {
                 PYO.postAjaxSuccess(response, author_sequence_id, count);
-            }).error(function (request, status, error) {
+            }).error(function (request, status) {
                 PYO.postAjaxError(post, author_sequence_id, status, count);
                 postAjax.XHR[count] = null;
             });
