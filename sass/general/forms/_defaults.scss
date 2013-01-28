@@ -17,14 +17,18 @@
 $input-font-size: $smallpx;
 $input-rhythm: .25;
 
-%input {
+%input-type {
   @include sans;
   @include adjust-font-size-to($input-font-size);
-  @include rhythm-borders(1px,$input-rhythm,$input-font-size);
-  width: 100%;
   color: inherit;
+}
+
+%input {
+  @extend %input-type;
+  @include rhythm-borders(1px,$input-rhythm);
   background: rgba(white,.25);
   border-color: inherit;
+  width: 100%;
   vertical-align: top;
   outline: 0;
 }
@@ -39,6 +43,45 @@ $input-rhythm: .25;
   @include trailer(.5);
   position: relative;
 }
+
+// ---------------------------------------------------------------------------
+// Select Dropdowns
+
+$select-radius    : rhythm(.25);
+$select-angle     : to bottom;
+$select-gradient  : color($base,0), color($base,.125);
+
+.formselect {
+  @extend %icon;
+  @extend %icon-arrow-down;
+  @extend %input;
+  @include border-radius($select-radius);
+  @include gradient-background-image($select-angle, $select-gradient);
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+    @include stretch-y;
+    @include border-right-radius($select-radius);
+    @include gradient-background-image($select-angle, $select-gradient);
+    right: rhythm(- $input-rhythm)/2;
+    padding: rhythm($input-rhythm) rhythm($input-rhythm)*2;
+    background-color: color($base3 lighter);
+    border-left: 1px solid $base;
+    pointer-events:none;
+  }
+
+  select {
+    @extend %input-type;
+    @include appearance(none);
+    width: 100%;
+    margin: 0;
+    border: 0;
+    background: none;
+    outline: 0;
+  }
+}
+
 
 // ---------------------------------------------------------------------------
 // Inline Forms
@@ -57,7 +100,7 @@ $input-rhythm: .25;
 
 @mixin inline-radio-checkbox($label: $left, $input: $center - $label, $context: $center) {
   [type="checkbox"], [type="radio"] {
-    + .type {
+    + [class*="type"] {
       display: inline-block;
       width: auto;
       margin: 0;
@@ -70,10 +113,15 @@ $input-rhythm: .25;
 // ---------------------------------------------------------------------------
 // Defaults
 
+.radio-options {
+  @include no-style-list;
+  padding: rhythm($input-rhythm) 0 0;
+}
+
 %radio-check-defaults {
   [type="checkbox"], [type="radio"] {
     display: none;
-    + .type {
+    + [class*="type"] {
       @extend %icon;
       display: block;
       &:before {
@@ -82,20 +130,20 @@ $input-rhythm: .25;
         color: $base01;
       }
     }
-    &:checked + .type {
+    &:checked + [class*="type"] {
       &:before { color: $blue; }
     }
-    &:focus + .type { color: $base03; }
+    &:focus + [class*="type"] { color: $base03; }
   }
 
   [type="checkbox"] {
-    + .type { @extend %icon-checkbox-unchecked; }
-    &:checked + .type { @extend %icon-checkbox-checked; }
+    + [class*="type"] { @extend %icon-checkbox-unchecked; }
+    &:checked + [class*="type"] { @extend %icon-checkbox-checked; }
   }
 
   [type="radio"] {
-    + .type { @extend %icon-radio-unchecked; }
-    &:checked + .type { @extend %icon-radio-checked; }
+    + [class*="type"] { @extend %icon-radio-unchecked; }
+    &:checked + [class*="type"] { @extend %icon-radio-checked; }
   }
 }
 

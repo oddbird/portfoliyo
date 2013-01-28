@@ -1,0 +1,23 @@
+// ---------------------------------------------------------------------------
+// Select buttons
+
+%select-buttons {
+  .radio-options { padding-top: 0; }
+  .option {
+    float: left;
+    &:first-child .radio-type { @include border-left-radius($button-radius); }
+    &:last-child .radio-type { @include border-right-radius($button-radius); }
+  }
+  .radio-value {
+    display: none;
+    & + .radio-type {
+      @extend %button;
+      @include button-color($base3);
+      border-radius: 0;
+    }
+    &:checked + .radio-type {
+      @include inset;
+      background: color($blue lightest);
+    }
+  }
+}
