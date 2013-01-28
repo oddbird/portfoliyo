@@ -80,6 +80,21 @@ class TestRegistrationForm(object):
         assert school.postcode == u"12345"
 
 
+    def test_add_school_takes_user_country(self, db):
+        """New school takes country of new user."""
+        data = self.base_data.copy()
+        data['country_code'] = 'ca'
+        data['addschool'] = '1'
+        data['addschool-name'] = "New School"
+        data['addschool-postcode'] = "12345"
+        form = forms.RegistrationForm(data)
+
+        assert form.is_valid()
+        profile = form.save()
+        school = profile.school
+        assert school.country_code == 'ca'
+
+
     def test_add_school_validation_error(self, db):
         """If addschool is True but fields not complete, validation error."""
         data = self.base_data.copy()

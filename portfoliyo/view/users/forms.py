@@ -114,6 +114,7 @@ class RegistrationForm(forms.Form):
         """Save and return new user profile."""
         school = self.cleaned_data['school']
         if school.id is None:
+            school.country_code = self.cleaned_data['country_code']
             school.save()
 
         profile = model.Profile.create_with_user(
