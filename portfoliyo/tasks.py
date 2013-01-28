@@ -15,10 +15,10 @@ logger = get_task_logger(__name__)
 
 
 @celery.task(ignore_result=True, acks_late=True)
-def send_sms(phone, body):
+def send_sms(phone, source, body):
     """Send an SMS message."""
     from portfoliyo import sms
-    sms.send(phone, body)
+    sms.send(phone, source, body)
 
 
 

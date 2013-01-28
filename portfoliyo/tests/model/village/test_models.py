@@ -7,9 +7,7 @@ import mock
 import pytest
 
 from portfoliyo.model.village import models, unread
-
 from portfoliyo.tests import factories, utils
-
 
 
 
@@ -184,6 +182,7 @@ class TestPostCreate(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
+            from_profile__source_phone='+13336660000',
             from_profile__user__is_active=True,
             from_profile__name="Jim Smith",
             description="Father",
@@ -199,7 +198,7 @@ class TestPostCreate(object):
                 )
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "Hey dad --John Doe")
+            "+13216540987", "+13336660000", "Hey dad --John Doe")
         assert post.to_sms == True
         assert post.meta['sms'] == [
             {
@@ -220,6 +219,7 @@ class TestPostCreate(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
+            from_profile__source_phone="+1333666000",
             from_profile__user__is_active=True,
             )
         signup = factories.TextSignupFactory.create(
@@ -239,7 +239,7 @@ class TestPostCreate(object):
                 )
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "Hey dad --John Doe")
+            "+13216540987", "+1333666000", "Hey dad --John Doe")
         assert utils.refresh(signup).state == 'done'
 
 
@@ -466,6 +466,7 @@ class TestBulkPost(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
+            from_profile__source_phone="+13336660000",
             from_profile__user__is_active=True,
             from_profile__role="Father",
             from_profile__name="Jim Smith",
@@ -479,7 +480,7 @@ class TestBulkPost(object):
                 rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
 
         mock_send_sms.assert_called_with(
-            "+13216540987", "Hey dad --John Doe")
+            "+13216540987", "+13336660000", "Hey dad --John Doe")
         assert post.to_sms == True
         assert post.meta['sms'] == [
             {

@@ -31,8 +31,9 @@ class RegistrationForm(forms.Form):
     """
     Form for registering a new user account.
 
-    Validates that the email address is not already in use, and
-    requires the password to be entered twice to catch typos.
+    Validates that the email address is not already in use, and requires the
+    password to be entered twice to catch typos. Also allows user to either
+    pick from an existing list of schools or enter a new one.
 
     """
     name = pyoforms.StripCharField(max_length=200)
@@ -42,6 +43,11 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     email = forms.EmailField(max_length=255)
+    country_code = forms.TypedChoiceField(
+        choices=model.Profile._meta.get_field('country_code').choices,
+        initial=model.Profile._meta.get_field('country_code').default,
+        widget=forms.RadioSelect(),
+        )
     school = pyoforms.ModelChoiceField(
         queryset=model.School.objects.filter(auto=False).order_by('name'),
         empty_label=u"I'm not affiliated with a school",
@@ -107,6 +113,7 @@ class RegistrationForm(forms.Form):
         """Save and return new user profile."""
         school = self.cleaned_data['school']
         if school.id is None:
+            school.country_code = self.cleaned_data['country_code']
             school.save()
 
         profile = model.Profile.create_with_user(
@@ -114,6 +121,7 @@ class RegistrationForm(forms.Form):
             email=self.cleaned_data['email'],
             password=self.cleaned_data['password'],
             role=self.cleaned_data['role'],
+            country_code=self.cleaned_data['country_code'],
             school=school,
             school_staff=True,
             email_confirmed=False,
