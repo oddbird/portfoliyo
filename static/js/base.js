@@ -401,7 +401,7 @@ var PYO = (function (PYO, $) {
                     return true;
                 }
             });
-            $(window).unload(function () {
+            $(window).bind('beforeunload', function () {
                 $.each(PYO.removalQueue.student, function (key) {
                     PYO.executeActionInQueue('student', key);
                 });
