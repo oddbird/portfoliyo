@@ -1,0 +1,6 @@
+{% load url from future %}
+
+<a href="{% if group %}{% url 'pdf_parent_instructions' lang=lang_code group_id=group.id %}{% else %}{% url 'pdf_parent_instructions' lang=lang_code %}{% endif %}" target="_new" class="download-pdf pdf-{{ lang_code }}">
+  Download {{ lang }} handout
+</a>
+

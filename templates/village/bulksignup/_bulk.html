@@ -3,12 +3,14 @@
 
 {% block village-title %}
   <span aria-hidden="true" class="icon-add-student"></span>
-  Signup parents{% if group %} <b>in the</b> {{ group.name }} <b>group</b>{% endif %}
+  Signup parents{% if group %} <b>in</b> {{ group.name }}{% endif %}
 {% endblock village-title %}
 
 {% block village-content %}
-<div class="bulk-signup">
+<div class="parent-signup">
 
+{% if code %}
+<section class="bulk-signup">
   {% if group_just_created %}
   <ol class="form-steps">
     <li>Give your group a name</li>
@@ -16,41 +18,17 @@
   </ol>
   {% endif %}
 
-  {% if code %}
-  <div class="parent-instructions">
-    <div class="pdf-instructions">
-      <p class="one-line">
-        Text <strong>{{ code }}</strong> to <strong>{{ pyo_phone }}</strong>
-        <b>— Try it yourself!</b>
-      </p>
-      <p>
-        Send this handout home with students
-        to help their parents sign up:
-      </p>
-    </div>
+  <p>bulk instructions</p>
 
-    <section class="pdf-previews">
-      <input type="radio" name="pdf-tabs" id="english-toggle" class="tab-toggle" checked>
-      <label for="english-toggle" class="tab-title">English</label>
+  {% include 'village/bulksignup/sheet/_download.html' with lang='English' lang_code='en' %}
+  {% include 'village/bulksignup/sheet/_download.html' with lang='Spanish' lang_code='es' %}
+</section>
+{% endif %}
 
-      <input type="radio" name="pdf-tabs" id="spanish-toggle" class="tab-toggle">
-      <label for="spanish-toggle" class="tab-title">Spanish</label>
+<section class="add-student">
+  <p>single form</p>
+  {# @@@ include "village/student_form/_add_student.html" #}
+</section>
 
-      {% include 'village/bulksignup/sheet/_preview.html' with lang='English' lang_code='en' %}
-
-      {% include 'village/bulksignup/sheet/_preview.html' with lang='Spanish' lang_code='es' %}
-
-    </section>
-  </div>
-  {% else %}
-  {# This should never happen, but better to have something here just in case. #}
-  <p>
-    Sorry, we messed up; for some reason your account is not able to sign up parents in bulk.
-    Please use the Help! button in the upper right to let us know so we can fix it.
-  </p>
-  <p>
-    In the meantime, you can <a href="{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}">add students by hand</a>.
-  </p>
-  {% endif %}
 </div>
 {% endblock village-content %}
