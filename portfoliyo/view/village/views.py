@@ -339,7 +339,7 @@ def _get_posts(profile, student=None, group=None):
         post_data = [
             model.post_dict(
                 post,
-                unread=post.id in all_unread,
+                unread=str(post.id) in all_unread,
                 )
             for post in reversed(
                 queryset.order_by(

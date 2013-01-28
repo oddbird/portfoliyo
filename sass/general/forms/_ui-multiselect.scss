@@ -7,20 +7,18 @@
 }
 
 .ui-multiselect {
-  @extend %icon;
-  @extend %icon-arrow-down;
   @include border-radius(3px);
   position: relative;
-  padding: 0 1.4em 0 .4em;
-  min-width: columns-width(4);
+  padding: 0 .4em;
   color: inherit;
   background: rgba(white,.5);
   border: 1px solid $base1;
-  &:before {
+  [class*="ui-icon-triangle"] {
+    @extend %icon;
+    @extend %icon-arrow-down;
     @include adjust-font-size-to($xsmallpx);
-    position: absolute;
-    right: rhythm(.125);
-    margin: 0;
+    float: right;
+    margin: 0 0 0 rhythm(.5);
   }
   #{$focus} {
     background: rgba(white,.75);
@@ -32,10 +30,11 @@
   @include box-shadow;
   @include arrow(bottom .5em $base);
   position: absolute;
-  right: 0;
+  right: - columns-width(1);
   bottom: 100%;
   min-width: 100%;
   background: $base3;
+  text-align: left;
   z-index: 900;
 }
 
@@ -46,19 +45,19 @@
   @include padding-trailer(.5);
   border-color: $base1;
 
-  li { @extend %check-option; }
-  input { @extend %check-value; }
-  label {
-    @extend %ellipsis;
-    @extend %check-type;
-  }
+  // li { @extend %check-option; }
+  // input { @extend %check-value; }
+  // label {
+  //   @extend %ellipsis;
+  //   @extend %check-type;
+  // }
   b { font-weight: bold; }
 }
 
 .ui-multiselect-header {
   @include clearfix;
   position: relative;
-  text-align: left;
+  min-width: columns-width(3);
   li {
     @include span-columns(2,4);
     &.ui-multiselect-close { display: none; }

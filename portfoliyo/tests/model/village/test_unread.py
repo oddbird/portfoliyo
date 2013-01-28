@@ -32,7 +32,7 @@ def test_all_unread(db):
 
     unread.mark_unread(post, profile)
 
-    assert unread.all_unread(post.student, profile) == {post.id}
+    assert unread.all_unread(post.student, profile) == {str(post.id)}
 
 
 
@@ -79,6 +79,23 @@ def test_unread_count(db):
 
 
 
+def test_unread_counts(db):
+    post1 = factories.PostFactory.create()
+    factories.PostFactory.create(student=post1.student)
+    post2 = factories.PostFactory.create()
+    post3 = factories.PostFactory.create(student=post2.student)
+    other_village_post = factories.PostFactory.create()
+    profile = factories.ProfileFactory.create()
+    unread.mark_unread(post1, profile)
+    unread.mark_unread(post2, profile)
+    unread.mark_unread(post3, profile)
+    unread.mark_unread(other_village_post, profile)
+
+    assert unread.unread_counts([post1.student, post2.student], profile) == {
+        post1.student: 1, post2.student: 2}
+
+
+
 def test_group_unread_count(db):
     post1 = factories.PostFactory.create()
     factories.PostFactory.create(student=post1.student)
@@ -92,3 +109,29 @@ def test_group_unread_count(db):
     unread.mark_unread(other_village_post, profile)
 
     assert unread.group_unread_count(group, profile) == 2
+
+
+
+def test_group_unread_counts(db):
+    post1 = factories.PostFactory.create()
+    factories.PostFactory.create(student=post1.student)
+    post2 = factories.PostFactory.create()
+    post3 = factories.PostFactory.create()
+    post4 = factories.PostFactory.create(student=post3.student)
+    post5 = factories.PostFactory.create()
+    factories.PostFactory.create(student=post5.student)
+    groupa = factories.GroupFactory.create()
+    groupa.students.add(post1.student, post2.student)
+    groupb = factories.GroupFactory.create()
+    groupb.students.add(post3.student, post5.student)
+    other_village_post = factories.PostFactory.create()
+    profile = factories.ProfileFactory.create()
+    unread.mark_unread(post1, profile)
+    unread.mark_unread(post2, profile)
+    unread.mark_unread(post3, profile)
+    unread.mark_unread(post4, profile)
+    unread.mark_unread(post5, profile)
+    unread.mark_unread(other_village_post, profile)
+
+    assert unread.group_unread_counts([groupa, groupb], profile) == {
+        groupa: 2, groupb: 3}

@@ -23,6 +23,14 @@ def parse_database_url(database, environment_variable='DATABASE_URL'):
 parse_database_url(DATABASES['default'])
 del parse_database_url
 
+# support memcachier add-on as well as default memcache add-on
+if 'MEMCACHE_SERVERS' not in os.environ:
+    os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
+if 'MEMCACHE_USERNAME' not in os.environ:
+    os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
+if 'MEMCACHE_PASSWORD' not in os.environ:
+    os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
+
 # pylibmc can't be imported at build time, so we need a fallback
 try:
     import pylibmc
@@ -36,6 +44,8 @@ else:
     CACHES = {
         'default': {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'TIMEOUT': 500,
+            'BINARY': True,
         }
     }
 
