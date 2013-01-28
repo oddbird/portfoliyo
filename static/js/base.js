@@ -429,7 +429,7 @@ var PYO = (function (PYO, $) {
         var typeCap = type.toString().substring(0, 1).toUpperCase() + type.toString().substring(1);
         var msg = $('#messages').messages('add', {
             tags: 'success undo-msg',
-            message: typeCap + " '" + name + "' removed. <a href='#' class='undo'>Undo</a>"
+            message: "<a href='#' class='undo'>undo</a>" + typeCap + " '" + name + "' removed."
         }, {escapeHTML: false});
         msg.data('type', type).data('id', id);
         msg.find('.undo').click(function (e) {

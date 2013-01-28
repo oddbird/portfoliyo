@@ -13,14 +13,14 @@ $announce-h-position: right;
     @include translateY(rhythm(-10));
   }
   100% {
-    @include opacity(1);
+    @include opacity(.95);
     @include translateY(0);
   }
 }
 
 @include keyframes(announce-out) {
   0% {
-    @include opacity(1);
+    @include opacity(.95);
     @include translateX(0);
   }
   100% {
@@ -50,24 +50,41 @@ $announce-h-position: right;
     #{$link} { color: $back;}
     #{$focus} { color: $base3; }
   }
+  .undo {
+    @extend %icon;
+    @extend %icon-undo;
+    @extend %button;
+    @include button-color($base2);
+    float: right;
+    margin-left: rhythm(.25);
+    padding: 0 rhythm(.25);
+    text-decoration: none;
+    &:before {
+      @include adjust-font-size-to($xsmallpx);
+      margin-right: .4em;
+    }
+  }
 }
+
+$announce-padding: .75;
 
 %announce {
   @extend %icon;
   @include animation(announce-in 1s ease backwards);
-  @include rhythm-borders(1px,.5);
+  @include rhythm-borders(1px,$announce-padding);
   @include clearfix;
+  @include opacity(.95);
   @include box-shadow($base03 0 0 rhythm(.25));
   position: relative;
   border-color: $back;
   width: columns-width($right + 1);
   &:before {
     position: absolute;
-    top: rhythm(.5);
-    left: rhythm(.5);
+    top: rhythm($announce-padding);
+    left: rhythm($announce-padding);
   }
   .body {
-    margin: 0 rhythm(1);
+    margin: 0 rhythm(.25) 0 rhythm(1);
     a {
       #{$link} {
         color: $base3;
