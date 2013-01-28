@@ -39,7 +39,7 @@ var PYO = (function (PYO, $) {
             if (data && data.objects && data.objects.length) {
                 var removed = [];
                 var add_student_url, add_students_bulk_url;
-                $.each(data.objects, function (i, v) {
+                $.each(data.objects, function (i) {
                     if (this.id.toString().indexOf('all') !== -1) {
                         add_student_url = this.add_student_uri;
                         add_students_bulk_url = this.add_students_bulk_uri;
