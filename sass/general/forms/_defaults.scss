@@ -100,7 +100,7 @@ $select-gradient  : color($base,0), color($base,.125);
 
 @mixin inline-radio-checkbox($label: $left, $input: $center - $label, $context: $center) {
   [type="checkbox"], [type="radio"] {
-    + .type {
+    + [class*="type"] {
       display: inline-block;
       width: auto;
       margin: 0;
@@ -113,10 +113,15 @@ $select-gradient  : color($base,0), color($base,.125);
 // ---------------------------------------------------------------------------
 // Defaults
 
+.radio-options {
+  @include no-style-list;
+  padding: rhythm($input-rhythm) 0 0;
+}
+
 %radio-check-defaults {
   [type="checkbox"], [type="radio"] {
     display: none;
-    + .type {
+    + [class*="type"] {
       @extend %icon;
       display: block;
       &:before {
@@ -125,20 +130,20 @@ $select-gradient  : color($base,0), color($base,.125);
         color: $base01;
       }
     }
-    &:checked + .type {
+    &:checked + [class*="type"] {
       &:before { color: $blue; }
     }
-    &:focus + .type { color: $base03; }
+    &:focus + [class*="type"] { color: $base03; }
   }
 
   [type="checkbox"] {
-    + .type { @extend %icon-checkbox-unchecked; }
-    &:checked + .type { @extend %icon-checkbox-checked; }
+    + [class*="type"] { @extend %icon-checkbox-unchecked; }
+    &:checked + [class*="type"] { @extend %icon-checkbox-checked; }
   }
 
   [type="radio"] {
-    + .type { @extend %icon-radio-unchecked; }
-    &:checked + .type { @extend %icon-radio-checked; }
+    + [class*="type"] { @extend %icon-radio-unchecked; }
+    &:checked + [class*="type"] { @extend %icon-radio-checked; }
   }
 }
 

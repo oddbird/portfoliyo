@@ -1,9 +1,9 @@
-<ul>
+<ul class="radio-options">
   {% for group_name, choices in optgroups %}
   {% for choice in choices %}
-    <li>
-      <input type="radio" id="{{ attrs.id }}_{{ forloop.counter }}" value="{{ choice.0 }}" name="{{ name }}"{% if required %} required{% endif %}{% if choice.0 in value %} checked{% endif %}>
-      <label for="{{ attrs.id }}_{{ forloop.counter }}">
+    <li class="option">
+      <input type="radio" class="radio-value" id="{{ attrs.id }}_{{ forloop.counter }}" value="{{ choice.0 }}" name="{{ name }}"{% if required %} required{% endif %}{% if choice.0 in value %} checked{% endif %}>
+      <label class="radio-type" for="{{ attrs.id }}_{{ forloop.counter }}">
         {{ choice.1 }}
       </label>
     </li>

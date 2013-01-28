@@ -10,6 +10,7 @@
 
 $button-rhythm: .25;
 $button-border: 1px;
+$button-radius: .25em;
 
 // ---------------------------------------------------------------------------
 // Mixins
@@ -26,7 +27,7 @@ $button-border: 1px;
 @mixin button(
   $color: $green
 ) {
-  @include border-radius(.25em);
+  @include border-radius($button-radius);
   @include rhythm-borders($button-border,$button-rhythm);
   @include button-color($color);
   @include box-shadow(color(white,.5) 0 1px 1px inset);
