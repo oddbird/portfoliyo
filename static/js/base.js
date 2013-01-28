@@ -7,6 +7,8 @@ var PYO = (function (PYO, $) {
         count: 0
     };
 
+    var nav = $('.village-nav');
+
     // Store keycode variables for easier readability
     PYO.keycodes = {
         SPACE: 32,
@@ -22,6 +24,11 @@ var PYO = (function (PYO, $) {
         UP: 38,
         RIGHT: 39,
         DOWN: 40
+    };
+
+    PYO.removalQueue = {
+        students: {},
+        groups: {}
     };
 
     PYO.updatePageHeight = function (container) {
@@ -100,7 +107,7 @@ var PYO = (function (PYO, $) {
                 }
                 container.loadingOverlay('remove');
                 pageAjax.XHR = null;
-            }).error(function (request, status, error) {
+            }).error(function (request, status) {
                 if (status !== 'abort') {
                     PYO.pageAjaxError(url);
                 }
@@ -369,6 +376,153 @@ var PYO = (function (PYO, $) {
                 msg.fadeOut(function () { $(this).remove(); });
                 if (url) { $.post(url); }
             });
+        }
+    };
+
+    PYO.watchForItemRemoval = function () {
+        if (window.History.enabled) {
+            var relationshipsUrl = $('.village').data('relationships-url');
+            $('.village').on('click', '.action-remove', function (e) {
+                e.preventDefault();
+                var trigger = $(this);
+                var type = trigger.data('type');
+                var id = trigger.data('id');
+                var name = trigger.data('name');
+                var deleteUrl = trigger.data('url') ? trigger.data('url') : relationshipsUrl + '?student=' + id;
+                var redirectUrl = type === 'student' && PYO.activeGroupId && trigger.data('group-url') ? trigger.data('group-url') : trigger.data('redirect-url');
+                if (type && id) {
+                    var title = document.title;
+                    var data = { url: redirectUrl };
+                    window.History.pushState(data, title, redirectUrl);
+                    PYO.addItemToRemovalQueue(type, id, name, deleteUrl);
+                    PYO.addUndoMsg(type, id, name);
+                    PYO.removeListItem(type, id);
+                } else {
+                    // @@@ error-handling?
+                }
+            });
+            $(window).unload(function () {
+                $.each(PYO.removalQueue.students, function (key) {
+                    PYO.executeActionInQueue('student', key);
+                });
+                $.each(PYO.removalQueue.groups, function (key) {
+                    PYO.executeActionInQueue('group', key);
+                });
+            });
+        }
+    };
+
+    PYO.removeListItem = function (type, id) {
+        var el, title;
+        if (type === 'student') {
+            el = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
+        }
+        if (type === 'group') {
+            el = nav.find('.group .listitem-select[data-group-id="' + id + '"]').closest('.group');
+            title = nav.find('.grouptitle .listitem-select[data-group-id="' + id + '"]');
+        }
+        if (el && el.length) { el.addClass('removed').slideUp(); }
+        if (title && title.length) { PYO.fetchGroups(); }
+    };
+
+    PYO.addUndoMsg = function (type, id, name) {
+        var typeCap = type.toString().substring(0, 1).toUpperCase() + type.toString().substring(1);
+        var msg = $('#messages').messages('add', {
+            tags: 'success undo-msg',
+            message: typeCap + " '" + name + "' removed. <a href='#' class='undo'>Undo</a>"
+        }, {escapeHTML: false});
+        msg.data('type', type).data('id', id);
+        msg.find('.undo').click(function (e) {
+            e.preventDefault();
+            $(this).blur();
+            PYO.restoreItem(type, id);
+            var message = $(this).closest('.undo-msg').removeClass('undo-msg');
+            if (message.data('count')) { $.doTimeout('msg-' + message.data('count')); }
+            PYO.removeItemFromRemovalQueue(type, id);
+            message.find('.body').html(typeCap + " '" + name + "' restored.");
+            $('#messages').messages('bindHandlers', message);
+        });
+    };
+
+    PYO.addItemToRemovalQueue = function (type, id, name, deleteUrl) {
+        if (PYO.removalQueue[type + 's'][id]) {
+            PYO.removalQueue[type + 's'][id].name = name;
+            PYO.removalQueue[type + 's'][id].url = deleteUrl;
+        } else {
+            PYO.removalQueue[type + 's'][id] = {
+                'name': name,
+                'url': deleteUrl
+            };
+        }
+    };
+
+    PYO.removeItemFromRemovalQueue = function (type, id) {
+        delete PYO.removalQueue[type + 's'][id];
+    };
+
+    PYO.executeActionInQueue = function (type, id) {
+        if (PYO.removalQueue[type + 's'][id]) {
+            var url = PYO.removalQueue[type + 's'][id].url;
+            if (url) {
+                $.ajax(url, {
+                    type: 'DELETE',
+                    dataType: 'html',
+                    success: function () {
+                        PYO.removeItemFromRemovalQueue(type, id);
+                    }
+                });
+            }
+        }
+    };
+
+    PYO.restoreItem = function (type, id) {
+        if (PYO.removalQueue[type + 's'][id]) {
+            var obj;
+            if (type === 'student') {
+                // If the removed (hidden) student is still in the nav
+                if (nav.find('.student.removed .listitem-select[data-id="' + id + '"]').length) {
+                    var student = nav.find('.student.removed .listitem-select[data-id="' + id + '"]').closest('.student');
+                    student.removeClass('removed').slideDown(function () { $(this).removeAttr('style'); });
+                } else if (PYO.removalQueue.students[id].obj) {
+                    obj = PYO.removalQueue.students[id].obj;
+                    var group_titles = nav.find('.grouptitle .group-link');
+                    var all_students_dashboard = group_titles.filter(function () {
+                        return $(this).data('group-id').toString().indexOf('all') !== -1;
+                    });
+                    var removed_students_arr = group_titles.first().data('removed').toString().split(',');
+                    var group_dashboard = group_titles.filter(function () {
+                        return $.inArray(id.toString(), removed_students_arr) !== -1;
+                    });
+                    // If viewing the all-students group
+                    if (all_students_dashboard.length) {
+                        PYO.addStudentToList(obj, true);
+                    }
+                    // If viewing the group that includes the restored student
+                    if (group_dashboard.length) {
+                        group_dashboard.each(function () {
+                            obj.group_id = $(this).data('group-id');
+                            PYO.addStudentToList(obj);
+                        });
+                    }
+                } else {
+                    // @@@ error-handling?
+                }
+            }
+            if (type === 'group') {
+                // If viewing the groups-list
+                if (nav.find('.group').length) {
+                    // If the removed (hidden) group is still in the nav
+                    if (nav.find('.group.removed .listitem-select[data-group-id="' + id + '"]').length) {
+                        var group = nav.find('.group.removed .listitem-select[data-group-id="' + id + '"]').closest('.group');
+                        group.removeClass('removed').slideDown(function () { $(this).removeAttr('style'); });
+                    } else if (PYO.removalQueue.groups[id].obj) {
+                        obj = PYO.removalQueue.groups[id].obj;
+                        PYO.addGroupToList(obj);
+                    } else {
+                        // @@@ error-handling?
+                    }
+                }
+            }
         }
     };
 

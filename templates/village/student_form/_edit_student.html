@@ -18,7 +18,7 @@
 
 {% block more-actions %}
   <p class="remove-item">
-    <button class="action-remove secondary" type="submit" name="remove" value="1">
+    <button class="action-remove secondary" type="submit" name="remove" value="1" data-type="student" data-id="{{ student.id }}" data-name="{{ student.name }}" data-redirect-url="{% url 'all_students' %}" data-group-url="{% if group %}{% url 'group' group_id=group.id %}{% endif %}">
       Remove {{ student.name }}
     </button>
   </p>

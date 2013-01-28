@@ -22,7 +22,7 @@ django-widget-tweaks==1.1.2
 
 django-secure==0.1.2
 
-django-messages-ui==0.2.3
+django-messages-ui==0.2.4
 django-ajax-loading-overlay==0.1.2
 django-html5accordion==0.1.8
 

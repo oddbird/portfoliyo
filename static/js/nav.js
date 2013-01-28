@@ -3,9 +3,9 @@ var PYO = (function (PYO, $) {
     'use strict';
 
     var all_students_group_obj;
+    var nav = $('.village-nav');
 
     PYO.navHandlers = function () {
-        var nav = $('.village-nav');
         var History = window.History;
 
         if (History.enabled) {
@@ -33,13 +33,13 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.fetchGroups = function (force) {
-        var nav = $('.village-nav');
         var groups_url = nav.data('groups-url');
         var replaceNav = function (data) {
             nav.loadingOverlay('remove');
             if (data && data.objects && data.objects.length) {
+                var removed = [];
                 var add_student_url, add_students_bulk_url;
-                $.each(data.objects, function () {
+                $.each(data.objects, function (i, v) {
                     if (this.id.toString().indexOf('all') !== -1) {
                         add_student_url = this.add_student_uri;
                         add_students_bulk_url = this.add_students_bulk_uri;
@@ -54,7 +54,14 @@ var PYO = (function (PYO, $) {
                             };
                         }
                     }
+                    if (PYO.removalQueue.groups[this.id.toString()]) {
+                        PYO.removalQueue.groups[this.id.toString()].obj = $.extend(true, {}, this);
+                        removed.push(i);
+                    }
                 });
+                for (var i = removed.length - 1; i >= 0; i--) {
+                    data.objects.splice(removed[i], 1);
+                }
                 if (data.objects.length === 1 && all_students_group_obj && !force) {
                     PYO.fetchStudents(all_students_group_obj);
                 } else {
@@ -82,7 +89,6 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.fetchGroupsError = function (force) {
-        var nav = $('.village-nav');
         var msg = PYO.tpl('ajax_error_msg', {
             error_class: 'nav-error',
             message: 'Unable to load groups.'
@@ -96,10 +102,23 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.fetchStudents = function (group_obj) {
-        var nav = $('.village-nav');
         var replaceNav = function (data) {
             nav.loadingOverlay('remove');
             if (data) {
+                if (data.objects && data.objects.length) {
+                    var removed = [];
+                    data.removed = [];
+                    $.each(data.objects, function (i, v) {
+                        if (PYO.removalQueue.students[this.id.toString()]) {
+                            PYO.removalQueue.students[this.id.toString()].obj = $.extend(true, {}, this);
+                            removed.push(i);
+                            data.removed.push(v.id);
+                        }
+                    });
+                    for (var i = removed.length - 1; i >= 0; i--) {
+                        data.objects.splice(removed[i], 1);
+                    }
+                }
                 data.group_name = group_obj.name;
                 data.group_id = group_obj.id;
                 data.group_url = group_obj.url;
@@ -176,7 +195,6 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.addStudentToList = function (data, all_students) {
-        var nav = $('.village-nav');
         // Check that a student with this ID is not already in the list
         if (nav.find('.student .listitem-select[data-id="' + data.id + '"]').length === 0) {
             var obj = {};
@@ -201,11 +219,47 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.removeStudentFromList = function (id) {
-        var nav = $('.village-nav');
         if (nav.find('.student .listitem-select[data-id="' + id + '"]').length) {
             var student = nav.find('.student .listitem-select[data-id="' + id + '"]').closest('.student');
             student.slideUp(function () { $(this).remove(); });
             if (id === PYO.activeStudentId) { PYO.showActiveItemRemovedMsg('student', true); }
+        }
+    };
+
+    PYO.addGroupToList = function (data) {
+        // Check that a group with this ID is not already in the list
+        if (nav.find('.group .listitem-select[data-group-id="' + data.id + '"]').length === 0) {
+            var obj = {};
+            if (nav.data('is-staff') === 'True') { obj.staff = true; }
+            obj.objects = [data];
+            var group = PYO.tpl('group_list_items', obj).hide();
+            var inserted = false;
+            nav.find('.group').not(':first').each(function () {
+                if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
+                    group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
+                    inserted = true;
+                }
+            });
+            if (!inserted) {
+                group.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+            }
+            group.find('.details').html5accordion();
+            group.find('input[placeholder], textarea[placeholder]').placeholder();
+        }
+    };
+
+    PYO.removeGroupFromList = function (id) {
+        var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
+        var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
+        // If viewing the groups-list
+        if (group.length) {
+            var group_container = group.closest('.group');
+            group_container.slideUp(function () { $(this).remove(); });
+            if (group.hasClass('active')) { PYO.showActiveItemRemovedMsg('group', true); }
+        }
+        // If viewing the removed group
+        if (grouptitle.length) {
+            PYO.showActiveItemRemovedMsg('group', grouptitle.hasClass('active'));
         }
     };
 
