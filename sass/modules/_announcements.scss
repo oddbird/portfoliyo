@@ -18,6 +18,17 @@ $announce-h-position: right;
   }
 }
 
+@include keyframes(announce-out) {
+  0% {
+    @include opacity(1);
+    @include translateX(0);
+  }
+  100% {
+    @include opacity(0);
+    @include translateX(rhythm(30));
+  }
+}
+
 // ---------------------------------------------------------------------------
 // Basics
 
@@ -65,7 +76,10 @@ $announce-h-position: right;
       #{$focus} { color: color($accent lightest); }
     }
   }
+  &.closed { @extend %closed-animation; }
 }
+
+%closed-animation { @include animation(announce-out 800ms ease forwards); }
 
 // ---------------------------------------------------------------------------
 // Types
