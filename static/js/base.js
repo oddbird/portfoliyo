@@ -27,8 +27,8 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.removalQueue = {
-        students: {},
-        groups: {}
+        student: {},
+        group: {}
     };
 
     PYO.updatePageHeight = function (container) {
@@ -382,15 +382,15 @@ var PYO = (function (PYO, $) {
     PYO.watchForItemRemoval = function () {
         if (window.History.enabled) {
             var relationshipsUrl = $('.village').data('relationships-url');
-            $('.village').on('click', '.action-remove', function (e) {
-                e.preventDefault();
+            $('.village').on('click', '.action-remove.has-undo', function (e) {
                 var trigger = $(this);
                 var type = trigger.data('type');
                 var id = trigger.data('id');
                 var name = trigger.data('name');
                 var deleteUrl = trigger.data('url') ? trigger.data('url') : relationshipsUrl + '?student=' + id;
                 var redirectUrl = type === 'student' && PYO.activeGroupId && trigger.data('group-url') ? trigger.data('group-url') : trigger.data('redirect-url');
-                if (type && id) {
+                if (type && id && name && redirectUrl && deleteUrl) {
+                    e.preventDefault();
                     var title = document.title;
                     var data = { url: redirectUrl };
                     window.History.pushState(data, title, redirectUrl);
@@ -398,14 +398,14 @@ var PYO = (function (PYO, $) {
                     PYO.addUndoMsg(type, id, name);
                     PYO.removeListItem(type, id);
                 } else {
-                    // @@@ error-handling?
+                    return true;
                 }
             });
             $(window).unload(function () {
-                $.each(PYO.removalQueue.students, function (key) {
+                $.each(PYO.removalQueue.student, function (key) {
                     PYO.executeActionInQueue('student', key);
                 });
-                $.each(PYO.removalQueue.groups, function (key) {
+                $.each(PYO.removalQueue.group, function (key) {
                     PYO.executeActionInQueue('group', key);
                 });
             });
@@ -426,7 +426,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.addUndoMsg = function (type, id, name) {
-        var typeCap = type.toString().substring(0, 1).toUpperCase() + type.toString().substring(1);
+        var typeCap = type.toString().charAt(0).toUpperCase() + type.toString().substring(1);
         var msg = $('#messages').messages('add', {
             tags: 'success undo-msg',
             message: "<a href='#' class='undo'>undo</a>" + typeCap + " '" + name + "' removed."
@@ -438,18 +438,18 @@ var PYO = (function (PYO, $) {
             PYO.restoreItem(type, id);
             var message = $(this).closest('.undo-msg').removeClass('undo-msg');
             if (message.data('count')) { $.doTimeout('msg-' + message.data('count')); }
-            PYO.removeItemFromRemovalQueue(type, id);
             message.find('.body').html(typeCap + " '" + name + "' restored.");
+            // Re-attach timers to success message (see django-messages-ui)
             $('#messages').messages('bindHandlers', message);
         });
     };
 
     PYO.addItemToRemovalQueue = function (type, id, name, deleteUrl) {
-        if (PYO.removalQueue[type + 's'][id]) {
-            PYO.removalQueue[type + 's'][id].name = name;
-            PYO.removalQueue[type + 's'][id].url = deleteUrl;
+        if (PYO.removalQueue[type][id]) {
+            PYO.removalQueue[type][id].name = name;
+            PYO.removalQueue[type][id].url = deleteUrl;
         } else {
-            PYO.removalQueue[type + 's'][id] = {
+            PYO.removalQueue[type][id] = {
                 'name': name,
                 'url': deleteUrl
             };
@@ -457,12 +457,12 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.removeItemFromRemovalQueue = function (type, id) {
-        delete PYO.removalQueue[type + 's'][id];
+        delete PYO.removalQueue[type][id];
     };
 
     PYO.executeActionInQueue = function (type, id) {
-        if (PYO.removalQueue[type + 's'][id]) {
-            var url = PYO.removalQueue[type + 's'][id].url;
+        if (PYO.removalQueue[type][id]) {
+            var url = PYO.removalQueue[type][id].url;
             if (url) {
                 $.ajax(url, {
                     type: 'DELETE',
@@ -476,15 +476,16 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.restoreItem = function (type, id) {
-        if (PYO.removalQueue[type + 's'][id]) {
+        if (PYO.removalQueue[type][id]) {
             var obj;
-            if (type === 'student') {
+            // If restoring a student and viewing a list of students
+            if (type === 'student' && nav.find('.student').length) {
                 // If the removed (hidden) student is still in the nav
                 if (nav.find('.student.removed .listitem-select[data-id="' + id + '"]').length) {
                     var student = nav.find('.student.removed .listitem-select[data-id="' + id + '"]').closest('.student');
                     student.removeClass('removed').slideDown(function () { $(this).removeAttr('style'); });
-                } else if (PYO.removalQueue.students[id].obj) {
-                    obj = PYO.removalQueue.students[id].obj;
+                } else if (PYO.removalQueue.student[id].obj) {
+                    obj = PYO.removalQueue.student[id].obj;
                     var group_titles = nav.find('.grouptitle .group-link');
                     var all_students_dashboard = group_titles.filter(function () {
                         return $(this).data('group-id').toString().indexOf('all') !== -1;
@@ -505,25 +506,26 @@ var PYO = (function (PYO, $) {
                         });
                     }
                 } else {
-                    // @@@ error-handling?
+                    PYO.fetchStudents();
                 }
             }
-            if (type === 'group') {
-                // If viewing the groups-list
-                if (nav.find('.group').length) {
-                    // If the removed (hidden) group is still in the nav
-                    if (nav.find('.group.removed .listitem-select[data-group-id="' + id + '"]').length) {
-                        var group = nav.find('.group.removed .listitem-select[data-group-id="' + id + '"]').closest('.group');
-                        group.removeClass('removed').slideDown(function () { $(this).removeAttr('style'); });
-                    } else if (PYO.removalQueue.groups[id].obj) {
-                        obj = PYO.removalQueue.groups[id].obj;
-                        PYO.addGroupToList(obj);
-                    } else {
-                        // @@@ error-handling?
-                    }
+            // If restoring a group and viewing the groups-list
+            if (type === 'group' && nav.find('.group').length) {
+                // If the removed (hidden) group is still in the nav
+                if (nav.find('.group.removed .listitem-select[data-group-id="' + id + '"]').length) {
+                    var group = nav.find('.group.removed .listitem-select[data-group-id="' + id + '"]').closest('.group');
+                    group.removeClass('removed').slideDown(function () { $(this).removeAttr('style'); });
+                } else if (PYO.removalQueue.group[id].obj) {
+                    obj = PYO.removalQueue.group[id].obj;
+                    PYO.addGroupToList(obj);
+                } else {
+                    PYO.fetchGroups();
                 }
             }
+        } else {
+            if (type === 'group') { PYO.fetchGroups(); } else { PYO.fetchStudents(); }
         }
+        PYO.removeItemFromRemovalQueue(type, id);
     };
 
     PYO.initializePage = function () {

@@ -54,8 +54,8 @@ var PYO = (function (PYO, $) {
                             };
                         }
                     }
-                    if (PYO.removalQueue.groups[this.id.toString()]) {
-                        PYO.removalQueue.groups[this.id.toString()].obj = $.extend(true, {}, this);
+                    if (PYO.removalQueue.group[this.id.toString()]) {
+                        PYO.removalQueue.group[this.id.toString()].obj = $.extend(true, {}, this);
                         removed.push(i);
                     }
                 });
@@ -109,8 +109,8 @@ var PYO = (function (PYO, $) {
                     var removed = [];
                     data.removed = [];
                     $.each(data.objects, function (i, v) {
-                        if (PYO.removalQueue.students[this.id.toString()]) {
-                            PYO.removalQueue.students[this.id.toString()].obj = $.extend(true, {}, this);
+                        if (PYO.removalQueue.student[this.id.toString()]) {
+                            PYO.removalQueue.student[this.id.toString()].obj = $.extend(true, {}, this);
                             removed.push(i);
                             data.removed.push(v.id);
                         }

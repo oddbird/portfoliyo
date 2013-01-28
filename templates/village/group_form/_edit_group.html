@@ -21,7 +21,7 @@
 
 {% block more-actions %}
   <p class="remove-item">
-    <button class="action-remove secondary" type="submit" name="remove" value="1" data-type="group" data-id="{{ group.id }}" data-name="{{ group }}" data-url="{% url 'api_dispatch_detail' api_name='v1' resource_name='group' pk=group.id %}" data-redirect-url="{% url 'home' %}">
+    <button class="action-remove secondary has-undo" type="submit" name="remove" value="1" data-type="group" data-id="{{ group.id }}" data-name="{{ group }}" data-url="{% url 'api_dispatch_detail' api_name='v1' resource_name='group' pk=group.id %}" data-redirect-url="{% url 'home' %}">
       Delete {{ group }}
     </button>
   </p>
