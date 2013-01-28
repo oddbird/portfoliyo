@@ -49,10 +49,11 @@ def twilio(viewfunc):
 def twilio_receive(request):
     """Receive an SMS via Twilio."""
     source = request.POST['From']
+    to = request.POST['To']
     body = request.POST['Body']
 
     with xact.xact():
-        reply = hook.receive_sms(source, body)
+        reply = hook.receive_sms(source, to, body)
 
     response = twiml.Response()
 

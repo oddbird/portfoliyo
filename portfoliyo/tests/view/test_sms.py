@@ -22,7 +22,7 @@ def signed_request(data=None, **extra):
 
 def data(**kw):
     """Get sample POST data with default fallbacks."""
-    defaults = {'From': 'from', 'Body': 'body'}
+    defaults = {'From': 'from', 'Body': 'body', 'To': 'to'}
     defaults.update(kw)
     return defaults
 
@@ -38,7 +38,7 @@ def test_calls_receive_sms(mock_receive_sms, mock_validate):
     response = sms.twilio_receive(signed_request(data()))
 
     assert response.status_code == 200
-    mock_receive_sms.assert_called_with('from', 'body')
+    mock_receive_sms.assert_called_with('from', 'to', 'body')
 
 
 @override_settings(TWILIO_AUTH_TOKEN='foo')

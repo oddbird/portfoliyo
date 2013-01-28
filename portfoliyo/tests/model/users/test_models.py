@@ -1,5 +1,6 @@
 """Tests for user models."""
 from django.db import IntegrityError
+from django.test.utils import override_settings
 import mock
 import pytest
 
@@ -295,6 +296,38 @@ class TestProfile(object):
             with pytest.raises(IntegrityError):
                 model.Profile.create_with_user(school, school_staff=True)
 
+
+    def test_send_sms(self):
+        """Send_sms method triggers SMS-sending tasks with correct phone #s."""
+        phone = '+13216540987'
+        source_phone = '+13336660000'
+        p = factories.ProfileFactory.build(
+            phone=phone, source_phone=source_phone)
+
+        with mock.patch('portfoliyo.tasks.send_sms.delay') as mock_send_sms:
+            p.send_sms('foo')
+
+        mock_send_sms.assert_called_once_with(phone, source_phone, 'foo')
+
+
+    def test_send_sms_no_phone(self):
+        """Send_sms method does nothing if user has no phone."""
+        p = factories.ProfileFactory.build(phone=None)
+
+        with mock.patch('portfoliyo.tasks.send_sms.delay') as mock_send_sms:
+            p.send_sms('foo')
+
+        assert mock_send_sms.call_count == 0
+
+
+    def test_create_with_user_sets_source_phone_by_country_code(self, db):
+        """Creating user sets source phone based on country code."""
+        school = factories.SchoolFactory()
+        ca_phone = '+13216543987'
+        with override_settings(PORTFOLIYO_NUMBERS={'ca': ca_phone}):
+            p = model.Profile.create_with_user(school, country_code='ca')
+
+        assert p.source_phone == ca_phone
 
 
 class TestRelationship(object):

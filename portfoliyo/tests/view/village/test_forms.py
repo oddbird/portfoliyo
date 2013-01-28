@@ -374,6 +374,17 @@ class TestInviteTeacherForm(object):
         assert profile.invited_by == rel.elder
 
 
+    def test_sets_country_code(self, db):
+        """Country_code field is set to same country as inviting teacher."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__country_code='ca')
+        form = forms.InviteTeacherForm(self.data(), rel=rel)
+        assert form.is_valid()
+        profile = form.save()
+
+        assert profile.country_code == 'ca'
+
+
     def test_user_inactive(self, db):
         """New user invited by email is inactive."""
         rel = factories.RelationshipFactory.create()
@@ -537,6 +548,17 @@ class TestInviteFamilyForm(object):
         profile = form.save()
 
         assert profile.invited_by == rel.elder
+
+
+    def test_sets_country_code(self, db):
+        """Country_code field is set to same country as inviting teacher."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__country_code='ca')
+        form = forms.InviteFamilyForm(self.data(), rel=rel)
+        assert form.is_valid()
+        profile = form.save()
+
+        assert profile.country_code == 'ca'
 
 
     def test_phone_user_active(self, db):

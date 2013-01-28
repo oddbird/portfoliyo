@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 
-def receive_sms(source, body):
+def receive_sms(source, to, body):
     """
     Hook for when an SMS is received.
 
@@ -36,7 +36,7 @@ def receive_sms(source, body):
         profile = model.Profile.objects.select_related(
             'user').get(phone=source)
     except model.Profile.DoesNotExist:
-        return handle_unknown_source(source, body)
+        return handle_unknown_source(source, to, body)
 
     if body.strip().lower() == 'stop':
         profile.declined = True
@@ -109,7 +109,7 @@ def receive_sms(source, body):
 
 
 
-def handle_unknown_source(source, body):
+def handle_unknown_source(source, to, body):
     """Handle a text from an unknown user."""
     teacher, group, lang = parse_code(body)
     if teacher is not None:
@@ -117,6 +117,7 @@ def handle_unknown_source(source, body):
             school=teacher.school,
             phone=source,
             invited_by=teacher,
+            source_phone=to,
             lang_code=lang,
             )
         model.TextSignup.objects.create(
