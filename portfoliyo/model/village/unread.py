@@ -31,6 +31,19 @@ def unread_count(student, profile):
     return client.scard(make_key(student, profile))
 
 
+def unread_counts(students, profile):
+    """
+    Return profile's unread counts for all given students.
+
+    Return dict mapping student to unread count.
+
+    """
+    student = list(students)
+    p = client.pipeline()
+    for student in students:
+        p.scard(make_key(student, profile))
+    return dict(zip(students, p.execute()))
+
 
 def group_unread_count(group, profile):
     """Return count of profile's unread posts in all villages in group."""
@@ -38,6 +51,35 @@ def group_unread_count(group, profile):
     for student in group.students.all():
         p.scard(make_key(student, profile))
     return sum(p.execute())
+
+
+def group_unread_counts(groups, profile):
+    """
+    Return counts of profile's unread posts in all given groups.
+
+    Return a dictionary mapping groups to counts.
+
+    """
+    # the algorithm here relies on consistent ordering
+    groups = list(groups)
+    p = client.pipeline()
+    # map each group to a count of villages in that group.
+    village_counts = {}
+    for group in groups:
+        count = 0
+        for student in group.students.all():
+            count += 1
+            p.scard(make_key(student, profile))
+        village_counts[group] = count
+    # flat list of all per-village unread counts
+    raw = p.execute()
+    results = {}
+    for group in groups:
+        count = village_counts[group]
+        # pop off and sum the right number of per-village unread counts
+        total, raw = sum(raw[:count]), raw[count:]
+        results[group] = total
+    return results
 
 
 def mark_village_read(student, profile):
