@@ -2056,8 +2056,8 @@ button {
   border: 0;
   list-style: none;
   position: fixed;
-  top: 2.55556rem;
-  right: 1.27778rem;
+  top: 2.23611rem;
+  right: 0.31944rem;
   z-index: 999;
   color: #eee8d5;
 }
@@ -2267,10 +2267,10 @@ button {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1125322800');
+  background-image: url('../images/flags/ca.png?1359410583');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1125322680');
+  background-image: url('../images/flags/us.png?1359410583');
 }
 
 .school-field {

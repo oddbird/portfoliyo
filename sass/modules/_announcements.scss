@@ -25,8 +25,8 @@ $announce-h-position: right;
   @include adjust-font-size-to($smallpx);
   @include no-style-list;
   position: fixed;
-  #{$announce-v-position}: rhythm(2);
-  #{$announce-h-position}: rhythm(1);
+  #{$announce-v-position}: rhythm(1.75);
+  #{$announce-h-position}: rhythm(.25);
   z-index: 999;
   color: $base2;
   .close {
