@@ -30,7 +30,7 @@
     <div class="fieldset add-school">
       {{ form.addschool }}
       {% include "forms/_field.html" with field=form.addschool_form.name label="School name" %}
-      {% include "forms/_field.html" with field=form.addschool_form.postcode label="School zip code" helptext="Don't want to add a school? <a href='#school-field' class='select-school-link'>Return to the full list</a>." %}
+      {% include "forms/_field.html" with field=form.addschool_form.postcode label="School postal code" helptext="Don't want to add a school? <a href='#school-field' class='select-school-link'>Return to the full list</a>." %}
     </div>
 
     <div class="form-actions">
