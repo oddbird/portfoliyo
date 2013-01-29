@@ -87,24 +87,24 @@ class TestDashboard(object):
 
 
 
-class TestAddStudentsBulk(object):
+class TestAddStudent(object):
     def test_contains_pdf_link(self, client, db):
-        """Add students bulk page contains link to parent instructions PDF."""
+        """Add student page contains link to parent instructions PDF."""
         p = factories.ProfileFactory.create(code='ABCDEF', school_staff=True)
         pdf_link = reverse('pdf_parent_instructions', kwargs={'lang': 'en'})
-        response = client.get(reverse('add_students_bulk'), user=p.user)
+        response = client.get(reverse('add_student'), user=p.user)
 
         assert len(response.html.findAll('a', href=pdf_link))
 
 
     def test_contains_group_pdf_link(self, client, db):
-        """Group add students bulk page has link to parent instructions PDF."""
+        """Group add student page has link to parent instructions PDF."""
         g = factories.GroupFactory.create(
             code='ABCDEF', owner__school_staff=True)
         pdf_link = reverse(
             'pdf_parent_instructions', kwargs={'lang': 'es', 'group_id': g.id})
         response = client.get(
-            reverse('add_students_bulk', kwargs={'group_id': g.id}),
+            reverse('add_student', kwargs={'group_id': g.id}),
             user=g.owner.user,
             )
 
@@ -115,12 +115,12 @@ class TestAddStudentsBulk(object):
         """Two-step group-creation guide appears if requested in querystring."""
         g = factories.GroupFactory.create(owner__school_staff=True)
         normal_response = client.get(
-            reverse('add_students_bulk', kwargs={'group_id': g.id}),
+            reverse('add_student', kwargs={'group_id': g.id}),
             user=g.owner.user,
             )
         twostep_response = client.get(
             reverse(
-                'add_students_bulk', kwargs={'group_id': g.id}) + '?created=1',
+                'add_student', kwargs={'group_id': g.id}) + '?created=1',
             user=g.owner.user,
             )
 
@@ -128,9 +128,6 @@ class TestAddStudentsBulk(object):
         assert len(twostep_response.html.findAll('ol', 'form-steps')) == 1
 
 
-
-class TestAddStudent(object):
-    """Tests for add_student view."""
     def test_add_student(self, client, db):
         """User can add a student."""
         teacher = factories.ProfileFactory.create(school_staff=True)
@@ -311,7 +308,7 @@ class TestAddGroup(object):
 
         assert group.name == "Some Group"
         assert response['Location'] == utils.location(
-            reverse('add_students_bulk', kwargs={'group_id': group.id})
+            reverse('add_student', kwargs={'group_id': group.id})
             + '?created=1'
             )
 

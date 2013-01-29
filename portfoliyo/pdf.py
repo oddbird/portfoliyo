@@ -37,7 +37,7 @@ SECTIONS = {
 COLOR = (7, 54, 66)
 
 
-TEXT_TEMPLATES_BASE = 'village/bulksignup/sheet/'
+TEXT_TEMPLATES_BASE = 'village/student_form/bulksheet/'
 
 
 
