@@ -218,25 +218,7 @@ var PYO = (function (PYO, $) {
             // If viewing the groups-list
             if (data && data.objects && data.objects.length && nav.find('.group').length) {
                 $.each(data.objects, function () {
-                    // Check that a group with this ID is not already in the list
-                    if (nav.find('.group .listitem-select[data-group-id="' + this.id + '"]').length === 0) {
-                        var obj = {};
-                        if (nav.data('is-staff') === 'True') { obj.staff = true; }
-                        obj.objects = [this];
-                        var group = PYO.tpl('group_list_items', obj).hide();
-                        var inserted = false;
-                        nav.find('.group').not(':first').each(function () {
-                            if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
-                                group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
-                                inserted = true;
-                            }
-                        });
-                        if (!inserted) {
-                            group.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
-                        }
-                        group.find('.details').html5accordion();
-                        group.find('input[placeholder], textarea[placeholder]').placeholder();
-                    }
+                    PYO.addGroupToList(this);
                 });
             }
         });
@@ -245,19 +227,7 @@ var PYO = (function (PYO, $) {
             if (data && data.objects && data.objects.length) {
                 $.each(data.objects, function () {
                     if (this.id) {
-                        var id = this.id;
-                        var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
-                        var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
-                        // If viewing the groups-list
-                        if (group.length) {
-                            var group_container = group.closest('.group');
-                            group_container.slideUp(function () { $(this).remove(); });
-                            if (group.hasClass('active')) { PYO.showActiveItemRemovedMsg('group', true); }
-                        }
-                        // If viewing the removed group
-                        if (grouptitle.length) {
-                            PYO.showActiveItemRemovedMsg('group', grouptitle.hasClass('active'));
-                        }
+                        PYO.removeGroupFromList(this.id);
                     }
                 });
             }
