@@ -50,20 +50,6 @@ $announce-h-position: right;
     #{$link} { color: $back;}
     #{$focus} { color: $base3; }
   }
-  .undo {
-    @extend %icon;
-    @extend %icon-undo;
-    @extend %button;
-    @include button-color($base2);
-    float: right;
-    margin-left: rhythm(.25);
-    padding: 0 rhythm(.25);
-    text-decoration: none;
-    &:before {
-      @include adjust-font-size-to($xsmallpx);
-      margin-right: .4em;
-    }
-  }
 }
 
 $announce-padding: .75;
