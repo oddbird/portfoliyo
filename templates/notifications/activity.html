@@ -1,47 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>{% include "notifications/activity.subject.txt" %}</title>
+
 <style type="text/css">
-  h1 { border: 1px solid black; }
+
+/* Reset */
+#outlook a {padding:0;}
+body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0; font-family:arial,helvetica,sans-serif; color:#555555;}
+.ExternalClass {width:100%;}
+.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+#backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;}
+
+img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+a img {border:none;}
+.image_fix {display:block;}
+
+h1, h2, h3, h4, h5, h6 {color: #555555 !important;}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: #e30028 !important;}
+h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {color: #94001a !important;}
+h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {color: #94001a !important;}
+
+h1 {margin: 10px 0; padding:0; font-size:30px;}
+h2 {font-size:18px;}
+h3 {margin:0; padding:0; font-size:14px;}
+
+p {font-size:14px; margin: 1em 0; padding:0; color:#777777;}
+
+ul {font-size:14px; margin-top:20px;}
+
+a:link { color: #e3002a; }
+a:visited { color: #94001a; }
+a:hover { color: #94001a; }
+
+#main {background-color:#fafdfd; padding:10px;}
+
+.post {background-color:#def1f0; padding:10px; border-bottom:1px solid white;}
+
+.reply {background-color:#ffffff; padding:10px; border-bottom:1px solid #dddddd;}
+
+.date {background-color:transparent; width:125px; color: #aaaaaa; font-size:10px; text-align:right;}
+
 </style>
+</head>
 
+<body>
 {% load url from future %}
-<h1>Recent activity in Portfoliyo:</h1>
 
-{% include "notifications/activity/_village_posts.html" %}
+<!-- Outside Tables -->
+<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable" width="100%"><tbody><tr><td align="center">
+<table align="center" cellpadding="0" cellspacing="0" id="topMessageWrapper" width="600"><tbody><tr><td>
 
-{% if recipient.notify_teacher_post %}
-  {% include "notifications/activity/_bulk_posts.html" %}
-{% endif %}
+<!-- H1 Header -->
+<h1>Recent Activity in Portfoliyo:</h1>
 
-<ul class="requested">
-  {% if recipient.notify_new_parent %}
-    {% include "notifications/activity/_new_parents.html" %}
-  {% endif %}
-  {% if recipient.notify_added_to_village %}
-    {% include "notifications/activity/_added_to_villages.html" %}
-  {% endif %}
-  {% if recipient.notify_joined_my_village %}
-    {% include "notifications/activity/_new_teachers.html" %}
-  {% endif %}
-</ul>
+<!-- Inner Tables -->
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="main">
+<tbody><tr><td valign="top">
 
-<ul class="nonrequested">
-  {% include "notifications/activity/_village_posts_nonrequested.html" %}
+  {% include "notifications/activity/_village_posts.html" %}
 
-  {% if not recipient.notify_teacher_post %}
-    {% include "notifications/activity/_bulk_posts_nonrequested.html" %}
+  {% if recipient.notify_teacher_post %}
+    {% include "notifications/activity/_bulk_posts.html" %}
   {% endif %}
 
-  {% if not recipient.notify_new_parent %}
-    {% include "notifications/activity/_new_parents.html" %}
-  {% endif %}
-  {% if not recipient.notify_added_to_village %}
-    {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
-  {% endif %}
-  {% if not recipient.notify_joined_my_village %}
-    {% include "notifications/activity/_new_teachers.html" %}
-  {% endif %}
-</ul>
+  <table border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;" width="100%">
+  <tbody><tr><td>
+    <ul class="requested">
+      {% if recipient.notify_new_parent %}
+        {% include "notifications/activity/_new_parents.html" %}
+      {% endif %}
+      {% if recipient.notify_added_to_village %}
+        {% include "notifications/activity/_added_to_villages.html" %}
+      {% endif %}
+      {% if recipient.notify_joined_my_village %}
+        {% include "notifications/activity/_new_teachers.html" %}
+      {% endif %}
+    </ul>
+  </td></tr></tbody>
+  </table>
 
-<p>
---<br />
-Don't want email notifications? <a href="{% url 'edit_profile' %}">Edit your profile</a>.
-</p>
+  <table border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;" width="100%">
+  <tbody><tr><td>
+    <ul class="nonrequested">
+      {% include "notifications/activity/_village_posts_nonrequested.html" %}
+
+      {% if not recipient.notify_teacher_post %}
+        {% include "notifications/activity/_bulk_posts_nonrequested.html" %}
+      {% endif %}
+
+      {% if not recipient.notify_new_parent %}
+        {% include "notifications/activity/_new_parents.html" %}
+      {% endif %}
+      {% if not recipient.notify_added_to_village %}
+        {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
+      {% endif %}
+      {% if not recipient.notify_joined_my_village %}
+        {% include "notifications/activity/_new_teachers.html" %}
+      {% endif %}
+    </ul>
+  </td></tr></tbody>
+  </table>
+
+  <hr /><br />
+  <p>
+    Don't want email notifications?
+    <a href="{% url 'edit_profile' %}">Edit your profile</a>.
+  </p>
+</td></tr></tbody>
+</table>
+
+<!-- Outside Tables -->
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</body>
+</html>

@@ -11,11 +11,10 @@
     <a href="{% url 'village' student_id=villages.0.student.id %}">{{ villages.0.student }}'s village</a>.
   {% else %}
     {{ teacher }} added you to {{ villages|length|apnumber }} student villages:
-    <ul>
-      {% for village in villages %}
-      <li><a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a></li>
-      {% endfor %}
-    </ul>
+    {% for village in villages %}
+      {% if forloop.last %}and{% endif %}
+      <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>{% if forloop.last %}.{% else% }, {% endif %}
+    {% endfor %}
   {% endif %}
 </li>
 {% endwith %}
