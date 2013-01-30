@@ -77,7 +77,7 @@ class TestProfileResource(object):
             )
 
 
-    def test_ordering(self, no_csrf_client, db):
+    def test_ordering(self, no_csrf_client):
         """Users ordered alphabetically."""
         p = factories.ProfileFactory.create(name='B', school_staff=True)
         factories.ProfileFactory.create(name='A', school=p.school)
@@ -88,7 +88,7 @@ class TestProfileResource(object):
         assert [p['name'] for p in profiles] == ['A', 'B']
 
 
-    def test_only_see_same_school_users(self, no_csrf_client, db):
+    def test_only_see_same_school_users(self, no_csrf_client):
         """Users can only see other users from same school in API."""
         p1 = factories.ProfileFactory.create()
         factories.ProfileFactory.create()
@@ -102,7 +102,7 @@ class TestProfileResource(object):
         assert set([p['id'] for p in objects]) == set([p1.pk, hero.pk])
 
 
-    def test_can_see_my_students_from_other_school(self, no_csrf_client, db):
+    def test_can_see_my_students_from_other_school(self, no_csrf_client):
         """Can see students from other schools if they are my students."""
         teacher = factories.ProfileFactory.create(school_staff=True)
         student = factories.ProfileFactory.create()
@@ -116,7 +116,7 @@ class TestProfileResource(object):
         assert set([p['id'] for p in objects]) == set([teacher.pk, student.pk])
 
 
-    def test_village_uri(self, no_csrf_client, db):
+    def test_village_uri(self, no_csrf_client):
         """Each profile has a village_uri in the API response."""
         s = factories.ProfileFactory.create(school_staff=True)
         village_url = reverse('village', kwargs={'student_id': s.id})
@@ -126,7 +126,7 @@ class TestProfileResource(object):
         assert response.json['objects'][0]['village_uri'] == village_url
 
 
-    def test_unread_count(self, no_csrf_client, db):
+    def test_unread_count(self, no_csrf_client):
         """Each profile has an unread_count in the API response."""
         rel = factories.RelationshipFactory.create(
             from_profile__school_staff=True)
@@ -141,7 +141,7 @@ class TestProfileResource(object):
             ][0]['unread_count'] == 1
 
 
-    def test_edit_student_uri(self, no_csrf_client, db):
+    def test_edit_student_uri(self, no_csrf_client):
         """Each profile has an edit_student_uri in the API response."""
         s = factories.ProfileFactory.create(school_staff=True)
         edit_url = reverse('edit_student', kwargs={'student_id': s.id})
@@ -151,7 +151,7 @@ class TestProfileResource(object):
         assert response.json['objects'][0]['edit_student_uri'] == edit_url
 
 
-    def test_filter_by_elder(self, no_csrf_client, db):
+    def test_filter_by_elder(self, no_csrf_client):
         """Can filter profiles by elders."""
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(
@@ -167,7 +167,7 @@ class TestProfileResource(object):
         assert objects[0]['id'] == rel.student.pk
 
 
-    def test_filter_by_student(self, no_csrf_client, db):
+    def test_filter_by_student(self, no_csrf_client):
         """Can filter profiles by students."""
         rel = factories.RelationshipFactory.create()
         rel2 = factories.RelationshipFactory.create(
@@ -183,7 +183,7 @@ class TestProfileResource(object):
         assert objects[0]['id'] == rel.elder.pk
 
 
-    def test_filter_by_elder_in_group(self, no_csrf_client, db):
+    def test_filter_by_elder_in_group(self, no_csrf_client):
         """Can filter profiles by group elder memberships."""
         s1 = factories.ProfileFactory.create()
         s2 = factories.ProfileFactory.create(school=s1.school)
@@ -202,7 +202,7 @@ class TestProfileResource(object):
         assert objects[0]['id'] == s2.pk
 
 
-    def test_filter_by_student_in_group(self, no_csrf_client, db):
+    def test_filter_by_student_in_group(self, no_csrf_client):
         """Can filter profiles by group student memberships."""
         s1 = factories.ProfileFactory.create()
         s2 = factories.ProfileFactory.create(school=s1.school)
@@ -246,7 +246,7 @@ class TestElderRelationshipResource(object):
             )
 
 
-    def test_only_see_own_relationships(self, no_csrf_client, db):
+    def test_only_see_own_relationships(self, no_csrf_client):
         """Users can only see their own relationships."""
         rel = factories.RelationshipFactory.create()
         factories.RelationshipFactory.create()
@@ -258,7 +258,7 @@ class TestElderRelationshipResource(object):
         assert set([r['id'] for r in objects]) == {rel.pk}
 
 
-    def test_delete_relationship(self, no_csrf_client, db):
+    def test_delete_relationship(self, no_csrf_client):
         """A user may delete their own relationship."""
         rel = factories.RelationshipFactory.create()
 
@@ -268,7 +268,7 @@ class TestElderRelationshipResource(object):
         assert utils.deleted(rel)
 
 
-    def test_delete_relationships_from_list(self, no_csrf_client, db):
+    def test_delete_relationships_from_list(self, no_csrf_client):
         """A user may delete their own relationship via list URL."""
         rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(
@@ -284,7 +284,7 @@ class TestElderRelationshipResource(object):
         assert not utils.deleted(other_rel)
 
 
-    def test_cannot_delete_other_rel(self, no_csrf_client, db):
+    def test_cannot_delete_other_rel(self, no_csrf_client):
         """Another user may not delete a relationship that is not theirs."""
         rel = factories.RelationshipFactory.create()
         other = factories.ProfileFactory.create()
@@ -294,7 +294,7 @@ class TestElderRelationshipResource(object):
         assert not utils.deleted(rel)
 
 
-    def test_delete_rel_csrf_protected(self, client, db):
+    def test_delete_rel_csrf_protected(self, client):
         """Deletion is CSRF-protected."""
         rel = factories.RelationshipFactory.create()
 
@@ -320,7 +320,7 @@ class TestGroupResource(object):
             )
 
 
-    def test_unread_count(self, no_csrf_client, db):
+    def test_unread_count(self, no_csrf_client):
         """Each group has an unread_count in the API response."""
         rel = factories.RelationshipFactory.create()
         post = factories.PostFactory.create(student=rel.student)
@@ -339,7 +339,7 @@ class TestGroupResource(object):
         assert response.json['objects'][0]['unread_count'] == 2
 
 
-    def test_only_see_my_groups(self, no_csrf_client, db):
+    def test_only_see_my_groups(self, no_csrf_client):
         """User can only see their own groups in API, not even same-school."""
         g1 = factories.GroupFactory.create()
         factories.GroupFactory.create(owner__school=g1.owner.school)
@@ -351,7 +351,7 @@ class TestGroupResource(object):
         assert {g['id'] for g in objects} == {g1.pk, 'all%s' % g1.owner.id}
 
 
-    def test_all_students_group(self, no_csrf_client, db):
+    def test_all_students_group(self, no_csrf_client):
         """All-students group always included in groups list."""
         rel = factories.RelationshipFactory.create(from_profile__code='ABCDE')
 
@@ -374,7 +374,7 @@ class TestGroupResource(object):
             )
 
 
-    def test_all_students_group_no_code_no_bulk_uri(self, no_csrf_client, db):
+    def test_all_students_group_no_code_no_bulk_uri(self, no_csrf_client):
         """If user has no code, no bulk-add-students uri included."""
         p = factories.ProfileFactory.create(code=None)
 
@@ -384,7 +384,7 @@ class TestGroupResource(object):
         assert 'add_students_bulk_uri' not in g
 
 
-    def test_group_ordering(self, no_csrf_client, db):
+    def test_group_ordering(self, no_csrf_client):
         """Groups ordered alphabetically, with All Students first."""
         g = factories.GroupFactory.create(name='B')
         factories.GroupFactory.create(name='A', owner=g.owner)
@@ -395,7 +395,7 @@ class TestGroupResource(object):
         assert [g['name'] for g in groups] == ['All Students', 'A', 'B']
 
 
-    def test_delete_group(self, no_csrf_client, db):
+    def test_delete_group(self, no_csrf_client):
         """Owner of a group can delete it."""
         group = factories.GroupFactory.create()
 
@@ -405,7 +405,7 @@ class TestGroupResource(object):
         assert utils.deleted(group)
 
 
-    def test_delete_group_requires_owner(self, no_csrf_client, db):
+    def test_delete_group_requires_owner(self, no_csrf_client):
         """Non-owner cannot delete a group, even if school staff."""
         group = factories.GroupFactory.create()
         profile = factories.ProfileFactory.create(school=group.owner.school)
@@ -416,7 +416,7 @@ class TestGroupResource(object):
         assert not utils.deleted(group)
 
 
-    def test_group_uri(self, no_csrf_client, db):
+    def test_group_uri(self, no_csrf_client):
         """Each group has a group_uri for use in the web UI."""
         g = factories.GroupFactory.create()
         group_url = reverse('group', kwargs={'group_id': g.id})
@@ -426,7 +426,7 @@ class TestGroupResource(object):
         assert response.json['objects'][1]['group_uri'] == group_url
 
 
-    def test_add_student_uri(self, no_csrf_client, db):
+    def test_add_student_uri(self, no_csrf_client):
         """Each group has an add_student_uri for use in the web UI."""
         g = factories.GroupFactory.create()
         add_student_url = reverse('add_student', kwargs={'group_id': g.id})
@@ -436,7 +436,7 @@ class TestGroupResource(object):
         assert response.json['objects'][1]['add_student_uri'] == add_student_url
 
 
-    def test_add_students_bulk_uri(self, no_csrf_client, db):
+    def test_add_students_bulk_uri(self, no_csrf_client):
         """Each group has an add_students_bulk_uri for use in the web UI."""
         g = factories.GroupFactory.create(code='ABCD')
         url = reverse('add_students_bulk', kwargs={'group_id': g.id})
@@ -446,7 +446,7 @@ class TestGroupResource(object):
         assert response.json['objects'][1]['add_students_bulk_uri'] == url
 
 
-    def test_students_uri(self, no_csrf_client, db):
+    def test_students_uri(self, no_csrf_client):
         """Each group has a students_uri for fetching its student list."""
         g = factories.GroupFactory.create()
         students_url = reverse(
@@ -459,7 +459,7 @@ class TestGroupResource(object):
         assert response.json['objects'][1]['students_uri'] == students_url
 
 
-    def test_edit_uri(self, no_csrf_client, db):
+    def test_edit_uri(self, no_csrf_client):
         """Each group has an edit_uri in the API response."""
         g = factories.GroupFactory.create()
         edit_url = reverse('edit_group', kwargs={'group_id': g.id})
@@ -487,7 +487,7 @@ class TestPostResource(object):
             )
 
 
-    def test_unread_count(self, no_csrf_client, db):
+    def test_unread_count(self, no_csrf_client):
         """Each post has an unread boolean in the API response."""
         rel = factories.RelationshipFactory.create()
         post = factories.PostFactory.create(student=rel.student)
