@@ -20,6 +20,7 @@ class NewTeacherCollector(base.NotificationTypeCollector):
         'teacher-id': (model.Profile, 'teacher'),
         'student-id': (model.Profile, 'student'),
         }
+    notification_pref = 'notify_joined_my_village'
 
 
     def get_context(self):
@@ -29,5 +30,7 @@ class NewTeacherCollector(base.NotificationTypeCollector):
                     base.Village(n['teacher'], n['student'])
                     for n in self.notifications
                     ]
-                )
+                ),
+            'any_requested_new_teacher': self.any_requested(),
+            'any_nonrequested_new_teacher': self.any_nonrequested(),
             }

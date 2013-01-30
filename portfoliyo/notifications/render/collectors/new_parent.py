@@ -42,6 +42,7 @@ class NewParentCollector(base.NotificationTypeCollector):
     type_name = types.NEW_PARENT
     subject_template = 'notifications/activity/_new_parents.subject.txt'
     db_lookup = {'signup-id': (model.TextSignup, 'signup')}
+    notification_pref = 'notify_new_parent'
 
 
     def get_context(self):
@@ -49,7 +50,9 @@ class NewParentCollector(base.NotificationTypeCollector):
             'signups': [
                 Signup.from_textsignup(n['signup'])
                 for n in self.notifications
-                ]
+                ],
+            'any_requested_new_parent': self.any_requested(),
+            'any_nonrequested_new_parent': self.any_nonrequested(),
             }
 
 

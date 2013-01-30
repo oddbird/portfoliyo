@@ -99,6 +99,42 @@ class TestSend(object):
         assert mail.outbox[0].subject == "New activity in two of your villages."
 
 
+    @pytest.mark.parametrize(
+        'params', [{'prefs': {'notify_new_parent': True}}])
+    def test_no_nonrequested(self, params, recip):
+        """If there are no non-requested notifications, container not shown."""
+        rel = factories.RelationshipFactory.create(
+            from_profile=recip, to_profile__name='A Student')
+        signup = factories.TextSignupFactory.create(
+            student=rel.student)
+
+        record.new_parent(recip, signup)
+
+        assert base.send(recip.id)
+        assert len(mail.outbox) == 1
+        html_body = mail.outbox[0].alternatives[0][0]
+        assert '<ul class="requested">' in html_body
+        assert '<ul class="nonrequested">' not in html_body
+
+
+    @pytest.mark.parametrize(
+        'params', [{'prefs': {'notify_new_parent': False}}])
+    def test_no_requested(self, params, recip):
+        """If no (non-post) requested notifications, container not shown."""
+        rel = factories.RelationshipFactory.create(
+            from_profile=recip, to_profile__name='A Student')
+        signup = factories.TextSignupFactory.create(
+            student=rel.student)
+
+        record.new_parent(recip, signup)
+
+        assert base.send(recip.id)
+        assert len(mail.outbox) == 1
+        html_body = mail.outbox[0].alternatives[0][0]
+        assert '<ul class="requested">' not in html_body
+        assert '<ul class="nonrequested">' in html_body
+
+
     def assert_multi_email(self,
                            subject=None,
                            html_snippets=None,

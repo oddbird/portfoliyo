@@ -1,34 +1,34 @@
 {% load url from future %}Recent activity in Portfoliyo:
-
+{% if any_requested_posts %}
 {% include "notifications/activity/_village_posts.txt" %}
-
-{% if recipient.notify_teacher_post %}
+{% endif %}
+{% if any_requested_bulk_posts %}
 {% include "notifications/activity/_bulk_posts.txt" %}
 {% endif %}
 
-{% if recipient.notify_new_parent %}
+{% if any_requested_new_parent %}
 {% include "notifications/activity/_new_parents.txt" %}
 {% endif %}
-{% if recipient.notify_added_to_village %}
+{% if any_requested_added_to_village %}
 {% include "notifications/activity/_added_to_villages.txt" %}
 {% endif %}
-{% if recipient.notify_joined_my_village %}
+{% if any_requested_new_teacher %}
 {% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
-
+{% if any_nonrequested_posts %}
 {% include "notifications/activity/_village_posts_nonrequested.txt" %}
-
-{% if not recipient.notify_teacher_post %}
+{% endif %}
+{% if any_nonrequested_bulk_posts %}
 {% include "notifications/activity/_bulk_posts_nonrequested.txt" %}
 {% endif %}
 
-{% if not recipient.notify_new_parent %}
+{% if any_nonrequested_new_parent %}
 {% include "notifications/activity/_new_parents.txt" %}
 {% endif %}
-{% if not recipient.notify_added_to_village %}
+{% if any_nonrequested_added_to_village %}
 {% include "notifications/activity/_added_to_villages_nonrequested.txt" %}
 {% endif %}
-{% if not recipient.notify_joined_my_village %}
+{% if any_nonrequested_new_teacher %}
 {% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
 

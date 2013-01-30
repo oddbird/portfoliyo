@@ -82,13 +82,18 @@ class BulkPostCollector(base.NotificationTypeCollector):
     type_name = types.BULK_POST
     subject_template = 'notifications/activity/_bulk_posts.subject.txt'
     db_lookup = {'bulk-post-id': (model.BulkPost, 'bulk-post')}
+    notification_pref = 'notify_teacher_post'
 
 
     def get_context(self):
         collection = BulkPostCollection()
         for n in self.notifications:
             collection.add(n['bulk-post'], n['students'])
-        return {'bulk_posts': collection}
+        return {
+            'bulk_posts': collection,
+            'any_requested_bulk_posts': self.any_requested(),
+            'any_nonrequested_bulk_posts': self.any_nonrequested(),
+            }
 
 
     def hydrate(self, data):

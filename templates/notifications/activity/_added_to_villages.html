@@ -13,7 +13,7 @@
     {{ teacher }} added you to {{ villages|length|apnumber }} student villages:
     {% for village in villages %}
       {% if forloop.last %}and{% endif %}
-      <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>{% if forloop.last %}.{% else% }, {% endif %}
+      <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>{% if forloop.last %}.{% else %}, {% endif %}
     {% endfor %}
   {% endif %}
 </li>
