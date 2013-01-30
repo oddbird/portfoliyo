@@ -152,6 +152,16 @@ class SlimProfileResource(PortfoliyoResource):
         authorization = ProfileAuthorization()
 
 
+    def get_object_list(self, request):
+        qs = super(SlimProfileResource, self).get_object_list(request)
+        user = getattr(request, 'user', None)
+        return qs.prefetch_dict(
+            model.unread.unread_counts,
+            'unread_count',
+            user.profile,
+            ) if user else qs
+
+
     def dehydrate_email(self, bundle):
         return bundle.obj.user.email
 
@@ -187,10 +197,9 @@ class SlimProfileResource(PortfoliyoResource):
             'edit_student',
             kwargs={'student_id': bundle.obj.id},
             )
-        user = getattr(bundle.request, 'user', None)
-        if user is not None:
-            bundle.data['unread_count'] = model.unread.unread_count(
-                bundle.obj, user.profile)
+        uc = getattr(bundle.obj, 'unread_count', None)
+        if uc is not None:
+            bundle.data['unread_count'] = uc
         return bundle
 
 

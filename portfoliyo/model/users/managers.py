@@ -20,11 +20,16 @@ class ProfileManager(models.Manager):
         return self.get_query_set().prefetch_relationships()
 
 
+    def prefetch_dict(self, *args, **kw):
+        return self.get_query_set().prefetch_dict(*args, **kw)
+
+
 
 class ProfileQuerySet(query.QuerySet):
     def __init__(self, *args, **kw):
         self._prefetch_elders = False
         self._prefetch_students = False
+        self._prefetch_dict = []
         self._prefetch_done = False
         super(ProfileQuerySet, self).__init__(*args, **kw)
 
@@ -41,9 +46,24 @@ class ProfileQuerySet(query.QuerySet):
         return self._clone(_prefetch_elders=True, _prefetch_students=True)
 
 
+    def prefetch_dict(self, func, attr, *a, **kw):
+        """
+        Prefetch info using any function that returns a dictionary.
+
+        Given prefetch func should accept a list of Profiles as its first
+        argument, and any other args/kwargs given. It should return a
+        dictionary where the keys are Profile instances, and the values will be
+        assigned to each instance's ``attr``.
+
+        """
+        return self._clone(
+            _prefetch_dict=self._prefetch_dict + [(func, attr, a, kw)])
+
+
     def _clone(self, *args, **kw):
         kw.setdefault('_prefetch_elders', self._prefetch_elders)
         kw.setdefault('_prefetch_students', self._prefetch_students)
+        kw.setdefault('_prefetch_dict', self._prefetch_dict)
         return super(ProfileQuerySet, self)._clone(*args, **kw)
 
 
@@ -66,6 +86,9 @@ class ProfileQuerySet(query.QuerySet):
             filters = filters | models.Q(to_profile__in=self._result_cache)
         if self._prefetch_elders:
             filters = filters | models.Q(from_profile__in=self._result_cache)
+        dict_values = {}
+        for func, attr, args, kw in self._prefetch_dict:
+            dict_values[attr] = func(self._result_cache, *args, **kw)
 
         elder_rels = Relationship.objects.filter(filters).select_related(
             'from_profile__user', 'to_profile__user')
@@ -89,6 +112,8 @@ class ProfileQuerySet(query.QuerySet):
                     key=lambda sr: sr.student.name,
                     )
                 profile._cached_student_relationships = qs
+            for attr, values_dict in dict_values.iteritems():
+                setattr(profile, attr, values_dict.get(profile, None))
 
         self._prefetch_done = True
 
