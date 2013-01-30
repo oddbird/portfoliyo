@@ -366,7 +366,7 @@ def village(request, student_id):
 
     group = get_querystring_group(request, student)
 
-    if rel:
+    if rel and not request.impersonating:
         model.unread.mark_village_read(rel.student, rel.elder)
 
     return TemplateResponse(
@@ -482,8 +482,9 @@ def create_post(request, student_id=None, group_id=None):
 @login_required
 @require_POST
 def mark_post_read(request, post_id):
-    post = get_object_or_404(model.Post, pk=post_id)
-    model.unread.mark_read(post, request.user.profile)
+    if not request.impersonating:
+        post = get_object_or_404(model.Post, pk=post_id)
+        model.unread.mark_read(post, request.user.profile)
     return http.HttpResponse(
         json.dumps({'success': True}), content_type='application/json')
 
