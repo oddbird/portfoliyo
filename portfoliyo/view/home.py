@@ -1,7 +1,7 @@
 """Core/home views."""
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
-from django.template.response import TemplateResponse
+from django.shortcuts import redirect, render
+from django.views.decorators.cache import cache_page
 
 
 
@@ -24,9 +24,16 @@ def redirect_home(user):
     return reverse('dashboard')
 
 
+
 def home(request):
     """Home view. Redirects appropriately or displays landing page."""
     if request.user.is_authenticated():
         return redirect(redirect_home(request.user))
     else:
-        return TemplateResponse(request, 'landing.html')
+        return landing(request)
+
+
+
+@cache_page(600)
+def landing(request):
+    return render(request, 'landing.html')

@@ -14,9 +14,10 @@ def client(request):
     webtestcase._patch_settings()
     request.addfinalizer(webtestcase._unpatch_settings)
 
-    # any test using the web client automatically gets db and redis
+    # any test using the web client automatically gets db, redis, cache
     request.getfuncargvalue('redis')
     request.getfuncargvalue('db')
+    request.getfuncargvalue('cache')
 
     return client.TestClient()
 
@@ -34,9 +35,10 @@ def no_csrf_client(request):
     webtestcase._patch_settings()
     request.addfinalizer(webtestcase._unpatch_settings)
 
-    # any test using the web client automatically gets db and redis
+    # any test using the web client automatically gets db, redis, cache
     request.getfuncargvalue('redis')
     request.getfuncargvalue('db')
+    request.getfuncargvalue('cache')
 
     return client.TestClient()
 
@@ -69,6 +71,7 @@ def redis(request):
     from portfoliyo import redis
     client = redis._orig_client
     redis.client = client
+    client.num_calls = 0
     def _disable_redis():
         redis.client = redis._disabled_client
     request.addfinalizer(_disable_redis)
@@ -100,13 +103,75 @@ class DisabledRedis(object):
 def _disable_redis(request):
     """Disable redis by default (use redis fixture to enable for a test)."""
     from portfoliyo import redis
+
+    # patch a real redis client to track number of calls
+    if not isinstance(redis.client, redis.InMemoryRedis):
+        def _tracked_send_packed_command(self, command):
+            self.num_calls += 1
+            return self._orig_send_packed(command)
+        redis.client._orig_send_packed = client.send_packed_command
+        redis.client.send_packed_command = _tracked_send_packed_command
+
     redis._orig_client = redis.client
     redis._disabled_client = DisabledRedis()
     redis.client = redis._disabled_client
+
     def _restore_redis():
         redis.client = redis._orig_client
+        if hasattr(client, '_orig_send_packed'):
+            redis.client.send_packed_command = redis.client._orig_send_packed
+            del redis.client._orig_send_packed
         del redis._orig_client
+
     request.addfinalizer(_restore_redis)
+
+
+
+@pytest.fixture
+def cache(request):
+    """Clear cache and give test access to it."""
+    from django.core import cache
+    from django.core.cache.backends.locmem import LocMemCache
+    c = cache._orig_cache
+    cache.cache = cache._orig_cache
+    def _disable_cache():
+        cache.cache = cache._disabled_cache
+    request.addfinalizer(_disable_cache)
+    if isinstance(c, LocMemCache):
+        c.clear()
+    else:
+        raise ValueError(
+            "Tests can only be run with the locmem cache backend."
+            )
+
+    return c
+
+
+
+class DisabledCache(object):
+    def _error(self):
+        raise ValueError(
+            "Tests cannot access cache unless the 'cache' fixture is used.")
+
+    def __getattr__(self, attr):
+        self._error()
+
+    def __getitem__(self, key):
+        self._error()
+
+
+
+@pytest.fixture(scope='session', autouse=True)
+def _disable_cache(request):
+    """Disable cache by default (use cache fixture to enable for a test)."""
+    from django.core import cache
+    cache._orig_cache = cache.cache
+    cache._disabled_cache = DisabledCache()
+    cache.cache = cache._disabled_cache
+    def _restore_cache():
+        cache.cache = cache._orig_cache
+        del cache._orig_cache
+    request.addfinalizer(_restore_cache)
 
 
 

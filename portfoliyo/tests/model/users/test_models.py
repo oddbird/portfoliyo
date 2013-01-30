@@ -759,6 +759,17 @@ class TestGroup(object):
         assert utils.deleted(g)
 
 
+    def test_generic_prefetch(self, db):
+        """Can attach a generic prefetch to a Group queryset."""
+        def copy_ids(groups):
+            # Silly sample prefetch function; returns group-keyed dict
+            return {group: group.id for group in groups}
+        group = factories.GroupFactory.create()
+        qs = model.Group.objects.prefetch('id_copy', copy_ids)
+
+        assert [g.id_copy for g in qs] == [group.id]
+
+
 
 class TestAllStudentsGroup(object):
     def test_elder_relationships(self, db):

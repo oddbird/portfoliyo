@@ -41,7 +41,7 @@ class TestAllow(object):
 
 
 class TestPusherAuthView(object):
-    def test_success(self, client, db):
+    def test_success(self, client):
         """Returns JSON authorization if successful."""
         profile = factories.ProfileFactory.create()
 
@@ -63,7 +63,7 @@ class TestPusherAuthView(object):
 
 
 
-    def test_failed(self, client, db):
+    def test_failed(self, client):
         """Returns 403 if unsuccessful."""
         profile = factories.ProfileFactory.create()
 
@@ -82,7 +82,7 @@ class TestPusherAuthView(object):
         mock_allow.assert_called_once_with(profile, 'channel')
 
 
-    def test_no_pusher(self, client, db):
+    def test_no_pusher(self, client):
         """Returns 403 if Pusher not configured."""
         profile = factories.ProfileFactory.create()
 
@@ -99,7 +99,7 @@ class TestPusherAuthView(object):
         assert mock_allow.call_count == 0
 
 
-    def test_anon_user(self, client, db):
+    def test_anon_user(self, client):
         """Returns 403 if the user is anonymous."""
         with mock.patch('portfoliyo.pusher.auth.allow') as mock_allow:
             with mock.patch('portfoliyo.pusher.auth.get_pusher') as mock_get_p:

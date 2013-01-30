@@ -19,6 +19,7 @@ class InMemoryRedis(object):
     def __init__(self):
         self.data = {}
         self.expiry = {}
+        self.num_calls = 0
 
 
     def _get(self, key, default=None):
@@ -32,6 +33,8 @@ class InMemoryRedis(object):
 
 
     def _check_expiry(self, key):
+        # All queries call this (indirectly via _get or _setdefault) once
+        self.num_calls += 1
         expiry = self.expiry.get(key)
         if expiry and time.time() > expiry:
             del self.data[key]
@@ -141,8 +144,11 @@ class Pipeline(object):
 
     def execute(self):
         results = []
+        start_calls = self.client.num_calls
         for method_name, args, kwargs in self.calls:
             results.append(getattr(self.client, method_name)(*args, **kwargs))
+        # a pipelined set of commands counts as one call to Redis
+        self.client.num_calls = start_calls + 1
         return results
 
 
