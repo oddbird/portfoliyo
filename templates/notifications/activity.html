@@ -5,41 +5,49 @@
 {% load url from future %}
 <h1>Recent activity in Portfoliyo:</h1>
 
-{% include "notifications/activity/_village_posts.html" %}
+{% if any_requested_posts %}
+  {% include "notifications/activity/_village_posts.html" %}
+{% endif %}
 
-{% if recipient.notify_teacher_post %}
+{% if any_requested_bulk_posts %}
   {% include "notifications/activity/_bulk_posts.html" %}
 {% endif %}
 
+{% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher %}
 <ul class="requested">
-  {% if recipient.notify_new_parent %}
+  {% if any_requested_new_parent %}
     {% include "notifications/activity/_new_parents.html" %}
   {% endif %}
-  {% if recipient.notify_added_to_village %}
+  {% if any_requested_added_to_village %}
     {% include "notifications/activity/_added_to_villages.html" %}
   {% endif %}
-  {% if recipient.notify_joined_my_village %}
+  {% if any_requested_new_teacher %}
     {% include "notifications/activity/_new_teachers.html" %}
   {% endif %}
 </ul>
+{% endif %}
 
+{% if any_nonrequested_posts or any_nonrequested_bulk_posts or any_nonrequested_new_parent or any_nonrequested_added_to_village or any_nonrequested_new_teacher %}
 <ul class="nonrequested">
-  {% include "notifications/activity/_village_posts_nonrequested.html" %}
+  {% if any_nonrequested_posts %}
+    {% include "notifications/activity/_village_posts_nonrequested.html" %}
+  {% endif %}
 
-  {% if not recipient.notify_teacher_post %}
+  {% if any_nonrequested_bulk_posts %}
     {% include "notifications/activity/_bulk_posts_nonrequested.html" %}
   {% endif %}
 
-  {% if not recipient.notify_new_parent %}
+  {% if any_nonrequested_new_parent %}
     {% include "notifications/activity/_new_parents.html" %}
   {% endif %}
-  {% if not recipient.notify_added_to_village %}
+  {% if any_nonrequested_added_to_village %}
     {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
   {% endif %}
-  {% if not recipient.notify_joined_my_village %}
+  {% if any_nonrequested_new_teacher %}
     {% include "notifications/activity/_new_teachers.html" %}
   {% endif %}
 </ul>
+{% endif %}
 
 <p>
 --<br />

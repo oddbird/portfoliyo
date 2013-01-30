@@ -99,7 +99,18 @@ class PostCollector(base.NotificationTypeCollector):
     db_lookup = {'post-id': (model.Post, 'post')}
 
 
-    def get_context(self):
+    def __init__(self, *args, **kw):
+        super(PostCollector, self).__init__(*args, **kw)
+        self._populated = False
+        self._villages = None
+        self._requested_villages = None
+        self._nonrequested_villages = None
+
+
+    def populate(self):
+        if self._populated:
+            return
+
         villages = {}
         for notification in self.notifications:
             student = notification['student']
@@ -115,13 +126,32 @@ class PostCollector(base.NotificationTypeCollector):
             else:
                 nonrequested.append(village)
 
+        self._villages = villages
+        self._requested_villages = sorted(
+            requested, key=lambda v: v.student.name)
+        self._nonrequested_villages = sorted(
+            nonrequested, key=lambda v: v.student.name)
+
+
+    def get_context(self):
+        self.populate()
         return {
-            'villages': villages,
-            'requested_villages': sorted(
-                requested, key=lambda v: v.student.name),
-            'nonrequested_villages': sorted(
-                nonrequested, key=lambda v: v.student.name),
+            'villages': self._villages,
+            'requested_villages': self._requested_villages,
+            'nonrequested_villages': self._nonrequested_villages,
+            'any_requested_posts': self.any_requested(),
+            'any_nonrequested_posts': self.any_nonrequested(),
             }
+
+
+    def any_requested(self):
+        self.populate()
+        return bool(self._requested_villages)
+
+
+    def any_nonrequested(self):
+        self.populate()
+        return bool(self._nonrequested_villages)
 
 
     def hydrate(self, data):

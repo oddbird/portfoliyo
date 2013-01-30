@@ -58,6 +58,8 @@ class NotificationTypeCollector(object):
     subject_template = None
     #  mapping of source data ID keys to lookup model and hydrated data key
     db_lookup = {}
+    #  what notification preference does this collector map to?
+    notification_pref = None
 
 
     """Base class for notification types."""
@@ -115,3 +117,11 @@ class NotificationTypeCollector(object):
 
     def get_students(self):
         return [n['student'] for n in self.notifications if 'student' in n]
+
+
+    def any_requested(self):
+        return self and getattr(self.profile, self.notification_pref)
+
+
+    def any_nonrequested(self):
+        return self and not getattr(self.profile, self.notification_pref)

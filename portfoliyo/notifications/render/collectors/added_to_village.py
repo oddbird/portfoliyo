@@ -20,6 +20,7 @@ class AddedToVillageCollector(base.NotificationTypeCollector):
         'added-by-id': (model.Profile, 'added_by'),
         'student-id': (model.Profile, 'student'),
         }
+    notification_pref = 'notify_added_to_village'
 
 
     def get_context(self):
@@ -32,5 +33,7 @@ class AddedToVillageCollector(base.NotificationTypeCollector):
                         key=lambda x: (x['added_by'].name, x['student'].name)
                         )
                     ],
-                )
+                ),
+            'any_requested_added_to_village': self.any_requested(),
+            'any_nonrequested_added_to_village': self.any_nonrequested(),
             }
