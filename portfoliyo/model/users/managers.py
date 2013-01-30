@@ -4,34 +4,47 @@ from django.db.models import query
 
 
 class PrefetchManager(models.Manager):
+    """
+    Generic prefetch manager.
+
+    Eases implementation of bulk-prefetching any type of associated data for
+    each model in a queryset, whether that associated data resides in the
+    database or elsewhere.
+
+    Allows attaching a prefetch function to a queryset long before that
+    queryset is evaluated. When the queryset is evaluated, the prefetch
+    function will be called only with those objects in the final result set.
+
+    """
     def get_query_set(self):
         return PrefetchQuerySet(self.model, using=self._db)
 
 
     def prefetch(self, *args, **kw):
-        return self.get_query_set().prefetch_dict(*args, **kw)
+        return self.get_query_set().prefetch(*args, **kw)
 
 
 
 class PrefetchQuerySet(query.QuerySet):
+    """Generic prefetch queryset."""
     def __init__(self, *args, **kw):
         self._prefetches = []
         self._prefetch_done = False
         super(PrefetchQuerySet, self).__init__(*args, **kw)
 
 
-    def prefetch(self, attr, func, *a, **kw):
+    def prefetch(self, attr, func, *args, **kw):
         """
-        Prefetch info using any function that returns a dictionary.
+        Prefetch data using any function that returns a dictionary.
 
-        Given prefetch func should accept a list of Profiles as its first
-        argument, and any other args/kwargs given. It should return a
-        dictionary where the keys are Profile instances, and the values will be
-        assigned to each instance's ``attr``.
+        Given prefetch ``func`` should accept an iterable of model instances as
+        its first argument, and any other args/kwargs given. It should return a
+        dictionary where the keys are model instances; the corresponding values
+        will be assigned to each instance's ``attr`` attribute.
 
         """
         return self._clone(
-            _prefetches=self._prefetches + [(func, attr, a, kw)])
+            _prefetches=self._prefetches + [(func, attr, args, kw)])
 
 
     def _clone(self, *args, **kw):
@@ -44,17 +57,26 @@ class PrefetchQuerySet(query.QuerySet):
 
 
     def _prefetch_prep(self):
+        """
+        Assemble the prefetched data.
+
+        Called early in the prefetch, but after the queryset's result-cache is
+        populated.
+
+        """
         self._prefetch_data = {}
         for func, attr, args, kw in self._prefetches:
             self._prefetch_data[attr] = func(self._result_cache, *args, **kw)
 
 
     def _prefetch_populate(self, obj):
+        """Populate the given ``obj`` model instance with prefetched data. """
         for attr, values_dict in self._prefetch_data.iteritems():
             setattr(obj, attr, values_dict.get(obj, None))
 
 
     def _do_prefetch(self):
+        """Execute prefetch (if any); called on iteration of the queryset."""
         if self._prefetch_done or not self._needs_prefetch():
             # nothing to do
             return

@@ -295,6 +295,9 @@ class GroupResource(SlimGroupResource):
 
 
     def _group_unread_counts(self, groups, request, profile):
+        # This is called when the group queryset is evaluated; we attach an
+        # `all_students_group` to the request, and send it along for the
+        # unread-counts-fetching along with the other groups.
         request.all_students_group = model.AllStudentsGroup(profile)
         all_groups = [request.all_students_group] + list(groups)
         counts = super(GroupResource, self)._group_unread_counts(
@@ -345,8 +348,10 @@ class GroupResource(SlimGroupResource):
 
     def obj_get_list(self, request=None, **kwargs):
         qs = super(GroupResource, self).obj_get_list(request, **kwargs)
+        # Evaluate the group queryset (populates request.all_students_group)
         groups = list(qs)
         if request is not None: # pragma: no cover
+            # Actually add the all-students-group to the list of groups
             groups.insert(0, request.all_students_group)
         return groups
 
