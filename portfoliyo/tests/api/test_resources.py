@@ -359,6 +359,26 @@ class TestGroupResource(object):
         assert response.json['objects'][0]['unread_count'] == 2
 
 
+    def test_unread_count_prefetched(self, no_csrf_client, redis):
+        """Unread counts are prefetched in a single Redis query."""
+        rel = factories.RelationshipFactory.create()
+        post = factories.PostFactory.create(student=rel.student)
+        other_rel = factories.RelationshipFactory.create(from_profile=rel.elder)
+        other_post = factories.PostFactory.create(student=other_rel.student)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.students.add(other_rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(other_post, rel.elder)
+
+        with utils.assert_num_calls(redis, 1):
+            response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+
+        assert response.json['objects'][1]['unread_count'] == 2
+        # all-students group also has unread count
+        assert response.json['objects'][0]['unread_count'] == 2
+
+
     def test_only_see_my_groups(self, no_csrf_client):
         """User can only see their own groups in API, not even same-school."""
         g1 = factories.GroupFactory.create()

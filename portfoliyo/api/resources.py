@@ -155,9 +155,9 @@ class SlimProfileResource(PortfoliyoResource):
     def get_object_list(self, request):
         qs = super(SlimProfileResource, self).get_object_list(request)
         user = getattr(request, 'user', None)
-        return qs.prefetch_dict(
-            model.unread.unread_counts,
+        return qs.prefetch(
             'unread_count',
+            model.unread.unread_counts,
             user.profile,
             ) if user else qs
 
@@ -244,6 +244,21 @@ class SlimGroupResource(PortfoliyoResource):
         detail_allowed_methods = ['get', 'delete']
 
 
+    def _group_unread_counts(self, groups, request, profile):
+        return model.unread.group_unread_counts(groups, profile)
+
+
+    def get_object_list(self, request):
+        qs = super(SlimGroupResource, self).get_object_list(request)
+        user = getattr(request, 'user', None)
+        return qs.prefetch(
+            'unread_count',
+            self._group_unread_counts,
+            request,
+            user.profile,
+            ) if user else qs
+
+
     def dehydrate(self, bundle):
         bundle.data['students_uri'] = reverse(
             'api_dispatch_list',
@@ -261,10 +276,9 @@ class SlimGroupResource(PortfoliyoResource):
             'add_student', kwargs={'group_id': bundle.obj.id})
         bundle.data['add_students_bulk_uri'] = reverse(
             'add_students_bulk', kwargs={'group_id': bundle.obj.id})
-        user = getattr(bundle.request, 'user', None)
-        if user is not None:
-            bundle.data['unread_count'] = model.unread.group_unread_count(
-                bundle.obj, bundle.request.user.profile)
+        uc = getattr(bundle.obj, 'unread_count', None)
+        if uc is not None:
+            bundle.data['unread_count'] = uc
         return bundle
 
 
@@ -278,6 +292,16 @@ class GroupResource(SlimGroupResource):
         queryset = SlimGroupResource.Meta.queryset.prefetch_related(
             'students__user').select_related('owner__user')
         fields = SlimGroupResource.Meta.fields + ['owner', 'students']
+
+
+    def _group_unread_counts(self, groups, request, profile):
+        request.all_students_group = model.AllStudentsGroup(profile)
+        all_groups = [request.all_students_group] + list(groups)
+        counts = super(GroupResource, self)._group_unread_counts(
+            all_groups, request, profile)
+        request.all_students_group.unread_count = counts.pop(
+            request.all_students_group)
+        return counts
 
 
     def full_dehydrate(self, bundle):
@@ -305,12 +329,7 @@ class GroupResource(SlimGroupResource):
                             'pk': bundle.obj.owner.id,
                             },
                         ),
-                    'unread_count': sum(
-                        [
-                            model.unread.unread_count(s, bundle.obj.owner)
-                            for s in bundle.obj.owner.students
-                            ]
-                        ),
+                    'unread_count': bundle.obj.unread_count,
                     'students': [
                         dehydrate_student(s) for s in bundle.obj.owner.students
                         ],
@@ -328,7 +347,7 @@ class GroupResource(SlimGroupResource):
         qs = super(GroupResource, self).obj_get_list(request, **kwargs)
         groups = list(qs)
         if request is not None: # pragma: no cover
-            groups.insert(0, model.AllStudentsGroup(request.user.profile))
+            groups.insert(0, request.all_students_group)
         return groups
 
 
