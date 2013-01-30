@@ -17,6 +17,7 @@ class ImpersonationMiddleware(object):
 
     """
     def process_request(self, request):
+        request.impersonating = False
         if not request.user.is_superuser:
             return None
 
@@ -43,4 +44,5 @@ class ImpersonationMiddleware(object):
             return None
 
         request.real_user = request.user
+        request.impersonating = True
         request.user = impersonate

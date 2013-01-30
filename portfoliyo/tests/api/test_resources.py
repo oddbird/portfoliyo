@@ -133,12 +133,32 @@ class TestProfileResource(object):
         post = factories.PostFactory.create(student=rel.student)
         unread.mark_unread(post, rel.elder)
 
-        response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+        response = no_csrf_client.get(
+            self.list_url() + '?elders=%s' % rel.elder.pk,
+            user=rel.elder.user,
+            )
 
-        assert [
-            o for o in response.json['objects']
-            if o['id'] == rel.student.id
-            ][0]['unread_count'] == 1
+        assert [o['unread_count'] for o in response.json['objects']] == [1]
+
+
+    def test_unread_count_prefetched(self, no_csrf_client, redis):
+        """Unread counts for all profiles fetched in single Redis query."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        rel2 = factories.RelationshipFactory.create(
+            from_profile=rel.elder)
+        post = factories.PostFactory.create(student=rel.student)
+        post2 = factories.PostFactory.create(student=rel2.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(post2, rel.elder)
+
+        with utils.assert_num_calls(redis, 1):
+            response = no_csrf_client.get(
+                self.list_url() + '?elders=%s' % rel.elder.pk,
+                user=rel.elder.user,
+                )
+
+        assert [o['unread_count'] for o in response.json['objects']] == [1, 1]
 
 
     def test_edit_student_uri(self, no_csrf_client):
@@ -333,6 +353,26 @@ class TestGroupResource(object):
         unread.mark_unread(other_post, rel.elder)
 
         response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
+
+        assert response.json['objects'][1]['unread_count'] == 2
+        # all-students group also has unread count
+        assert response.json['objects'][0]['unread_count'] == 2
+
+
+    def test_unread_count_prefetched(self, no_csrf_client, redis):
+        """Unread counts are prefetched in a single Redis query."""
+        rel = factories.RelationshipFactory.create()
+        post = factories.PostFactory.create(student=rel.student)
+        other_rel = factories.RelationshipFactory.create(from_profile=rel.elder)
+        other_post = factories.PostFactory.create(student=other_rel.student)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        group.students.add(other_rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(other_post, rel.elder)
+
+        with utils.assert_num_calls(redis, 1):
+            response = no_csrf_client.get(self.list_url(), user=rel.elder.user)
 
         assert response.json['objects'][1]['unread_count'] == 2
         # all-students group also has unread count

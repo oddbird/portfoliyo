@@ -837,6 +837,29 @@ class TestVillage(GroupContextTests):
         assert not unread.is_unread(post2, rel.elder)
 
 
+    def test_does_not_mark_posts_read_if_impersonating(self, client):
+        """If impersonating, does not mark posts as read."""
+        superuser = factories.ProfileFactory.create(
+            user__is_superuser=True)
+        rel = factories.RelationshipFactory.create(
+            from_profile__user__email='foo@example.com')
+        post = factories.PostFactory.create(student=rel.student)
+        post2 = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+        unread.mark_unread(post2, rel.elder)
+
+        assert unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post2, rel.elder)
+
+        client.get(
+            self.url(rel.student) + '?impersonate=foo@example.com',
+            user=superuser.user,
+            )
+
+        assert unread.is_unread(post, rel.elder)
+        assert unread.is_unread(post2, rel.elder)
+
+
     def test_posts(self, client):
         """Shows posts in village."""
         rel = factories.RelationshipFactory.create(
@@ -1090,6 +1113,26 @@ class TestMarkPostRead(object):
             status=200)
 
         assert not unread.is_unread(post, rel.elder)
+
+
+    def test_does_not_mark_read_if_impersonating(self, no_csrf_client):
+        """Does not mark the post read if user is impersonating another."""
+        superuser = factories.ProfileFactory.create(
+            user__is_superuser=True)
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True,
+            from_profile__user__email='foo@example.com',
+            )
+        post = factories.PostFactory.create(student=rel.student)
+        unread.mark_unread(post, rel.elder)
+
+        no_csrf_client.post(
+            self.url(post) + '?impersonate=foo@example.com',
+            user=superuser.user,
+            status=200,
+            )
+
+        assert unread.is_unread(post, rel.elder)
 
 
 

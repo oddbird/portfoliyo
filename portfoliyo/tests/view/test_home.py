@@ -1,5 +1,6 @@
 """Tests for core/home views."""
 from django.core.urlresolvers import reverse
+import mock
 
 from portfoliyo.tests import factories
 from portfoliyo.tests.utils import location
@@ -46,3 +47,12 @@ class TestHome(object):
         response = client.get(self.url, user=rel.elder.user, status=302)
 
         assert response['Location'] == location(reverse('dashboard'))
+
+
+    def test_landing_cached(self, client):
+        with mock.patch('django.shortcuts.loader.render_to_string') as mock_rts:
+            mock_rts.return_value = 'fake content'
+            client.get(self.url)
+            client.get(self.url)
+
+        assert mock_rts.call_count == 1
