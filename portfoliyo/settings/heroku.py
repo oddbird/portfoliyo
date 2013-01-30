@@ -2,7 +2,7 @@ from .base import *
 
 import os
 import urlparse
-env = lambda key, returntype=str: returntype(os.environ[key])
+env = lambda key, returntype=str: returntype(os.environ.get(key, ''))
 
 DATABASES = dict(default={})
 def parse_database_url(database, environment_variable='DATABASE_URL'):
@@ -161,6 +161,7 @@ GOOGLE_ANALYTICS_ID = env('GOOGLE_ANALYTICS_ID')
 USERVOICE_ID = env('USERVOICE_ID')
 SNAPENGAGE_ID = env('SNAPENGAGE_ID')
 MIXPANEL_ID = env('MIXPANEL_ID')
+INTERCOM_ID = env('INTERCOM_ID')
 CRAZYEGG_ID = env('CRAZYEGG_ID')
 
 PORTFOLIYO_BASE_URL = env('PORTFOLIYO_BASE_URL')
