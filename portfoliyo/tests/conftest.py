@@ -71,6 +71,7 @@ def redis(request):
     from portfoliyo import redis
     client = redis._orig_client
     redis.client = client
+    client.num_calls = 0
     def _disable_redis():
         redis.client = redis._disabled_client
     request.addfinalizer(_disable_redis)
@@ -102,12 +103,26 @@ class DisabledRedis(object):
 def _disable_redis(request):
     """Disable redis by default (use redis fixture to enable for a test)."""
     from portfoliyo import redis
+
+    # patch a real redis client to track number of calls
+    if not isinstance(redis.client, redis.InMemoryRedis):
+        def _tracked_send_packed_command(self, command):
+            self.num_calls += 1
+            return self._orig_send_packed(command)
+        redis.client._orig_send_packed = client.send_packed_command
+        redis.client.send_packed_command = _tracked_send_packed_command
+
     redis._orig_client = redis.client
     redis._disabled_client = DisabledRedis()
     redis.client = redis._disabled_client
+
     def _restore_redis():
         redis.client = redis._orig_client
+        if hasattr(client, '_orig_send_packed'):
+            redis.client.send_packed_command = redis.client._orig_send_packed
+            del redis.client._orig_send_packed
         del redis._orig_client
+
     request.addfinalizer(_restore_redis)
 
 

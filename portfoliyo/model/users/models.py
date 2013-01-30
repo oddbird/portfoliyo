@@ -286,6 +286,9 @@ class Group(GroupBase, models.Model):
     code = models.CharField(max_length=20, unique=True)
 
 
+    objects = managers.PrefetchManager()
+
+
     def save(self, *args, **kwargs):
         """Set code for all new groups."""
         if self.code:
