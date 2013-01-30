@@ -14,9 +14,10 @@ def client(request):
     webtestcase._patch_settings()
     request.addfinalizer(webtestcase._unpatch_settings)
 
-    # any test using the web client automatically gets db and redis
+    # any test using the web client automatically gets db, redis, cache
     request.getfuncargvalue('redis')
     request.getfuncargvalue('db')
+    request.getfuncargvalue('cache')
 
     return client.TestClient()
 
@@ -34,9 +35,10 @@ def no_csrf_client(request):
     webtestcase._patch_settings()
     request.addfinalizer(webtestcase._unpatch_settings)
 
-    # any test using the web client automatically gets db and redis
+    # any test using the web client automatically gets db, redis, cache
     request.getfuncargvalue('redis')
     request.getfuncargvalue('db')
+    request.getfuncargvalue('cache')
 
     return client.TestClient()
 
@@ -107,6 +109,54 @@ def _disable_redis(request):
         redis.client = redis._orig_client
         del redis._orig_client
     request.addfinalizer(_restore_redis)
+
+
+
+@pytest.fixture
+def cache(request):
+    """Clear cache and give test access to it."""
+    from django.core import cache
+    from django.core.cache.backends.locmem import LocMemCache
+    c = cache._orig_cache
+    cache.cache = cache._orig_cache
+    def _disable_cache():
+        cache.cache = cache._disabled_cache
+    request.addfinalizer(_disable_cache)
+    if isinstance(c, LocMemCache):
+        c.clear()
+    else:
+        raise ValueError(
+            "Tests can only be run with the locmem cache backend."
+            )
+
+    return c
+
+
+
+class DisabledCache(object):
+    def _error(self):
+        raise ValueError(
+            "Tests cannot access cache unless the 'cache' fixture is used.")
+
+    def __getattr__(self, attr):
+        self._error()
+
+    def __getitem__(self, key):
+        self._error()
+
+
+
+@pytest.fixture(scope='session', autouse=True)
+def _disable_cache(request):
+    """Disable cache by default (use cache fixture to enable for a test)."""
+    from django.core import cache
+    cache._orig_cache = cache.cache
+    cache._disabled_cache = DisabledCache()
+    cache.cache = cache._disabled_cache
+    def _restore_cache():
+        cache.cache = cache._orig_cache
+        del cache._orig_cache
+    request.addfinalizer(_restore_cache)
 
 
 
