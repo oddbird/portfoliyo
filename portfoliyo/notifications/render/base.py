@@ -72,9 +72,10 @@ def render(profile, clear=True):
 
     text = consecutive_newlines.sub(
         '\n\n', render_to_string(TEXT_TEMPLATE, context))
-    html = premailer.transform(
+    html = premailer.Premailer(
         render_to_string(HTML_TEMPLATE, context),
         base_url=settings.PORTFOLIYO_BASE_URL,
-        )
+        output_xhtml=True,
+        ).transform()
 
     return subject, text, html

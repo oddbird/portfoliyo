@@ -57,7 +57,7 @@ redis==2.7.2
 
 unidecode==0.04.10
 
-premailer==1.12
+premailer==1.12.obc1
 cssselect==0.7.1
 
 pybars==0.0.4
