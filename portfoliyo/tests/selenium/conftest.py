@@ -15,6 +15,7 @@ def selenium(request):
 def _selenium_live_server_helper(request):
     if 'selenium' in request.funcargnames:
         request.getfuncargvalue('transactional_db')
+        request.getfuncargvalue('redis')
 
 
 @pytest.fixture(scope='function')

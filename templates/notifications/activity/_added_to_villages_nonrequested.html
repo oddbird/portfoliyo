@@ -1,0 +1,34 @@
+{% load url from future %}
+{% load humanize %}
+
+{% regroup added_to_villages by teacher as villages_grouped_by_adding_teacher %}
+
+{% for village_group in villages_grouped_by_adding_teacher %}
+{% with village_group.grouper as teacher and village_group.list as villages %}
+<li>
+  {% if villages|length == 1 %}
+    {{ teacher }} added you to
+    <a href="{% url 'village' student_id=villages.0.student.id %}">{{ villages.0.student }}'s village</a>.
+  {% else %}
+    {{ teacher }} added you to {{ villages|length|apnumber }} student villages:
+    {% if villages|length > 3 %}
+      {% for village in villages %}
+        {% if forloop.counter < 4 %}
+          <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>,
+        {% endif %}
+      {% endfor %}
+      and
+      {{ villages|length|add:"-3"|apnumber }} more village{% if villages|length > 4 %}s{% endif %}.
+    {% else %}
+      {% for village in villages %}
+        {% if not forloop.last %}
+          <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>,
+        {% else %}
+          and <a href="{% url 'village' student_id=village.student.id %}">{{ village.student }}</a>.
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% endif %}
+</li>
+{% endwith %}
+{% endfor %}

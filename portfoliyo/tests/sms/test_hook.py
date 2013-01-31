@@ -3,7 +3,6 @@
 from datetime import datetime
 
 from django.conf import settings
-from django.core import mail
 from django.utils.timezone import get_current_timezone
 import mock
 
@@ -63,7 +62,7 @@ def test_activate_user(db):
     assert profile.user.is_active
     assert not profile.declined
     mock_create.assert_any_call(
-        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
+        None, rel.student, reply, in_reply_to=phone, notifications=False)
     assert reply == (
         "You can text this number "
         "to talk with Ms. Johns."
@@ -89,7 +88,7 @@ def test_decline(db):
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
     mock_create.assert_any_call(
-        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
+        None, rel.student, reply, in_reply_to=phone, notifications=False)
 
 
 
@@ -111,7 +110,7 @@ def test_active_user_decline(db):
         )
     mock_create.assert_any_call(profile, rel.student, "stop", from_sms=True)
     mock_create.assert_any_call(
-        None, rel.student, reply, in_reply_to=phone, email_notifications=False)
+        None, rel.student, reply, in_reply_to=phone, notifications=False)
 
 
 
@@ -283,10 +282,10 @@ def test_code_signup_student_name(db):
     assert signup.student == student
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(
-        parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
+        parent, student, "Jimmy Doe", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
+        None, student, reply, in_reply_to=phone, notifications=False)
 
 
 def test_code_signup_student_name_strips_extra_lines(db):
@@ -313,7 +312,7 @@ def test_code_signup_student_name_strips_extra_lines(db):
         student,
         "Jimmy Doe\nLook at me!",
         from_sms=True,
-        email_notifications=False,
+        notifications=False,
         )
 
 
@@ -379,10 +378,10 @@ def test_group_code_signup_student_name(db):
     assert signup.student == student
     # and the name is sent on to the village chat as a post
     mock_create.assert_any_call(
-        parent, student, "Jimmy Doe", from_sms=True, email_notifications=False)
+        parent, student, "Jimmy Doe", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
+        None, student, reply, in_reply_to=phone, notifications=False)
 
 
 def test_code_signup_student_name_dupe_detection(db):
@@ -451,10 +450,10 @@ def test_code_signup_role(db):
     student = teacher_rel.student
     # and the role is sent on to the village chat as a post
     mock_create.assert_any_call(
-        parent, student, "father", from_sms=True, email_notifications=False)
+        parent, student, "father", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
+        None, student, reply, in_reply_to=phone, notifications=False)
 
 
 def test_code_signup_role_strips_extra_lines(db):
@@ -540,8 +539,10 @@ def test_code_signup_name(db):
         state=model.TextSignup.STATE.name,
         )
 
-    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "John Doe")
+    record_notification_path = 'portfoliyo.tasks.record_notification.delay'
+    with mock.patch(record_notification_path) as mock_record_notification:
+        with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
+            reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "John Doe")
 
     assert reply == (
         "All done, thank you! You can text this number "
@@ -553,13 +554,11 @@ def test_code_signup_name(db):
     assert signup.state == model.TextSignup.STATE.done
     student = teacher_rel.student
     mock_create.assert_any_call(
-        parent, student, "John Doe", from_sms=True, email_notifications=False)
+        parent, student, "John Doe", from_sms=True, notifications=False)
     # and the automated reply is also sent on to village chat
     mock_create.assert_any_call(
-        None, student, reply, in_reply_to=phone, email_notifications=False)
-    # email notification of the signup is sent
-    assert len(mail.outbox) == 1
-    assert mail.outbox[0].to == ['teacher@example.com']
+        None, student, reply, in_reply_to=phone, notifications=False)
+    mock_record_notification.assert_called_with('new_parent', teacher_rel.elder, signup)
 
 
 def test_code_signup_name_strips_extra_lines(db):
@@ -620,37 +619,6 @@ def test_unusually_long_parent_name_tracked(db):
     mock_track.assert_called_with('long answer', phone, msg)
 
 
-
-def test_code_signup_name_no_notification(db):
-    """Finish signup sends no notification if teacher doesn't want them."""
-    phone = '+13216430987'
-    teacher_rel = factories.RelationshipFactory.create(
-        from_profile__school_staff=True,
-        from_profile__notify_new_parent=False,
-        from_profile__user__email='teacher@example.com',
-        to_profile__name="Jimmy Doe",
-        )
-    parent_rel = factories.RelationshipFactory.create(
-        from_profile__name="John Doe",
-        from_profile__role="",
-        from_profile__phone=phone,
-        from_profile__invited_by=teacher_rel.elder,
-        to_profile=teacher_rel.student,
-        )
-    factories.TextSignupFactory.create(
-        family=parent_rel.elder,
-        teacher=teacher_rel.elder,
-        student=teacher_rel.student,
-        state=model.TextSignup.STATE.name,
-        )
-
-    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
-        hook.receive_sms(phone, settings.DEFAULT_NUMBER, "father")
-
-    # no email notification of the signup is sent
-    assert not len(mail.outbox)
-
-
 def test_subsequent_signup(db):
     """A parent can send a second code after completing first signup."""
     phone = '+13216430987'
@@ -666,9 +634,13 @@ def test_subsequent_signup(db):
     other_teacher = factories.ProfileFactory.create(
         code='ABCDEF', name='Ms. Doe')
 
-    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
-            reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
+    rn_tgt = 'portfoliyo.tasks.record_notification.delay'
+    create_tgt = 'portfoliyo.sms.hook.model.Post.create'
+    with mock.patch('portfoliyo.sms.hook.track_signup') as mock_track:
+        with mock.patch(rn_tgt) as mock_record_notification:
+            with mock.patch(create_tgt) as mock_create:
+                reply = hook.receive_sms(
+                    phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too.")
@@ -691,9 +663,15 @@ def test_subsequent_signup(db):
         signup.student,
         reply,
         in_reply_to=u'+13216430987',
-        email_notifications=False,
+        notifications=False,
         )
+    assert mock_record_notification.call_count == 2
+    mock_record_notification.assert_any_call(
+        'village_additions', signup.family, [other_teacher], [signup.student])
+    mock_record_notification.assert_any_call(
+        'new_parent', other_teacher, new_signup)
     mock_track.assert_called_with(signup.family, other_teacher, None)
+
 
 
 def test_subsequent_signup_with_language(db):
@@ -735,8 +713,11 @@ def test_subsequent_signup_when_teacher_already_in_village(db):
     factories.RelationshipFactory.create(
         from_profile=signup.family, to_profile=signup.student)
 
-    with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
+    rn_tgt = 'portfoliyo.tasks.record_notification.delay'
+    create_tgt = 'portfoliyo.sms.hook.model.Post.create'
+    with mock.patch(rn_tgt) as mock_record_notification:
+        with mock.patch(create_tgt) as mock_create:
+            reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply is None
     assert signup.family.signups.count() == 1
@@ -747,6 +728,8 @@ def test_subsequent_signup_when_teacher_already_in_village(db):
         "ABCDEF",
         from_sms=True,
         )
+    assert mock_record_notification.call_count == 0
+
 
 
 def test_subsequent_group_signup(db):

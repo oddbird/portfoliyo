@@ -6,7 +6,7 @@ from django.db import models
 from django.utils import dateformat, html, timezone
 from jsonfield import JSONField
 
-from portfoliyo import notifications, tasks
+from portfoliyo import tasks
 from ..users import models as user_models
 from . import unread
 
@@ -52,6 +52,8 @@ class BasePost(models.Model):
     # arbitrary additional metadata, currently just SMSes
     meta = JSONField(default={})
 
+    is_bulk = None
+
 
     class Meta:
         abstract = True
@@ -76,10 +78,9 @@ class BasePost(models.Model):
         """
         Send SMS notifications for this post.
 
-        ``profile_ids`` is a list of Profile IDs who should receive
-        notifications. Only profiles in this list who also are active, have
-        phone numbers, and have not declined sms notifications, will receive
-        texts.
+        ``profile_ids`` is a list of Profile IDs who should receive SMSes. Only
+        profiles in this list who also are active, have phone numbers, and have
+        not declined SMSes, will receive texts.
 
         Sets self.to_sms to True if any texts were sent, False otherwise, and
         self.meta['sms'] to a list of dictionaries containing basic metadata
@@ -89,17 +90,17 @@ class BasePost(models.Model):
         meta_sms = []
         sms_sent = False
         if self.author:
-            suffix = notification_suffix(self.get_relationship() or self.author)
+            suffix = sms_suffix(self.get_relationship() or self.author)
         else:
             suffix = u""
         sms_body = self.original_text + suffix
 
-        to_notify = sms_eligible(self.elders_in_context).filter(
+        to_sms = sms_eligible(self.elders_in_context).filter(
             models.Q(pk__in=profile_ids) | models.Q(phone=in_reply_to))
 
         to_mark_done = []
 
-        for elder in to_notify:
+        for elder in to_sms:
             sms_data = {
                 'id': elder.id,
                 'role': elder.role_in_context,
@@ -126,23 +127,9 @@ class BasePost(models.Model):
 
 
 
-    def notify_email(self, from_sms):
-        """Send email notifications to eligible users."""
-        # No email notifications on system-generated posts:
-        if not self.author:
-            return
-        filters = {
-            'user__email__isnull': False,
-            'user__is_active': True,
-            }
-        if from_sms:
-            filters['notify_parent_text'] = True
-        else:
-            filters['notify_teacher_post'] = True
-        send_to = self.elders_in_context.filter(
-            **filters).exclude(pk=self.author.pk)
-        for profile in send_to:
-            notifications.send_post_email_notification(profile, self)
+    def notify(self):
+        """Record notifications for eligible users."""
+        tasks.record_notification.delay('post_all', self)
 
 
     def get_relationship(self):
@@ -155,6 +142,9 @@ class BulkPost(BasePost):
     # the group this was posted to (null means all-students for this author)
     group = models.ForeignKey(
         user_models.Group, blank=True, null=True, related_name='bulk_posts')
+
+
+    is_bulk = True
 
 
     def extra_data(self):
@@ -189,8 +179,8 @@ class BulkPost(BasePost):
 
         It is currently not allowed for both to be ``None``.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
-        notification of this post.
+        ``sms_profile_ids`` is a list of Profile IDs who should receive this
+        post as an SMS.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -256,7 +246,7 @@ class BulkPost(BasePost):
         tasks.push_event.delay(
             'bulk_posted', post.id, author_sequence_id=sequence_id)
 
-        post.notify_email(from_sms)
+        post.notify()
 
         if author and not author.has_posted:
             user_models.Profile.objects.filter(pk=author.pk).update(
@@ -279,6 +269,9 @@ class Post(BasePost):
         BulkPost, blank=True, null=True, related_name='triggered')
 
 
+    is_bulk = False
+
+
     def extra_data(self):
         """Return any extra data for serialization."""
         return {'student_id': self.student_id}
@@ -294,12 +287,12 @@ class Post(BasePost):
     @classmethod
     def create(cls, author, student, text,
                sms_profile_ids=None, sequence_id=None, from_sms=False,
-               in_reply_to=None, email_notifications=True):
+               in_reply_to=None, notifications=True):
         """
-        Create/return a Post, triggering a Pusher event and SMS notifications.
+        Create/return a Post, triggering a Pusher event and SMSes.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive SMS
-        notification of this post.
+        ``sms_profile_ids`` is a list of Profile IDs who should receive this
+        post as an SMS.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -310,8 +303,8 @@ class Post(BasePost):
         ``in_reply_to`` can be set to a phone number, in which case it will be
         assumed that an SMS was already sent to that number.
 
-        If ``email_notifications`` is ``False``, no email notifications of this
-        post will be sent.
+        If ``notifications`` is ``False``, this post won't be included in
+        activity notifications.
 
         """
         html_text = text2html(text)
@@ -339,9 +332,6 @@ class Post(BasePost):
             if elder.user.email and elder != author:
                 unread.mark_unread(post, elder)
 
-        if email_notifications:
-            post.notify_email(from_sms)
-
         tasks.push_event.delay(
             'posted',
             post.id,
@@ -349,6 +339,9 @@ class Post(BasePost):
             mark_read_url=reverse(
                 'mark_post_read', kwargs={'post_id': post.id}),
             )
+
+        if notifications:
+            post.notify()
 
         if author and not author.has_posted:
             user_models.Profile.objects.filter(pk=author.pk).update(
@@ -373,8 +366,7 @@ def text2html(text):
     return html.escape(text).replace('\n', '<br>')
 
 
-
-def notification_suffix(elder_or_rel):
+def sms_suffix(elder_or_rel):
     """The suffix for texts sent out from this elder or relationship."""
     return u' --%s' % elder_or_rel.name_or_role
 
@@ -382,7 +374,7 @@ def notification_suffix(elder_or_rel):
 
 def post_char_limit(elder_or_rel):
     """Max length for posts from this elder or relationship."""
-    return 160 - len(notification_suffix(elder_or_rel))
+    return 160 - len(sms_suffix(elder_or_rel))
 
 
 

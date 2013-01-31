@@ -10,7 +10,7 @@ def user_networks():
     networks = []
     networks_by_user = {}
 
-    for rel in models.Relationship.objects.all():
+    for rel in models.Relationship.objects.order_by('id'):
         fpid, tpid = rel.from_profile_id, rel.to_profile_id
 
         fpid_net = networks_by_user.get(fpid)

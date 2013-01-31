@@ -5,10 +5,11 @@ from portfoliyo import email
 
 
 
-def test_send_multipart():
+def test_send_templated_multipart():
     with mock.patch('portfoliyo.email.render_to_string') as mock_render:
         mock_render.side_effect = ['first', 'second', 'third\nhere']
-        email.send_multipart('some/template', {'a': 1}, ['foo@example.com'])
+        email.send_templated_multipart(
+            'some/template', {'a': 1}, ['foo@example.com'])
 
     mock_render.assert_any_call('some/template.txt', {'a': 1})
     mock_render.assert_any_call('some/template.html', {'a': 1})

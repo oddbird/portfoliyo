@@ -1,0 +1,6 @@
+{% load humanize %}
+{% if signups|length == 1 %}
+{{ signups.0.student }}'s {{ signups.0.role }} ({{ signups.0.family }}) just signed up.
+{% else %}
+You have {{ signups|length|apnumber }} new signups.
+{% endif %}

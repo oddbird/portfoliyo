@@ -780,7 +780,7 @@ class TestVillage(GroupContextTests):
 
 
     @pytest.mark.parametrize('link_target', ['invite_teacher', 'invite_family'])
-    def test_link_only_if_staff(self, client, link_target, db):
+    def test_link_only_if_staff(self, client, link_target):
         """Link with given target is only present for school staff."""
         parent_rel = factories.RelationshipFactory.create(
             from_profile__school_staff=False)

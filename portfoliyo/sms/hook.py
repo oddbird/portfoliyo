@@ -4,7 +4,7 @@ import logging
 from django.conf import settings
 from django.utils import timezone
 
-from portfoliyo import model, notifications, tasks
+from portfoliyo import model, tasks
 from . import messages
 
 
@@ -145,7 +145,8 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
     state to the new signup so we still get answers to the questions.
 
     """
-    student = profile.students[0] if profile.students else None
+    students = profile.students
+    student = students[0] if students else None
 
     if profile.lang_code != lang:
         profile.lang_code = lang
@@ -191,13 +192,18 @@ def handle_subsequent_code(profile, body, teacher, group, lang, signup):
 
     track_signup(profile, teacher, group)
 
-    model.TextSignup.objects.create(
+    new_signup = model.TextSignup.objects.create(
         family=profile,
         teacher=teacher,
         group=group,
         student=student,
         state=next_state,
         )
+
+    if student and created:
+        tasks.record_notification.delay('new_parent', teacher, new_signup)
+        tasks.record_notification.delay(
+            'village_additions', profile, [teacher], [student])
 
     return reply(profile.phone, [student] if student else [], msg)
 
@@ -242,7 +248,7 @@ def handle_new_student(signup, body):
         student,
         body,
         from_sms=True,
-        email_notifications=False,
+        notifications=False,
         )
     return reply(
         signup.family.phone,
@@ -266,7 +272,7 @@ def handle_role_update(signup, body):
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, body, from_sms=True, email_notifications=False)
+            parent, rel.student, body, from_sms=True, notifications=False)
     return reply(
         parent.phone,
         parent.students,
@@ -283,13 +289,11 @@ def handle_name_update(signup, body):
     parent.save()
     signup.state = model.TextSignup.STATE.done
     signup.save()
-    teacher = signup.teacher
     student_rels = parent.student_relationships
     for rel in student_rels:
         model.Post.create(
-            parent, rel.student, body, from_sms=True, email_notifications=False)
-        if teacher and teacher.notify_new_parent and teacher.user.email:
-            notifications.send_signup_email_notification(teacher, rel)
+            parent, rel.student, body, from_sms=True, notifications=False)
+    tasks.record_notification.delay('new_parent', signup.teacher, signup)
     return reply(
         parent.phone,
         parent.students,
@@ -390,7 +394,7 @@ def reply(phone, students, body):
     """Save given reply to given students' villages before returning it."""
     for student in students:
         model.Post.create(
-            None, student, body, in_reply_to=phone, email_notifications=False)
+            None, student, body, in_reply_to=phone, notifications=False)
     return body
 
 

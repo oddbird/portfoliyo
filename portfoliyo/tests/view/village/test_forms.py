@@ -228,7 +228,7 @@ class TestInviteTeacherForm(object):
         return defaults
 
 
-    def test_creates_profile(self, db):
+    def test_invite_new_creates_profile(self, db):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(
             self.data(email='bar@EXAMPLE.com'), rel=rel)
@@ -239,7 +239,7 @@ class TestInviteTeacherForm(object):
         assert profile.school_staff
 
 
-    def test_sends_invite_email(self, db):
+    def test_invite_new_sends_invite_email(self, db):
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(
             self.data(email='bar@EXAMPLE.com'), rel=rel)
@@ -385,7 +385,7 @@ class TestInviteTeacherForm(object):
         assert profile.country_code == 'ca'
 
 
-    def test_user_inactive(self, db):
+    def test_new_user_inactive(self, db):
         """New user invited by email is inactive."""
         rel = factories.RelationshipFactory.create()
         form = forms.InviteTeacherForm(self.data(), rel=rel)
@@ -444,17 +444,70 @@ class TestInviteTeacherForm(object):
         assert profile.role == u'something'
 
 
-    def test_relationship_exists(self, db):
+    def test_existing_user_notified(self, db):
+        """If a user with given email already exists, they are notified."""
+        invitee = factories.ProfileFactory.create(user__email='foo@example.com')
+        rel = factories.RelationshipFactory()
+        form = forms.InviteTeacherForm(
+            self.data(contact='foo@example.COM', students=[rel.student.pk]),
+            rel=rel,
+            )
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            form.save()
+
+        mock_record_notification.assert_called_once_with(
+            'village_additions', rel.elder, [invitee], {rel.student})
+
+
+    def test_no_notification_if_relationship_exists(self, db):
         """If existing teacher is already teacher for student, no error."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
         form = forms.InviteTeacherForm(
-            self.data(contact=rel.elder.user.email), rel=rel)
+            self.data(contact=rel.elder.user.email, students=[rel.student.pk]),
+            rel=rel,
+            )
         assert form.is_valid(), dict(form.errors)
-        profile = form.save()
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            profile = form.save()
 
         assert rel.elder == profile
         assert len(profile.students) == 1
+
+        # no students notified
+        mock_record_notification.assert_called_once_with(
+            'village_additions', rel.elder, [rel.elder], set())
+
+
+    def test_existing_user_notified_of_group(self, db):
+        """Existing teacher's notified of group addition (new students only)."""
+        inviter = factories.ProfileFactory.create()
+        invitee = factories.ProfileFactory.create(user__email='foo@example.com')
+        rel1 = factories.RelationshipFactory.create(from_profile=inviter)
+        rel2 = factories.RelationshipFactory.create(from_profile=inviter)
+        factories.RelationshipFactory.create(
+            from_profile=invitee, to_profile=rel2.student)
+        group = factories.GroupFactory.create(owner=inviter)
+        group.students.add(rel1.student, rel2.student)
+        form = forms.InviteTeacherForm(
+            self.data(
+                contact='foo@example.COM',
+                groups=[group.pk],
+                students=[],
+                ),
+            group=group,
+            )
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            form.save()
+
+        # no notification for rel2.student b/c already had relationship
+        mock_record_notification.assert_called_once_with(
+            'village_additions', inviter, [invitee], {rel1.student})
 
 
 
@@ -848,6 +901,54 @@ class TestStudentForms(object):
         assert profile.student_in_groups.get() == group
 
 
+    def test_add_student_with_teacher_sends_notification(self, db):
+        """Teacher added to new student is notified."""
+        elder = factories.ProfileFactory.create()
+        other_elder = factories.ProfileFactory.create(
+            school=elder.school, school_staff=True)
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'elders': [other_elder.id],
+                },
+            elder=elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            profile = form.save()
+
+        mock_record_notification.assert_called_once_with(
+            'village_additions', elder, {other_elder}, [profile])
+
+
+    def test_add_student_with_group_sends_notifications(self, db):
+        """Teacher added via group to new student is notified."""
+        group = factories.GroupFactory.create()
+        other_elder = factories.ProfileFactory.create(
+            school=group.owner.school, school_staff=True)
+        group.elders.add(other_elder)
+        form = forms.AddStudentForm(
+            {
+                'name': "Some Student",
+                'groups': [group.id],
+                },
+            elder=group.owner,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            profile = form.save()
+
+        assert mock_record_notification.call_count == 2
+        mock_record_notification.assert_any_call(
+            'village_additions', group.owner, set(), [profile])
+        mock_record_notification.assert_any_call(
+            'village_additions', group.owner, {other_elder}, [profile])
+
+
     def test_edit_student_with_other_school_elder(self, db):
         """Can preserve cross-school elder relationship."""
         rel = factories.RelationshipFactory.create(
@@ -1170,6 +1271,61 @@ class TestStudentForms(object):
         assert set(profile.elders) == {rel.elder, new_elder}
 
 
+    def test_edit_student_add_elder_sends_notification(self, db):
+        """Associating a student with a new teacher sends notification."""
+        rel = factories.RelationshipFactory.create()
+        new_elder = factories.ProfileFactory(
+            school=rel.elder.school, school_staff=True)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [],
+                'elders': [new_elder.pk],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            form.save()
+
+        mock_record_notification.assert_called_once_with(
+            'village_additions', rel.elder, {new_elder}, [rel.student])
+
+
+    def test_edit_student_add_group_sends_notification(self, db):
+        """Associating a student with new elder via group sends notification."""
+        rel = factories.RelationshipFactory.create()
+        new_elder = factories.ProfileFactory(
+            school=rel.elder.school, school_staff=True)
+        other_new_rel = factories.RelationshipFactory(
+            to_profile=rel.student, from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.elders.add(new_elder, other_new_rel.elder)
+        form = forms.StudentForm(
+            {
+                'name': "Some Student",
+                'groups': [group.pk],
+                'elders': [],
+                },
+            instance=rel.student,
+            elder=rel.elder,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            form.save()
+
+        assert mock_record_notification.call_count == 2
+        mock_record_notification.assert_any_call(
+            'village_additions', rel.elder, set(), [rel.student])
+        mock_record_notification.assert_any_call(
+            'village_additions', rel.elder, {new_elder}, [rel.student])
+
+
     def _assert_cannot_add(self, rel, elder=None, group=None):
         form = forms.StudentForm(
             {
@@ -1259,6 +1415,35 @@ class TestGroupForms(object):
         assert set(group.elders.all()) == {elder}
 
 
+    def test_create_group_sends_notifications(self, db):
+        """Sends added-to-village notification for every student/elder combo."""
+        me = factories.ProfileFactory.create(school_staff=True)
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=me.school)
+        rel = factories.RelationshipFactory.create(from_profile=me)
+        other_elder_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student, from_profile__school_staff=True)
+
+        form = forms.AddGroupForm(
+            {
+                'name': 'New Group',
+                'elders': [elder.pk, other_elder_rel.elder.pk],
+                'students': [rel.student.pk],
+                },
+            owner=me,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            form.save()
+
+        # no notification for other_elder_rel.elder, because they already had a
+        # relationship with student
+        mock_record_notification.assert_called_once_with(
+            'village_additions', me, {elder}, [rel.student])
+
+
     def test_edit_group_with_students_and_elders(self, db):
         """Can add/remove students and elders from group when editing."""
         group = factories.GroupFactory.create()
@@ -1284,6 +1469,35 @@ class TestGroupForms(object):
 
         assert len(group.students.all()) == 0
         assert set(group.elders.all()) == {elder}
+
+
+    def test_edit_group_sends_notifications(self, db):
+        """Sends notifications to new student/elder combos."""
+        group = factories.GroupFactory.create()
+        prev_elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+        elder = factories.ProfileFactory.create(
+            school_staff=True, school=group.owner.school)
+        rel = factories.RelationshipFactory.create(from_profile=group.owner)
+        group.students.add(rel.student)
+        group.elders.add(prev_elder)
+
+        form = forms.GroupForm(
+            {
+                'name': 'New Name',
+                'elders': [elder.pk],
+                'students': [rel.student.pk],
+                },
+            instance=group,
+            )
+
+        assert form.is_valid(), dict(form.errors)
+        target = 'portfoliyo.tasks.record_notification.delay'
+        with mock.patch(target) as mock_record_notification:
+            form.save()
+
+        mock_record_notification.assert_called_once_with(
+            'village_additions', group.owner, {elder}, [rel.student])
 
 
     def test_edit_group_with_cross_school_elder(self, db):

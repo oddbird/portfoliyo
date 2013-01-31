@@ -19,7 +19,7 @@ def send_invite_email(profile, template_name, extra_context=None,
     }
     c.update(extra_context or {})
 
-    email.send_multipart(template_name, c, [profile.user.email])
+    email.send_templated_multipart(template_name, c, [profile.user.email])
 
 
 
