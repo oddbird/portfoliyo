@@ -132,6 +132,8 @@ class PostCollector(base.NotificationTypeCollector):
         self._nonrequested_villages = sorted(
             nonrequested, key=lambda v: v.student.name)
 
+        self._populated = True
+
 
     def get_context(self):
         self.populate()

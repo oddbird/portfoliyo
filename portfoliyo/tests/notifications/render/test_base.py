@@ -113,8 +113,8 @@ class TestSend(object):
         assert base.send(recip.id)
         assert len(mail.outbox) == 1
         html_body = mail.outbox[0].alternatives[0][0]
-        assert '<ul class="requested">' in html_body
-        assert '<ul class="nonrequested">' not in html_body
+        assert 'class="requested"' in html_body
+        assert 'class="nonrequested"' not in html_body
 
 
     @pytest.mark.parametrize(
@@ -131,8 +131,8 @@ class TestSend(object):
         assert base.send(recip.id)
         assert len(mail.outbox) == 1
         html_body = mail.outbox[0].alternatives[0][0]
-        assert '<ul class="requested">' not in html_body
-        assert '<ul class="nonrequested">' in html_body
+        assert 'class="requested"' not in html_body
+        assert 'class="nonrequested"' in html_body
 
 
     def assert_multi_email(self,
@@ -189,11 +189,13 @@ class TestSend(object):
         assert base.send(recip.id)
         self.assert_multi_email(
             html_snippets=[
-                '<p>--<br />Don\'t want email notifications? '
+                '<p>Don\'t want email notifications from Portfoliyo? '
                 '<a href="%(url)s">Edit your profile</a>.</p>'
                 ],
             text_snippets=[
-                "--\nDon't want email notifications? Edit your profile: %(url)s"
+                "----\n"
+                "Don't want email notifications from Portfoliyo? "
+                "Edit your profile: %(url)s"
                 ],
             snippet_context={'url': reverse('edit_profile')},
             )
@@ -208,7 +210,7 @@ class TestSend(object):
                     '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
                     ],
                 'text': [
-                    "- Teacher1 added you to StudentX's village. "
+                    "# Teacher1 added you to StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s"
                     ]
                 },
@@ -217,15 +219,14 @@ class TestSend(object):
                     ("Teacher1", "StudentX"), ("Teacher1", "StudentY")],
                 'subject': "Teacher1 added you to two villages.",
                 'html': [
-                    '<li>Teacher1 added you to two student villages: <ul>'
-                    '<li><a href="%(StudentXUrl)s">StudentX</a></li>'
-                    '<li><a href="%(StudentYUrl)s">StudentY</a></li>'
-                    '</ul></li>'
+                    '<li>Teacher1 added you to two student villages: '
+                    '<a href="%(StudentXUrl)s">StudentX</a>, '
+                    'and <a href="%(StudentYUrl)s">StudentY</a>.'
                     ],
                 'text': [
-                    '- Teacher1 added you to two student villages:\n'
-                    '-- StudentX: %(StudentXUrl)s\n'
-                    '-- StudentY: %(StudentYUrl)s\n'
+                    '# Teacher1 added you to two student villages:\n'
+                    '  - StudentX: %(StudentXUrl)s\n'
+                    '  - StudentY: %(StudentYUrl)s\n'
                     ],
                 },
             {
@@ -239,9 +240,9 @@ class TestSend(object):
                     '<a href="%(StudentYUrl)s">StudentY\'s village</a>.</li>',
                     ],
                 'text': [
-                    "- Teacher1 added you to StudentX's village. "
+                    "# Teacher1 added you to StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s",
-                    "- Teacher2 added you to StudentY's village. "
+                    "# Teacher2 added you to StudentY's village. "
                     "Start a conversation: %(StudentYUrl)s",
                     ],
                 },
@@ -257,7 +258,7 @@ class TestSend(object):
                     '</li>'
                     ],
                 'text': [
-                    '- Teacher1 added you to two student villages: '
+                    '# Teacher1 added you to two student villages: '
                     'StudentX, and StudentY.'
                     ],
                 },
@@ -279,7 +280,7 @@ class TestSend(object):
                     '</li>'
                     ],
                 'text': [
-                    '- Teacher1 added you to four student villages: '
+                    '# Teacher1 added you to four student villages: '
                     'StudentW, StudentX, StudentY, and one more village.'
                     ],
                 },
@@ -319,7 +320,7 @@ class TestSend(object):
                     '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
                     ],
                 'text': [
-                    "- Teacher1 joined StudentX's village. "
+                    "# Teacher1 joined StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s"
                     ],
                 },
@@ -327,7 +328,7 @@ class TestSend(object):
                 'scenario': (["StudentX", "StudentY"], ["Teacher1"]),
                 'subject': "Teacher1 joined two of your villages.",
                 'html': [
-                    '<ul class="requested">'
+                    '<ul>'
                     '<li>Teacher1 joined '
                     '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
                     '<li>Teacher1 joined '
@@ -335,9 +336,9 @@ class TestSend(object):
                     '</ul>'
                     ],
                 'text': [
-                    "- Teacher1 joined StudentX's village. "
+                    "# Teacher1 joined StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s\n"
-                    "- Teacher1 joined StudentY's village. "
+                    "# Teacher1 joined StudentY's village. "
                     "Start a conversation: %(StudentYUrl)s\n"
                     ],
                 },
@@ -345,7 +346,7 @@ class TestSend(object):
                 'scenario': (["StudentX"], ["Teacher1", "Teacher2"]),
                 'subject': "Two teachers joined StudentX's village.",
                 'html': [
-                    '<ul class="requested">'
+                    '<ul>'
                     '<li>Teacher1 joined '
                     '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
                     '<li>Teacher2 joined '
@@ -353,9 +354,9 @@ class TestSend(object):
                     '</ul>'
                     ],
                 'text': [
-                    "- Teacher1 joined StudentX's village. "
+                    "# Teacher1 joined StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s\n"
-                    "- Teacher2 joined StudentX's village. "
+                    "# Teacher2 joined StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s\n"
                     ],
                 },
@@ -364,7 +365,7 @@ class TestSend(object):
                     ["StudentX", "StudentY"], ["Teacher1", "Teacher2"]),
                 'subject': "Two teachers joined two of your villages.",
                 'html': [
-                    '<ul class="requested">'
+                    '<ul>'
                     '<li>Teacher1 joined '
                     '<a href="%(StudentXUrl)s">StudentX\'s village</a>.</li>'
                     '<li>Teacher2 joined '
@@ -376,13 +377,13 @@ class TestSend(object):
                     '</ul>'
                     ],
                 'text': [
-                    "- Teacher1 joined StudentX's village. "
+                    "# Teacher1 joined StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s\n"
-                    "- Teacher2 joined StudentX's village. "
+                    "# Teacher2 joined StudentX's village. "
                     "Start a conversation: %(StudentXUrl)s\n"
-                    "- Teacher1 joined StudentY's village. "
+                    "# Teacher1 joined StudentY's village. "
                     "Start a conversation: %(StudentYUrl)s\n"
-                    "- Teacher2 joined StudentY's village. "
+                    "# Teacher2 joined StudentY's village. "
                     "Start a conversation: %(StudentYUrl)s\n"
                     ],
                 },
@@ -419,7 +420,7 @@ class TestSend(object):
                     '<a href="%(StudentXUrl)s">StudentX</a>\'s Dad.</li>'
                     ],
                 'text': [
-                    "- ParentX signed up as StudentX's Dad. "
+                    "# ParentX signed up as StudentX's Dad. "
                     "Start a conversation: %(StudentXUrl)s"
                     ],
                 },
@@ -430,7 +431,7 @@ class TestSend(object):
                     ],
                 'subject': "You have two new signups.",
                 'html': [
-                    '<ul class="requested">'
+                    '<ul>'
                     '<li>ParentX signed up as '
                     '<a href="%(StudentXUrl)s">StudentX</a>\'s Dad.</li>'
                     '<li>ParentY signed up as '
@@ -439,9 +440,9 @@ class TestSend(object):
                     '</ul>'
                     ],
                 'text': [
-                    "- ParentX signed up as StudentX's Dad. "
+                    "# ParentX signed up as StudentX's Dad. "
                     "Start a conversation: %(StudentXUrl)s\n"
-                    "- ParentY signed up as StudentY's Mom in the Math group. "
+                    "# ParentY signed up as StudentY's Mom in the Math group. "
                     "Start a conversation: %(StudentYUrl)s"
                     ],
                 },
@@ -479,21 +480,16 @@ class TestSend(object):
                     ],
                 'subject': "New message in StX's village.",
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
+                    '<h2><a href="%(StXUrl)s">StX\'s village</a>:</h2>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>'
+                    '</h3>',
+                    '<p>html: hello</p>',
                     ],
                 'text': [
-                    'In StX\'s village:\n'
+                    '# StX\'s village:\n'
                     '  "hello" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
                     'Log in to reply: %(StXUrl)s'
                     ],
@@ -505,32 +501,22 @@ class TestSend(object):
                     ],
                 'subject': "New messages in StX's village.",
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
+                    '<h2><a href="%(StXUrl)s">StX\'s village</a>:</h2>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
-                    '1/14/2013 at 6 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
+                    '</h3>',
+                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: again</p>'
-                    '</article>'
+                    '</h3>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<p>html: again</p>',
                     ],
                 'text': [
-                    'In StX\'s village:\n'
+                    '# StX\'s village:\n'
                     '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
                     '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
                     'Log in to reply: %(StXUrl)s'
@@ -543,32 +529,22 @@ class TestSend(object):
                     ],
                 'subject': "New message in StX's village.",
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
-                    '<article class="post">'
-                    '<header class="post-meta">'
+                    '<h2><a href="%(StXUrl)s">StX\'s village</a>:</h2>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
-                    '1/14/2013 at 6 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
+                    '</h3>',
+                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: again</p>'
-                    '</article>'
+                    '</h3>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<p>html: again</p>',
                     ],
                 'text': [
-                    'In StX\'s village:\n'
+                    '# StX\'s village:\n'
                     '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
                     '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
                     'Log in to reply: %(StXUrl)s'
@@ -581,13 +557,13 @@ class TestSend(object):
                     ],
                 'subject': "New messages in two of your villages.",
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
-                    '<h2>In <a href="%(StYUrl)s">StY\'s village</a>:</h2>',
+                    '<h2><a href="%(StXUrl)s">StX\'s village</a>:</h2>',
+                    '<h2><a href="%(StYUrl)s">StY\'s village</a>:</h2>',
                     ],
                 'text': [
-                    'In StX\'s village:\n',
+                    '# StX\'s village:\n',
                     'Log in to reply: %(StXUrl)s',
-                    'In StY\'s village:\n',
+                    '# StY\'s village:\n',
                     'Log in to reply: %(StYUrl)s',
                     ],
                 },
@@ -738,21 +714,16 @@ class TestSend(object):
                     ],
                 'subject': "New message in StX's village.",
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX\'s village</a>:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
+                    '<h2><a href="%(StXUrl)s">StX\'s village</a>:</h2>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teacher1</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>'
+                    '</h3>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<p>html: hello</p>',
                     ],
                 'text': [
-                    'In StX\'s village:\n'
+                    '# StX\'s village:\n'
                     '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
                     'Log in to reply: %(StXUrl)s'
                     ],
@@ -763,22 +734,17 @@ class TestSend(object):
                     ],
                 'subject': "Teacher1 sent a message in two of your villages.",
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<h2><a href="%(StXUrl)s">StX</a> and '
                     '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teacher1</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>'
+                    '</h3>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<p>html: hello</p>',
                     ],
                 'text': [
-                    'In StX and StY\'s villages:\n'
+                    '# StX and StY\'s villages:\n'
                     '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
                     ],
                 },
@@ -789,33 +755,23 @@ class TestSend(object):
                     ],
                 'subject': "Teach1 sent two messages in two of your villages.",
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<h2><a href="%(StXUrl)s">StX</a> and '
                     '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
-                    '1/14/2013 at 6 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
+                    '</h3>',
+                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: again</p>'
-                    '</article>'
+                    '</h3>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<p>html: again</p>',
                     ],
                 'text': [
-                    'In StX and StY\'s villages:\n'
+                    '# StX and StY\'s villages:\n'
                     '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n'
                     '  "again" - Teach1 (Teacher), 1/14/2013 at 7 p.m.\n'
                     ],
@@ -830,33 +786,23 @@ class TestSend(object):
                     "two of your villages."
                     ),
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<h2><a href="%(StXUrl)s">StX</a> and '
                     '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
-                    '1/14/2013 at 6 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
+                    '</h3>',
+                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach2</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hi</p>'
-                    '</article>'
+                    '</h3>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<p>html: hi</p>'
                     ],
                 'text': [
-                    'In StX and StY\'s villages:\n'
+                    '# StX and StY\'s villages:\n'
                     '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n'
                     '  "hi" - Teach2 (Teacher), 1/14/2013 at 7 p.m.\n'
                     ],
@@ -871,37 +817,27 @@ class TestSend(object):
                     "three of your villages."
                     ),
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '<h2><a href="%(StXUrl)s">StX</a> and '
                     '<a href="%(StYUrl)s">StY</a>\'s villages:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T18:00:00-05:00">'
-                    '1/14/2013 at 6 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hello</p>'
-                    '</article>',
-                    '<h2>In <a href="%(StXUrl)s">StX</a> and '
+                    '</h3>',
+                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<p>html: hello</p>',
+                    '<h2><a href="%(StXUrl)s">StX</a> and '
                     '<a href="%(StZUrl)s">StZ</a>\'s villages:</h2>',
-                    '<article class="post new">'
-                    '<header class="post-meta">'
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach2</span>'
-                    '</h3>'
-                    '<time class="pubdate" datetime="2013-01-14T19:00:00-05:00">'
-                    '1/14/2013 at 7 p.m.</time>'
-                    '</header>'
-                    '<p class="post-text">html: hi</p>'
-                    '</article>'
+                    '</h3>',
+                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<p>html: hi</p>'
                     ],
                 'text': [
-                    'In StX and StY\'s villages:\n'
+                    '# StX and StY\'s villages:\n'
                     '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n',
-                    'In StX and StZ\'s villages:\n'
+                    '# StX and StZ\'s villages:\n'
                     '  "hi" - Teach2 (Teacher), 1/14/2013 at 7 p.m.\n'
                     ],
                 },
@@ -918,12 +854,12 @@ class TestSend(object):
                     "Teach1 sent a message in three of your villages."
                     ),
                 'html': [
-                    '<h2>In <a href="%(StXUrl)s">StX</a>, '
+                    '<h2><a href="%(StXUrl)s">StX</a>, '
                     '<a href="%(StYUrl)s">StY</a> and '
                     '<a href="%(StZUrl)s">StZ</a>\'s villages:</h2>',
                     ],
                 'text': [
-                    'In StX, StY and StZ\'s villages:\n'
+                    '# StX, StY and StZ\'s villages:\n'
                     ],
                 },
             { # a bulk post in four villages
@@ -939,13 +875,13 @@ class TestSend(object):
                     "Teach1 sent a message in four of your villages."
                     ),
                 'html': [
-                    '<h2>In <a href="%(StWUrl)s">StW</a>, '
+                    '<h2><a href="%(StWUrl)s">StW</a>, '
                     '<a href="%(StXUrl)s">StX</a>, '
                     '<a href="%(StYUrl)s">StY</a>, '
                     'and one more village:</h2>',
                     ],
                 'text': [
-                    'In StW, StX, StY, and one more village:\n'
+                    '# StW, StX, StY, and one more village:\n'
                     ],
                 },
             { # a bulk post in five villages
@@ -961,13 +897,13 @@ class TestSend(object):
                     "Teach1 sent a message in five of your villages."
                     ),
                 'html': [
-                    '<h2>In <a href="%(StWUrl)s">StW</a>, '
+                    '<h2><a href="%(StWUrl)s">StW</a>, '
                     '<a href="%(StXUrl)s">StX</a>, '
                     '<a href="%(StYUrl)s">StY</a>, '
                     'and two more villages:</h2>',
                     ],
                 'text': [
-                    'In StW, StX, StY, and two more villages:\n'
+                    '# StW, StX, StY, and two more villages:\n'
                     ],
                 },
             { # nonrequested bulk posts by two teachers
