@@ -61,9 +61,10 @@
 
   .no-sms {
     @extend %parent-status-icon;
-    @extend %icon-replace;
+    @extend %button-icon;
     @extend %icon-close;
-    &:before { color: $red; }
+    @include button-color($red);
+    @include inset;
   }
 }
 
@@ -76,7 +77,6 @@
   @extend %parent-status-icon;
   @extend %button-icon;
   @extend %icon-bubble;
-  @include button-color(color($green lightest));
-  // #{$focus} { background-color: ; }
+  @include button-color($base3);
 }
 

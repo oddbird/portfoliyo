@@ -425,11 +425,15 @@ function program4(depth0,data) {
   buffer += escapeExpression(stack1) + "\" class=\"action-addsingle ajax-link\">add a student by hand »</a>";
   return buffer;}
 
-  buffer += "<h2 class=\"listitem title grouptitle\">\n  <a href=\"#\" class=\"action-back groups\" title=\"Go back to group list\">Back</a>\n  <a href=\"";
+  buffer += "<div class=\"grouptitle\">\n  <a href=\"#\" class=\"action-back groups\" title=\"List groups\">List groups</a>\n  <h2 class=\"group-name\">";
+  foundHelper = helpers.group_name;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "</h2>\n  <a href=\"";
   foundHelper = helpers.group_url;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.group_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\" class=\"group-link ajax-link listitem-select\" data-group-name=\"";
+  buffer += escapeExpression(stack1) + "\" class=\"group-feed ajax-link\" data-group-name=\"";
   foundHelper = helpers.group_name;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
@@ -461,11 +465,11 @@ function program4(depth0,data) {
   foundHelper = helpers.removed;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.removed; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\">\n    <span class=\"listitem-name\">";
+  buffer += escapeExpression(stack1) + "\">\n    Send a message to ";
   foundHelper = helpers.group_name;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "</span>\n  </a>\n</h2>\n\n<ul class=\"itemlist\">\n  ";
+  buffer += escapeExpression(stack1) + "\n  </a>\n</div>\n\n<ul class=\"itemlist\">\n  ";
   stack1 = depth0;
   stack1 = self.invokePartial(partials.student_list_items, 'student_list_items', stack1, helpers, partials);;
   if(stack1 || stack1 === 0) { buffer += stack1; }

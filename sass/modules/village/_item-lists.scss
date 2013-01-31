@@ -19,12 +19,15 @@ $village-list-size      : $smallpx;
   }
 }
 
-.additems { margin: $box-padding*2; }
+.itemlist { @extend %overflow-y; }
+
+.additems { padding: $box-padding*2; }
 
 [class*="additem-"] {
   @extend %button;
   @extend %icon;
   @extend %icon-plus;
+  @extend %ellipsis;
   @include button-color(color($green lightest));
   margin: $box-padding*2;
   display: block;

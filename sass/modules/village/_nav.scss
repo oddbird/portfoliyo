@@ -14,7 +14,7 @@ $village-nav-action-color : $base03;
   @extend %village-nav-span;
   @include trailing-border(1px,$village-nav-rhythm,$village-list-size);
   @include padding-leader($village-nav-rhythm,$village-list-size);
-  border-color: $village-border-color;
+  border-color: $base2;
   padding-left: $box-padding;
 }
 
@@ -22,15 +22,77 @@ $village-nav-action-color : $base03;
   @extend %error;
 }
 
+// ---------------------------------------------------------------------------
+// Group Titles
+
+%grouptitle-button {
+  @extend %button-icon;
+  @include button-color($base3);
+  position: absolute;
+  top: $box-padding;
+}
+
+.grouptitle {
+  @include box-shadow($inset-color 0 0 $inset-size);
+  @include trailing-border(1px,.25);
+  padding: {
+    top: $box-padding;
+    left: $box-padding;
+    right: $box-padding;
+  }
+  background: color($base3 light);
+  border-color: $village-border-color;
+}
+
+.group-name {
+  padding: 0 rhythm(1.5);
+  font-weight: bold;
+  text-align: center;
+}
+
+.action-back {
+  @extend %grouptitle-button;
+  @extend %icon-users-list;
+  left: $box-padding;
+}
+
+.group-feed {
+  @extend %grouptitle-button;
+  @extend %icon-bubble;
+  right: $box-padding;
+  &.active {
+    @include button-color($blue);
+    @include inset;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Lists
+
+@mixin calc-height($calc, $fallback) {
+  $calc: unquote($calc);
+  height: $fallback;
+  height: -webkit-calc(#{$calc});
+  height: -moz-calc(#{$calc});
+  height: -o-calc(#{$calc});
+  height: calc(#{$calc});
+}
+
 .village-nav {
   @extend %village-lists;
-  @extend %overflow-y;
   @include span-columns($left);
   position: relative;
+  height: 100%;
   margin: 0;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
-  z-index: 15;
+  z-index: 50;
+  .itemlist { @include calc-height('100% - 7.5rem',rhythm(16)); }
+  .additems {
+    @include leading-border(1px,.25);
+    @include box-shadow($inset-color 0 0 $inset-size);
+    border-color: $village-border-color;
+  }
 }
 
 .listitem {
@@ -42,24 +104,12 @@ $village-nav-action-color : $base03;
   @extend %village-nav-item;
   @extend %village-activenav;
   #{$link} {
-    .title & {
-      color: $back;
-      background: rgba($village-nav-title-bg,.25);
-      font-weight: bold;
-      &.active {
-        background: $base1;
-        color: $base3;
-      }
-    }
     .group & {
       @extend %icon;
       @extend %icon-users;
     }
   }
-  #{$focus} {
-    background: rgba($base2,.5);
-    .title & { background: rgba($village-nav-title-bg,.5); }
-  }
+  #{$focus} { background: rgba($base2,.5); }
 
   .unread {
     @include adjust-font-size-to($smallpx,.75,$village-list-size);
@@ -73,25 +123,5 @@ $village-nav-action-color : $base03;
     color: $base3;
     text-align: center;
     &.zero { display: none; }
-  }
-}
-
-.action-back.groups {
-  @extend %icon-replace;
-  @extend %icon-users-list;
-  @include leader($village-nav-rhythm);
-  @include border-radius(.125em);
-  @include rem(width, rhythm(1));
-  position: relative;
-  overflow: hidden;
-  float: left;
-  margin-right: .4rem;
-  margin-left: $box-padding;
-  color: $base3;
-  background: rgba($back,.5);
-  z-index: 6;
-  #{$focus} {
-    @extend %icon-arrow-left;
-    background: $accent;
   }
 }
