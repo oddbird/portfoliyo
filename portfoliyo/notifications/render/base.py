@@ -65,13 +65,15 @@ def render(profile, clear=True):
     if not collection:
         raise NothingToDo()
 
-    subject = render_to_string(
-        collection.get_subject_template(), collection.context)
+    context = collection.context
+    context['BASE_URL'] = settings.PORTFOLIYO_BASE_URL
+
+    subject = render_to_string(collection.get_subject_template(), context)
 
     text = consecutive_newlines.sub(
-        '\n\n', render_to_string(TEXT_TEMPLATE, collection.context))
+        '\n\n', render_to_string(TEXT_TEMPLATE, context))
     html = premailer.transform(
-        render_to_string(HTML_TEMPLATE, collection.context),
+        render_to_string(HTML_TEMPLATE, context),
         base_url=settings.PORTFOLIYO_BASE_URL,
         )
 

@@ -6,7 +6,7 @@
   {% include "notifications/activity/includes/_post.txt" %}
 {% endfor %}
 
-Log in to reply: {% url 'village' student_id=village.student.id %}
+Log in to reply: {{ BASE_URL }}{% url 'village' student_id=village.student.id %}
 
 {% if forloop.last and not any_requested_bulk_posts %}{% else %}--{% endif %}
 {% endfor %}

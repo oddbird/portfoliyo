@@ -1,6 +1,7 @@
 """Integration tests for email-sending."""
 from datetime import datetime, timedelta
 
+from django.conf import settings
 from django.core import mail
 from django.core.urlresolvers import reverse
 from django.test import html
@@ -159,6 +160,9 @@ class TestSend(object):
         if subject is not None:
             assert email.subject == subject
 
+        snippet_context = snippet_context or {}
+        snippet_context['base'] = settings.PORTFOLIYO_BASE_URL
+
         assert len(email.alternatives) == 1
         assert email.alternatives[0][1] == 'text/html'
         parsed_html_body = html.parse_html(email.alternatives[0][0])
@@ -195,7 +199,7 @@ class TestSend(object):
             text_snippets=[
                 "----\n"
                 "Don't want email notifications from Portfoliyo? "
-                "Edit your profile: %(url)s"
+                "Edit your profile: %(base)s%(url)s"
                 ],
             snippet_context={'url': reverse('edit_profile')},
             )
@@ -211,7 +215,7 @@ class TestSend(object):
                     ],
                 'text': [
                     "# Teacher1 added you to StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s"
+                    "Start a conversation: %(base)s%(StudentXUrl)s"
                     ]
                 },
             {
@@ -225,8 +229,8 @@ class TestSend(object):
                     ],
                 'text': [
                     '# Teacher1 added you to two student villages:\n'
-                    '  - StudentX: %(StudentXUrl)s\n'
-                    '  - StudentY: %(StudentYUrl)s\n'
+                    '  - StudentX: %(base)s%(StudentXUrl)s\n'
+                    '  - StudentY: %(base)s%(StudentYUrl)s\n'
                     ],
                 },
             {
@@ -241,9 +245,9 @@ class TestSend(object):
                     ],
                 'text': [
                     "# Teacher1 added you to StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s",
+                    "Start a conversation: %(base)s%(StudentXUrl)s",
                     "# Teacher2 added you to StudentY's village. "
-                    "Start a conversation: %(StudentYUrl)s",
+                    "Start a conversation: %(base)s%(StudentYUrl)s",
                     ],
                 },
             {
@@ -321,7 +325,7 @@ class TestSend(object):
                     ],
                 'text': [
                     "# Teacher1 joined StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s"
+                    "Start a conversation: %(base)s%(StudentXUrl)s"
                     ],
                 },
             {
@@ -337,9 +341,9 @@ class TestSend(object):
                     ],
                 'text': [
                     "# Teacher1 joined StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentXUrl)s\n"
                     "# Teacher1 joined StudentY's village. "
-                    "Start a conversation: %(StudentYUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentYUrl)s\n"
                     ],
                 },
             {
@@ -355,9 +359,9 @@ class TestSend(object):
                     ],
                 'text': [
                     "# Teacher1 joined StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentXUrl)s\n"
                     "# Teacher2 joined StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentXUrl)s\n"
                     ],
                 },
             {
@@ -378,13 +382,13 @@ class TestSend(object):
                     ],
                 'text': [
                     "# Teacher1 joined StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentXUrl)s\n"
                     "# Teacher2 joined StudentX's village. "
-                    "Start a conversation: %(StudentXUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentXUrl)s\n"
                     "# Teacher1 joined StudentY's village. "
-                    "Start a conversation: %(StudentYUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentYUrl)s\n"
                     "# Teacher2 joined StudentY's village. "
-                    "Start a conversation: %(StudentYUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentYUrl)s\n"
                     ],
                 },
             ])
@@ -421,7 +425,7 @@ class TestSend(object):
                     ],
                 'text': [
                     "# ParentX signed up as StudentX's Dad. "
-                    "Start a conversation: %(StudentXUrl)s"
+                    "Start a conversation: %(base)s%(StudentXUrl)s"
                     ],
                 },
             {
@@ -441,9 +445,9 @@ class TestSend(object):
                     ],
                 'text': [
                     "# ParentX signed up as StudentX's Dad. "
-                    "Start a conversation: %(StudentXUrl)s\n"
+                    "Start a conversation: %(base)s%(StudentXUrl)s\n"
                     "# ParentY signed up as StudentY's Mom in the Math group. "
-                    "Start a conversation: %(StudentYUrl)s"
+                    "Start a conversation: %(base)s%(StudentYUrl)s"
                     ],
                 },
             ])
@@ -491,7 +495,7 @@ class TestSend(object):
                 'text': [
                     '# StX\'s village:\n'
                     '  "how\'s it" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
-                    'Log in to reply: %(StXUrl)s'
+                    'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
             { # two new posts in a village
@@ -519,7 +523,7 @@ class TestSend(object):
                     '# StX\'s village:\n'
                     '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
                     '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
-                    'Log in to reply: %(StXUrl)s'
+                    'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
             { # one new post and one context post; note "new" class gone
@@ -547,7 +551,7 @@ class TestSend(object):
                     '# StX\'s village:\n'
                     '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
                     '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
-                    'Log in to reply: %(StXUrl)s'
+                    'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
             { # new posts in two different villages
@@ -562,9 +566,9 @@ class TestSend(object):
                     ],
                 'text': [
                     '# StX\'s village:\n',
-                    'Log in to reply: %(StXUrl)s',
+                    'Log in to reply: %(base)s%(StXUrl)s',
                     '# StY\'s village:\n',
-                    'Log in to reply: %(StYUrl)s',
+                    'Log in to reply: %(base)s%(StYUrl)s',
                     ],
                 },
             { # non-requested post by single author
@@ -725,7 +729,7 @@ class TestSend(object):
                 'text': [
                     '# StX\'s village:\n'
                     '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
-                    'Log in to reply: %(StXUrl)s'
+                    'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
             { # one bulk post by one teacher, seen in two of my villages

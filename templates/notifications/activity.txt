@@ -53,5 +53,5 @@ Also...
 
 
 ----
-Don't want email notifications from Portfoliyo? Edit your profile: {% url 'edit_profile' %}
+Don't want email notifications from Portfoliyo? Edit your profile: {{ BASE_URL }}{% url 'edit_profile' %}
 {% endautoescape %}
