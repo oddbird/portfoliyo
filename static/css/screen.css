@@ -250,18 +250,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\f111";
 }
 
-.icon-group:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
-  content: "\e01b";
-}
-
-.icon-add-student:before, [class*="additem-"][class*="-village"]:before {
-  content: "\e01c";
-}
-
-.icon-add-group:before, [class*="additem-"][class*="-group"]:before {
-  content: "\e01d";
-}
-
 .brand .wordmark:before {
   content: "\e020";
 }
@@ -274,12 +262,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
-.action-back.groups:before {
-  content: "\f0c9";
-}
-
 .page-actions .action-back:before {
   content: "\e01e";
+}
+
+.action-back.groups:before {
+  content: "\e021";
+}
+
+.icon-add-group:before, [class*="additem-"][class*="-group"]:before {
+  content: "\e01d";
+}
+
+.icon-add-student:before, [class*="additem-"][class*="-village"]:before {
+  content: "\e01c";
+}
+
+.icon-group:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
+  content: "\e01b";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
