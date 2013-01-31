@@ -41,7 +41,14 @@ def recip(request, db):
 
     # Temporarily patch premailer to be a no-op; our tests assert against the
     # HTML that's in the templates, not as mangled by premailer.
-    patcher2 = mock.patch('premailer.transform', lambda x, base_url=None: x)
+    class mock_Premailer(object):
+        def __init__(self, html, **kw):
+            self.html = html
+
+        def transform(self):
+            return self.html
+
+    patcher2 = mock.patch('premailer.Premailer', mock_Premailer)
     patcher2.start()
     request.addfinalizer(patcher2.stop)
 
