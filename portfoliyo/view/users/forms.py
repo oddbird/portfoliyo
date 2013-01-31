@@ -51,7 +51,7 @@ class RegistrationForm(forms.Form):
         )
     school = pyoforms.ModelChoiceField(
         queryset=model.School.objects.filter(auto=False).order_by('name'),
-        empty_label=u"I'm not affiliated with a school",
+        empty_label=u"I'm not affiliated with a school or program",
         required=False,
         widget=SchoolRadioSelect,
         initial=u'',
