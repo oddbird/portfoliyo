@@ -36,7 +36,11 @@ a:link { color: #e3002a; }
 a:visited { color: #94001a; }
 a:hover { color: #94001a; }
 
-#main {background-color:#fafdfd; padding:1em;}
+table {width: 100%;}
+#main {background-color:#fafdfd; padding:1em; width:550px;}
+@media screen and (max-width: 660px){
+#main {width:100%; max-width:550px;}
+}
 
 .post {padding:1em; border-bottom:1px solid #dddddd;}
 h2 + .post {border-top:1px solid #dddddd;}
@@ -57,11 +61,10 @@ h2 + .post {border-top:1px solid #dddddd;}
 {% load url from future %}
 
 <!-- Outside Tables -->
-<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable" width="100%"><tbody><tr><td align="center">
-<table align="center" cellpadding="0" cellspacing="0" id="topMessageWrapper" width="600"><tbody><tr><td>
+<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable"><tbody><tr><td align="center">
 
 <!-- Inner Tables -->
-<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="main">
+<table border="0" cellpadding="0" cellspacing="0" height="100%" id="main">
 <tbody><tr><td valign="top">
 
   {% if any_requested_posts or any_requested_bulk_posts %}
@@ -82,7 +85,7 @@ h2 + .post {border-top:1px solid #dddddd;}
   {% endif %}
 
   {% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher %}
-  <table class="requested" border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;" width="100%">
+  <table class="requested" border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;">
   <tbody><tr><td>
     <ul>
       {% if any_requested_new_parent %}
@@ -100,7 +103,7 @@ h2 + .post {border-top:1px solid #dddddd;}
   {% endif %}
 
   {% if any_nonrequested_posts or any_nonrequested_bulk_posts or any_nonrequested_new_parent or any_nonrequested_added_to_village or any_nonrequested_new_teacher %}
-  <table class="nonrequested" border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;" width="100%">
+  <table class="nonrequested" border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;">
   <tbody><tr><td>
     {% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher %}
     <p class="also">Also...</p>
@@ -137,7 +140,6 @@ h2 + .post {border-top:1px solid #dddddd;}
 </table>
 
 <!-- Outside Tables -->
-</td></tr></tbody></table>
 </td></tr></tbody></table>
 </body>
 </html>
