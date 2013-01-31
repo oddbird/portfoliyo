@@ -14,7 +14,7 @@ HTML_TEMPLATE = 'notifications/activity.html'
 TEXT_TEMPLATE = 'notifications/activity.txt'
 
 
-consecutive_newlines = re.compile('\n+')
+consecutive_newlines = re.compile('\n\n+')
 
 
 
