@@ -490,7 +490,7 @@ class TestSend(object):
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<p>html: how&39;s it</p>',
+                    "<p>html: how's it</p>",
                     ],
                 'text': [
                     '# StX\'s village:\n'
