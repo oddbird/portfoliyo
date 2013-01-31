@@ -41,21 +41,20 @@
 .ui-multiselect-checkboxes {
   @extend %radio-check-defaults;
   @include cond;
-  @include padding-leader(.5);
-  @include padding-trailer(.5);
+  @include bleed(rhythm(.25), right left);
+  @include rhythm-padding(.5);
+  max-height: 12rem;
   border-color: $base1;
+  overflow-y: scroll;
 
-  // li { @extend %check-option; }
-  // input { @extend %check-value; }
-  // label {
-  //   @extend %ellipsis;
-  //   @extend %check-type;
-  // }
   b { font-weight: bold; }
 }
 
 .ui-multiselect-header {
   @include clearfix;
+  @include bleed(rhythm(.25), top right left);
+  @include padding-trailer(.25);
+  @include box-shadow($inset-color 0 0 $inset-size);
   position: relative;
   min-width: columns-width(3);
   li {

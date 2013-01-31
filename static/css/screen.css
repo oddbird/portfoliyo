@@ -1063,11 +1063,20 @@ button {
 
 .ui-multiselect-checkboxes {
   font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin-right: -0.31944rem;
+  padding-right: 0.31944rem;
+  margin-left: -0.31944rem;
+  padding-left: 0.31944rem;
   padding-top: 12px;
   padding-top: 0.63889rem;
   padding-bottom: 12px;
   padding-bottom: 0.63889rem;
+  max-height: 12rem;
   border-color: #93a1a1;
+  overflow-y: scroll;
 }
 .ui-multiselect-checkboxes b {
   font-weight: bold;
@@ -1075,6 +1084,20 @@ button {
 
 .ui-multiselect-header {
   overflow: hidden;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin-top: -0.31944rem;
+  padding-top: 0.31944rem;
+  margin-right: -0.31944rem;
+  padding-right: 0.31944rem;
+  margin-left: -0.31944rem;
+  padding-left: 0.31944rem;
+  padding-bottom: 6px;
+  padding-bottom: 0.31944rem;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   position: relative;
   min-width: 11rem;
 }
@@ -2329,10 +2352,10 @@ button {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1359412038');
+  background-image: url('../images/flags/ca.png?1359567924');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1359412038');
+  background-image: url('../images/flags/us.png?1359567924');
 }
 
 .school-field {
