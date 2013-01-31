@@ -4,19 +4,19 @@
 
 {% if village_set.students|length == 2 %}
 <h2>
-  In <a href="{% url 'village' student_id=village_set.students.0.id %}">{{ village_set.students.0 }}</a> and <a href="{% url 'village' student_id=village_set.students.1.id %}">{{ village_set.students.1 }}</a>'s villages:
+  <a href="{% url 'village' student_id=village_set.students.0.id %}">{{ village_set.students.0 }}</a> and <a href="{% url 'village' student_id=village_set.students.1.id %}">{{ village_set.students.1 }}</a>'s villages:
 </h2>
 {% endif %}
 
 {% if village_set.students|length == 3 %}
 <h2>
-  In <a href="{% url 'village' student_id=village_set.students.0.id %}">{{ village_set.students.0 }}</a>, <a href="{% url 'village' student_id=village_set.students.1.id %}">{{ village_set.students.1 }}</a> and <a href="{% url 'village' student_id=village_set.students.2.id %}">{{ village_set.students.2 }}</a>'s villages:
+  <a href="{% url 'village' student_id=village_set.students.0.id %}">{{ village_set.students.0 }}</a>, <a href="{% url 'village' student_id=village_set.students.1.id %}">{{ village_set.students.1 }}</a> and <a href="{% url 'village' student_id=village_set.students.2.id %}">{{ village_set.students.2 }}</a>'s villages:
 </h2>
 {% endif %}
 
 {% if village_set.students|length > 3 %}
 <h2>
-  In {% for student in village_set.students %}{% if forloop.counter < 4 %}<a href="{% url 'village' student_id=student.id %}">{{ student }}</a>, {% endif %}{% endfor %}and {{ village_set.students|length|add:"-3"|apnumber }} more village{% if students|length > 4 %}s{% endif %}:
+  {% for student in village_set.students %}{% if forloop.counter < 4 %}<a href="{% url 'village' student_id=student.id %}">{{ student }}</a>, {% endif %}{% endfor %}and {{ village_set.students|length|add:"-3"|apnumber }} more village{% if students|length > 4 %}s{% endif %}:
 </h2>
 {% endif %}
 

@@ -1,9 +1,22 @@
-{% load url from future %}Recent activity in Portfoliyo:
+{% load url from future %}
+{% if any_requested_posts or any_requested_bulk_posts %}
+New Posts:
+==========
+
+{% endif %}
+
 {% if any_requested_posts %}
 {% include "notifications/activity/_village_posts.txt" %}
 {% endif %}
 {% if any_requested_bulk_posts %}
 {% include "notifications/activity/_bulk_posts.txt" %}
+{% endif %}
+
+{% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher or any_nonrequested_posts or any_nonrequested_bulk_posts or any_nonrequested_new_parent or any_nonrequested_added_to_village or any_nonrequested_new_teacher %}
+
+Recent Activity:
+================
+
 {% endif %}
 
 {% if any_requested_new_parent %}
@@ -15,13 +28,19 @@
 {% if any_requested_new_teacher %}
 {% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
+
+{% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher %}
+{% if any_nonrequested_posts or any_nonrequested_bulk_posts or any_nonrequested_new_parent or any_nonrequested_added_to_village or any_nonrequested_new_teacher %}
+Also...
+{% endif %}
+{% endif %}
+
 {% if any_nonrequested_posts %}
 {% include "notifications/activity/_village_posts_nonrequested.txt" %}
 {% endif %}
 {% if any_nonrequested_bulk_posts %}
 {% include "notifications/activity/_bulk_posts_nonrequested.txt" %}
 {% endif %}
-
 {% if any_nonrequested_new_parent %}
 {% include "notifications/activity/_new_parents.txt" %}
 {% endif %}
@@ -32,5 +51,6 @@
 {% include "notifications/activity/_new_teachers.txt" %}
 {% endif %}
 
---
-Don't want email notifications? Edit your profile: {% url 'edit_profile' %}
+
+----
+Don't want email notifications from Portfoliyo? Edit your profile: {% url 'edit_profile' %}

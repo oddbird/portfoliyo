@@ -2,19 +2,20 @@
 {% for village_set in bulk_posts.village_sets.values %}
 
 {% if village_set.students|length == 2 %}
-In {{ village_set.students.0 }} and {{ village_set.students.1 }}'s villages:
+# {{ village_set.students.0 }} and {{ village_set.students.1 }}'s villages:
 {% endif %}
 
 {% if village_set.students|length == 3 %}
-In {{ village_set.students.0 }}, {{ village_set.students.1 }} and {{ village_set.students.2 }}'s villages:
+# {{ village_set.students.0 }}, {{ village_set.students.1 }} and {{ village_set.students.2 }}'s villages:
 {% endif %}
 
 {% if village_set.students|length > 3 %}
-In {% for student in village_set.students %}{% if forloop.counter < 4 %}{{ student }}, {% endif %}{% endfor %}and {{ village_set.students|length|add:"-3"|apnumber }} more village{% if students|length > 4 %}s{% endif %}:
+# {% for student in village_set.students %}{% if forloop.counter < 4 %}{{ student }}, {% endif %}{% endfor %}and {{ village_set.students|length|add:"-3"|apnumber }} more village{% if students|length > 4 %}s{% endif %}:
 {% endif %}
 
 {% for post in village_set.posts %}
   {% include "notifications/activity/includes/_post.txt" %}
 {% endfor %}
 
+{% if not forloop.last %}--{% endif %}
 {% endfor %}

@@ -6,11 +6,11 @@
 {% for village_group in villages_grouped_by_adding_teacher %}
 {% with village_group.grouper as teacher and village_group.list as villages %}
 {% if villages|length == 1 %}
-- {{ teacher }} added you to {{ villages.0.student }}'s village. Start a conversation: {% url 'village' student_id=villages.0.student.id %}
+# {{ teacher }} added you to {{ villages.0.student }}'s village. Start a conversation: {% url 'village' student_id=villages.0.student.id %}
 {% else %}
-- {{ teacher }} added you to {{ villages|length|apnumber }} student villages:
+# {{ teacher }} added you to {{ villages|length|apnumber }} student villages:
 {% for village in villages %}
--- {{ village.student }}: {% url 'village' student_id=village.student.id %}
+  - {{ village.student }}: {% url 'village' student_id=village.student.id %}
 {% endfor %}
 {% endif %}
 {% endwith %}
