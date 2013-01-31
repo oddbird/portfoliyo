@@ -52,6 +52,11 @@ else:
 DEBUG = False
 TEMPLATE_DEBUG = False
 
+TEMPLATE_LOADERS = [
+    ('django.template.loaders.cached.Loader', TEMPLATE_LOADERS)
+    ]
+
+
 # This email address will get emailed on 500 server errors.
 ADMINS = [
     ('Admin', env('ADMIN_ERROR_EMAILS')),
