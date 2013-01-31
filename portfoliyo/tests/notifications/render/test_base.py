@@ -476,7 +476,7 @@ class TestSend(object):
     @pytest.mark.parametrize('params', [
             { # simple case with a single post
                 'scenario': [
-                    ('StX', 'PaX', 'Dad', 'hello', timedelta(), True),
+                    ('StX', 'PaX', 'Dad', "how's it", timedelta(), True),
                     ],
                 'subject': "New message in StX's village.",
                 'html': [
@@ -486,11 +486,11 @@ class TestSend(object):
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<p>html: hello</p>',
+                    '<p>html: how&39;s it</p>',
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "hello" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
+                    '  "how\'s it" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
                     'Log in to reply: %(StXUrl)s'
                     ],
                 },

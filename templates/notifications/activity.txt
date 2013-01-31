@@ -1,4 +1,4 @@
-{% load url from future %}
+{% load url from future %}{% autoescape off %}
 {% if any_requested_posts or any_requested_bulk_posts %}
 New Posts:
 ==========
@@ -54,3 +54,4 @@ Also...
 
 ----
 Don't want email notifications from Portfoliyo? Edit your profile: {% url 'edit_profile' %}
+{% endautoescape %}
