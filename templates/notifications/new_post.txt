@@ -1,6 +1,0 @@
-"{{ post.original_text|safe }}" — {{ post.author|safe }}
-
-
---
-{% if village_url %}Log in to reply: {{ village_url }}
-{% endif %}Don't want email notifications? Edit your profile: {{ profile_url }}

@@ -43,7 +43,6 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     email = forms.EmailField(max_length=255)
-    email_notifications = forms.BooleanField(initial=True, required=False)
     country_code = forms.TypedChoiceField(
         choices=model.Profile._meta.get_field('country_code').choices,
         initial=model.Profile._meta.get_field('country_code').default,
@@ -127,7 +126,7 @@ class RegistrationForm(forms.Form):
             school_staff=True,
             email_confirmed=False,
             is_active=True,
-            email_notifications=self.cleaned_data['email_notifications'],
+            email_notifications=True,
             )
 
         return profile
