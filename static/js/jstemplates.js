@@ -56,7 +56,7 @@ function program4(depth0,data) {
   buffer += escapeExpression(stack1) + "\" class=\"action-addsingle ajax-link\">add a student by hand »</a>";
   return buffer;}
 
-  buffer += "<ul class=\"itemlist\">\n  ";
+  buffer += "<div class=\"navtitle\">\n  <h2 class=\"groups-title\">Groups</h2>\n</div>\n\n<ul class=\"itemlist groups-list\">\n  ";
   stack1 = depth0;
   stack1 = self.invokePartial(partials.group_list_items, 'group_list_items', stack1, helpers, partials);;
   if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -425,7 +425,7 @@ function program4(depth0,data) {
   buffer += escapeExpression(stack1) + "\" class=\"action-addsingle ajax-link\">add a student by hand »</a>";
   return buffer;}
 
-  buffer += "<div class=\"grouptitle\">\n  <a href=\"#\" class=\"action-back groups\" title=\"List groups\">List groups</a>\n  <h2 class=\"group-name\">";
+  buffer += "<div class=\"navtitle\">\n  <a href=\"#\" class=\"action-showgroups\" title=\"List groups\">List groups</a>\n  <h2 class=\"group-name\">";
   foundHelper = helpers.group_name;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
@@ -469,7 +469,7 @@ function program4(depth0,data) {
   foundHelper = helpers.group_name;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\n  </a>\n</div>\n\n<ul class=\"itemlist\">\n  ";
+  buffer += escapeExpression(stack1) + "\n  </a>\n</div>\n\n<ul class=\"itemlist students-list\">\n  ";
   stack1 = depth0;
   stack1 = self.invokePartial(partials.student_list_items, 'student_list_items', stack1, helpers, partials);;
   if(stack1 || stack1 === 0) { buffer += stack1; }

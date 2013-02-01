@@ -27,12 +27,16 @@ $village-nav-action-color : $base03;
 
 %grouptitle-button {
   @extend %button-icon;
-  @include button-color($base3);
   position: absolute;
   top: $box-padding;
 }
 
-.grouptitle {
+%navname {
+  font-weight: bold;
+  text-align: center;
+}
+
+.navtitle {
   @include box-shadow($inset-color 0 0 $inset-size);
   @include trailing-border(1px,.25);
   padding: {
@@ -45,14 +49,14 @@ $village-nav-action-color : $base03;
 }
 
 .group-name {
+  @extend %navname;
   padding: 0 rhythm(1.5);
-  font-weight: bold;
-  text-align: center;
 }
 
-.action-back {
+.action-showgroups {
   @extend %grouptitle-button;
   @extend %icon-users-list;
+  @include button-color($base3);
   left: $box-padding;
 }
 
@@ -61,22 +65,15 @@ $village-nav-action-color : $base03;
   @extend %icon-bubble;
   right: $box-padding;
   &.active {
-    @include button-color($blue);
     @include inset;
+    background-color: $blue;
   }
 }
 
+.groups-title { @extend %navname; }
+
 // ---------------------------------------------------------------------------
 // Lists
-
-@mixin calc-height($calc, $fallback) {
-  $calc: unquote($calc);
-  height: $fallback;
-  height: -webkit-calc(#{$calc});
-  height: -moz-calc(#{$calc});
-  height: -o-calc(#{$calc});
-  height: calc(#{$calc});
-}
 
 .village-nav {
   @extend %village-lists;
@@ -87,7 +84,9 @@ $village-nav-action-color : $base03;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
   z-index: 50;
-  .itemlist { @include calc-height('100% - 7.5rem',rhythm(16)); }
+  .itemlist { height: rhythm(12); }
+  .students-list { @include calc(height, '100% - 7.5rem'); }
+  .groups-list { @include calc(height, '100% - 10rem'); }
   .additems {
     @include leading-border(1px,.25);
     @include box-shadow($inset-color 0 0 $inset-size);
