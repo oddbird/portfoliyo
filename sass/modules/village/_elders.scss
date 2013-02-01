@@ -11,13 +11,28 @@
   border-color: $base2;
 }
 
-.elders-title {
+.elder-list {
+  height: 50%;
+  .itemlist { @include calc(height, '100% - 2rem', rhythm(6)); }
+}
+
+.elder-header {
   @extend %elder-listitem;
-  font-weight: bold;
-  color: $base3;
-  background: mix($blue,$base);
+  @include box-shadow($inset-color 0 0 $inset-size);
+  position: relative;
+  padding-right: rhythm(2);
+  background: $base2;
   border-color: $village-border-color;
-  + .addelder-link { border-top: 0; }
+  font-weight: bold;
+  .teachers & { @include leading-border(1px,.25); }
+  .additem-elder {
+    @extend %button-icon;
+    @extend %icon-user-plus;
+    @include button-color(color($green lightest));
+    position: absolute;
+    top: $box-padding;
+    right: $box-padding;
+  }
 }
 
 %parent-status-icon {

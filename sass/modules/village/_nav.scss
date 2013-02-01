@@ -44,7 +44,7 @@ $village-nav-action-color : $base03;
     left: $box-padding;
     right: $box-padding;
   }
-  background: color($base3 light);
+  background: $base2;
   border-color: $village-border-color;
 }
 
@@ -85,8 +85,8 @@ $village-nav-action-color : $base03;
   border-width: 0 1px;
   z-index: 50;
   .itemlist { height: rhythm(12); }
-  .students-list { @include calc(height, '100% - 7.5rem'); }
-  .groups-list { @include calc(height, '100% - 10rem'); }
+  .students-list { @include calc(height, '100% - #{rhythm(5.25)}'); }
+  .groups-list { @include calc(height, '100% - #{rhythm(7)}'); }
   .additems {
     @include leading-border(1px,.25);
     @include box-shadow($inset-color 0 0 $inset-size);
@@ -122,5 +122,36 @@ $village-nav-action-color : $base03;
     color: $base3;
     text-align: center;
     &.zero { display: none; }
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Add Items
+
+.additems {
+  padding: $box-padding*2;
+
+  [class*="additem-"] {
+    @extend %button;
+    @extend %icon;
+    @extend %icon-user-plus;
+    @extend %ellipsis;
+    @include button-color(color($green lightest));
+    margin: $box-padding 0;
+    display: block;
+    font-weight: bold;
+    text-align: left;
+
+    .additems & { margin: $box-padding*2 0; }
+
+    &[class*="-group"] {
+      @extend %icon-users-plus;
+      @include button-color(color($blue lightest));
+    }
+
+    &.active {
+      @include button-color(color($base));
+      @include inset;
+    }
   }
 }

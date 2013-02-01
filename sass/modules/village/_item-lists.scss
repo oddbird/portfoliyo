@@ -20,30 +20,3 @@ $village-list-size      : $smallpx;
 }
 
 .itemlist { @extend %overflow-y; }
-
-.additems { padding: $box-padding*2; }
-
-[class*="additem-"] {
-  @extend %button;
-  @extend %icon;
-  @extend %icon-plus;
-  @extend %ellipsis;
-  @include button-color(color($green lightest));
-  margin: $box-padding*2;
-  display: block;
-  font-weight: bold;
-  text-align: left;
-
-  .additems & { margin: $box-padding*2 0; }
-
-  &[class*="-village"] { @extend %icon-user-plus; }
-  &[class*="-group"] {
-    @extend %icon-users-plus;
-    @include button-color(color($blue lightest));
-  }
-
-  &.active {
-    @include button-color(color($base));
-    @include inset;
-  }
-}

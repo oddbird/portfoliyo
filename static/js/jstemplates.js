@@ -56,7 +56,7 @@ function program4(depth0,data) {
   buffer += escapeExpression(stack1) + "\" class=\"action-addsingle ajax-link\">add a student by hand »</a>";
   return buffer;}
 
-  buffer += "<div class=\"navtitle\">\n  <h2 class=\"groups-title\">Groups</h2>\n</div>\n\n<ul class=\"itemlist groups-list\">\n  ";
+  buffer += "<div class=\"navtitle\">\n  <h2 class=\"groups-title\">All Groups</h2>\n</div>\n\n<ul class=\"itemlist groups-list\">\n  ";
   stack1 = depth0;
   stack1 = self.invokePartial(partials.group_list_items, 'group_list_items', stack1, helpers, partials);;
   if(stack1 || stack1 === 0) { buffer += stack1; }
