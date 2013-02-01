@@ -380,9 +380,10 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.watchForItemRemoval = function () {
-        if (window.History.enabled) {
-            var relationshipsUrl = $('.village').data('relationships-url');
-            $('.village').on('click', '.action-remove.has-undo', function (e) {
+        if (window.History.enabled || Modernizr.localstorage) {
+            var village = $('.village');
+            var relationshipsUrl = village.data('relationships-url');
+            village.on('click', '.action-remove.has-undo', function (e) {
                 var trigger = $(this);
                 var type = trigger.data('type');
                 var id = trigger.data('id');
@@ -391,25 +392,68 @@ var PYO = (function (PYO, $) {
                 var redirectUrl = type === 'student' && PYO.activeGroupId && trigger.data('group-url') ? trigger.data('group-url') : trigger.data('redirect-url');
                 if (type && id && name && redirectUrl && deleteUrl) {
                     e.preventDefault();
-                    var title = document.title;
-                    var data = { url: redirectUrl };
-                    window.History.pushState(data, title, redirectUrl);
-                    PYO.addItemToRemovalQueue(type, id, name, deleteUrl);
-                    PYO.addUndoMsg(type, id, name);
-                    PYO.removeListItem(type, id);
+                    if (window.History.enabled) {
+                        var title = document.title;
+                        var data = { url: redirectUrl };
+                        window.History.pushState(data, title, redirectUrl);
+                        PYO.addItemToRemovalQueue(type, id, name, deleteUrl);
+                        PYO.addUndoMsg(type, id, name);
+                        PYO.removeListItem(type, id);
+                    } else if (Modernizr.localstorage) {
+                        PYO.addItemToLocalStorage(type, id, name, deleteUrl);
+                        window.location = redirectUrl;
+                    }
                 } else {
                     return true;
                 }
             });
-            $(window).bind('beforeunload', function () {
-                $.each(PYO.removalQueue.student, function (key) {
-                    PYO.executeActionInQueue('student', key);
-                });
-                $.each(PYO.removalQueue.group, function (key) {
-                    PYO.executeActionInQueue('group', key);
-                });
-            });
+            if (Modernizr.localstorage && !window.History.enabled) { PYO.loadRemovalQueue(); }
+            PYO.bindUnloadHandlers();
         }
+    };
+
+    PYO.bindUnloadHandlers = function () {
+        $(window).on('beforeunload', function () {
+            $.each(PYO.removalQueue.student, function (key) {
+                PYO.executeActionInQueue('student', key, true);
+            });
+            $.each(PYO.removalQueue.group, function (key) {
+                PYO.executeActionInQueue('group', key, true);
+            });
+        });
+    };
+
+    PYO.addItemToLocalStorage = function (type, id, name, deleteUrl) {
+        var obj = {
+            student: {},
+            group: {}
+        };
+        obj[type][id] = {
+            'name': name,
+            'url': deleteUrl
+        };
+        localStorage.setItem('removalQueue', JSON.stringify(obj));
+    };
+
+    PYO.loadRemovalQueue = function () {
+        var queue = localStorage.getItem('removalQueue');
+        if (queue) {
+            try {
+                PYO.removalQueue = JSON.parse(queue);
+            } catch (e) {
+                return;
+            }
+        }
+        $.each(PYO.removalQueue, function (key, val) {
+            var type = key;
+            $.each(val, function (key, val) {
+                var id = key;
+                var name = val.name ? val.name : '';
+                PYO.removeListItem(type, id);
+                PYO.addUndoMsg(type, id, name);
+            });
+        });
+        localStorage.removeItem('removalQueue');
     };
 
     PYO.removeListItem = function (type, id) {
@@ -460,13 +504,15 @@ var PYO = (function (PYO, $) {
         delete PYO.removalQueue[type][id];
     };
 
-    PYO.executeActionInQueue = function (type, id) {
+    PYO.executeActionInQueue = function (type, id, sync) {
+        var async = sync ? false : true;
         if (PYO.removalQueue[type][id]) {
             var url = PYO.removalQueue[type][id].url;
             if (url) {
                 $.ajax(url, {
                     type: 'DELETE',
                     dataType: 'html',
+                    async: async,
                     success: function () {
                         PYO.removeItemFromRemovalQueue(type, id);
                     }
