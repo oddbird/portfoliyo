@@ -7,8 +7,6 @@ var PYO = (function (PYO, $) {
         count: 0
     };
 
-    var removalRequestsPending = 0;
-
     var nav = $('.village-nav');
 
     // Store keycode variables for easier readability
@@ -382,7 +380,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.watchForItemRemoval = function () {
-        if (window.History.enabled || Modernizr.localstorage) {
+        if (Modernizr.localstorage) {
             var village = $('.village');
             var relationshipsUrl = village.data('relationships-url');
             village.on('click', '.action-remove.has-undo', function (e) {
@@ -394,22 +392,21 @@ var PYO = (function (PYO, $) {
                 var redirectUrl = type === 'student' && PYO.activeGroupId && trigger.data('group-url') ? trigger.data('group-url') : trigger.data('redirect-url');
                 if (type && id && name && redirectUrl && deleteUrl) {
                     e.preventDefault();
+                    PYO.addItemToRemovalQueue(type, id, name, deleteUrl);
                     if (window.History.enabled) {
                         var title = document.title;
                         var data = { url: redirectUrl };
                         window.History.pushState(data, title, redirectUrl);
-                        PYO.addItemToRemovalQueue(type, id, name, deleteUrl);
                         PYO.addUndoMsg(type, id, name);
                         PYO.removeListItem(type, id);
-                    } else if (Modernizr.localstorage) {
-                        PYO.addItemToLocalStorage(type, id, name, deleteUrl);
+                    } else {
                         window.location = redirectUrl;
                     }
                 } else {
                     return true;
                 }
             });
-            if (Modernizr.localstorage && !window.History.enabled) { PYO.loadRemovalQueue(); }
+            PYO.loadRemovalQueue();
             PYO.bindUnloadHandlers();
         }
     };
@@ -422,24 +419,11 @@ var PYO = (function (PYO, $) {
             $.each(PYO.removalQueue.group, function (key) {
                 PYO.executeActionInQueue('group', key);
             });
-            if (removalRequestsPending > 0) {
-                var warning = 'Your most recent changes are still being saved. ' +
-                    'If you close the window now, they may not be saved.';
-                return warning;
-            }
         });
     };
 
-    PYO.addItemToLocalStorage = function (type, id, name, deleteUrl) {
-        var obj = {
-            student: {},
-            group: {}
-        };
-        obj[type][id] = {
-            'name': name,
-            'url': deleteUrl
-        };
-        localStorage.setItem('removalQueue', JSON.stringify(obj));
+    PYO.saveQueueToLocalStorage = function () {
+        localStorage.setItem('removalQueue', JSON.stringify(PYO.removalQueue));
     };
 
     PYO.loadRemovalQueue = function () {
@@ -460,7 +444,6 @@ var PYO = (function (PYO, $) {
                 PYO.addUndoMsg(type, id, name);
             });
         });
-        localStorage.removeItem('removalQueue');
     };
 
     PYO.removeListItem = function (type, id) {
@@ -505,25 +488,23 @@ var PYO = (function (PYO, $) {
                 'url': deleteUrl
             };
         }
+        PYO.saveQueueToLocalStorage();
     };
 
     PYO.removeItemFromRemovalQueue = function (type, id) {
         delete PYO.removalQueue[type][id];
+        PYO.saveQueueToLocalStorage();
     };
 
     PYO.executeActionInQueue = function (type, id) {
         if (PYO.removalQueue[type][id]) {
             var url = PYO.removalQueue[type][id].url;
             if (url) {
-                removalRequestsPending++;
                 $.ajax(url, {
                     type: 'DELETE',
                     dataType: 'html',
                     success: function () {
                         PYO.removeItemFromRemovalQueue(type, id);
-                    },
-                    complete: function () {
-                        removalRequestsPending--;
                     }
                 });
             }
