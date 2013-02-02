@@ -7,6 +7,8 @@ var PYO = (function (PYO, $) {
         count: 0
     };
 
+    var removalRequestsPending = 0;
+
     var nav = $('.village-nav');
 
     // Store keycode variables for easier readability
@@ -413,13 +415,20 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.bindUnloadHandlers = function () {
-        $(window).on('beforeunload', function () {
+        $(window).on('beforeunload', function (e) {
             $.each(PYO.removalQueue.student, function (key) {
                 PYO.executeActionInQueue('student', key, true);
             });
             $.each(PYO.removalQueue.group, function (key) {
                 PYO.executeActionInQueue('group', key, true);
             });
+            e = e || window.event;
+            if (removalRequestsPending > 0) {
+                var warning = 'Your most recent changes are still being saved. ' +
+                    'If you close the window now, they may not be saved.';
+                e.returnValue = warning;
+                return warning;
+            }
         });
     };
 
@@ -504,17 +513,19 @@ var PYO = (function (PYO, $) {
         delete PYO.removalQueue[type][id];
     };
 
-    PYO.executeActionInQueue = function (type, id, sync) {
-        var async = sync ? false : true;
+    PYO.executeActionInQueue = function (type, id) {
         if (PYO.removalQueue[type][id]) {
             var url = PYO.removalQueue[type][id].url;
             if (url) {
+                removalRequestsPending++;
                 $.ajax(url, {
                     type: 'DELETE',
                     dataType: 'html',
-                    async: async,
                     success: function () {
                         PYO.removeItemFromRemovalQueue(type, id);
+                    },
+                    complete: function () {
+                        removalRequestsPending--;
                     }
                 });
             }
