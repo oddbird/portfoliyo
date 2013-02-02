@@ -400,6 +400,8 @@ var PYO = (function (PYO, $) {
                         PYO.addUndoMsg(type, id, name);
                         PYO.removeListItem(type, id);
                     } else {
+                        $(window).off('beforeunload');
+                        localStorage.setItem('showUndo', true);
                         window.location = redirectUrl;
                     }
                 } else {
@@ -428,6 +430,7 @@ var PYO = (function (PYO, $) {
 
     PYO.loadRemovalQueue = function () {
         var queue = localStorage.getItem('removalQueue');
+        var undo = localStorage.getItem('showUndo');
         if (queue) {
             try {
                 PYO.removalQueue = JSON.parse(queue);
@@ -441,9 +444,14 @@ var PYO = (function (PYO, $) {
                 var id = key;
                 var name = val.name ? val.name : '';
                 PYO.removeListItem(type, id);
-                PYO.addUndoMsg(type, id, name);
+                if (undo) {
+                    PYO.addUndoMsg(type, id, name);
+                } else {
+                    PYO.executeActionInQueue(type, id, true);
+                }
             });
         });
+        localStorage.removeItem('showUndo');
     };
 
     PYO.removeListItem = function (type, id) {
@@ -496,7 +504,7 @@ var PYO = (function (PYO, $) {
         PYO.saveQueueToLocalStorage();
     };
 
-    PYO.executeActionInQueue = function (type, id) {
+    PYO.executeActionInQueue = function (type, id, remove) {
         if (PYO.removalQueue[type][id]) {
             var url = PYO.removalQueue[type][id].url;
             if (url) {
@@ -505,6 +513,9 @@ var PYO = (function (PYO, $) {
                     dataType: 'html',
                     success: function () {
                         PYO.removeItemFromRemovalQueue(type, id);
+                    },
+                    error: function () {
+                        if (remove) { PYO.removeItemFromRemovalQueue(type, id); }
                     }
                 });
             }
