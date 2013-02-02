@@ -178,48 +178,53 @@ def _disable_redis(request):
 
 @pytest.fixture
 def cache(request):
-    """Clear cache and give test access to it."""
-    from django.core import cache
-    from django.core.cache.backends.locmem import LocMemCache
-    c = cache._orig_cache
-    cache.cache = cache._orig_cache
+    """Enable the cache, clear it, and give test access to it."""
+    from django.core.cache import cache
+    _disabled_class = cache.__class__
+    cache.__class__ = cache._orig_class
+    cache.clear()
     def _disable_cache():
-        cache.cache = cache._disabled_cache
+        cache.__class__ = _disabled_class
     request.addfinalizer(_disable_cache)
-    if isinstance(c, LocMemCache):
-        c.clear()
-    else:
-        raise ValueError(
-            "Tests can only be run with the locmem cache backend."
-            )
 
-    return c
-
-
-
-class DisabledCache(object):
-    def _error(self):
-        raise ValueError(
-            "Tests cannot access cache unless the 'cache' fixture is used.")
-
-    def __getattr__(self, attr):
-        self._error()
-
-    def __getitem__(self, key):
-        self._error()
+    return cache
 
 
 
 @pytest.fixture(scope='session', autouse=True)
 def _disable_cache(request):
-    """Disable cache by default (use cache fixture to enable for a test)."""
-    from django.core import cache
-    cache._orig_cache = cache.cache
-    cache._disabled_cache = DisabledCache()
-    cache.cache = cache._disabled_cache
+    """
+    Disable the given cache backend.
+
+    We disable by monkeypatching rather than replacing wholesale, because the
+    common "from django.core.cache import cache" idiom makes replacement
+    unreliable; some module may have imported the cache before we can replace
+    it.
+
+    """
+    from django.core.cache import cache
+    from django.core.cache.backends.locmem import LocMemCache
+
+    if not isinstance(cache, LocMemCache):
+        raise ValueError("Tests can only be run with the LocMem cache backend.")
+
+    class _DisabledCache(cache.__class__):
+        def _error(self):
+            raise ValueError(
+                "Tests cannot access cache unless the 'cache' fixture is used.")
+
+        def __getattr__(self, attr):
+            self._error()
+
+        def __getitem__(self, key):
+            self._error()
+
+    cache._orig_class = cache.__class__
+    cache.__class__ = _DisabledCache
+
     def _restore_cache():
-        cache.cache = cache._orig_cache
-        del cache._orig_cache
+        cache.__class__ = cache._orig_class
+
     request.addfinalizer(_restore_cache)
 
 
