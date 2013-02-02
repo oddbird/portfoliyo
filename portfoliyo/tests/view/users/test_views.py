@@ -265,6 +265,7 @@ class TestRegister(object):
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
+        form['country_code'] = 'us'
         form['school'] = str(school.id)
         res = form.submit(status=302)
 
@@ -299,6 +300,7 @@ class TestConfirmEmail(object):
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'New Role'
+        form['country_code'] = 'us'
         form['school'] = str(school.id)
         form.submit(status=302)
 
