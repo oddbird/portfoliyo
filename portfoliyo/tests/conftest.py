@@ -106,11 +106,19 @@ def _disable_redis(request):
 
     # patch a real redis client to track number of calls
     if not isinstance(redis.client, redis.InMemoryRedis):
-        def _tracked_send_packed_command(self, command):
+        sr = redis.client.__class__
+        def _tracked_execute_command(self, *args, **kw):
             self.num_calls += 1
-            return self._orig_send_packed(command)
-        redis.client._orig_send_packed = client.send_packed_command
-        redis.client.send_packed_command = _tracked_send_packed_command
+            return self._orig_exec(*args, **kw)
+        sr._orig_exec = sr.execute_command
+        sr.execute_command = _tracked_execute_command
+        # we assume a pipeline is only executed once; generally true
+        def _tracked_pipeline(self, *args, **kw):
+            self.num_calls += 1
+            return self._orig_pipeline(*args, **kw)
+        sr._orig_pipeline = sr.pipeline
+        sr.pipeline = _tracked_pipeline
+        redis.client.num_calls = 0
 
     redis._orig_client = redis.client
     redis._disabled_client = DisabledRedis()
