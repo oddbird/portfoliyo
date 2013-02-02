@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.fixture
-def client(request):
+def client(request, db, redis, cache):
     """Give a test access to a WebTest client for integration-testing views."""
     # We don't use TestCase classes, but we instantiate the django_webtest
     # TestCase subclass to use its methods for patching/unpatching settings.
@@ -14,17 +14,12 @@ def client(request):
     webtestcase._patch_settings()
     request.addfinalizer(webtestcase._unpatch_settings)
 
-    # any test using the web client automatically gets db, redis, cache
-    request.getfuncargvalue('redis')
-    request.getfuncargvalue('db')
-    request.getfuncargvalue('cache')
-
     return client.TestClient()
 
 
 
 @pytest.fixture
-def no_csrf_client(request):
+def no_csrf_client(request, db, redis, cache):
     """Give a test access to a CSRF-exempt WebTest client."""
     # We don't use TestCase classes, but we instantiate the django_webtest
     # TestCase subclass to use its methods for patching/unpatching settings.
@@ -34,11 +29,6 @@ def no_csrf_client(request):
     webtestcase.csrf_checks = False
     webtestcase._patch_settings()
     request.addfinalizer(webtestcase._unpatch_settings)
-
-    # any test using the web client automatically gets db, redis, cache
-    request.getfuncargvalue('redis')
-    request.getfuncargvalue('db')
-    request.getfuncargvalue('cache')
 
     return client.TestClient()
 
@@ -64,31 +54,101 @@ def sms(request, monkeypatch):
     return base.backend
 
 
+def pytest_addoption(parser):
+    parser.addoption(
+        '--clobber-redis',
+        action='store_true',
+        help=(
+            "Run tests against real Redis (clobbering data). "
+            "Requires REDIS_URL setting."
+            ),
+        )
+
+
+def pytest_generate_tests(metafunc):
+    """
+    Execute all Redis-using tests with both in-memory and real Redis.
+
+    If real Redis is not available, execute them only using the in-memory fake
+    Redis.
+
+    """
+    if 'redis' in metafunc.fixturenames:
+        from django.conf import settings
+        redis_types = ['fake']
+        if metafunc.config.getoption('--clobber-redis'):
+            if settings.REDIS_URL:
+                redis_types.append('real')
+            else:
+                from django.core.exceptions import ImproperlyConfigured
+                raise ImproperlyConfigured(
+                    "--clobber-redis requires the REDIS_URL setting.")
+        metafunc.parametrize('redis', redis_types, indirect=True)
+
+
 @pytest.fixture
 def redis(request):
-    """Clear Redis and give test access to redis client."""
-    from django.conf import settings
+    """
+    Clear Redis and give test access to redis client.
+
+    Uses the param passed in by ``pytest_generate_tests`` to decide whether to
+    instantiate a real or fake Redis.
+
+    """
     from portfoliyo import redis
-    client = redis._orig_client
+
+    _disabled_client = redis.client
+    if request.param == 'real':
+        # if we're using real Redis, _orig_client will be a real Redis client.
+        # It's faster not to instantiate a new redis client for each test.
+        client = redis._orig_client
+        client.flushdb()
+    else:
+        client = redis._fake_redis()
+
     redis.client = client
     client.num_calls = 0
+
     def _disable_redis():
-        redis.client = redis._disabled_client
+        redis.client = _disabled_client
     request.addfinalizer(_disable_redis)
-    if isinstance(client, redis.InMemoryRedis):
-        client.data = {}
-        client.expiry = {}
-    else:
-        if getattr(settings, 'TEST_DESTROY_REDIS_DATA', False):
-            client.flushdb()
-        else:
-            raise ValueError(
-                "To run tests with a real Redis, you must set the "
-                "TEST_DESTROY_REDIS_DATA setting to True. "
-                "All data in the db at REDIS_URL will be destroyed."
-                )
 
     return client
+
+
+@pytest.fixture(scope='session', autouse=True)
+def _redis_call_counts(request):
+    """
+    Patch the Redis client to track the number of server queries.
+
+    In the case of pipelines, this makes the assumption that a given pipeline
+    will only be executed once (and thus send a single query to the
+    server). This is at least a correct assumption for our usage.
+
+    """
+    from redis import StrictRedis
+    sr = StrictRedis
+    def _tracked_execute_command(self, *args, **kw):
+        self.num_calls += 1
+        return self._orig_exec(*args, **kw)
+    sr._orig_exec = sr.execute_command
+    sr.execute_command = _tracked_execute_command
+    # we assume a pipeline is only executed once; generally true
+    def _tracked_pipeline(self, *args, **kw):
+        self.num_calls += 1
+        return self._orig_pipeline(*args, **kw)
+    sr._orig_pipeline = sr.pipeline
+    sr.pipeline = _tracked_pipeline
+    sr.num_calls = 0
+
+    def _unpatch():
+        sr.execute_command = sr._orig_exec
+        del sr._orig_exec
+        sr.pipeline = sr._orig_pipeline
+        del sr._orig_pipeline
+        del sr.num_calls
+
+    request.addfinalizer(_unpatch)
 
 
 
@@ -104,31 +164,12 @@ def _disable_redis(request):
     """Disable redis by default (use redis fixture to enable for a test)."""
     from portfoliyo import redis
 
-    # patch a real redis client to track number of calls
-    if not isinstance(redis.client, redis.InMemoryRedis):
-        sr = redis.client.__class__
-        def _tracked_execute_command(self, *args, **kw):
-            self.num_calls += 1
-            return self._orig_exec(*args, **kw)
-        sr._orig_exec = sr.execute_command
-        sr.execute_command = _tracked_execute_command
-        # we assume a pipeline is only executed once; generally true
-        def _tracked_pipeline(self, *args, **kw):
-            self.num_calls += 1
-            return self._orig_pipeline(*args, **kw)
-        sr._orig_pipeline = sr.pipeline
-        sr.pipeline = _tracked_pipeline
-        redis.client.num_calls = 0
-
     redis._orig_client = redis.client
     redis._disabled_client = DisabledRedis()
     redis.client = redis._disabled_client
 
     def _restore_redis():
         redis.client = redis._orig_client
-        if hasattr(client, '_orig_send_packed'):
-            redis.client.send_packed_command = redis.client._orig_send_packed
-            del redis.client._orig_send_packed
         del redis._orig_client
 
     request.addfinalizer(_restore_redis)

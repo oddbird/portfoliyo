@@ -123,7 +123,7 @@ class TestPostCreate(object):
         assert utils.refresh(rel.elder).has_posted
 
 
-    def test_new_post_unread_for_all_web_users_in_village(self, db):
+    def test_new_post_unread_for_all_web_users_in_village(self, db, redis):
         """New post is marked unread for all non-author web users in village."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')
@@ -416,7 +416,7 @@ class TestBulkPost(object):
         assert group_post_data['group_id'] == 'all%s' % rel.from_profile_id
 
 
-    def test_new_post_unread_for_all_web_users_in_village_but_author(self, db):
+    def test_new_post_unread_for_all_web_users_but_author(self, db, redis):
         """Sub-post marked unread for all web users in village except author."""
         rel = factories.RelationshipFactory.create(
             from_profile__user__email='foo@example.com')

@@ -213,7 +213,7 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
         if getattr(self.request, "limited", False):
             a, b = random.randint(1,9), random.randint(1, 9)
             # avoid negative answers
-            if b > a:
+            if b > a: # pragma: no cover
                 a, b = b, a
             opname, op = random.choice(OPERATORS.items())
 

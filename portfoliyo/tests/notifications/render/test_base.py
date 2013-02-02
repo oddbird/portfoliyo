@@ -16,7 +16,7 @@ from portfoliyo.tests import factories
 
 
 @pytest.fixture
-def recip(request, db):
+def recip(request, db, redis):
     """A user who can receive notifications."""
     kw = {
         'user__email': 'foo@example.com',

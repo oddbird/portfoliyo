@@ -302,7 +302,8 @@ def test_code_signup_student_name_strips_extra_lines(db):
         )
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        hook.receive_sms(phone, settings.DEFAULT_NUMBER, "Jimmy Doe\nLook at me!")
+        hook.receive_sms(
+            phone, settings.DEFAULT_NUMBER, "Jimmy Doe\nLook at me!")
 
     parent = model.Profile.objects.get(phone=phone)
     student = parent.students[0]
@@ -479,7 +480,8 @@ def test_code_signup_role_strips_extra_lines(db):
         state=model.TextSignup.STATE.relationship,
         )
 
-    hook.receive_sms(phone, settings.DEFAULT_NUMBER, "father\nI'm a sig!")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        hook.receive_sms(phone, settings.DEFAULT_NUMBER, "father\nI'm a sig!")
 
     parent = model.Profile.objects.get(phone=phone)
     assert parent.role == "father"
@@ -583,7 +585,9 @@ def test_code_signup_name_strips_extra_lines(db):
         state=model.TextSignup.STATE.name,
         )
 
-    hook.receive_sms(phone, settings.DEFAULT_NUMBER, "\n John Doe\nI'm a sig too!")
+    with mock.patch('portfoliyo.sms.hook.model.Post.create'):
+        hook.receive_sms(
+            phone, settings.DEFAULT_NUMBER, "\n John Doe\nI'm a sig too!")
 
     parent = model.Profile.objects.get(phone=phone)
     assert parent.name == "John Doe"

@@ -3,7 +3,7 @@ import time
 
 from django.conf import settings
 
-from portfoliyo.redis import client as redis
+from portfoliyo import redis
 
 
 PENDING_PROFILES_KEY = 'notify:pending:profile-ids'
@@ -15,7 +15,7 @@ NOTIFICATION_KEY_PATTERN = 'notify:profiles:%s:notifications:%s'
 
 def pending_profile_ids():
     """Get list of profile IDs with pending triggering notifications."""
-    return redis.smembers(PENDING_PROFILES_KEY)
+    return redis.client.smembers(PENDING_PROFILES_KEY)
 
 
 
@@ -42,7 +42,7 @@ def store(profile_id, name, triggering=False, data=None):
 
     expiry_timestamp = time.time() + settings.NOTIFICATION_EXPIRY_SECONDS
 
-    p = redis.pipeline()
+    p = redis.client.pipeline()
     # add the notification ID to the list of pending notifications for this user
     p.zadd(pending_key, expiry_timestamp, notification_id)
     # Store data hash for the notification. Allow the data to exist for an
@@ -68,7 +68,7 @@ def get_all(profile_id, clear=False):
     pending_key = make_pending_notifications_key(profile_id)
     now_ts = int(time.time())
 
-    p = redis.pipeline()
+    p = redis.client.pipeline()
     # get non-expired pending notifications for this user
     p.zrangebyscore(pending_key, now_ts, '+inf')
     if clear:
@@ -87,13 +87,13 @@ def get_all(profile_id, clear=False):
 def get(profile_id, notification_id):
     """Get a notification's data by id."""
     key = make_notification_key(profile_id, notification_id)
-    return redis.hgetall(key)
+    return redis.client.hgetall(key)
 
 
 
 def get_next_notification_id(profile_id):
     """Get the next notification ID for the given profile ID."""
-    return redis.incr(NEXT_NOTIFICATION_ID_KEY_PATTERN % profile_id)
+    return redis.client.incr(NEXT_NOTIFICATION_ID_KEY_PATTERN % profile_id)
 
 
 

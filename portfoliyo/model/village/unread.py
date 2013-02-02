@@ -1,34 +1,34 @@
 """Unread-counts data-model layer implementation."""
-from portfoliyo.redis import client
+from portfoliyo import redis
 
 
 
 def mark_unread(post, profile):
     """Mark given post unread by given profile."""
-    client.sadd(make_key(post.student, profile), post.id)
+    redis.client.sadd(make_key(post.student, profile), post.id)
 
 
 def mark_read(post, profile):
     """Mark given post read by given profile."""
-    client.srem(make_key(post.student, profile), post.id)
+    redis.client.srem(make_key(post.student, profile), post.id)
 
 
 
 def is_unread(post, profile):
     """Given post is unread by given profile (returns boolean)."""
-    return client.sismember(make_key(post.student, profile), post.id)
+    return redis.client.sismember(make_key(post.student, profile), post.id)
 
 
 
 def all_unread(student, profile):
     """Return set of post IDs in ``student`` village unread by ``profile``."""
-    return client.smembers(make_key(student, profile))
+    return redis.client.smembers(make_key(student, profile))
 
 
 
 def unread_count(student, profile):
     """Return count of profile's unread posts in given student's village."""
-    return client.scard(make_key(student, profile))
+    return redis.client.scard(make_key(student, profile))
 
 
 def unread_counts(students, profile):
@@ -39,7 +39,7 @@ def unread_counts(students, profile):
 
     """
     student = list(students)
-    p = client.pipeline()
+    p = redis.client.pipeline()
     for student in students:
         p.scard(make_key(student, profile))
     return dict(zip(students, p.execute()))
@@ -47,7 +47,7 @@ def unread_counts(students, profile):
 
 def group_unread_count(group, profile):
     """Return count of profile's unread posts in all villages in group."""
-    p = client.pipeline()
+    p = redis.client.pipeline()
     for student in group.students.all():
         p.scard(make_key(student, profile))
     return sum(p.execute())
@@ -60,7 +60,7 @@ def group_unread_counts(groups, profile):
     Return a dictionary mapping groups to counts.
 
     """
-    p = client.pipeline()
+    p = redis.client.pipeline()
 
     # track list of student IDs for each group
     student_ids_by_group = {}
@@ -89,7 +89,7 @@ def group_unread_counts(groups, profile):
 
 def mark_village_read(student, profile):
     """Mark all posts in given student's village as read by profile."""
-    client.delete(make_key(student, profile))
+    redis.client.delete(make_key(student, profile))
 
 
 

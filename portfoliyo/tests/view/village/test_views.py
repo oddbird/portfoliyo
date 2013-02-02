@@ -674,7 +674,7 @@ class TestGetPosts(object):
         assert [p.id for p in posts] == [p['post_id'] for p in data['posts']]
 
 
-    def test_student(self, db):
+    def test_student(self, db, redis):
         """Given student, returns posts in student village."""
         profile = factories.ProfileFactory.create()
         post1 = factories.PostFactory.create()
@@ -720,7 +720,7 @@ class TestGetPosts(object):
         self.assert_posts(views._get_posts(profile), [])
 
 
-    def test_ordering(self, db):
+    def test_ordering(self, db, redis):
         """Posts are ordered by timestamp."""
         profile = factories.ProfileFactory.create()
         second_post = factories.PostFactory.create(
@@ -736,7 +736,7 @@ class TestGetPosts(object):
             )
 
 
-    def test_unread(self, db):
+    def test_unread(self, db, redis):
         """Marks posts in student village correctly as read/unread."""
         profile = factories.ProfileFactory.create()
         read_post = factories.PostFactory.create()
