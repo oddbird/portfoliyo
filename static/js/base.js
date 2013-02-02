@@ -447,7 +447,7 @@ var PYO = (function (PYO, $) {
                 if (undo) {
                     PYO.addUndoMsg(type, id, name);
                 } else {
-                    PYO.executeActionInQueue(type, id, true);
+                    PYO.executeActionInQueue(type, id);
                 }
             });
         });
@@ -504,7 +504,7 @@ var PYO = (function (PYO, $) {
         PYO.saveQueueToLocalStorage();
     };
 
-    PYO.executeActionInQueue = function (type, id, remove) {
+    PYO.executeActionInQueue = function (type, id) {
         if (PYO.removalQueue[type][id]) {
             var url = PYO.removalQueue[type][id].url;
             if (url) {
@@ -513,9 +513,6 @@ var PYO = (function (PYO, $) {
                     dataType: 'html',
                     success: function () {
                         PYO.removeItemFromRemovalQueue(type, id);
-                    },
-                    error: function () {
-                        if (remove) { PYO.removeItemFromRemovalQueue(type, id); }
                     }
                 });
             }
