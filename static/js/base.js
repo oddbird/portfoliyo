@@ -415,18 +415,16 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.bindUnloadHandlers = function () {
-        $(window).on('beforeunload', function (e) {
+        $(window).on('beforeunload', function () {
             $.each(PYO.removalQueue.student, function (key) {
-                PYO.executeActionInQueue('student', key, true);
+                PYO.executeActionInQueue('student', key);
             });
             $.each(PYO.removalQueue.group, function (key) {
-                PYO.executeActionInQueue('group', key, true);
+                PYO.executeActionInQueue('group', key);
             });
-            e = e || window.event;
             if (removalRequestsPending > 0) {
                 var warning = 'Your most recent changes are still being saved. ' +
                     'If you close the window now, they may not be saved.';
-                e.returnValue = warning;
                 return warning;
             }
         });
