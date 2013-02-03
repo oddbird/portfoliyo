@@ -400,7 +400,7 @@ var PYO = (function (PYO, $) {
                         PYO.addUndoMsg(type, id, name);
                         PYO.removeListItem(type, id);
                     } else {
-                        $(window).off('beforeunload');
+                        $(window).off('beforeunload.undo');
                         localStorage.setItem('showUndo', true);
                         window.location = redirectUrl;
                     }
@@ -414,7 +414,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.bindUnloadHandlers = function () {
-        $(window).on('beforeunload', function () {
+        $(window).on('beforeunload.undo', function () {
             $.each(PYO.removalQueue.student, function (key) {
                 PYO.executeActionInQueue('student', key);
             });
