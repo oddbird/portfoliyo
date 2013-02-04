@@ -43,15 +43,13 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     email = forms.EmailField(max_length=255)
-    email_notifications = forms.BooleanField(initial=True, required=False)
     country_code = forms.TypedChoiceField(
         choices=model.Profile._meta.get_field('country_code').choices,
-        initial=model.Profile._meta.get_field('country_code').default,
         widget=forms.RadioSelect(),
         )
     school = pyoforms.ModelChoiceField(
         queryset=model.School.objects.filter(auto=False).order_by('name'),
-        empty_label=u"I'm not affiliated with a school",
+        empty_label=u"I'm not affiliated with a school or program",
         required=False,
         widget=SchoolRadioSelect,
         initial=u'',
@@ -127,7 +125,7 @@ class RegistrationForm(forms.Form):
             school_staff=True,
             email_confirmed=False,
             is_active=True,
-            email_notifications=self.cleaned_data['email_notifications'],
+            email_notifications=True,
             )
 
         return profile
@@ -215,7 +213,7 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
         if getattr(self.request, "limited", False):
             a, b = random.randint(1,9), random.randint(1, 9)
             # avoid negative answers
-            if b > a:
+            if b > a: # pragma: no cover
                 a, b = b, a
             opname, op = random.choice(OPERATORS.items())
 

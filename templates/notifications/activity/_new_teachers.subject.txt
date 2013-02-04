@@ -1,0 +1,2 @@
+{% load summary %}
+{{ new_teacher_villages.teachers|summary:"unnamed=teachers"|capfirst }} joined {{ new_teacher_villages.students|summary:"named='s village:unnamed=of your villages" }}.

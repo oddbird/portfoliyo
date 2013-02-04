@@ -89,12 +89,8 @@ SECRET_KEY = '-p++6p5gmhd_3wz43nl5&_6==tz_d*^yaf)@w@=w)3o!glwixd'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = [
-    (
-        'django.template.loaders.cached.Loader', (
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-            )
-     )
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 ]
 
 TEMPLATE_CONTEXT_PROCESSORS = [
@@ -252,8 +248,14 @@ PORTFOLIYO_NUMBERS = {
 DEFAULT_NUMBER = '+15555555555'
 
 REDIS_URL = None
+CELERY_ALWAYS_EAGER = True
 
 PORTFOLIYO_BASE_URL = 'http://localhost:8000'
 
+NOTIFICATION_EMAILS = True
+# notifications last 48 hours by default
+NOTIFICATION_EXPIRY_SECONDS = 48 * 60 * 60
+
 DEBUG_TOOLBAR = False
+DEBUG_URLS = DEBUG
 SPEED_TRACER = False

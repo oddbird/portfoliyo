@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>{% include "notifications/activity.subject.txt" %}</title>
+
+<!--
+
+These extra characters are to make the head of the email at least 1KB in size,
+in order to apparently prevent partial-loading oddities in iOS email clients,
+per
+http://www.emailonacid.com/blog/details/C6/ensure_that_your_entire_email_is_rendered_by_default_in_the_iphone_ipad
+
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+It's a little ridiculous to have to do this, frankly. Software is terrible.
+
+-->
+
+<style type="text/css">
+
+/* Reset */
+#outlook a {padding:0;}
+body{width:100% !important; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; margin:0; padding:0; font-family:arial,helvetica,sans-serif; color:#555555;}
+.ExternalClass {width:100%;}
+.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {line-height: 100%;}
+#backgroundTable {margin:0; padding:0; width:100% !important; line-height: 100% !important;font-family:arial,helvetica,sans-serif; color:#555555;}
+
+img {outline:none; text-decoration:none; -ms-interpolation-mode: bicubic;}
+a img {border:none;}
+.image_fix {display:block;}
+
+h1, h2, h3, h4, h5, h6 {color: #555555 !important;}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {color: #e30028 !important;}
+h1 a:active, h2 a:active,  h3 a:active, h4 a:active, h5 a:active, h6 a:active {color: #94001a !important;}
+h1 a:visited, h2 a:visited,  h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {color: #94001a !important;}
+
+h1 {margin: 0; padding: .33em 0; font-size:30px;}
+h2 {font-size:18px;}
+h3 {margin:0; padding:0; font-size:14px;}
+
+p {font-size:14px; margin: 0; padding-top: 1em; color:#777777;}
+
+ul {font-size:14px; margin: 0; padding-top:2em;}
+
+a:link { color: #e3002a; }
+a:visited { color: #94001a; }
+a:hover { color: #94001a; }
+
+#main {background-color:#fafdfd; padding:1em; text-align:left;}
+
+.post {padding:1em; border-bottom:1px solid #dddddd;}
+h2 + .post {border-top:1px solid #dddddd;}
+.post + h2 {padding-top: .77em;}
+
+.mine {background-color:#ffffff; }
+.reply {background-color:#def1f0; }
+
+.date {background-color:transparent; width:125px; color: #aaaaaa; font-size:10px; text-align:right;}
+
+.nonrequested {color: #888888;}
+.also {padding-top: 2em;}
+
+</style>
+</head>
+
+<body>
+{% load url from future %}
+
+<!-- Outside Tables -->
+<table cellpadding="0" cellspacing="0" border="0" id="backgroundTable" width="100%"><tbody><tr><td align="center">
+<table align="center" cellpadding="0" cellspacing="0" id="topMessageWrapper" width="600"><tbody><tr><td>
+
+<!-- Inner Tables -->
+<table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="main">
+<tbody><tr><td valign="top">
+
+  {% if any_requested_posts or any_requested_bulk_posts %}
+    <h1>New Posts:</h1>
+  {% endif %}
+
+  {% if any_requested_posts %}
+    {% include "notifications/activity/_village_posts.html" %}
+  {% endif %}
+
+  {% if any_requested_bulk_posts %}
+    {% include "notifications/activity/_bulk_posts.html" %}
+  {% endif %}
+
+  {% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher or any_nonrequested_posts or any_nonrequested_bulk_posts or any_nonrequested_new_parent or any_nonrequested_added_to_village or any_nonrequested_new_teacher %}
+    <br /><hr />
+    <h1>Recent Activity:</h1>
+  {% endif %}
+
+  {% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher %}
+  <table class="requested" border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;" width="100%">
+  <tbody><tr><td>
+    <ul>
+      {% if any_requested_new_parent %}
+        {% include "notifications/activity/_new_parents.html" %}
+      {% endif %}
+      {% if any_requested_added_to_village %}
+        {% include "notifications/activity/_added_to_villages.html" %}
+      {% endif %}
+      {% if any_requested_new_teacher %}
+        {% include "notifications/activity/_new_teachers.html" %}
+      {% endif %}
+    </ul>
+  </td></tr></tbody>
+  </table>
+  {% endif %}
+
+  {% if any_nonrequested_posts or any_nonrequested_bulk_posts or any_nonrequested_new_parent or any_nonrequested_added_to_village or any_nonrequested_new_teacher %}
+  <table class="nonrequested" border="0" cellpadding="0" cellspacing="0" style="word-wrap:break-word;table-layout:fixed;" width="100%">
+  <tbody><tr><td>
+    {% if any_requested_new_parent or any_requested_added_to_village or any_requested_new_teacher %}
+    <p class="also">Also...</p>
+    {% endif %}
+    <ul>
+      {% if any_nonrequested_posts %}
+        {% include "notifications/activity/_village_posts_nonrequested.html" %}
+      {% endif %}
+
+      {% if any_nonrequested_bulk_posts %}
+        {% include "notifications/activity/_bulk_posts_nonrequested.html" %}
+      {% endif %}
+
+      {% if any_nonrequested_new_parent %}
+        {% include "notifications/activity/_new_parents.html" %}
+      {% endif %}
+      {% if any_nonrequested_added_to_village %}
+        {% include "notifications/activity/_added_to_villages_nonrequested.html" %}
+      {% endif %}
+      {% if any_nonrequested_new_teacher %}
+        {% include "notifications/activity/_new_teachers.html" %}
+      {% endif %}
+    </ul>
+  </td></tr></tbody>
+  </table>
+  {% endif %}
+
+  <br /><hr />
+  <p>
+    Don't want email notifications from Portfoliyo?
+    <a href="{% url 'edit_profile' %}">Edit your profile</a>.
+  </p>
+</td></tr></tbody>
+</table>
+
+<!-- Outside Tables -->
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+</body>
+</html>

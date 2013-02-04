@@ -198,7 +198,7 @@ var PYO = (function (PYO, $) {
             var student = PYO.tpl('student_list_items', obj).hide();
             var inserted = false;
             nav.find('.student').each(function () {
-                if (!inserted && $(this).find('.listitem-select').data('name').toLowerCase() > student.find('.listitem-select').data('name').toLowerCase()) {
+                if (!inserted && $(this).find('.listitem-select').data('name').toString().toLowerCase() > student.find('.listitem-select').data('name').toString().toLowerCase()) {
                     student.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
                     inserted = true;
                 }
@@ -228,7 +228,7 @@ var PYO = (function (PYO, $) {
             var group = PYO.tpl('group_list_items', obj).hide();
             var inserted = false;
             nav.find('.group').not(':first').each(function () {
-                if (!inserted && $(this).find('.group-link').data('group-name').toLowerCase() > group.find('.group-link').data('group-name').toLowerCase()) {
+                if (!inserted && $(this).find('.group-link').data('group-name').toString().toLowerCase() > group.find('.group-link').data('group-name').toString().toLowerCase()) {
                     group.insertBefore($(this)).slideDown(function () { $(this).removeAttr('style'); });
                     inserted = true;
                 }

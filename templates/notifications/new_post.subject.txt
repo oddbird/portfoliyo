@@ -1,1 +1,0 @@
-{{ message_source }} sent a message.
