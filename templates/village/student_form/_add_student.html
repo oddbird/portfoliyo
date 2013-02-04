@@ -9,8 +9,16 @@
 {% block village-content %}
 <div class="parent-signup">
 
+<input type="radio" id="sms-signup-toggle" name="signup-tabs" class="radio-value" checked />
+<input type="radio" id="form-signup-toggle" name="signup-tabs" class="radio-value" />
+
+<div class="tab-options">
+  <label for="sms-signup-toggle" class="radio-type">SMS signup</label>
+  <label for="form-signup-toggle" class="radio-type">Add by hand</label>
+</div>
+
 {% if code %}
-<section class="bulk-signup">
+<section class="sms-signup">
   {% if group_just_created %}
   <ol class="form-steps">
     <li>Give your group a name</li>
@@ -18,15 +26,15 @@
   </ol>
   {% endif %}
 
-  <p>bulk instructions</p>
+  <h3 class="signup-title">Parents can sign-up with their phones</h3>
 
   {% include 'village/student_form/bulksheet/_download.html' with lang='English' lang_code='en' %}
   {% include 'village/student_form/bulksheet/_download.html' with lang='Spanish' lang_code='es' %}
 </section>
 {% endif %}
 
-<section class="add-student">
-  <p>single form</p>
+<section class="form-signup">
+  <h3 class="signup-title">Add students and parents by hand</h3>
   {% include "village/student_form/_add_student_form.html" %}
 </section>
 

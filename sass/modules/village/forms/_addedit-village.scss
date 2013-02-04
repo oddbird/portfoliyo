@@ -8,6 +8,33 @@
 
 .parent-signup, .village-edit-form { @extend %village-page; }
 
+.parent-signup {
+  %hide-tab-content { display: none; }
+  %show-tab-content { display: block; }
+  %active-tab-title { @extend %select-button-active; }
+  @include tabs(sms-signup form-signup, '.tab-options' null);
+
+  .tab-options {
+    @extend %tab-buttons;
+    position: relative;
+    float: right;
+    z-index: 10;
+    .radio-type {
+      @extend %select-button-base;
+      @extend %icon;
+      &:before { margin-right: rhythm(.5); }
+    }
+  }
+  [for="sms-signup-toggle"] { @extend %icon-bubble; }
+  [for="form-signup-toggle"] { @extend %icon-pencil; }
+}
+
+.signup-title {
+  @include serif;
+  @include adjust-font-size-to($medpx);
+  @include trailer;
+}
+
 .download-pdf {
   @extend %icon;
   @extend %icon-download;
