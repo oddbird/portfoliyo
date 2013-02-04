@@ -1,0 +1,19 @@
+{% extends "village/student_form/_base_form.html" %}
+{% load url from future %}
+{% load widget_tweaks %}
+
+{% block form-action %}{% url 'edit_student' student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}{% endblock %}
+
+{% block form-id %}edit-student-form{% endblock %}
+{% block form-class %}village-edit-form{% endblock %}
+
+{% block more-actions %}
+  <p class="remove-item">
+    <button class="action-remove secondary has-undo" type="submit" name="remove" value="1" data-type="student" data-id="{{ student.id }}" data-name="{{ student.name }}" data-redirect-url="{% url 'all_students' %}" data-group-url="{% if group %}{% url 'group' group_id=group.id %}{% endif %}">
+      Remove {{ student.name }}
+    </button>
+  </p>
+  <p><a href="{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}" class="cancel ajax-link">Cancel</a> or</p>
+{% endblock %}
+
+{% block form-button-text %}save{% endblock %}

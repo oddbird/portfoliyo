@@ -1,13 +1,6 @@
-{% extends "village/student_form/_base.html" %}
+{% extends "village/student_form/_base_form.html" %}
 {% load url from future %}
 {% load widget_tweaks %}
-
-{% block form-header %}
-  <h2 class="village-title">
-    <span aria-hidden="true" class="icon-add-student"></span>
-    Add a Student
-  </h2>
-{% endblock %}
 
 {% block form-action %}{% if group %}{% url 'add_student' group_id=group.id %}{% else %}{% url 'add_student' %}{% endif %}{% endblock %}
 
