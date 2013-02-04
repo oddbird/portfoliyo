@@ -8,10 +8,10 @@ from django.conf import settings
 
 
 
-def send_multipart(template_name, context, recipients,
-                   sender=None, fail_silently=False):
+def send_templated_multipart(template_name, context, recipients,
+                             sender=None, fail_silently=False):
     """
-    Send a multi-part e-mail with both HTML and text parts.
+    Send a templated multi-part e-mail with both HTML and text parts.
 
     ``template_name`` should not include an extension. Both HTML (``.html``)
     and text (``.txt``) versions must exist, as well as ``.subject.txt`` for
@@ -22,24 +22,41 @@ def send_multipart(template_name, context, recipients,
     ``context`` should be a dictionary; all three templates (HTML,
     text, and subject) are rendered with this same context.
 
-    ``recipients`` should be a list of email addresses, e.g. ['a@b.com',
-    'c@d.com'].
+    Other arguments are the same as the ``send_multipart`` function in this
+    module.
+
+    """
+    text_part = render_to_string('%s.txt' % template_name, context)
+    html_part = render_to_string('%s.html' % template_name, context)
+    subject = render_to_string('%s.subject.txt' % template_name, context)
+
+    return send_multipart(
+        subject, text_part, html_part, recipients, sender, fail_silently)
+
+
+
+
+def send_multipart(subject, text_part, html_part, recipients,
+                   sender=None, fail_silently=False):
+    """
+    Send a multi-part email with both HTML and text parts.
+
+    ``subject`` should be the email subject as a string (newlines will be
+    replaced with spaces).
+
+    ``text_part`` and ``html_part`` should be text and HTML versions of the
+    email body, as strings.
+
+    ``recipients`` should be a list of email addresses.
 
     ``sender`` can be an email, 'Name <email>' or None. If unspecified, the
     ``DEFAULT_FROM_EMAIL`` setting will be used.
 
     """
-
     sender = sender or settings.DEFAULT_FROM_EMAIL
 
-    text_part = render_to_string('%s.txt' % template_name, context)
-    html_part = render_to_string('%s.html' % template_name, context)
     # collapse newlines in subject to spaces
-    subject = u" ".join(
-        render_to_string(
-            '%s.subject.txt' % template_name, context).splitlines()
-        )
-
+    subject = u" ".join(subject.splitlines()).strip()
     msg = EmailMultiAlternatives(subject, text_part, sender, recipients)
     msg.attach_alternative(html_part, "text/html")
     return msg.send(fail_silently)

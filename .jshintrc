@@ -4,7 +4,8 @@
         "ich": true,
         "Pusher": true,
         "FlashDetect": true,
-        "Handlebars": true
+        "Handlebars": true,
+        "Modernizr": true
     },
 
     "browser": true,

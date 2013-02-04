@@ -379,10 +379,15 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    // When user clicks to remove a group or student, the item is hidden in the
+    // DOM and added to PYO.removalQueue (which is also stored in localStorage).
+    // A message is shown (with an option to undo), and then the item is
+    // actually removed (via Ajax) after 15s.
     PYO.watchForItemRemoval = function () {
-        if (window.History.enabled) {
-            var relationshipsUrl = $('.village').data('relationships-url');
-            $('.village').on('click', '.action-remove.has-undo', function (e) {
+        if (Modernizr.localstorage) {
+            var village = $('.village');
+            var relationshipsUrl = village.data('relationships-url');
+            village.on('click', '.action-remove.has-undo', function (e) {
                 var trigger = $(this);
                 var type = trigger.data('type');
                 var id = trigger.data('id');
@@ -391,25 +396,78 @@ var PYO = (function (PYO, $) {
                 var redirectUrl = type === 'student' && PYO.activeGroupId && trigger.data('group-url') ? trigger.data('group-url') : trigger.data('redirect-url');
                 if (type && id && name && redirectUrl && deleteUrl) {
                     e.preventDefault();
-                    var title = document.title;
-                    var data = { url: redirectUrl };
-                    window.History.pushState(data, title, redirectUrl);
+                    // Add the item to the queue (and localStorage)
                     PYO.addItemToRemovalQueue(type, id, name, deleteUrl);
-                    PYO.addUndoMsg(type, id, name);
-                    PYO.removeListItem(type, id);
+                    // If the browser supports HTML5 history API, redirect the user via Pjax,
+                    // add the undo message, and visually remove the item.
+                    if (window.History.enabled) {
+                        var title = document.title;
+                        var data = { url: redirectUrl };
+                        window.History.pushState(data, title, redirectUrl);
+                        PYO.addUndoMsg(type, id, name);
+                        PYO.removeListItem(type, id);
+                    // ...otherwise, remove the unload event handler (so that the item isn't
+                    // immediately removed via Ajax on redirect) and redirect.
+                    } else {
+                        $(window).off('beforeunload.undo');
+                        // Set ``true ``to show the undo message on the next page-load.
+                        localStorage.setItem('showUndo', true);
+                        window.location = redirectUrl;
+                    }
                 } else {
                     return true;
                 }
             });
-            $(window).bind('beforeunload', function () {
-                $.each(PYO.removalQueue.student, function (key) {
-                    PYO.executeActionInQueue('student', key);
-                });
-                $.each(PYO.removalQueue.group, function (key) {
-                    PYO.executeActionInQueue('group', key);
-                });
-            });
+            // On page-load, check localStorage for an unresolved removal queue,
+            // and bind item-removal to the window ``unload`` event.
+            PYO.loadRemovalQueue();
+            PYO.bindUnloadHandlers();
         }
+    };
+
+    // On window ``unload``, remove all items remaining in the queue.
+    PYO.bindUnloadHandlers = function () {
+        $(window).on('beforeunload.undo', function () {
+            $.each(PYO.removalQueue.student, function (key) {
+                PYO.executeActionInQueue('student', key);
+            });
+            $.each(PYO.removalQueue.group, function (key) {
+                PYO.executeActionInQueue('group', key);
+            });
+        });
+    };
+
+    PYO.saveQueueToLocalStorage = function () {
+        localStorage.setItem('removalQueue', JSON.stringify(PYO.removalQueue));
+    };
+
+    // On page-load, load the queue from localStorage.
+    PYO.loadRemovalQueue = function () {
+        var queue = localStorage.getItem('removalQueue');
+        var undo = localStorage.getItem('showUndo');
+        if (queue) {
+            try {
+                PYO.removalQueue = JSON.parse(queue);
+            } catch (e) {
+                return;
+            }
+        }
+        $.each(PYO.removalQueue, function (key, val) {
+            var type = key;
+            $.each(val, function (key, val) {
+                var id = key;
+                var name = val.name ? val.name : '';
+                PYO.removeListItem(type, id);
+                // If ``showUndo`` is true, show the undo message.
+                if (undo) {
+                    PYO.addUndoMsg(type, id, name);
+                // Otherwise, immediately remove any items in the queue.
+                } else {
+                    PYO.executeActionInQueue(type, id);
+                }
+            });
+        });
+        localStorage.removeItem('showUndo');
     };
 
     PYO.removeListItem = function (type, id) {
@@ -421,7 +479,9 @@ var PYO = (function (PYO, $) {
             el = nav.find('.group .listitem-select[data-group-id="' + id + '"]').closest('.group');
             title = nav.find('.grouptitle .listitem-select[data-group-id="' + id + '"]');
         }
+        // Hide the removed student/group.
         if (el && el.length) { el.addClass('removed').slideUp(); }
+        // If you just removed the active group, take user back to the groups list.
         if (title && title.length) { PYO.fetchGroups(); }
     };
 
@@ -439,7 +499,7 @@ var PYO = (function (PYO, $) {
             var message = $(this).closest('.undo-msg').removeClass('undo-msg');
             if (message.data('count')) { $.doTimeout('msg-' + message.data('count')); }
             message.find('.body').html(typeCap + " '" + name + "' restored.");
-            // Re-attach timers to success message (see django-messages-ui)
+            // Re-attach timers to new success message (see django-messages-ui)
             $('#messages').messages('bindHandlers', message);
         });
     };
@@ -454,10 +514,12 @@ var PYO = (function (PYO, $) {
                 'url': deleteUrl
             };
         }
+        PYO.saveQueueToLocalStorage();
     };
 
     PYO.removeItemFromRemovalQueue = function (type, id) {
         delete PYO.removalQueue[type][id];
+        PYO.saveQueueToLocalStorage();
     };
 
     PYO.executeActionInQueue = function (type, id) {
@@ -505,6 +567,7 @@ var PYO = (function (PYO, $) {
                             PYO.addStudentToList(obj);
                         });
                     }
+                // As a fallback, just reload the students list.
                 } else {
                     PYO.fetchStudents();
                 }
@@ -518,10 +581,12 @@ var PYO = (function (PYO, $) {
                 } else if (PYO.removalQueue.group[id].obj) {
                     obj = PYO.removalQueue.group[id].obj;
                     PYO.addGroupToList(obj);
+                // As a fallback, just reload the groups list.
                 } else {
                     PYO.fetchGroups();
                 }
             }
+        // As a fallback, just reload the list of students or groups.
         } else {
             if (type === 'group') { PYO.fetchGroups(); } else { PYO.fetchStudents(); }
         }

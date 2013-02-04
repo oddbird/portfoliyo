@@ -165,7 +165,16 @@ for method_name in dir(InMemoryRedis):
 
 
 
+def _real_redis():
+    return redis.StrictRedis.from_url(settings.REDIS_URL)
+
+
+def _fake_redis():
+    return InMemoryRedis()
+
+
+
 if settings.REDIS_URL: # pragma: no cover
-    client = redis.StrictRedis.from_url(settings.REDIS_URL) # pragma: no cover
+    client = _real_redis()
 else: # pragma: no cover
-    client = InMemoryRedis() # pragma: no cover
+    client = _fake_redis()

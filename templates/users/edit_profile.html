@@ -22,12 +22,9 @@
 
       {% include "forms/_field.html" with field=form.notify_new_parent label="A parent signs up." %}
       {% include "forms/_field.html" with field=form.notify_parent_text label="A parent sends a message." %}
-      {% comment %}
-      {# @@@ These two notification types don't exist yet. #}
+      {% include "forms/_field.html" with field=form.notify_teacher_post label="Another teacher sends a message." %}
       {% include "forms/_field.html" with field=form.notify_added_to_village label="Another teacher adds me to a village." %}
       {% include "forms/_field.html" with field=form.notify_joined_my_village label="Another teacher joins one of my villages." %}
-      {% endcomment %}
-      {% include "forms/_field.html" with field=form.notify_teacher_post label="Another teacher sends a message." %}
 
     </div>
 
