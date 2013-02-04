@@ -6,7 +6,7 @@
 // ---------------------------------------------------------------------------
 // Parent Signup
 
-.parent-signup, .village-add-form, .village-edit-form { @extend %village-page; }
+.parent-signup, .village-edit-form { @extend %village-page; }
 
 .download-pdf {
   @extend %icon;
