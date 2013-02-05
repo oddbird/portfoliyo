@@ -9,10 +9,11 @@
 .parent-signup, .village-edit-form { @extend %village-page; }
 
 .parent-signup {
+  @include tabs(sms-signup form-signup, '.tab-options' null);
+
   %hide-tab-content { display: none; }
   %show-tab-content { display: block; }
   %active-tab-title { @extend %select-button-active; }
-  @include tabs(sms-signup form-signup, '.tab-options' null);
 
   .tab-options {
     @extend %tab-buttons;
@@ -29,18 +30,85 @@
   [for="form-signup-toggle"] { @extend %icon-pencil; }
 }
 
-.signup-title {
-  @include serif;
-  @include adjust-font-size-to($medpx);
-  @include trailer;
+.sms-signup, .form-signup { clear: both; }
+
+$phone: 5;
+$non-phone: $content-width - 5;
+
+.sms-signup {
+  @include pie-clearfix;
+  position: relative;
+}
+
+.sms-instructions {
+  clear: both;
+  p {
+    @include span-columns($non-phone omega, $content-width);
+    @include rhythm-borders(1px,1);
+    @include trailer;
+    @include arrow(1em left color($green darker));
+    background: color($green darker);
+    border-color: color($green darkest);
+    color: $base3;
+    text-transform: uppercase;
+    &:first-of-type { @include leader(1); }
+  }
+  strong {
+    @include adjust-font-size-to($xlargepx);
+    display: block;
+    text-transform: none;
+  }
+}
+
+.phone-img {
+  @include fluid-ratio(9/16,columns($phone,$content-width));
+  @include background(image-url('phone.png') no-repeat center);
+  @include background-size(contain);
+  float: left;
+  margin-right: gutter($content-width);
+}
+
+$burst-color: $red;
+$burst-size: rhythm(5);
+
+.try-it {
+  @include transition(all 400ms ease);
+  position: absolute;
+  bottom: 0;
+  width: $burst-size;
+  height: $burst-size;
+  color: contrast($burst-color);
+  background: $burst-color;
+  text-align: center;
+  b {
+    position: relative;
+    display: block;
+    padding: rhythm(1.25) rhythm(.5);
+    font-weight: bold;
+    z-index: 10;
+  }
+  &:before, &:after {
+    @include stretch;
+    content: "";
+    background: $burst-color;
+  }
+  &:before { @include rotate(30deg); }
+  &:after { @include rotate(60deg); }
+  &:hover { @include rotate(360deg); }
+}
+
+.sms-downloads { @include span-columns($non-phone omega, $content-width); }
+
+.download-title {
+  @include trailer(.5);
+  font-weight: bold;
 }
 
 .download-pdf {
+  @extend %button;
   @extend %icon;
   @extend %icon-download;
-  @include adjust-font-size-to($smallpx);
-  display: block;
-  padding: rhythm(.125);
+  @include button-color(color($green lightest));
 }
 
 // ---------------------------------------------------------------------------

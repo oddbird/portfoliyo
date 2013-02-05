@@ -26,15 +26,29 @@
   </ol>
   {% endif %}
 
-  <h3 class="signup-title">Parents can sign-up with their phones</h3>
+  <div class="sms-instructions">
+    <div class="phone-img">
+      <aside class="try-it"><b>Try it yourself!</b></aside>
+    </div>
+    <p>
+      Send a text to:
+      <strong>{{ pyo_phone }}</strong>
+    </p>
+    <p>
+      With the message:
+      <strong>{{ code|lower }}</strong>
+    </p>
+  </div>
 
-  {% include 'village/student_form/bulksheet/_download.html' with lang='English' lang_code='en' %}
-  {% include 'village/student_form/bulksheet/_download.html' with lang='Spanish' lang_code='es' %}
+  <div class="sms-downloads">
+    <h4 class="download-title">Download & print these instructions:</h4>
+    {% include 'village/student_form/bulksheet/_download.html' with lang='English' lang_code='en' %}
+    {% include 'village/student_form/bulksheet/_download.html' with lang='Spanish' lang_code='es' %}
+  </div>
 </section>
 {% endif %}
 
 <section class="form-signup">
-  <h3 class="signup-title">Add students and parents by hand</h3>
   {% include "village/student_form/_add_student_form.html" %}
 </section>
 
