@@ -2974,6 +2974,31 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   text-transform: none;
 }
 
+.group-add-notice {
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin-top: 12px;
+  margin-top: 0.63889rem;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin-left: -1.27778rem;
+  padding-left: 1.27778rem;
+  margin-right: -1.27778rem;
+  padding-right: 1.27778rem;
+  margin-bottom: -1.27778rem;
+  padding-bottom: 1.27778rem;
+  padding: 0.63889rem 1.27778rem;
+  display: block;
+  color: rgba(253, 246, 227, 0.75);
+  background: rgba(7, 54, 66, 0.25);
+}
+.group-add-notice b {
+  font-weight: bold;
+}
+
 .phone-img {
   position: relative;
   height: 0;

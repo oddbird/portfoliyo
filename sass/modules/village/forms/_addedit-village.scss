@@ -60,6 +60,17 @@ $non-phone: $content-width - 5;
   }
 }
 
+.group-add-notice {
+  @include adjust-font-size-to($xsmallpx);
+  @include leader(.5);
+  @include bleed(rhythm(1), left right bottom);
+  padding: rhythm(.5) rhythm(1);
+  display: block;
+  color: rgba($base3,.75);
+  background: rgba($back,.25);
+  b { font-weight: bold; }
+}
+
 .phone-img {
   @include fluid-ratio(9/16,columns($phone,$content-width));
   @include background(image-url('phone.png') no-repeat center);

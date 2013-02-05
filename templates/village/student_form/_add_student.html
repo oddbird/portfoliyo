@@ -37,6 +37,7 @@
     <p>
       With the message:
       <strong>{{ code|lower }}</strong>
+      {% if group %}<em class="group-add-notice">This code will add people to your <b>{{ group }}</b> group.</em>{% endif %}
     </p>
   </div>
 
