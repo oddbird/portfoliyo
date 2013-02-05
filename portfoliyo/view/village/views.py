@@ -92,22 +92,6 @@ def add_student(request, group_id=None):
         {
             'form': form,
             'group': group,
-            },
-        )
-
-
-
-@school_staff_required
-@ajax('village/bulksignup/_bulk.html')
-def add_students_bulk(request, group_id=None):
-    """Add students by sending home a PDF to parents."""
-    group = get_object_or_404(model.Group, id=group_id) if group_id else None
-
-    return TemplateResponse(
-        request,
-        'village/bulksignup/bulk.html',
-        {
-            'group': group,
             'code': group.code if group else request.user.profile.code,
             'default_lang_code': settings.LANGUAGE_CODE,
             'pyo_phone': formats.display_phone(
@@ -168,7 +152,7 @@ def add_group(request):
             tracking.track(request, 'added group')
             if not group.students.exists():
                 return redirect(
-                    reverse('add_students_bulk', kwargs={'group_id': group.id})
+                    reverse('add_student', kwargs={'group_id': group.id})
                     + '?created=1')
             return redirect('group', group_id=group.id)
     else:

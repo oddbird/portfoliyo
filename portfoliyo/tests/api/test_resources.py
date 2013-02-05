@@ -405,23 +405,12 @@ class TestGroupResource(object):
             kwargs={'resource_name': 'user', 'api_name': 'v1'},
             ) + '?elders=%s' % rel.elder.id
         assert g['add_student_uri'] == reverse('add_student')
-        assert g['add_students_bulk_uri'] == reverse('add_students_bulk')
         assert g['group_uri'] == reverse('all_students')
         assert g['owner'] == reverse(
             'api_dispatch_detail',
             kwargs={
                 'resource_name': 'user', 'api_name': 'v1', 'pk': rel.elder.id},
             )
-
-
-    def test_all_students_group_no_code_no_bulk_uri(self, no_csrf_client):
-        """If user has no code, no bulk-add-students uri included."""
-        p = factories.ProfileFactory.create(code=None)
-
-        response = no_csrf_client.get(self.list_url(), user=p.user)
-        g = response.json['objects'][0]
-
-        assert 'add_students_bulk_uri' not in g
 
 
     def test_group_ordering(self, no_csrf_client):
@@ -474,16 +463,6 @@ class TestGroupResource(object):
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 
         assert response.json['objects'][1]['add_student_uri'] == add_student_url
-
-
-    def test_add_students_bulk_uri(self, no_csrf_client):
-        """Each group has an add_students_bulk_uri for use in the web UI."""
-        g = factories.GroupFactory.create(code='ABCD')
-        url = reverse('add_students_bulk', kwargs={'group_id': g.id})
-
-        response = no_csrf_client.get(self.list_url(), user=g.owner.user)
-
-        assert response.json['objects'][1]['add_students_bulk_uri'] == url
 
 
     def test_students_uri(self, no_csrf_client):

@@ -11,6 +11,9 @@
 %village-page {
   @extend %formdefaults;
   @extend %overflow-y;
+  @include transition(padding 300ms);
   padding: rhythm(.5);
   > :last-child { @include trailer(2); }
+  @include breakpoint(70em) { @include pad(1,1,$content-width); }
+  @include breakpoint(90em) { @include pad(1,4,$content-width); }
 }

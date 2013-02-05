@@ -1,11 +1,6 @@
-{% extends "village/_base.html" %}
+{% load url from future %}
 {% load widget_tweaks %}
 
-{% block village-header %}
-  {% block form-header %}{% endblock %}
-{% endblock %}
-
-{% block village-content %}
 <form method="POST" action="{% block form-action %}{% endblock %}" class="{% block form-class %}{% endblock %}" id="{% block form-id %}{% endblock %}">
   {% csrf_token %}
   {{ form.non_field_errors }}
@@ -27,4 +22,3 @@
     <button type="submit" class="action-post">{% block form-button-text %}{% endblock %}</button>
   </div>
 </form>
-{% endblock %}
