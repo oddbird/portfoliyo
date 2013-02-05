@@ -2943,8 +2943,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
   position: relative;
-  background: #4f5b00;
-  border-color: #1a1e00;
+  background: #586e75;
+  border-color: #586e75;
   color: #fdf6e3;
   text-transform: uppercase;
 }
@@ -2956,7 +2956,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border: solid transparent;
   pointer-events: none;
   right: 100%;
-  border-right-color: #4f5b00;
+  border-right-color: #586e75;
   border-width: 1em;
   top: 50%;
   margin-top: -1em;

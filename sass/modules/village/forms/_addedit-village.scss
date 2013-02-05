@@ -34,6 +34,7 @@
 
 $phone: 5;
 $non-phone: $content-width - 5;
+$instruction-background: $base01;
 
 .sms-signup {
   @include pie-clearfix;
@@ -46,10 +47,10 @@ $non-phone: $content-width - 5;
     @include span-columns($non-phone omega, $content-width);
     @include rhythm-borders(1px,1);
     @include trailer;
-    @include arrow(1em left color($green darker));
-    background: color($green darker);
-    border-color: color($green darkest);
-    color: $base3;
+    @include arrow(1em left $instruction-background);
+    background: $instruction-background;
+    border-color: $instruction-background;
+    color: contrast($instruction-background);
     text-transform: uppercase;
     &:first-of-type { @include leader(1); }
   }
