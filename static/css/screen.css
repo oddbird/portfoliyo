@@ -731,6 +731,9 @@ optgroup {
   top: -9999px;
   left: -9999px;
 }
+.login form .radio-options, .register form .radio-options, .edit-profile form .radio-options, .reset-password form .radio-options, .change-password form .radio-options, .set-password form .radio-options, [class^="errorpage-"] form .radio-options, .activationfailed form .radio-options, .awaiting-activation form .radio-options, .no-students form .radio-options, .pjax-error .radio-options, .group-add-form .radio-options, .group-edit-form .radio-options, .parent-signup .radio-options, .village-edit-form .radio-options, .elder-invite-form .radio-options, .elder-edit-form .radio-options, .dashboard .radio-options, .post-add-form .radio-options {
+  margin: 0;
+}
 .login form .form-actions, .register form .form-actions, .edit-profile form .form-actions, .reset-password form .form-actions, .change-password form .form-actions, .set-password form .form-actions, [class^="errorpage-"] form .form-actions, .activationfailed form .form-actions, .awaiting-activation form .form-actions, .no-students form .form-actions, .pjax-error .form-actions, .group-add-form .form-actions, .group-edit-form .form-actions, .parent-signup .form-actions, .village-edit-form .form-actions, .elder-invite-form .form-actions, .elder-edit-form .form-actions, .dashboard .form-actions, .post-add-form .form-actions {
   margin-top: 12px;
   margin-top: 0.63889rem;

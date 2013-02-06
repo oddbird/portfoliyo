@@ -16,20 +16,12 @@
       {% include "forms/_field.html" with field=form.name label="Students call me..." %}
       {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
       {% include "forms/_field.html" with field=form.email %}
+      {% include "forms/_field.html" with field=form.country_code label="Country" %}
     </div>
 
     <div class="fieldset initial-password">
       {% include "forms/_field.html" with field=form.password %}
       {% include "forms/_field.html" with field=form.password_confirm %}
-    </div>
-
-    {% include "forms/_field.html" with field=form.country_code label="Country" %}
-    {% include "forms/_field.html" with field=form.school label="School or program" helptext="Don't see yours listed? <a href='#add-school' class='add-school-link'>Add a new one</a>." %}
-
-    <div class="fieldset add-school">
-      {{ form.addschool }}
-      {% include "forms/_field.html" with field=form.addschool_form.name label="School or program name" %}
-      {% include "forms/_field.html" with field=form.addschool_form.postcode label="Postal code" helptext="Don't want to add a school or program? <a href='#school-field' class='select-school-link'>Return to the full list</a>." %}
     </div>
 
     <div class="form-actions">

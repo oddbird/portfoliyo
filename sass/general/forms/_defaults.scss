@@ -205,6 +205,8 @@ $select-gradient  : color($base,0), color($base,.125);
   }
   .optional-fieldset { .formfield-optional { @include gone; } }
 
+  .radio-options { margin: 0; }
+
   $form-action-note-size: $smallpx;
 
   .form-actions {
