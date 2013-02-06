@@ -11,14 +11,36 @@
   border-color: $base2;
 }
 
-.elders-title {
-  @extend %elder-listitem;
-  font-weight: bold;
-  color: $base3;
-  background: mix($blue,$base);
-  border-color: $village-border-color;
-  + .addelder-link { border-top: 0; }
+.elder-list {
+  height: 50%;
+  .itemlist { @include calc(height, '100% - 2rem', rhythm(6)); }
 }
+
+.elder-header {
+  @extend %elder-listitem;
+  @include box-shadow($inset-color 0 0 $inset-size);
+  position: relative;
+  padding-right: rhythm(2);
+  background: $base2;
+  border-color: $village-border-color;
+  font-weight: bold;
+  .teachers & { @include leading-border(1px,.25); }
+}
+
+.additem-elder {
+  @extend %button-icon;
+  @extend %icon-user-plus;
+  @include button-color(color($green lightest));
+  position: absolute;
+  top: $box-padding;
+  right: $box-padding;
+  &.active {
+    @include inset;
+    background: $base01;
+    color: $base3;
+  }
+}
+
 
 %parent-status-icon {
   display: block;
@@ -61,9 +83,10 @@
 
   .no-sms {
     @extend %parent-status-icon;
-    @extend %icon-replace;
+    @extend %button-icon;
     @extend %icon-close;
-    &:before { color: $red; }
+    @include button-color($red);
+    @include inset;
   }
 }
 
@@ -76,7 +99,6 @@
   @extend %parent-status-icon;
   @extend %button-icon;
   @extend %icon-bubble;
-  @include button-color(color($green lightest));
-  // #{$focus} { background-color: ; }
+  @include button-color($base3);
 }
 

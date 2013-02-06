@@ -332,13 +332,13 @@ var PYO = (function (PYO, $) {
         });
 
         if (PYO.directSmsName) {
-            $('.village-elders .elder .action-sms[data-name="' + PYO.directSmsName + '"]').click();
+            $('.elder-list.family .elder .action-sms[data-name="' + PYO.directSmsName + '"]').click();
             PYO.directSmsName = '';
         }
     };
 
     PYO.initializeSmsDirectLinks = function () {
-        $('body').on('click', '.village-elders .elder .action-sms', function (e) {
+        $('body').on('click', '.elder-list.family .elder .action-sms', function (e) {
             e.preventDefault();
             var context = $('.village-main');
             var el = $(this);
@@ -355,7 +355,7 @@ var PYO = (function (PYO, $) {
                 });
             } else {
                 PYO.directSmsName = name;
-                $('.village-nav .listitem-select.ajax-link.active').click();
+                $('.village-nav .ajax-link.active').click();
             }
         });
     };

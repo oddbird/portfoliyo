@@ -76,7 +76,7 @@ var PYO = (function (PYO, $) {
                 $.each(data.objects, function () {
                     var id = this.id;
                     var all_groups = nav.find('.group .group-link');
-                    var group_titles = nav.find('.grouptitle .group-link');
+                    var group_titles = nav.find('.navtitle .group-feed');
                     var all_students_group = all_groups.filter(function () {
                         return $(this).data('group-id').toString().indexOf('all') !== -1;
                     });
@@ -103,7 +103,7 @@ var PYO = (function (PYO, $) {
                     if (this.id) {
                         var id = this.id;
                         var all_groups = nav.find('.group .group-link');
-                        var group_titles = nav.find('.grouptitle .group-link');
+                        var group_titles = nav.find('.navtitle .group-feed');
                         var all_students_group = all_groups.filter(function () {
                             return $(this).data('group-id').toString().indexOf('all') !== -1;
                         });
@@ -152,7 +152,7 @@ var PYO = (function (PYO, $) {
                     var evData = this;
                     var id = evData.id;
                     var added_to_groups_arr = evData.groups;
-                    var group_titles = nav.find('.grouptitle .group-link');
+                    var group_titles = nav.find('.navtitle .group-feed');
                     var all_groups = nav.find('.group .group-link');
                     var group_dashboard = group_titles.filter(function () {
                         return $.inArray($(this).data('group-id'), added_to_groups_arr) !== -1;
@@ -186,7 +186,7 @@ var PYO = (function (PYO, $) {
                     if (this.id) {
                         var id = this.id;
                         var removed_from_groups_arr = this.groups;
-                        var group_titles = nav.find('.grouptitle .group-link');
+                        var group_titles = nav.find('.navtitle .group-feed');
                         var all_groups = nav.find('.group .group-link');
                         var group_dashboard = group_titles.filter(function () {
                             return $.inArray($(this).data('group-id'), removed_from_groups_arr) !== -1;
@@ -240,7 +240,7 @@ var PYO = (function (PYO, $) {
                         var id = this.id;
                         var name = this.name;
                         var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
-                        var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
+                        var grouptitle = nav.find('.navtitle .group-feed[data-group-id="' + id + '"]');
                         // If viewing the groups-list
                         if (group.length && group.data('group-name') !== name) {
                             // @@@ groups list should be re-alphabetized (and update group village header?)
@@ -249,7 +249,7 @@ var PYO = (function (PYO, $) {
                         }
                         // If viewing the edited group
                         if (grouptitle.length && grouptitle.data('group-name') !== name) {
-                            grouptitle.find('.listitem-name').text(name);
+                            grouptitle.closest('.navtitle').find('.group-name').text(name);
                             grouptitle.data('group-name', name).attr('data-group-name', name);
                         }
                     }

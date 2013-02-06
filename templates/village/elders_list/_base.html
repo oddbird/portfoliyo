@@ -1,15 +1,25 @@
 {% load elders %}
 {% load url from future %}
 
-<div class="village-elders">
+{% with elders|elder_types as elder_types %}
+{% for elder_type in elder_types %}
 
-  {% with elders|elder_types as elder_types %}
-  {% for elder_type in elder_types %}
-
-  <h2 class="elders-title">{% if elder_type.school_staff %}Teachers{% else %}Family Members{% endif %}</h2>
+<nav class="elder-list {% if elder_type.school_staff %}teachers{% else %}family{% endif %}">
+  <header class="elder-header">
+    <h2 class="elder-title">
+      {% if elder_type.school_staff %}Teachers{% else %}Family{% endif %}
+    </h2>
+    {% block invite-elder %}
+    {% if request.user.profile.school_staff %}
+    <a href="{% block invite-elder-url %}{% endblock %}" class="additem-elder ajax-link{% if invite_teacher_active and elder_type.school_staff %} active{% endif %}{% if invite_family_active and not elder_type.school_staff %} active{% endif %}">
+      Invite {% if elder_type.school_staff %}Teachers{% else %}Family{% endif %}
+    </a>
+    {% endif %}
+    {% endblock invite-elder %}
+  </header>
 
   {% if elder_type.elders %}
-  <ul>
+  <ul class="itemlist {% if elder_type.school_staff %}teachers-list{% else %}parents-list{% endif %}">
     {% for nav_elder in elder_type.elders %}
     {% if not nav_elder.school_staff %}
 
@@ -43,13 +53,7 @@
     {% endfor %}
   </ul>
   {% endif %}
+</nav>
 
-  {% block invite-elder %}
-  {% if request.user.profile.school_staff %}
-  <a href="{% block invite-elder-url %}{% endblock %}" class="additem-elder ajax-link{% if invite_teacher_active and elder_type.school_staff %} active{% endif %}{% if invite_family_active and not elder_type.school_staff %} active{% endif %}">{% if elder_type.school_staff %}Invite Teacher{% else %}Invite Family Member{% endif %}</a>
-  {% endif %}
-  {% endblock invite-elder %}
-
-  {% endfor %}
-  {% endwith %}
-</div>
+{% endfor %}
+{% endwith %}

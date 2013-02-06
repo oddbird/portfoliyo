@@ -47,7 +47,6 @@ $content-width          : $center + $right;
 
 .village-info {
   @extend %village-lists;
-  @extend %overflow-y;
   @include span-columns($right omega, $content-width);
   margin: 0;
   height: 100%;
