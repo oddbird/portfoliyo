@@ -25,15 +25,22 @@
   border-color: $village-border-color;
   font-weight: bold;
   .teachers & { @include leading-border(1px,.25); }
-  .additem-elder {
-    @extend %button-icon;
-    @extend %icon-user-plus;
-    @include button-color(color($green lightest));
-    position: absolute;
-    top: $box-padding;
-    right: $box-padding;
+}
+
+.additem-elder {
+  @extend %button-icon;
+  @extend %icon-user-plus;
+  @include button-color(color($green lightest));
+  position: absolute;
+  top: $box-padding;
+  right: $box-padding;
+  &.active {
+    @include inset;
+    background: $base01;
+    color: $base3;
   }
 }
+
 
 %parent-status-icon {
   display: block;
