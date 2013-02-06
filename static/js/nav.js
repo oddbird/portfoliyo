@@ -18,8 +18,7 @@ var PYO = (function (PYO, $) {
                     id: trigger.data('group-id'),
                     edit_url: trigger.data('group-edit-url'),
                     resource_url: trigger.data('group-resource-url'),
-                    add_student_url: trigger.data('group-add-student-url'),
-                    add_students_bulk_url: trigger.data('group-add-students-bulk-url')
+                    add_student_url: trigger.data('group-add-student-url')
                 };
                 PYO.fetchStudents(group_obj);
             });
@@ -38,19 +37,17 @@ var PYO = (function (PYO, $) {
             nav.loadingOverlay('remove');
             if (data && data.objects && data.objects.length) {
                 var removed = [];
-                var add_student_url, add_students_bulk_url;
+                var add_student_url;
                 $.each(data.objects, function (i) {
                     if (this.id.toString().indexOf('all') !== -1) {
                         add_student_url = this.add_student_uri;
-                        add_students_bulk_url = this.add_students_bulk_uri;
                         if (!all_students_group_obj) {
                             all_students_group_obj = {
                                 name: this.name,
                                 url: this.group_uri,
                                 students_url: this.students_uri,
                                 id: this.id,
-                                add_student_url: this.add_student_uri,
-                                add_students_bulk_url: this.add_students_bulk_uri
+                                add_student_url: this.add_student_uri
                             };
                         }
                     }
@@ -68,7 +65,6 @@ var PYO = (function (PYO, $) {
                     if (nav.data('is-staff') === 'True') { data.staff = true; }
                     data.add_group_url = nav.data('add-group-url');
                     data.add_student_url = add_student_url;
-                    data.add_students_bulk_url = add_students_bulk_url;
                     var newGroups = PYO.tpl('group_list', data);
                     PYO.updateNavActiveClasses(newGroups);
                     nav.html(newGroups);
@@ -126,7 +122,6 @@ var PYO = (function (PYO, $) {
                 data.group_edit_url = group_obj.edit_url;
                 data.group_resource_url = group_obj.resource_url;
                 data.group_add_student_url = group_obj.add_student_url;
-                data.group_add_students_bulk_url = group_obj.add_students_bulk_url;
                 if (nav.data('is-staff') === 'True') { data.staff = true; }
                 if (group_obj.id.toString().indexOf('all') !== -1) { data.all_students = true; }
                 var students = PYO.tpl('student_list', data);
@@ -161,8 +156,7 @@ var PYO = (function (PYO, $) {
                             id: this.id,
                             edit_url: this.edit_uri,
                             resource_url: this.resource_uri,
-                            add_student_url: this.add_student_uri,
-                            add_students_bulk_url: this.add_students_bulk_uri
+                            add_student_url: this.add_student_uri
                         };
                     }
                     if (!all_students_group_obj && this.id.toString().indexOf('all') !== -1) {
@@ -171,8 +165,7 @@ var PYO = (function (PYO, $) {
                             url: this.group_uri,
                             students_url: this.students_uri,
                             id: this.id,
-                            add_student_url: this.add_student_uri,
-                            add_students_bulk_url: this.add_students_bulk_uri
+                            add_student_url: this.add_student_uri
                         };
                     }
                 });

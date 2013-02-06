@@ -27,12 +27,8 @@ function program1(depth0,data) {
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.add_group_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   buffer += escapeExpression(stack1) + "\" class=\"additem-group ajax-link\">Add Group</a>\n\n  ";
-  stack1 = depth0.add_students_bulk_url;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(2, program2, data)});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n  ";
   stack1 = depth0.add_student_url;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(4, program4, data)});
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(2, program2, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</div>\n";
   return buffer;}
@@ -40,20 +36,10 @@ function program2(depth0,data) {
   
   var buffer = "", stack1, foundHelper;
   buffer += "<a href=\"";
-  foundHelper = helpers.add_students_bulk_url;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-  else { stack1 = depth0.add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\" class=\"action-addbulk ajax-link additem-village\">Signup Parents</a>";
-  return buffer;}
-
-function program4(depth0,data) {
-  
-  var buffer = "", stack1, foundHelper;
-  buffer += "or <a href=\"";
   foundHelper = helpers.add_student_url;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.add_student_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\" class=\"action-addsingle ajax-link\">add a student by hand »</a>";
+  buffer += escapeExpression(stack1) + "\" class=\"action-addbulk ajax-link additem-village\">Signup Parents</a>";
   return buffer;}
 
   buffer += "<div class=\"navtitle\">\n  <h2 class=\"groups-title\">All Groups</h2>\n</div>\n\n<ul class=\"itemlist groups-list\">\n  ";
@@ -396,12 +382,8 @@ function program1(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n<div class=\"additems\">\n  ";
-  stack1 = depth0.group_add_students_bulk_url;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(2, program2, data)});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n  ";
   stack1 = depth0.group_add_student_url;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(4, program4, data)});
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(2, program2, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</div>\n";
   return buffer;}
@@ -409,20 +391,10 @@ function program2(depth0,data) {
   
   var buffer = "", stack1, foundHelper;
   buffer += "<a href=\"";
-  foundHelper = helpers.group_add_students_bulk_url;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-  else { stack1 = depth0.group_add_students_bulk_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\" class=\"action-addbulk ajax-link additem-village\">Signup Parents</a>";
-  return buffer;}
-
-function program4(depth0,data) {
-  
-  var buffer = "", stack1, foundHelper;
-  buffer += "or <a href=\"";
   foundHelper = helpers.group_add_student_url;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.group_add_student_url; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\" class=\"action-addsingle ajax-link\">add a student by hand »</a>";
+  buffer += escapeExpression(stack1) + "\" class=\"action-addbulk ajax-link additem-village\">Signup Parents</a>";
   return buffer;}
 
   buffer += "<div class=\"navtitle\">\n  <a href=\"#\" class=\"action-showgroups\" title=\"List groups\">List groups</a>\n  <h2 class=\"group-name\">";

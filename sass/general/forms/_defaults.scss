@@ -160,7 +160,7 @@ $select-gradient  : color($base,0), color($base,.125);
     &[type="month"], &[type="week"], &[type="time"],
     &[type="number"], &[type="search"], &[type="color"] {
       @extend %input;
-      @include rem(min-height, rhythm(1 + $input-rhythm*2, $input-font-size));
+      @include rem(min-height, rhythm(1 + $input-rhythm*2));
       margin: 0;
     }
   }
@@ -168,7 +168,7 @@ $select-gradient  : color($base,0), color($base,.125);
   textarea {
     @extend %input;
     @include transition(200ms min-height);
-    @include rem(min-height, rhythm(1 + $input-rhythm*2, $input-font-size));
+    @include rem(min-height, rhythm(1 + $input-rhythm*2));
   }
 
   fieldset {
@@ -214,25 +214,30 @@ $select-gradient  : color($base,0), color($base,.125);
     text-align: right;
     p {
       @include adjust-font-size-to($form-action-note-size);
-      @include rem(margin, 0 .4em rhythm(.5,$form-action-note-size) 0);
+      @include rem(margin, 0 .4em rhythm(.5) 0);
       display: inline-block;
     }
     button:not([class~="secondary"]) {
       @extend %button;
       text-transform: capitalize;
     }
-    [class~="secondary"] {
-      @include link($non-links: true);
-      &.action-remove {
-        @extend %icon;
-        @extend %icon-remove;
-        color: $red;
-        #{$focus} { color: $alt; }
-      }
-    }
+  }
+  [class~="secondary"] {
+    @include link($non-links: true);
   }
 }
 
 button { @include reset-button; }
 
 .linkaction { @extend %button; }
+
+.remove-item {
+  @include padding-leader($input-rhythm);
+  float: left;
+  .action-remove {
+    @extend %icon;
+    @extend %icon-remove;
+    color: $red;
+    #{$focus} { color: $accent; }
+  }
+}

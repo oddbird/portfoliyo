@@ -85,8 +85,8 @@ $village-nav-action-color : $base03;
   border-width: 0 1px;
   z-index: 50;
   .itemlist { height: rhythm(12); }
-  .students-list { @include calc(height, '100% - #{rhythm(5.25)}'); }
-  .groups-list { @include calc(height, '100% - #{rhythm(7)}'); }
+  .students-list { @include calc(height, '100% - #{rhythm(4.25)}'); }
+  .groups-list { @include calc(height, '100% - #{rhythm(6)}'); }
   .additems {
     @include leading-border(1px,.25);
     @include box-shadow($inset-color 0 0 $inset-size);

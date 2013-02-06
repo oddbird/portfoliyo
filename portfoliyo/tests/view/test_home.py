@@ -24,11 +24,11 @@ class TestHome(object):
 
 
     def test_redirect_to_add_group(self, client):
-        """Redirects to add-students-bulk if staff user has no students."""
+        """Redirects to add-student if staff user has no students."""
         profile = factories.ProfileFactory.create(school_staff=True)
         res = client.get(self.url, user=profile.user, status=302)
 
-        assert res['Location'] == location(reverse('add_students_bulk'))
+        assert res['Location'] == location(reverse('add_student'))
 
 
     def test_redirect_to_no_students(self, client):
