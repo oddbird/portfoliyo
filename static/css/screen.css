@@ -2557,7 +2557,7 @@ button {
 
 .pjax-error, .group-add-form, .group-edit-form, .parent-signup, .village-edit-form, .elder-invite-form, .elder-edit-form, .dashboard, .itemlist, .village-feed {
   height: 100%;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 .loading.pjax-error, .loading.group-add-form, .loading.group-edit-form, .loading.parent-signup, .loading.village-edit-form, .loading.elder-invite-form, .loading.elder-edit-form, .loading.dashboard, .loading.itemlist, .loading.village-feed {
