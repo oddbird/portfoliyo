@@ -55,20 +55,25 @@ var PYO = (function (PYO, $) {
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
                     updateHeight();
-                    PYO.updateVillageHeight();
+                    PYO.updateContentHeight('.village-content', '.village-body', '.village-header');
+                    PYO.updateContentHeight('.village-nav', '.itemlist', '.navtitle', '.additems');
+                    PYO.updateContentHeight('.elder-list', '.itemlist', '.elder-header');
                     PYO.updateFeedHeights();
                 });
             });
         }
     };
 
-    PYO.updateVillageHeight = function () {
-        if ($('.village-content').length) {
-            var container = $('.village-content');
-            var header = container.find('.village-header');
-            var body = container.find('.village-body');
-            var newHeight = container.height() - header.outerHeight();
-            body.height(newHeight);
+    PYO.updateContentHeight = function (container, content, header, footer) {
+        if ($(container).length) {
+            $(container).each(function () {
+                var c = $(this);
+                var b = c.find(content);
+                var h = c.find(header);
+                var f = c.find(footer);
+                var newHeight = c.height() - h.outerHeight() - f.outerHeight();
+                b.height(newHeight);
+            });
         }
     };
 
@@ -594,7 +599,8 @@ var PYO = (function (PYO, $) {
     PYO.initializePage = function () {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');
-        PYO.updateVillageHeight();
+        PYO.updateContentHeight('.village-content', '.village-body', '.village-header');
+        PYO.updateContentHeight('.elder-list', '.itemlist', '.elder-header');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
         if ($('#invite-teacher-form').length) { PYO.disablePreselectedAssociations('#invite-teacher-form'); }

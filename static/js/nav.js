@@ -68,6 +68,7 @@ var PYO = (function (PYO, $) {
                     var newGroups = PYO.tpl('group_list', data);
                     PYO.updateNavActiveClasses(newGroups);
                     nav.html(newGroups);
+                    PYO.updateContentHeight('.village-nav', '.itemlist', '.navtitle', '.additems');
                     newGroups.find('.details').html5accordion();
                     newGroups.find('input[placeholder], textarea[placeholder]').placeholder();
                     if (!newGroups) { PYO.fetchGroupsError(force); }
@@ -127,6 +128,7 @@ var PYO = (function (PYO, $) {
                 var students = PYO.tpl('student_list', data);
                 PYO.updateNavActiveClasses(students);
                 nav.html(students);
+                PYO.updateContentHeight('.village-nav', '.itemlist', '.navtitle', '.additems');
                 students.find('.details').html5accordion();
                 students.find('input[placeholder], textarea[placeholder]').placeholder();
             } else { fetchStudentsError(); }
