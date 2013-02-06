@@ -137,13 +137,11 @@ var PYO = (function (PYO, $) {
                             var title = document.title;
                             var data = { url: url };
                             History.pushState(data, title, url);
-                            if (!el.hasClass('active') && (!el.hasClass('group-link') || el.closest('.listitem').hasClass('grouptitle'))) {
+                            if (!el.hasClass('active') && !el.hasClass('group-link')) {
                                 if (el.parents('.village-nav').length) {
-                                    $('.village-nav .ajax-link.listitem-select').removeClass('active');
-                                    el.closest('.listitem').find('.ajax-link.listitem-select').addClass('active');
-                                } else {
-                                    el.addClass('active');
+                                    $('.village-nav .ajax-link').removeClass('active');
                                 }
+                                el.addClass('active');
                             }
                         }
                         if (el.parent().hasClass('student')) {
@@ -477,7 +475,7 @@ var PYO = (function (PYO, $) {
         }
         if (type === 'group') {
             el = nav.find('.group .listitem-select[data-group-id="' + id + '"]').closest('.group');
-            title = nav.find('.grouptitle .listitem-select[data-group-id="' + id + '"]');
+            title = nav.find('.navtitle .group-feed[data-group-id="' + id + '"]');
         }
         // Hide the removed student/group.
         if (el && el.length) { el.addClass('removed').slideUp(); }
@@ -548,7 +546,7 @@ var PYO = (function (PYO, $) {
                     student.removeClass('removed').slideDown(function () { $(this).removeAttr('style'); });
                 } else if (PYO.removalQueue.student[id].obj) {
                     obj = PYO.removalQueue.student[id].obj;
-                    var group_titles = nav.find('.grouptitle .group-link');
+                    var group_titles = nav.find('.navtitle .group-feed');
                     var all_students_dashboard = group_titles.filter(function () {
                         return $(this).data('group-id').toString().indexOf('all') !== -1;
                     });
