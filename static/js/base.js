@@ -55,24 +55,29 @@ var PYO = (function (PYO, $) {
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
                     updateHeight();
-                    PYO.updateContentHeight('.village-content', '.village-body', '.village-header');
-                    PYO.updateContentHeight('.village-nav', '.itemlist', '.navtitle', '.additems');
-                    PYO.updateContentHeight('.elder-list', '.itemlist', '.elder-header');
+                    PYO.updateContentHeight('.village-content', '.village-body');
+                    PYO.updateContentHeight('.village-nav', '.itemlist');
+                    PYO.updateContentHeight('.elder-list', '.itemlist');
                     PYO.updateFeedHeights();
                 });
             });
         }
     };
 
-    PYO.updateContentHeight = function (container, content, header, footer) {
+    PYO.updateContentHeight = function (container, body) {
         if ($(container).length) {
             $(container).each(function () {
                 var c = $(this);
-                var b = c.find(content);
-                var h = c.find(header);
-                var f = c.find(footer);
-                var newHeight = c.height() - h.outerHeight() - f.outerHeight();
-                b.height(newHeight);
+                var b = c.find(body);
+                if (b.length) {
+                    var siblings = b.siblings();
+                    var siblingHeight = 0;
+                    siblings.each(function () {
+                        siblingHeight = siblingHeight + $(this).outerHeight();
+                    });
+                    var newHeight = c.height() - siblingHeight;
+                    b.height(newHeight);
+                }
             });
         }
     };
@@ -599,8 +604,8 @@ var PYO = (function (PYO, $) {
     PYO.initializePage = function () {
         PYO.activeStudentId = $('.village-content').data('student-id');
         PYO.activeGroupId = $('.village-content').data('group-id');
-        PYO.updateContentHeight('.village-content', '.village-body', '.village-header');
-        PYO.updateContentHeight('.elder-list', '.itemlist', '.elder-header');
+        PYO.updateContentHeight('.village-content', '.village-body');
+        PYO.updateContentHeight('.elder-list', '.itemlist');
         PYO.updateNavActiveClasses();
         PYO.addGroupAssociationColors('.relation-fieldset');
         if ($('#invite-teacher-form').length) { PYO.disablePreselectedAssociations('#invite-teacher-form'); }
