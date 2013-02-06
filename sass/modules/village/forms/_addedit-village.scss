@@ -21,7 +21,6 @@
     float: right;
     z-index: 10;
     .radio-type {
-      @extend %select-button-base;
       @extend %icon;
       &:before { margin-right: rhythm(.5); }
     }

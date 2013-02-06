@@ -35,6 +35,8 @@
 
 %tab-buttons {
   .radio-type {
+    @extend %select-button-base;
+    @extend %select-button-inactive;
     float: left;
     &:first-child { @include border-left-radius($button-radius); }
     &:last-child { @include border-right-radius($button-radius); }
