@@ -1,7 +1,7 @@
 // ---------------------------------------------------------------------------
 // Select buttons
 
-%select-button-base {
+%select-button-inactive {
   @extend %button;
   @include button-color($base3);
   border-radius: 0;
@@ -15,7 +15,7 @@
 %select-button-base {
   .radio-value {
     display: none;
-    & + .radio-type { @extend %select-button-base; }
+    & + .radio-type { @extend %select-button-inactive; }
     &:checked + .radio-type { @extend %select-button-active; }
   }
 }
