@@ -43,9 +43,6 @@ var PYO = (function (PYO, $) {
         // pusher.js
         PYO.initializePusher();
 
-        // user.js
-        PYO.addSchool('#register-form');
-
         // chat.js
         PYO.initializeSmsDirectLinks();
     });
