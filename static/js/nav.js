@@ -24,7 +24,7 @@ var PYO = (function (PYO, $) {
             });
         }
 
-        nav.on('click', '.groups.action-back', function (e) {
+        nav.on('click', '.action-showgroups', function (e) {
             e.preventDefault();
             $(this).blur();
             PYO.fetchGroups(true);
@@ -68,6 +68,7 @@ var PYO = (function (PYO, $) {
                     var newGroups = PYO.tpl('group_list', data);
                     PYO.updateNavActiveClasses(newGroups);
                     nav.html(newGroups);
+                    PYO.updateContentHeight('.village-nav', '.itemlist');
                     newGroups.find('.details').html5accordion();
                     newGroups.find('input[placeholder], textarea[placeholder]').placeholder();
                     if (!newGroups) { PYO.fetchGroupsError(force); }
@@ -127,6 +128,7 @@ var PYO = (function (PYO, $) {
                 var students = PYO.tpl('student_list', data);
                 PYO.updateNavActiveClasses(students);
                 nav.html(students);
+                PYO.updateContentHeight('.village-nav', '.itemlist');
                 students.find('.details').html5accordion();
                 students.find('input[placeholder], textarea[placeholder]').placeholder();
             } else { fetchStudentsError(); }
@@ -204,7 +206,7 @@ var PYO = (function (PYO, $) {
                 }
             });
             if (!inserted) {
-                student.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+                student.appendTo(nav.find('.students-list')).slideDown(function () { $(this).removeAttr('style'); });
             }
             student.find('.details').html5accordion();
             student.find('input[placeholder], textarea[placeholder]').placeholder();
@@ -234,7 +236,7 @@ var PYO = (function (PYO, $) {
                 }
             });
             if (!inserted) {
-                group.appendTo(nav.find('.itemlist')).slideDown(function () { $(this).removeAttr('style'); });
+                group.appendTo(nav.find('.groups-list')).slideDown(function () { $(this).removeAttr('style'); });
             }
             group.find('.details').html5accordion();
             group.find('input[placeholder], textarea[placeholder]').placeholder();
@@ -243,7 +245,7 @@ var PYO = (function (PYO, $) {
 
     PYO.removeGroupFromList = function (id) {
         var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
-        var grouptitle = nav.find('.grouptitle .group-link[data-group-id="' + id + '"]');
+        var grouptitle = nav.find('.navtitle .group-feed[data-group-id="' + id + '"]');
         // If viewing the groups-list
         if (group.length) {
             var group_container = group.closest('.group');
@@ -270,14 +272,7 @@ var PYO = (function (PYO, $) {
 
         if (links.length) {
             var url = window.location.pathname;
-            links.filter('[href="' + url + '"]').each(function () {
-                var el = $(this);
-                if (el.hasClass('action-addsingle')) {
-                    el.closest('.addstudent').find('.ajax-link.additem-link').addClass('active');
-                } else {
-                    el.addClass('active');
-                }
-            });
+            links.filter('[href="' + url + '"]').addClass('active');
             links.filter(function () {
                 var id;
                 if ($(this).hasClass('group-link')) {
