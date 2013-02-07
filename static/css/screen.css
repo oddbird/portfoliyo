@@ -2516,11 +2516,7 @@ button {
   font-size: 1.94444rem;
   line-height: 46px;
   line-height: 2.55556rem;
-  width: 74.60317%;
-  float: left;
-  margin-right: 1.5873%;
-  float: left;
-  max-width: 74.60317%;
+  overflow: hidden;
   font-weight: bold;
 }
 .village-title [class^="icon-"] {
@@ -2538,6 +2534,7 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
+  float: right;
   padding-top: 0.31944rem;
   text-align: right;
 }

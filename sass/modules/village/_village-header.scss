@@ -17,9 +17,7 @@
 .village-title {
   @include serif;
   @include adjust-font-size-to($largepx);
-  @include span-columns($center, $content-width);
-  float: left;
-  max-width: columns($center, $content-width);
+  overflow: hidden;
   font-weight: bold;
   [class^="icon-"] {
     color: color($base,.5);
@@ -33,6 +31,7 @@
 
 .page-actions {
   @include adjust-font-size-to($smallpx);
+  float: right;
   padding-top: $box-padding;
   text-align: right;
 

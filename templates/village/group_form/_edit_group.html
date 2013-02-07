@@ -2,13 +2,13 @@
 {% load url from future %}
 
 {% block form-header %}
+  <div class="page-actions">
+    <a href="{% url 'group' group_id=group.id %}" class="action-back ajax-link">Back to {{ group }}</a>
+  </div>
   <h2 class="village-title">
     <span aria-hidden="true" class="icon-edit"></span>
     <b>Edit</b> {{ group }}
   </h2>
-  <div class="page-actions">
-    <a href="{% url 'group' group_id=group.id %}" class="action-back ajax-link">Back to {{ group }}</a>
-  </div>
 {% endblock %}
 
 {% block form-action %}{% url 'edit_group' group_id=group.id %}{% endblock %}
