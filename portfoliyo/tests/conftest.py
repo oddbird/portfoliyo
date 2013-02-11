@@ -104,7 +104,7 @@ def redis(request):
         client = redis._orig_client
         client.flushdb()
     else:
-        client = redis._fake_redis()
+        client = redis.InMemoryRedis()
 
     redis.client = client
     client.num_calls = 0
