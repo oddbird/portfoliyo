@@ -14,18 +14,6 @@ from portfoliyo import model
 from .. import forms as pyoforms
 
 
-class SchoolRadioSelect(forms.RadioSelect):
-    """A RadioSelect with a custom display template."""
-    template_name = 'users/school_radio.html'
-
-
-
-class SchoolForm(forms.ModelForm):
-    class Meta:
-        model = model.School
-        fields = ['name', 'postcode']
-
-
 
 class RegistrationForm(forms.Form):
     """
@@ -47,53 +35,15 @@ class RegistrationForm(forms.Form):
         choices=model.Profile._meta.get_field('country_code').choices,
         widget=forms.RadioSelect(),
         )
-    school = pyoforms.ModelChoiceField(
-        queryset=model.School.objects.filter(auto=False).order_by('name'),
-        empty_label=u"I'm not affiliated with a school or program",
-        required=False,
-        widget=SchoolRadioSelect,
-        initial=u'',
-        )
-    addschool = forms.BooleanField(
-        initial=False, required=False, widget=forms.HiddenInput)
-
-
-    def __init__(self, *args, **kwargs):
-        """Also instantiate a nested SchoolForm."""
-        super(RegistrationForm, self).__init__(*args, **kwargs)
-        self.addschool_form = SchoolForm(self.data or None, prefix='addschool')
 
 
     def clean(self):
-        """
-        Verify password fields match and school is provided.
-
-        If addschool is True, build a new School based on data in nested
-        SchoolForm.
-
-        If not, and no school was selected, auto-construct one.
-
-        """
+        """Verify password fields match."""
         data = self.cleaned_data
         password = data.get('password')
         confirm = data.get('password_confirm')
         if password != confirm:
             raise forms.ValidationError("The passwords didn't match.")
-        if data.get('addschool'):
-            if self.addschool_form.is_valid():
-                data['school'] = self.addschool_form.save(commit=False)
-            else:
-                raise forms.ValidationError(
-                    "Could not add a school.")
-        else:
-            # reinstantiate unbound addschool_form to avoid spurious errors
-            self.addschool_form = SchoolForm(prefix='addschool')
-            if data.get('email') and not data.get('school'):
-                data['school'] = model.School(
-                    name=(u"%f-%s" % (time.time(), data['email']))[:200],
-                    postcode="",
-                    auto=True,
-                    )
         return data
 
 
@@ -110,10 +60,12 @@ class RegistrationForm(forms.Form):
 
     def save(self):
         """Save and return new user profile."""
-        school = self.cleaned_data['school']
-        if school.id is None:
-            school.country_code = self.cleaned_data['country_code']
-            school.save()
+        school = model.School.objects.create(
+            name=(u"%f-%s" % (time.time(), self.cleaned_data['email']))[:200],
+            postcode="",
+            auto=True,
+            country_code = self.cleaned_data['country_code']
+            )
 
         profile = model.Profile.create_with_user(
             name=self.cleaned_data['name'],

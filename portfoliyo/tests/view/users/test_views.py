@@ -258,7 +258,6 @@ class TestRegister(object):
 
     def test_register(self, client):
         """Get logged in and redirected to home after registering."""
-        school = factories.SchoolFactory.create()
         form = client.get(self.url).forms['register-form']
         form['name'] = 'Some Body'
         form['email'] = 'some@example.com'
@@ -266,7 +265,6 @@ class TestRegister(object):
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
         form['country_code'] = 'us'
-        form['school'] = str(school.id)
         res = form.submit(status=302)
 
         assert res['Location'] == utils.location(reverse('add_student'))
@@ -276,13 +274,11 @@ class TestRegister(object):
 
     def test_register_failed(self, client):
         """Form redisplayed with any errors."""
-        school = factories.SchoolFactory.create()
         form = client.get(self.url).forms['register-form']
         form['email'] = 'some@example.com'
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
-        form['school'] = str(school.id)
         res = form.submit(status=200)
 
         res.mustcontain('field is required')
@@ -293,7 +289,6 @@ class TestConfirmEmail(object):
     """Tests for confirm_email view."""
     def url(self, client):
         """Shortcut for confirm_email url."""
-        school = factories.SchoolFactory.create()
         form = client.get(reverse('register')).forms['register-form']
         form['name'] = 'New Body'
         form['email'] = 'new@example.com'
@@ -301,7 +296,6 @@ class TestConfirmEmail(object):
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'New Role'
         form['country_code'] = 'us'
-        form['school'] = str(school.id)
         form.submit(status=302)
 
         for line in mail.outbox[0].body.splitlines():
