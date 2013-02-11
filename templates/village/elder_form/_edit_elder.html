@@ -2,13 +2,13 @@
 {% load url from future %}
 
 {% block village-header %}
+  <div class="page-actions">
+    <a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="action-back ajax-link">Back to {% firstof student group %}</a>
+  </div>
   <h2 class="village-title">
     <span aria-hidden="true" class="icon-edit"></span>
     <b>Edit</b> {% firstof elder.name elder.user.email elder.phone "Family Member" %}
   </h2>
-  <div class="page-actions">
-    <a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="action-back ajax-link">Back to {% firstof student group %}</a>
-  </div>
 {% endblock %}
 
 {% block village-content %}
