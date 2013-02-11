@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from django.utils import timezone
 
-from portfoliyo import model
+from portfoliyo import model, serializers
 from portfoliyo.notifications import types
 from . import base
 
@@ -13,7 +13,7 @@ def serialize_post(post, **extra):
     """Transform ``Post`` instance into its serialized representation."""
     extra['plain_text'] = post.original_text
     extra['original_timestamp'] = post.timestamp
-    return model.post_dict(post, **extra)
+    return serializers.post_dict(post, **extra)
 
 
 

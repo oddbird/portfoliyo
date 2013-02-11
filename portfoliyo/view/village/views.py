@@ -13,7 +13,7 @@ from django.template.response import TemplateResponse
 from django.views.decorators.http import require_POST
 from unidecode import unidecode
 
-from portfoliyo import formats, model, pdf, xact
+from portfoliyo import formats, model, pdf, serializers, xact
 from portfoliyo.view import tracking
 from .. import home
 from ..ajax import ajax
@@ -321,7 +321,7 @@ def _get_posts(profile, student=None, group=None):
     post_data = []
     if queryset is not None:
         post_data = [
-            model.post_dict(
+            serializers.post_dict(
                 post,
                 unread=str(post.id) in all_unread,
                 )
@@ -453,7 +453,7 @@ def create_post(request, student_id=None, group_id=None):
     data = {
         'success': True,
         'posts': [
-            model.post_dict(
+            serializers.post_dict(
                 post, author_sequence_id=sequence_id, unread=False)
             ],
         }
