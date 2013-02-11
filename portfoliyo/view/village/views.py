@@ -321,7 +321,7 @@ def _get_posts(profile, student=None, group=None):
     post_data = []
     if queryset is not None:
         post_data = [
-            serializers.post_dict(
+            serializers.post2dict(
                 post,
                 unread=str(post.id) in all_unread,
                 )
@@ -453,7 +453,7 @@ def create_post(request, student_id=None, group_id=None):
     data = {
         'success': True,
         'posts': [
-            serializers.post_dict(
+            serializers.post2dict(
                 post, author_sequence_id=sequence_id, unread=False)
             ],
         }

@@ -7,8 +7,8 @@ from portfoliyo.tests import factories
 
 
 
-def test_post_dict(db):
-    """post_dict returns dictionary of post data."""
+def test_post2dict(db):
+    """post2dict returns dictionary of post data."""
     rel = factories.RelationshipFactory.create(
         from_profile__name='The Teacher', description='desc')
     post = factories.PostFactory.create(
@@ -19,7 +19,7 @@ def test_post_dict(db):
         html_text='Foo',
         )
 
-    assert serializers.post_dict(post, extra="extra") == {
+    assert serializers.post2dict(post, extra="extra") == {
         'post_id': post.id,
         'author_id': rel.elder.id,
         'student_id': rel.student.id,
@@ -40,12 +40,12 @@ def test_post_dict(db):
 
 
 
-def test_post_dict_no_author():
+def test_post2dict_no_author():
     """Special handling for author-less (automated) posts."""
     student = factories.ProfileFactory.build()
     post = factories.PostFactory.build(author=None, student=student)
 
-    d = serializers.post_dict(post)
+    d = serializers.post2dict(post)
 
     assert d['author_id'] == 0
     assert d['author'] == ""
@@ -53,7 +53,7 @@ def test_post_dict_no_author():
 
 
 
-def test_post_dict_no_relationship(db):
+def test_post2dict_no_relationship(db):
     """If relationship is gone, uses author's role instead."""
     rel = factories.RelationshipFactory.create(
         from_profile__name='The Teacher',
@@ -66,4 +66,4 @@ def test_post_dict_no_relationship(db):
         )
     rel.delete()
 
-    assert serializers.post_dict(post)['role'] == 'role'
+    assert serializers.post2dict(post)['role'] == 'role'

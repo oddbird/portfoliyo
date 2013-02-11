@@ -13,7 +13,7 @@ def serialize_post(post, **extra):
     """Transform ``Post`` instance into its serialized representation."""
     extra['plain_text'] = post.original_text
     extra['original_timestamp'] = post.timestamp
-    return serializers.post_dict(post, **extra)
+    return serializers.post2dict(post, **extra)
 
 
 

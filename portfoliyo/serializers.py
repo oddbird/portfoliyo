@@ -2,7 +2,7 @@
 from django.utils import dateformat, timezone
 
 
-def post_dict(post, **extra):
+def post2dict(post, **extra):
     """Return given post rendered as dictionary, ready for JSONification."""
     if post.author:
         author_name = (

@@ -23,7 +23,7 @@ def bulk_posted(bulk_post_id, **extra_data):
 
 
 def posted_event(post, **extra_data):
-    data = {'posts': [serializers.post_dict(post, **extra_data)]}
+    data = {'posts': [serializers.post2dict(post, **extra_data)]}
     teacher_ids = post.elders_in_context.filter(
         school_staff=True).values_list('pk', flat=True)
     for teacher_id in teacher_ids:
