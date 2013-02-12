@@ -110,7 +110,14 @@ $inset-size: rhythm(.125);
 // - %button
 // - %reset-button
 
-%button { @include button; }
+%button {
+  @include button;
+  &[disabled] {
+    @include button-color(color($red));
+    cursor: text;
+    &, #{$focus} { @include box-shadow(none); }
+  }
+}
 
 %button-icon {
   @extend %button;
