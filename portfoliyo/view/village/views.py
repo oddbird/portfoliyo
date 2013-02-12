@@ -365,6 +365,8 @@ def village(request, student_id):
 
     group = get_querystring_group(request, student)
 
+    posts = _get_posts(request.user.profile, student=student)
+
     if rel and not request.impersonating:
         model.unread.mark_village_read(rel.student, rel.elder)
 
@@ -378,7 +380,7 @@ def village(request, student_id):
             'elders': model.contextualized_elders(
                 student.elder_relationships).order_by('school_staff', 'name'),
             'read_only': rel is None,
-            'posts': _get_posts(request.user.profile, student=student),
+            'posts': posts,
             'post_char_limit': model.post_char_limit(rel) if rel else 0,
             },
         )
