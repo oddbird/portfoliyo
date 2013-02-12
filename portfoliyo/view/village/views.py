@@ -231,6 +231,9 @@ def invite_family(request, student_id):
             'group': group,
             'student': rel.student,
             'inviter': model.elder_in_context(rel),
+            'elders': model.contextualized_elders(
+                rel.student.elder_relationships).order_by(
+                'school_staff', 'name'),
             'form': form,
             },
         )
@@ -262,7 +265,14 @@ def invite_teacher(request, student_id):
     return TemplateResponse(
         request,
         'village/invite_elder/teacher.html',
-        {'group': group, 'student': rel.student, 'form': form},
+        {
+            'group': group,
+            'student': rel.student,
+            'form': form,
+            'elders': model.contextualized_elders(
+                rel.student.elder_relationships).order_by(
+                'school_staff', 'name'),
+            },
         )
 
 
@@ -292,7 +302,12 @@ def invite_teacher_to_group(request, group_id):
     return TemplateResponse(
         request,
         'village/invite_elder/teacher_to_group.html',
-        {'group': group, 'form': form},
+        {
+            'group': group,
+            'form': form,
+            'elders': model.contextualized_elders(
+                group.all_elders).order_by('school_staff', 'name'),
+            },
         )
 
 
@@ -488,6 +503,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
         editor = model.elder_in_context(teacher_rel)
         elder_rel = get_relationship_or_404(student_id, elder)
         elder = model.elder_in_context(elder_rel)
+        all_elders = elder_rel.student.elder_relationships
         group = get_querystring_group(request, elder_rel.student)
     else:
         elder_rel = None
@@ -497,6 +513,7 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
                     owner=request.user.profile), pk=group_id)
         else:
             group = model.AllStudentsGroup(request.user.profile)
+        all_elders = group.all_elders
 
     if request.method == 'POST':
         form = forms.EditFamilyForm(request.POST, instance=elder, rel=elder_rel)
@@ -521,6 +538,8 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
             'student': elder_rel.student if elder_rel else None,
             'inviter': editor,
             'elder': elder,
+            'elders': model.contextualized_elders(
+                all_elders).order_by('school_staff', 'name'),
             },
         )
 
