@@ -193,6 +193,12 @@ $instruction-height: rhythm(5.5);
 $addnote-fontsize: $input-font-size;
 $postaction-size: $smallpx;
 
+%post-targeting {
+  @include adjust-font-size-to($postaction-size);
+  @include trailer(.5);
+  text-align: left;
+}
+
 .post-add-form {
   @extend %formdefaults;
   @include stretch-x;
@@ -208,24 +214,41 @@ $postaction-size: $smallpx;
 
   .form-actions {
     clear: none;
-    display: inline-block;
     margin: 0;
-    .action-post {
-      @extend %button;
-      @include button-size($addnote-fontsize .125);
-      text-transform: uppercase;
+    .action-post.action-post {
+      @include border-left-radius(0);
+      float: right;
+      width: space(2, $center);
+      height: rhythm(2.5);
     }
+  }
+
+  .sms-targeting {
+    @extend %post-targeting;
+    > .type {
+      display: inline;
+      font-weight: bold;
+      cursor: default;
+    }
+    .multiselect-dropdown { min-width: columns(2, $center); }
+    .ui-multiselect { width: 100%; }
+  }
+  .group-targeting {
+    @extend %post-targeting;
+    @extend %icon;
+    @extend %icon-warning;
+    font-weight: bold;
   }
 }
 
 .post-textfield {
-  text-align: left;
+  @include span-columns($center - 2, $center);
   .value {
-    @include trailer(.125, $addnote-fontsize);
-    height: rhythm(2.5, $addnote-fontsize);
-    min-height: rhythm(2.5, $addnote-fontsize);
+    @include trailer(.125);
+    height: rhythm(2.5);
+    margin: 0;
     background: rgba(white,.75);
-    padding-left: rhythm(.5, $addnote-fontsize);
+    padding-left: rhythm(.5);
     resize: none;
   }
   .charcount {
@@ -235,16 +258,6 @@ $postaction-size: $smallpx;
     bottom: 0;
     color: $base1;
     &.overlimit { color: $red; }
-  }
-}
-
-.sms-targeting {
-  @include adjust-font-size-to($postaction-size);
-  display: inline-block;
-  > .type {
-    display: inline;
-    font-style: italic;
-    cursor: default;
   }
 }
 

@@ -39,11 +39,7 @@
   <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
-    <div class="formfield post-textfield">
-      <textarea id="post-text" name="text" class="value"></textarea>
-      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
-    </div>
-
+    {% block sms-target %}
     <div class="formfield sms-targeting">
       <label for="sms-target" class="type">Send text messages to</label>
       <div class="multiselect-dropdown">
@@ -53,6 +49,12 @@
           {% endfor %}
         </select>
       </div>
+    </div>
+    {% endblock %}
+
+    <div class="formfield post-textfield">
+      <textarea id="post-text" name="text" class="value"></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
     </div>
 
     <div class="form-actions">
