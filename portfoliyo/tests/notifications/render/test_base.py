@@ -492,7 +492,7 @@ class TestSend(object):
                 'subject': "New message in StX's village.",
                 'html': [
                     '<h2><a href="%(StXUrl)s">StX\'s village</a>:</h2>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
@@ -501,7 +501,7 @@ class TestSend(object):
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "how\'s it" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
+                    '  "how\'s it" - PaX (Dad), January 14, 2012 at 7 p.m.\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -517,19 +517,19 @@ class TestSend(object):
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<em title="January 14, 2012 at 6 p.m.">January 14, 2012 at 6 p.m.</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<p>html: again</p>',
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
-                    '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
+                    '  "hello" - PaX (Dad), January 14, 2012 at 6 p.m.\n'
+                    '  "again" - PaX (Dad), January 14, 2012 at 7 p.m.\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -545,19 +545,19 @@ class TestSend(object):
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<em title="January 14, 2012 at 6 p.m.">January 14, 2012 at 6 p.m.</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<p>html: again</p>',
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "hello" - PaX (Dad), 1/14/2013 at 6 p.m.\n'
-                    '  "again" - PaX (Dad), 1/14/2013 at 7 p.m.\n'
+                    '  "hello" - PaX (Dad), January 14, 2012 at 6 p.m.\n'
+                    '  "again" - PaX (Dad), January 14, 2012 at 7 p.m.\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -683,7 +683,7 @@ class TestSend(object):
         context = {}
         name_map = {}
         rels = {}
-        now = datetime(2013, 1, 15, tzinfo=timezone.utc)
+        now = datetime(2012, 1, 15, tzinfo=timezone.utc)
         for st_name, author_name, role, text, ago, new in params['scenario']:
             if st_name not in name_map:
                 name_map[st_name] = factories.RelationshipFactory.create(
@@ -730,12 +730,12 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teacher1</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<p>html: hello</p>',
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    '  "hello" - Teacher1 (Teacher), January 14, 2012 at 7 p.m.\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -751,12 +751,12 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teacher1</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<p>html: hello</p>',
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teacher1 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    '  "hello" - Teacher1 (Teacher), January 14, 2012 at 7 p.m.\n'
                     ],
                 },
             { # two bulk posts by same teacher, seen in two of my villages
@@ -772,19 +772,19 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<em title="January 14, 2012 at 6 p.m.">January 14, 2012 at 6 p.m.</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<p>html: again</p>',
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n'
-                    '  "again" - Teach1 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    '  "hello" - Teach1 (Teacher), January 14, 2012 at 6 p.m.\n'
+                    '  "again" - Teach1 (Teacher), January 14, 2012 at 7 p.m.\n'
                     ],
                 },
             { # bulk posts by two teachers in the same two villages
@@ -803,19 +803,19 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<em title="January 14, 2012 at 6 p.m.">January 14, 2012 at 6 p.m.</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach2</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<p>html: hi</p>'
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n'
-                    '  "hi" - Teach2 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    '  "hello" - Teach1 (Teacher), January 14, 2012 at 6 p.m.\n'
+                    '  "hi" - Teach2 (Teacher), January 14, 2012 at 7 p.m.\n'
                     ],
                 },
             { # bulk posts by two teachers in different sets of villages
@@ -834,7 +834,7 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 6 p.m.</em>',
+                    '<em title="January 14, 2012 at 6 p.m.">January 14, 2012 at 6 p.m.</em>',
                     '<p>html: hello</p>',
                     '<h2><a href="%(StXUrl)s">StX</a> and '
                     '<a href="%(StZUrl)s">StZ</a>\'s villages:</h2>',
@@ -842,14 +842,14 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach2</span>'
                     '</h3>',
-                    '<em>1/14/2013 at 7 p.m.</em>',
+                    '<em title="January 14, 2012 at 7 p.m.">January 14, 2012 at 7 p.m.</em>',
                     '<p>html: hi</p>'
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teach1 (Teacher), 1/14/2013 at 6 p.m.\n',
+                    '  "hello" - Teach1 (Teacher), January 14, 2012 at 6 p.m.\n',
                     '# StX and StZ\'s villages:\n'
-                    '  "hi" - Teach2 (Teacher), 1/14/2013 at 7 p.m.\n'
+                    '  "hi" - Teach2 (Teacher), January 14, 2012 at 7 p.m.\n'
                     ],
                 },
             { # a bulk post in three villages
@@ -1036,7 +1036,7 @@ class TestSend(object):
     def test_bulk_posts(self, params, recip):
         context = {}
         name_map = {}
-        now = datetime(2013, 1, 15, tzinfo=timezone.utc)
+        now = datetime(2012, 1, 15, tzinfo=timezone.utc)
         for teacher_name, my_sts, other_sts, msg, ago in params['scenario']:
             if teacher_name not in name_map:
                 name_map[teacher_name] = factories.ProfileFactory.create(

@@ -1,5 +1,8 @@
 """Serialization."""
+import datetime
+
 from django.utils import dateformat, timezone
+
 
 
 def post2dict(post, **extra):
@@ -29,7 +32,8 @@ def post2dict(post, **extra):
         'author': author_name,
         'role': role,
         'timestamp': timestamp.isoformat(),
-        'date': dateformat.format(timestamp, 'n/j/Y'),
+        'date': dateformat.format(timestamp, 'F j, Y'),
+        'naturaldate': naturaldate(timestamp),
         'time': dateformat.time_format(timestamp, 'P'),
         'text': post.html_text,
         'sms': post.sms,
@@ -44,3 +48,39 @@ def post2dict(post, **extra):
     data.update(extra)
 
     return data
+
+
+
+def now(tzinfo=None):
+    """Get the current datetime."""
+    return datetime.datetime.now(tzinfo)
+
+
+
+def naturaldate(value):
+    """
+    Return given past date/datetime formatted "naturally" as a day/date.
+
+    If the given date is today or yesterday, return "today" or "yesterday". If
+    the date is within the past week, return the full day of the week
+    name. Otherwise, return e.g. "January 23, 2012", omitting the year if it is
+    the current year.
+
+    """
+    tzinfo = getattr(value, 'tzinfo', None)
+    value = datetime.date(value.year, value.month, value.day)
+    today = now(tzinfo).date()
+    delta = today - value
+    if delta.days == 0:
+        return u'today'
+    elif delta.days == 1:
+        return u'yesterday'
+    elif 0 < delta.days < 7:
+        return dateformat.format(value, 'l')
+
+    if today.year == value.year:
+        long_format = 'F j'
+    else:
+        long_format = 'F j, Y'
+
+    return dateformat.format(value, long_format)
