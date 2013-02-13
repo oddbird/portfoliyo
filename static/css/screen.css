@@ -3106,16 +3106,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 5px;
-  padding-bottom: 0.26389rem;
-  padding-top: 0.31944rem;
-  padding-left: 0.31944rem;
-  padding-right: 0.31944rem;
-  background: #eee8d5;
-  border-color: #93a1a1;
+  padding: 0.31944rem;
+  background: #fdf9ee;
+  border-bottom: 1px solid #93a1a1;
 }
 
 .group-name {
@@ -3573,7 +3566,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   position: relative;
   padding-right: 2.55556rem;
-  background: #eee8d5;
+  background: #fdf9ee;
   border-color: #93a1a1;
   font-weight: bold;
 }
