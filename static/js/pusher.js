@@ -259,7 +259,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.preventPusherAfterFormSubmit = function () {
-        $('.village').on('submit', 'form', function () {
+        $('.village').on('submit', 'form:not(.post-add-form)', function () {
             PYO.pusher.unsubscribe('private-user_' + PYO.activeUserId);
         });
     };
