@@ -275,7 +275,7 @@ var PYO = (function (PYO, $) {
             links.filter('[href="' + url + '"]').addClass('active');
             links.filter(function () {
                 var id;
-                if ($(this).hasClass('group-link')) {
+                if ($(this).hasClass('group-link') || $(this).hasClass('group-feed')) {
                     id = $(this).data('group-id');
                     if (!PYO.activeStudentId) { return id === PYO.activeGroupId; }
                 } else {
