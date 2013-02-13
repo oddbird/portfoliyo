@@ -146,6 +146,7 @@ var PYO = (function (PYO, $) {
                     author_id: PYO.activeUserId,
                     role: role,
                     date: date,
+                    naturaldate: 'today',
                     time: time,
                     text: text,
                     author_sequence_id: author_sequence,
