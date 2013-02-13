@@ -259,8 +259,10 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.preventPusherAfterFormSubmit = function () {
-        $('.village').on('submit', 'form:not(.post-add-form)', function () {
-            PYO.pusher.unsubscribe('private-user_' + PYO.activeUserId);
+        $('.village').on('submit', 'form', function (e) {
+            if (!e.isDefaultPrevented()) {
+                PYO.pusher.unsubscribe('private-user_' + PYO.activeUserId);
+            }
         });
     };
 
