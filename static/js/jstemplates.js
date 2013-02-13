@@ -261,19 +261,19 @@ function program13(depth0,data) {
   stack1 = depth0.from_sms;
   stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(16, program16, data),fn:self.program(14, program14, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\">\n      ";
+  buffer += "\">\n      <p class=\"info-text\">\n        ";
   stack1 = depth0.from_sms;
   stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(21, program21, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n\n      ";
+  buffer += "\n\n        ";
   stack1 = depth0.to_sms;
   stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(23, program23, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n\n      ";
+  buffer += "\n\n        ";
   stack1 = depth0.from_sms;
   stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(26, program26, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    </div>\n    ";
+  buffer += "\n      </p>\n    </div>\n    ";
   return buffer;}
 function program14(depth0,data) {
   

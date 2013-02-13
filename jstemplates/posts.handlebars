@@ -14,11 +14,13 @@
   <div class="post-body">
     {{#unless local}}
     <div class="sms-info" title="{{#if from_sms}}Received by text.{{else}}{{#if to_sms}}Text{{plural_sms}}{{else}}No texts{{/if}} sent.{{/if}}">
-      {{#if from_sms}}Received by text. {{/if}}
+      <p class="info-text">
+        {{#if from_sms}}Received by text. {{/if}}
 
-      {{#if to_sms}}Text{{plural_sms}} sent{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
+        {{#if to_sms}}Text{{plural_sms}} sent{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
 
-      {{#unless from_sms}}{{#unless to_sms}}No text messages sent.{{/unless}}{{/unless}}
+        {{#unless from_sms}}{{#unless to_sms}}No text messages sent.{{/unless}}{{/unless}}
+      </p>
     </div>
     {{/unless}}
 

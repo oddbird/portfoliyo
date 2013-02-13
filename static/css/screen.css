@@ -3357,8 +3357,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -webkit-border-radius: 0.31944rem;
   -moz-border-radius: 0.31944rem;
   border-radius: 0.31944rem;
-  border: 2px solid #93a1a1;
-  background: #fdf6e3;
+  border: 2px solid #657b83;
+  background: #657b83;
 }
 .post-body:before {
   content: " ";
@@ -3368,22 +3368,13 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border: solid transparent;
   pointer-events: none;
   bottom: 100%;
-  border-bottom-color: #93a1a1;
+  border-bottom-color: #657b83;
   border-width: 0.47917rem;
   left: 0.31944rem;
-}
-.old .post-body {
-  background: #fdf9ee;
-}
-.mine .post-body {
-  background: #d3e7f6;
 }
 .mine .post-body:before {
   left: auto;
   right: 0.31944rem;
-}
-.not-posted .post-body {
-  background: #f8d6d5;
 }
 
 .sms-info {
@@ -3396,10 +3387,18 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-size: 0.66667rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  padding-right: 1.27778rem;
+  -moz-border-radius-topleft: 0.31944rem;
+  -webkit-border-top-left-radius: 0.31944rem;
+  border-top-left-radius: 0.31944rem;
+  -moz-border-radius-topright: 0.31944rem;
+  -webkit-border-top-right-radius: 0.31944rem;
+  border-top-right-radius: 0.31944rem;
   background: #93a1a1;
   color: #fdf6e3;
-  border-bottom: 2px solid #93a1a1;
+  border-bottom: 2px solid #657b83;
+}
+.sms-info .info-text {
+  padding: 0.31944rem;
 }
 .sms .sms-info:before {
   background: rgba(22, 83, 126, 0.5);
@@ -3408,22 +3407,41 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: rgba(108, 82, 0, 0.5);
 }
 .sms-info:before {
-  font-size: 14px;
-  font-size: 0.77778rem;
+  font-size: 18px;
+  font-size: 1rem;
   line-height: 23px;
   line-height: 1.27778rem;
   -moz-border-radius-topleft: 0.31944rem;
   -webkit-border-top-left-radius: 0.31944rem;
   border-top-left-radius: 0.31944rem;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   float: left;
-  padding: 0 0.31944rem;
+  padding: 0.31944rem 0.63889rem;
   margin-right: 0.31944rem;
   background: #657b83;
 }
 
 .post-text {
   overflow: hidden;
-  padding: 0.31944rem;
+  -moz-border-radius-bottomleft: 0.31944rem;
+  -webkit-border-bottom-left-radius: 0.31944rem;
+  border-bottom-left-radius: 0.31944rem;
+  -moz-border-radius-bottomright: 0.31944rem;
+  -webkit-border-bottom-right-radius: 0.31944rem;
+  border-bottom-right-radius: 0.31944rem;
+  padding: 0.63889rem;
+  background: #fdf6e3;
+}
+.old .post-text {
+  background: #fdf9ee;
+}
+.mine .post-text {
+  background: #d3e7f6;
+}
+.not-posted .post-text {
+  background: #f8d6d5;
 }
 
 .post-add-form .sms-targeting, .post-add-form .group-targeting {

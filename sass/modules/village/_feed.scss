@@ -72,29 +72,26 @@ $background       : $base2;
 
 .post-body {
   @include leader(.25);
-  @include arrow(top rhythm(.25) $base1 rhythm(.375));
+  @include arrow(top rhythm(.25) $base rhythm(.375));
   @include border-radius(rhythm(.25));
-  border: 2px solid $base1;
-  background: $base3;
-  .old & { background: color($base3 lighter); }
-  .mine & {
-    background: color($blue lightest);
-    &:before {
-      left: auto;
-      right: rhythm(.25);
-    }
+  border: 2px solid $base;
+  background: $base;
+  .mine &:before {
+    left: auto;
+    right: rhythm(.25);
   }
-  .not-posted & { background: color($red lightest); }
 }
 
 .sms-info {
   @extend %icon;
   @include ellipsis;
   @include adjust-font-size-to($xsmallpx);
-  padding-right: rhythm(1);
+  @include border-top-radius(rhythm(.25));
   background: $base1;
   color: $base3;
-  border-bottom: 2px solid $base1;
+  border-bottom: 2px solid $base;
+
+  .info-text { padding: $box-padding; }
 
   .sms & {
     @extend %icon-bubble-check;
@@ -106,10 +103,11 @@ $background       : $base2;
   }
 
   &:before {
-    @include adjust-font-size-to($smallpx);
+    @include adjust-font-size-to($normpx);
     @include border-top-left-radius(rhythm(.25));
+    @include inset;
     float: left;
-    padding: 0 rhythm(.25);
+    padding: rhythm(.25) rhythm(.5);
     margin-right: rhythm(.25);
     background: $base;
   }
@@ -117,7 +115,12 @@ $background       : $base2;
 
 .post-text {
   @include clearfix;
-  padding: rhythm(.25);
+  @include border-bottom-radius(rhythm(.25));
+  padding: rhythm(.5);
+  background: $base3;
+  .old & { background: color($base3 lighter); }
+  .mine & { background: color($blue lightest); }
+  .not-posted & { background: color($red lightest); }
 }
 
 // ---------------------------------------------------------------------------
