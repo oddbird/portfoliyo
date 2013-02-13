@@ -147,6 +147,71 @@ class TestPostCreate(object):
             ]
 
 
+    def test_no_texts_by_default(self, db):
+        """Sends no texts by default."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__name="John Doe",
+            from_profile__phone=None,
+            )
+        factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__source_phone='+13336660000',
+            from_profile__user__is_active=True,
+            from_profile__name="Jim Smith",
+            description="Father",
+            )
+
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
+        with mock.patch(target) as mock_send_sms:
+            post = models.Post.create(
+                rel1.elder,
+                rel1.student,
+                'Hey dad',
+                )
+
+        assert not mock_send_sms.call_count
+        assert post.to_sms == False
+        assert post.meta['sms'] == []
+
+
+    def test_text_all_mobile_users(self, db):
+        """Sends text to all active mobile users if 'all' given."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__name="John Doe",
+            from_profile__phone=None,
+            )
+        rel2 = factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__source_phone='+13336660000',
+            from_profile__user__is_active=True,
+            from_profile__name="Jim Smith",
+            description="Father",
+            )
+
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
+        with mock.patch(target) as mock_send_sms:
+            post = models.Post.create(
+                rel1.elder,
+                rel1.student,
+                'Hey dad',
+                sms_profile_ids='all',
+                )
+
+        mock_send_sms.assert_called_with(
+            "+13216540987", "+13336660000", "Hey dad --John Doe")
+        assert post.to_sms == True
+        assert post.meta['sms'] == [
+            {
+                'id': rel2.elder.id,
+                'role': "Father",
+                'name': "Jim Smith",
+                'phone': "+13216540987",
+                }
+            ]
+
+
     def test_sending_sms_flips_to_done(self, db):
         """If a user in signup process gets a text, we flip them to done."""
         rel1 = factories.RelationshipFactory.create(
@@ -415,6 +480,41 @@ class TestBulkPost(object):
         with mock.patch(target) as mock_send_sms:
             post = models.BulkPost.create(
                 rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
+
+        mock_send_sms.assert_called_with(
+            "+13216540987", "+13336660000", "Hey dad --John Doe")
+        assert post.to_sms == True
+        assert post.meta['sms'] == [
+            {
+                'id': rel2.elder.id,
+                'name': 'Jim Smith',
+                'role': 'Father',
+                'phone': "+13216540987",
+                }
+            ]
+
+
+    def test_text_all_mobile_users(self, db):
+        """Sends text to all active mobile users if 'all' given."""
+        rel1 = factories.RelationshipFactory.create(
+            from_profile__name="John Doe",
+            from_profile__phone=None,
+            )
+        rel2 = factories.RelationshipFactory.create(
+            to_profile=rel1.to_profile,
+            from_profile__phone="+13216540987",
+            from_profile__source_phone="+13336660000",
+            from_profile__user__is_active=True,
+            from_profile__role="Father",
+            from_profile__name="Jim Smith",
+            )
+        group = factories.GroupFactory.create()
+        group.students.add(rel1.student)
+
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
+        with mock.patch(target) as mock_send_sms:
+            post = models.BulkPost.create(
+                rel1.elder, group, 'Hey dad', sms_profile_ids='all')
 
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "Hey dad --John Doe")

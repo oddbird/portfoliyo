@@ -1000,7 +1000,7 @@ class TestCreatePost(object):
             self.url(), {}, user=factories.UserFactory.create(), status=400)
 
 
-    def test_create_post_with_sms_notifications(self, no_csrf_client):
+    def test_create_post_with_smses(self, no_csrf_client):
         """Creates a post and sends SMSes."""
         rel = factories.RelationshipFactory.create(
             from_profile__name="Mr. Doe")
@@ -1017,6 +1017,60 @@ class TestCreatePost(object):
             response = no_csrf_client.post(
                 self.url(rel.student),
                 {'text': 'foo', 'sms-target': [other_rel.elder.id]},
+                user=rel.elder.user,
+                )
+
+        post = response.json['posts'][0]
+        assert post['sms_recipients'] == 'Recipient'
+        mock_send_sms.assert_called_with(
+            "+13216540987", "+13336660000", "foo --Mr. Doe")
+
+
+    def test_group_post_sms_all(self, no_csrf_client):
+        """A group post automatically sends SMSes to all family members."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Mr. Doe")
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+        factories.RelationshipFactory.create(
+            to_profile=rel.student,
+            from_profile__phone='+13216540987',
+            from_profile__source_phone='+13336660000',
+            from_profile__name='Recipient',
+            from_profile__user__is_active=True,
+            )
+
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
+        with mock.patch(target) as mock_send_sms:
+            response = no_csrf_client.post(
+                self.url(group=group),
+                {'text': 'foo'},
+                user=rel.elder.user,
+                )
+
+        post = response.json['posts'][0]
+        assert post['sms_recipients'] == 'Recipient'
+        mock_send_sms.assert_called_with(
+            "+13216540987", "+13336660000", "foo --Mr. Doe")
+
+
+    def test_all_students_post_sms_all(self, no_csrf_client):
+        """An all-students post sends SMSes to all family members."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Mr. Doe")
+        factories.RelationshipFactory.create(
+            to_profile=rel.student,
+            from_profile__phone='+13216540987',
+            from_profile__source_phone='+13336660000',
+            from_profile__name='Recipient',
+            from_profile__user__is_active=True,
+            )
+
+        target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
+        with mock.patch(target) as mock_send_sms:
+            response = no_csrf_client.post(
+                self.url(),
+                {'text': 'foo'},
                 user=rel.elder.user,
                 )
 

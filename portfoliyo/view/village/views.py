@@ -432,10 +432,12 @@ def create_post(request, student_id=None, group_id=None):
     group = None
     rel = None
     post_model = model.BulkPost
+    sms_profile_ids = 'all'
     if student_id is not None:
         rel = get_relationship_or_404(student_id, request.user.profile)
         post_model = model.Post
         target = rel.student
+        sms_profile_ids = request.POST.getlist('sms-target')
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
@@ -444,7 +446,6 @@ def create_post(request, student_id=None, group_id=None):
         target = None
 
     text = request.POST['text']
-    sms_profile_ids = request.POST.getlist('sms-target')
     sequence_id = request.POST.get('author_sequence_id')
     limit = model.post_char_limit(rel or request.user.profile)
     if len(text) > limit:

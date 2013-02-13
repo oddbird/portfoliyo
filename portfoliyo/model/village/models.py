@@ -74,13 +74,14 @@ class BasePost(models.Model):
         return {}
 
 
-    def send_sms(self, profile_ids, in_reply_to=None):
+    def send_sms(self, profile_ids=None, in_reply_to=None):
         """
         Send SMS notifications for this post.
 
         ``profile_ids`` is a list of Profile IDs who should receive SMSes. Only
         profiles in this list who also are active, have phone numbers, and have
-        not declined SMSes, will receive texts.
+        not declined SMSes, will receive texts. If set to "all", all eligible
+        users will receive SMSes.
 
         Sets self.to_sms to True if any texts were sent, False otherwise, and
         self.meta['sms'] to a list of dictionaries containing basic metadata
@@ -95,8 +96,13 @@ class BasePost(models.Model):
             suffix = u""
         sms_body = self.original_text + suffix
 
-        to_sms = sms_eligible(self.elders_in_context).filter(
-            models.Q(pk__in=profile_ids) | models.Q(phone=in_reply_to))
+        to_sms = sms_eligible(self.elders_in_context)
+
+        if profile_ids != 'all':
+            filters = models.Q(pk__in=profile_ids or [])
+            if in_reply_to:
+                filters = filters | models.Q(phone=in_reply_to)
+            to_sms = to_sms.filter(filters)
 
         to_mark_done = []
 
@@ -180,7 +186,8 @@ class BulkPost(BasePost):
         It is currently not allowed for both to be ``None``.
 
         ``sms_profile_ids`` is a list of Profile IDs who should receive this
-        post as an SMS.
+        post as an SMS. If set to "all", will send to all SMS-eligible elders
+        in the group.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -206,7 +213,7 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        post.send_sms(sms_profile_ids or [])
+        post.send_sms(sms_profile_ids)
 
         post.save()
 
@@ -292,7 +299,7 @@ class Post(BasePost):
         Create/return a Post, triggering a Pusher event and SMSes.
 
         ``sms_profile_ids`` is a list of Profile IDs who should receive this
-        post as an SMS.
+        post as an SMS. If set to "all", all eligible users will receive SMSes.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -324,7 +331,7 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        post.send_sms(sms_profile_ids or [], in_reply_to)
+        post.send_sms(sms_profile_ids, in_reply_to)
         post.save()
 
         # mark the post unread by all web users in village (except the author)
