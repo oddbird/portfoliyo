@@ -186,7 +186,7 @@ def test_code_signup(db):
             reply = hook.receive_sms(phone, source_phone, "abcdef")
 
     assert reply == (
-        "Thanks! What is the name of your child in Teacher Jane's class?"
+        "Thanks! What is the first and last name of your child in Teacher Jane's class?"
         )
     profile = model.Profile.objects.get(phone=phone)
     signup = profile.signups.get()
@@ -229,7 +229,7 @@ def test_group_code_signup(db):
             reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, "abcdefg")
 
     assert reply == (
-        "Thanks! What is the name of your child in Teacher Jane's class?"
+        "Thanks! What is the first and last name of your child in Teacher Jane's class?"
         )
     profile = model.Profile.objects.get(phone=phone)
     signup = profile.signups.get()
@@ -889,7 +889,7 @@ def test_subsequent_signup_when_no_students(db):
     reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'ABCDEF')
 
     assert reply == (
-        "Thanks! What is the name of your child in Ms. Doe's class?")
+        "Thanks! What is the first and last name of your child in Ms. Doe's class?")
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     assert new_signup.state == model.TextSignup.STATE.kidname
     assert new_signup.teacher == signup.teacher
