@@ -3573,9 +3573,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .post-add-form.group-posts {
   background: #bcd0d4;
 }
-.post-add-form .formfield {
-  margin: 0;
-}
 .post-add-form .form-actions {
   clear: none;
   margin: 0;
@@ -3610,6 +3607,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   width: 82.97872%;
   float: left;
   margin-right: 2.12766%;
+  margin: 0;
 }
 .post-textfield .value {
   margin-bottom: 3px;

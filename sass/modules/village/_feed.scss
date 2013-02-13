@@ -210,8 +210,6 @@ $postaction-size: $smallpx;
   text-align: right;
   &.group-posts { background: mix($blue,$base2,25%); }
 
-  .formfield { margin: 0; }
-
   .form-actions {
     clear: none;
     margin: 0;
@@ -243,6 +241,7 @@ $postaction-size: $smallpx;
 
 .post-textfield {
   @include span-columns($center - 2, $center);
+  margin: 0;
   .value {
     @include trailer(.125);
     height: rhythm(2.5);
