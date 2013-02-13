@@ -206,16 +206,16 @@ function program1(depth0,data) {
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.time; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   buffer += escapeExpression(stack1) + "\">";
-  stack1 = depth0.naturaldate;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(33, program33, data),fn:self.program(31, program31, data)});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " at ";
+  foundHelper = helpers.naturaldate;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.naturaldate; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + " at ";
   foundHelper = helpers.time;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.time; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   buffer += escapeExpression(stack1) + "</time>\n  </header>\n\n  <p class=\"post-text\">\n    ";
   stack1 = depth0.local;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(37, program37, data),fn:self.program(35, program35, data)});
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(33, program33, data),fn:self.program(31, program31, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n  </p>\n\n</article>\n";
   return buffer;}
@@ -363,28 +363,12 @@ function program29(depth0,data) {
 function program31(depth0,data) {
   
   var stack1, foundHelper;
-  foundHelper = helpers.naturaldate;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-  else { stack1 = depth0.naturaldate; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  return escapeExpression(stack1);}
-
-function program33(depth0,data) {
-  
-  var stack1, foundHelper;
-  foundHelper = helpers.date;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-  else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  return escapeExpression(stack1);}
-
-function program35(depth0,data) {
-  
-  var stack1, foundHelper;
   foundHelper = helpers.text;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   return escapeExpression(stack1);}
 
-function program37(depth0,data) {
+function program33(depth0,data) {
   
   var stack1, foundHelper;
   foundHelper = helpers.text;
