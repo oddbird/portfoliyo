@@ -150,6 +150,7 @@ $instruction-height: rhythm(5.5);
     @include cond;
     float: right;
     text-align: right;
+    &:first-letter { text-transform: uppercase; }
   }
 }
 

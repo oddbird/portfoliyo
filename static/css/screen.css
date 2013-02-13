@@ -3492,6 +3492,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   float: right;
   text-align: right;
 }
+.post-meta .pubdate:first-letter {
+  text-transform: uppercase;
+}
 
 .sms-info .summary {
   float: left;
