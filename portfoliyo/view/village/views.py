@@ -520,10 +520,17 @@ def edit_elder(request, elder_id, student_id=None, group_id=None):
 
     if request.method == 'POST':
         form = forms.EditFamilyForm(request.POST, instance=elder, rel=elder_rel)
-        if form.is_valid():
+        success = False
+        if elder_rel and request.POST.get('remove', False):
+            with xact.xact():
+                elder_rel.delete()
+            success = True
+        elif form.is_valid():
             with xact.xact():
                 form.save(editor=editor)
             messages.success(request, u"Changes saved!")
+            success = True
+        if success:
             if elder_rel:
                 return redirect('village', student_id=student_id)
             elif group and not group.is_all:
