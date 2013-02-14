@@ -189,11 +189,11 @@ function program1(depth0,data) {
   foundHelper = helpers.author;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.author; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "</span>\n    </h3>\n    <time class=\"pubdate\" datetime=\"";
-  foundHelper = helpers.timestamp;
-  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
-  else { stack1 = depth0.timestamp; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
-  buffer += escapeExpression(stack1) + "\" title=\"";
+  buffer += escapeExpression(stack1) + "</span>\n    </h3>\n    <time class=\"pubdate\"";
+  stack1 = depth0.timestamp;
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(13, program13, data)});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += " title=\"";
   foundHelper = helpers.date;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
   else { stack1 = depth0.date; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
@@ -211,11 +211,11 @@ function program1(depth0,data) {
   else { stack1 = depth0.time; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   buffer += escapeExpression(stack1) + "\n    </time>\n  </header>\n\n  <div class=\"post-body\">\n    ";
   stack1 = depth0.local;
-  stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(13, program13, data)});
+  stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(15, program15, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n\n    <p class=\"post-text\">\n      ";
   stack1 = depth0.local;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(24, program24, data),fn:self.program(22, program22, data)});
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(26, program26, data),fn:self.program(24, program24, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n    </p>\n  </div>\n\n</article>\n";
   return buffer;}
@@ -256,27 +256,37 @@ function program11(depth0,data) {
 
 function program13(depth0,data) {
   
+  var buffer = "", stack1, foundHelper;
+  buffer += " datetime=\"";
+  foundHelper = helpers.timestamp;
+  if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{}}); }
+  else { stack1 = depth0.timestamp; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
+  buffer += escapeExpression(stack1) + "\"";
+  return buffer;}
+
+function program15(depth0,data) {
+  
   var buffer = "", stack1;
   buffer += "\n    <div class=\"sms-info\">\n      <p class=\"info-text\">\n        ";
   stack1 = depth0.from_sms;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(14, program14, data)});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n\n        ";
-  stack1 = depth0.to_sms;
   stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(16, program16, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n\n        ";
+  stack1 = depth0.to_sms;
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(18, program18, data)});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n\n        ";
   stack1 = depth0.from_sms;
-  stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(19, program19, data)});
+  stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(21, program21, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n      </p>\n    </div>\n    ";
   return buffer;}
-function program14(depth0,data) {
+function program16(depth0,data) {
   
   
   return "Received by text. ";}
 
-function program16(depth0,data) {
+function program18(depth0,data) {
   
   var buffer = "", stack1, foundHelper;
   buffer += "Text";
@@ -285,11 +295,11 @@ function program16(depth0,data) {
   else { stack1 = depth0.plural_sms; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   buffer += escapeExpression(stack1) + " sent";
   stack1 = depth0.sms_recipients;
-  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(17, program17, data)});
+  stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(19, program19, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += ".";
   return buffer;}
-function program17(depth0,data) {
+function program19(depth0,data) {
   
   var buffer = "", stack1, foundHelper;
   buffer += " to ";
@@ -299,19 +309,19 @@ function program17(depth0,data) {
   buffer += escapeExpression(stack1);
   return buffer;}
 
-function program19(depth0,data) {
+function program21(depth0,data) {
   
   var stack1;
   stack1 = depth0.to_sms;
-  stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(20, program20, data)});
+  stack1 = helpers.unless.call(depth0, stack1, {hash:{},inverse:self.noop,fn:self.program(22, program22, data)});
   if(stack1 || stack1 === 0) { return stack1; }
   else { return ''; }}
-function program20(depth0,data) {
+function program22(depth0,data) {
   
   
   return "No text messages sent.";}
 
-function program22(depth0,data) {
+function program24(depth0,data) {
   
   var stack1, foundHelper;
   foundHelper = helpers.text;
@@ -319,7 +329,7 @@ function program22(depth0,data) {
   else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1() : stack1; }
   return escapeExpression(stack1);}
 
-function program24(depth0,data) {
+function program26(depth0,data) {
   
   var stack1, foundHelper;
   foundHelper = helpers.text;

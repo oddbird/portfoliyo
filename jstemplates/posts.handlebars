@@ -6,7 +6,7 @@
       <b class="title">{{role}}:</b>
       <span class="fn">{{author}}</span>
     </h3>
-    <time class="pubdate" datetime="{{timestamp}}" title="{{date}} at {{time}}">
+    <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{date}} at {{time}}">
       {{naturaldate}} at {{time}}
     </time>
   </header>
