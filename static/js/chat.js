@@ -64,9 +64,7 @@ var PYO = (function (PYO, $) {
             var post_obj = { posts: [newPostData] };
             var newPost = PYO.renderPost(post_obj);
             var scroll = PYO.scrolledToBottom();
-            newPost.filter('.post.mine').removeClass('old unread').each(function () {
-                $(this).find('.details').addClass('open auto');
-            });
+            newPost.filter('.post.mine').removeClass('old unread');
             newPost.find('.details').html5accordion();
             oldPost.loadingOverlay('remove');
             oldPost.replaceWith(newPost);
