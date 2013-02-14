@@ -63,6 +63,8 @@ $background       : $base2;
     .byline {
       @include pad(4,0,$center - 1);
       text-align: right;
+      .fn { font-weight: bold; }
+      .title { @extend %alt-text; }
     }
     .pubdate {
       right: auto;
