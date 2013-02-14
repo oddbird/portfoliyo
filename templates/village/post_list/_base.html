@@ -20,12 +20,10 @@
       {{ posts|handlebars:"posts" }}
 
       {% if not user.profile.has_posted %}
-      <article class="instructions">
-        <ol class="howto">
-          <li class="howto-sms"><p>Select family members who should receive a text.</p></li>
-          <li class="howto-post"><p>Write a message for teachers and family members. Then hit send!</p></li>
-        </ol>
-      </article>
+      <ol class="howto">
+        <li class="howto-sms"><p>Select family members to receive a text.</p></li>
+        <li class="howto-post"><p>Write a short message and hit send!</p></li>
+      </ol>
       {% endif %}
     </div>
 

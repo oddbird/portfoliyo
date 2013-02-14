@@ -3446,6 +3446,55 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: #f8d6d5;
 }
 
+.howto {
+  margin-top: 46px;
+  margin-top: 2.55556rem;
+}
+.howto:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+[class^="howto-"] {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  width: 48.93617%;
+  float: left;
+  margin-right: 2.12766%;
+  -webkit-border-radius: 0.31944rem;
+  -moz-border-radius: 0.31944rem;
+  border-radius: 0.31944rem;
+  border-width: 2px;
+  border-width: 0.11111rem;
+  border-style: solid;
+  padding: 21px;
+  padding: 1.16667rem;
+  position: relative;
+  border-color: #cb4b16;
+  background: #fdf6e3;
+  text-align: center;
+}
+[class^="howto-"]:nth-child(even) {
+  float: right;
+  margin-right: 0;
+}
+[class^="howto-"]:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  top: 100%;
+  border-top-color: #cb4b16;
+  border-width: 0.63889rem;
+  left: 50%;
+  margin-left: -0.63889rem;
+}
+
 .post-add-form .sms-targeting, .post-add-form .group-targeting {
   font-size: 14px;
   font-size: 0.77778rem;

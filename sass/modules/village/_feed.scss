@@ -132,6 +132,26 @@ $background       : $base2;
 }
 
 // ---------------------------------------------------------------------------
+// Instructions
+
+.howto {
+  @include pie-clearfix;
+  @include leader(2);
+}
+
+[class^="howto-"] {
+  @include adjust-font-size-to($smallpx);
+  @include span-columns(floor($center/2),$center);
+  @include nth-omega(even);
+  @include border-radius($box-padding);
+  @include rhythm-borders(2px,1);
+  @include arrow(bottom center $orange rhythm(.5));
+  border-color: $orange;
+  background: $base3;
+  text-align: center;
+}
+
+// ---------------------------------------------------------------------------
 // Post Add Form
 
 $addnote-fontsize: $input-font-size;
