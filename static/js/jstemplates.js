@@ -154,7 +154,7 @@ templates['posts'] = template(function (Handlebars,depth0,helpers,partials,data)
 function program1(depth0,data) {
   
   var buffer = "", stack1, foundHelper;
-  buffer += "\n<article class=\"post ";
+  buffer += "\n<article class=\"post";
   stack1 = depth0.local;
   stack1 = helpers['if'].call(depth0, stack1, {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data)});
   if(stack1 || stack1 === 0) { buffer += stack1; }
