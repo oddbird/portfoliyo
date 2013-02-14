@@ -3286,11 +3286,16 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   line-height: 1.27778rem;
   margin-bottom: 12px;
   margin-bottom: 0.63889rem;
+  margin-right: 8.51064%;
 }
 .post:after {
   content: "";
   display: table;
   clear: both;
+}
+.post.mine {
+  margin-left: 8.51064%;
+  margin-right: 0%;
 }
 .post .timeout {
   -webkit-box-sizing: content-box;
@@ -3310,31 +3315,32 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: table;
   clear: both;
 }
-.post-meta .byline, .post-meta .pubdate {
-  width: 48.93617%;
-  float: left;
-  margin-right: 2.12766%;
+.post-meta .byline {
+  padding-left: 0%;
+  padding-right: 37.2093%;
 }
 .post-meta .pubdate {
-  float: right;
-  margin-right: 0;
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  float: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   color: #93a1a1;
-  text-align: right;
 }
 .post-meta .pubdate:first-letter {
   text-transform: uppercase;
 }
 .mine .post-meta .byline {
-  float: right;
-  margin-right: 0;
+  padding-left: 37.2093%;
+  padding-right: 0%;
   text-align: right;
 }
 .mine .post-meta .pubdate {
-  float: left;
-  margin-right: 1.26582%;
-  text-align: left;
+  right: auto;
+  left: 0;
 }
 .post-meta .title, .post-meta .fn {
   display: inline-block;
@@ -3371,11 +3377,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .sms-info {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
   font-size: 12px;
   font-size: 0.66667rem;
   line-height: 23px;
@@ -3391,6 +3392,11 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border-bottom: 2px solid #657b83;
 }
 .sms-info .info-text {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
   padding: 0.31944rem;
 }
 .sms .sms-info:before {

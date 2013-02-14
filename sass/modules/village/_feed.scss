@@ -34,6 +34,9 @@ $background       : $base2;
   @include pie-clearfix;
   @include adjust-font-size-to($post-size);
   @include trailer(.5);
+  @include post(1,$center);
+
+  &.mine { @include squish(1,0,$center); }
 
   .timeout {
     @extend %error;
@@ -45,24 +48,25 @@ $background       : $base2;
   @include pie-clearfix;
   position: relative;
 
-  .byline, .pubdate { @include span-columns(floor($center/2), $center); }
+  .byline { @include pad(0,4,$center - 1); }
   .pubdate {
-    @include omega;
+    @include adjust-font-size-to($xsmallpx);
     @include cond;
-    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
     color: $base1;
-    text-align: right;
     &:first-letter { text-transform: uppercase; }
   }
 
   .mine & {
     .byline {
-      @include omega;
+      @include pad(4,0,$center - 1);
       text-align: right;
     }
     .pubdate {
-      @include remove-omega;
-      text-align: left;
+      right: auto;
+      left: 0;
     }
   }
 
@@ -84,14 +88,16 @@ $background       : $base2;
 
 .sms-info {
   @extend %icon;
-  @include ellipsis;
   @include adjust-font-size-to($xsmallpx);
   @include border-top-radius(rhythm(.25));
   background: $base1;
   color: $base3;
   border-bottom: 2px solid $base;
 
-  .info-text { padding: $box-padding; }
+  .info-text {
+    @include ellipsis;
+    padding: $box-padding;
+  }
 
   .sms & {
     @extend %icon-bubble-check;
