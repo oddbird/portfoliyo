@@ -3265,8 +3265,14 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .village-feed {
-  padding: 0.63889rem 1.27778rem;
+  padding: 0.63889rem 1.27778rem 0;
   background: #eee8d5;
+}
+.village-feed:after {
+  content: " ";
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  display: block;
 }
 
 .feedhead {
@@ -3516,8 +3522,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .post-add-form {
   margin-top: 23px;
   margin-top: 1.27778rem;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
   border-width: 1px;
   border-width: 0.05556rem;
   border-style: solid;

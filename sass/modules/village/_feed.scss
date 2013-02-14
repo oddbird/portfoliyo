@@ -14,8 +14,14 @@ $background       : $base2;
 
 .village-feed {
   @extend %overflow-y;
-  padding: rhythm(.5) rhythm(1);
+  padding: rhythm(.5) rhythm(1) 0;
   background: $base2;
+
+  // This is some bullshit hack for Chrome.
+  @include after(" ") {
+    @include padding-leader;
+    display: block;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -170,7 +176,7 @@ $postaction-size: $smallpx;
 .post-add-form {
   @extend %formdefaults;
   @include pie-clearfix;
-  @include rhythm-margins(1,1);
+  @include leader;
   @include rhythm-borders(1px,1);
   @include inset;
   background: $base3;
