@@ -7,13 +7,6 @@ var PYO = (function (PYO, $) {
         count: 0
     };
 
-    var smsDetailsOpened = function (trigger) {
-        trigger.css('overflow', '');
-        if (trigger.closest('.post').is(':last-child')) {
-            PYO.scrollToBottom();
-        }
-    };
-
     PYO.scrollToBottom = function () {
         if ($('.village-feed').length) {
             var feed = $('.village-feed');
@@ -29,40 +22,6 @@ var PYO = (function (PYO, $) {
             bottom = true;
         }
         return bottom;
-    };
-
-    PYO.updateFeedHeights = function () {
-        var feed = $('.village-feed');
-        var scroll = PYO.scrolledToBottom();
-        if (feed.length) {
-            var postAddForm = $('.village .post-add-form');
-            if (postAddForm.length) {
-                feed.css('bottom', postAddForm.outerHeight().toString() + 'px');
-            }
-
-            var instructions = feed.find('.instructions');
-            var stickyhack = feed.find('.feed-posts .stickyhack');
-            if (instructions.length && stickyhack.length) {
-                var howToPost = instructions.find('.howto-post').css('margin-top', '');
-                var howToSms = instructions.find('.howto-sms').css('margin-top', '');
-                var diff;
-                var updateInstructions = function () {
-                    var instructionsHeight = instructions.outerHeight();
-                    instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
-                    stickyhack.css('height', instructionsHeight.toString() + 'px');
-                    if (howToSms.outerHeight() > howToPost.outerHeight()) {
-                        diff = howToSms.outerHeight() - howToPost.outerHeight();
-                        howToPost.css('margin-top', diff.toString() + 'px');
-                    } else if (howToPost.outerHeight() > howToSms.outerHeight()) {
-                        diff = howToPost.outerHeight() > howToSms.outerHeight();
-                        howToSms.css('margin-top', diff.toString() + 'px');
-                    }
-                };
-                updateInstructions();
-            }
-
-            if (scroll) { PYO.scrollToBottom(); }
-        }
     };
 
     PYO.renderPost = function (data) {
@@ -90,13 +49,10 @@ var PYO = (function (PYO, $) {
     PYO.addPost = function (data) {
         if (data) {
             var feedPosts = $('.village-feed .feed-posts');
-            var stickyhack = feedPosts.find('.stickyhack');
+            var instructions = feedPosts.find('.howto');
             var posts = PYO.renderPost(data);
-            posts.find('.details').html5accordion({
-                initialSlideSpeed: 0,
-                openCallback: smsDetailsOpened
-            });
-            if (stickyhack.length) { stickyhack.before(posts); }
+            posts.find('.details').html5accordion();
+            if (instructions.length) { instructions.before(posts); }
             else { feedPosts.append(posts); }
             PYO.authorPosts = feedPosts.find('.post.mine').length;
             return posts;
@@ -111,10 +67,7 @@ var PYO = (function (PYO, $) {
             newPost.filter('.post.mine').removeClass('old unread').each(function () {
                 $(this).find('.details').addClass('open auto');
             });
-            newPost.find('.details').html5accordion({
-                initialSlideSpeed: 0,
-                openCallback: smsDetailsOpened
-            });
+            newPost.find('.details').html5accordion();
             oldPost.loadingOverlay('remove');
             oldPost.replaceWith(newPost);
             $.doTimeout('new-post-' + newPostData.author_sequence_id);
@@ -196,9 +149,7 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
-                    feed.find('.post.mine .details.open.auto').removeClass('open').prop('open', false).find('.details-body').hide();
-                    feed.find('.post .details.auto').removeClass('auto');
-                    feed.find('.instructions').remove();
+                    feed.find('.howto').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                     $('#sms-target').multiselect('checkAll');
@@ -395,7 +346,7 @@ var PYO = (function (PYO, $) {
         var feed = $('.village-feed');
         var posts = feed.find('.post');
 
-        posts.find('.details').html5accordion({ openCallback: smsDetailsOpened });
+        posts.find('.details').html5accordion();
         PYO.authorPosts = posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine').length;
         posts.filter('.unread').removeClass('unread');
 
@@ -403,7 +354,6 @@ var PYO = (function (PYO, $) {
         PYO.watchForReadPosts();
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
-        PYO.updateFeedHeights();
         PYO.scrollToBottom();
     };
 
