@@ -3317,7 +3317,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 .post-meta .byline {
   padding-left: 0%;
-  padding-right: 37.2093%;
+  padding-right: 18.60465%;
 }
 .post-meta .pubdate {
   font-size: 12px;
@@ -3334,7 +3334,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   text-transform: uppercase;
 }
 .mine .post-meta .byline {
-  padding-left: 37.2093%;
+  padding-left: 18.60465%;
   padding-right: 0%;
   text-align: right;
 }
@@ -3533,15 +3533,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   clear: none;
   margin: 0;
 }
-.post-add-form .form-actions .action-post.action-post {
-  -moz-border-radius-topleft: 0;
-  -webkit-border-top-left-radius: 0;
-  border-top-left-radius: 0;
-  -moz-border-radius-bottomleft: 0;
-  -webkit-border-bottom-left-radius: 0;
-  border-bottom-left-radius: 0;
+.post-add-form .form-actions .action-post {
+  width: 14.89362%;
   float: right;
-  width: 17.02128%;
+  margin-right: 0;
   height: 3.19444rem;
 }
 .post-add-form .sms-targeting > .type {

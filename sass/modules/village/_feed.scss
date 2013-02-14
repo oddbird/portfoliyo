@@ -30,13 +30,16 @@ $background       : $base2;
 // ---------------------------------------------------------------------------
 // Posts
 
+$post-offset: 1;
+$post-context: $center - $post-offset;
+
 .post {
   @include pie-clearfix;
   @include adjust-font-size-to($post-size);
   @include trailer(.5);
-  @include post(1,$center);
+  @include post($post-offset,$center);
 
-  &.mine { @include squish(1,0,$center); }
+  &.mine { @include squish($post-offset,0,$center); }
 
   .timeout {
     @extend %error;
@@ -48,7 +51,7 @@ $background       : $base2;
   @include pie-clearfix;
   position: relative;
 
-  .byline { @include pad(0,4,$center - 1); }
+  .byline { @include pad(0,2,$post-context); }
   .pubdate {
     @include adjust-font-size-to($xsmallpx);
     @include cond;
@@ -61,7 +64,7 @@ $background       : $base2;
 
   .mine & {
     .byline {
-      @include pad(4,0,$center - 1);
+      @include pad(2,0,$post-context);
       text-align: right;
       .fn { font-weight: bold; }
       .title { @extend %alt-text; }
@@ -176,10 +179,8 @@ $postaction-size: $smallpx;
   .form-actions {
     clear: none;
     margin: 0;
-    .action-post.action-post {
-      @include border-left-radius(0);
-      float: right;
-      width: space(2, $center);
+    .action-post {
+      @include span-columns(2 omega, $center);
       height: rhythm(2.5);
     }
   }
