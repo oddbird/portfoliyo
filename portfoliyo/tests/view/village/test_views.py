@@ -1225,6 +1225,23 @@ class TestEditFamily(object):
         assert elder.phone == '+13216540987'
 
 
+    def test_remove(self, client):
+        """User can remove a family member from a village."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=False)
+        editor_rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True, to_profile=rel.student)
+        form = client.get(
+            self.url(rel),
+            user=editor_rel.elder.user,
+            ).forms['edit-elder-form']
+        response = form.submit('remove', status=302)
+
+        assert response['Location'] == utils.location(
+            reverse('village', kwargs={'student_id': rel.student.id}))
+        assert utils.deleted(rel)
+
+
     def test_error(self, client):
         """Test form redisplay with errors."""
         rel = factories.RelationshipFactory()
