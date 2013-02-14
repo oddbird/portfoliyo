@@ -2470,10 +2470,6 @@ button {
 }
 
 .village {
-  -webkit-transition: height 150ms;
-  -moz-transition: height 150ms;
-  -o-transition: height 150ms;
-  transition: height 150ms;
   position: relative;
   height: 30.66667rem;
 }
