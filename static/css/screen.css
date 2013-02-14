@@ -3445,6 +3445,14 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .not-posted .post-text {
   background: #f8d6d5;
 }
+.post-text:first-child {
+  -moz-border-radius-topleft: 0.31944rem;
+  -webkit-border-top-left-radius: 0.31944rem;
+  border-top-left-radius: 0.31944rem;
+  -moz-border-radius-topright: 0.31944rem;
+  -webkit-border-top-right-radius: 0.31944rem;
+  border-top-right-radius: 0.31944rem;
+}
 
 .howto {
   margin-top: 46px;

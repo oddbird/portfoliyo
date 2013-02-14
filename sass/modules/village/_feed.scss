@@ -132,6 +132,7 @@ $post-context: $center - $post-offset;
   .old & { background: color($base3 lighter); }
   .mine & { background: color($blue lightest); }
   .not-posted & { background: color($red lightest); }
+  &:first-child { @include border-top-radius(rhythm(.25)); }
 }
 
 // ---------------------------------------------------------------------------
