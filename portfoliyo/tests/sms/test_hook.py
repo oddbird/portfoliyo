@@ -780,7 +780,7 @@ def test_subsequent_signup_when_first_needs_student_name(db):
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
-        "And what's the student's name?"
+        "And what's the student's first and last name?"
         )
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     signup = utils.refresh(signup)
@@ -805,7 +805,7 @@ def test_subsequent_group_signup_when_first_needs_student_name(db):
 
     assert reply == (
         "Ok, thanks! You can text Ms. Doe at this number too. "
-        "And what's the student's name?"
+        "And what's the student's first and last name?"
         )
     new_signup = signup.family.signups.exclude(pk=signup.pk).get()
     signup = utils.refresh(signup)
