@@ -45,7 +45,10 @@ $post-context: $center - $post-offset;
   @include adjust-font-size-to($post-size);
   @include trailer(.25);
 
-  &:last-child { @include trailer(4); }
+  &:last-child {
+    @include trailer;
+    .has-instructions & { @include trailer(4); }
+  }
   .timeout { @extend %error; }
 }
 

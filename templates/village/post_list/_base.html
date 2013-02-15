@@ -14,7 +14,7 @@
 <div class="village-main">
   {% block village-main %}
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{% firstof relationship.description_or_role user.profile.role %}" {% block village-feed-attrs %}{% endblock %}>
-    <div class="feed-posts">
+    <div class="feed-posts{% if not user.profile.has_posted %} has-instructions{% endif %}">
       <h3 class="feedhead">{% block getting-started-header %}Welcome!{% endblock %}</h3>
 
       {{ posts|handlebars:"posts" }}

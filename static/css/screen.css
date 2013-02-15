@@ -3299,6 +3299,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   clear: both;
 }
 .post:last-child {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+.has-instructions .post:last-child {
   margin-bottom: 92px;
   margin-bottom: 5.11111rem;
 }
