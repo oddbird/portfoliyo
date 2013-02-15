@@ -2,7 +2,7 @@
 <article class="post{{#if local}} local{{else}}{{#if sms}} sms{{else}} no-sms{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if unread}} unread{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
 
   <h3 class="byline vcard">
-    <span class="fn">{{author}}</span>
+    <span class="fn">{{#if school_staff}}{{author}}{{else}}{{role}}{{/if}}</span>
   </h3>
 
   <div class="post-body">
