@@ -58,8 +58,7 @@ def now():
 
 def naturaldatetime(value):
     """
-    Return given past datetime formatted "naturally", omitting unnecessary
-    data.
+    Return given past datetime formatted "naturally", omitting unnecessary data.
 
     If the given date is today, display only the time. If the date is within
     the past week, prepend the three-letter day of the week name to the
