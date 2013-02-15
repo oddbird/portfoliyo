@@ -1,19 +1,16 @@
 {{#each posts}}
 <article class="post{{#if local}} local{{else}}{{#if sms}} sms{{else}} no-sms{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if unread}} unread{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
 
-  <header class="post-meta">
-    <h3 class="byline vcard">
-      <b class="title">{{role}}:</b>
-      <span class="fn">{{author}}</span>
-    </h3>
-    <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{date}} at {{time}}">
-      {{naturaldate}} at {{time}}
-    </time>
-  </header>
+  <h3 class="byline vcard">
+    <span class="fn">{{author}}</span>
+  </h3>
 
   <div class="post-body">
     {{#unless local}}
-    <div class="sms-info">
+    <header class="post-info">
+      <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{date}} at {{time}}">
+        {{naturaldate}} {{time}}
+      </time>
       <p class="info-text">
         {{#if from_sms}}Received by text. {{/if}}
 
@@ -21,12 +18,12 @@
 
         {{#unless from_sms}}{{#unless to_sms}}No text messages sent.{{/unless}}{{/unless}}
       </p>
-    </div>
+    </header>
     {{/unless}}
 
-    <p class="post-text">
-      {{#if local}}{{text}}{{else}}{{{text}}}{{/if}}
-    </p>
+    <div class="post-text">
+      <p>{{#if local}}{{text}}{{else}}{{{text}}}{{/if}}</p>
+    </div>
   </div>
 
 </article>
