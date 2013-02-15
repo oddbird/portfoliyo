@@ -9,7 +9,7 @@
     {{#unless local}}
     <header class="post-info">
       <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{date}} at {{time}}">
-        {{naturaldate}} {{time}}
+        {{#if naturaldate}}{{naturaldate}} {{/if}}{{time}}
       </time>
       <p class="info-text">
         {{#if from_sms}}Received by text. {{/if}}
