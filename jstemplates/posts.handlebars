@@ -1,5 +1,5 @@
 {{#each posts}}
-<article class="post{{#if local}} local{{else}}{{#if sms}} sms{{else}} no-sms{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if unread}} unread{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
+<article class="post{{#if local}} local{{else}}{{#if sms}} sms{{else}} no-sms{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if mine}} mine{{else}}{{#if unread}} unread{{/if}}{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
 
   <h3 class="byline vcard">
     <span class="fn">{{#if school_staff}}{{author}}{{else}}{{role}}{{/if}}</span>

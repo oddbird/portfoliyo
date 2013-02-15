@@ -29,21 +29,7 @@ var PYO = (function (PYO, $) {
         if (data && data.posts && data.posts.length) {
             posts = PYO.tpl('posts', data);
         }
-        if (posts) {
-            var nametag = posts.find('.nametag');
-            nametag.each(function () {
-                var thisTag = $(this);
-                var userID = thisTag.data('user-id');
-                if (userID) {
-                    var mentions = userID.toString().split(',');
-                    if ($.inArray(PYO.activeUserId.toString(), mentions) !== -1) {
-                        thisTag.addClass('me');
-                    }
-                }
-            });
-            posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine').removeClass('unread');
-            return posts;
-        }
+        return posts;
     };
 
     PYO.addPost = function (data) {
@@ -64,7 +50,7 @@ var PYO = (function (PYO, $) {
             var post_obj = { posts: [newPostData] };
             var newPost = PYO.renderPost(post_obj);
             var scroll = PYO.scrolledToBottom();
-            newPost.filter('.post.mine').removeClass('old unread');
+            newPost.filter('.post.mine').removeClass('old');
             newPost.find('.details').html5accordion();
             oldPost.loadingOverlay('remove');
             oldPost.replaceWith(newPost);
@@ -102,7 +88,8 @@ var PYO = (function (PYO, $) {
                     author_sequence_id: author_sequence,
                     xhr_count: xhr_count,
                     local: true,
-                    school_staff: true
+                    school_staff: true,
+                    mine: true
                 }
             ]
         };
@@ -345,7 +332,7 @@ var PYO = (function (PYO, $) {
         var posts = feed.find('.post');
 
         posts.find('.details').html5accordion();
-        PYO.authorPosts = posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine').length;
+        PYO.authorPosts = posts.filter('.mine').length;
         posts.filter('.unread').removeClass('unread');
 
         PYO.initializeMultiselect();
