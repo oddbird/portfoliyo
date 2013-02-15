@@ -772,8 +772,8 @@ class TestVillage(GroupContextTests):
         response = client.get(url, user=rel.elder.user)
         newbie_response = client.get(url, user=newbie_rel.elder.user)
 
-        assert not len(response.html.findAll('article', 'instructions'))
-        assert len(newbie_response.html.findAll('article', 'instructions')) == 1
+        assert not len(response.html.findAll('ol', 'howto'))
+        assert len(newbie_response.html.findAll('ol', 'howto')) == 1
 
 
     @pytest.mark.parametrize('link_target', ['invite_teacher', 'invite_family'])
