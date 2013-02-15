@@ -8,15 +8,15 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.scrollToBottom = function () {
-        if ($('.village-feed').length) {
-            var feed = $('.village-feed');
+        if ($('.feed-posts').length) {
+            var feed = $('.feed-posts');
             var height = parseInt(feed.get(0).scrollHeight, 10);
             feed.scrollTop(height).scroll();
         }
     };
 
     PYO.scrolledToBottom = function () {
-        var feed = $('.village-feed');
+        var feed = $('.feed-posts');
         var bottom = false;
         if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
             bottom = true;
@@ -331,7 +331,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.watchForReadPosts = function () {
-        $('.village-feed').scroll(function () {
+        $('.feed-posts').scroll(function () {
             $.doTimeout('scroll', 150, function () {
                 if (PYO.scrolledToBottom()) {
                     PYO.markPostsRead();
