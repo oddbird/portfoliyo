@@ -65,10 +65,6 @@ var PYO = (function (PYO, $) {
         var author = feed.data('author');
         var role = feed.data('author-role');
         var today = new Date();
-        var day = today.getDate();
-        var month = today.getMonth() + 1;
-        var year = today.getFullYear();
-        var date = month + '/' + day + '/' + year;
         var hour = today.getHours();
         var minute = today.getMinutes();
         minute = (minute < 10) ? '0' + minute : minute;
@@ -82,8 +78,7 @@ var PYO = (function (PYO, $) {
                     author: author,
                     author_id: PYO.activeUserId,
                     role: role,
-                    date: date,
-                    time: time,
+                    timestamp_display: time,
                     text: text,
                     author_sequence_id: author_sequence,
                     xhr_count: xhr_count,

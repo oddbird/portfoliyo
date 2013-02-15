@@ -8,8 +8,8 @@
   <div class="post-body">
     {{#unless local}}
     <header class="post-info">
-      <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{date}} at {{time}}">
-        {{#if naturaldate}}{{naturaldate}} {{/if}}{{time}}
+      <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{timestamp_display}}">
+        {{timestamp_display}}
       </time>
       <p class="info-text">
         {{#if from_sms}}Received by text. {{/if}}
