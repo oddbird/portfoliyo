@@ -57,7 +57,7 @@ MESSAGES = {
         },
 
     'STUDENT_NAME': {
-        'en': u"Thanks! What is the name of your child in %s's class?",
+        'en': u"Thanks! What is the first and last name of your child in %s's class?",
         'es': (
             u"¡Gracias! "
             u"¿Cuál es el nombre de su hijo en la clase del %s?"
@@ -97,7 +97,7 @@ MESSAGES = {
         },
 
     'STUDENT_NAME_FOLLOWUP': {
-        'en': u"And what's the student's name?",
+        'en': u"And what's the student's first and last name?",
         'es': u"¿Y cuál es el nombre de su hijo?",
         },
 
