@@ -2567,12 +2567,12 @@ button {
   color: #657b83;
 }
 
-.pjax-error, .group-add-form, .group-edit-form, .parent-signup, .village-edit-form, .elder-invite-form, .elder-edit-form, .dashboard, .itemlist, .village-feed {
+.pjax-error, .group-add-form, .group-edit-form, .parent-signup, .village-edit-form, .elder-invite-form, .elder-edit-form, .dashboard, .itemlist, .feed-posts {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
-.loading.pjax-error, .loading.group-add-form, .loading.group-edit-form, .loading.parent-signup, .loading.village-edit-form, .loading.elder-invite-form, .loading.elder-edit-form, .loading.dashboard, .loading.itemlist, .loading.village-feed {
+.loading.pjax-error, .loading.group-add-form, .loading.group-edit-form, .loading.parent-signup, .loading.village-edit-form, .loading.elder-invite-form, .loading.elder-edit-form, .loading.dashboard, .loading.itemlist, .loading.feed-posts {
   position: absolute;
 }
 
@@ -3261,14 +3261,18 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .village-feed {
-  padding: 0.63889rem 1.27778rem 0;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
   background: #eee8d5;
 }
-.village-feed:after {
-  content: " ";
-  padding-top: 23px;
-  padding-top: 1.27778rem;
-  display: block;
+
+.feed-posts {
+  height: -webkit-calc(100% - 6.54861rem);
+  height: -moz-calc(100% - 6.54861rem);
+  height: -o-calc(100% - 6.54861rem);
+  height: calc(100% - 6.54861rem);
+  padding: 0.63889rem 1.27778rem;
 }
 
 .feedhead {
@@ -3293,6 +3297,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   content: "";
   display: table;
   clear: both;
+}
+.post:last-child {
+  margin-bottom: 92px;
+  margin-bottom: 5.11111rem;
 }
 
 .byline {
@@ -3422,8 +3430,11 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .howto {
-  margin-top: 46px;
-  margin-top: 2.55556rem;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  margin: 0.63889rem 1.27778rem;
 }
 .howto:after {
   content: "";
@@ -3436,18 +3447,21 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  width: 48.93617%;
-  float: left;
-  margin-right: 2.12766%;
   -webkit-border-radius: 0.31944rem;
   -moz-border-radius: 0.31944rem;
   border-radius: 0.31944rem;
   border-width: 2px;
   border-width: 0.11111rem;
   border-style: solid;
-  padding: 21px;
-  padding: 1.16667rem;
+  padding: 10px;
+  padding: 0.52778rem;
+  -webkit-box-shadow: #657b83 0 0 0.31944rem;
+  -moz-box-shadow: #657b83 0 0 0.31944rem;
+  box-shadow: #657b83 0 0 0.31944rem;
   position: relative;
+  position: absolute;
+  bottom: 0;
+  width: 48.93617%;
   border-color: #cb4b16;
   background: #fdf6e3;
   text-align: center;
@@ -3469,6 +3483,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   left: 50%;
   margin-left: -0.63889rem;
 }
+[class^="howto-"]:first-child {
+  left: 0;
+}
+[class^="howto-"]:last-child {
+  right: 0;
+}
 
 .post-add-form .sms-targeting, .post-add-form .group-targeting {
   font-size: 14px;
@@ -3481,17 +3501,13 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .post-add-form {
-  margin-top: 23px;
-  margin-top: 1.27778rem;
-  border-width: 1px;
-  border-width: 0.05556rem;
-  border-style: solid;
-  padding: 22px;
-  padding: 1.22222rem;
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  background: #fdf6e3;
+  -webkit-box-shadow: #657b83 0 0 0.31944rem;
+  -moz-box-shadow: #657b83 0 0 0.31944rem;
+  box-shadow: #657b83 0 0 0.31944rem;
+  position: relative;
+  padding: 0.63889rem 1.27778rem;
+  background: #fdf9ee;
+  border-top: 1px solid #93a1a1;
   text-align: right;
 }
 .post-add-form:after {
@@ -3510,7 +3526,12 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   width: 14.89362%;
   float: right;
   margin-right: 0;
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   height: 3.19444rem;
+  font-weight: bold;
 }
 .post-add-form .sms-targeting > .type {
   display: inline;

@@ -18,18 +18,18 @@
       <h3 class="feedhead">{% block getting-started-header %}Welcome!{% endblock %}</h3>
 
       {{ posts|handlebars:"posts" }}
-
-      {% if not user.profile.has_posted %}
-      <ol class="howto">
-        <li class="howto-sms"><p>Select family members to receive a text.</p></li>
-        <li class="howto-post"><p>Write a short message and hit send!</p></li>
-      </ol>
-      {% endif %}
     </div>
 
     {% if not read_only %}
     <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
       {% csrf_token %}
+
+      {% if not user.profile.has_posted %}
+      <ol class="howto">
+        <li class="howto-sms"><p>Select family members to receive a&nbsp;text.</p></li>
+        <li class="howto-post"><p>Write a short message and hit&nbsp;send!</p></li>
+      </ol>
+      {% endif %}
 
       {% block sms-target %}
       <div class="formfield sms-targeting">

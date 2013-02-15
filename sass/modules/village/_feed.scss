@@ -13,15 +13,16 @@ $background       : $base2;
 // Village Feed
 
 .village-feed {
-  @extend %overflow-y;
-  padding: rhythm(.5) rhythm(1) 0;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
   background: $base2;
+}
 
-  // This is some bullshit hack for Chrome.
-  @include after(" ") {
-    @include padding-leader;
-    display: block;
-  }
+.feed-posts {
+  @extend %overflow-y;
+  @include calc(height, '100% - #{rhythm(5.125)}');
+  padding: rhythm(.5) rhythm(1);
 }
 
 // ---------------------------------------------------------------------------
@@ -44,6 +45,7 @@ $post-context: $center - $post-offset;
   @include adjust-font-size-to($post-size);
   @include trailer(.25);
 
+  &:last-child { @include trailer(4); }
   .timeout { @extend %error; }
 }
 
@@ -122,19 +124,26 @@ $post-context: $center - $post-offset;
 
 .howto {
   @include pie-clearfix;
-  @include leader(2);
+  @include stretch-x;
+  bottom: 100%;
+  margin: rhythm(.5) rhythm(1);
 }
 
 [class^="howto-"] {
   @include adjust-font-size-to($smallpx);
-  @include span-columns(floor($center/2),$center);
   @include nth-omega(even);
   @include border-radius($box-padding);
-  @include rhythm-borders(2px,1);
+  @include rhythm-borders(2px,.5);
+  @include box-shadow($base 0 0 $box-padding);
   @include arrow(bottom center $orange rhythm(.5));
+  position: absolute;
+  bottom: 0;
+  width: columns(floor($center/2),$center);
   border-color: $orange;
   background: $base3;
   text-align: center;
+  &:first-child { left: 0; }
+  &:last-child { right: 0; }
 }
 
 // ---------------------------------------------------------------------------
@@ -152,10 +161,11 @@ $postaction-size: $smallpx;
 .post-add-form {
   @extend %formdefaults;
   @include pie-clearfix;
-  @include leader;
-  @include rhythm-borders(1px,1);
-  @include inset;
-  background: $base3;
+  @include box-shadow($base 0 0 $box-padding);
+  position: relative;
+  padding: rhythm(.5) rhythm(1);
+  background: color($base3 lighter);
+  border-top: 1px solid $village-border-color;
   text-align: right;
   &.group-posts { background: mix($blue,$base2,25%); }
 
@@ -164,7 +174,9 @@ $postaction-size: $smallpx;
     margin: 0;
     .action-post {
       @include span-columns(2 omega, $center);
+      @include adjust-font-size-to($smallpx);
       height: rhythm(2.5);
+      font-weight: bold;
     }
   }
 
