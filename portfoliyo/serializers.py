@@ -58,11 +58,12 @@ def now():
 
 def naturaldatetime(value):
     """
-    Return given past datetime formatted "naturally", omitting unnecessary data.
+    Return given past datetime formatted "naturally", omitting unnecessary
+    data.
 
     If the given date is today, display only the time. If the date is within
     the past week, prepend the three-letter day of the week name to the
-    time. Otherwise, return e.g. "January 23, 2012", omitting the year if it is
+    time. Otherwise, prepend e.g. "Jan 23 2012", omitting the year if it is
     the current year.
 
     A given timezone-naive datetime is assumed to be in the current timezone.
@@ -74,14 +75,14 @@ def naturaldatetime(value):
         value = timezone.localtime(value)
     nowdt = timezone.localtime(now())
     delta = nowdt - value
+    period = dateformat.format(value, 'A').lower()
     if delta.days <= 0:
-        return dateformat.format(value, 'P')
+        format_string = 'f'
     elif 0 < delta.days < 7:
-        return dateformat.format(value, 'D P')
-
-    if nowdt.year == value.year:
-        long_format = 'j-M P'
+        format_string = 'D f'
+    elif nowdt.year == value.year:
+        format_string = 'M j, f'
     else:
-        long_format = 'j-M Y P'
+        format_string = 'M j Y, f'
 
-    return dateformat.format(value, long_format)
+    return dateformat.format(value, format_string) + period

@@ -492,7 +492,7 @@ class TestSend(object):
                 'subject': "New message in StX's village.",
                 'html': [
                     '<h2><a href="%(StXUrl)s">StX\'s village</a>:</h2>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
@@ -501,7 +501,7 @@ class TestSend(object):
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "how\'s it" - PaX (Dad), 14-Jan 2012 7 p.m.\n'
+                    '  "how\'s it" - PaX (Dad), Jan 14 2012, 7pm\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -517,19 +517,19 @@ class TestSend(object):
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 6 p.m.">14-Jan 2012 6 p.m.</em>',
+                    '<em title="Jan 14 2012, 6pm">Jan 14 2012, 6pm</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<p>html: again</p>',
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "hello" - PaX (Dad), 14-Jan 2012 6 p.m.\n'
-                    '  "again" - PaX (Dad), 14-Jan 2012 7 p.m.\n'
+                    '  "hello" - PaX (Dad), Jan 14 2012, 6pm\n'
+                    '  "again" - PaX (Dad), Jan 14 2012, 7pm\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -545,19 +545,19 @@ class TestSend(object):
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 6 p.m.">14-Jan 2012 6 p.m.</em>',
+                    '<em title="Jan 14 2012, 6pm">Jan 14 2012, 6pm</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Dad:</b>'
                     '<span class="fn">PaX</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<p>html: again</p>',
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "hello" - PaX (Dad), 14-Jan 2012 6 p.m.\n'
-                    '  "again" - PaX (Dad), 14-Jan 2012 7 p.m.\n'
+                    '  "hello" - PaX (Dad), Jan 14 2012, 6pm\n'
+                    '  "again" - PaX (Dad), Jan 14 2012, 7pm\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -730,12 +730,12 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teacher1</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<p>html: hello</p>',
                     ],
                 'text': [
                     '# StX\'s village:\n'
-                    '  "hello" - Teacher1 (Teacher), 14-Jan 2012 7 p.m.\n'
+                    '  "hello" - Teacher1 (Teacher), Jan 14 2012, 7pm\n'
                     'Log in to reply: %(base)s%(StXUrl)s'
                     ],
                 },
@@ -751,12 +751,12 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teacher1</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<p>html: hello</p>',
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teacher1 (Teacher), 14-Jan 2012 7 p.m.\n'
+                    '  "hello" - Teacher1 (Teacher), Jan 14 2012, 7pm\n'
                     ],
                 },
             { # two bulk posts by same teacher, seen in two of my villages
@@ -772,19 +772,19 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 6 p.m.">14-Jan 2012 6 p.m.</em>',
+                    '<em title="Jan 14 2012, 6pm">Jan 14 2012, 6pm</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<p>html: again</p>',
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teach1 (Teacher), 14-Jan 2012 6 p.m.\n'
-                    '  "again" - Teach1 (Teacher), 14-Jan 2012 7 p.m.\n'
+                    '  "hello" - Teach1 (Teacher), Jan 14 2012, 6pm\n'
+                    '  "again" - Teach1 (Teacher), Jan 14 2012, 7pm\n'
                     ],
                 },
             { # bulk posts by two teachers in the same two villages
@@ -803,19 +803,19 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 6 p.m.">14-Jan 2012 6 p.m.</em>',
+                    '<em title="Jan 14 2012, 6pm">Jan 14 2012, 6pm</em>',
                     '<p>html: hello</p>',
                     '<h3 class="byline vcard">'
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach2</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<p>html: hi</p>'
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teach1 (Teacher), 14-Jan 2012 6 p.m.\n'
-                    '  "hi" - Teach2 (Teacher), 14-Jan 2012 7 p.m.\n'
+                    '  "hello" - Teach1 (Teacher), Jan 14 2012, 6pm\n'
+                    '  "hi" - Teach2 (Teacher), Jan 14 2012, 7pm\n'
                     ],
                 },
             { # bulk posts by two teachers in different sets of villages
@@ -834,7 +834,7 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach1</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 6 p.m.">14-Jan 2012 6 p.m.</em>',
+                    '<em title="Jan 14 2012, 6pm">Jan 14 2012, 6pm</em>',
                     '<p>html: hello</p>',
                     '<h2><a href="%(StXUrl)s">StX</a> and '
                     '<a href="%(StZUrl)s">StZ</a>\'s villages:</h2>',
@@ -842,14 +842,14 @@ class TestSend(object):
                     '<b class="title">Teacher:</b>'
                     '<span class="fn">Teach2</span>'
                     '</h3>',
-                    '<em title="14-Jan 2012 7 p.m.">14-Jan 2012 7 p.m.</em>',
+                    '<em title="Jan 14 2012, 7pm">Jan 14 2012, 7pm</em>',
                     '<p>html: hi</p>'
                     ],
                 'text': [
                     '# StX and StY\'s villages:\n'
-                    '  "hello" - Teach1 (Teacher), 14-Jan 2012 6 p.m.\n',
+                    '  "hello" - Teach1 (Teacher), Jan 14 2012, 6pm\n',
                     '# StX and StZ\'s villages:\n'
-                    '  "hi" - Teach2 (Teacher), 14-Jan 2012 7 p.m.\n'
+                    '  "hi" - Teach2 (Teacher), Jan 14 2012, 7pm\n'
                     ],
                 },
             { # a bulk post in three villages

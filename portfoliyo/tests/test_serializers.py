@@ -86,7 +86,7 @@ def test_post2dict(db):
         'role': u'desc',
         'school_staff': False,
         'timestamp': '2012-09-17T05:30:00+00:00',
-        'timestamp_display': u'17-Sep 2012 5:30 a.m.',
+        'timestamp_display': u'Sep 17 2012, 5:30am',
         'text': 'Foo',
         'extra': 'extra',
         'sms': False,
@@ -104,7 +104,7 @@ def test_post2dict_timestamp_display(mock_now):
     """Natural date for a nearby date."""
     post = factories.PostFactory.build(
         timestamp=datetime.datetime(2013, 2, 11, 8, 32, tzinfo=timezone.utc))
-    assert serializers.post2dict(post)['timestamp_display'] == u"8:32 a.m."
+    assert serializers.post2dict(post)['timestamp_display'] == u"8:32am"
 
 
 
@@ -146,28 +146,28 @@ class TestNaturalDateTime(object):
     def test_today(self, mock_now):
         """A date today is rendered as just the time."""
         d = datetime.datetime(2012, 1, 3, 8, 23, tzinfo=timezone.utc)
-        assert serializers.naturaldatetime(d) == u"8:23 a.m."
+        assert serializers.naturaldatetime(d) == u"8:23am"
 
 
     @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
     def test_day_of_week(self, mock_now):
         """A date within the past week is rendered as weekday and time."""
         d = datetime.datetime(2013, 2, 5, 15, 45, tzinfo=timezone.utc)
-        assert serializers.naturaldatetime(d) == u"Tue 3:45 p.m."
+        assert serializers.naturaldatetime(d) == u"Tue 3:45pm"
 
 
     @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
     def test_same_year(self, mock_now):
         """A date within the current year is date and time without year."""
         d = datetime.datetime(2013, 1, 15, 8, 12, tzinfo=timezone.utc)
-        assert serializers.naturaldatetime(d) == u"15-Jan 8:12 a.m."
+        assert serializers.naturaldatetime(d) == u"Jan 15, 8:12am"
 
 
     @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
     def test_different_year(self, mock_now):
         """A date in a different year is date and time with year."""
         d = datetime.datetime(2012, 1, 15, 10, 34, tzinfo=timezone.utc)
-        assert serializers.naturaldatetime(d) == u"15-Jan 2012 10:34 a.m."
+        assert serializers.naturaldatetime(d) == u"Jan 15 2012, 10:34am"
 
 
     @pytest.mark.mock_now(2012, 1, 3, 1, tzinfo=timezone.utc)
@@ -175,9 +175,9 @@ class TestNaturalDateTime(object):
         """Values are normalized to local time correctly."""
         d = datetime.datetime(2012, 1, 2, 23, 10, tzinfo=denver)
         with timezone.override(denver):
-            assert serializers.naturaldatetime(d) == u"11:10 p.m."
+            assert serializers.naturaldatetime(d) == u"11:10pm"
         with timezone.override(timezone.utc):
-            assert serializers.naturaldatetime(d) == u"6:10 a.m."
+            assert serializers.naturaldatetime(d) == u"6:10am"
 
 
     @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
@@ -185,4 +185,4 @@ class TestNaturalDateTime(object):
         """A naive datetime is assumed to be local time."""
         d = datetime.datetime(2012, 1, 15, 10, 34)
         with timezone.override(denver):
-            assert serializers.naturaldatetime(d) == u"15-Jan 2012 10:34 a.m."
+            assert serializers.naturaldatetime(d) == u"Jan 15 2012, 10:34am"
