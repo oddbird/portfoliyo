@@ -59,7 +59,7 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.createPostObj = function (author_sequence, xhr_count) {
+    PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr) {
         var feed = $('.village-feed');
         var textarea = $('#post-text');
         var author = feed.data('author');
@@ -82,9 +82,13 @@ var PYO = (function (PYO, $) {
                     text: text,
                     author_sequence_id: author_sequence,
                     xhr_count: xhr_count,
-                    local: true,
+                    pending: true,
                     school_staff: true,
-                    mine: true
+                    mine: true,
+                    sms: smsTargetArr.length ? true : false,
+                    to_sms: smsTargetArr.length ? true : false,
+                    plural_sms: smsTargetArr.length > 1 ? 's' : '',
+                    sms_recipients: smsTargetArr.join(', ')
                 }
             ]
         };
@@ -106,18 +110,23 @@ var PYO = (function (PYO, $) {
                     var author_sequence_id = (PYO.authorPosts || 0) + 1;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
-                    var postObj = PYO.createPostObj(author_sequence_id, count);
-                    var post = PYO.addPost(postObj);
                     var postData = [
                         { name: 'text', value: text },
                         { name: 'author_sequence_id', value: author_sequence_id }
                     ];
                     var smsInputName = $('#sms-target').attr('name');
+                    var smsTargetArr = [];
+                    var postObj, post;
 
                     form.find('.sms-targeting .ui-multiselect-checkboxes input:checked').each(function () {
                         var obj = { name: smsInputName, value: $(this).val() };
+                        var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
                         postData.push(obj);
+                        smsTargetArr.push(displayName);
                     });
+
+                    postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
+                    post = PYO.addPost(postObj);
 
                     if (url) {
                         postAjax.XHR[count] = $.post(url, postData, function (response) {
@@ -153,7 +162,7 @@ var PYO = (function (PYO, $) {
             $.each(response.posts, function () {
                 feed.trigger('successful-post', {smsRecipients: this.num_sms_recipients, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
-                    var oldPost = feed.find('.post.mine.local[data-author-sequence="' + this.author_sequence_id + '"]');
+                    var oldPost = feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
                     if (oldPost.length) { PYO.replacePost(this, oldPost); }
                 }
             });

@@ -1,28 +1,31 @@
 {{#each posts}}
-<article class="post{{#if local}} local{{else}}{{#if sms}} sms{{else}} no-sms{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if mine}} mine{{else}}{{#if unread}} unread{{/if}}{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
+<article class="post{{#if pending}} pending{{else}}{{#if sms}} sms{{else}} no-sms{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if mine}} mine{{else}}{{#if unread}} unread{{/if}}{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
 
   <h3 class="byline vcard">
     <span class="fn">{{#if school_staff}}{{author}}{{else}}{{role}}{{/if}}</span>
   </h3>
 
   <div class="post-body">
-    {{#unless local}}
     <header class="post-info">
       <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{timestamp_display}}">
         {{timestamp_display}}
       </time>
       <p class="info-text">
-        {{#if from_sms}}Received by text. {{/if}}
-
-        {{#if to_sms}}Text{{plural_sms}} sent{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
-
-        {{#unless from_sms}}{{#unless to_sms}}No text messages sent.{{/unless}}{{/unless}}
+        {{#if sms}}
+          {{#if pending}}
+            {{#if to_sms}}Sending text{{plural_sms}}{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
+          {{else}}
+            {{#if from_sms}}Received by text. {{/if}}
+            {{#if to_sms}}Text{{plural_sms}} sent{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
+          {{/if}}
+        {{else}}
+          No text messages sent.
+        {{/if}}
       </p>
     </header>
-    {{/unless}}
 
     <div class="post-text">
-      <p>{{#if local}}{{text}}{{else}}{{{text}}}{{/if}}</p>
+      <p>{{#if pending}}{{text}}{{else}}{{{text}}}{{/if}}</p>
     </div>
   </div>
 
