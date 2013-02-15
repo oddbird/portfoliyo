@@ -6,6 +6,33 @@ from portfoliyo.pusher import events
 from portfoliyo.tests import factories
 
 
+def test_posted_event(db):
+    """Pusher event for a post."""
+    author_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True)
+    other_rel = factories.RelationshipFactory.create(
+        from_profile__school_staff=True, to_profile=author_rel.student)
+    p = factories.PostFactory.create(
+        author=author_rel.elder, student=author_rel.student)
+
+    with mock.patch('portfoliyo.pusher.events.get_pusher') as mock_get_pusher:
+        author_channel = mock.Mock()
+        other_channel = mock.Mock()
+        mock_get_pusher.return_value = {
+            'private-user_%s' % author_rel.elder.id: author_channel,
+            'private-user_%s' % other_rel.elder.id: other_channel,
+            }
+        events.posted_event(p, extra='foo')
+
+    author_args = author_channel.trigger.call_args[0]
+    other_args = other_channel.trigger.call_args[0]
+    assert author_args[0] == other_args[0] == 'message_posted'
+    author_data = author_args[1]['posts'][0]
+    other_data = other_args[1]['posts'][0]
+    assert author_data['extra'] == other_data['extra'] == 'foo'
+    assert author_data['mine']
+    assert not other_data['mine']
+
 
 def test_student_event(db):
     """Pusher event for adding/editing/removing a student."""

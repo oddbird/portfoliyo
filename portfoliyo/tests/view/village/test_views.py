@@ -748,6 +748,20 @@ class TestGetPosts(object):
         assert expected == found
 
 
+    def test_mine(self, db, redis):
+        """Marks posts in student village correctly as mine/not."""
+        profile = factories.ProfileFactory.create()
+        my_post = factories.PostFactory.create(author=profile)
+        other_post = factories.PostFactory.create(
+            student=my_post.student)
+
+        expected = [(my_post.id, True), (other_post.id, False)]
+        data = views._get_posts(profile, student=my_post.student)
+        found = [(p['post_id'], p['mine']) for p in data['posts']]
+
+        assert expected == found
+
+
 
 
 class TestVillage(GroupContextTests):
