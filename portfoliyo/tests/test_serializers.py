@@ -75,6 +75,7 @@ def test_post2dict(db):
         'student_id': rel.student.id,
         'author': 'The Teacher',
         'role': u'desc',
+        'school_staff': False,
         'timestamp': '2012-09-17T01:30:00-04:00',
         'date': u'September 17, 2012',
         'naturaldate': u'September 17, 2012',
@@ -107,8 +108,8 @@ def test_post2dict_no_author():
     d = serializers.post2dict(post)
 
     assert d['author_id'] == 0
-    assert d['author'] == ""
-    assert d['role'] == "Portfoliyo"
+    assert d['author'] == "Portfoliyo"
+    assert d['role'] == ""
 
 
 

@@ -19,8 +19,8 @@ def post2dict(post, **extra):
         else:
             role = relationship.description or post.author.role
     else:
-        author_name = ""
-        role = "Portfoliyo"
+        author_name = "Portfoliyo"
+        role = ""
 
     timestamp = timezone.localtime(post.timestamp)
 
@@ -31,6 +31,7 @@ def post2dict(post, **extra):
         'author_id': post.author_id if post.author else 0,
         'author': author_name,
         'role': role,
+        'school_staff': post.author.school_staff if post.author else True,
         'timestamp': timestamp.isoformat(),
         'date': dateformat.format(timestamp, 'F j, Y'),
         'naturaldate': naturaldate(timestamp),
