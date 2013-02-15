@@ -39,7 +39,7 @@ var PYO = (function (PYO, $) {
             var pageHeight;
             var updateHeight = function () {
                 pageHeight = $(window).height() - headerHeight - footerHeight;
-                page.height(pageHeight);
+                page.css('height', pageHeight.toString() + 'px');
             };
             updateHeight();
 
@@ -69,7 +69,7 @@ var PYO = (function (PYO, $) {
                     });
                     var newHeight = c.height() - siblingHeight;
                     if (scroll) { scrolled = PYO.scrolledToBottom(); }
-                    b.outerHeight(newHeight);
+                    b.css('height', newHeight.toString() + 'px');
                     if (scrolled) { PYO.scrollToBottom(); }
                 }
             });
