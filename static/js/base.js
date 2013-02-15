@@ -46,7 +46,8 @@ var PYO = (function (PYO, $) {
             $(window).resize(function () {
                 $.doTimeout('resize', 250, function () {
                     updateHeight();
-                    PYO.updateContentHeight('.village-content', '.village-body', true);
+                    PYO.updateContentHeight('.village-content', '.village-body');
+                    PYO.updateContentHeight('.village-feed', '.feed-posts', true);
                     PYO.updateContentHeight('.village-nav', '.itemlist');
                     PYO.updateContentHeight('.elder-list', '.itemlist');
                 });
@@ -68,7 +69,7 @@ var PYO = (function (PYO, $) {
                     });
                     var newHeight = c.height() - siblingHeight;
                     if (scroll) { scrolled = PYO.scrolledToBottom(); }
-                    b.height(newHeight);
+                    b.outerHeight(newHeight);
                     if (scrolled) { PYO.scrollToBottom(); }
                 }
             });
@@ -611,6 +612,7 @@ var PYO = (function (PYO, $) {
         if ($('#edit-elder-form').length) { PYO.setPhoneChangedClass('#edit-elder-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
+        PYO.updateContentHeight('.village-feed', '.feed-posts');
     };
 
     return PYO;
