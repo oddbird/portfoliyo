@@ -3,32 +3,62 @@ module.exports = function (grunt) {
 
     'use strict';
 
-    var SRC_JS_TEMPLATES = 'jstemplates/';
-    var DEST_JS_TEMPLATES = 'static/js/';
-
     // Project configuration.
     grunt.initConfig({
-        shell: {
-            handlebars_compile: {
-                command: 'node_modules/.bin/handlebars ' + SRC_JS_TEMPLATES + ' -f ' + DEST_JS_TEMPLATES + 'jstemplates.js -k each -k if -k unless',
-                stdout: true
+        vars: {
+            src_js_templates_dir: 'jstemplates/',
+            dest_js_templates_dir: 'static/js/',
+            src_js_dir: 'static/js/',
+            dest_js_templates: 'jstemplates.js',
+            src_js_templates: '*.handlebars',
+            src_js: '*.js'
+        },
+        pkg: grunt.file.readJSON('package.json'),
+        handlebars: {
+            compile: {
+                options: {
+                    namespace: 'PYO.templates',
+                    wrapped: true,
+                    processName: function (filename) {
+                        var pieces = filename.split('/');
+                        var name = pieces[pieces.length - 1].split('.');
+                        return name[name.length - 2];
+                    }
+                },
+                files: [{
+                    src: '<%= vars.src_js_templates_dir %><%= vars.src_js_templates %>',
+                    dest: '<%= vars.dest_js_templates_dir %><%= vars.dest_js_templates %>'
+                }]
             }
+        },
+        jshint: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            gruntfile: ['Gruntfile.js'],
+            js: ['<%= vars.src_js_dir %><%= vars.src_js %>', '!<%= vars.dest_js_templates_dir %><%= vars.dest_js_templates %>']
         },
         watch: {
             jstemplates: {
-                files: SRC_JS_TEMPLATES + '*.handlebars',
-                tasks: ['handlebars-compile']
+                files: '<%= vars.src_js_templates_dir %><%= vars.src_js_templates %>',
+                tasks: ['handlebars']
+            },
+            gruntfile: {
+                files: '<%= jshint.gruntfile %>',
+                tasks: ['jshint:gruntfile']
+            },
+            js: {
+                files: '<%= jshint.js %>',
+                tasks: ['jshint:js']
             }
         }
     });
 
-    // aliases for shell tasks
-    grunt.registerTask('handlebars-compile', 'shell:handlebars_compile');
-
     // Default task
-    grunt.registerTask('default', ['handlebars-compile']);
+    grunt.registerTask('default', ['handlebars']);
 
     // Plugin tasks
+    grunt.loadNpmTasks('grunt-contrib-handlebars');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-shell');
 };
