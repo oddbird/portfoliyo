@@ -1,13 +1,4 @@
 {
-    "predef": {
-        "mixpanel": true,
-        "ich": true,
-        "Pusher": true,
-        "FlashDetect": true,
-        "Handlebars": true,
-        "Modernizr": true
-    },
-
     "browser": true,
     "jquery": true,
 
@@ -25,5 +16,14 @@
     "strict": true,
     "trailing": true,
     "eqnull": true,
-    "white": true
+    "white": true,
+
+    "globals": {
+        "mixpanel": true,
+        "ich": true,
+        "Pusher": true,
+        "FlashDetect": true,
+        "Handlebars": true,
+        "Modernizr": true
+    }
 }

@@ -2,10 +2,10 @@
   "name": "portfoliyo",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "~0.4.0rc2",
-    "grunt-cli": "~0.1.6",
-    "handlebars": "~1.0.7",
-    "grunt-contrib-watch": "~0.1.4",
-    "grunt-shell": "~0.1.4"
+    "grunt": "~0.4.0",
+    "grunt-contrib-watch": "~0.2.0",
+    "grunt-contrib-handlebars": "~0.5.4",
+    "grunt-contrib-jshint": "~0.1.1",
+    "grunt-cli": "~0.1.6"
   }
 }
