@@ -13,3 +13,4 @@ logfile
 chromedriver.log
 .coverage
 celerybeat-schedule
+node_modules/
