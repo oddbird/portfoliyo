@@ -5,12 +5,12 @@ var PYO = (function (PYO, $) {
     PYO.tpl = function (template, data) {
         // This will remove any top-level text nodes from rendered templates.
         // ...see http://bugs.jquery.com/ticket/12462 and https://github.com/wycats/handlebars.js/issues/162
-        return $($.parseHTML(Handlebars.templates[template](data))).filter('*');
+        return $($.parseHTML(PYO.templates[template](data))).filter('*');
     };
 
     $(function () {
-        Handlebars.registerPartial('group_list_items', Handlebars.templates.group_list_items);
-        Handlebars.registerPartial('student_list_items', Handlebars.templates.student_list_items);
+        Handlebars.registerPartial('group_list_items', PYO.templates.group_list_items);
+        Handlebars.registerPartial('student_list_items', PYO.templates.student_list_items);
 
         // Handlebars.registerHelper('debug', function(optionalValue) {
         //     console.log('Current Context');
