@@ -250,10 +250,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e018";
 }
 
-.no-sms .post-info:before {
-  content: "\e019";
-}
-
 .page-actions .action-back:before {
   content: "\e01e";
 }
@@ -266,12 +262,24 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01d";
 }
 
+.icon-group:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
+  content: "\e01b";
+}
+
 .icon-invite:before, .icon-add-student:before, .additems [class*="additem-"]:before, .additem-elder:before {
   content: "\e01c";
 }
 
-.icon-group:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
-  content: "\e01b";
+.pending .post-info:before {
+  content: "\e022";
+}
+
+.no-sms .post-info:before {
+  content: "\e025";
+}
+
+.from-sms .post-info:before {
+  content: "\e026";
 }
 
 /* Use the following CSS code if you want to have a class per icon */
@@ -3312,7 +3320,13 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   float: left;
   margin-right: 2.12766%;
   font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  padding-right: 0.31944rem;
+  color: #657b83;
   font-weight: bold;
+  text-align: right;
+}
+.old .byline {
+  font-weight: normal;
 }
 
 .post-body {
@@ -3324,8 +3338,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-border-radius: 0.31944rem;
   border-radius: 0.31944rem;
   position: relative;
-  border: 2px solid #657b83;
-  background: #657b83;
+  border: 2px solid #268bd2;
+  background: #268bd2;
 }
 .post-body:before {
   content: " ";
@@ -3335,9 +3349,16 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border: solid transparent;
   pointer-events: none;
   right: 100%;
-  border-right-color: #657b83;
+  border-right-color: #268bd2;
   border-width: 0.47917rem;
   top: 0.15972rem;
+}
+.old .post-body {
+  border-color: #657b83;
+  background: #657b83;
+}
+.old .post-body:before {
+  border-right-color: #657b83;
 }
 
 .post-info {
@@ -3351,18 +3372,21 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-border-radius-topright: 0.31944rem;
   -webkit-border-top-right-radius: 0.31944rem;
   border-top-right-radius: 0.31944rem;
-  background: #929e42;
-  color: #fdf6e3;
-  border-bottom: 2px solid #657b83;
-}
-.old .post-info {
   background: #93a1a1;
+  color: #fdf6e3;
+  border-bottom: 2px solid #268bd2;
+}
+.pending .post-info:before {
+  background: #416986;
 }
 .sms .post-info:before {
+  background: #535c1f;
+}
+.from-sms .post-info:before {
   background: #416986;
 }
 .no-sms .post-info:before {
-  background: #6c5a24;
+  background: #7e4b35;
 }
 .post-info:before {
   font-size: 18px;
@@ -3376,10 +3400,15 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   float: left;
-  padding: 0.31944rem 0.63889rem;
-  margin-right: 0.31944rem;
+  padding: 0.15972rem 0.31944rem;
   background: #657b83;
-  border-right: 2px solid #657b83;
+  border-right: 2px solid #268bd2;
+}
+.old .post-info {
+  border-bottom-color: #657b83;
+}
+.old .post-info:before {
+  border-right-color: #657b83;
 }
 
 .pubdate {
@@ -3388,7 +3417,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   line-height: 23px;
   line-height: 1.27778rem;
   font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  padding: 0.31944rem;
+  padding: 0.15972rem 0.31944rem;
   float: right;
 }
 .pubdate:first-letter {
@@ -3401,7 +3430,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -ms-text-overflow: ellipsis;
   -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
-  padding: 0.31944rem;
+  padding: 0.15972rem 0.31944rem;
 }
 
 .post-text {
@@ -3412,7 +3441,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-border-radius-bottomright: 0.31944rem;
   -webkit-border-bottom-right-radius: 0.31944rem;
   border-bottom-right-radius: 0.31944rem;
-  padding: 0.63889rem;
+  padding: 0.31944rem;
   background: #fdf6e3;
 }
 .old .post-text {

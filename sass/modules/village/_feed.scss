@@ -39,6 +39,8 @@ $background       : $base2;
 
 $post-offset: 2;
 $post-context: $center - $post-offset;
+$new-borders: $blue;
+$old-borders: $base;
 
 .post {
   @include pie-clearfix;
@@ -55,35 +57,52 @@ $post-context: $center - $post-offset;
 .byline {
   @include span-columns($post-offset,$center);
   @include cond;
+  padding-right: $box-padding;
+  color: $base;
   font-weight: bold;
+  text-align: right;
+
+  .old & { font-weight: normal; }
 }
 
 .post-body {
   @include span-columns($post-context omega, $center);
-  @include arrow(left rhythm(.125) $base rhythm(.375));
+  @include arrow(left rhythm(.125) $new-borders rhythm(.375));
   @include border-radius(rhythm(.25));
   position: relative;
-  border: 2px solid $base;
-  background: $base;
+  border: 2px solid $new-borders;
+  background: $new-borders;
+
+  .old & {
+    border-color: $old-borders;
+    background: $old-borders;
+    &:before { border-right-color: $old-borders; }
+  }
 }
 
 .post-info {
   @extend %icon;
   @include adjust-font-size-to($xsmallpx);
   @include border-top-radius(rhythm(.25));
-  background: color(-25% $green light);
+  background: $base1;
   color: $base3;
-  border-bottom: 2px solid $base;
+  border-bottom: 2px solid $new-borders;
 
-  .old & { background: $base1; }
-
+  .pending & {
+    @extend %icon-bubble-dots;
+    &:before { background: color(-50% $blue dark); }
+  }
   .sms & {
     @extend %icon-bubble-check;
+    &:before { background: color(-50% $green dark); }
+  }
+  .from-sms & {
+    @extend %icon-bubble-down;
     &:before { background: color(-50% $blue dark); }
   }
   .no-sms & {
-    @extend %icon-bubble-notification;
-    &:before { background: color(-50% $yellow dark); }
+    @extend %icon-bubble-minus;
+    &:before { background: color(-50% $orange dark); }
   }
 
   &:before {
@@ -91,30 +110,34 @@ $post-context: $center - $post-offset;
     @include border-top-left-radius(rhythm(.25));
     @include inset;
     float: left;
-    padding: rhythm(.25) rhythm(.5);
-    margin-right: rhythm(.25);
+    padding: rhythm(.125) rhythm(.25);
     background: $base;
-    border-right: 2px solid $base;
+    border-right: 2px solid $new-borders;
+  }
+
+  .old & {
+    border-bottom-color: $old-borders;
+    &:before { border-right-color: $old-borders; }
   }
 }
 
 .pubdate {
   @include adjust-font-size-to($xsmallpx);
   @include cond;
-  padding: $box-padding;
+  padding: $box-padding/2 $box-padding;
   float: right;
   &:first-letter { text-transform: uppercase; }
 }
 
 .info-text {
   @include ellipsis;
-  padding: $box-padding;
+  padding: $box-padding/2 $box-padding;
 }
 
 .post-text {
   @include clearfix;
   @include border-bottom-radius(rhythm(.25));
-  padding: rhythm(.5);
+  padding: $box-padding;
   background: $base3;
   .old & { background: color($base3 lighter); }
   .mine & { background: color($blue 92%); }
