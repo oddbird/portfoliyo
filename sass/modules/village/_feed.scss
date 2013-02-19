@@ -51,7 +51,17 @@ $old-borders: $base;
     @include trailer;
     .has-instructions & { @include trailer(4); }
   }
-  .timeout { @extend %error; }
+  .timeout {
+    @extend %error;
+    @extend %icon;
+    @extend %icon-warning;
+    @include rhythm-margins(.25);
+    @include border-radius($box-padding);
+    @include inset;
+    clear: both;
+    padding: $box-padding rhythm(1);
+    &:before { @include adjust-font-size-to($normpx); }
+  }
 }
 
 .byline {
