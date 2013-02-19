@@ -516,3 +516,21 @@ class TestPostResource(object):
             self.detail_url(post), user=rel.elder.user)
 
         assert response.json['unread'] == True
+
+
+    def test_mine(self, no_csrf_client):
+        """Each post has a 'mine' boolean in the API response."""
+        rel = factories.RelationshipFactory.create()
+        my_post = factories.PostFactory.create(
+            student=rel.student, author=rel.elder)
+        other_post = factories.PostFactory.create(student=rel.student)
+
+        response = no_csrf_client.get(
+            self.detail_url(my_post), user=rel.elder.user)
+
+        assert response.json['mine'] == True
+
+        response = no_csrf_client.get(
+            self.detail_url(other_post), user=rel.elder.user)
+
+        assert response.json['mine'] == False

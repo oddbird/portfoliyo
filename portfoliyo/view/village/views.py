@@ -339,6 +339,7 @@ def _get_posts(profile, student=None, group=None):
             serializers.post2dict(
                 post,
                 unread=str(post.id) in all_unread,
+                mine=post.author == profile,
                 )
             for post in reversed(
                 queryset.order_by(

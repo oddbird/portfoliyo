@@ -31,7 +31,7 @@ var PYO = (function (PYO, $) {
         // base.js
         PYO.activeUserId = $('.village').data('user-id');
         PYO.announcements('#messages .announce');
-        PYO.updatePageHeight('.village');
+        PYO.updatePageHeight();
         PYO.ajaxifyVillages('.village');
         PYO.detectFlashSupport('.village');
         PYO.watchForItemRemoval();

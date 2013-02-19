@@ -379,4 +379,5 @@ class PostResource(PortfoliyoResource):
     def dehydrate(self, bundle):
         bundle.data['unread'] = model.unread.is_unread(
             bundle.obj, bundle.request.user.profile)
+        bundle.data['mine'] = bundle.obj.author == bundle.request.user.profile
         return bundle

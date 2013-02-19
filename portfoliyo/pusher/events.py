@@ -23,12 +23,13 @@ def bulk_posted(bulk_post_id, **extra_data):
 
 
 def posted_event(post, **extra_data):
-    data = {'posts': [serializers.post2dict(post, **extra_data)]}
+    data = serializers.post2dict(post, **extra_data)
     teacher_ids = post.elders_in_context.filter(
         school_staff=True).values_list('pk', flat=True)
     for teacher_id in teacher_ids:
         channel = 'user_%s' % teacher_id
-        trigger(channel, 'message_posted', data)
+        my_data = {'posts': [dict(data, mine=data['author_id'] == teacher_id)]}
+        trigger(channel, 'message_posted', my_data)
 
 
 

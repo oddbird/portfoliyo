@@ -131,6 +131,7 @@ $.widget("ech.multiselect", {
 				title = this.innerHTML,
 				name = $this.data('name'),
 				role = $this.data('role'),
+				actualName = $this.data('actual-name'),
 				description = this.title,
 				value = this.value,
 				inputID = 'ui-multiselect-' + (this.id || id + '-option-' + i),
@@ -164,7 +165,7 @@ $.widget("ech.multiselect", {
 			html += '<li class="' + liClasses + '">';
 
 			// create the input
-			html += '<input id="' + inputID + '" class="value" name="multiselect_' + id + '" type="' + (o.multiple ? "checkbox" : "radio") + '" value="' + value + '" title="' + title + '" data-role="' + role + '" data-name="' + name + '"';
+			html += '<input id="' + inputID + '" class="value" name="multiselect_' + id + '" type="' + (o.multiple ? "checkbox" : "radio") + '" value="' + value + '" title="' + title + '" data-role="' + role + '" data-name="' + name + '" data-actual-name="' + actualName + '"';
 
 			// pre-selected?
 			if( isSelected ){

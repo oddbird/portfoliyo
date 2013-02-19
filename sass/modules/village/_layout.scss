@@ -14,7 +14,6 @@
 
 .village {
   @include pie-clearfix;
-  @include transition(height 150ms);
   position: relative;
   height: rhythm(24);
 }

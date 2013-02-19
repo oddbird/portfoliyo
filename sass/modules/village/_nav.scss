@@ -38,14 +38,9 @@ $village-nav-action-color : $base03;
 
 .navtitle {
   @include box-shadow($inset-color 0 0 $inset-size);
-  @include trailing-border(1px,.25);
-  padding: {
-    top: $box-padding;
-    left: $box-padding;
-    right: $box-padding;
-  }
-  background: $base2;
-  border-color: $village-border-color;
+  padding: $box-padding;
+  background: color($base3 lighter);
+  border-bottom: 1px solid $village-border-color;
 }
 
 .group-name {

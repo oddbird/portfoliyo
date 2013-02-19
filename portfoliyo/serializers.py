@@ -19,8 +19,8 @@ def post2dict(post, **extra):
         else:
             role = relationship.description or post.author.role
     else:
-        author_name = ""
-        role = "Portfoliyo"
+        author_name = "Portfoliyo"
+        role = ""
 
     timestamp = timezone.localtime(post.timestamp)
 
@@ -31,10 +31,9 @@ def post2dict(post, **extra):
         'author_id': post.author_id if post.author else 0,
         'author': author_name,
         'role': role,
+        'school_staff': post.author.school_staff if post.author else True,
         'timestamp': timestamp.isoformat(),
-        'date': dateformat.format(timestamp, 'F j, Y'),
-        'naturaldate': naturaldate(timestamp),
-        'time': dateformat.time_format(timestamp, 'P'),
+        'timestamp_display': naturaldatetime(timestamp),
         'text': post.html_text,
         'sms': post.sms,
         'to_sms': post.to_sms,
@@ -51,36 +50,38 @@ def post2dict(post, **extra):
 
 
 
-def now(tzinfo=None):
-    """Get the current datetime."""
-    return datetime.datetime.now(tzinfo)
+def now():
+    """Get the current (timezone-aware) datetime."""
+    return datetime.datetime.utcnow().replace(tzinfo=timezone.utc)
 
 
 
-def naturaldate(value):
+def naturaldatetime(value):
     """
-    Return given past date/datetime formatted "naturally" as a day/date.
+    Return given past datetime formatted "naturally", omitting unnecessary data.
 
-    If the given date is today or yesterday, return "today" or "yesterday". If
-    the date is within the past week, return the full day of the week
-    name. Otherwise, return e.g. "January 23, 2012", omitting the year if it is
+    If the given date is today, display only the time. If the date is within
+    the past week, prepend the three-letter day of the week name to the
+    time. Otherwise, prepend e.g. "Jan 23 2012", omitting the year if it is
     the current year.
 
+    A given timezone-naive datetime is assumed to be in the current timezone.
+
     """
-    tzinfo = getattr(value, 'tzinfo', None)
-    value = datetime.date(value.year, value.month, value.day)
-    today = now(tzinfo).date()
-    delta = today - value
-    if delta.days == 0:
-        return u'today'
-    elif delta.days == 1:
-        return u'yesterday'
-    elif 0 < delta.days < 7:
-        return dateformat.format(value, 'l')
-
-    if today.year == value.year:
-        long_format = 'F j'
+    if timezone.is_naive(value):
+        value = timezone.make_aware(value, timezone.get_current_timezone())
     else:
-        long_format = 'F j, Y'
+        value = timezone.localtime(value)
+    nowdt = timezone.localtime(now())
+    delta = nowdt - value
+    period = dateformat.format(value, 'A').lower()
+    if delta.days <= 0:
+        format_string = 'f'
+    elif 0 < delta.days < 7:
+        format_string = 'D f'
+    elif nowdt.year == value.year:
+        format_string = 'M j, f'
+    else:
+        format_string = 'M j Y, f'
 
-    return dateformat.format(value, long_format)
+    return dateformat.format(value, format_string) + period

@@ -14,55 +14,48 @@
 <div class="village-main">
   {% block village-main %}
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{% firstof relationship.description_or_role user.profile.role %}" {% block village-feed-attrs %}{% endblock %}>
-    <div class="feed-posts">
-      <article class="getting-started">
-          <h3 class="starthead">{% block getting-started-header %}Welcome!{% endblock %}</h3>
-      </article>
+    <div class="feed-posts{% if not user.profile.has_posted %} has-instructions{% endif %}">
+      <h3 class="feedhead">{% block getting-started-header %}Welcome!{% endblock %}</h3>
 
       {{ posts|handlebars:"posts" }}
+    </div>
+
+    {% if not read_only %}
+    <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
+      {% csrf_token %}
 
       {% if not user.profile.has_posted %}
-        <div class="stickyhack"> </div>
-      {% endif %}
-    </div>
-    {% if not user.profile.has_posted %}
-    <article class="instructions">
       <ol class="howto">
-        <li class="howto-post"><p>Write a message for teachers and family members.</p></li>
-        <li class="howto-sms"><p>Select family members who should receive a text. Then hit send!</p></li>
+        <li class="howto-sms"><p>Select family members to receive a&nbsp;text.</p></li>
+        <li class="howto-post"><p>Write a short message and hit&nbsp;send!</p></li>
       </ol>
-    </article>
+      {% endif %}
+
+      {% block sms-target %}
+      <div class="formfield sms-targeting">
+        <label for="sms-target" class="type">Send text messages to</label>
+        <div class="multiselect-dropdown">
+          <select id="sms-target" class="value" name="sms-target" multiple="multiple">
+            {% for elder in elders|sms_eligible %}
+              <option value="{{ elder.id }}" data-role="{{ elder.role_in_context }}" data-name="{% firstof elder.name elder.user.email elder.phone %}" data-actual-name="{{ elder.name }}" selected>{{ elder.role_in_context }}: {% firstof elder.name elder.user.email elder.phone %}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      {% endblock %}
+
+      <div class="formfield post-textfield">
+        <textarea id="post-text" name="text" class="value"></textarea>
+        <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="action-post">Send</button>
+      </div>
+
+    </form>
     {% endif %}
   </section>
-
-  {% if not read_only %}
-  <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
-    {% csrf_token %}
-
-    {% block sms-target %}
-    <div class="formfield sms-targeting">
-      <label for="sms-target" class="type">Send text messages to</label>
-      <div class="multiselect-dropdown">
-        <select id="sms-target" class="value" name="sms-target" multiple="multiple">
-          {% for elder in elders|sms_eligible %}
-            <option value="{{ elder.id }}" data-role="{{ elder.role_in_context }}" data-name="{% firstof elder.name elder.user.email elder.phone %}" selected>{{ elder.role_in_context }}: {% firstof elder.name elder.user.email elder.phone %}</option>
-          {% endfor %}
-        </select>
-      </div>
-    </div>
-    {% endblock %}
-
-    <div class="formfield post-textfield">
-      <textarea id="post-text" name="text" class="value"></textarea>
-      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
-    </div>
-
-    <div class="form-actions">
-      <button type="submit" class="action-post">Send</button>
-    </div>
-
-  </form>
-  {% endif %}
   {% endblock village-main %}
 </div>
 
