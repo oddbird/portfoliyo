@@ -3377,16 +3377,16 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border-bottom: 2px solid #268bd2;
 }
 .pending .post-info:before {
-  background: #416986;
+  background: #1e6fa8;
 }
 .sms .post-info:before {
-  background: #535c1f;
+  background: #6a7a00;
 }
 .from-sms .post-info:before {
-  background: #416986;
+  background: #1e6fa8;
 }
 .no-sms .post-info:before {
-  background: #7e4b35;
+  background: #a23c11;
 }
 .post-info:before {
   font-size: 18px;

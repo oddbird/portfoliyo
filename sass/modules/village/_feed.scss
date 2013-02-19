@@ -90,19 +90,19 @@ $old-borders: $base;
 
   .pending & {
     @extend %icon-bubble-dots;
-    &:before { background: color(-50% $blue dark); }
+    &:before { background: color($blue dark); }
   }
   .sms & {
     @extend %icon-bubble-check;
-    &:before { background: color(-50% $green dark); }
+    &:before { background: color($green dark); }
   }
   .from-sms & {
     @extend %icon-bubble-down;
-    &:before { background: color(-50% $blue dark); }
+    &:before { background: color($blue dark); }
   }
   .no-sms & {
     @extend %icon-bubble-minus;
-    &:before { background: color(-50% $orange dark); }
+    &:before { background: color($orange dark); }
   }
 
   &:before {
