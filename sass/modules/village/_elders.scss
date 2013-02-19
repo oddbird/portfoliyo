@@ -21,7 +21,7 @@
   @include box-shadow($inset-color 0 0 $inset-size);
   position: relative;
   padding-right: rhythm(2);
-  background: $base2;
+  background: color($base3 lighter);
   border-color: $village-border-color;
   font-weight: bold;
   .teachers & { @include leading-border(1px,.25); }

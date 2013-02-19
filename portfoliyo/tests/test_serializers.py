@@ -1,6 +1,6 @@
 import datetime
 
-from django.utils.timezone import utc
+from django.utils import timezone
 import mock
 import pytest
 import pytz
@@ -22,13 +22,11 @@ class MockNow(object):
 
     """
     def __init__(self, *args, **kwargs):
-        kwargs.setdefault('tzinfo', utc)
+        kwargs.setdefault('tzinfo', timezone.utc)
         self.now = datetime.datetime(*args, **kwargs)
 
 
-    def __call__(self, tzinfo=None):
-        if tzinfo is not None:
-            return self.now.astimezone(tzinfo)
+    def __call__(self):
         return self.now
 
 
@@ -57,6 +55,17 @@ def mock_now(request):
 
 
 
+@pytest.fixture(autouse=True)
+def _current_timezone(request):
+    """Use current timezone as given in a mark."""
+    if 'timezone' in request.keywords:
+        cm = timezone.override(request.keywords['timezone'].args[0])
+        cm.__enter__()
+        request.addfinalizer(lambda: cm.__exit__(None, None, None))
+
+
+
+@pytest.mark.timezone(timezone.utc)
 def test_post2dict(db):
     """post2dict returns dictionary of post data."""
     rel = factories.RelationshipFactory.create(
@@ -65,7 +74,7 @@ def test_post2dict(db):
         author=rel.elder,
         student=rel.student,
         relationship=rel,
-        timestamp=datetime.datetime(2012, 9, 17, 5, 30, tzinfo=utc),
+        timestamp=datetime.datetime(2012, 9, 17, 5, 30, tzinfo=timezone.utc),
         html_text='Foo',
         )
 
@@ -75,10 +84,9 @@ def test_post2dict(db):
         'student_id': rel.student.id,
         'author': 'The Teacher',
         'role': u'desc',
-        'timestamp': '2012-09-17T01:30:00-04:00',
-        'date': u'September 17, 2012',
-        'naturaldate': u'September 17, 2012',
-        'time': u'1:30 a.m.',
+        'school_staff': False,
+        'timestamp': '2012-09-17T05:30:00+00:00',
+        'timestamp_display': u'Sep 17 2012, 5:30am',
         'text': 'Foo',
         'extra': 'extra',
         'sms': False,
@@ -90,12 +98,13 @@ def test_post2dict(db):
         }
 
 
-@pytest.mark.mock_now(2013, 2, 11, tzinfo=utc)
-def test_post2dict_naturaldate(mock_now):
-    """Naturaldate for a nearby date."""
+@pytest.mark.timezone(timezone.utc)
+@pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
+def test_post2dict_timestamp_display(mock_now):
+    """Natural date for a nearby date."""
     post = factories.PostFactory.build(
-        timestamp=datetime.datetime(2013, 2, 11, tzinfo=utc))
-    assert serializers.post2dict(post)['naturaldate'] == u"today"
+        timestamp=datetime.datetime(2013, 2, 11, 8, 32, tzinfo=timezone.utc))
+    assert serializers.post2dict(post)['timestamp_display'] == u"8:32am"
 
 
 
@@ -107,8 +116,8 @@ def test_post2dict_no_author():
     d = serializers.post2dict(post)
 
     assert d['author_id'] == 0
-    assert d['author'] == ""
-    assert d['role'] == "Portfoliyo"
+    assert d['author'] == "Portfoliyo"
+    assert d['role'] == ""
 
 
 
@@ -131,38 +140,49 @@ def test_post2dict_no_relationship(db):
 denver = pytz.timezone('America/Denver')
 
 
-class TestNaturalDate(object):
-    @pytest.mark.mock_now(2012, 1, 3)
+@pytest.mark.timezone(timezone.utc)
+class TestNaturalDateTime(object):
+    @pytest.mark.mock_now(2012, 1, 3, tzinfo=timezone.utc)
     def test_today(self, mock_now):
-        d = datetime.datetime(2012, 1, 3)
-        assert serializers.naturaldate(d) == u"today"
+        """A date today is rendered as just the time."""
+        d = datetime.datetime(2012, 1, 3, 8, 23, tzinfo=timezone.utc)
+        assert serializers.naturaldatetime(d) == u"8:23am"
 
 
-    @pytest.mark.mock_now(2012, 1, 3, 1, tzinfo=utc)
-    def test_today_timezone(self, mock_now):
-        d = datetime.datetime(2012, 1, 2, 23, tzinfo=denver)
-        assert serializers.naturaldate(d) == u"today"
-
-
-    @pytest.mark.mock_now(2012, 1, 3)
-    def test_yesterday(self, mock_now):
-        d = datetime.datetime(2012, 1, 2)
-        assert serializers.naturaldate(d) == u"yesterday"
-
-
-    @pytest.mark.mock_now(2013, 2, 11)
+    @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
     def test_day_of_week(self, mock_now):
-        d = datetime.datetime(2013, 2, 5)
-        assert serializers.naturaldate(d) == u"Tuesday"
+        """A date within the past week is rendered as weekday and time."""
+        d = datetime.datetime(2013, 2, 5, 15, 45, tzinfo=timezone.utc)
+        assert serializers.naturaldatetime(d) == u"Tue 3:45pm"
 
 
-    @pytest.mark.mock_now(2013, 2, 11)
+    @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
     def test_same_year(self, mock_now):
-        d = datetime.datetime(2013, 1, 15)
-        assert serializers.naturaldate(d) == u"January 15"
+        """A date within the current year is date and time without year."""
+        d = datetime.datetime(2013, 1, 15, 8, 12, tzinfo=timezone.utc)
+        assert serializers.naturaldatetime(d) == u"Jan 15, 8:12am"
 
 
-    @pytest.mark.mock_now(2013, 2, 11)
+    @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
     def test_different_year(self, mock_now):
-        d = datetime.datetime(2012, 1, 15)
-        assert serializers.naturaldate(d) == u"January 15, 2012"
+        """A date in a different year is date and time with year."""
+        d = datetime.datetime(2012, 1, 15, 10, 34, tzinfo=timezone.utc)
+        assert serializers.naturaldatetime(d) == u"Jan 15 2012, 10:34am"
+
+
+    @pytest.mark.mock_now(2012, 1, 3, 1, tzinfo=timezone.utc)
+    def test_today_timezone(self, mock_now):
+        """Values are normalized to local time correctly."""
+        d = datetime.datetime(2012, 1, 2, 23, 10, tzinfo=denver)
+        with timezone.override(denver):
+            assert serializers.naturaldatetime(d) == u"11:10pm"
+        with timezone.override(timezone.utc):
+            assert serializers.naturaldatetime(d) == u"6:10am"
+
+
+    @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
+    def test_timezone_naive(self, mock_now):
+        """A naive datetime is assumed to be local time."""
+        d = datetime.datetime(2012, 1, 15, 10, 34)
+        with timezone.override(denver):
+            assert serializers.naturaldatetime(d) == u"Jan 15 2012, 10:34am"

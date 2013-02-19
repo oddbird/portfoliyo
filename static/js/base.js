@@ -31,24 +31,15 @@ var PYO = (function (PYO, $) {
         group: {}
     };
 
-    PYO.updatePageHeight = function (container) {
-        if ($(container).length) {
-            var page = $(container);
+    PYO.updatePageHeight = function () {
+        if ($('.village').length) {
+            var page = $('.village');
             var headerHeight = $('div[role="banner"]').outerHeight();
             var footerHeight = $('footer').outerHeight();
-            var pageHeight, transition;
+            var pageHeight;
             var updateHeight = function () {
-                var scroll = PYO.scrolledToBottom();
                 pageHeight = $(window).height() - headerHeight - footerHeight;
-                transition = page.css('transition');
-                page.css({
-                    'transition': 'none',
-                    'height': pageHeight.toString() + 'px'
-                });
-                $(window).load(function () {
-                    page.css('transition', transition);
-                });
-                if (scroll) { PYO.scrollToBottom(); }
+                page.css('height', pageHeight.toString() + 'px');
             };
             updateHeight();
 
@@ -56,19 +47,20 @@ var PYO = (function (PYO, $) {
                 $.doTimeout('resize', 250, function () {
                     updateHeight();
                     PYO.updateContentHeight('.village-content', '.village-body');
+                    PYO.updateContentHeight('.village-feed', '.feed-posts', true);
                     PYO.updateContentHeight('.village-nav', '.itemlist');
                     PYO.updateContentHeight('.elder-list', '.itemlist');
-                    PYO.updateFeedHeights();
                 });
             });
         }
     };
 
-    PYO.updateContentHeight = function (container, body) {
+    PYO.updateContentHeight = function (container, body, scroll) {
         if ($(container).length) {
             $(container).each(function () {
                 var c = $(this);
                 var b = c.find(body);
+                var scrolled;
                 if (b.length) {
                     var siblings = b.siblings();
                     var siblingHeight = 0;
@@ -76,7 +68,9 @@ var PYO = (function (PYO, $) {
                         siblingHeight = siblingHeight + $(this).outerHeight();
                     });
                     var newHeight = c.height() - siblingHeight;
-                    b.height(newHeight);
+                    if (scroll) { scrolled = PYO.scrolledToBottom(); }
+                    b.css('height', newHeight.toString() + 'px');
+                    if (scrolled) { PYO.scrollToBottom(); }
                 }
             });
         }
@@ -618,6 +612,7 @@ var PYO = (function (PYO, $) {
         if ($('#edit-elder-form').length) { PYO.setPhoneChangedClass('#edit-elder-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
+        PYO.updateContentHeight('.village-feed', '.feed-posts');
     };
 
     return PYO;

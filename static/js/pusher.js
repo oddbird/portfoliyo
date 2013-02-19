@@ -19,7 +19,7 @@ var PYO = (function (PYO, $) {
             };
             var oldPost = $('.village-feed').find('.post.mine[data-author-sequence="' + newPostData.author_sequence_id + '"]');
             if (oldPost.length) {
-                if (oldPost.hasClass('local')) {
+                if (oldPost.hasClass('pending')) {
                     PYO.replacePost(newPostData, oldPost);
                 } else if (oldPost.data('post-id') !== newPostData.post_id) {
                     addPost();

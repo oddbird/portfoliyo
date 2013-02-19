@@ -210,7 +210,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00e";
 }
 
-.message.warning:before, .post-add-form .group-targeting:before, .elder .vcard.inactive:before {
+.message.warning:before, .post .timeout:before, .post-add-form .group-targeting:before, .elder .vcard.inactive:before {
   content: "\e00f";
 }
 
@@ -246,12 +246,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e020";
 }
 
-.sms .sms-info .summary:before {
+.sms .post-info:before {
   content: "\e018";
-}
-
-.no-sms .sms-info .summary:before {
-  content: "\e019";
 }
 
 .page-actions .action-back:before {
@@ -266,40 +262,52 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01d";
 }
 
-.icon-invite:before, .icon-add-student:before, .additems [class*="additem-"]:before, .additem-elder:before {
-  content: "\e01c";
-}
-
 .icon-group:before, .group .listitem-select:link:before, .group .listitem-select:visited:before {
   content: "\e01b";
 }
 
+.icon-invite:before, .icon-add-student:before, .additems [class*="additem-"]:before, .additem-elder:before {
+  content: "\e01c";
+}
+
+.pending .post-info:before {
+  content: "\e022";
+}
+
+.no-sms .post-info:before {
+  content: "\e025";
+}
+
+.from-sms .post-info:before {
+  content: "\e026";
+}
+
 /* Use the following CSS code if you want to have a class per icon */
-.action-showgroups:before, .group-feed:before, .additem-elder:before, .elder .no-sms:before, .action-sms:before, #messages .close:before, .sms-info .summary:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post-add-form .group-targeting:before, .elder .vcard.inactive:before, [data-icon]:before {
+.action-showgroups:before, .group-feed:before, .additem-elder:before, .elder .no-sms:before, .action-sms:before, #messages .close:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post .timeout:before, .post-info:before, .post-add-form .group-targeting:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.action-showgroups:before, .group-feed:before, .additem-elder:before, .elder .no-sms:before, .action-sms:before, #messages .close:before, .sms-info .summary:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post-add-form .group-targeting:before, .elder .vcard.inactive:before {
+.action-showgroups:before, .group-feed:before, .additem-elder:before, .elder .no-sms:before, .action-sms:before, #messages .close:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post .timeout:before, .post-info:before, .post-add-form .group-targeting:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
-.action-showgroups, .group-feed, .additem-elder, .elder .no-sms, .action-sms, #messages .close, .sms-info .summary {
+.action-showgroups, .group-feed, .additem-elder, .elder .no-sms, .action-sms, #messages .close {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.action-showgroups:focus, .group-feed:focus, .additem-elder:focus, .elder .no-sms:focus, .action-sms:focus, #messages .close:focus, .sms-info .summary:focus {
+.action-showgroups:focus, .group-feed:focus, .additem-elder:focus, .elder .no-sms:focus, .action-sms:focus, #messages .close:focus {
   outline: 0;
 }
-.action-showgroups:focus:before, .group-feed:focus:before, .additem-elder:focus:before, .elder .no-sms:focus:before, .action-sms:focus:before, #messages .close:focus:before, .sms-info .summary:focus:before {
+.action-showgroups:focus:before, .group-feed:focus:before, .additem-elder:focus:before, .elder .no-sms:focus:before, .action-sms:focus:before, #messages .close:focus:before {
   outline: 1px dotted;
 }
-.action-showgroups:before, .group-feed:before, .additem-elder:before, .elder .no-sms:before, .action-sms:before, #messages .close:before, .sms-info .summary:before {
+.action-showgroups:before, .group-feed:before, .additem-elder:before, .elder .no-sms:before, .action-sms:before, #messages .close:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -2470,10 +2478,6 @@ button {
 }
 
 .village {
-  -webkit-transition: height 150ms;
-  -moz-transition: height 150ms;
-  -o-transition: height 150ms;
-  transition: height 150ms;
   position: relative;
   height: 30.66667rem;
 }
@@ -2571,12 +2575,12 @@ button {
   color: #657b83;
 }
 
-.pjax-error, .group-add-form, .group-edit-form, .parent-signup, .village-edit-form, .elder-invite-form, .elder-edit-form, .dashboard, .itemlist, .village-feed {
+.pjax-error, .group-add-form, .group-edit-form, .parent-signup, .village-edit-form, .elder-invite-form, .elder-edit-form, .dashboard, .itemlist, .feed-posts {
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
-.loading.pjax-error, .loading.group-add-form, .loading.group-edit-form, .loading.parent-signup, .loading.village-edit-form, .loading.elder-invite-form, .loading.elder-edit-form, .loading.dashboard, .loading.itemlist, .loading.village-feed {
+.loading.pjax-error, .loading.group-add-form, .loading.group-edit-form, .loading.parent-signup, .loading.village-edit-form, .loading.elder-invite-form, .loading.elder-edit-form, .loading.dashboard, .loading.itemlist, .loading.feed-posts {
   position: absolute;
 }
 
@@ -3106,16 +3110,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 5px;
-  padding-bottom: 0.26389rem;
-  padding-top: 0.31944rem;
-  padding-left: 0.31944rem;
-  padding-right: 0.31944rem;
-  background: #eee8d5;
-  border-color: #93a1a1;
+  padding: 0.31944rem;
+  background: #fdf9ee;
+  border-bottom: 1px solid #93a1a1;
 }
 
 .group-name {
@@ -3272,76 +3269,225 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .village-feed {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  bottom: 6.06944rem;
-  height: auto;
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  background: #eee8d5;
 }
 
 .feed-posts {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  min-height: 100%;
-  background: #eee8d5;
-}
-.feed-posts .stickyhack {
-  clear: both;
-  display: block;
-  height: 7.02778rem;
+  height: -webkit-calc(100% - 6.54861rem);
+  height: -moz-calc(100% - 6.54861rem);
+  height: -o-calc(100% - 6.54861rem);
+  height: calc(100% - 6.54861rem);
+  padding: 0.63889rem 1.27778rem;
 }
 
-.getting-started {
-  padding-top: 23px;
-  padding-top: 1.27778rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 22px;
-  padding-bottom: 1.22222rem;
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
-  padding-left: 2.12766%;
-  padding-right: 2.12766%;
-  border: 0;
-  background: #fdf6e3;
-}
-.getting-started .starthead {
+.feedhead {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
   font-size: 23px;
   font-size: 1.27778rem;
   line-height: 35px;
   line-height: 1.91667rem;
-  color: #93a1a1;
-}
-.getting-started + .post {
-  border-top: 1px solid;
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
 }
 
-.instructions {
-  -webkit-box-shadow: #657b83 0 0 3px inset;
-  -moz-box-shadow: #657b83 0 0 3px inset;
-  box-shadow: #657b83 0 0 3px inset;
-  background: #eee8d5;
-  background: #eee8d5 -webkit-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
-  background: #eee8d5 -moz-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
-  background: #eee8d5 -o-linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
-  background: #eee8d5 linear-gradient(-45deg, rgba(147, 161, 161, 0.075) 25%, rgba(147, 161, 161, 0) 25%, rgba(147, 161, 161, 0) 50%, rgba(147, 161, 161, 0.075) 50%, rgba(147, 161, 161, 0.075) 75%, rgba(147, 161, 161, 0) 75%) repeat scroll;
-  -webkit-background-size: 4em 4em;
-  -moz-background-size: 4em 4em;
-  -o-background-size: 4em 4em;
-  background-size: 4em 4em;
-  margin-top: -7.02778rem;
-  padding: 1.27778rem 2.12766%;
+.post {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin-bottom: 6px;
+  margin-bottom: 0.31944rem;
+}
+.post:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.post:last-child {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+.has-instructions .post:last-child {
+  margin-bottom: 92px;
+  margin-bottom: 5.11111rem;
+}
+.post .timeout {
+  margin-top: 6px;
+  margin-top: 0.31944rem;
+  margin-bottom: 6px;
+  margin-bottom: 0.31944rem;
+  -webkit-border-radius: 0.31944rem;
+  -moz-border-radius: 0.31944rem;
+  border-radius: 0.31944rem;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  clear: both;
+  padding: 0.31944rem 1.27778rem;
+}
+.post .timeout:before {
+  font-size: 18px;
+  font-size: 1rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+}
+
+.byline {
+  width: 14.89362%;
+  float: left;
+  margin-right: 2.12766%;
+  font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  padding-right: 0.31944rem;
+  color: #657b83;
+  font-weight: bold;
+  text-align: right;
+}
+.old .byline {
+  font-weight: normal;
+}
+
+.post-body {
+  width: 82.97872%;
+  float: right;
+  margin-right: 0;
+  position: relative;
+  -webkit-border-radius: 0.31944rem;
+  -moz-border-radius: 0.31944rem;
+  border-radius: 0.31944rem;
+  position: relative;
+  border: 2px solid #268bd2;
+  background: #268bd2;
+}
+.post-body:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  right: 100%;
+  border-right-color: #268bd2;
+  border-width: 0.47917rem;
+  top: 0.15972rem;
+}
+.old .post-body {
+  border-color: #657b83;
+  background: #657b83;
+}
+.old .post-body:before {
+  border-right-color: #657b83;
+}
+
+.post-info {
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  -moz-border-radius-topleft: 0.31944rem;
+  -webkit-border-top-left-radius: 0.31944rem;
+  border-top-left-radius: 0.31944rem;
+  -moz-border-radius-topright: 0.31944rem;
+  -webkit-border-top-right-radius: 0.31944rem;
+  border-top-right-radius: 0.31944rem;
+  background: #93a1a1;
+  color: #fdf6e3;
+  border-bottom: 2px solid #268bd2;
+}
+.pending .post-info:before {
+  background: #1e6fa8;
+}
+.sms .post-info:before {
+  background: #6a7a00;
+}
+.from-sms .post-info:before {
+  background: #1e6fa8;
+}
+.no-sms .post-info:before {
+  background: #a23c11;
+}
+.post-info:before {
+  font-size: 18px;
+  font-size: 1rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  -moz-border-radius-topleft: 0.31944rem;
+  -webkit-border-top-left-radius: 0.31944rem;
+  border-top-left-radius: 0.31944rem;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  float: left;
+  padding: 0.15972rem 0.31944rem;
+  background: #657b83;
+  border-right: 2px solid #268bd2;
+}
+.old .post-info {
+  border-bottom-color: #657b83;
+}
+.old .post-info:before {
+  border-right-color: #657b83;
+}
+
+.pubdate {
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  padding: 0.15972rem 0.31944rem;
+  float: right;
+}
+.pubdate:first-letter {
+  text-transform: uppercase;
+}
+
+.info-text {
+  white-space: nowrap;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  -o-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  padding: 0.15972rem 0.31944rem;
+}
+
+.post-text {
+  overflow: hidden;
+  -moz-border-radius-bottomleft: 0.31944rem;
+  -webkit-border-bottom-left-radius: 0.31944rem;
+  border-bottom-left-radius: 0.31944rem;
+  -moz-border-radius-bottomright: 0.31944rem;
+  -webkit-border-bottom-right-radius: 0.31944rem;
+  border-bottom-right-radius: 0.31944rem;
+  padding: 0.31944rem;
+  background: #fdf6e3;
+}
+.old .post-text {
+  background: #fdf9ee;
+}
+.mine .post-text {
+  background: #edf5fb;
+}
+.not-posted .post-text {
+  background: #f8d6d5;
+}
+.post-text:first-child {
+  -moz-border-radius-topleft: 0.31944rem;
+  -webkit-border-top-left-radius: 0.31944rem;
+  border-top-left-radius: 0.31944rem;
+  -moz-border-radius-topright: 0.31944rem;
+  -webkit-border-top-right-radius: 0.31944rem;
+  border-top-right-radius: 0.31944rem;
 }
 
 .howto {
-  clear: both;
-  counter-reset: howto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  margin: 0.63889rem 1.27778rem;
 }
 .howto:after {
   content: "";
@@ -3350,172 +3496,34 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 [class^="howto-"] {
-  border-width: 1px;
-  border-width: 0.05556rem;
-  border-style: solid;
-  padding: 16px;
-  padding: 0.90278rem;
-  -webkit-border-radius: 0.25em;
-  -moz-border-radius: 0.25em;
-  border-radius: 0.25em;
-  position: relative;
-  -webkit-box-shadow: #073642 0 0 0.25em;
-  -moz-box-shadow: #073642 0 0 0.25em;
-  box-shadow: #073642 0 0 0.25em;
-  position: relative;
-  float: right;
-  width: 48.93617%;
-  background: #fdf6e3;
-  color: #cb4b16;
-  font-style: italic;
-  counter-increment: howto;
-}
-[class^="howto-"]:before, [class^="howto-"]:after {
-  content: " ";
-  position: absolute;
-  height: 0;
-  width: 0;
-  border: solid transparent;
-  pointer-events: none;
-  top: 100%;
-  border-top-color: #fdf6e3;
-  border-width: 9px;
-  left: 50%;
-  margin-left: -9px;
-}
-[class^="howto-"]:before {
-  border-width: 11.25px;
-  border-top-color: #cb4b16;
-  margin-left: -11.25px;
-}
-[class^="howto-"]:first-child {
-  float: left;
-}
-[class^="howto-"] p:before {
-  -webkit-border-radius: 8em;
-  -moz-border-radius: 8em;
-  border-radius: 8em;
-  content: counter(howto, decimal);
-  position: absolute;
-  top: -0.95833rem;
-  left: -0.63889rem;
-  padding: 0.15972rem 0.47917rem;
-  background: #cb4b16;
-  color: #fdf6e3;
-  font-style: normal;
-}
-
-.feed-posts {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-}
-
-.post {
   font-size: 14px;
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 5px;
-  padding-bottom: 0.26389rem;
-  padding-left: 2.12766%;
-  padding-right: 2.12766%;
-  border-color: #93a1a1;
+  -webkit-border-radius: 0.31944rem;
+  -moz-border-radius: 0.31944rem;
+  border-radius: 0.31944rem;
+  border-width: 2px;
+  border-width: 0.11111rem;
+  border-style: solid;
+  padding: 10px;
+  padding: 0.52778rem;
+  -webkit-box-shadow: #657b83 0 0 0.31944rem;
+  -moz-box-shadow: #657b83 0 0 0.31944rem;
+  box-shadow: #657b83 0 0 0.31944rem;
+  position: relative;
+  position: absolute;
+  bottom: 0;
+  width: 48.93617%;
+  border-color: #cb4b16;
   background: #fdf6e3;
+  text-align: center;
 }
-.post:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.post.old {
-  color: #93a1a1;
-  background: #fdf9ee;
-}
-.post.old .title, .post.old .summary {
-  color: #93a1a1;
-}
-.post.mine {
-  background: #e3f1fa;
-}
-.post.not-posted {
-  background: #fdf4f3;
-}
-.post .timeout {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin-left: -2.12766%;
-  padding-left: 2.12766%;
-  margin-right: -2.12766%;
-  padding-right: 2.12766%;
-}
-.post:last-of-type {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0.15972rem 0.15972rem;
-}
-
-.post-meta {
-  position: relative;
-  color: #93a1a1;
-}
-.post-meta:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-.post-meta .byline, .post-meta .pubdate {
-  white-space: nowrap;
-  overflow: hidden;
-  -ms-text-overflow: ellipsis;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  max-width: 45%;
-}
-.post-meta .byline {
-  float: left;
-}
-.post-meta .title {
-  color: #657b83;
-  font-weight: bold;
-}
-.post-meta .pubdate {
-  font-size: 12px;
-  font-size: 0.66667rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
-  font-family: "CambridgeRoundCond", "Helvetica Neue", Arial, Helvetica, sans-serif;
+[class^="howto-"]:nth-child(even) {
   float: right;
-  text-align: right;
+  margin-right: 0;
 }
-.post-meta .pubdate:first-letter {
-  text-transform: uppercase;
-}
-
-.sms-info .summary {
-  float: left;
-  margin-right: .2em;
-}
-.sms-info .details-body {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin-left: -2.12766%;
-  padding-left: 2.12766%;
-  margin-right: -2.12766%;
-  padding-right: 2.12766%;
-  margin-bottom: 6px;
-  margin-bottom: 0.31944rem;
-  position: relative;
-  display: none;
-  background: #93a1a1;
-  color: #fdf6e3;
-}
-.sms-info .details-body:before {
+[class^="howto-"]:before {
   content: " ";
   position: absolute;
   height: 0;
@@ -3523,31 +3531,16 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border: solid transparent;
   pointer-events: none;
   top: 100%;
-  border-top-color: #93a1a1;
-  border-width: 0.375em;
-  left: 2.12766%;
+  border-top-color: #cb4b16;
+  border-width: 0.63889rem;
+  left: 50%;
+  margin-left: -0.63889rem;
 }
-.sms-info .details-body:after {
-  left: 2.12766%;
-  margin-left: 0;
+[class^="howto-"]:first-child {
+  left: 0;
 }
-
-.post-text {
-  overflow: hidden;
-}
-
-.nametag {
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  display: inline-block;
-  padding: 0 0.4em;
-  border: 1px solid #586e75;
-  background: rgba(147, 161, 161, 0.25);
-}
-.nametag.me {
-  background: #268bd2;
-  color: #fdf6e3;
+[class^="howto-"]:last-child {
+  right: 0;
 }
 
 .post-add-form .sms-targeting, .post-add-form .group-targeting {
@@ -3561,17 +3554,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .post-add-form {
-  position: absolute;
-  left: 0;
-  right: 0;
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
-  bottom: 0;
-  padding: 0.63889rem 1.26582%;
-  border-top: 1px solid #657b83;
-  background: #eee8d5;
+  -webkit-box-shadow: #657b83 0 0 0.31944rem;
+  -moz-box-shadow: #657b83 0 0 0.31944rem;
+  box-shadow: #657b83 0 0 0.31944rem;
+  position: relative;
+  padding: 0.63889rem 1.27778rem;
+  background: #fdf9ee;
+  border-top: 1px solid #93a1a1;
   text-align: right;
+}
+.post-add-form:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 .post-add-form.group-posts {
   background: #bcd0d4;
@@ -3580,16 +3575,16 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   clear: none;
   margin: 0;
 }
-.post-add-form .form-actions .action-post.action-post {
-  -moz-border-radius-topleft: 0;
-  -webkit-border-top-left-radius: 0;
-  border-top-left-radius: 0;
-  -moz-border-radius-bottomleft: 0;
-  -webkit-border-bottom-left-radius: 0;
-  border-bottom-left-radius: 0;
+.post-add-form .form-actions .action-post {
+  width: 14.89362%;
   float: right;
-  width: 17.02128%;
+  margin-right: 0;
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   height: 3.19444rem;
+  font-weight: bold;
 }
 .post-add-form .sms-targeting > .type {
   display: inline;
@@ -3671,7 +3666,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   position: relative;
   padding-right: 2.55556rem;
-  background: #eee8d5;
+  background: #fdf9ee;
   border-color: #93a1a1;
   font-weight: bold;
 }

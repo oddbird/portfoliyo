@@ -7,23 +7,16 @@ var PYO = (function (PYO, $) {
         count: 0
     };
 
-    var smsDetailsOpened = function (trigger) {
-        trigger.css('overflow', '');
-        if (trigger.closest('.post').is(':last-child')) {
-            PYO.scrollToBottom();
-        }
-    };
-
     PYO.scrollToBottom = function () {
-        if ($('.village-feed').length) {
-            var feed = $('.village-feed');
+        if ($('.feed-posts').length) {
+            var feed = $('.feed-posts');
             var height = parseInt(feed.get(0).scrollHeight, 10);
             feed.scrollTop(height).scroll();
         }
     };
 
     PYO.scrolledToBottom = function () {
-        var feed = $('.village-feed');
+        var feed = $('.feed-posts');
         var bottom = false;
         if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
             bottom = true;
@@ -31,72 +24,21 @@ var PYO = (function (PYO, $) {
         return bottom;
     };
 
-    PYO.updateFeedHeights = function () {
-        var feed = $('.village-feed');
-        var scroll = PYO.scrolledToBottom();
-        if (feed.length) {
-            var postAddForm = $('.village .post-add-form');
-            if (postAddForm.length) {
-                feed.css('bottom', postAddForm.outerHeight().toString() + 'px');
-            }
-
-            var instructions = feed.find('.instructions');
-            var stickyhack = feed.find('.feed-posts .stickyhack');
-            if (instructions.length && stickyhack.length) {
-                var howToPost = instructions.find('.howto-post').css('margin-top', '');
-                var howToSms = instructions.find('.howto-sms').css('margin-top', '');
-                var diff;
-                var updateInstructions = function () {
-                    var instructionsHeight = instructions.outerHeight();
-                    instructions.css('margin-top', '-' + instructionsHeight.toString() + 'px');
-                    stickyhack.css('height', instructionsHeight.toString() + 'px');
-                    if (howToSms.outerHeight() > howToPost.outerHeight()) {
-                        diff = howToSms.outerHeight() - howToPost.outerHeight();
-                        howToPost.css('margin-top', diff.toString() + 'px');
-                    } else if (howToPost.outerHeight() > howToSms.outerHeight()) {
-                        diff = howToPost.outerHeight() > howToSms.outerHeight();
-                        howToSms.css('margin-top', diff.toString() + 'px');
-                    }
-                };
-                updateInstructions();
-            }
-
-            if (scroll) { PYO.scrollToBottom(); }
-        }
-    };
-
     PYO.renderPost = function (data) {
         var posts;
         if (data && data.posts && data.posts.length) {
             posts = PYO.tpl('posts', data);
         }
-        if (posts) {
-            var nametag = posts.find('.nametag');
-            nametag.each(function () {
-                var thisTag = $(this);
-                var userID = thisTag.data('user-id');
-                if (userID) {
-                    var mentions = userID.toString().split(',');
-                    if ($.inArray(PYO.activeUserId.toString(), mentions) !== -1) {
-                        thisTag.addClass('me');
-                    }
-                }
-            });
-            posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine').removeClass('unread');
-            return posts;
-        }
+        return posts;
     };
 
     PYO.addPost = function (data) {
         if (data) {
             var feedPosts = $('.village-feed .feed-posts');
-            var stickyhack = feedPosts.find('.stickyhack');
+            var instructions = feedPosts.find('.howto');
             var posts = PYO.renderPost(data);
-            posts.find('.details').html5accordion({
-                initialSlideSpeed: 0,
-                openCallback: smsDetailsOpened
-            });
-            if (stickyhack.length) { stickyhack.before(posts); }
+            posts.find('.details').html5accordion();
+            if (instructions.length) { instructions.before(posts); }
             else { feedPosts.append(posts); }
             PYO.authorPosts = feedPosts.find('.post.mine').length;
             return posts;
@@ -108,13 +50,8 @@ var PYO = (function (PYO, $) {
             var post_obj = { posts: [newPostData] };
             var newPost = PYO.renderPost(post_obj);
             var scroll = PYO.scrolledToBottom();
-            newPost.filter('.post.mine').removeClass('old unread').each(function () {
-                $(this).find('.details').addClass('open auto');
-            });
-            newPost.find('.details').html5accordion({
-                initialSlideSpeed: 0,
-                openCallback: smsDetailsOpened
-            });
+            newPost.filter('.post.mine').removeClass('old');
+            newPost.find('.details').html5accordion();
             oldPost.loadingOverlay('remove');
             oldPost.replaceWith(newPost);
             $.doTimeout('new-post-' + newPostData.author_sequence_id);
@@ -122,22 +59,18 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.createPostObj = function (author_sequence, xhr_count) {
+    PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr) {
         var feed = $('.village-feed');
         var textarea = $('#post-text');
         var author = feed.data('author');
         var role = feed.data('author-role');
         var today = new Date();
-        var day = today.getDate();
-        var month = today.getMonth() + 1;
-        var year = today.getFullYear();
-        var date = month + '/' + day + '/' + year;
         var hour = today.getHours();
         var minute = today.getMinutes();
         minute = (minute < 10) ? '0' + minute : minute;
-        var period = (hour > 12) ? 'p.m.' : 'a.m.';
+        var period = (hour > 12) ? 'pm' : 'am';
         hour = (hour > 12) ? hour - 12 : hour;
-        var time = hour + ':' + minute + ' ' + period;
+        var time = hour + ':' + minute + period;
         var text = $.trim(textarea.val());
         var postObj = {
             posts: [
@@ -145,13 +78,17 @@ var PYO = (function (PYO, $) {
                     author: author,
                     author_id: PYO.activeUserId,
                     role: role,
-                    date: date,
-                    naturaldate: 'today',
-                    time: time,
+                    timestamp_display: time,
                     text: text,
                     author_sequence_id: author_sequence,
                     xhr_count: xhr_count,
-                    local: true
+                    pending: true,
+                    school_staff: true,
+                    mine: true,
+                    sms: smsTargetArr.length ? true : false,
+                    to_sms: smsTargetArr.length ? true : false,
+                    plural_sms: smsTargetArr.length > 1 ? 's' : '',
+                    sms_recipients: smsTargetArr.join(', ')
                 }
             ]
         };
@@ -173,18 +110,23 @@ var PYO = (function (PYO, $) {
                     var author_sequence_id = (PYO.authorPosts || 0) + 1;
                     var url = feed.data('post-url');
                     var count = ++postAjax.count;
-                    var postObj = PYO.createPostObj(author_sequence_id, count);
-                    var post = PYO.addPost(postObj);
                     var postData = [
                         { name: 'text', value: text },
                         { name: 'author_sequence_id', value: author_sequence_id }
                     ];
                     var smsInputName = $('#sms-target').attr('name');
+                    var smsTargetArr = [];
+                    var postObj, post;
 
                     form.find('.sms-targeting .ui-multiselect-checkboxes input:checked').each(function () {
                         var obj = { name: smsInputName, value: $(this).val() };
+                        var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
                         postData.push(obj);
+                        smsTargetArr.push(displayName);
                     });
+
+                    postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
+                    post = PYO.addPost(postObj);
 
                     if (url) {
                         postAjax.XHR[count] = $.post(url, postData, function (response) {
@@ -196,9 +138,7 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
-                    feed.find('.post.mine .details.open.auto').removeClass('open').prop('open', false).find('.details-body').hide();
-                    feed.find('.post .details.auto').removeClass('auto');
-                    feed.find('.instructions').remove();
+                    feed.find('.howto').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                     $('#sms-target').multiselect('checkAll');
@@ -222,7 +162,7 @@ var PYO = (function (PYO, $) {
             $.each(response.posts, function () {
                 feed.trigger('successful-post', {smsRecipients: this.num_sms_recipients, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
-                    var oldPost = feed.find('.post.mine.local[data-author-sequence="' + this.author_sequence_id + '"]');
+                    var oldPost = feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
                     if (oldPost.length) { PYO.replacePost(this, oldPost); }
                 }
             });
@@ -382,7 +322,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.watchForReadPosts = function () {
-        $('.village-feed').scroll(function () {
+        $('.feed-posts').scroll(function () {
             $.doTimeout('scroll', 150, function () {
                 if (PYO.scrolledToBottom()) {
                     PYO.markPostsRead();
@@ -395,15 +335,14 @@ var PYO = (function (PYO, $) {
         var feed = $('.village-feed');
         var posts = feed.find('.post');
 
-        posts.find('.details').html5accordion({ openCallback: smsDetailsOpened });
-        PYO.authorPosts = posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine').length;
+        posts.find('.details').html5accordion();
+        PYO.authorPosts = posts.filter('.mine').length;
         posts.filter('.unread').removeClass('unread');
 
         PYO.initializeMultiselect();
         PYO.watchForReadPosts();
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
-        PYO.updateFeedHeights();
         PYO.scrollToBottom();
     };
 

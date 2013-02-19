@@ -1,1 +1,1 @@
-"{{ post.plain_text }}" - {{ post.author }} ({{ post.role }}), {{ post.date }} at {{ post.time }}
+"{{ post.plain_text }}" - {{ post.author }} ({{ post.role }}), {{ post.timestamp_display }}
