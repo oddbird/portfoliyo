@@ -68,9 +68,9 @@ var PYO = (function (PYO, $) {
         var hour = today.getHours();
         var minute = today.getMinutes();
         minute = (minute < 10) ? '0' + minute : minute;
-        var period = (hour > 12) ? 'p.m.' : 'a.m.';
+        var period = (hour > 12) ? 'pm' : 'am';
         hour = (hour > 12) ? hour - 12 : hour;
-        var time = hour + ':' + minute + ' ' + period;
+        var time = hour + ':' + minute + period;
         var text = $.trim(textarea.val());
         var postObj = {
             posts: [
