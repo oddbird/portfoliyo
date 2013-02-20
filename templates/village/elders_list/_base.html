@@ -25,18 +25,12 @@
 
     {# Parents ----------------------------------------- #}
     <li class="elder parent">
-      {% if nav_elder|elder_status:request.user.profile == 'mobile' %}
-      <a href="#" class="action-sms" title="text {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}" data-name="{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">send sms</a>
-      {% else %}
-      <span class="no-sms" title="{{ nav_elder|elder_status_description:request.user.profile }}">{{ nav_elder|elder_status_description:request.user.profile }}</span>
-      {% endif %}
-
       {% if request.user.profile.school_staff %}
-      <a href="{% block edit-elder-url %}{% endblock %}" class="vcard listitem-select action-edit ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="edit {% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}">
+      <a href="{% block edit-elder-url %}{% endblock %}" class="vcard listitem-select action-edit ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="{{ nav_elder|elder_status_description:request.user.profile }} [Edit]">
         {% include "village/elders_list/_elder_info.html" %}
       </a>
       {% else %}
-      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
+      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="{{ nav_elder|elder_status_description:request.user.profile }}">
         {% include "village/elders_list/_elder_info.html" %}
       </span>
       {% endif %}
@@ -44,8 +38,8 @@
     {% else %}
 
     {# Teachers ----------------------------------------- #}
-    <li class="elder teacher" title="{{ nav_elder|elder_status_description:request.user.profile }}">
-      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}">
+    <li class="elder teacher">
+      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="{{ nav_elder|elder_status_description:request.user.profile }}">
         {% include "village/elders_list/_elder_info.html" %}
       </span>
     </li>

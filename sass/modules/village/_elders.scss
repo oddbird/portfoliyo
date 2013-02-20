@@ -5,7 +5,7 @@
   @include padding-leader(.25);
   @include trailing-border(1px,.25);
   padding-left: $box-padding;
-  padding-right: $box-padding;
+  padding-right: $box-padding*2 + rhythm(1);
   position: relative;
   display: block;
   border-color: $base2;
@@ -41,15 +41,6 @@
   }
 }
 
-
-%parent-status-icon {
-  display: block;
-  position: absolute;
-  top: $box-padding;
-  right: $box-padding;
-  z-index: 5;
-}
-
 .elder {
   position: relative;
 
@@ -59,20 +50,28 @@
   .vcard {
     @extend %elder-listitem;
     @extend %village-activenav;
+    color: $base;
+
     &:before {
       position: absolute;
-      right: 0;
+      right: $box-padding;
+      width: rhythm(1);
+      text-align: center;
       z-index: 5;
     }
+
     &.declined {
-      background: lighten($red,40);
+      @extend %icon;
+      @extend %icon-warning;
+      background: color($red lightest);
+      &:before { color: color($red dark); }
     }
     &.inactive {
       @extend %icon;
       @extend %icon-warning;
       padding-right: ($box-padding*2) + rhythm(1);
-      background: lighten($yellow,50);
-      &:before { color: $base1; }
+      background: color($yellow lightest);
+      &:before { color: color($yellow dark); }
     }
     &.active {
       background: $base01;
@@ -80,25 +79,4 @@
       &:before, .fn, .value { color: $base2; }
     }
   }
-
-  .no-sms {
-    @extend %parent-status-icon;
-    @extend %button-icon;
-    @extend %icon-close;
-    @include button-color($red);
-    @include inset;
-  }
 }
-
-.parent .vcard {
-  padding-right: ($box-padding*2) + rhythm(1);
-  color: $base;
-}
-
-.action-sms {
-  @extend %parent-status-icon;
-  @extend %button-icon;
-  @extend %icon-bubble;
-  @include button-color($base3);
-}
-
