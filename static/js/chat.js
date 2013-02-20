@@ -73,24 +73,22 @@ var PYO = (function (PYO, $) {
         var time = hour + ':' + minute + period;
         var text = $.trim(textarea.val());
         var postObj = {
-            posts: [
-                {
-                    author: author,
-                    author_id: PYO.activeUserId,
-                    role: role,
-                    timestamp_display: time,
-                    text: text,
-                    author_sequence_id: author_sequence,
-                    xhr_count: xhr_count,
-                    pending: true,
-                    school_staff: true,
-                    mine: true,
-                    sms: smsTargetArr.length ? true : false,
-                    to_sms: smsTargetArr.length ? true : false,
-                    plural_sms: smsTargetArr.length > 1 ? 's' : '',
-                    sms_recipients: smsTargetArr.join(', ')
-                }
-            ]
+            posts: [{
+                author: author,
+                author_id: PYO.activeUserId,
+                role: role,
+                timestamp_display: time,
+                text: text,
+                author_sequence_id: author_sequence,
+                xhr_count: xhr_count,
+                pending: true,
+                school_staff: true,
+                mine: true,
+                sms: smsTargetArr.length ? true : false,
+                to_sms: smsTargetArr.length ? true : false,
+                plural_sms: smsTargetArr.length > 1 ? 's' : '',
+                sms_recipients: smsTargetArr.join(', ')
+            }]
         };
         return postObj;
     };
@@ -114,16 +112,28 @@ var PYO = (function (PYO, $) {
                         { name: 'text', value: text },
                         { name: 'author_sequence_id', value: author_sequence_id }
                     ];
-                    var smsInputName = $('#sms-target').attr('name');
+                    var smsSelect = form.find('.sms-targeting');
+                    var smsInputName = smsSelect.find('#sms-target').attr('name');
                     var smsTargetArr = [];
                     var postObj, post;
 
-                    form.find('.sms-targeting .ui-multiselect-checkboxes input:checked').each(function () {
-                        var obj = { name: smsInputName, value: $(this).val() };
-                        var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
-                        postData.push(obj);
-                        smsTargetArr.push(displayName);
-                    });
+                    if (smsSelect.length) {
+                        smsSelect.find('.ui-multiselect-checkboxes input:checked').each(function () {
+                            var obj = { name: smsInputName, value: $(this).val() };
+                            var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
+                            postData.push(obj);
+                            smsTargetArr.push(displayName);
+                        });
+                    } else {
+                        context.find('.village-info .elder-list.family .parents-list .parent').each(function () {
+                            if (!$(this).find('.no-sms').length) {
+                                var name = $(this).find('.fn').data('name');
+                                var role = $(this).find('.fn').data('role');
+                                var displayName = name ? name : role;
+                                smsTargetArr.push(displayName);
+                            }
+                        });
+                    }
 
                     postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
                     post = PYO.addPost(postObj);
