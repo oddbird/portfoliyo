@@ -281,34 +281,6 @@ var PYO = (function (PYO, $) {
                 }
             }
         });
-
-        if (PYO.directSmsName) {
-            $('.elder-list.family .elder .action-sms[data-name="' + PYO.directSmsName + '"]').click();
-            PYO.directSmsName = '';
-        }
-    };
-
-    PYO.initializeSmsDirectLinks = function () {
-        $('body').on('click', '.elder-list.family .elder .action-sms', function (e) {
-            e.preventDefault();
-            var context = $('.village-main');
-            var el = $(this);
-            var name = el.data('name');
-            var textarea = context.find('#post-text');
-
-            if (textarea.length) {
-                textarea.focus();
-                var form = context.find('.post-add-form');
-                var select = form.find('#sms-target');
-                select.multiselect('uncheckAll');
-                select.multiselect('widget').find('input[data-name="' + name + '"]').each(function () {
-                    this.click();
-                });
-            } else {
-                PYO.directSmsName = name;
-                $('.village-nav .ajax-link.active').click();
-            }
-        });
     };
 
     PYO.markPostsRead = function () {

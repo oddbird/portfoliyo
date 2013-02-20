@@ -45,9 +45,6 @@ var PYO = (function (PYO, $) {
 
         // user.js
         PYO.addSchool('#register-form');
-
-        // chat.js
-        PYO.initializeSmsDirectLinks();
     });
 
     return PYO;
