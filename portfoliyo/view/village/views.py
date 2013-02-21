@@ -473,7 +473,7 @@ def create_post(request, student_id=None, group_id=None):
         'success': True,
         'posts': [
             serializers.post2dict(
-                post, author_sequence_id=sequence_id, unread=False)
+                post, author_sequence_id=sequence_id, unread=False, mine=True)
             ],
         }
 
