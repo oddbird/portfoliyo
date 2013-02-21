@@ -3278,6 +3278,20 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: calc(100% - 6.54861rem);
   padding: 0.63889rem 0;
 }
+.feed-posts .empty {
+  display: none;
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  padding: 2.55556rem;
+  color: rgba(101, 123, 131, 0.5);
+  text-align: center;
+}
+.feed-posts .empty:last-child {
+  display: block;
+}
 
 .feedhead {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -3296,7 +3310,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   line-height: 23px;
   line-height: 1.27778rem;
   padding: 0.63889rem;
-  border: 1px solid rgba(238, 232, 213, 0.5);
+  border-bottom: 1px solid rgba(238, 232, 213, 0.5);
   margin-bottom: -1px;
 }
 .post:after {
