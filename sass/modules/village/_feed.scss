@@ -11,7 +11,7 @@
 .feed-posts {
   @extend %overflow-y;
   @include calc(height, '100% - #{rhythm(5.125)}');
-  padding: rhythm(.5) rhythm(1);
+  padding: rhythm(.5) 0;
 }
 
 // ---------------------------------------------------------------------------
@@ -21,19 +21,18 @@
   @include serif;
   @include adjust-font-size-to($medpx);
   @include trailer(.5);
+  padding: 0 rhythm(.5);
 }
 
 // ---------------------------------------------------------------------------
 // Posts
 
 .post {
-  @extend %icon;
-  @extend %icon-bubble;
   @include pie-clearfix;
   @include adjust-font-size-to($smallpx);
-  @include trailing-border(1px,.75);
-  @include trailer(.75);
-  border-color: color($base2,.5);
+  padding: rhythm(.5);
+  border: 1px solid color($base2,.5);
+  margin-bottom: -1px;
 
   &:last-child {
     @include trailer(0);
@@ -42,40 +41,14 @@
     .has-instructions & { @include trailer(4); }
   }
 
-  &:before {
-    @include adjust-font-size-to($medpx);
-    @include border-radius($box-padding);
-    @include inset;
-    float: left;
-    margin-right: rhythm(.5);
-    padding: rhythm(.25) rhythm(.5);
-    background: $base;
-    color: $base3;
-    text-align: center;
+  &.mine {
+    background: color($blue lightest, .5);
   }
-
-  &.pending {
-    @extend %icon-bubble-dots;
-    &:before { background: color($blue dark); }
-  }
-  &.sms {
-    @extend %icon-bubble-forward;
-    &:before { background: color($green dark); }
-  }
-  &.from-sms {
-    @extend %icon-bubble-reply;
-    &:before { background: color($blue dark); }
-  }
-  &.no-sms {
-    @extend %icon-bubble;
-    &:before { background: color($orange dark); }
-  }
-
   .timeout {
     @extend %error;
     @extend %icon;
     @extend %icon-warning;
-    @include rhythm-margins(.25);
+    @include trailer(.5);
     @include border-radius($box-padding);
     @include inset;
     clear: both;
@@ -84,8 +57,42 @@
   }
 }
 
+$post-icon-width: rhythm(2.5);
+
 .post-header, .post-body {
-  padding-left: rhythm(2.5);
+  padding-left: $post-icon-width;
+}
+
+.post-header {
+  @extend %icon;
+  @extend %icon-bubble;
+  &:before {
+    @include adjust-font-size-to($medpx);
+    @include border-radius($box-padding);
+    @include inset;
+    float: left;
+    margin-left: - $post-icon-width;
+    padding: rhythm(.25) rhythm(.5);
+    background: $base;
+    color: $base3;
+    text-align: center;
+  }
+  .pending & {
+    @extend %icon-bubble-dots;
+    &:before { background: color($blue dark); }
+  }
+  .sms & {
+    @extend %icon-bubble-forward;
+    &:before { background: color($green dark); }
+  }
+  .from-sms & {
+    @extend %icon-bubble-reply;
+    &:before { background: color($blue dark); }
+  }
+  .no-sms & {
+    @extend %icon-bubble;
+    &:before { background: color($orange dark); }
+  }
 }
 
 .byline {
