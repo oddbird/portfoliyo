@@ -125,13 +125,11 @@ var PYO = (function (PYO, $) {
                             smsTargetArr.push(displayName);
                         });
                     } else {
-                        context.find('.village-info .elder-list.family .parents-list .parent').each(function () {
-                            if (!$(this).find('.no-sms').length) {
-                                var name = $(this).find('.fn').data('name');
-                                var role = $(this).find('.fn').data('role');
-                                var displayName = name ? name : role;
-                                smsTargetArr.push(displayName);
-                            }
+                        context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
+                            var name = $(this).find('.fn').data('name');
+                            var role = $(this).find('.fn').data('role');
+                            var displayName = name ? name : role;
+                            smsTargetArr.push(displayName);
                         });
                     }
 
@@ -279,34 +277,6 @@ var PYO = (function (PYO, $) {
                         return checked + ' family members';
                     }
                 }
-            }
-        });
-
-        if (PYO.directSmsName) {
-            $('.elder-list.family .elder .action-sms[data-name="' + PYO.directSmsName + '"]').click();
-            PYO.directSmsName = '';
-        }
-    };
-
-    PYO.initializeSmsDirectLinks = function () {
-        $('body').on('click', '.elder-list.family .elder .action-sms', function (e) {
-            e.preventDefault();
-            var context = $('.village-main');
-            var el = $(this);
-            var name = el.data('name');
-            var textarea = context.find('#post-text');
-
-            if (textarea.length) {
-                textarea.focus();
-                var form = context.find('.post-add-form');
-                var select = form.find('#sms-target');
-                select.multiselect('uncheckAll');
-                select.multiselect('widget').find('input[data-name="' + name + '"]').each(function () {
-                    this.click();
-                });
-            } else {
-                PYO.directSmsName = name;
-                $('.village-nav .ajax-link.active').click();
             }
         });
     };
