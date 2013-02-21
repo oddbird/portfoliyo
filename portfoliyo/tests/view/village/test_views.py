@@ -975,6 +975,7 @@ class TestCreatePost(object):
         assert post['text'] == 'foo'
         assert post['author_id'] == rel.elder.id
         assert post['student_id'] == rel.student.id
+        assert post['mine']
 
 
     def test_requires_relationship(self, no_csrf_client):
