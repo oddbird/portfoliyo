@@ -3357,14 +3357,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   color: #fdf6e3;
   text-align: center;
 }
-.pending .post-header:before {
-  background: #1e6fa8;
-}
-.sms .post-header:before {
+.mine.sms .post-header:before {
   background: #6a7a00;
-}
-.from-sms .post-header:before {
-  background: #1e6fa8;
 }
 .no-sms .post-header:before {
   background: #a23c11;

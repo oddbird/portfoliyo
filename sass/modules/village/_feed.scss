@@ -77,18 +77,13 @@ $post-icon-width: rhythm(2.5);
     color: $base3;
     text-align: center;
   }
-  .pending & {
-    @extend %icon-bubble-dots;
-    &:before { background: color($blue dark); }
-  }
-  .sms & {
-    @extend %icon-bubble-forward;
-    &:before { background: color($green dark); }
-  }
-  .from-sms & {
-    @extend %icon-bubble-reply;
-    &:before { background: color($blue dark); }
-  }
+
+  .pending & { @extend %icon-bubble-dots; }
+
+  .sms & { @extend %icon-bubble-forward; }
+  .mine.sms &:before { background: color($green dark); }
+  .from-sms & { @extend %icon-bubble-reply; }
+
   .no-sms & {
     @extend %icon-bubble;
     &:before { background: color($orange dark); }
