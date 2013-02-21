@@ -41,8 +41,6 @@
 %icon-home:before { content: "\e020"; }
 %icon-question-sign:before { content: "\f059"; }
 %icon-loop:before { content: "\e01f"; }
-%icon-bubble-check:before { content: "\e018"; }
-%icon-bubble-notification:before { content: "\e019"; }
 %icon-undo:before { content: "\f0e2"; }
 %icon-reorder:before { content: "\e012"; }
 %icon-undo-2:before { content: "\e01e"; }
@@ -51,7 +49,8 @@
 %icon-users:before { content: "\e01b"; }
 %icon-user-plus:before { content: "\e01c"; }
 %icon-bubble-dots:before { content: "\e022"; }
-%icon-bubble-cancel:before { content: "\e023"; }
-%icon-bubble-plus:before { content: "\e024"; }
-%icon-bubble-minus:before { content: "\e025"; }
-%icon-bubble-down:before { content: "\e026"; }
+%icon-bubble-forward:before { content: "\e018"; }
+%icon-bubble-reply:before { content: "\e019"; }
+%icon-attachment:before { content: "\e023"; }
+%icon-phone:before { content: "\e024"; }
+%icon-bubbles:before { content: "\e025"; }

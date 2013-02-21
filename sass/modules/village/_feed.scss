@@ -1,28 +1,26 @@
 // ---------------------------------------------------------------------------
-// Settings
-
-$post-byline-cols : 2;
-$post-size        : $smallpx;
-$post-time-size   : $xsmallpx;
-$post-v-padding   : .25;
-$post-h-padding   : gutter($center);
-
-$background       : $base2;
-
-// ---------------------------------------------------------------------------
 // Village Feed
 
 .village-feed {
   position: relative;
   overflow: hidden;
   height: 100%;
-  background: $base2;
+  background: color($base3 lightest);
 }
 
 .feed-posts {
   @extend %overflow-y;
   @include calc(height, '100% - #{rhythm(5.125)}');
-  padding: rhythm(.5) rhythm(1);
+  padding: rhythm(.5) 0;
+  .empty {
+    display: none;
+    @include adjust-font-size-to($largepx);
+    @include serif;
+    padding: rhythm(2);
+    color: color($base, .5);
+    text-align: center;
+    &:last-child { display: block; }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -32,30 +30,34 @@ $background       : $base2;
   @include serif;
   @include adjust-font-size-to($medpx);
   @include trailer(.5);
+  padding: 0 rhythm(.5);
 }
 
 // ---------------------------------------------------------------------------
 // Posts
 
-$post-offset: 2;
-$post-context: $center - $post-offset;
-$new-borders: $blue;
-$old-borders: $base;
-
 .post {
   @include pie-clearfix;
-  @include adjust-font-size-to($post-size);
-  @include trailer(.25);
+  @include adjust-font-size-to($smallpx);
+  padding: rhythm(.5);
+  border-bottom: 1px solid color($base2,.5);
+  margin-bottom: -1px;
 
   &:last-child {
-    @include trailer;
+    @include trailer(0);
+    border: 0;
+
     .has-instructions & { @include trailer(4); }
+  }
+
+  &.mine {
+    background: color($blue lightest, .5);
   }
   .timeout {
     @extend %error;
     @extend %icon;
     @extend %icon-warning;
-    @include rhythm-margins(.25);
+    @include trailer(.5);
     @include border-radius($box-padding);
     @include inset;
     clear: both;
@@ -64,95 +66,61 @@ $old-borders: $base;
   }
 }
 
-.byline {
-  @include span-columns($post-offset,$center);
-  @include cond;
-  padding-right: $box-padding;
-  color: $base;
-  font-weight: bold;
-  text-align: right;
+$post-icon-width: rhythm(2.5);
 
+.post-header, .post-body {
+  padding-left: $post-icon-width;
+}
+
+.post-header {
+  @extend %icon;
+  @extend %icon-bubble;
+  &:before {
+    @include adjust-font-size-to($medpx);
+    @include border-radius($box-padding);
+    @include inset;
+    float: left;
+    margin-left: - $post-icon-width;
+    padding: rhythm(.25) rhythm(.5);
+    background: $base;
+    color: $base3;
+    text-align: center;
+  }
+
+  .pending & { @extend %icon-bubble-dots; }
+
+  .sms & { @extend %icon-bubble-forward; }
+  .mine.sms &:before { background: color($green dark); }
+  .from-sms & { @extend %icon-bubble-reply; }
+
+  .no-sms & {
+    @extend %icon-bubble;
+    &:before { background: color($orange dark); }
+  }
+}
+
+.byline {
+  @extend %ellipsis;
+  @include adjust-font-size-to($normpx);
+  @include serif;
+  font-weight: bold;
   .old & { font-weight: normal; }
 }
 
-.post-body {
-  @include span-columns($post-context omega, $center);
-  @include arrow(left rhythm(.125) $new-borders rhythm(.375));
-  @include border-radius(rhythm(.25));
-  position: relative;
-  border: 2px solid $new-borders;
-  background: $new-borders;
-
-  .old & {
-    border-color: $old-borders;
-    background: $old-borders;
-    &:before { border-right-color: $old-borders; }
-  }
-}
-
-.post-info {
-  @extend %icon;
-  @include adjust-font-size-to($xsmallpx);
-  @include border-top-radius(rhythm(.25));
-  background: $base1;
-  color: $base3;
-  border-bottom: 2px solid $new-borders;
-
-  .pending & {
-    @extend %icon-bubble-dots;
-    &:before { background: color($blue dark); }
-  }
-  .sms & {
-    @extend %icon-bubble-check;
-    &:before { background: color($green dark); }
-  }
-  .from-sms & {
-    @extend %icon-bubble-down;
-    &:before { background: color($blue dark); }
-  }
-  .no-sms & {
-    @extend %icon-bubble-minus;
-    &:before { background: color($orange dark); }
-  }
-
-  &:before {
-    @include adjust-font-size-to($normpx);
-    @include border-top-left-radius(rhythm(.25));
-    @include inset;
-    float: left;
-    padding: rhythm(.125) rhythm(.25);
-    background: $base;
-    border-right: 2px solid $new-borders;
-  }
-
-  .old & {
-    border-bottom-color: $old-borders;
-    &:before { border-right-color: $old-borders; }
-  }
-}
-
 .pubdate {
-  @include adjust-font-size-to($xsmallpx);
   @include cond;
-  padding: $box-padding/2 $box-padding;
   float: right;
-  &:first-letter { text-transform: uppercase; }
+  padding-left: rhythm(1);
+  color: $base1;
+  font-weight: bold;
+  .old & { font-weight: normal; }
 }
 
-.info-text {
-  @include ellipsis;
-  padding: $box-padding/2 $box-padding;
-}
-
-.post-text {
-  @include clearfix;
-  @include border-bottom-radius(rhythm(.25));
-  padding: $box-padding;
-  background: $base3;
-  .old & { background: color($base3 lighter); }
-  .mine & { background: color($blue 92%); }
-  .not-posted & { background: color($red lightest); }
-  &:first-child { @include border-top-radius(rhythm(.25)); }
+.recipients {
+  @include adjust-font-size-to($xsmallpx);
+  @extend %ellipsis;
+  padding-right: 50%;
+  color: $base1;
 }
 
 // ---------------------------------------------------------------------------
