@@ -1,29 +1,30 @@
 {{#each posts}}
 <article class="post{{#if pending}} pending{{else}}{{#if from_sms}} from-sms{{else}}{{#if to_sms}} sms{{else}} no-sms{{/if}}{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if mine}} mine{{else}}{{#if unread}} unread{{/if}}{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
 
-  <h3 class="byline vcard">
-    <span class="fn">{{#if school_staff}}{{author}}{{else}}{{role}}{{/if}}</span>
-  </h3>
+  <header class="post-header">
+    <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{timestamp_display}}">
+      {{timestamp_display}}
+    </time>
+
+    <h3 class="byline vcard">
+      <span class="fn">{{#if school_staff}}{{author}}{{else}}{{role}}{{/if}}</span>
+    </h3>
+
+    <p class="recipients">
+      {{#if sms}}
+        {{#if pending}}
+          {{#if to_sms}}Sending text{{plural_sms}}{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
+        {{else}}
+          {{#if from_sms}}Sent from phone. {{/if}}
+          {{#if to_sms}}Text{{plural_sms}} sent{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
+        {{/if}}
+      {{else}}
+        No text messages sent.
+      {{/if}}
+    </p>
+  </header>
 
   <div class="post-body">
-    <header class="post-info">
-      <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{timestamp_display}}">
-        {{timestamp_display}}
-      </time>
-      <p class="info-text">
-        {{#if sms}}
-          {{#if pending}}
-            {{#if to_sms}}Sending text{{plural_sms}}{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
-          {{else}}
-            {{#if from_sms}}Received by text. {{/if}}
-            {{#if to_sms}}Text{{plural_sms}} sent{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
-          {{/if}}
-        {{else}}
-          No text messages sent.
-        {{/if}}
-      </p>
-    </header>
-
     <div class="post-text">
       <p>{{#if pending}}{{text}}{{else}}{{{text}}}{{/if}}</p>
     </div>
