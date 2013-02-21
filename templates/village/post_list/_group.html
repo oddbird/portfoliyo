@@ -15,6 +15,7 @@
 {% block village-feed-attrs %}{% if group.is_all %} data-post-url="{% url 'create_post' %}"{% else %} data-post-url="{% url 'create_post' group_id=group.id %}"{% endif %}{% endblock %}
 {% block empty-feed %}There are no posts in this group.{% endblock %}
 {% block addpost-classes %}group-posts{% endblock %}
+{% block howto-target %}{% endblock %}
 {% block sms-target %}
   <p class="group-targeting">
     Group messages will be sent to all family members in the group.

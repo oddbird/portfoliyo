@@ -25,7 +25,9 @@
 
       {% if not user.profile.has_posted %}
       <ol class="howto">
+        {% block howto-target %}
         <li class="howto-sms"><p>Select family members to receive a&nbsp;text.</p></li>
+        {% endblock %}
         <li class="howto-post"><p>Write a short message and hit&nbsp;send!</p></li>
       </ol>
       {% endif %}
