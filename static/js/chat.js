@@ -125,13 +125,11 @@ var PYO = (function (PYO, $) {
                             smsTargetArr.push(displayName);
                         });
                     } else {
-                        context.find('.village-info .elder-list.family .parents-list .parent').each(function () {
-                            if (!$(this).find('.no-sms').length) {
-                                var name = $(this).find('.fn').data('name');
-                                var role = $(this).find('.fn').data('role');
-                                var displayName = name ? name : role;
-                                smsTargetArr.push(displayName);
-                            }
+                        context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
+                            var name = $(this).find('.fn').data('name');
+                            var role = $(this).find('.fn').data('role');
+                            var displayName = name ? name : role;
+                            smsTargetArr.push(displayName);
                         });
                     }
 
