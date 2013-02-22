@@ -18,9 +18,9 @@
 
 .elder-header {
   @extend %elder-listitem;
-  @include box-shadow($inset-color 0 0 $inset-size);
+  @include pie-clearfix;
   position: relative;
-  padding-right: rhythm(2);
+  padding: $box-padding;
   background: color($base3 lighter);
   border-color: $village-border-color;
   font-weight: bold;
@@ -28,17 +28,24 @@
 }
 
 .additem-elder {
-  @extend %button-icon;
+  @extend %button;
+  @extend %icon;
   @extend %icon-user-plus;
+  @include button-size;
   @include button-color(color($green lightest));
-  position: absolute;
-  top: $box-padding;
-  right: $box-padding;
+  float: right;
+  margin-left: $box-padding;
   &.active {
     @include inset;
     background: $base01;
     color: $base3;
   }
+}
+
+.elder-title {
+  @extend %ellipsis;
+  @include padding-leader(.125);
+  margin-top: 1px;
 }
 
 .elder {
