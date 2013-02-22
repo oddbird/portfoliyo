@@ -1,8 +1,9 @@
+{% load formats %}
 <b class="title">{{ nav_elder.role_in_context }}:</b>
-<span class="fn" data-name="{{ nav_elder.name }}" data-role="{{ nav_elder.role_in_context }}">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone %}</span>
+<span class="fn" data-name="{{ nav_elder.name }}" data-role="{{ nav_elder.role_in_context }}">{% firstof nav_elder.name nav_elder.user.email nav_elder.phone|display_phone %}</span>
 {% if nav_elder.phone and nav_elder.name %}
 <div class="tel">
   <b class="type">Phone:</b>
-  <span class="value">{{ nav_elder.phone }}</span>
+  <span class="value">{{ nav_elder.phone|display_phone }}</span>
 </div>
 {% endif %}

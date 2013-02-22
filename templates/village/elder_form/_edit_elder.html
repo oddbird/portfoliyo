@@ -1,5 +1,6 @@
 {% extends "village/_base.html" %}
 {% load url from future %}
+{% load formats %}
 
 {% block village-header %}
   <div class="page-actions">
@@ -7,7 +8,7 @@
   </div>
   <h2 class="village-title">
     <span aria-hidden="true" class="icon-edit"></span>
-    <b>Edit</b> {% firstof elder.name elder.user.email elder.phone "Family Member" %}
+    <b>Edit</b> {% firstof elder.name elder.user.email elder.phone|display_phone "Family Member" %}
   </h2>
 {% endblock %}
 
