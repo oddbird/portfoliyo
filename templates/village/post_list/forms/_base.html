@@ -8,28 +8,36 @@
   <input type="radio" id="conversation-form-toggle" name="add-post-types" class="radio-value" />
 
   <div class="post-type-tabs">
-    <label for="message-form-toggle" class="radio-type">messages</label>
-    <label for="note-form-toggle" class="radio-type">notes</label>
-    <label for="conversation-form-toggle" class="radio-type">conversations</label>
+    <label for="message-form-toggle" class="radio-type" title="Send a Message">Send a Message</label>
+    <label for="note-form-toggle" class="radio-type" title="Leave a Note">Leave a Note</label>
+    <label for="conversation-form-toggle" class="radio-type" title="Log a Conversation">Log a Conversation</label>
   </div>
 
 
-  <form method="POST" class="message-form" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
+  <form method="POST" class="message-form post-type" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
     <div class="formfield to-field">
-      <label class="type" for="to-input">Send to:</label>
-      <div class="input-tokens">
+      <label class="tokens-type" for="to-input">To:</label>
+      <div class="tokens-input">
         {% for elder in elders|sms_eligible %}
-          <div class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
-            <input class="token-toggle" type="checkbox" name="elder-{{ elder.id }}" id="elder-{{ elder.id }}" value="{{ elder.id }}" {% if forloop.first %}checked{% endif %}>
+          <span class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
+            <input class="token-toggle" type="checkbox" name="elder-{{ elder.id }}" id="elder-{{ elder.id }}" value="{{ elder.id }}" checked />
             <span class="token-body">
               <span class="token-text">{{ elder.role_in_context }}</span>
               <label class="token-control" for="elder-{{ elder.id }}">remove</label>
             </span>
-          </div>
+          </span>
         {% endfor %}
-        <input type="text" id="to-input" name="to" value="" placeholder="" />
+        <input type="text" id="to-input" name="to" value="" placeholder="Add recipients..." class="token-value" />
+        <ul class="token-suggest">
+          <li><b>su</b>ggestion 1</li>
+          <li><b>su</b>ggestion 2</li>
+          <li><b>su</b>ggestion 3</li>
+          <li><b>su</b>ggestion 4</li>
+          <li><b>su</b>ggestion 5</li>
+          <li><b>su</b>ggestion 6</li>
+        </ul>
       </div>
     </div>
 
@@ -44,7 +52,7 @@
 
   </form>
 
-  <form method="POST" class="note-form">
+  <form method="POST" class="note-form post-type">
     <div class="formfield post-textfield">
       <textarea id="note-text" name="text" class="value"></textarea>
       <span class="charcount">{{ post_char_limit }} characters remaining...</span>
@@ -55,7 +63,7 @@
     </div>
   </form>
 
-  <form method="POST" class="conversation-form">
+  <form method="POST" class="conversation-form post-type">
     <div class="formfield post-textfield">
       <textarea id="conversation-text" name="text" class="value"></textarea>
       <span class="charcount">{{ post_char_limit }} characters remaining...</span>
