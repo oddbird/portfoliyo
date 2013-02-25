@@ -147,6 +147,30 @@ $select-gradient  : color($base,0), color($base,.125);
   }
 }
 
+%textarea {
+  @extend %input;
+  @include transition(200ms min-height);
+  @include rem(min-height, rhythm(1 + $input-rhythm*2));
+}
+
+$form-action-note-size: $smallpx;
+
+%form-actions {
+  @include rhythm(.5,0,0,.5);
+  position: relative;
+  clear: both;
+  text-align: right;
+  p {
+    @include adjust-font-size-to($form-action-note-size);
+    @include rem(margin, 0 .4em rhythm(.5) 0);
+    display: inline-block;
+  }
+  button:not([class~="secondary"]) {
+    @extend %button;
+    text-transform: capitalize;
+  }
+}
+
 %formdefaults {
   .type {
     display: block;
@@ -166,9 +190,7 @@ $select-gradient  : color($base,0), color($base,.125);
   }
 
   textarea {
-    @extend %input;
-    @include transition(200ms min-height);
-    @include rem(min-height, rhythm(1 + $input-rhythm*2));
+    @extend %textarea;
   }
 
   fieldset {
@@ -205,22 +227,8 @@ $select-gradient  : color($base,0), color($base,.125);
   }
   .optional-fieldset { .formfield-optional { @include gone; } }
 
-  $form-action-note-size: $smallpx;
-
   .form-actions {
-    @include rhythm(.5,0,0,.5);
-    position: relative;
-    clear: both;
-    text-align: right;
-    p {
-      @include adjust-font-size-to($form-action-note-size);
-      @include rem(margin, 0 .4em rhythm(.5) 0);
-      display: inline-block;
-    }
-    button:not([class~="secondary"]) {
-      @extend %button;
-      text-transform: capitalize;
-    }
+    @extend %form-actions;
   }
   [class~="secondary"] {
     @include link($non-links: true);

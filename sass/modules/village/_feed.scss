@@ -153,27 +153,32 @@ $post-icon-width: rhythm(2.5);
 // ---------------------------------------------------------------------------
 // Post Add Form
 
-$addnote-fontsize: $input-font-size;
-$postaction-size: $smallpx;
-
-%post-targeting {
-  @include adjust-font-size-to($postaction-size);
-  @include trailer(.5);
-  text-align: left;
-}
-
 .post-add-form {
-  @extend %formdefaults;
   @include pie-clearfix;
   @include box-shadow($base 0 0 $box-padding);
   position: relative;
   padding: rhythm(.5) rhythm(1);
   background: color($base3 lighter);
   border-top: 1px solid $village-border-color;
-  text-align: right;
   &.group-posts { background: mix($blue,$base2,25%); }
 
+  @include tabs(message-form note-form conversation-form, '.post-type-tabs' null);
+
+  %hide-tab-content {
+    visibility: hidden;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+  }
+  %show-tab-content {
+    position: relative;
+    visibility: visible;
+    z-index: 10;
+  }
+  %active-tab-title { font-weight: bold; }
+
   .form-actions {
+    @extend %form-actions;
     clear: none;
     margin: 0;
     .action-post {
@@ -183,29 +188,13 @@ $postaction-size: $smallpx;
       font-weight: bold;
     }
   }
-
-  .sms-targeting {
-    @extend %post-targeting;
-    > .type {
-      display: inline;
-      font-weight: bold;
-      cursor: default;
-    }
-    .multiselect-dropdown { min-width: columns(2, $center); }
-    .ui-multiselect { width: 100%; }
-  }
-  .group-targeting {
-    @extend %post-targeting;
-    @extend %icon;
-    @extend %icon-warning;
-    font-weight: bold;
-  }
 }
 
 .post-textfield {
   @include span-columns($center - 2, $center);
   margin: 0;
   .value {
+    @extend %textarea;
     @include trailer(.125);
     height: rhythm(2.5);
     margin: 0;

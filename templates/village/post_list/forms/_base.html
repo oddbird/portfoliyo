@@ -1,0 +1,70 @@
+{% load elders handlebars formats %}
+
+{% if not read_only %}
+<div class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}">
+
+  <input type="radio" id="message-form-toggle" name="add-post-types" class="radio-value" checked />
+  <input type="radio" id="note-form-toggle" name="add-post-types" class="radio-value" />
+  <input type="radio" id="conversation-form-toggle" name="add-post-types" class="radio-value" />
+
+  <div class="post-type-tabs">
+    <label for="message-form-toggle" class="radio-type">messages</label>
+    <label for="note-form-toggle" class="radio-type">notes</label>
+    <label for="conversation-form-toggle" class="radio-type">conversations</label>
+  </div>
+
+
+  <form method="POST" class="message-form" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
+    {% csrf_token %}
+
+    <div class="formfield to-field">
+      <label class="type" for="to-input">Send to:</label>
+      <div class="input-tokens">
+        {% for elder in elders|sms_eligible %}
+          <div class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
+            <input class="token-toggle" type="checkbox" name="elder-{{ elder.id }}" id="elder-{{ elder.id }}" value="{{ elder.id }}" {% if forloop.first %}checked{% endif %}>
+            <span class="token-body">
+              <span class="token-text">{{ elder.role_in_context }}</span>
+              <label class="token-control" for="elder-{{ elder.id }}">remove</label>
+            </span>
+          </div>
+        {% endfor %}
+        <input type="text" id="to-input" name="to" value="" placeholder="" />
+      </div>
+    </div>
+
+    <div class="formfield post-textfield">
+      <textarea id="message-text" name="text" class="value"></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">Send</button>
+    </div>
+
+  </form>
+
+  <form method="POST" class="note-form">
+    <div class="formfield post-textfield">
+      <textarea id="note-text" name="text" class="value"></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">Send</button>
+    </div>
+  </form>
+
+  <form method="POST" class="conversation-form">
+    <div class="formfield post-textfield">
+      <textarea id="conversation-text" name="text" class="value"></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">Send</button>
+    </div>
+  </form>
+
+</div>
+{% endif %}
