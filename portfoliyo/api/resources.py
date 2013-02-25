@@ -9,7 +9,7 @@ from .authentication import SessionAuthentication
 from .authorization import (
     ProfileAuthorization, RelationshipAuthorization, GroupAuthorization)
 from .pagination import NoCountPaginator
-from portfoliyo import model, xact
+from portfoliyo import model, serializers, xact
 
 
 class PortfoliyoResource(ModelResource):
@@ -376,7 +376,8 @@ class PostResource(PortfoliyoResource):
             }
 
 
-    def dehydrate(self, bundle):
+    def full_dehydrate(self, bundle):
+        bundle.data.update(serializers.post2dict(bundle.obj))
         bundle.data['unread'] = model.unread.is_unread(
             bundle.obj, bundle.request.user.profile)
         bundle.data['mine'] = bundle.obj.author == bundle.request.user.profile
