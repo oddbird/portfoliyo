@@ -373,7 +373,9 @@ class PostResource(PortfoliyoResource):
         filtering = {
             'author': ['exact'],
             'student': ['exact'],
+            'timestamp': constants.ALL,
             }
+        ordering = ['timestamp']
 
 
     def full_dehydrate(self, bundle):
