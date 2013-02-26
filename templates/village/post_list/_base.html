@@ -1,5 +1,6 @@
 {% extends "village/_base.html" %}
 {% load elders handlebars formats %}
+{% load url from future %}
 
 {% block village-header %}
   {% block page-actions %}
@@ -13,7 +14,7 @@
 {% block village-content %}
 <div class="village-main">
   {% block village-main %}
-  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{% firstof relationship.description_or_role user.profile.role %}" {% block village-feed-attrs %}{% endblock %}>
+  <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{% firstof relationship.description_or_role user.profile.role %}" data-posts-url="{% url 'api_dispatch_list' resource_name='post' api_name='v1' %}" {% block village-feed-attrs %}{% endblock %}>
     <div class="feed-posts{% if not user.profile.has_posted %} has-instructions{% endif %}">
       <p class="empty">{% block empty-feed %}There are no posts in this village.{% endblock %}</p>
       {{ posts|handlebars:"posts" }}

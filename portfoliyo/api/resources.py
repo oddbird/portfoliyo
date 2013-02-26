@@ -376,6 +376,7 @@ class PostResource(PortfoliyoResource):
             'timestamp': constants.ALL,
             }
         ordering = ['timestamp']
+        limit = 50
 
 
     def full_dehydrate(self, bundle):
