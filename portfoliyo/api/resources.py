@@ -352,19 +352,15 @@ class GroupResource(SlimGroupResource):
 
 
 
-class PostResource(PortfoliyoResource):
+class BasePostResource(PortfoliyoResource):
     author = fields.ForeignKey(ProfileResource, 'author', blank=True, null=True)
-    student = fields.ForeignKey(ProfileResource, 'student')
 
 
     class Meta(PortfoliyoResource.Meta):
-        queryset = model.Post.objects.all()
-        resource_name = 'post'
         fields = [
             'id',
             'author',
             'timestamp',
-            'student',
             'original_text',
             'html_text',
             'to_sms',
@@ -372,7 +368,6 @@ class PostResource(PortfoliyoResource):
             ]
         filtering = {
             'author': ['exact'],
-            'student': ['exact'],
             'timestamp': constants.ALL,
             }
         ordering = ['timestamp']
@@ -381,7 +376,44 @@ class PostResource(PortfoliyoResource):
 
     def full_dehydrate(self, bundle):
         bundle.data.update(serializers.post2dict(bundle.obj))
+        bundle.data['mine'] = bundle.obj.author == bundle.request.user.profile
+        return bundle
+
+
+
+class PostResource(BasePostResource):
+    student = fields.ForeignKey(ProfileResource, 'student')
+
+
+    class Meta(BasePostResource.Meta):
+        queryset = model.Post.objects.all()
+        resource_name = 'post'
+        fields = BasePostResource.Meta.fields + ['student']
+        filtering = BasePostResource.Meta.filtering.copy()
+        filtering['student'] = ['exact']
+
+
+    def full_dehydrate(self, bundle):
+        bundle = super(PostResource, self).full_dehydrate(bundle)
         bundle.data['unread'] = model.unread.is_unread(
             bundle.obj, bundle.request.user.profile)
-        bundle.data['mine'] = bundle.obj.author == bundle.request.user.profile
+        return bundle
+
+
+
+class BulkPostResource(BasePostResource):
+    group = fields.ForeignKey(GroupResource, 'group')
+
+
+    class Meta(BasePostResource.Meta):
+        queryset = model.BulkPost.objects.all()
+        resource_name = 'bulkpost'
+        fields = BasePostResource.Meta.fields + ['group']
+        filtering = BasePostResource.Meta.filtering.copy()
+        filtering['group'] = ['exact']
+
+
+    def full_dehydrate(self, bundle):
+        bundle = super(BulkPostResource, self).full_dehydrate(bundle)
+        bundle.data['unread'] = False
         return bundle

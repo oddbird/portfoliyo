@@ -1,6 +1,8 @@
 """Tests for API resources."""
+import datetime
 from django.core.urlresolvers import reverse
 import mock
+import pytest
 
 from portfoliyo.api import resources
 from portfoliyo.model import unread
@@ -534,3 +536,67 @@ class TestPostResource(object):
             self.detail_url(other_post), user=rel.elder.user)
 
         assert response.json['mine'] == False
+
+
+
+@pytest.mark.parametrize('resource', ['post', 'bulkpost'])
+def test_backlog_query(no_csrf_client, resource):
+    """Test the query that will be used for fetching post backlogs."""
+    factory, subject_type = {
+        'post': (factories.PostFactory, 'student'),
+        'bulkpost': (factories.BulkPostFactory, 'group'),
+        }[resource]
+
+    profile = factories.ProfileFactory.create(school_staff=True)
+    if subject_type == 'group':
+        post_data = {'group__owner': profile}
+    else:
+        post_data = {}
+
+    url = reverse(
+        'api_dispatch_list',
+        kwargs={'resource_name': resource, 'api_name': 'v1'},
+        )
+
+    # this is the earliest post shown in the default backlog; we want to fetch
+    # a set of posts earlier than this
+    earliest_shown = factory.create(**post_data)
+    if subject_type == 'student':
+        factories.RelationshipFactory.create(
+            from_profile=profile, to_profile=earliest_shown.student)
+
+    def create_post(**kwargs):
+        """
+        Create and return a post in the same backlog as earliest_shown.
+
+        Keyword args determine how much earlier this post occurred; they are
+        passed to datetime.timedelta.
+
+        """
+        return factory.create(
+            timestamp=earliest_shown.timestamp - datetime.timedelta(**kwargs),
+            **{subject_type: getattr(earliest_shown, subject_type)}
+            )
+
+    show1 = create_post(hours=5)
+    show2 = create_post(hours=3)
+    # this post will exceed our specified limit
+    create_post(hours=10)
+    # this post is in a different backlog and won't be shown
+    factory.create(
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=1))
+
+    response = no_csrf_client.get(
+        url,
+        {
+            'limit': 2,
+            'order_by': '-timestamp',
+            'timestamp__lt': earliest_shown.timestamp.isoformat(),
+            subject_type: getattr(earliest_shown, '%s_id' % subject_type),
+            },
+        user=profile.user,
+        )
+
+    returned_ids = [o['post_id'] for o in response.json['objects']]
+
+    assert returned_ids == [show2.id, show1.id]
