@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from tastypie import constants, fields
 from tastypie.authorization import ReadOnlyAuthorization
 from tastypie.bundle import Bundle
+from tastypie.paginator import Paginator
 from tastypie.resources import ModelResource
 
 from .authentication import SessionAuthentication
@@ -372,6 +373,7 @@ class BasePostResource(PortfoliyoResource):
             }
         ordering = ['timestamp']
         limit = 50
+        paginator_class = Paginator
 
 
     def full_dehydrate(self, bundle):

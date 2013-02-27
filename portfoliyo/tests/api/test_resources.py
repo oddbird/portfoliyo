@@ -584,6 +584,7 @@ def test_village_backlog_query(no_csrf_client):
     returned_ids = [o['post_id'] for o in response.json['objects']]
 
     assert returned_ids == [show2.id, show1.id]
+    assert response.json['meta']['total_count'] == 3
 
 
 
@@ -635,6 +636,7 @@ def test_group_backlog_query(no_csrf_client):
     returned_ids = [o['post_id'] for o in response.json['objects']]
 
     assert returned_ids == [show2.id, show1.id]
+    assert response.json['meta']['total_count'] == 3
 
 
 
@@ -686,3 +688,4 @@ def test_allstudents_backlog_query(no_csrf_client):
     returned_ids = [o['post_id'] for o in response.json['objects']]
 
     assert returned_ids == [show2.id, show1.id]
+    assert response.json['meta']['total_count'] == 3
