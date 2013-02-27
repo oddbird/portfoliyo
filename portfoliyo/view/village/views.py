@@ -334,7 +334,9 @@ def _get_posts(profile, student=None, group=None):
         queryset = None
 
     post_data = []
+    count = 0
     if queryset is not None:
+        count = queryset.count()
         post_data = [
             serializers.post2dict(
                 post,
@@ -346,7 +348,7 @@ def _get_posts(profile, student=None, group=None):
                     '-timestamp')[:BACKLOG_POSTS])
             ]
 
-    return {'posts': post_data}
+    return {'posts': post_data, 'count': count}
 
 
 

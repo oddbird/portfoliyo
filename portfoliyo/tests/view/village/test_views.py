@@ -677,7 +677,7 @@ class TestGetPosts(object):
         post1 = factories.PostFactory.create()
         post2 = factories.PostFactory.create(student=post1.student)
 
-        with utils.assert_num_queries(1):
+        with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(profile, student=post1.student),
                 [post1, post2],
@@ -689,7 +689,7 @@ class TestGetPosts(object):
         post1 = factories.BulkPostFactory.create()
         post2 = factories.BulkPostFactory.create(group=post1.group)
 
-        with utils.assert_num_queries(1):
+        with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(post1.group.owner, group=post1.group),
                 [post1, post2],
@@ -702,7 +702,7 @@ class TestGetPosts(object):
         post2 = factories.BulkPostFactory.create(
             group=None, author=post1.author)
 
-        with utils.assert_num_queries(1):
+        with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(
                     post1.author, group=model.AllStudentsGroup(post1.author)),
@@ -761,6 +761,17 @@ class TestGetPosts(object):
 
         assert expected == found
 
+
+    def test_count(self, db, redis):
+        """Return total post count too."""
+        rel = factories.RelationshipFactory.create()
+        for i in range(3):
+            factories.PostFactory.create(student=rel.student)
+        with mock.patch.object(views, 'BACKLOG_POSTS', 2):
+            data = views._get_posts(rel.elder, student=rel.student)
+
+        assert len(data['posts']) == 2
+        assert data['count'] == 3
 
 
 
