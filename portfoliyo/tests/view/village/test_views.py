@@ -772,6 +772,8 @@ class TestGetPosts(object):
 
         assert len(data['objects']) == 2
         assert data['meta']['total_count'] == 3
+        assert data['meta']['limit'] == 2
+        assert data['meta']['more'] == True
 
 
 

@@ -585,6 +585,8 @@ def test_village_backlog_query(no_csrf_client):
 
     assert returned_ids == [show2.id, show1.id]
     assert response.json['meta']['total_count'] == 3
+    assert response.json['meta']['limit'] == 2
+    assert response.json['meta']['more'] == True
 
 
 
@@ -637,6 +639,8 @@ def test_group_backlog_query(no_csrf_client):
 
     assert returned_ids == [show2.id, show1.id]
     assert response.json['meta']['total_count'] == 3
+    assert response.json['meta']['limit'] == 2
+    assert response.json['meta']['more'] == True
 
 
 
@@ -689,3 +693,5 @@ def test_allstudents_backlog_query(no_csrf_client):
 
     assert returned_ids == [show2.id, show1.id]
     assert response.json['meta']['total_count'] == 3
+    assert response.json['meta']['limit'] == 2
+    assert response.json['meta']['more'] == True
