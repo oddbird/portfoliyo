@@ -3224,6 +3224,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: none;
   border: 0;
 }
+.token-value:focus {
+  outline: none;
+}
 .token-value:focus + .token-suggest {
   display: block;
 }
