@@ -413,6 +413,17 @@ class BulkPostResource(BasePostResource):
         filtering['group'] = ['exact']
 
 
+    def build_filters(self, filters=None):
+        filters = filters or {}
+
+        group = filters.get('group', '')
+        if group.startswith('all'):
+            filters['group'] = None
+            filters['author'] = group[3:]
+
+        return super(BulkPostResource, self).build_filters(filters)
+
+
     def full_dehydrate(self, bundle):
         bundle = super(BulkPostResource, self).full_dehydrate(bundle)
         bundle.data['unread'] = False
