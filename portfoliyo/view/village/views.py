@@ -22,7 +22,7 @@ from . import forms
 
 
 # number of posts to show in backlog
-BACKLOG_POSTS = 100
+BACKLOG_POSTS = 15
 
 
 @login_required
