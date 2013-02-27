@@ -348,7 +348,7 @@ def _get_posts(profile, student=None, group=None):
                     '-timestamp')[:BACKLOG_POSTS])
             ]
 
-    return {'posts': post_data, 'count': count}
+    return {'objects': post_data, 'meta': {'total_count': count}}
 
 
 

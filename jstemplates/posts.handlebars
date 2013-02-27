@@ -1,4 +1,4 @@
-{{#each posts}}
+{{#each objects}}
 <article class="post{{#if pending}} pending{{else}}{{#if from_sms}} from-sms{{else}}{{#if to_sms}} sms{{else}} no-sms{{/if}}{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if mine}} mine{{else}}{{#if unread}} unread{{/if}}{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
 
   <header class="post-header">

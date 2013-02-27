@@ -668,7 +668,7 @@ class TestGetPosts(object):
     """Tests for _get_posts utility method."""
     def assert_posts(self, data, posts):
         """Given posts (only) are listed in given order in ``data``."""
-        assert [p.id for p in posts] == [p['post_id'] for p in data['posts']]
+        assert [p.id for p in posts] == [p['post_id'] for p in data['objects']]
 
 
     def test_student(self, db, redis):
@@ -743,7 +743,7 @@ class TestGetPosts(object):
 
         expected = [(read_post.id, False), (unread_post.id, True)]
         data = views._get_posts(profile, student=read_post.student)
-        found = [(p['post_id'], p['unread']) for p in data['posts']]
+        found = [(p['post_id'], p['unread']) for p in data['objects']]
 
         assert expected == found
 
@@ -757,7 +757,7 @@ class TestGetPosts(object):
 
         expected = [(my_post.id, True), (other_post.id, False)]
         data = views._get_posts(profile, student=my_post.student)
-        found = [(p['post_id'], p['mine']) for p in data['posts']]
+        found = [(p['post_id'], p['mine']) for p in data['objects']]
 
         assert expected == found
 
@@ -770,8 +770,8 @@ class TestGetPosts(object):
         with mock.patch.object(views, 'BACKLOG_POSTS', 2):
             data = views._get_posts(rel.elder, student=rel.student)
 
-        assert len(data['posts']) == 2
-        assert data['count'] == 3
+        assert len(data['objects']) == 2
+        assert data['meta']['total_count'] == 3
 
 
 
