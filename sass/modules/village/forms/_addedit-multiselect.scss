@@ -1,0 +1,78 @@
+// ---------------------------------------------------------------------------
+// Add/Edit multiselect fields
+
+.students-field, .elders-field, .groups-field {
+  > .type {
+    @include adjust-font-size-to($smallpx);
+    padding: rhythm(.25,$smallpx);
+    background: $base;
+    color: $base3;
+    text-transform: uppercase;
+  }
+  .check-options {
+    @extend %check-options;
+    height: rhythm(8,$input-font-size);
+  }
+  @include span-columns($center/2, $center);
+  + .students-field, + .elders-field { @include omega; }
+}
+
+@function lighten-color($color, $amount) {
+  @return adjust-color($color, $lightness: $amount);
+}
+
+.relation-fieldset {
+  .summary {
+    @include leader(-.25);
+    text-align: right;
+  }
+  &.details { @include clearfix; }
+}
+
+$label-colors: $yellow $orange $magenta $violet $cyan $green
+               lighten-color($yellow, 15%)
+               lighten-color($orange, 15%)
+               lighten-color($magenta, 15%)
+               lighten-color($violet, 15%)
+               lighten-color($cyan, 15%)
+               lighten-color($green, 15%)
+               desaturate(lighten-color($yellow, 50%), 25%)
+               desaturate(lighten-color($orange, 50%), 25%)
+               desaturate(lighten-color($magenta, 50%), 25%)
+               desaturate(lighten-color($violet, 50%), 25%)
+               desaturate(lighten-color($cyan, 50%), 25%)
+               desaturate(lighten-color($green, 50%), 25%);
+
+.select-groups {
+  [class*="label-color-"] {
+    &:after {
+      @include border-radius(3px);
+      @include box-shadow($back 0 0 2px inset);
+      content: " ";
+      position: absolute;
+      right: rhythm(.125,$input-font-size);
+      display: inline-block;
+      margin-top: rhythm(.125,$input-font-size);
+      width: 1em;
+      height: 1em;
+    }
+  }
+  $i: 1;
+  @each $color in $label-colors {
+    .label-color-#{$i}:after { background: $color; }
+    $i: $i + 1;
+  }
+}
+
+.select-students, .select-elders {
+  .disabled + .type { @extend %options-checked; }
+
+  $i: 1;
+  @each $color in $label-colors {
+    .group-selected-#{$i}:before {
+      @include text-shadow($back 0 1px 0);
+      color: $color;
+    }
+    $i: $i + 1;
+  }
+}

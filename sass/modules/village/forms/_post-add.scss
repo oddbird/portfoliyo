@@ -1,0 +1,172 @@
+// ---------------------------------------------------------------------------
+// Post Add Form
+
+.post-add-form {
+  @include pie-clearfix;
+  @include box-shadow($base 0 0 $box-padding);
+  position: relative;
+  background: color($base3 lighter);
+  border-top: 1px solid $village-border-color;
+  &.group-posts { background: mix($blue,$base2,25%); }
+
+  @include tabs(message-form note-form conversation-form, '.post-type-tabs' null);
+
+  %hide-tab-content {
+    visibility: hidden;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+  }
+  %show-tab-content {
+    position: relative;
+    visibility: visible;
+    z-index: 10;
+  }
+  %active-tab-title {
+    background: none;
+    border-bottom-color: transparent;
+  }
+
+  .form-actions {
+    @extend %form-actions;
+    clear: none;
+    margin: 0;
+    .action-post {
+      @include span-columns(2 omega, $center);
+      @include adjust-font-size-to($smallpx);
+      height: rhythm(2.5);
+      font-weight: bold;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tabs
+
+.post-type-tabs {
+  $tabs: 3;
+  $tab-width: percentage(1/$tabs);
+  @include pie-clearfix;
+  .radio-type {
+    @extend %ellipsis;
+    @include rhythm-borders(1px,.5);
+    float: left;
+    width: $tab-width;
+    margin-right: -100%;
+    background: $base2;
+    border-color: $base1;
+    border-width: 0 1px 1px 0;
+    text-align: center;
+    &:first-child { margin-left: 0; }
+    &:nth-child(2) { margin-left: $tab-width; }
+    &:last-child { margin-left: $tab-width*2; border-right: 0; }
+  }
+}
+
+.post-type {
+  padding: rhythm(.5) rhythm(1);
+}
+
+// ---------------------------------------------------------------------------
+// Main text field
+
+.post-textfield {
+  @include span-columns($center - 2, $center);
+  margin: 0;
+  .value {
+    @extend %textarea;
+    @include trailer(.125);
+    height: rhythm(2.5);
+    margin: 0;
+    background: rgba(white,.75);
+    padding-left: rhythm(.5);
+    resize: none;
+  }
+  .charcount {
+    @include adjust-font-size-to($xsmallpx);
+    position: absolute;
+    right: .25em;
+    bottom: 0;
+    color: $base1;
+    &.overlimit { color: $red; }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tokens
+
+.tokens-input {
+  @extend %input;
+  position: relative;
+  width: auto;
+  background: rgba(white,.75);
+}
+
+.token-body {
+  @include border-radius($box-padding);
+  @include adjust-font-size-to($xsmallpx,1);
+  display: none;
+  margin: -1px 0;
+  padding-left: $box-padding;
+  background: color($blue lightest);
+  border: 1px solid color($blue dark);
+}
+
+.token-control {
+  @extend %icon-replace;
+  @extend %icon-close;
+  @include box-sizing(content-box);
+  @include adjust-font-size-to($xxxsmallpx,1);
+  @include border-right-radius($box-padding);
+  border-left: 1px solid color($blue dark, .5);
+  margin-left: $box-padding;
+  padding: 0 $box-padding;
+  &:before {
+    right: 0;
+    text-align: center;
+  }
+  #{$focus} { color: $red; }
+}
+
+.token-toggle {
+  @include gone;
+  &:checked + .token-body { display: inline-block; }
+}
+
+.token-value {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  &:focus + .token-suggest { display: block; }
+}
+
+.token-suggest {
+  @include box-shadow($base 0 0 $box-padding);
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  left: 0;
+  max-height: rhythm(3.25);
+  padding: $box-padding;
+  background: $base3;
+  border: 1px solid $base;
+  border-top: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 20;
+  b { font-weight: bold; }
+}
+
+// ---------------------------------------------------------------------------
+// Messages
+
+.to-field {
+  .tokens-type {
+    @include padding-leader($input-rhythm);
+    float: left;
+    margin-right: rhythm(.5);
+  }
+  .tokens-input { margin-left: rhythm(1.5); }
+}
