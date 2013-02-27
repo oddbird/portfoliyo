@@ -24,19 +24,19 @@
           <span class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
             <input class="token-toggle" type="checkbox" name="elder-{{ elder.id }}" id="elder-{{ elder.id }}" value="{{ elder.id }}" checked />
             <span class="token-body">
+              <label class="token-status sms" for="elder-{{ elder.id }}">sms</label>
               <span class="token-text">{{ elder.role_in_context }}</span>
-              <label class="token-control" for="elder-{{ elder.id }}">remove</label>
             </span>
           </span>
         {% endfor %}
         <input type="text" id="to-input" name="to" value="" placeholder="Add recipients..." class="token-value" />
         <ul class="token-suggest">
-          <li><b>su</b>ggestion 1</li>
-          <li><b>su</b>ggestion 2</li>
-          <li><b>su</b>ggestion 3</li>
-          <li><b>su</b>ggestion 4</li>
-          <li><b>su</b>ggestion 5</li>
-          <li><b>su</b>ggestion 6</li>
+          <li><a href="#" class="option selected"><b>su</b>ggestion 1</a></li>
+          <li><a href="#" class="option"><b>su</b>ggestion 2</a></li>
+          <li><a href="#" class="option"><b>su</b>ggestion 3</a></li>
+          <li><a href="#" class="option"><b>su</b>ggestion 4</a></li>
+          <li><a href="#" class="option"><b>su</b>ggestion 5</a></li>
+          <li><a href="#" class="option"><b>su</b>ggestion 6</a></li>
         </ul>
       </div>
     </div>

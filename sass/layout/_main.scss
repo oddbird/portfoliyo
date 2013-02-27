@@ -4,7 +4,6 @@
 [role="main"] {
   color: $base;
   background: $base3;
-  overflow: hidden;
   padding: 0 $box-padding;
   .container { @extend %container; }
 }
