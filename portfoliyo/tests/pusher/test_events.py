@@ -27,8 +27,8 @@ def test_posted_event(db):
     author_args = author_channel.trigger.call_args[0]
     other_args = other_channel.trigger.call_args[0]
     assert author_args[0] == other_args[0] == 'message_posted'
-    author_data = author_args[1]['posts'][0]
-    other_data = other_args[1]['posts'][0]
+    author_data = author_args[1]['objects'][0]
+    other_data = other_args[1]['objects'][0]
     assert author_data['extra'] == other_data['extra'] == 'foo'
     assert author_data['mine']
     assert not other_data['mine']
