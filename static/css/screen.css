@@ -3276,7 +3276,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: -moz-calc(100% - 6.54861rem);
   height: -o-calc(100% - 6.54861rem);
   height: calc(100% - 6.54861rem);
-  padding: 0.63889rem 0;
 }
 .feed-posts .empty {
   display: none;
