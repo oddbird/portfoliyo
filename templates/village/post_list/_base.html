@@ -16,7 +16,7 @@
   {% block village-main %}
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{% firstof relationship.description_or_role user.profile.role %}" {% block village-feed-attrs %}{% endblock %}>
     <div class="feed-posts{% if not user.profile.has_posted %} has-instructions{% endif %}">
-      <span class="feedstatus no-more"> </span>
+      <span class="feedstatus"> </span>
       {{ posts|handlebars:"posts" }}
     </div>
 
