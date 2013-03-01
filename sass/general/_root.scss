@@ -4,6 +4,8 @@
 @include establish-baseline;
 @include border-box-sizing;
 
+html, body { height: 100%; }
+
 body {
   @include baseline-grid-background;
   @include sans;

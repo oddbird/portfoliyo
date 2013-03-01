@@ -331,6 +331,10 @@ html {
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   background: #073642;
@@ -1545,10 +1549,14 @@ button {
 }
 
 [role="main"] {
-  color: #657b83;
-  background: #fdf6e3;
+  min-height: -webkit-calc(100% - 3.99306rem);
+  min-height: -moz-calc(100% - 3.99306rem);
+  min-height: -o-calc(100% - 3.99306rem);
+  min-height: calc(100% - 3.99306rem);
   overflow: hidden;
   padding: 0 0.31944rem;
+  color: #657b83;
+  background: #fdf6e3;
 }
 
 [role="contentinfo"] {
