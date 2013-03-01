@@ -58,17 +58,31 @@
   @include pie-clearfix;
   .radio-type {
     @extend %ellipsis;
+    @extend %icon;
+    @include adjust-font-size-to($smallpx,1);
     @include rhythm-borders(1px,.5);
     float: left;
     width: $tab-width;
     margin-right: -100%;
+    padding: $box-padding;
     background: $base2;
     border-color: $base1;
     border-width: 0 1px 1px 0;
     text-align: center;
+
+    &:before {
+      @include adjust-font-size-to($normpx);
+      vertical-align: middle;
+      margin-right: .4em;
+    }
+
     &:first-child { margin-left: 0; }
     &:nth-child(2) { margin-left: $tab-width; }
     &:last-child { margin-left: $tab-width*2; border-right: 0; }
+
+    &[for*="message"] { @extend %icon-bubble; }
+    &[for*="note"] { @extend %icon-attachment; }
+    &[for*="conversation"] { @extend %icon-bubbles; }
   }
 }
 

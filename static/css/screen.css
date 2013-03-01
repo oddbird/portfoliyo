@@ -238,7 +238,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e009";
 }
 
-.parent-signup [for="sms-signup-toggle"]:before, .token-status.sms:before, .group-feed:before, .post-header:before {
+.parent-signup [for="sms-signup-toggle"]:before, .post-type-tabs .radio-type[for*="message"]:before, .token-status.sms:before, .group-feed:before, .post-header:before {
   content: "\e01a";
 }
 
@@ -282,15 +282,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
+.post-type-tabs .radio-type[for*="note"]:before {
+  content: "\e023";
+}
+
+.post-type-tabs .radio-type[for*="conversation"]:before {
+  content: "\e025";
+}
+
 /* Use the following CSS code if you want to have a class per icon */
-.bulk-tokens a:before, .action-showgroups:before, .group-feed:before, #messages .close:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
+.bulk-tokens a:before, .action-showgroups:before, .group-feed:before, #messages .close:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.bulk-tokens a:before, .action-showgroups:before, .group-feed:before, #messages .close:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+.bulk-tokens a:before, .action-showgroups:before, .group-feed:before, #messages .close:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
@@ -3141,6 +3149,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   clear: both;
 }
 .post-type-tabs .radio-type {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   border-width: 1px;
   border-width: 0.05556rem;
   border-style: solid;
@@ -3149,10 +3161,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   float: left;
   width: 33.33333%;
   margin-right: -100%;
+  padding: 0.31944rem;
   background: #eee8d5;
   border-color: #93a1a1;
   border-width: 0 1px 1px 0;
   text-align: center;
+}
+.post-type-tabs .radio-type:before {
+  font-size: 18px;
+  font-size: 1rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  vertical-align: middle;
+  margin-right: .4em;
 }
 .post-type-tabs .radio-type:first-child {
   margin-left: 0;
