@@ -7,6 +7,8 @@ var PYO = (function (PYO, $) {
         count: 0
     };
 
+    var backlogXHR = false;
+
     PYO.scrollToBottom = function () {
         if ($('.feed-posts').length) {
             var feed = $('.feed-posts');
@@ -311,6 +313,55 @@ var PYO = (function (PYO, $) {
         });
     };
 
+    PYO.fetchBacklog = function () {
+        var feed = $('.village-feed');
+        var backlog = feed.find('.feed-posts');
+        var feedStatus = backlog.find('.feedstatus');
+        var url = feed.data('posts-url');
+        var timestamp = backlog.find('.post').first().find('time.pubdate').attr('datetime');
+        var postData = {
+            order_by: '-timestamp',
+            timestamp__lt: timestamp
+        };
+        if (PYO.activeStudentId) {
+            postData.student = PYO.activeStudentId;
+        } else if (PYO.activeGroupId) {
+            postData.group = PYO.activeGroupId;
+        }
+        if (!backlogXHR) {
+            backlogXHR = $.get(url, postData, function (data) {
+                if (data && data.objects && data.objects.length) {
+                    data.objects.reverse();
+                    var posts = PYO.renderPost(data);
+                    posts.find('.details').html5accordion();
+                    var scrollBottom = backlog.get(0).scrollHeight - backlog.scrollTop() - backlog.outerHeight();
+                    feedStatus.after(posts);
+                    var scrollTo = backlog.get(0).scrollHeight - backlog.outerHeight() - scrollBottom;
+                    backlog.scrollTop(scrollTo);
+                    PYO.authorPosts = backlog.find('.post.mine').length;
+                }
+            }).always(function () { backlogXHR = false; });
+        }
+    };
+
+    PYO.scrollForBacklog = function () {
+        var feed = $('.feed-posts');
+        var scrolledToTop = function () {
+            var top = false;
+            if (feed.scrollTop() <= 10) {
+                top = true;
+            }
+            return top;
+        };
+        feed.scroll(function () {
+            $.doTimeout('scroll', 250, function () {
+                if (scrolledToTop() && !backlogXHR) {
+                    PYO.fetchBacklog();
+                }
+            });
+        });
+    };
+
     PYO.initializeFeed = function () {
         var feed = $('.village-feed');
         var posts = feed.find('.post');
@@ -324,6 +375,7 @@ var PYO = (function (PYO, $) {
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
+        PYO.scrollForBacklog();
     };
 
     return PYO;
