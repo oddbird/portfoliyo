@@ -11,15 +11,66 @@
 .feed-posts {
   @extend %overflow-y;
   @include calc(height, '100% - #{rhythm(5.125)}');
-  .empty {
-    display: none;
+}
+
+$loading-angle  : -45deg;
+$loading-grad   : color($blue lightest,.325) 25%,
+                  color($blue lightest,0) 25%,
+                  color($blue lightest,0) 50%,
+                  color($blue lightest,.325) 50%,
+                  color($blue lightest,.325) 75%,
+                  color($blue lightest,0) 75%;
+
+@include keyframes(loadfeed) {
+  0% { background-position: 0 0; }
+  100% { background-position: 4em 0; }
+}
+
+.feedstatus {
+  @extend %icon;
+  @include serif;
+  @include adjust-font-size-to($medpx);
+  @include trailing-border(1px,1);
+  @include text-shadow(white 0 1px 0);
+  @include background(color($base2,.5) repeat scroll);
+  @include transition(color 600ms);
+  @include inset;
+  display: block;
+  padding: rhythm(1);
+  border-color: $base2;
+  color: color($base, .5);
+  text-align: center;
+
+  // no more posts to load
+  @extend %icon-checkmark;
+  @include after("Showing all posts.");
+
+  // no posts in village
+  &:last-child {
+    @extend %icon-bubble;
     @include adjust-font-size-to($largepx);
-    @include serif;
-    padding: rhythm(2);
-    color: color($base, .5);
-    text-align: center;
-    &:last-child { display: block; }
+    @include padding-leader(4);
+    @include after("No posts in this village.");
+    height: 100%;
+    border: 0;
+    &:before {
+      @include adjust-font-size-to($xxlargepx);
+      display: block;
+    }
   }
+
+  // more posts to load
+  &.has-more {
+    @extend %icon-bubble-dots;
+    @include after("Loading older posts...");
+    &.loading {
+      @include background-image(linear-gradient($loading-angle, $loading-grad...));
+      @include background-size(4em 4em);
+      @include animation(loadfeed 1.5s linear infinite both);
+      color: color($base, .75);
+    }
+  }
+
 }
 
 // ---------------------------------------------------------------------------

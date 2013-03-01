@@ -28,7 +28,8 @@ def posted_event(post, **extra_data):
         school_staff=True).values_list('pk', flat=True)
     for teacher_id in teacher_ids:
         channel = 'user_%s' % teacher_id
-        my_data = {'posts': [dict(data, mine=data['author_id'] == teacher_id)]}
+        my_data = {
+            'objects': [dict(data, mine=data['author_id'] == teacher_id)]}
         trigger(channel, 'message_posted', my_data)
 
 

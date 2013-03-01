@@ -1,6 +1,8 @@
 """Tests for API resources."""
+import datetime
 from django.core.urlresolvers import reverse
 import mock
+import pytest
 
 from portfoliyo.api import resources
 from portfoliyo.model import unread
@@ -534,3 +536,162 @@ class TestPostResource(object):
             self.detail_url(other_post), user=rel.elder.user)
 
         assert response.json['mine'] == False
+
+
+
+def test_village_backlog_query(no_csrf_client):
+    profile = factories.ProfileFactory.create(school_staff=True)
+
+    url = reverse(
+        'api_dispatch_list',
+        kwargs={'resource_name': 'post', 'api_name': 'v1'},
+        )
+
+    # this is the earliest post shown in the default backlog; we want to fetch
+    # a set of posts earlier than this
+    earliest_shown = factories.PostFactory.create()
+    factories.RelationshipFactory.create(
+        from_profile=profile, to_profile=earliest_shown.student)
+    # these posts will be fetched by the query
+    show1 = factories.PostFactory.create(
+        student=earliest_shown.student,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=5),
+        )
+    show2 = factories.PostFactory.create(
+        student=earliest_shown.student,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=3),
+        )
+    # this post will be beyond our specified limit
+    factories.PostFactory.create(
+        student=earliest_shown.student,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=6),
+        )
+    # this post, though recent, is in a different backlog and won't be shown
+    factories.PostFactory.create(
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=1))
+
+    response = no_csrf_client.get(
+        url,
+        {
+            'limit': 2,
+            'order_by': '-timestamp',
+            'timestamp__lt': earliest_shown.timestamp.isoformat(),
+            'student': earliest_shown.student_id,
+            },
+        user=profile.user,
+        )
+
+    returned_ids = [o['post_id'] for o in response.json['objects']]
+
+    assert returned_ids == [show2.id, show1.id]
+    assert response.json['meta']['total_count'] == 3
+    assert response.json['meta']['limit'] == 2
+    assert response.json['meta']['more'] == True
+
+
+
+def test_group_backlog_query(no_csrf_client):
+    profile = factories.ProfileFactory.create(school_staff=True)
+
+    url = reverse(
+        'api_dispatch_list',
+        kwargs={'resource_name': 'bulkpost', 'api_name': 'v1'},
+        )
+
+    # this is the earliest post shown in the default backlog; we want to fetch
+    # a set of posts earlier than this
+    earliest_shown = factories.BulkPostFactory.create(
+        group__owner=profile, author=profile)
+    # these posts will be fetched by the query
+    show1 = factories.BulkPostFactory.create(
+        group=earliest_shown.group,
+        author=profile,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=5),
+        )
+    show2 = factories.BulkPostFactory.create(
+        group=earliest_shown.group,
+        author=profile,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=3),
+        )
+    # this post will be beyond our specified limit
+    factories.BulkPostFactory.create(
+        group=earliest_shown.group,
+        author=profile,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=6),
+        )
+    # this post, though recent, is in a different backlog and won't be shown
+    factories.BulkPostFactory.create(
+        author=profile,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=1))
+
+    response = no_csrf_client.get(
+        url,
+        {
+            'limit': 2,
+            'order_by': '-timestamp',
+            'timestamp__lt': earliest_shown.timestamp.isoformat(),
+            'group': earliest_shown.group_id,
+            },
+        user=profile.user,
+        )
+
+    returned_ids = [o['post_id'] for o in response.json['objects']]
+
+    assert returned_ids == [show2.id, show1.id]
+    assert response.json['meta']['total_count'] == 3
+    assert response.json['meta']['limit'] == 2
+    assert response.json['meta']['more'] == True
+
+
+
+def test_allstudents_backlog_query(no_csrf_client):
+    profile = factories.ProfileFactory.create(school_staff=True)
+
+    url = reverse(
+        'api_dispatch_list',
+        kwargs={'resource_name': 'bulkpost', 'api_name': 'v1'},
+        )
+
+    # this is the earliest post shown in the default backlog; we want to fetch
+    # a set of posts earlier than this
+    earliest_shown = factories.BulkPostFactory.create(
+        group=None, author=profile)
+    # these posts will be fetched by the query
+    show1 = factories.BulkPostFactory.create(
+        group=None,
+        author=profile,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=5),
+        )
+    show2 = factories.BulkPostFactory.create(
+        group=None,
+        author=profile,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=3),
+        )
+    # this post will be beyond our specified limit
+    factories.BulkPostFactory.create(
+        group=None,
+        author=profile,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=6),
+        )
+    # this post, though recent, is in a different backlog and won't be shown
+    factories.BulkPostFactory.create(
+        group=None,
+        timestamp=earliest_shown.timestamp - datetime.timedelta(hours=1))
+
+    response = no_csrf_client.get(
+        url,
+        {
+            'limit': 2,
+            'order_by': '-timestamp',
+            'timestamp__lt': earliest_shown.timestamp.isoformat(),
+            'group': 'all%s' % profile.id,
+            },
+        user=profile.user,
+        )
+
+    returned_ids = [o['post_id'] for o in response.json['objects']]
+
+    assert returned_ids == [show2.id, show1.id]
+    assert response.json['meta']['total_count'] == 3
+    assert response.json['meta']['limit'] == 2
+    assert response.json['meta']['more'] == True
