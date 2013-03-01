@@ -132,11 +132,11 @@
   a { @extend %button-icon; }
   .add-all {
     @extend %icon-plus;
-    @include button-color($green light);
+    @include button-color($green lightest);
   }
   .remove-all {
     @extend %icon-close;
-    @include button-color($red light);
+    @include button-color($red lightest);
   }
 }
 

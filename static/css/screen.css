@@ -3231,30 +3231,30 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   padding-top: 0.31944rem;
 }
 .bulk-tokens .add-all {
-  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
-  background: -webkit-linear-gradient(top, rgba(176, 189, 91, 0.25), rgba(157, 173, 51, 0), rgba(125, 138, 40, 0.25));
-  background: -moz-linear-gradient(top, rgba(176, 189, 91, 0.25), rgba(157, 173, 51, 0), rgba(125, 138, 40, 0.25));
-  background: -o-linear-gradient(top, rgba(176, 189, 91, 0.25), rgba(157, 173, 51, 0), rgba(125, 138, 40, 0.25));
-  background: linear-gradient(top, rgba(176, 189, 91, 0.25), rgba(157, 173, 51, 0), rgba(125, 138, 40, 0.25));
-  background-color: #9dad33;
-  border-color: #52713a;
-  color: #fdf6e3;
+  text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  background: -moz-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  background: -o-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  background: linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  background-color: #e6eacc;
+  border-color: #769087;
+  color: #657b83;
 }
 .bulk-tokens .add-all:link, .bulk-tokens .add-all:visited, .bulk-tokens .add-all:focus, .bulk-tokens .add-all:hover, .bulk-tokens .add-all:active {
-  color: #fdf6e3;
+  color: #657b83;
 }
 .bulk-tokens .remove-all {
-  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
-  background: -webkit-linear-gradient(top, rgba(232, 123, 121, 0.25), rgba(227, 91, 88, 0), rgba(181, 72, 70, 0.25));
-  background: -moz-linear-gradient(top, rgba(232, 123, 121, 0.25), rgba(227, 91, 88, 0), rgba(181, 72, 70, 0.25));
-  background: -o-linear-gradient(top, rgba(232, 123, 121, 0.25), rgba(227, 91, 88, 0), rgba(181, 72, 70, 0.25));
-  background: linear-gradient(top, rgba(232, 123, 121, 0.25), rgba(227, 91, 88, 0), rgba(181, 72, 70, 0.25));
-  background-color: #e35b58;
-  border-color: #75484d;
-  color: #fdf6e3;
+  text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(249, 222, 221, 0.25), rgba(248, 214, 213, 0), rgba(198, 171, 170, 0.25));
+  background: -moz-linear-gradient(top, rgba(249, 222, 221, 0.25), rgba(248, 214, 213, 0), rgba(198, 171, 170, 0.25));
+  background: -o-linear-gradient(top, rgba(249, 222, 221, 0.25), rgba(248, 214, 213, 0), rgba(198, 171, 170, 0.25));
+  background: linear-gradient(top, rgba(249, 222, 221, 0.25), rgba(248, 214, 213, 0), rgba(198, 171, 170, 0.25));
+  background-color: #f8d6d5;
+  border-color: #7f868b;
+  color: #657b83;
 }
 .bulk-tokens .remove-all:link, .bulk-tokens .remove-all:visited, .bulk-tokens .remove-all:focus, .bulk-tokens .remove-all:hover, .bulk-tokens .remove-all:active {
-  color: #fdf6e3;
+  color: #657b83;
 }
 
 .token-body {
