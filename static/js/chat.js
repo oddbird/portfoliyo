@@ -8,6 +8,7 @@ var PYO = (function (PYO, $) {
     };
 
     var backlogXHR = false;
+    var backlogHasMore;
 
     PYO.scrollToBottom = function () {
         if ($('.feed-posts').length) {
@@ -328,7 +329,8 @@ var PYO = (function (PYO, $) {
         } else if (PYO.activeGroupId) {
             postData.group = PYO.activeGroupId;
         }
-        if (!backlogXHR) {
+        if (url && !backlogXHR) {
+            feedStatus.addClass('loading');
             backlogXHR = $.get(url, postData, function (data) {
                 if (data && data.objects && data.objects.length) {
                     data.objects.reverse();
@@ -339,8 +341,13 @@ var PYO = (function (PYO, $) {
                     var scrollTo = backlog.get(0).scrollHeight - backlog.outerHeight() - scrollBottom;
                     backlog.scrollTop(scrollTo);
                     PYO.authorPosts = backlog.find('.post.mine').length;
+                    if (data.meta) { backlogHasMore = data.meta.more; }
+                    if (!backlogHasMore) { feedStatus.removeClass('has-more'); }
                 }
-            }).always(function () { backlogXHR = false; });
+            }).always(function () {
+                backlogXHR = false;
+                feedStatus.removeClass('loading');
+            });
         }
     };
 
@@ -353,9 +360,10 @@ var PYO = (function (PYO, $) {
             }
             return top;
         };
+        backlogHasMore = feed.data('more');
         feed.scroll(function () {
             $.doTimeout('scroll', 250, function () {
-                if (scrolledToTop() && !backlogXHR) {
+                if (scrolledToTop() && !backlogXHR && backlogHasMore) {
                     PYO.fetchBacklog();
                 }
             });
