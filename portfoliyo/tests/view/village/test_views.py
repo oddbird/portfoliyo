@@ -668,7 +668,7 @@ class TestGetPosts(object):
     """Tests for _get_posts utility method."""
     def assert_posts(self, data, posts):
         """Given posts (only) are listed in given order in ``data``."""
-        assert [p.id for p in posts] == [p['post_id'] for p in data['posts']]
+        assert [p.id for p in posts] == [p['post_id'] for p in data['objects']]
 
 
     def test_student(self, db, redis):
@@ -677,7 +677,7 @@ class TestGetPosts(object):
         post1 = factories.PostFactory.create()
         post2 = factories.PostFactory.create(student=post1.student)
 
-        with utils.assert_num_queries(1):
+        with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(profile, student=post1.student),
                 [post1, post2],
@@ -689,7 +689,7 @@ class TestGetPosts(object):
         post1 = factories.BulkPostFactory.create()
         post2 = factories.BulkPostFactory.create(group=post1.group)
 
-        with utils.assert_num_queries(1):
+        with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(post1.group.owner, group=post1.group),
                 [post1, post2],
@@ -702,7 +702,7 @@ class TestGetPosts(object):
         post2 = factories.BulkPostFactory.create(
             group=None, author=post1.author)
 
-        with utils.assert_num_queries(1):
+        with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(
                     post1.author, group=model.AllStudentsGroup(post1.author)),
@@ -743,7 +743,7 @@ class TestGetPosts(object):
 
         expected = [(read_post.id, False), (unread_post.id, True)]
         data = views._get_posts(profile, student=read_post.student)
-        found = [(p['post_id'], p['unread']) for p in data['posts']]
+        found = [(p['post_id'], p['unread']) for p in data['objects']]
 
         assert expected == found
 
@@ -757,10 +757,23 @@ class TestGetPosts(object):
 
         expected = [(my_post.id, True), (other_post.id, False)]
         data = views._get_posts(profile, student=my_post.student)
-        found = [(p['post_id'], p['mine']) for p in data['posts']]
+        found = [(p['post_id'], p['mine']) for p in data['objects']]
 
         assert expected == found
 
+
+    def test_count(self, db, redis):
+        """Return total post count too."""
+        rel = factories.RelationshipFactory.create()
+        for i in range(3):
+            factories.PostFactory.create(student=rel.student)
+        with mock.patch.object(views, 'BACKLOG_POSTS', 2):
+            data = views._get_posts(rel.elder, student=rel.student)
+
+        assert len(data['objects']) == 2
+        assert data['meta']['total_count'] == 3
+        assert data['meta']['limit'] == 2
+        assert data['meta']['more'] == True
 
 
 

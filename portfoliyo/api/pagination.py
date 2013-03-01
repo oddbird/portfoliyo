@@ -12,3 +12,11 @@ class NoCountPaginator(paginator.Paginator):
         del output['meta']['total_count']
         return output
 
+
+class PostPaginator(paginator.Paginator):
+    """Adds a meta.more boolean attribute."""
+    def page(self):
+        output = super(PostPaginator, self).page()
+        meta = output['meta']
+        meta['more'] = meta['total_count'] > meta['limit']
+        return output

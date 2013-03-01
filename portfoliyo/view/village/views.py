@@ -22,7 +22,7 @@ from . import forms
 
 
 # number of posts to show in backlog
-BACKLOG_POSTS = 100
+BACKLOG_POSTS = 15
 
 
 @login_required
@@ -334,7 +334,9 @@ def _get_posts(profile, student=None, group=None):
         queryset = None
 
     post_data = []
+    count = 0
     if queryset is not None:
+        count = queryset.count()
         post_data = [
             serializers.post2dict(
                 post,
@@ -346,7 +348,14 @@ def _get_posts(profile, student=None, group=None):
                     '-timestamp')[:BACKLOG_POSTS])
             ]
 
-    return {'posts': post_data}
+    return {
+        'objects': post_data,
+        'meta': {
+            'total_count': count,
+            'limit': BACKLOG_POSTS,
+            'more': count > BACKLOG_POSTS,
+            },
+        }
 
 
 
