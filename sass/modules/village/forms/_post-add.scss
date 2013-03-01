@@ -108,12 +108,13 @@
   @extend %input;
   position: relative;
   width: auto;
+  padding: 0 $box-padding;
   background: rgba(white,.75);
 }
 
 .bulk-tokens {
   float: right;
-  padding-top: $box-padding/2;
+  padding-top: $box-padding;
   a { @extend %button-icon; }
   .add-all {
     @extend %icon-plus;
@@ -155,6 +156,7 @@
 }
 
 .token-value {
+  height: rhythm(1.5);
   margin: 0;
   padding: 0;
   background: none;
@@ -200,7 +202,7 @@
 
 .to-field {
   .tokens-type {
-    @include padding-leader(.375);
+    @include padding-leader(.25);
     float: left;
     margin-right: rhythm(.5);
   }

@@ -3201,12 +3201,13 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .tokens-input {
   position: relative;
   width: auto;
+  padding: 0 0.31944rem;
   background: rgba(255, 255, 255, 0.75);
 }
 
 .bulk-tokens {
   float: right;
-  padding-top: 0.15972rem;
+  padding-top: 0.31944rem;
 }
 .bulk-tokens .add-all {
   text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
@@ -3270,6 +3271,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .token-value {
+  height: 1.91667rem;
   margin: 0;
   padding: 0;
   background: none;
@@ -3323,8 +3325,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .to-field .tokens-type {
-  padding-top: 9px;
-  padding-top: 0.47917rem;
+  padding-top: 6px;
+  padding-top: 0.31944rem;
   float: left;
   margin-right: 0.63889rem;
 }
