@@ -10,7 +10,6 @@
 .feed-posts {
   @extend %overflow-y;
   @include calc(height, '100% - #{rhythm(5.125)}');
-  padding: rhythm(.5) 0;
   .empty {
     display: none;
     @include adjust-font-size-to($largepx);

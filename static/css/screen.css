@@ -331,6 +331,10 @@ html {
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: "CambridgeRound", "Helvetica Neue", Arial, Helvetica, sans-serif;
   background: #073642;
@@ -1547,9 +1551,13 @@ button {
 }
 
 [role="main"] {
+  min-height: -webkit-calc(100% - 3.99306rem);
+  min-height: -moz-calc(100% - 3.99306rem);
+  min-height: -o-calc(100% - 3.99306rem);
+  min-height: calc(100% - 3.99306rem);
+  padding: 0 0.31944rem;
   color: #657b83;
   background: #fdf6e3;
-  padding: 0 0.31944rem;
 }
 
 [role="contentinfo"] {
@@ -3486,7 +3494,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: -moz-calc(100% - 6.54861rem);
   height: -o-calc(100% - 6.54861rem);
   height: calc(100% - 6.54861rem);
-  padding: 0.63889rem 0;
 }
 .feed-posts .empty {
   display: none;
