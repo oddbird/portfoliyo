@@ -270,7 +270,12 @@ class Post(BasePost):
         user_models.Profile, related_name='posts_in_village')
     # relationship between author and student (nullable b/c might be deleted)
     relationship = models.ForeignKey(
-        user_models.Relationship, related_name='posts', blank=True, null=True)
+        user_models.Relationship,
+        related_name='posts',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        )
     # (optional) the bulk-post that triggered this post
     from_bulk = models.ForeignKey(
         BulkPost, blank=True, null=True, related_name='triggered')

@@ -551,6 +551,18 @@ class TestBasePost(object):
         assert models.BasePost().extra_data() == {}
 
 
+class TestPost(object):
+    def test_relationship_deleted(self, db):
+        """Deleting a relationship does not delete posts in that village."""
+        rel = factories.RelationshipFactory.create()
+        post = factories.PostFactory.create(
+            student=rel.student, relationship=rel)
+
+        rel.delete()
+
+        assert not utils.deleted(post)
+
+
 
 class TestText2Html(object):
     def test_escapes_html(self, monkeypatch):
