@@ -1,8 +1,9 @@
 {% load elders handlebars formats %}
 
 {% if not read_only %}
-<div class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}">
+<div class="post-add-form {% block addpost-classes %}{% endblock %}">
 
+  {% block post-add-tabs %}
   <input type="radio" id="message-form-toggle" name="add-post-types" class="radio-value" checked />
   <input type="radio" id="note-form-toggle" name="add-post-types" class="radio-value" />
   <input type="radio" id="conversation-form-toggle" name="add-post-types" class="radio-value" />
@@ -12,14 +13,21 @@
     <label for="note-form-toggle" class="radio-type" title="Leave a Note">Leave a Note</label>
     <label for="conversation-form-toggle" class="radio-type" title="Log a Conversation">Log a Conversation</label>
   </div>
-
+  {% endblock %}
 
   <form method="POST" class="message-form post-type" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
+    {% block to-field %}
     <div class="formfield to-field">
       <label class="tokens-type" for="to-input">To:</label>
       <div class="tokens-input">
+        {% if elders|sms_eligible|length > 1 %}
+          <div class="bulk-tokens">
+            <a href="#" class="add-all">add all</a>
+            <a href="#" class="remove-all">remove all</a>
+          </div>
+        {% endif %}
         {% for elder in elders|sms_eligible %}
           <span class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
             <input class="token-toggle" type="checkbox" name="elder-{{ elder.id }}" id="elder-{{ elder.id }}" value="{{ elder.id }}" checked />
@@ -40,6 +48,7 @@
         </ul>
       </div>
     </div>
+    {% endblock %}
 
     <div class="formfield post-textfield">
       <textarea id="message-text" name="text" class="value"></textarea>
@@ -52,6 +61,7 @@
 
   </form>
 
+  {% block post-add-types %}
   <form method="POST" class="note-form post-type">
     <div class="formfield post-textfield">
       <textarea id="note-text" name="text" class="value"></textarea>
@@ -73,6 +83,7 @@
       <button type="submit" class="action-post">Send</button>
     </div>
   </form>
+  {% endblock %}
 
 </div>
 {% endif %}

@@ -37,6 +37,16 @@
       font-weight: bold;
     }
   }
+
+  &.group-posts {
+    .message-form { @extend %show-tab-content; }
+    .no-to-field {
+      @extend %icon;
+      @extend %icon-warning;
+      @include adjust-font-size-to($smallpx);
+      @include trailer(.25);
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -99,6 +109,20 @@
   position: relative;
   width: auto;
   background: rgba(white,.75);
+}
+
+.bulk-tokens {
+  float: right;
+  padding-top: $box-padding/2;
+  a { @extend %button-icon; }
+  .add-all {
+    @extend %icon-plus;
+    @include button-color($green light);
+  }
+  .remove-all {
+    @extend %icon-close;
+    @include button-color($red light);
+  }
 }
 
 .token-body {
