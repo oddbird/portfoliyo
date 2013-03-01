@@ -9,7 +9,7 @@ var PYO = (function (PYO, $) {
             var addPost = function () {
                 var scroll = PYO.scrolledToBottom();
                 if (unread) { newPostData.unread = true; }
-                var post_obj = { posts: [newPostData] };
+                var post_obj = { objects: [newPostData] };
                 PYO.addPost(post_obj);
                 if (scroll) {
                     PYO.scrollToBottom();
@@ -50,10 +50,10 @@ var PYO = (function (PYO, $) {
         };
 
         PYO.channel.bind('message_posted', function (data) {
-            if (data && data.posts && data.posts.length) {
+            if (data && data.objects && data.objects.length) {
                 var feed = $('.village-feed');
 
-                $.each(data.posts, function () {
+                $.each(data.objects, function () {
                     if (this.student_id) {
                         if (feed.length && PYO.activeStudentId && this.student_id === PYO.activeStudentId) {
                             addNewPost(this, true);

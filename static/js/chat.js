@@ -26,7 +26,7 @@ var PYO = (function (PYO, $) {
 
     PYO.renderPost = function (data) {
         var posts;
-        if (data && data.posts && data.posts.length) {
+        if (data) {
             posts = PYO.tpl('posts', data);
         }
         return posts;
@@ -47,7 +47,7 @@ var PYO = (function (PYO, $) {
 
     PYO.replacePost = function (newPostData, oldPost) {
         if (newPostData && oldPost && oldPost.length) {
-            var post_obj = { posts: [newPostData] };
+            var post_obj = { objects: [newPostData] };
             var newPost = PYO.renderPost(post_obj);
             var scroll = PYO.scrolledToBottom();
             newPost.filter('.post.mine').removeClass('old');
@@ -73,7 +73,7 @@ var PYO = (function (PYO, $) {
         var time = hour + ':' + minute + period;
         var text = $.trim(textarea.val());
         var postObj = {
-            posts: [{
+            objects: [{
                 author: author,
                 author_id: PYO.activeUserId,
                 role: role,
@@ -165,9 +165,9 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
-        if (response && response.posts && response.posts.length) {
+        if (response && response.objects && response.objects.length) {
             var feed = $('.village-feed');
-            $.each(response.posts, function () {
+            $.each(response.objects, function () {
                 feed.trigger('successful-post', {smsRecipients: this.num_sms_recipients, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
                     var oldPost = feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
