@@ -355,14 +355,14 @@ var PYO = (function (PYO, $) {
         var feed = $('.feed-posts');
         var scrolledToTop = function () {
             var top = false;
-            if (feed.scrollTop() <= 10) {
+            if (feed.scrollTop() <= 80) {
                 top = true;
             }
             return top;
         };
         backlogHasMore = feed.data('more');
         feed.scroll(function () {
-            $.doTimeout('scroll', 250, function () {
+            $.doTimeout('scroll', 150, function () {
                 if (scrolledToTop() && !backlogXHR && backlogHasMore) {
                     PYO.fetchBacklog();
                 }
