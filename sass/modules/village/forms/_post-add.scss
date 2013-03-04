@@ -3,7 +3,8 @@
 
 .post-add-form {
   @include pie-clearfix;
-  position: relative;
+  @include stretch-x;
+  bottom: 0;
   background: color($base3 lighter);
   border-top: 1px solid $village-border-color;
   &.group-posts { background: mix($blue,$base2,25%); }
@@ -120,7 +121,7 @@
   @extend %input;
   position: relative;
   width: auto;
-  padding: $box-padding/2 $box-padding 0;
+  padding: $box-padding/2 $box-padding;
   background: rgba(white,.75);
 }
 
@@ -140,7 +141,7 @@
 
 .token-body {
   @include border-radius($box-padding);
-  @include adjust-font-size-to($xxsmallpx);
+  @include adjust-font-size-to($xxsmallpx,.75);
   display: none;
   padding: 0 $box-padding;
   margin-bottom: $box-padding/2;
@@ -158,7 +159,7 @@
 .token-status {
   @extend %icon-replace;
   @extend %icon-user;
-  @include adjust-font-size-to($xxxsmallpx);
+  @include adjust-font-size-to($xxxsmallpx,.75);
 
   &.sms { @extend %icon-bubble; }
 }
@@ -169,7 +170,8 @@
 }
 
 .token-value {
-  height: rhythm(1);
+  @include adjust-leading-to(.75);
+  height: rhythm(.75);
   margin: 0;
   padding: 0;
   background: none;

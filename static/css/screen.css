@@ -3092,7 +3092,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .post-add-form {
-  position: relative;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: #fdf9ee;
   border-top: 1px solid #93a1a1;
 }
@@ -3217,7 +3220,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .tokens-input {
   position: relative;
   width: auto;
-  padding: 0.15972rem 0.31944rem 0;
+  padding: 0.15972rem 0.31944rem;
   background: rgba(255, 255, 255, 0.75);
 }
 
@@ -3258,8 +3261,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border-radius: 0.31944rem;
   font-size: 12px;
   font-size: 0.66667rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
+  line-height: 17px;
+  line-height: 0.95833rem;
   display: none;
   padding: 0 0.31944rem;
   margin-bottom: 0.15972rem;
@@ -3273,8 +3276,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .token-status {
   font-size: 9px;
   font-size: 0.5rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
+  line-height: 17px;
+  line-height: 0.95833rem;
 }
 
 .token-toggle {
@@ -3287,7 +3290,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .token-value {
-  height: 1.27778rem;
+  line-height: 17px;
+  line-height: 0.95833rem;
+  height: 0.95833rem;
   margin: 0;
   padding: 0;
   background: none;
