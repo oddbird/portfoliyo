@@ -12,7 +12,7 @@
 
 {% block edit-url %}{% url 'edit_group' group_id=group.id %}{% endblock %}
 
-{% block village-feed-attrs %}{% if group.is_all %} data-post-url="{% url 'create_post' %}"{% else %} data-post-url="{% url 'create_post' group_id=group.id %}"{% endif %}{% endblock %}
+{% block village-feed-attrs %} data-posts-url="{% url 'api_dispatch_list' resource_name='bulkpost' api_name='v1' %}"{% if group.is_all %} data-post-url="{% url 'create_post' %}"{% else %} data-post-url="{% url 'create_post' group_id=group.id %}"{% endif %}{% endblock %}
 {% block empty-feed %}There are no posts in this group.{% endblock %}
 
 {% block addposts %}{% include "village/post_list/forms/_group.html" %}{% endblock %}

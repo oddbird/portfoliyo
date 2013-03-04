@@ -8,7 +8,7 @@
 
 {% block edit-url %}{% url 'edit_student' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% endblock %}
 
-{% block village-feed-attrs %} data-post-url="{% url 'create_post' student_id=student.id %}"{% endblock %}
+{% block village-feed-attrs %} data-post-url="{% url 'create_post' student_id=student.id %}" data-posts-url="{% url 'api_dispatch_list' resource_name='post' api_name='v1' %}"{% endblock %}
 
 {% block addposts %}{% include "village/post_list/forms/_village.html" %}{% endblock %}
 

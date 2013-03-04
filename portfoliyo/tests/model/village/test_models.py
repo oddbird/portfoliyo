@@ -99,7 +99,7 @@ class TestPostCreate(object):
                 rel.elder, rel.student, 'Foo\n', sequence_id='33')
 
         args = mock_trigger.call_args[0]
-        post_data = args[2]['posts'][0]
+        post_data = args[2]['objects'][0]
 
         assert args[0] == 'user_%s' % rel.from_profile_id
         assert args[1] == 'message_posted'
@@ -403,9 +403,9 @@ class TestBulkPost(object):
             models.BulkPost.create(rel.elder, None, 'Foo\n', sequence_id='33')
 
         student_args = mock_trigger.call_args_list[0][0]
-        student_post_data = student_args[2]['posts'][0]
+        student_post_data = student_args[2]['objects'][0]
         group_args = mock_trigger.call_args_list[1][0]
-        group_post_data = group_args[2]['posts'][0]
+        group_post_data = group_args[2]['objects'][0]
 
         assert student_args[0] == 'user_%s' % rel.from_profile_id
         assert group_args[0] == 'user_%s' % rel.from_profile_id
