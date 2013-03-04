@@ -30,12 +30,10 @@
     @extend %form-actions;
     clear: none;
     margin: 0;
-    .action-post {
-      @include span-columns(2 omega, $center);
-      @include adjust-font-size-to($smallpx);
-      height: rhythm(2.5);
-      font-weight: bold;
-    }
+  }
+  .action-post {
+    @include span-columns(2 omega, $center);
+    height: rhythm(2.5);
   }
 
   &.group-posts {
@@ -122,13 +120,13 @@
   @extend %input;
   position: relative;
   width: auto;
-  padding: 0 $box-padding;
+  padding: $box-padding/2 $box-padding 0;
   background: rgba(white,.75);
 }
 
 .bulk-tokens {
   float: right;
-  padding-top: $box-padding;
+  padding: 1px 0 1px $box-padding;
   a { @extend %button-icon; }
   .add-all {
     @extend %icon-plus;
@@ -142,12 +140,12 @@
 
 .token-body {
   @include border-radius($box-padding);
-  @include adjust-font-size-to($xsmallpx);
+  @include adjust-font-size-to($xxsmallpx);
   display: none;
-  margin: $box-padding/2 $box-padding/4 $box-padding/2 0;
   padding: 0 $box-padding;
+  margin-bottom: $box-padding/2;
   background: color($blue lightest);
-  border: 1px solid color($blue dark);
+  border: 1px solid color(-50% $blue light);
 
   #{$focus} {
     .token-status {
@@ -159,7 +157,8 @@
 
 .token-status {
   @extend %icon-replace;
-  @include adjust-font-size-to($xxsmallpx,1);
+  @extend %icon-user;
+  @include adjust-font-size-to($xxxsmallpx);
 
   &.sms { @extend %icon-bubble; }
 }
@@ -170,7 +169,7 @@
 }
 
 .token-value {
-  height: rhythm(1.5);
+  height: rhythm(1);
   margin: 0;
   padding: 0;
   background: none;
@@ -214,6 +213,18 @@
 // ---------------------------------------------------------------------------
 // Messages
 
+.message-form {
+  .action-post {
+    @extend %icon;
+    @extend %icon-bubble-forward;
+    &:before {
+      display: none;
+      margin-right: .4em;
+      @include breakpoint(55em) { display: inline; }
+    }
+  }
+}
+
 .to-field {
   .tokens-type {
     @include padding-leader(.25);
@@ -221,4 +232,16 @@
     margin-right: rhythm(.5);
   }
   .tokens-input { margin-left: rhythm(1.5); }
+}
+
+// ---------------------------------------------------------------------------
+// Conversations
+
+.with-field {
+  .tokens-type {
+    @include padding-leader(.25);
+    float: left;
+    margin-right: rhythm(.5);
+  }
+  .tokens-input { margin-left: rhythm(2.5); }
 }

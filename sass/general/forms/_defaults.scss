@@ -201,17 +201,17 @@ $form-action-note-size: $smallpx;
     background: $base2;
   }
 
-  .fieldset-header {
+  [class~="fieldset-header"] {
     @include trailer;
   }
 
-  .fieldset-help {
+  [class~="fieldset-help"] {
     @include leader;
     @include trailer(.5);
     font-style: italic;
   }
 
-  .formfield-help {
+  [class~="formfield-help"] {
     @include adjust-font-size-to($smallpx);
     display: block;
     clear: both;
@@ -221,13 +221,13 @@ $form-action-note-size: $smallpx;
     text-align: right;
   }
 
-  .formfield-optional, .fieldset-optional {
+  [class~="formfield-optional"], [class~="fieldset-optional"] {
     @include adjust-font-size-to($smallpx);
     color: $base1;
   }
-  .optional-fieldset { .formfield-optional { @include gone; } }
+  [class~="optional-fieldset"] { .formfield-optional { @include gone; } }
 
-  .form-actions {
+  [class~="form-actions"] {
     @extend %form-actions;
   }
   [class~="secondary"] {
