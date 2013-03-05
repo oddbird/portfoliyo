@@ -117,26 +117,26 @@ var PYO = (function (PYO, $) {
                         { name: 'text', value: text },
                         { name: 'author_sequence_id', value: author_sequence_id }
                     ];
-                    var smsSelect = form.find('.sms-targeting');
-                    var smsInputName = smsSelect.find('#sms-target').attr('name');
+                    // var smsSelect = form.find('.sms-targeting');
+                    // var smsInputName = smsSelect.find('#sms-target').attr('name');
                     var smsTargetArr = [];
                     var postObj, post;
 
-                    if (smsSelect.length) {
-                        smsSelect.find('.ui-multiselect-checkboxes input:checked').each(function () {
-                            var obj = { name: smsInputName, value: $(this).val() };
-                            var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
-                            postData.push(obj);
-                            smsTargetArr.push(displayName);
-                        });
-                    } else {
-                        context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
-                            var name = $(this).find('.fn').data('name');
-                            var role = $(this).find('.fn').data('role');
-                            var displayName = name ? name : role;
-                            smsTargetArr.push(displayName);
-                        });
-                    }
+                    // if (smsSelect.length) {
+                    //     smsSelect.find('.ui-multiselect-checkboxes input:checked').each(function () {
+                    //         var obj = { name: smsInputName, value: $(this).val() };
+                    //         var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
+                    //         postData.push(obj);
+                    //         smsTargetArr.push(displayName);
+                    //     });
+                    // } else {
+                    context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
+                        var name = $(this).find('.fn').data('name');
+                        var role = $(this).find('.fn').data('role');
+                        var displayName = name ? name : role;
+                        smsTargetArr.push(displayName);
+                    });
+                    // }
 
                     postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
                     post = PYO.addPost(postObj);
@@ -154,10 +154,11 @@ var PYO = (function (PYO, $) {
                     // @@@ feed.find('.howto').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
-                    $('#sms-target').multiselect('checkAll');
+                    // $('#sms-target').multiselect('checkAll');
                 }
             });
 
+            // Hijack ENTER to submit the form (instead of adding a newline)
             textarea.keydown(function (event) {
                 if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
                     event.preventDefault();
@@ -264,28 +265,6 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeMultiselect = function () {
-        var context = $('.village-main');
-        var form = context.find('.post-add-form');
-        var select = form.find('#sms-target');
-        select.multiselect({
-            checkAllText: 'all',
-            uncheckAllText: 'none',
-            noneSelectedText: 'no one',
-            selectedText: function (checked, total, arr) {
-                if (checked < 4) {
-                    return $(arr).map(function () { return $(this).data('role'); }).get().join(', ');
-                } else {
-                    if (checked === total) {
-                        return 'all family members';
-                    } else {
-                        return checked + ' family members';
-                    }
-                }
-            }
-        });
-    };
-
     PYO.markPostsRead = function () {
         var feed = $('.village-feed');
         var nav = $('.village-nav');
@@ -380,7 +359,6 @@ var PYO = (function (PYO, $) {
         PYO.authorPosts = posts.filter('.mine').length;
         posts.filter('.unread').removeClass('unread');
 
-        PYO.initializeMultiselect();
         PYO.watchForReadPosts();
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
