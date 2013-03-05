@@ -102,7 +102,7 @@ var PYO = (function (PYO, $) {
         if ($(container).length) {
             var feed = $(container);
             var context = feed.closest('.village');
-            var form = context.find('form.post-add-form');
+            var form = context.find('form.message-form');
             var button = form.find('.action-post');
             var textarea = form.find('#post-text');
 
@@ -243,7 +243,7 @@ var PYO = (function (PYO, $) {
     PYO.characterCount = function (container) {
         if ($(container).length) {
             var context = $(container);
-            var form = context.find('form.post-add-form');
+            var form = context.find('form.message-form');
             var textarea = form.find('#post-text');
             var limit = form.data('char-limit');
             var count = form.find('.charcount');
