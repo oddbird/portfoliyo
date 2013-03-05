@@ -38,11 +38,13 @@ var PYO = (function (PYO, $) {
     PYO.addPost = function (data) {
         if (data) {
             var feedPosts = $('.village-feed .feed-posts');
-            var instructions = feedPosts.find('.howto');
+            // @@@ var instructions = feedPosts.find('.howto');
             var posts = PYO.renderPost(data);
             posts.find('.details').html5accordion();
-            if (instructions.length) { instructions.before(posts); }
-            else { feedPosts.append(posts); }
+            // if (instructions.length) { instructions.before(posts); }
+            // else {
+            feedPosts.append(posts);
+            // }
             PYO.authorPosts = feedPosts.find('.post.mine').length;
             return posts;
         }
@@ -149,7 +151,7 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
-                    feed.find('.howto').remove();
+                    // @@@ feed.find('.howto').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                     $('#sms-target').multiselect('checkAll');
