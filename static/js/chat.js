@@ -66,7 +66,7 @@ var PYO = (function (PYO, $) {
 
     PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr) {
         var feed = $('.village-feed');
-        var textarea = $('#post-text');
+        var textarea = $('#message-text');
         var author = feed.data('author');
         var role = feed.data('author-role');
         var today = new Date();
@@ -104,7 +104,9 @@ var PYO = (function (PYO, $) {
             var context = feed.closest('.village');
             var form = context.find('form.message-form');
             var button = form.find('.action-post');
-            var textarea = form.find('#post-text');
+            var textarea = form.find('#message-text');
+
+            PYO.initializeToField();
 
             form.submit(function (event) {
                 event.preventDefault();
@@ -117,26 +119,29 @@ var PYO = (function (PYO, $) {
                         { name: 'text', value: text },
                         { name: 'author_sequence_id', value: author_sequence_id }
                     ];
-                    // var smsSelect = form.find('.sms-targeting');
-                    // var smsInputName = smsSelect.find('#sms-target').attr('name');
+                    var smsInput = form.find('#to-input');
+                    var smsInputName = smsInput.attr('name');
                     var smsTargetArr = [];
                     var postObj, post;
 
-                    // if (smsSelect.length) {
-                    //     smsSelect.find('.ui-multiselect-checkboxes input:checked').each(function () {
-                    //         var obj = { name: smsInputName, value: $(this).val() };
-                    //         var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
-                    //         postData.push(obj);
-                    //         smsTargetArr.push(displayName);
-                    //     });
-                    // } else {
-                    context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
-                        var name = $(this).find('.fn').data('name');
-                        var role = $(this).find('.fn').data('role');
-                        var displayName = name ? name : role;
-                        smsTargetArr.push(displayName);
-                    });
-                    // }
+                    if (smsInput.length) {
+                        if (smsInput.val()) {
+                            $.each(smsInput.val().toString().split(','), function (i, v) {
+                                var obj = { name: smsInputName, value: v };
+                                postData.push(obj);
+                                var el = context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile .fn[data-id="' + v + '"]');
+                                var displayName = el.data('name') ? el.data('name') : el.data('role');
+                                smsTargetArr.push(displayName);
+                            });
+                        }
+                    } else {
+                        context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
+                            var name = $(this).find('.fn').data('name');
+                            var role = $(this).find('.fn').data('role');
+                            var displayName = name ? name : role;
+                            smsTargetArr.push(displayName);
+                        });
+                    }
 
                     postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
                     post = PYO.addPost(postObj);
@@ -244,7 +249,7 @@ var PYO = (function (PYO, $) {
         if ($(container).length) {
             var context = $(container);
             var form = context.find('form.message-form');
-            var textarea = form.find('#post-text');
+            var textarea = form.find('#message-text');
             var limit = form.data('char-limit');
             var count = form.find('.charcount');
             var button = form.find('.action-post');
@@ -263,6 +268,28 @@ var PYO = (function (PYO, $) {
 
             textarea.keyup(updateCount).change(updateCount);
         }
+    };
+
+    PYO.initializeToField = function () {
+        var select = $('.post-add-form .message-form #to-input');
+        var opts = $('.village .village-info .elder-list.family .parents-list .parent .vcard.mobile .fn');
+        var optsArr = [];
+        opts.each(function () {
+            var el = $(this);
+            var id = el.data('id');
+            var role = el.data('role');
+            optsArr.push({
+                id: id,
+                text: role
+            });
+        });
+
+        select.select2({
+            multiple: true,
+            data: optsArr,
+            dropdownCssClass: 'token-suggest',
+            formatResultCssClass: function () { return 'option'; }
+        });
     };
 
     PYO.markPostsRead = function () {
