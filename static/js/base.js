@@ -612,7 +612,7 @@ var PYO = (function (PYO, $) {
         if ($('#edit-elder-form').length) { PYO.setPhoneChangedClass('#edit-elder-form'); }
         if ($('.village-feed').length) { PYO.initializeFeed(); }
         PYO.formFocus();
-        PYO.updateContentHeight('.village-feed', '.feed-posts');
+        PYO.updateContentHeight('.village-feed', '.feed-posts', true);
     };
 
     return PYO;
