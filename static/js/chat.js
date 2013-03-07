@@ -106,8 +106,6 @@ var PYO = (function (PYO, $) {
             var button = form.find('.action-post');
             var textarea = form.find('#message-text');
 
-            PYO.initializeToField();
-
             form.submit(function (event) {
                 event.preventDefault();
                 if (textarea.val().length) {
@@ -159,7 +157,7 @@ var PYO = (function (PYO, $) {
                     // @@@ feed.find('.howto').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
-                    // $('#sms-target').multiselect('checkAll');
+                    form.find('.to-field .bulk-tokens .add-all').click();
                 }
             });
 
@@ -402,6 +400,7 @@ var PYO = (function (PYO, $) {
         posts.filter('.unread').removeClass('unread');
 
         PYO.watchForReadPosts();
+        PYO.initializeToField();
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
