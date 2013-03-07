@@ -268,41 +268,44 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeToField = function () {
-        var form = $('.post-add-form .message-form');
-        var select = form.find('#to-input');
-        var opts = $('.village-info .elder-list.family .parents-list .parent .vcard.mobile .fn');
-        var selectAll = form.find('.to-field .bulk-tokens .add-all');
-        var selectNone = form.find('.to-field .bulk-tokens .remove-all');
-        var optsArr = [];
-        opts.each(function () {
-            var el = $(this);
-            var id = el.data('id');
-            var role = el.data('role');
-            optsArr.push({
-                id: id,
-                text: role
+    PYO.initializeToField = function (containerSel, optionsSel) {
+        if ($(containerSel).length) {
+            var container = $(containerSel);
+            var select = container.find('input.token-value');
+            var opts = $(optionsSel);
+            var selectAll = container.find('.bulk-tokens .add-all');
+            var selectNone = container.find('.bulk-tokens .remove-all');
+            var optsArr = [];
+            opts.each(function () {
+                var el = $(this);
+                var id = el.data('id');
+                var role = el.data('role');
+                var name = el.data('name');
+                optsArr.push({
+                    id: id,
+                    text: el.closest('.elder').hasClass('teacher') && name ? name : role
+                });
             });
-        });
 
-        select.select2({
-            multiple: true,
-            data: optsArr,
-            dropdownCssClass: 'token-suggest',
-            formatResultCssClass: function () { return 'option'; }
-        });
+            select.select2({
+                multiple: true,
+                data: optsArr,
+                dropdownCssClass: 'token-suggest',
+                formatResultCssClass: function () { return 'option'; }
+            });
 
-        selectAll.click(function (e) {
-            e.preventDefault();
-            $(this).blur();
-            select.select2('data', optsArr);
-        });
+            selectAll.click(function (e) {
+                e.preventDefault();
+                $(this).blur();
+                select.select2('data', optsArr);
+            });
 
-        selectNone.click(function (e) {
-            e.preventDefault();
-            $(this).blur();
-            select.select2('data', '');
-        });
+            selectNone.click(function (e) {
+                e.preventDefault();
+                $(this).blur();
+                select.select2('data', '');
+            });
+        }
     };
 
     PYO.markPostsRead = function () {
@@ -400,7 +403,8 @@ var PYO = (function (PYO, $) {
         posts.filter('.unread').removeClass('unread');
 
         PYO.watchForReadPosts();
-        PYO.initializeToField();
+        PYO.initializeToField('.post-add-form .message-form', '.village-info .elder-list.family .elder .vcard.mobile .fn');
+        PYO.initializeToField('.post-add-form .conversation-form', '.village-info .parent .vcard.mobile .fn, .village-info .teacher .vcard.online .fn');
         PYO.submitPost('.village-feed');
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();

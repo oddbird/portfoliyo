@@ -65,24 +65,7 @@
             <a href="#" class="remove-all">remove all</a>
           </div>
         {% endif %}
-        {% for elder in elders %}
-          <span class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
-            <input class="token-toggle" type="checkbox" name="elder-{{ elder.id }}" id="elder-{{ elder.id }}" value="{{ elder.id }}" {% if not elder.school_staff %}checked{% endif %} />
-            <span class="token-body">
-              <label class="token-status" for="elder-{{ elder.id }}">present</label>
-              <span class="token-text">{{ elder.role_in_context }}</span>
-            </span>
-          </span>
-        {% endfor %}
-        <input type="text" id="with-input" name="with" value="" placeholder="Add participants..." class="token-value" />
-        <ul class="token-suggest">
-          <li><a href="#" class="option selected"><b>su</b>ggestion 1</a></li>
-          <li><a href="#" class="option"><b>su</b>ggestion 2</a></li>
-          <li><a href="#" class="option"><b>su</b>ggestion 3</a></li>
-          <li><a href="#" class="option"><b>su</b>ggestion 4</a></li>
-          <li><a href="#" class="option"><b>su</b>ggestion 5</a></li>
-          <li><a href="#" class="option"><b>su</b>ggestion 6</a></li>
-        </ul>
+        <input type="hidden" id="with-input" name="with-target" value="" data-placeholder="Add participants..." class="token-value" />
       </div>
     </div>
 
