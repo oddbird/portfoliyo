@@ -98,7 +98,8 @@ def redis(request):
     from portfoliyo import redis
 
     _disabled_client = redis.client
-    if request.param == 'real':
+    redis_type = getattr(request, 'param', 'fake')
+    if redis_type == 'real':
         # if we're using real Redis, _orig_client will be a real Redis client.
         # It's faster not to instantiate a new redis client for each test.
         client = redis._orig_client
