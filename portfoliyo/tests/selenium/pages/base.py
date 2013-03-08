@@ -23,12 +23,6 @@ class BasePage(page.Page):
 
     def click_logout(self):
         logout = self.selenium.find_element(*self.logout_locator)
-        # @@@ JS workaround because move_to_element (mouseover) does not
-        # trigger :hover pseudoclass to show submenu in Firefox Driver
-        javascript = '$(".meta .useractions").show();'
-        self.selenium.execute_script(javascript)
-        WebDriverWait(self.selenium, self.timeout).until(
-            lambda s: logout.is_displayed())
         logout.click()
         from . import home
         return home.HomePage(self.selenium)
