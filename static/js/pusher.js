@@ -2,6 +2,7 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
+    var village = $('.village');
     var nav = $('.village-nav');
 
     PYO.listenForPosts = function () {
@@ -17,7 +18,7 @@ var PYO = (function (PYO, $) {
                     incrementUnread(newPostData.student_id);
                 }
             };
-            var oldPost = $('.village-feed').find('.post.mine[data-author-sequence="' + newPostData.author_sequence_id + '"]');
+            var oldPost = PYO.feed.find('.post.mine[data-author-sequence="' + newPostData.author_sequence_id + '"]');
             if (oldPost.length) {
                 if (oldPost.hasClass('pending')) {
                     PYO.replacePost(newPostData, oldPost);
@@ -51,18 +52,16 @@ var PYO = (function (PYO, $) {
 
         PYO.channel.bind('message_posted', function (data) {
             if (data && data.objects && data.objects.length) {
-                var feed = $('.village-feed');
-
                 $.each(data.objects, function () {
                     if (this.student_id) {
-                        if (feed.length && PYO.activeStudentId && this.student_id === PYO.activeStudentId) {
+                        if (PYO.feed.length && PYO.activeStudentId && this.student_id === PYO.activeStudentId) {
                             addNewPost(this, true);
                         } else if (this.author_id !== PYO.activeUserId) {
                             incrementUnread(this.student_id);
                         }
                     }
 
-                    if (this.group_id && feed.length && !PYO.activeStudentId && PYO.activeGroupId && this.group_id === PYO.activeGroupId) {
+                    if (this.group_id && PYO.feed.length && !PYO.activeStudentId && PYO.activeGroupId && this.group_id === PYO.activeGroupId) {
                         addNewPost(this);
                     }
                 });
@@ -259,7 +258,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.preventPusherAfterFormSubmit = function () {
-        $('.village').on('submit', 'form', function (e) {
+        village.on('submit', 'form', function (e) {
             if (!e.isDefaultPrevented()) {
                 PYO.pusher.unsubscribe('private-user_' + PYO.activeUserId);
             }
@@ -267,7 +266,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializePusher = function () {
-        PYO.pusherKey = $('.village').data('pusher-key');
+        PYO.pusherKey = village.data('pusher-key');
         if (PYO.pusherKey) {
             PYO.pusher = new Pusher(PYO.pusherKey, {encrypted: true});
             if (PYO.activeUserId) {

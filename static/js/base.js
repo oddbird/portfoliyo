@@ -8,6 +8,9 @@ var PYO = (function (PYO, $) {
     };
 
     var nav = $('.village-nav');
+    var village = $('.village');
+    var villageContent = $('.village-content');
+    var body = $('body');
 
     // Store keycode variables for easier readability
     PYO.keycodes = {
@@ -32,14 +35,13 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.updatePageHeight = function () {
-        if ($('.village').length) {
-            var page = $('.village');
+        if (village.length) {
             var headerHeight = $('div[role="banner"]').outerHeight();
             var footerHeight = $('footer').outerHeight();
             var pageHeight;
             var updateHeight = function () {
                 pageHeight = $(window).height() - headerHeight - footerHeight;
-                page.css('height', pageHeight.toString() + 'px');
+                village.css('height', pageHeight.toString() + 'px');
             };
             updateHeight();
 
@@ -55,21 +57,21 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.updateContentHeight = function (container, body, scroll) {
+    PYO.updateContentHeight = function (container, content, scroll) {
         if ($(container).length) {
             $(container).each(function () {
-                var c = $(this);
-                var b = c.find(body);
+                var context = $(this);
+                var c = context.find(content);
                 var scrolled;
-                if (b.length) {
-                    var siblings = b.siblings();
+                if (c.length) {
+                    var siblings = c.siblings();
                     var siblingHeight = 0;
                     siblings.each(function () {
                         siblingHeight = siblingHeight + $(this).outerHeight();
                     });
-                    var newHeight = c.height() - siblingHeight;
+                    var newHeight = context.height() - siblingHeight;
                     if (scroll) { scrolled = PYO.scrolledToBottom(); }
-                    b.css('height', newHeight.toString() + 'px');
+                    c.css('height', newHeight.toString() + 'px');
                     if (scrolled) { PYO.scrollToBottom(); }
                 }
             });
@@ -77,7 +79,6 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.pageAjaxError = function (url) {
-        var container = $('.village-content');
         var msg = PYO.tpl('ajax_error_msg', {
             error_class: 'pjax-error',
             message: 'Unable to load the requested page.'
@@ -87,29 +88,29 @@ var PYO = (function (PYO, $) {
             msg.remove();
             PYO.pageAjaxLoad(url);
         });
-        container.loadingOverlay('remove');
-        container.html(msg);
+        villageContent.loadingOverlay('remove');
+        villageContent.html(msg);
     };
 
     PYO.pageAjaxLoad = function (url) {
         if (pageAjax.XHR) { pageAjax.XHR.abort(); }
 
-        var container = $('.village-content');
         var count = ++pageAjax.count;
 
         if (url) {
-            container.loadingOverlay();
-            container.find('.feed-error, .pjax-error').remove();
+            villageContent.loadingOverlay();
+            villageContent.find('.feed-error, .pjax-error').remove();
 
             pageAjax.XHR = $.get(url, function (response) {
                 if (response && response.html && pageAjax.count === count) {
                     var newPage = $($.parseHTML(response.html));
-                    container.replaceWith(newPage);
+                    villageContent.replaceWith(newPage);
+                    villageContent = $('.village-content');
                     newPage.find('.details').not('.post .details').html5accordion();
                     newPage.find('input[placeholder], textarea[placeholder]').placeholder();
                     PYO.initializePage();
                 }
-                container.loadingOverlay('remove');
+                villageContent.loadingOverlay('remove');
                 pageAjax.XHR = null;
             }).error(function (request, status) {
                 if (status !== 'abort') {
@@ -125,7 +126,7 @@ var PYO = (function (PYO, $) {
             var History = window.History;
 
             if (History.enabled) {
-                $('body').on('click', '.ajax-link', function (e) {
+                body.on('click', '.ajax-link', function (e) {
                     var el = $(this);
                     if (e.which === 2 || e.metaKey) {
                         return true;
@@ -168,7 +169,7 @@ var PYO = (function (PYO, $) {
     PYO.detectFlashSupport = function (container) {
         if ($(container).length) {
             if (Pusher && Pusher.TransportType !== 'native' && FlashDetect && !FlashDetect.versionAtLeast(10)) {
-                $('#messages').messages('add', {
+                PYO.msgs.messages('add', {
                     tags: 'warning',
                     message: 'This site requires Flash Player version 10.0.0 or higher to display live updates. Refresh your browser page to see new posts, or <a href="http://get.adobe.com/flashplayer/" target="_blank">download Flash Player</a>.'
                 }, {escapeHTML: false});
@@ -489,7 +490,7 @@ var PYO = (function (PYO, $) {
 
     PYO.addUndoMsg = function (type, id, name) {
         var typeCap = type.toString().charAt(0).toUpperCase() + type.toString().substring(1);
-        var msg = $('#messages').messages('add', {
+        var msg = PYO.msgs.messages('add', {
             tags: 'success undo-msg',
             message: typeCap + " '" + name + "' removed. <a href='#' class='undo'>Undo</a>."
         }, {escapeHTML: false});
@@ -502,7 +503,7 @@ var PYO = (function (PYO, $) {
             if (message.data('count')) { $.doTimeout('msg-' + message.data('count')); }
             message.find('.body').html(typeCap + " '" + name + "' restored.");
             // Re-attach timers to new success message (see django-messages-ui)
-            $('#messages').messages('bindHandlers', message);
+            PYO.msgs.messages('bindHandlers', message);
         });
     };
 
@@ -596,8 +597,10 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializePage = function () {
-        PYO.activeStudentId = $('.village-content').data('student-id');
-        PYO.activeGroupId = $('.village-content').data('group-id');
+        PYO.activeStudentId = villageContent.data('student-id');
+        PYO.activeGroupId = villageContent.data('group-id');
+        PYO.feed = $('.village-feed');
+        PYO.feedPosts = PYO.feed.find('.feed-posts');
         PYO.updateContentHeight('.village-content', '.village-body');
         PYO.updateContentHeight('.elder-list', '.itemlist');
         PYO.updateNavActiveClasses();
@@ -610,7 +613,7 @@ var PYO = (function (PYO, $) {
         if ($('#edit-student-form').length) { PYO.disableStudentOwnerRemoval('#edit-student-form'); }
         if ($('#add-group-form').length) { PYO.setAddGroupButtonText('#add-group-form'); }
         if ($('#edit-elder-form').length) { PYO.setPhoneChangedClass('#edit-elder-form'); }
-        if ($('.village-feed').length) { PYO.initializeFeed(); }
+        if (PYO.feed.length) { PYO.initializeFeed(); }
         PYO.formFocus();
         PYO.updateContentHeight('.village-feed', '.feed-posts');
     };
