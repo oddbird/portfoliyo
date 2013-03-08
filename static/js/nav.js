@@ -259,7 +259,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.showActiveItemRemovedMsg = function (item, disable_form) {
-        $('#messages').messages('add', {
+        PYO.msgs.messages('add', {
             tags: 'warning',
             message: 'The ' + item + ' you are viewing has been removed. Any further changes will be lost. Please <a href="/">reload your page</a>.'
         }, {escapeHTML: false});
@@ -271,7 +271,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.updateNavActiveClasses = function (container) {
-        var context = container ? container : $('.village-nav');
+        var context = container ? container : nav;
         var links = context.find('.ajax-link').removeClass('active');
 
         if (links.length) {
@@ -291,7 +291,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializeNav = function () {
-        if ($('.village-nav').length) {
+        if (nav.length) {
             PYO.navHandlers();
             if (PYO.activeStudentId || PYO.activeGroupId || $('#add-student-form').length) {
                 PYO.fetchStudents();

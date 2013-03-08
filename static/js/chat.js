@@ -2,6 +2,8 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
+    var nav = $('.village-nav');
+
     var postAjax = {
         XHR: {},
         count: 0
@@ -11,17 +13,15 @@ var PYO = (function (PYO, $) {
     var backlogHasMore;
 
     PYO.scrollToBottom = function () {
-        if ($('.feed-posts').length) {
-            var feed = $('.feed-posts');
-            var height = parseInt(feed.get(0).scrollHeight, 10);
-            feed.scrollTop(height).scroll();
+        if (PYO.feedPosts.length) {
+            var height = parseInt(PYO.feedPosts.get(0).scrollHeight, 10);
+            PYO.feedPosts.scrollTop(height).scroll();
         }
     };
 
     PYO.scrolledToBottom = function () {
-        var feed = $('.feed-posts');
         var bottom = false;
-        if (feed.length && feed.get(0).scrollHeight - feed.scrollTop() - feed.outerHeight() <= 50) {
+        if (PYO.feedPosts.length && PYO.feedPosts.get(0).scrollHeight - PYO.feedPosts.scrollTop() - PYO.feedPosts.outerHeight() <= 50) {
             bottom = true;
         }
         return bottom;
@@ -37,15 +37,14 @@ var PYO = (function (PYO, $) {
 
     PYO.addPost = function (data) {
         if (data) {
-            var feedPosts = $('.village-feed .feed-posts');
-            // @@@ var instructions = feedPosts.find('.howto');
+            // @@@ var instructions = PYO.feedPosts.find('.howto');
             var posts = PYO.renderPost(data);
             posts.find('.details').html5accordion();
             // if (instructions.length) { instructions.before(posts); }
             // else {
-            feedPosts.append(posts);
+            PYO.feedPosts.append(posts);
             // }
-            PYO.authorPosts = feedPosts.find('.post.mine').length;
+            PYO.authorPosts = PYO.feedPosts.find('.post.mine').length;
             return posts;
         }
     };
@@ -65,10 +64,9 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr) {
-        var feed = $('.village-feed');
         var textarea = $('#message-text');
-        var author = feed.data('author');
-        var role = feed.data('author-role');
+        var author = PYO.feed.data('author');
+        var role = PYO.feed.data('author-role');
         var today = new Date();
         var hour = today.getHours();
         var minute = today.getMinutes();
@@ -98,10 +96,9 @@ var PYO = (function (PYO, $) {
         return postObj;
     };
 
-    PYO.submitPost = function (container) {
-        if ($(container).length) {
-            var feed = $(container);
-            var context = feed.closest('.village');
+    PYO.submitPost = function () {
+        if (PYO.feed.length) {
+            var context = PYO.feed.closest('.village');
             var form = context.find('form.message-form');
             var button = form.find('.action-post');
             var textarea = form.find('#message-text');
@@ -111,7 +108,7 @@ var PYO = (function (PYO, $) {
                 if (textarea.val().length) {
                     var text = $.trim(textarea.val());
                     var author_sequence_id = (PYO.authorPosts || 0) + 1;
-                    var url = feed.data('post-url');
+                    var url = PYO.feed.data('post-url');
                     var count = ++postAjax.count;
                     var postData = [
                         { name: 'text', value: text },
@@ -154,7 +151,7 @@ var PYO = (function (PYO, $) {
                     }
 
                     textarea.val('').change();
-                    // @@@ feed.find('.howto').remove();
+                    // @@@ PYO.feed.find('.howto').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                     form.find('.to-field .bulk-tokens .add-all').click();
@@ -175,11 +172,10 @@ var PYO = (function (PYO, $) {
 
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
         if (response && response.objects && response.objects.length) {
-            var feed = $('.village-feed');
             $.each(response.objects, function () {
-                feed.trigger('successful-post', {smsRecipients: this.num_sms_recipients, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
+                PYO.feed.trigger('successful-post', {smsRecipients: this.num_sms_recipients, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
-                    var oldPost = feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
+                    var oldPost = PYO.feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
                     if (oldPost.length) { PYO.replacePost(this, oldPost); }
                 }
             });
@@ -219,8 +215,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.resendPost = function (post) {
-        var feed = $('.village-feed');
-        var url = feed.data('post-url');
+        var url = PYO.feed.data('post-url');
         var author_sequence_id = post.data('author-sequence');
         var text = $.trim(post.find('.post-text').text());
         var postData = {
@@ -309,9 +304,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.markPostsRead = function () {
-        var feed = $('.village-feed');
-        var nav = $('.village-nav');
-        var posts = feed.find('.post.unread');
+        var posts = PYO.feed.find('.post.unread');
 
         nav.find('.student .listitem-select[data-id="' + PYO.activeStudentId + '"] .unread').addClass('zero').text('0');
 
@@ -329,7 +322,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.watchForReadPosts = function () {
-        $('.feed-posts').scroll(function () {
+        PYO.feedPosts.scroll(function () {
             $.doTimeout('scroll', 150, function () {
                 if (PYO.scrolledToBottom()) {
                     PYO.markPostsRead();
@@ -339,11 +332,9 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.fetchBacklog = function () {
-        var feed = $('.village-feed');
-        var backlog = feed.find('.feed-posts');
-        var feedStatus = backlog.find('.feedstatus');
-        var url = feed.data('posts-url');
-        var timestamp = backlog.find('.post').first().find('time.pubdate').attr('datetime');
+        var feedStatus = PYO.feedPosts.find('.feedstatus');
+        var url = PYO.feed.data('posts-url');
+        var timestamp = PYO.feedPosts.find('.post').first().find('time.pubdate').attr('datetime');
         var postData = {
             order_by: '-timestamp',
             timestamp__lt: timestamp
@@ -360,11 +351,11 @@ var PYO = (function (PYO, $) {
                     data.objects.reverse();
                     var posts = PYO.renderPost(data);
                     posts.find('.details').html5accordion();
-                    var scrollBottom = backlog.get(0).scrollHeight - backlog.scrollTop() - backlog.outerHeight();
+                    var scrollBottom = PYO.feedPosts.get(0).scrollHeight - PYO.feedPosts.scrollTop() - PYO.feedPosts.outerHeight();
                     feedStatus.after(posts);
-                    var scrollTo = backlog.get(0).scrollHeight - backlog.outerHeight() - scrollBottom;
-                    backlog.scrollTop(scrollTo);
-                    PYO.authorPosts = backlog.find('.post.mine').length;
+                    var scrollTo = PYO.feedPosts.get(0).scrollHeight - PYO.feedPosts.outerHeight() - scrollBottom;
+                    PYO.feedPosts.scrollTop(scrollTo);
+                    PYO.authorPosts = PYO.feedPosts.find('.post.mine').length;
                     if (data.meta) { backlogHasMore = data.meta.more; }
                     if (!backlogHasMore) { feedStatus.removeClass('has-more'); }
                 }
@@ -376,16 +367,15 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.scrollForBacklog = function () {
-        var feed = $('.feed-posts');
         var scrolledToTop = function () {
             var top = false;
-            if (feed.scrollTop() <= 80) {
+            if (PYO.feedPosts.scrollTop() <= 80) {
                 top = true;
             }
             return top;
         };
-        backlogHasMore = feed.data('more');
-        feed.scroll(function () {
+        backlogHasMore = PYO.feedPosts.data('more');
+        PYO.feedPosts.scroll(function () {
             $.doTimeout('scroll', 150, function () {
                 if (scrolledToTop() && !backlogXHR && backlogHasMore) {
                     PYO.fetchBacklog();
@@ -395,8 +385,7 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.initializeFeed = function () {
-        var feed = $('.village-feed');
-        var posts = feed.find('.post');
+        var posts = PYO.feed.find('.post');
 
         posts.find('.details').html5accordion();
         PYO.authorPosts = posts.filter('.mine').length;
@@ -405,7 +394,7 @@ var PYO = (function (PYO, $) {
         PYO.watchForReadPosts();
         PYO.initializeToField('.post-add-form .message-form', '.village-info .elder-list.family .elder .vcard.mobile .fn');
         PYO.initializeToField('.post-add-form .conversation-form', '.village-info .parent .vcard.mobile .fn, .village-info .teacher .vcard.online .fn');
-        PYO.submitPost('.village-feed');
+        PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
         PYO.scrollForBacklog();

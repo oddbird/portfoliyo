@@ -3,9 +3,12 @@ var PYO = (function (PYO, $) {
     'use strict';
 
     $(function () {
+        // vars
+        PYO.msgs = $('#messages');
+
         // plugins
         $('input[placeholder], textarea[placeholder]').placeholder();
-        $('#messages').messages({
+        PYO.msgs.messages({
             handleAjax: true,
             closeCallback: function (el) {
                 el.addClass('closed');
