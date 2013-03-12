@@ -1,0 +1,5 @@
+{{#each suggestions}}
+<li>
+  <a href="#" class="option{{#if newSuggestion}} new{{/if}}" {{#if id}}data-id="{{id}}" {{/if}}{{#if type}}data-type="{{type}}" {{/if}}data-name="{{name}}"{{#if responseDataName}}{{#if responseDataVal}} data-{{responseDataName}}="{{responseDataVal}}"{{/if}}{{/if}}>{{preText}}<b>{{typedText}}</b>{{postText}}{{#if displayType}} <i>[{{displayType}}]</i>{{else}}{{#if type}} <i>[{{type}}]</i>{{/if}}{{/if}}</a>
+</li>
+{{/each}}

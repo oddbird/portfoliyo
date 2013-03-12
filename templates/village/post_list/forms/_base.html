@@ -28,7 +28,17 @@
             <a href="#" class="remove-all">remove all</a>
           </div>
         {% endif %}
-        <input type="hidden" id="to-input" name="sms-target" value="{% for elder in elders|sms_eligible %}{{ elder.id }}{% if not forloop.last %},{% endif %}{% endfor %}" data-placeholder="Add recipients..." class="token-value" />
+        {% for elder in elders|sms_eligible %}
+          <span class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
+            <input class="token-toggle" type="checkbox" name="elder-{{ elder.id }}" id="elder-{{ elder.id }}" value="{{ elder.id }}" checked />
+            <span class="token-body">
+              <label class="token-status sms" for="elder-{{ elder.id }}">sms</label>
+              <span class="token-text">{{ elder.role_in_context }}</span>
+            </span>
+          </span>
+        {% endfor %}
+        <input type="text" id="to-input" name="to" value="" placeholder="Add recipients..." class="token-value" />
+        <ul class="token-suggest"></ul>
       </div>
     </div>
     {% endblock %}

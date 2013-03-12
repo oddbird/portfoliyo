@@ -266,40 +266,28 @@ var PYO = (function (PYO, $) {
     PYO.initializeToField = function (containerSel, optionsSel) {
         if ($(containerSel).length) {
             var container = $(containerSel);
-            var select = container.find('input.token-value');
-            var opts = $(optionsSel);
             var selectAll = container.find('.bulk-tokens .add-all');
             var selectNone = container.find('.bulk-tokens .remove-all');
-            var optsArr = [];
-            opts.each(function () {
-                var el = $(this);
-                var id = el.data('id');
-                var role = el.data('role');
-                var name = el.data('name');
-                optsArr.push({
-                    id: id,
-                    text: el.closest('.elder').hasClass('teacher') && name ? name : role
-                });
+
+            container.customAutocomplete({
+                textbox: 'input.token-value',
+                suggestionList: '.token-suggest',
+                inputList: '.tokens-input',
+                triggerSubmit: null,
+                inputsNeverRemoved: true
             });
 
-            select.select2({
-                multiple: true,
-                data: optsArr,
-                dropdownCssClass: 'token-suggest',
-                formatResultCssClass: function () { return 'option'; }
-            });
+            // selectAll.click(function (e) {
+            //     e.preventDefault();
+            //     $(this).blur();
+            //     select.select2('data', optsArr);
+            // });
 
-            selectAll.click(function (e) {
-                e.preventDefault();
-                $(this).blur();
-                select.select2('data', optsArr);
-            });
-
-            selectNone.click(function (e) {
-                e.preventDefault();
-                $(this).blur();
-                select.select2('data', '');
-            });
+            // selectNone.click(function (e) {
+            //     e.preventDefault();
+            //     $(this).blur();
+            //     select.select2('data', '');
+            // });
         }
     };
 
