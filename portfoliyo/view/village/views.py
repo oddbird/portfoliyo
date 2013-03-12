@@ -480,7 +480,7 @@ def create_post(request, student_id=None, group_id=None):
 
     data = {
         'success': True,
-        'posts': [
+        'objects': [
             serializers.post2dict(
                 post, author_sequence_id=sequence_id, unread=False, mine=True)
             ],

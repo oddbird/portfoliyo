@@ -982,7 +982,7 @@ class TestCreatePost(object):
             self.url(rel.student), {'text': 'foo'}, user=rel.elder.user)
 
         assert response.json['success']
-        posts = response.json['posts']
+        posts = response.json['objects']
         assert len(posts) == 1
         post = posts[0]
         assert post['text'] == 'foo'
@@ -1048,7 +1048,7 @@ class TestCreatePost(object):
                 user=rel.elder.user,
                 )
 
-        post = response.json['posts'][0]
+        post = response.json['objects'][0]
         assert post['sms_recipients'] == 'Recipient'
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
@@ -1076,7 +1076,7 @@ class TestCreatePost(object):
                 user=rel.elder.user,
                 )
 
-        post = response.json['posts'][0]
+        post = response.json['objects'][0]
         assert post['sms_recipients'] == 'Recipient'
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
@@ -1102,7 +1102,7 @@ class TestCreatePost(object):
                 user=rel.elder.user,
                 )
 
-        post = response.json['posts'][0]
+        post = response.json['objects'][0]
         assert post['sms_recipients'] == 'Recipient'
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
@@ -1116,7 +1116,7 @@ class TestCreatePost(object):
             self.url(group=group), {'text': 'foo'}, user=group.owner.user)
 
         assert response.json['success']
-        posts = response.json['posts']
+        posts = response.json['objects']
         assert len(posts) == 1
         post = posts[0]
         assert post['text'] == 'foo'
@@ -1132,7 +1132,7 @@ class TestCreatePost(object):
             self.url(), {'text': 'foo'}, user=elder.user)
 
         assert response.json['success']
-        posts = response.json['posts']
+        posts = response.json['objects']
         assert len(posts) == 1
         post = posts[0]
         assert post['text'] == 'foo'
@@ -1150,7 +1150,7 @@ class TestCreatePost(object):
             user=rel.elder.user,
             )
 
-        assert response.json['posts'][0]['author_sequence_id'] == '5'
+        assert response.json['objects'][0]['author_sequence_id'] == '5'
 
 
     def test_length_limit(self, no_csrf_client):
