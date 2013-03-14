@@ -281,7 +281,7 @@ var PYO = (function (PYO, $) {
                 selectNone: '.bulk-tokens .remove-all'
             });
 
-            container.on('click', '.tokens-input', function (e) {
+            container.on('click', '.tokens-input', function () {
                 container.find('input.token-value').focus();
             });
         }

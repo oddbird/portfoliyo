@@ -79,7 +79,7 @@ var PYO = (function (PYO, $) {
                 suggestionList.hide().html(filteredSuggestions);
                 // Adds ".selected" to first autocomplete suggestion.
                 if (!(suggestionList.find('.selected').length)) {
-                    suggestionList.find('li:first-child a').addClass('selected');
+                    suggestionList.find('li:first-child .option').addClass('selected');
                 }
             }
         };
@@ -92,7 +92,7 @@ var PYO = (function (PYO, $) {
                 var thisSuggestionType = $(this).find('.option').data('type') || options.inputType;
 
                 if (thisSuggestionText && !options.caseSensitive) { thisSuggestionText = thisSuggestionText.toString().toLowerCase(); }
-                if ($(this).find('a').hasClass('new')) {
+                if ($(this).find('.option').hasClass('new')) {
                     // Checked inputs of the same type, with the same text
                     var existingInputs = inputs.filter('[name="' + thisSuggestionType + '"]:checked').filter(function () {
                         return $(this).closest(options.inputWrapper).find(options.inputText).text() === thisSuggestionText;
@@ -290,6 +290,40 @@ var PYO = (function (PYO, $) {
                         removeFakePlaceholder();
                     }
                 }
+                // LEFT or DELETE highlight the last input if cursor is at the beginning of the textbox
+                if ((e.keyCode === keycodes.LEFT || e.keyCode === keycodes.BACKSPACE || e.keyCode === keycodes.RIGHT) && textbox.get(0).selectionStart === 0) {
+                    var wrappers = inputs.filter(':checked').closest(options.inputWrapper);
+                    if (wrappers.filter('.selected').length) {
+                        var selected = wrappers.filter('.selected').first();
+                        var index = wrappers.index(selected);
+                        // Move the selected one LEFT
+                        if (e.keyCode === keycodes.LEFT) {
+                            if (!selected.is(wrappers.first())) {
+                                wrappers.removeClass('selected');
+                                wrappers.eq(index - 1).addClass('selected');
+                            }
+                        }
+                        // Move the selected one RIGHT
+                        if (e.keyCode === keycodes.RIGHT) {
+                            wrappers.removeClass('selected');
+                            if (!selected.is(wrappers.last())) {
+                                wrappers.eq(index + 1).addClass('selected');
+                            }
+                        }
+                        // Uncheck the selected input on BACKSPACE
+                        if (e.keyCode === keycodes.BACKSPACE) {
+                            wrappers.removeClass('selected');
+                            selected.find(options.inputs).prop('checked', false).change();
+                        }
+                        e.preventDefault();
+                        suggestionList.hide();
+                        return;
+                    } else if (e.keyCode === keycodes.LEFT || e.keyCode === keycodes.BACKSPACE) {
+                        inputs.filter(':checked').last().closest(options.inputWrapper).addClass('selected');
+                        suggestionList.hide();
+                        return;
+                    }
+                }
                 // Submit form if textbox is empty and form-actions are visible
                 if (e.keyCode === keycodes.ENTER && textbox.val() === '' && formActions.is(':visible') && !options.autoSubmit) {
                     e.preventDefault();
@@ -318,13 +352,13 @@ var PYO = (function (PYO, $) {
                         if (e.keyCode === keycodes.UP) {
                             e.preventDefault();
                             if (!suggestionList.find('.selected').parent().is(':first-child')) {
-                                suggestionList.find('.selected').removeClass('selected').parent().prev().children('a').addClass('selected');
+                                suggestionList.find('.selected').removeClass('selected').parent().prev().children('.option').addClass('selected');
                             }
                         }
                         if (e.keyCode === keycodes.DOWN) {
                             e.preventDefault();
                             if (!suggestionList.find('.selected').parent().is(':last-child')) {
-                                suggestionList.find('.selected').removeClass('selected').parent().next().children('a').addClass('selected');
+                                suggestionList.find('.selected').removeClass('selected').parent().next().children('.option').addClass('selected');
                             }
                         }
                         // ENTER selects the "active" suggestion, if exists.
@@ -395,6 +429,7 @@ var PYO = (function (PYO, $) {
                     removeFakePlaceholder();
                 }
                 window.setTimeout(hideList, 150);
+                context.find(options.inputWrapper).filter('.selected').removeClass('selected');
             });
 
         // Optionally give textbox initial focus on page-load
@@ -406,7 +441,7 @@ var PYO = (function (PYO, $) {
             // Adds ".selected" to suggestion on mouseover, removing ".selected" from other suggestions
             mouseover: function () {
                 var thisSuggestion = $(this).addClass('selected');
-                thisSuggestion.parent('li').siblings('li').find('a').removeClass('selected');
+                thisSuggestion.parent('li').siblings('li').find('.option').removeClass('selected');
             },
             // Prevent the suggestion list from being hidden (by textbox blur event) when clicking a suggestion
             mousedown: function () {
