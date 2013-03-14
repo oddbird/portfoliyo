@@ -27,6 +27,8 @@ var PYO = (function (PYO, $) {
         var origNewInputs = newInputList.html();
         var inputs = inputList.add(newInputList).find(options.inputs);
         var newInputTextbox = newInputList.find(options.newInputTextbox);
+        var selectAll = context.find(options.selectAll);
+        var selectNone = context.find(options.selectNone);
         var placeholder = textbox.attr('placeholder');
         var prefix = options.prefix;
         var newInputCounter = 1;
@@ -69,6 +71,16 @@ var PYO = (function (PYO, $) {
                         }
                     }
                 });
+            }
+
+            // Refresh suggestions when an input changes
+            if (newSuggestions) {
+                filterSuggestions();
+                suggestionList.hide().html(filteredSuggestions);
+                // Adds ".selected" to first autocomplete suggestion.
+                if (!(suggestionList.find('.selected').length)) {
+                    suggestionList.find('li:first-child a').addClass('selected');
+                }
             }
         };
 
@@ -502,14 +514,6 @@ var PYO = (function (PYO, $) {
                 e.preventDefault();
                 $(this).closest(options.inputWrapper).remove();
                 inputs = inputList.add(newInputList).find(options.inputs);
-                if (newSuggestions) {
-                    filterSuggestions();
-                    suggestionList.hide().html(filteredSuggestions);
-                    // Adds ".selected" to first autocomplete suggestion.
-                    if (!(suggestionList.find('.selected').length)) {
-                        suggestionList.find('li:first-child a').addClass('selected');
-                    }
-                }
                 inputsChanged();
             });
         }
@@ -565,6 +569,22 @@ var PYO = (function (PYO, $) {
                 }
             });
         });
+
+        selectAll.click(function (e) {
+            e.preventDefault();
+            $(this).blur();
+            inputs.each(function () {
+                $(this).prop('checked', true).change();
+            });
+        });
+
+        selectNone.click(function (e) {
+            e.preventDefault();
+            $(this).blur();
+            inputs.each(function () {
+                $(this).prop('checked', false).change();
+            });
+        });
     };
 
     // Store keycode variables for easier readability
@@ -615,7 +635,9 @@ var PYO = (function (PYO, $) {
         prefix: '',                                     // Prefix to apply to each input ID (to avoid ID duplication when using multiple times on one page)
         noInputsNote: false,                            // Set ``true`` to add "none" when no there are no inputs
         extraDataName: null,                            // Additional key to be sent with ajax-request
-        extraDataFn: null                               // Function which returns additional value to be sent with ajax-request
+        extraDataFn: null,                              // Function which returns additional value to be sent with ajax-request
+        selectAll: null,                                // Selector for select-all button
+        selectNone: null                                // Selector for select-none button
     };
 
     return PYO;

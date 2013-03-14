@@ -263,11 +263,9 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeToField = function (containerSel, optionsSel) {
+    PYO.initializeToField = function (containerSel) {
         if ($(containerSel).length) {
             var container = $(containerSel);
-            var selectAll = container.find('.bulk-tokens .add-all');
-            var selectNone = container.find('.bulk-tokens .remove-all');
 
             container.customAutocomplete({
                 textbox: 'input.token-value',
@@ -278,20 +276,10 @@ var PYO = (function (PYO, $) {
                     context.find('#message-text').focus();
                 },
                 inputsNeverRemoved: true,
-                inputType: 'elder'
+                inputType: 'elder',
+                selectAll: '.bulk-tokens .add-all',
+                selectNone: '.bulk-tokens .remove-all'
             });
-
-            // selectAll.click(function (e) {
-            //     e.preventDefault();
-            //     $(this).blur();
-            //     select.select2('data', optsArr);
-            // });
-
-            // selectNone.click(function (e) {
-            //     e.preventDefault();
-            //     $(this).blur();
-            //     select.select2('data', '');
-            // });
         }
     };
 
@@ -384,8 +372,8 @@ var PYO = (function (PYO, $) {
         posts.filter('.unread').removeClass('unread');
 
         PYO.watchForReadPosts();
-        PYO.initializeToField('.post-add-form .message-form', '.village-info .elder-list.family .elder .vcard.mobile .fn');
-        PYO.initializeToField('.post-add-form .conversation-form', '.village-info .parent .vcard.mobile .fn, .village-info .teacher .vcard.online .fn');
+        PYO.initializeToField('.post-add-form .message-form');
+        PYO.initializeToField('.post-add-form .conversation-form');
         PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
