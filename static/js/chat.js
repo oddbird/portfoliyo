@@ -263,7 +263,7 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeToField = function (containerSel) {
+    PYO.initializeToField = function (containerSel, textareaSel) {
         if ($(containerSel).length) {
             var container = $(containerSel);
 
@@ -273,7 +273,7 @@ var PYO = (function (PYO, $) {
                 suggestionList: '.token-suggest',
                 inputList: '.tokens-input',
                 triggerSubmit: function (context) {
-                    context.find('#message-text').focus();
+                    context.find(textareaSel).focus();
                 },
                 inputsNeverRemoved: true,
                 inputType: 'elder',
@@ -372,8 +372,8 @@ var PYO = (function (PYO, $) {
         posts.filter('.unread').removeClass('unread');
 
         PYO.watchForReadPosts();
-        PYO.initializeToField('.post-add-form .message-form');
-        PYO.initializeToField('.post-add-form .conversation-form');
+        PYO.initializeToField('.post-add-form .message-form', '#message-text');
+        // PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text');
         PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
