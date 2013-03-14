@@ -3105,7 +3105,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   top: 0.31944rem;
 }
 
-.group-name, .groups-title {
+.group-name a, .groups-title {
+  padding: 0.31944rem;
   font-weight: bold;
   text-align: center;
 }
@@ -3114,13 +3115,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem;
-  padding: 0.31944rem;
   background: #fdf9ee;
   border-bottom: 1px solid #93a1a1;
 }
 
-.group-name {
-  padding: 0 1.91667rem;
+.group-name a {
+  display: block;
+  padding: 0.31944rem 2.23611rem;
+}
+.group-name a:link, .group-name a:visited {
+  color: inherit;
+}
+.group-name a:focus, .group-name a:hover, .group-name a:active {
+  color: #d33682;
 }
 
 .action-showgroups {
