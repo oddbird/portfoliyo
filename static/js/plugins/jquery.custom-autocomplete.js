@@ -323,7 +323,7 @@ var PYO = (function (PYO, $) {
                         suggestionList.hide();
                         return;
                     }
-                }
+                } else { inputs.closest(options.inputWrapper).removeClass('selected'); }
                 // Submit form if textbox is empty and form-actions are visible
                 if (e.keyCode === keycodes.ENTER && textbox.val() === '' && formActions.is(':visible') && !options.autoSubmit) {
                     e.preventDefault();
