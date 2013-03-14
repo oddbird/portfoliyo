@@ -4,7 +4,6 @@
 .dashboard {
   @extend %village-page;
   @extend %type;
-  li { @include adjust-leading-to(2); }
 }
 
 // ---------------------------------------------------------------------------

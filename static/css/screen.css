@@ -3078,11 +3078,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-top: 1.27778rem;
 }
 
-.dashboard li {
-  line-height: 46px;
-  line-height: 2.55556rem;
-}
-
 .listitem-select {
   display: block;
   position: relative;

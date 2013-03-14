@@ -1,14 +1,34 @@
 {% extends "village/_base.html" %}
 
-{% block village-title %}Welcome to Portfoliyo!{% endblock village-title %}
+{% block village-title %}
+  <span aria-hidden="true" class="icon-group"></span>
+  { group.name }
+{% endblock %}
 
 {% block village-content %}
 <div class="dashboard">
-  <ul>
-    <li>Create groups to keep your students organized.</li>
-    <li>Add students by printing sign-up directions for parents.</li>
-    <li>All your parent communication in one place.</li>
-    <li>Invite other teachers to the conversation.</li>
-  </ul>
+
+<ul class="stats">
+  <li><b>32</b> Students</li>
+  <li><b>14</b> Family Members</li>
+  <li><b>6</b> Teachers</li>
+</ul>
+
+<div class="posting">
+  <p>
+    <span class="select-village">Select a student village</span>
+    or
+    <a href="#" class="group-post-link">send a message to the entire group</a>.
+  </p>
 </div>
-{% endblock village-content %}
+
+<div class="activity">
+  <h3 class="activity-title">Recent Activity</h3>
+  <ol>
+    <li>Something happened</li>
+    <li>Other things</li>
+  </ol>
+</div>
+
+</div>
+{% endblock %}
