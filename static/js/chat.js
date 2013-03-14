@@ -280,6 +280,10 @@ var PYO = (function (PYO, $) {
                 selectAll: '.bulk-tokens .add-all',
                 selectNone: '.bulk-tokens .remove-all'
             });
+
+            container.on('click', '.tokens-input', function (e) {
+                container.find('input.token-value').focus();
+            });
         }
     };
 
