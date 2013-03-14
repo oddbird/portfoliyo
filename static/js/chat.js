@@ -271,10 +271,14 @@ var PYO = (function (PYO, $) {
 
             container.customAutocomplete({
                 textbox: 'input.token-value',
+                inputs: 'input.token-toggle',
                 suggestionList: '.token-suggest',
                 inputList: '.tokens-input',
-                triggerSubmit: null,
-                inputsNeverRemoved: true
+                triggerSubmit: function (context) {
+                    context.find('#message-text').focus();
+                },
+                inputsNeverRemoved: true,
+                inputType: 'elder'
             });
 
             // selectAll.click(function (e) {

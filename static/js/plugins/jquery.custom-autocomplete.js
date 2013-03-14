@@ -1,8 +1,3 @@
-/*jslint    browser:    true,
-            indent:     4,
-            confusion:  true */
-/*global    jQuery */
-
 /**
  * jQuery Custom Autocomplete 0.2.1
  *
@@ -12,7 +7,7 @@
  * Licensed under the New BSD License
  * See: http://www.opensource.org/licenses/bsd-license.php
  */
-(function ($) {
+var PYO = (function (PYO, $) {
 
     'use strict';
 
@@ -20,177 +15,223 @@
     var cache = {};
 
     $.fn.customAutocomplete = function (opts) {
-        var options = $.extend({}, $.fn.customAutocomplete.defaults, opts),
-            keycodes = $.fn.customAutocomplete.keycodes,
-            context = $(this),
-            textbox = context.find(options.textbox),
-            formActions = context.find(options.formActions),
-            suggestionList = context.find(options.suggestionList),
-            inputList = context.find(options.inputList),
-            newInputList = context.find(options.newInputList),
-            origInputs = inputList.html(),
-            origNewInputs = newInputList.html(),
-            inputs = inputList.add(newInputList).find(options.inputs),
-            newInputTextbox = newInputList.find(options.newInputTextbox),
-            placeholder = textbox.attr('placeholder'),
-            url = options.url,
-            prefix = options.prefix,
-            newInputCounter = 1,
-            newSuggestions,
-            filteredSuggestions,
-            typedText,
-            ajaxCalls = 0,
-            ajaxResponses = 0,
+        var options = $.extend({}, $.fn.customAutocomplete.defaults, opts);
+        var keycodes = $.fn.customAutocomplete.keycodes;
+        var context = $(this);
+        var textbox = context.find(options.textbox);
+        var formActions = context.find(options.formActions);
+        var suggestionList = context.find(options.suggestionList);
+        var inputList = context.find(options.inputList);
+        var newInputList = context.find(options.newInputList);
+        var origInputs = inputList.html();
+        var origNewInputs = newInputList.html();
+        var inputs = inputList.add(newInputList).find(options.inputs);
+        var newInputTextbox = newInputList.find(options.newInputTextbox);
+        var placeholder = textbox.attr('placeholder');
+        var prefix = options.prefix;
+        var newInputCounter = 1;
+        var ajaxCalls = 0;
+        var ajaxResponses = 0;
+        var newSuggestions, filteredSuggestions, typedText;
 
-            // Removes (faked) placeholder text from textbox
-            removeFakePlaceholder = function () {
-                if (textbox.val().indexOf(placeholder) !== -1) {
-                    textbox.val(null);
+        // Removes (faked) placeholder text from textbox
+        var removeFakePlaceholder = function () {
+            if (textbox.val().indexOf(placeholder) !== -1) {
+                textbox.val(null);
+            }
+            textbox.removeClass('placeholder');
+        };
+
+        // Submits form, adds no-inputs note, or shows/hides form-actions when inputs change
+        var inputsChanged = function () {
+            if (options.autoSubmit) {
+                options.triggerSubmit(context);
+            }
+
+            if (options.hideFormActions) {
+                if (inputList.html() !== origInputs && newInputList.html() !== origNewInputs) {
+                    formActions.fadeIn();
+                } else {
+                    formActions.fadeOut();
                 }
-                textbox.removeClass('placeholder');
-            },
+            }
 
-            // Submits form, adds no-inputs note, or shows/hides form-actions when inputs change
-            inputsChanged = function () {
-                if (options.autoSubmit) {
-                    options.triggerSubmit(context);
-                }
-
-                if (options.hideFormActions) {
-                    if (inputList.html() !== origInputs && newInputList.html() !== origNewInputs) {
-                        formActions.fadeIn();
+            if (options.noInputsNote) {
+                var noInputsNote = PYO.tpl('autocomplete_no_inputs', { prefix: prefix });
+                inputList.add(newInputList).each(function () {
+                    if ($(this).find(options.inputs).length) {
+                        $(this).find('.none').remove();
                     } else {
-                        formActions.fadeOut();
-                    }
-                }
-
-                if (options.noInputsNote) {
-                    var noInputsNote = ich.autocomplete_no_inputs({ prefix: prefix });
-                    inputList.add(newInputList).each(function () {
-                        if ($(this).find(options.inputs).length) {
-                            $(this).find('.none').remove();
+                        if ($(this).children('ul').length) {
+                            $(this).children('ul').append(noInputsNote);
                         } else {
-                            if ($(this).children('ul').length) {
-                                $(this).children('ul').append(noInputsNote);
-                            } else {
-                                $(this).append(noInputsNote);
-                            }
-                        }
-                    });
-                }
-            },
-
-            // Filter autocomplete suggestions, returning those that aren't duplicates.
-            filterSuggestions = function () {
-                filteredSuggestions = newSuggestions.filter(function () {
-                    var thisSuggestionID = $(this).find('a').data('id'),
-                        thisSuggestionName = $(this).find('a').data('name'),
-                        thisSuggestionType = $(this).find('a').data('type');
-                    if (thisSuggestionName && !options.caseSensitive) { thisSuggestionName = thisSuggestionName.toString().toLowerCase(); }
-                    if ($(this).find('a').hasClass('new')) {
-                        if (inputs.filter('[id^="id-' + prefix + '-' + thisSuggestionType + '-"]:checked').filter(function () { return $(this).closest(options.inputWrapper).find(options.inputText).text() === thisSuggestionName; }).length
-                                || inputs.filter('[id^="id-' + prefix + '-new' + thisSuggestionType + '-"]:checked').filter(function () { return $(this).closest(options.inputWrapper).find(options.inputText).text() === thisSuggestionName; }).length
-                                || newSuggestions.find('a:not(.new)').filter(function () { return $(this).data('name') === thisSuggestionName && $(this).data('type') === thisSuggestionType; }).length) {
-                            return false;
-                        } else {
-                            return true;
-                        }
-                    } else {
-                        if (inputs.filter('[value="' + thisSuggestionID + '"]:checked').length) {
-                            return false;
-                        } else {
-                            return true;
+                            $(this).append(noInputsNote);
                         }
                     }
                 });
-            },
+            }
+        };
 
-            // Create list of autocomplete suggestions from Ajax response or existing list of inputs
-            updateSuggestions = function (data, cached) {
-                var extraDataName, suggestions;
-                if (!data && !options.ajax) {
-                    if (options.caseSensitive) {
-                        suggestions = inputList.find(options.inputs).not(':disabled').closest(options.inputWrapper).filter(function () {
-                            return $(this).find(options.inputText).text().indexOf(typedText) !== -1;
-                        });
-                    } else {
-                        suggestions = inputList.find(options.inputs).not(':disabled').closest(options.inputWrapper).filter(function () {
-                            return $(this).find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase()) !== -1;
-                        });
-                    }
-                    data = {};
-                    data.suggestions = [];
-                    suggestions.each(function () {
-                        var typedIndex,
-                            thisSuggestion = {};
-                        if (options.caseSensitive) {
-                            typedIndex = $(this).find(options.inputText).text().indexOf(typedText);
-                        } else {
-                            typedIndex = $(this).find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase());
-                        }
-                        thisSuggestion.typedText = typedText;
-                        thisSuggestion.name = $(this).find(options.inputText).text();
-                        thisSuggestion.preText = $(this).find(options.inputText).text().substring(0, typedIndex);
-                        thisSuggestion.postText = $(this).find(options.inputText).text().substring(typedIndex + typedText.length);
-                        thisSuggestion.id = $(this).find('input').attr('value');
+        // Filter autocomplete suggestions, returning those that aren't duplicates.
+        var filterSuggestions = function () {
+            filteredSuggestions = newSuggestions.filter(function () {
+                var thisSuggestionID = $(this).find('.option').data('id');
+                var thisSuggestionText = $(this).find('.option').data('text');
+                var thisSuggestionType = $(this).find('.option').data('type') || options.inputType;
+
+                if (thisSuggestionText && !options.caseSensitive) { thisSuggestionText = thisSuggestionText.toString().toLowerCase(); }
+                if ($(this).find('a').hasClass('new')) {
+                    // Checked inputs of the same type, with the same text
+                    var existingInputs = inputs.filter('[name="' + thisSuggestionType + '"]:checked').filter(function () {
+                        return $(this).closest(options.inputWrapper).find(options.inputText).text() === thisSuggestionText;
+                    });
+                    // Existing non-new suggestions of the same type, with the same text
+                    var existingSuggestions = newSuggestions.find('.option').not('.new').filter(function () {
                         if (options.multipleCategories) {
-                            thisSuggestion.type = $(this).find('input').data('name');
-                            if ($(this).closest(options.inputList).find('.category-title').length) {
-                                thisSuggestion.displayType = $(this).closest(options.inputList).find('.category-title').text();
-                            }
+                            return $(this).data('text') === thisSuggestionText && $(this).data('type') === thisSuggestionType;
+                        } else {
+                            return $(this).data('text') === thisSuggestionText;
                         }
-                        data.suggestions.push(thisSuggestion);
                     });
-                }
-
-                if (options.allowNew && !cached) {
-                    if (!(options.restrictAllowNew && textbox.data('allow-new') !== true)) {
-                        newInputList.each(function () {
-                            var thisSuggestion = {};
-                            thisSuggestion.typedText = typedText;
-                            thisSuggestion.name = typedText;
-                            thisSuggestion.id = typedText;
-                            thisSuggestion.newSuggestion = true;
-                            if (options.multipleCategories) {
-                                thisSuggestion.type = $(this).data('name');
-                                if ($(this).find('.category-title').length) {
-                                    thisSuggestion.displayType = $(this).find('.category-title').text();
-                                }
-                            } else {
-                                thisSuggestion.type = options.inputType;
-                            }
-
-                            data.suggestions.unshift(thisSuggestion);
-                        });
+                    if (existingInputs.length || existingSuggestions.length) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                } else {
+                    if (inputs.filter('[name="' + thisSuggestionType + '"][value="' + thisSuggestionID + '"]:checked').length) {
+                        return false;
+                    } else {
+                        return true;
                     }
                 }
+            });
+        };
 
-                if (options.extraDataName) {
-                    extraDataName = options.extraDataName;
-                    $.each(data.suggestions, function (index, value) {
-                        if (this[extraDataName]) {
-                            this.responseDataName = extraDataName;
-                            this.responseDataVal = this[extraDataName];
-                        }
+        // Create list of autocomplete suggestions from Ajax response or existing list of inputs
+        var updateSuggestions = function (data, cached) {
+            var extraDataName, possibilities;
+            // Create list of suggestions from local inputs
+            if (!data && !options.ajax) {
+                var possibileInputs = inputList.find(options.inputs).not(':disabled').closest(options.inputWrapper);
+                if (options.caseSensitive) {
+                    possibilities = possibileInputs.filter(function () {
+                        return $(this).find(options.inputText).text().indexOf(typedText) !== -1;
+                    });
+                } else {
+                    possibilities = possibileInputs.filter(function () {
+                        return $(this).find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase()) !== -1;
                     });
                 }
+                data = {};
+                data.suggestions = [];
+                possibilities.each(function () {
+                    var thisSuggestion = {};
+                    var typedIndex;
+                    if (options.caseSensitive) {
+                        typedIndex = $(this).find(options.inputText).text().indexOf(typedText);
+                    } else {
+                        typedIndex = $(this).find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase());
+                    }
+                    thisSuggestion.typedText = typedText;
+                    thisSuggestion.text = $(this).find(options.inputText).text();
+                    thisSuggestion.preText = $(this).find(options.inputText).text().substring(0, typedIndex);
+                    thisSuggestion.postText = $(this).find(options.inputText).text().substring(typedIndex + typedText.length);
+                    thisSuggestion.id = $(this).find(options.inputs).attr('value');
+                    if (options.multipleCategories) {
+                        thisSuggestion.type = $(this).find(options.inputs).data('type');
+                        if ($(this).closest(options.inputList).find('.category-title').length) {
+                            thisSuggestion.displayType = $(this).closest(options.inputList).find('.category-title').text();
+                        }
+                    }
+                    data.suggestions.push(thisSuggestion);
+                });
+            }
 
-                newSuggestions = PYO.tpl('autocomplete_suggestion', data);
-                filterSuggestions();
-                suggestionList.html(filteredSuggestions);
+            // Create suggestion from new-input types
+            if (options.allowNew && !cached && !(options.restrictAllowNew && textbox.data('allow-new') !== true)) {
+                newInputList.each(function () {
+                    var thisSuggestion = {};
+                    thisSuggestion.typedText = typedText;
+                    thisSuggestion.text = typedText;
+                    thisSuggestion.id = typedText;
+                    thisSuggestion.newSuggestion = true;
+                    if (options.multipleCategories) {
+                        thisSuggestion.type = $(this).data('type');
+                        if ($(this).find('.category-title').length) {
+                            thisSuggestion.displayType = $(this).find('.category-title').text();
+                        }
+                    }
+                    data.suggestions.unshift(thisSuggestion);
+                });
+            }
 
-                // Show suggestion list if it contains suggestions; otherwise, hide it.
-                if (suggestionList.find('li').length) {
-                    suggestionList.show();
+            if (options.extraDataName) {
+                extraDataName = options.extraDataName;
+                $.each(data.suggestions, function () {
+                    if (this[extraDataName]) {
+                        this.responseDataName = extraDataName;
+                        this.responseDataVal = this[extraDataName];
+                    }
+                });
+            }
+
+            newSuggestions = PYO.tpl('autocomplete_suggestion', data);
+            filterSuggestions();
+            suggestionList.html(filteredSuggestions);
+
+            // Show suggestion list if it contains suggestions; otherwise, hide it.
+            if (suggestionList.find('li').length) {
+                suggestionList.show();
+            } else {
+                suggestionList.hide();
+            }
+
+            // Adds ".selected" to first autocomplete suggestion.
+            if (!(suggestionList.find('.selected').length)) {
+                suggestionList.find('li:first-child .option').addClass('selected');
+            }
+        };
+
+        // Updates suggestion-list
+        var updateSuggestionList = function () {
+            if (textbox.val() !== typedText && textbox.val() !== placeholder) {
+                var data, serializedData, extraDataName, extraDataVal;
+                var extraData = {};
+                typedText = textbox.val();
+                if (typedText.length && typedText.trim() !== '') {
+                    if (options.ajax) {
+                        if (options.extraDataName && options.extraDataFn) {
+                            extraDataName = options.extraDataName;
+                            extraDataVal = options.extraDataFn();
+                            extraData[extraDataName] = extraDataVal;
+                        }
+                        data = $.extend({}, extraData, {text: typedText});
+                        serializedData = $.param(data);
+                        if (cache[serializedData]) {
+                            updateSuggestions(cache[serializedData], true);
+                        } else {
+                            ajaxCalls = ajaxCalls + 1;
+                            $.get(options.url, data, function (response) {
+                                ajaxResponses = ajaxResponses + 1;
+                                cache[serializedData] = response;
+                                updateSuggestions(response, false);
+                            });
+                        }
+                    } else {
+                        updateSuggestions();
+                    }
                 } else {
-                    suggestionList.hide();
+                    suggestionList.empty().hide();
                 }
+            }
+        };
 
-                // Adds ".selected" to first autocomplete suggestion.
-                if (!(suggestionList.find('.selected').length)) {
-                    suggestionList.find('li:first-child a').addClass('selected');
-                }
-            };
+        var showSuggestionList = function () {
+            if (suggestionList.find('li').length) {
+                suggestionList.show();
+            }
+        };
 
         // Hide suggestion-list on initial page-load
         suggestionList.hide();
@@ -221,43 +262,7 @@
         });
 
         textbox
-            .keyup(function (e) {
-                // Updates suggestion-list if typed-text has changed
-                var updateSuggestionList = function () {
-                    var data,
-                        serializedData,
-                        extraData = {},
-                        extraDataName,
-                        extraDataVal;
-                    if (textbox.val() !== typedText && textbox.val() !== placeholder) {
-                        typedText = textbox.val();
-                        if (typedText.length && typedText.trim() !== '') {
-                            if (options.ajax) {
-                                if (options.extraDataName && options.extraDataFn) {
-                                    extraDataName = options.extraDataName;
-                                    extraDataVal = options.extraDataFn();
-                                    extraData[extraDataName] = extraDataVal;
-                                }
-                                data = $.extend({}, extraData, {text: typedText});
-                                serializedData = $.param(data);
-                                if (cache[serializedData]) {
-                                    updateSuggestions(cache[serializedData], true);
-                                } else {
-                                    ajaxCalls = ajaxCalls + 1;
-                                    $.get(options.url, data, function (response) {
-                                        ajaxResponses = ajaxResponses + 1;
-                                        cache[serializedData] = response;
-                                        updateSuggestions(response, false);
-                                    });
-                                }
-                            } else {
-                                updateSuggestions();
-                            }
-                        } else {
-                            suggestionList.empty().hide();
-                        }
-                    }
-                };
+            .keyup(function () {
                 if (options.ajax) {
                     $(this).doTimeout('autocomplete', 200, function () {
                         updateSuggestionList();
@@ -281,26 +286,22 @@
                     // If the suggestion list is not visible...
                     if (!suggestionList.is(':visible')) {
                         // ...prevent normal TAB function, and show suggestion list
-                        if (e.keyCode === keycodes.TAB && textbox.val() !== '' && suggestionList.find('li').length) {
+                        if (e.keyCode === keycodes.TAB && textbox.val() !== '') {
                             e.preventDefault();
-                            suggestionList.show();
+                            showSuggestionList();
                         }
                         // ...show suggestion list on ENTER
                         if (e.keyCode === keycodes.ENTER) {
                             e.preventDefault();
-                            if (suggestionList.find('li').length) {
-                                suggestionList.show();
-                            }
+                            showSuggestionList();
                         }
                         // ...show the suggestion list on arrow-keys
                         if (e.keyCode === keycodes.UP || e.keyCode === keycodes.DOWN || e.keyCode === keycodes.LEFT || e.keyCode === keycodes.RIGHT) {
-                            if (suggestionList.find('li').length) {
-                                suggestionList.show();
-                            }
+                            showSuggestionList();
                         }
                     // If the suggestion list is already visible...
                     } else {
-                        var thisInputName = suggestionList.find('.selected').data('name');
+                        var thisInputText = suggestionList.find('.selected').data('text');
                         // UP and DOWN move "active" suggestion
                         if (e.keyCode === keycodes.UP) {
                             e.preventDefault();
@@ -329,9 +330,9 @@
                         }
                         // TAB auto-completes the "active" suggestion if it isn't already completed...
                         if (e.keyCode === keycodes.TAB) {
-                            if (thisInputName && textbox.val().toLowerCase() !== thisInputName.toString().toLowerCase()) {
+                            if (thisInputText && textbox.val().toLowerCase() !== thisInputText.toString().toLowerCase()) {
                                 e.preventDefault();
-                                textbox.val(thisInputName);
+                                textbox.val(thisInputText);
                             // ...otherwise, TAB selects the "active" suggestion (if exists)
                             } else if (suggestionList.find('.selected').length) {
                                 e.preventDefault();
@@ -341,9 +342,9 @@
                         // RIGHT auto-completes the "active" suggestion if it isn't already completed
                         // and the cursor is at the end of the textbox
                         if (e.keyCode === keycodes.RIGHT) {
-                            if (thisInputName && textbox.val().toLowerCase() !== thisInputName.toString().toLowerCase() && textbox.get(0).selectionStart === textbox.val().length) {
+                            if (thisInputText && textbox.val().toLowerCase() !== thisInputText.toString().toLowerCase() && textbox.get(0).selectionStart === textbox.val().length) {
                                 e.preventDefault();
-                                textbox.val(thisInputName);
+                                textbox.val(thisInputText);
                             }
                         }
                         // ESC hides the suggestion list
@@ -392,8 +393,8 @@
         suggestionList.on({
             // Adds ".selected" to suggestion on mouseover, removing ".selected" from other suggestions
             mouseover: function () {
-                var thisSuggestion = $(this).addClass('selected'),
-                    otherSuggestions = thisSuggestion.parent('li').siblings('li').find('a').removeClass('selected');
+                var thisSuggestion = $(this).addClass('selected');
+                thisSuggestion.parent('li').siblings('li').find('a').removeClass('selected');
             },
             // Prevent the suggestion list from being hidden (by textbox blur event) when clicking a suggestion
             mousedown: function () {
@@ -402,16 +403,17 @@
             // Add new input or select existing input when suggestion is clicked
             click: function (e) {
                 e.preventDefault();
-                var thisGroup, thisTypeName, existingNewInput, index, newInput, thisInput, data,
-                    thisID = $(this).data('id'),
-                    inputName = $(this).data('name');
+                var thisGroup, thisTypeName, existingNewInput, index, newInput, thisInput, data;
+                var el = $(this);
+                var thisID = el.data('id');
+                var inputText = el.data('text');
                 if (options.multipleCategories) {
-                    thisTypeName = $(this).data('type');
+                    thisTypeName = el.data('type');
                 } else {
                     thisTypeName = options.inputType;
                 }
                 if (!options.caseSensitive) {
-                    inputName = inputName.toString().toLowerCase();
+                    inputText = inputText.toString().toLowerCase();
                 }
                 thisInput = inputs.filter('[value="' + thisID + '"]');
                 // If there's an existing non-new input, select it...
@@ -420,7 +422,7 @@
                 } else {
                     if (options.multipleCategories) {
                         thisGroup = newInputList.filter(function () {
-                            return $(this).data('name') === thisTypeName;
+                            return $(this).data('type') === thisTypeName;
                         });
                     } else {
                         thisGroup = newInputList;
@@ -428,62 +430,61 @@
                     if (options.inputsNeverRemoved) {
                         index = thisGroup.find(options.inputs).length + 1;
                     } else {
-                        index = newInputCounter;
-                        newInputCounter = newInputCounter + 1;
+                        index = newInputCounter++;
                     }
                     if (options.allowNew) {
                         // If we're dealing with a new input...
-                        if ($(this).hasClass('new')) {
+                        if (el.hasClass('new')) {
                             if (!options.multipleCategories) {
-                                thisTypeName = 'new' + thisTypeName;
+                                thisTypeName = 'new-' + thisTypeName;
                             }
                             data = {
                                 typeName: thisTypeName,
-                                inputName: inputName,
-                                id: inputName,
+                                inputText: inputText,
+                                id: inputText,
                                 index: index,
                                 newInput: true,
                                 prefix: prefix
                             };
-                            if ($(this).data(options.extraDataName)) {
+                            if (el.data(options.extraDataName)) {
                                 data.responseDataName = options.extraDataName;
-                                data.responseDataVal = $(this).data(options.extraDataName);
+                                data.responseDataVal = el.data(options.extraDataName);
                             }
-                            newInput = ich.autocomplete_input(data);
-                            existingNewInput = thisGroup.find(options.inputs + '[value="' + inputName + '"]');
+                            existingNewInput = thisGroup.find(options.inputs + '[value="' + inputText + '"]');
                             // ...select it if it already exists...
                             if (existingNewInput.length && options.inputsNeverRemoved) {
                                 existingNewInput.prop('checked', true).change();
                             } else {
                                 // ...or add it if it doesn't already exist.
+                                newInput = PYO.tpl('autocomplete_input', data);
                                 if (thisGroup.children('ul').length) {
                                     thisGroup.removeClass('empty').children('ul').append(newInput);
                                 } else {
                                     thisGroup.removeClass('empty').append(newInput);
                                 }
-                                $('#id-' + prefix + '-' + thisTypeName + '-' + index.toString()).prop('checked', true).change();
+                                newInput.find(options.inputs).prop('checked', true).change();
                                 inputs = inputList.add(newInputList).find(options.inputs);
                             }
                         } else {
                             // Otherwise, simply add the input.
                             data = {
                                 typeName: thisTypeName,
-                                inputName: inputName,
+                                inputText: inputText,
                                 id: thisID,
                                 index: index,
                                 prefix: prefix
                             };
-                            if ($(this).data(options.extraDataName)) {
+                            if (el.data(options.extraDataName)) {
                                 data.responseDataName = options.extraDataName;
-                                data.responseDataVal = $(this).data(options.extraDataName);
+                                data.responseDataVal = el.data(options.extraDataName);
                             }
-                            newInput = ich.autocomplete_input(data);
+                            newInput = PYO.tpl('autocomplete_input', data);
                             if (thisGroup.children('ul').length) {
                                 thisGroup.removeClass('empty').children('ul').append(newInput);
                             } else {
                                 thisGroup.removeClass('empty').append(newInput);
                             }
-                            $('#id-' + prefix + '-' + thisTypeName + '-' + index.toString()).prop('checked', true).change();
+                            newInput.find(options.inputs).prop('checked', true).change();
                             inputs = inputList.add(newInputList).find(options.inputs);
                         }
                     }
@@ -493,7 +494,7 @@
                 typedText = null;
                 suggestionList.empty().hide();
             }
-        }, 'a');
+        }, '.option');
 
         // Remove inputs and update suggestion list when unchecked.
         if (!options.inputsNeverRemoved) {
@@ -518,36 +519,36 @@
             $(this).keydown(function (e) {
                 if (e.keyCode === keycodes.ENTER) {
                     e.preventDefault();
-                    var thisTextbox = $(this),
-                        thisText = options.caseSensitive ? thisTextbox.val() : thisTextbox.val().toLowerCase(),
-                        thisGroup = thisTextbox.closest(options.newInputList),
-                        existingInput = thisGroup.find(options.inputs + '[value="' + thisText + '"]'),
-                        typeName = thisGroup.data('name'),
-                        index = thisGroup.find(options.inputs).length + 1,
-                        newInput = ich.autocomplete_input({
-                            typeName: typeName,
-                            inputName: thisText,
-                            id: thisText,
-                            index: index,
-                            newInput: true,
-                            prefix: prefix
-                        }),
-                        addInput = function () {
-                            if (thisGroup.children('ul').length) {
-                                thisGroup.removeClass('empty').children('ul').append(newInput);
-                            } else {
-                                thisGroup.removeClass('empty').append(newInput);
-                            }
-                            $('#id-' + prefix + '-' + typeName + '-' + index.toString()).prop('checked', true).change();
-                            inputs = inputs.add('#id-' + prefix + '-' + typeName + '-' + index.toString());
-                            thisTextbox.val(null);
-                            thisText = null;
-                        },
-                        selectInput = function () {
-                            existingInput.prop('checked', true).change();
-                            thisTextbox.val(null);
-                            thisText = null;
-                        };
+                    var thisTextbox = $(this);
+                    var thisText = options.caseSensitive ? thisTextbox.val() : thisTextbox.val().toLowerCase();
+                    var thisGroup = thisTextbox.closest(options.newInputList);
+                    var existingInput = thisGroup.find(options.inputs + '[value="' + thisText + '"]');
+                    var typeName = thisGroup.data('type');
+                    var index = thisGroup.find(options.inputs).length + 1;
+                    var newInput = PYO.tpl('autocomplete_input', {
+                        typeName: typeName,
+                        inputText: thisText,
+                        id: thisText,
+                        index: index,
+                        newInput: true,
+                        prefix: prefix
+                    });
+                    var addInput = function () {
+                        if (thisGroup.children('ul').length) {
+                            thisGroup.removeClass('empty').children('ul').append(newInput);
+                        } else {
+                            thisGroup.removeClass('empty').append(newInput);
+                        }
+                        newInput.find(options.inputs).prop('checked', true).change();
+                        inputs = inputList.add(newInputList).find(options.inputs);
+                        thisTextbox.val(null);
+                        thisText = null;
+                    };
+                    var selectInput = function () {
+                        existingInput.prop('checked', true).change();
+                        thisTextbox.val(null);
+                        thisText = null;
+                    };
                     // ENTER performs submit action if textbox is empty...
                     if (thisText === '' && formActions.is(':visible') && !options.autoSubmit) {
                         options.triggerSubmit(context);
@@ -617,4 +618,6 @@
         extraDataFn: null                               // Function which returns additional value to be sent with ajax-request
     };
 
-}(jQuery));
+    return PYO;
+
+}(PYO || {}, jQuery));

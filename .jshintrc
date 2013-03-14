@@ -20,7 +20,6 @@
 
     "globals": {
         "mixpanel": true,
-        "ich": true,
         "Pusher": true,
         "FlashDetect": true,
         "Handlebars": true,
