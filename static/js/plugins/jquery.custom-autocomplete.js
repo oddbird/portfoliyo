@@ -507,9 +507,6 @@ var PYO = (function (PYO, $) {
                 } else {
                     thisTypeName = options.inputType;
                 }
-                if (!options.caseSensitive) {
-                    inputText = inputText.toLowerCase();
-                }
                 data = {
                     typeName: thisTypeName,
                     inputText: inputText,
