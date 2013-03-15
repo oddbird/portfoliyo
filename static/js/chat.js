@@ -377,7 +377,7 @@ var PYO = (function (PYO, $) {
 
         PYO.watchForReadPosts();
         PYO.initializeToField('.post-add-form .message-form', '#message-text');
-        // PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text');
+        PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text');
         PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
