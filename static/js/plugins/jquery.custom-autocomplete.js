@@ -577,6 +577,14 @@ var PYO = (function (PYO, $) {
                 $(this).prop('checked', false).change();
             });
         });
+
+        context.on('click', options.inputWrapper, function (e) {
+            if (!$(e.target).is('label')) {
+                var el = $(this);
+                el.addClass('selected');
+                el.siblings(options.inputWrapper).removeClass('selected');
+            }
+        });
     };
 
     // Store keycode variables for easier readability
