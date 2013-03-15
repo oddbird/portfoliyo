@@ -28,15 +28,17 @@
             <a href="#" class="remove-all">remove all</a>
           </div>
         {% endif %}
-        {% for elder in elders|sms_eligible %}
-          <span class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
-            <input class="token-toggle" type="checkbox" name="elder" id="elder-{{ elder.id }}" value="{{ elder.id }}" checked />
-            <span class="token-body">
-              <label class="token-status sms" for="elder-{{ elder.id }}">sms</label>
-              <span class="token-text">{{ elder.role_in_context }}</span>
+        <div class="tokens-list">
+          {% for elder in elders|sms_eligible %}
+            <span class="token">
+              <input class="token-toggle" type="checkbox" name="elder" id="elder-{{ elder.id }}" value="{{ elder.id }}" checked />
+              <span class="token-body">
+                <label class="token-status sms" for="elder-{{ elder.id }}">sms</label>
+                <span class="token-text">{{ elder.role_in_context }}</span>
+              </span>
             </span>
-          </span>
-        {% endfor %}
+          {% endfor %}
+        </div>
         <input type="text" id="to-input" name="to" value="" placeholder="Add recipients..." class="token-value" />
         <ul class="token-suggest"></ul>
       </div>
@@ -75,15 +77,17 @@
             <a href="#" class="remove-all">remove all</a>
           </div>
         {% endif %}
-        {% for elder in elders %}
-          <span class="token" data-id="{{ elder.id }}" data-role="{{ elder.role_in_context }}">
-            <input class="token-toggle" type="checkbox" name="elder" id="elder-{{ elder.id }}" value="{{ elder.id }}" />
-            <span class="token-body">
-              <label class="token-status" for="elder-{{ elder.id }}">present</label>
-              <span class="token-text">{{ elder.role_in_context }}</span>
+        <div class="tokens-list">
+          {% for elder in elders %}
+            <span class="token">
+              <input class="token-toggle" type="checkbox" name="elder" id="elder-{{ elder.id }}" value="{{ elder.id }}" />
+              <span class="token-body">
+                <label class="token-status" for="elder-{{ elder.id }}">present</label>
+                <span class="token-text">{{ elder.role_in_context }}</span>
+              </span>
             </span>
-          </span>
-        {% endfor %}
+          {% endfor %}
+        </div>
         <input type="text" id="with-input" name="with" value="" placeholder="Add participants..." class="token-value" />
         <ul class="token-suggest"></ul>
       </div>

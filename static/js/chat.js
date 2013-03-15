@@ -263,15 +263,14 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeToField = function (containerSel, textareaSel) {
+    PYO.initializeToField = function (containerSel, textareaSel, opts) {
         if ($(containerSel).length) {
             var container = $(containerSel);
-
-            container.customAutocomplete({
+            var defaults = {
                 textbox: 'input.token-value',
                 inputs: 'input.token-toggle',
                 suggestionList: '.token-suggest',
-                inputList: '.tokens-input',
+                inputList: '.tokens-list',
                 triggerSubmit: function (context) {
                     context.find(textareaSel).focus();
                 },
@@ -279,7 +278,10 @@ var PYO = (function (PYO, $) {
                 inputType: 'elder',
                 selectAll: '.bulk-tokens .add-all',
                 selectNone: '.bulk-tokens .remove-all'
-            });
+            };
+            var options = $.extend({}, defaults, opts);
+
+            container.customAutocomplete(options);
 
             container.on('click', '.tokens-input', function () {
                 container.find('input.token-value').focus();
@@ -377,7 +379,10 @@ var PYO = (function (PYO, $) {
 
         PYO.watchForReadPosts();
         PYO.initializeToField('.post-add-form .message-form', '#message-text');
-        PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text');
+        PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text', {
+            allowNew: true,
+            labelText: 'present'
+        });
         PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();

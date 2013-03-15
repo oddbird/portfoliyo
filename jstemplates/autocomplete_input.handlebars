@@ -1,0 +1,7 @@
+<span class="{{#if prefix}}{{prefix}}-{{/if}}token{{#if newInput}} new{{/if}}">
+  <input class="token-toggle{{#if newInput}} new{{/if}}" type="checkbox" name="{{#if prefix}}{{prefix}}-{{/if}}{{typeName}}" id="{{typeName}}-{{index}}" value="{{id}}"{{#if responseDataName}}{{#if responseDataVal}} data-{{responseDataName}}="{{responseDataVal}}"{{/if}}{{/if}} />
+  <span class="token-body">
+    <label class="token-status" for="{{typeName}}-{{index}}">{{#if labelText}}{{labelText}}{{else}}{{inputText}}{{/if}}</label>
+    <span class="token-text">{{inputText}}</span>
+  </span>
+</span>

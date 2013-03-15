@@ -90,19 +90,22 @@ var PYO = (function (PYO, $) {
                 var thisSuggestionID = $(this).find('.option').data('id');
                 var thisSuggestionText = $(this).find('.option').data('text');
                 var thisSuggestionType = $(this).find('.option').data('type') || options.inputType;
+                var existingInputs;
 
                 if (thisSuggestionText && !options.caseSensitive) { thisSuggestionText = thisSuggestionText.toString().toLowerCase(); }
                 if ($(this).find('.option').hasClass('new')) {
                     // Checked inputs of the same type, with the same text
-                    var existingInputs = inputs.filter('[name="' + thisSuggestionType + '"]:checked').filter(function () {
+                    existingInputs = inputs.filter('[name="' + thisSuggestionType + '"]:checked').filter(function () {
                         return $(this).closest(options.inputWrapper).find(options.inputText).text() === thisSuggestionText;
                     });
                     // Existing non-new suggestions of the same type, with the same text
                     var existingSuggestions = newSuggestions.find('.option').not('.new').filter(function () {
+                        var thisText = $(this).data('text').toString();
+                        if (!options.caseSensitive) { thisText = thisText.toLowerCase(); }
                         if (options.multipleCategories) {
-                            return $(this).data('text') === thisSuggestionText && $(this).data('type') === thisSuggestionType;
+                            return thisText === thisSuggestionText && $(this).data('type') === thisSuggestionType;
                         } else {
-                            return $(this).data('text') === thisSuggestionText;
+                            return thisText === thisSuggestionText;
                         }
                     });
                     if (existingInputs.length || existingSuggestions.length) {
@@ -111,7 +114,10 @@ var PYO = (function (PYO, $) {
                         return true;
                     }
                 } else {
-                    if (inputs.filter('[name="' + thisSuggestionType + '"][value="' + thisSuggestionID + '"]:checked').length) {
+                    existingInputs = inputs.filter('[value="' + thisSuggestionID + '"]:checked').filter(function () {
+                        return $(this).attr('name') === 'new-' + thisSuggestionType || $(this).attr('name') === thisSuggestionType;
+                    });
+                    if (existingInputs.length) {
                         return false;
                     } else {
                         return true;
@@ -491,7 +497,8 @@ var PYO = (function (PYO, $) {
                                 id: inputText,
                                 index: index,
                                 newInput: true,
-                                prefix: prefix
+                                prefix: prefix,
+                                labelText: options.labelText
                             };
                             if (el.data(options.extraDataName)) {
                                 data.responseDataName = options.extraDataName;
@@ -519,7 +526,8 @@ var PYO = (function (PYO, $) {
                                 inputText: inputText,
                                 id: thisID,
                                 index: index,
-                                prefix: prefix
+                                prefix: prefix,
+                                labelText: options.labelText
                             };
                             if (el.data(options.extraDataName)) {
                                 data.responseDataName = options.extraDataName;
@@ -544,14 +552,15 @@ var PYO = (function (PYO, $) {
         }, '.option');
 
         // Remove inputs and update suggestion list when unchecked.
-        if (!options.inputsNeverRemoved) {
-            inputList.add(newInputList).on('click', 'label', function (e) {
-                e.preventDefault();
-                $(this).closest(options.inputWrapper).remove();
-                inputs = inputList.add(newInputList).find(options.inputs);
-                inputsChanged();
-            });
-        }
+        inputList.add(newInputList).on('change', options.inputs, function () {
+            if (!options.inputsNeverRemoved || $(this).hasClass('new')) {
+                if ($(this).prop('checked') === false) {
+                    $(this).closest(options.inputWrapper).remove();
+                    inputs = inputList.add(newInputList).find(options.inputs);
+                    inputsChanged();
+                }
+            }
+        });
 
         // Allow adding new inputs via group-specific textbox
         newInputTextbox.each(function () {
@@ -570,7 +579,8 @@ var PYO = (function (PYO, $) {
                         id: thisText,
                         index: index,
                         newInput: true,
-                        prefix: prefix
+                        prefix: prefix,
+                        labelText: options.labelText
                     });
                     var addInput = function () {
                         if (thisGroup.children('ul').length) {
@@ -672,7 +682,8 @@ var PYO = (function (PYO, $) {
         extraDataName: null,                            // Additional key to be sent with ajax-request
         extraDataFn: null,                              // Function which returns additional value to be sent with ajax-request
         selectAll: null,                                // Selector for select-all button
-        selectNone: null                                // Selector for select-none button
+        selectNone: null,                               // Selector for select-none button
+        labelText: null                                 // Text to insert in new-input labels (only needed if ``allowNew: true``)
     };
 
     return PYO;
