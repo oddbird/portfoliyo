@@ -154,6 +154,7 @@
     background: color($blue light);
     color: $base3;
   }
+  .token-context { @include gone; }
 
   #{$focus} {
     .token-status {
@@ -188,6 +189,7 @@
 }
 
 .token-suggest {
+  @include adjust-font-size-to($xsmallpx);
   @include box-shadow(color($back,.5) 0 $box-padding $box-padding);
   position: absolute;
   top: 100%;
@@ -204,7 +206,7 @@
   b { font-weight: bold; }
   .option {
     @include leading-border(1px, .25);
-    padding: $box-padding;
+    padding: $box-padding/2 $box-padding;
     display: block;
     border-color: $base2;
     color: $base;
@@ -212,9 +214,13 @@
       background: color($blue lightest);
       color: $back;
     }
+    .token-context {
+      float: right;
+      font-style: italic;
+    }
   }
   li:first-child .option { border: none; }
-}
+  }
 
 // ---------------------------------------------------------------------------
 // Messages

@@ -34,7 +34,10 @@
               <input class="token-toggle" type="checkbox" name="elder" id="elder-{{ elder.id }}" value="{{ elder.id }}" checked />
               <span class="token-body">
                 <label class="token-status sms" for="elder-{{ elder.id }}">sms</label>
-                <span class="token-text">{{ elder.role_in_context }}</span>
+                <span class="token-text">
+                  {{ elder.role_in_context }}
+                  <span class="token-context">{{ elder.name }}</span>
+                </span>
               </span>
             </span>
           {% endfor %}
@@ -83,7 +86,10 @@
               <input class="token-toggle" type="checkbox" name="elder" id="elder-{{ elder.id }}" value="{{ elder.id }}" />
               <span class="token-body">
                 <label class="token-status" for="elder-{{ elder.id }}">present</label>
-                <span class="token-text">{{ elder.role_in_context }}</span>
+                <span class="token-text">
+                  {{ elder.role_in_context }}
+                  <span class="token-context">{{ elder.name }}</span>
+                </span>
               </span>
             </span>
           {% endfor %}
