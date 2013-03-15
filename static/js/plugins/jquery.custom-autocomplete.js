@@ -94,7 +94,7 @@ var PYO = (function (PYO, $) {
                 if (thisSuggestionText && !options.caseSensitive) { thisSuggestionText = thisSuggestionText.toLowerCase(); }
                 if ($(this).find('.option').hasClass('new')) {
                     // Checked inputs of the same type, with the same text
-                    existingInputs = inputs.filter('[name="' + thisSuggestionType + '"]:checked').filter(function () {
+                    existingInputs = inputs.filter('[name="' + prefix + '-' + thisSuggestionType + '"]:checked').filter(function () {
                         return $(this).closest(options.inputWrapper).find(options.inputText).text() === thisSuggestionText;
                     });
                     // Existing non-new suggestions of the same type, with the same text
@@ -114,7 +114,7 @@ var PYO = (function (PYO, $) {
                     }
                 } else {
                     existingInputs = inputs.filter('[value="' + thisSuggestionID + '"]:checked').filter(function () {
-                        return $(this).attr('name') === 'new-' + thisSuggestionType || $(this).attr('name') === thisSuggestionType;
+                        return $(this).attr('name') === prefix + '-new-' + thisSuggestionType || $(this).attr('name') === prefix + '-' + thisSuggestionType;
                     });
                     if (existingInputs.length) {
                         return false;

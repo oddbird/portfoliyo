@@ -378,17 +378,18 @@ var PYO = (function (PYO, $) {
         posts.filter('.unread').removeClass('unread');
 
         PYO.watchForReadPosts();
-        PYO.initializeToField('.post-add-form .message-form', '#message-text');
+        PYO.initializeToField('.post-add-form .message-form', '#message-text', {prefix: 'message'});
         PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text', {
             allowNew: true,
-            labelText: 'present'
+            labelText: 'present',
+            prefix: 'conversation'
         });
         PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
         PYO.scrollForBacklog();
 
-        $('.post-add-form').resize(function (e) {
+        $('.post-add-form').resize(function () {
             PYO.updateContentHeight('.village-feed', '.feed-posts', true);
         });
     };
