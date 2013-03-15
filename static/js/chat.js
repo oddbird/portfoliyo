@@ -387,6 +387,10 @@ var PYO = (function (PYO, $) {
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
         PYO.scrollForBacklog();
+
+        $('.post-add-form').resize(function (e) {
+            PYO.updateContentHeight('.village-feed', '.feed-posts', true);
+        });
     };
 
     return PYO;
