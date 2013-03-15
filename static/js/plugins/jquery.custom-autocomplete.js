@@ -87,11 +87,11 @@ var PYO = (function (PYO, $) {
         var filterSuggestions = function () {
             filteredSuggestions = newSuggestions.filter(function () {
                 var thisSuggestionID = $(this).find('.option').data('id');
-                var thisSuggestionText = $(this).find('.option').data('text');
+                var thisSuggestionText = $(this).find('.option').data('text').toString();
                 var thisSuggestionType = $(this).find('.option').data('type') || options.inputType;
                 var existingInputs;
 
-                if (thisSuggestionText && !options.caseSensitive) { thisSuggestionText = thisSuggestionText.toString().toLowerCase(); }
+                if (thisSuggestionText && !options.caseSensitive) { thisSuggestionText = thisSuggestionText.toLowerCase(); }
                 if ($(this).find('.option').hasClass('new')) {
                     // Checked inputs of the same type, with the same text
                     existingInputs = inputs.filter('[name="' + thisSuggestionType + '"]:checked').filter(function () {
@@ -353,27 +353,43 @@ var PYO = (function (PYO, $) {
                         }
                     // If the suggestion list is already visible...
                     } else {
-                        var thisInputText = suggestionList.find('.selected').data('text');
+                        var thisSuggestion = suggestionList.find('.selected');
+                        var thisInputText = thisSuggestion.data('text').toString();
+                        var newSelected;
                         // UP and DOWN move "active" suggestion
                         if (e.keyCode === keycodes.UP) {
                             e.preventDefault();
-                            if (!suggestionList.find('.selected').parent().is(':first-child')) {
-                                suggestionList.find('.selected').removeClass('selected').parent().prev().children('.option').addClass('selected');
+                            if (!thisSuggestion.parent().is(':first-child')) {
+                                thisSuggestion.removeClass('selected');
+                                newSelected = thisSuggestion.parent().prev().children('.option').addClass('selected');
+                                if (newSelected.length && newSelected.position().top < 0) {
+                                    suggestionList.scrollTop(suggestionList.scrollTop() + newSelected.position().top);
+                                }
                             }
                         }
                         if (e.keyCode === keycodes.DOWN) {
                             e.preventDefault();
-                            if (!suggestionList.find('.selected').parent().is(':last-child')) {
-                                suggestionList.find('.selected').removeClass('selected').parent().next().children('.option').addClass('selected');
+                            if (!thisSuggestion.parent().is(':last-child')) {
+                                thisSuggestion.removeClass('selected');
+                                newSelected = thisSuggestion.parent().next().children('.option').addClass('selected');
+                                if (newSelected.length) {
+                                    var elPosition = newSelected.position().top;
+                                    var elHeight = newSelected.outerHeight();
+                                    var contScrolltop = suggestionList.scrollTop();
+                                    var contHeight = suggestionList.outerHeight();
+                                    if (elPosition + elHeight > contHeight) {
+                                        suggestionList.scrollTop(elPosition + contScrolltop + elHeight - contHeight);
+                                    }
+                                }
                             }
                         }
                         // ENTER selects the "active" suggestion, if exists.
                         if (e.keyCode === keycodes.ENTER) {
                             e.preventDefault();
-                            if (suggestionList.find('.selected').length) {
+                            if (thisSuggestion.length) {
                                 $.doTimeout(100, function () {
                                     if (ajaxCalls === ajaxResponses) {
-                                        suggestionList.find('.selected').click();
+                                        thisSuggestion.click();
                                         return false;
                                     }
                                     return true;
@@ -382,19 +398,19 @@ var PYO = (function (PYO, $) {
                         }
                         // TAB auto-completes the "active" suggestion if it isn't already completed...
                         if (e.keyCode === keycodes.TAB) {
-                            if (thisInputText && textbox.val().toLowerCase() !== thisInputText.toString().toLowerCase()) {
+                            if (thisInputText && textbox.val().toLowerCase() !== thisInputText.toLowerCase()) {
                                 e.preventDefault();
                                 textbox.val(thisInputText);
                             // ...otherwise, TAB selects the "active" suggestion (if exists)
-                            } else if (suggestionList.find('.selected').length) {
+                            } else if (thisSuggestion.length) {
                                 e.preventDefault();
-                                suggestionList.find('.selected').click();
+                                thisSuggestion.click();
                             }
                         }
                         // RIGHT auto-completes the "active" suggestion if it isn't already completed
                         // and the cursor is at the end of the textbox
                         if (e.keyCode === keycodes.RIGHT) {
-                            if (thisInputText && textbox.val().toLowerCase() !== thisInputText.toString().toLowerCase() && textbox.get(0).selectionStart === textbox.val().length) {
+                            if (thisInputText && textbox.val().toLowerCase() !== thisInputText.toLowerCase() && textbox.get(0).selectionStart === textbox.val().length) {
                                 e.preventDefault();
                                 textbox.val(thisInputText);
                             }
@@ -460,7 +476,7 @@ var PYO = (function (PYO, $) {
                 var el = $(this);
                 var thisID = el.data('id');
                 var thisInput = inputs.filter('[value="' + thisID + '"]');
-                var inputText = el.data('text');
+                var inputText = el.data('text').toString();
                 var addInput = function () {
                     newInput = PYO.tpl('autocomplete_input', data);
                     if (thisGroup.children('ul').length) {
@@ -477,7 +493,7 @@ var PYO = (function (PYO, $) {
                     thisTypeName = options.inputType;
                 }
                 if (!options.caseSensitive) {
-                    inputText = inputText.toString().toLowerCase();
+                    inputText = inputText.toLowerCase();
                 }
                 data = {
                     typeName: thisTypeName,
