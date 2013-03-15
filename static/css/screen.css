@@ -3226,7 +3226,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 
 .bulk-tokens {
   float: right;
-  padding: 1px 0 1px 0.31944rem;
+  padding-left: 0.31944rem;
 }
 .bulk-tokens .add-all {
   text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
@@ -3255,6 +3255,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   color: #657b83;
 }
 
+.tokens-list {
+  display: inline;
+}
+
 .token-body {
   -webkit-border-radius: 0.31944rem;
   -moz-border-radius: 0.31944rem;
@@ -3269,6 +3273,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: #d3e7f6;
   border: 1px solid #739cb9;
 }
+.selected .token-body {
+  background: #51a2db;
+  color: #fdf6e3;
+}
 .token-body:focus .token-status, .token-body:hover .token-status, .token-body:active .token-status {
   color: #dc322f;
 }
@@ -3278,6 +3286,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-size: 0.5rem;
   line-height: 17px;
   line-height: 0.95833rem;
+  vertical-align: top;
 }
 
 .token-toggle {
@@ -3301,20 +3310,16 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .token-value:focus {
   outline: none;
 }
-.token-value:focus + .token-suggest {
-  display: block;
-}
 
 .token-suggest {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0.31944rem 0.31944rem;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0.31944rem 0.31944rem;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0.31944rem 0.31944rem;
-  display: none;
   position: absolute;
   top: 100%;
   right: -1px;
   left: -1px;
-  max-height: 6.38889rem;
+  max-height: 5.75rem;
   margin-top: 1px;
   border: 1px solid #657b83;
   border-top: 0;

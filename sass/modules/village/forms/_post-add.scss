@@ -127,7 +127,7 @@
 
 .bulk-tokens {
   float: right;
-  padding: 1px 0 1px $box-padding;
+  padding-left: $box-padding;
   a { @extend %button-icon; }
   .add-all {
     @extend %icon-plus;
@@ -139,6 +139,8 @@
   }
 }
 
+.tokens-list { display: inline; }
+
 .token-body {
   @include border-radius($box-padding);
   @include adjust-font-size-to($xxsmallpx,.75);
@@ -147,6 +149,11 @@
   margin-bottom: $box-padding/2;
   background: color($blue lightest);
   border: 1px solid color(-50% $blue light);
+
+  .selected & {
+    background: color($blue light);
+    color: $base3;
+  }
 
   #{$focus} {
     .token-status {
@@ -160,6 +167,7 @@
   @extend %icon-replace;
   @extend %icon-user;
   @include adjust-font-size-to($xxxsmallpx,.75);
+  vertical-align: top;
 
   &.sms { @extend %icon-bubble; }
 }
@@ -176,20 +184,16 @@
   padding: 0;
   background: none;
   border: 0;
-  &:focus {
-    outline: none;
-    + .token-suggest { display: block; }
-  }
+  &:focus { outline: none; }
 }
 
 .token-suggest {
   @include box-shadow(color($back,.5) 0 $box-padding $box-padding);
-  display: none;
   position: absolute;
   top: 100%;
   right: -1px;
   left: -1px;
-  max-height: rhythm(5);
+  max-height: rhythm(4.5);
   margin-top: 1px;
   border: 1px solid $base;
   border-top: 0;
