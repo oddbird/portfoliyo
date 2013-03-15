@@ -26,7 +26,6 @@ var PYO = (function (PYO, $) {
         var origInputs = inputList.html();
         var origNewInputs = newInputList.html();
         var inputs = inputList.add(newInputList).find(options.inputs);
-        var newInputTextbox = newInputList.find(options.newInputTextbox);
         var selectAll = context.find(options.selectAll);
         var selectNone = context.find(options.selectNone);
         var placeholder = textbox.attr('placeholder');
@@ -268,7 +267,6 @@ var PYO = (function (PYO, $) {
         // Set newInputList to inputList if only one category
         if (!options.multipleCategories && options.newInputList === null) {
             newInputList = context.find(options.inputList);
-            newInputTextbox = newInputList.find(options.newInputTextbox);
             options.newInputList = options.inputList;
         }
 
@@ -296,9 +294,10 @@ var PYO = (function (PYO, $) {
                         removeFakePlaceholder();
                     }
                 }
-                // LEFT or DELETE highlight the last input if cursor is at the beginning of the textbox
+                // If cursor is at the beginning of the textbox, LEFT BACKSPACE RIGHT function to highlight existing tokens
                 if ((e.keyCode === keycodes.LEFT || e.keyCode === keycodes.BACKSPACE || e.keyCode === keycodes.RIGHT) && textbox.get(0).selectionStart === 0) {
                     var wrappers = inputs.filter(':checked').closest(options.inputWrapper);
+                    // If a token is already selected...
                     if (wrappers.filter('.selected').length) {
                         var selected = wrappers.filter('.selected').first();
                         var index = wrappers.index(selected);
@@ -324,6 +323,7 @@ var PYO = (function (PYO, $) {
                         e.preventDefault();
                         suggestionList.hide();
                         return;
+                    // LEFT or BACKSPACE highlight the last input if cursor is at the beginning of the textbox
                     } else if (e.keyCode === keycodes.LEFT || e.keyCode === keycodes.BACKSPACE) {
                         inputs.filter(':checked').last().closest(options.inputWrapper).addClass('selected');
                         suggestionList.hide();
@@ -456,10 +456,21 @@ var PYO = (function (PYO, $) {
             // Add new input or select existing input when suggestion is clicked
             click: function (e) {
                 e.preventDefault();
-                var thisGroup, thisTypeName, existingNewInput, index, newInput, thisInput, data;
+                var thisGroup, thisTypeName, existingNewInput, index, newInput, data;
                 var el = $(this);
                 var thisID = el.data('id');
+                var thisInput = inputs.filter('[value="' + thisID + '"]');
                 var inputText = el.data('text');
+                var addInput = function () {
+                    newInput = PYO.tpl('autocomplete_input', data);
+                    if (thisGroup.children('ul').length) {
+                        thisGroup.removeClass('empty').children('ul').append(newInput);
+                    } else {
+                        thisGroup.removeClass('empty').append(newInput);
+                    }
+                    newInput.find(options.inputs).prop('checked', true).change();
+                    inputs = inputList.add(newInputList).find(options.inputs);
+                };
                 if (options.multipleCategories) {
                     thisTypeName = el.data('type');
                 } else {
@@ -468,11 +479,22 @@ var PYO = (function (PYO, $) {
                 if (!options.caseSensitive) {
                     inputText = inputText.toString().toLowerCase();
                 }
-                thisInput = inputs.filter('[value="' + thisID + '"]');
-                // If there's an existing non-new input, select it...
+                data = {
+                    typeName: thisTypeName,
+                    inputText: inputText,
+                    id: thisID,
+                    prefix: prefix,
+                    labelText: options.labelText
+                };
+                if (el.data(options.extraDataName)) {
+                    data.responseDataName = options.extraDataName;
+                    data.responseDataVal = el.data(options.extraDataName);
+                }
+                // If there's an existing non-new input, select it
                 if (thisInput.length) {
                     thisInput.prop('checked', true).change();
-                } else {
+                // Otherwise, if we're allowed to add new inputs...
+                } else if (options.allowNew) {
                     if (options.multipleCategories) {
                         thisGroup = newInputList.filter(function () {
                             return $(this).data('type') === thisTypeName;
@@ -485,63 +507,25 @@ var PYO = (function (PYO, $) {
                     } else {
                         index = newInputCounter++;
                     }
-                    if (options.allowNew) {
-                        // If we're dealing with a new input...
-                        if (el.hasClass('new')) {
+                    data.index = index;
+                    // If we're dealing with a new input...
+                    if (el.hasClass('new')) {
+                        existingNewInput = thisGroup.find(options.inputs + '[value="' + inputText + '"]');
+                        // ...select it if it already exists...
+                        if (existingNewInput.length && options.inputsNeverRemoved) {
+                            existingNewInput.prop('checked', true).change();
+                        } else {
+                            // ...or add it if it doesn't already exist.
                             if (!options.multipleCategories) {
                                 thisTypeName = 'new-' + thisTypeName;
                             }
-                            data = {
-                                typeName: thisTypeName,
-                                inputText: inputText,
-                                id: inputText,
-                                index: index,
-                                newInput: true,
-                                prefix: prefix,
-                                labelText: options.labelText
-                            };
-                            if (el.data(options.extraDataName)) {
-                                data.responseDataName = options.extraDataName;
-                                data.responseDataVal = el.data(options.extraDataName);
-                            }
-                            existingNewInput = thisGroup.find(options.inputs + '[value="' + inputText + '"]');
-                            // ...select it if it already exists...
-                            if (existingNewInput.length && options.inputsNeverRemoved) {
-                                existingNewInput.prop('checked', true).change();
-                            } else {
-                                // ...or add it if it doesn't already exist.
-                                newInput = PYO.tpl('autocomplete_input', data);
-                                if (thisGroup.children('ul').length) {
-                                    thisGroup.removeClass('empty').children('ul').append(newInput);
-                                } else {
-                                    thisGroup.removeClass('empty').append(newInput);
-                                }
-                                newInput.find(options.inputs).prop('checked', true).change();
-                                inputs = inputList.add(newInputList).find(options.inputs);
-                            }
-                        } else {
-                            // Otherwise, simply add the input.
-                            data = {
-                                typeName: thisTypeName,
-                                inputText: inputText,
-                                id: thisID,
-                                index: index,
-                                prefix: prefix,
-                                labelText: options.labelText
-                            };
-                            if (el.data(options.extraDataName)) {
-                                data.responseDataName = options.extraDataName;
-                                data.responseDataVal = el.data(options.extraDataName);
-                            }
-                            newInput = PYO.tpl('autocomplete_input', data);
-                            if (thisGroup.children('ul').length) {
-                                thisGroup.removeClass('empty').children('ul').append(newInput);
-                            } else {
-                                thisGroup.removeClass('empty').append(newInput);
-                            }
-                            newInput.find(options.inputs).prop('checked', true).change();
-                            inputs = inputList.add(newInputList).find(options.inputs);
+                            data.typeName = thisTypeName;
+                            data.newInput = true;
+                            addInput();
                         }
+                    } else {
+                        // Otherwise, simply add the input.
+                        addInput();
                     }
                 }
                 // Empty the textbox, and empty and hide the suggestion list
@@ -560,59 +544,6 @@ var PYO = (function (PYO, $) {
                     inputsChanged();
                 }
             }
-        });
-
-        // Allow adding new inputs via group-specific textbox
-        newInputTextbox.each(function () {
-            $(this).keydown(function (e) {
-                if (e.keyCode === keycodes.ENTER) {
-                    e.preventDefault();
-                    var thisTextbox = $(this);
-                    var thisText = options.caseSensitive ? thisTextbox.val() : thisTextbox.val().toLowerCase();
-                    var thisGroup = thisTextbox.closest(options.newInputList);
-                    var existingInput = thisGroup.find(options.inputs + '[value="' + thisText + '"]');
-                    var typeName = thisGroup.data('type');
-                    var index = thisGroup.find(options.inputs).length + 1;
-                    var newInput = PYO.tpl('autocomplete_input', {
-                        typeName: typeName,
-                        inputText: thisText,
-                        id: thisText,
-                        index: index,
-                        newInput: true,
-                        prefix: prefix,
-                        labelText: options.labelText
-                    });
-                    var addInput = function () {
-                        if (thisGroup.children('ul').length) {
-                            thisGroup.removeClass('empty').children('ul').append(newInput);
-                        } else {
-                            thisGroup.removeClass('empty').append(newInput);
-                        }
-                        newInput.find(options.inputs).prop('checked', true).change();
-                        inputs = inputList.add(newInputList).find(options.inputs);
-                        thisTextbox.val(null);
-                        thisText = null;
-                    };
-                    var selectInput = function () {
-                        existingInput.prop('checked', true).change();
-                        thisTextbox.val(null);
-                        thisText = null;
-                    };
-                    // ENTER performs submit action if textbox is empty...
-                    if (thisText === '' && formActions.is(':visible') && !options.autoSubmit) {
-                        options.triggerSubmit(context);
-                    } else if (thisText.length && thisText.trim() !== '') {
-                        // ...otherwise, if the input already exists, ENTER selects it...
-                        if (existingInput.length) {
-                            if (!existingInput.is(':checked')) {
-                                selectInput();
-                            }
-                        } else {
-                            addInput();
-                        }
-                    }
-                }
-            });
         });
 
         selectAll.click(function (e) {
@@ -670,7 +601,6 @@ var PYO = (function (PYO, $) {
         restrictAllowNew: false,                        // Set ``true`` if new inputs are only allowed if textbox has data-allow-new="true"
         newInputList: null,                             // Selector for list of new inputs (only needed if ``allowNew: true``
                                                         //      and ``multipleCategories: true``)
-        newInputTextbox: null,                          // Selector for secondary textbox to enter new group-specific inputs
         fakePlaceholder: false,                         // Set ``true`` to create fake placeholder text when using ``initialFocus: true``
         initialFocus: false,                            // Set ``true`` to give textbox focus on initial page load
         reset: '.reset',                                // Selector for button to reset all inputs to original state
