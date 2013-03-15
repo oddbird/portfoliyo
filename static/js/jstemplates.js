@@ -124,6 +124,10 @@ function program10(depth0,data) {
   if (stack1 = helpers.inputText) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.inputText; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
+    + "</span>\n    <span class=\"token-context\">";
+  if (stack1 = helpers.inputContext) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.inputContext; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
     + "</span>\n  </span>\n</span>\n";
   return buffer;
   });
@@ -139,33 +143,29 @@ function program1(depth0,data) {
   buffer += "\n<li>\n  <a href=\"#\" class=\"option";
   stack1 = helpers['if'].call(depth0, depth0.newSuggestion, {hash:{},inverse:self.noop,fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\" ";
+  buffer += "\"";
   stack1 = helpers['if'].call(depth0, depth0.id, {hash:{},inverse:self.noop,fn:self.program(4, program4, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   stack1 = helpers['if'].call(depth0, depth0.type, {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "data-text=\"";
+  buffer += " data-text=\"";
   if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" data-context=\"";
+  if (stack1 = helpers.context) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.context; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
     + "\"";
   stack1 = helpers['if'].call(depth0, depth0.responseDataName, {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += ">";
-  if (stack1 = helpers.preText) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.preText; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "<b>";
-  if (stack1 = helpers.typedText) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.typedText; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</b>";
-  if (stack1 = helpers.postText) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.postText; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1);
-  stack1 = helpers['if'].call(depth0, depth0.displayType, {hash:{},inverse:self.program(13, program13, data),fn:self.program(11, program11, data),data:data});
+  buffer += ">\n    <span class=\"suggestion-text\">";
+  stack1 = helpers['if'].call(depth0, depth0.typedText, {hash:{},inverse:self.program(13, program13, data),fn:self.program(11, program11, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</a>\n</li>\n";
+  buffer += "</span>\n    <span class=\"suggestion-context\">";
+  stack1 = helpers['if'].call(depth0, depth0.typedContext, {hash:{},inverse:self.program(17, program17, data),fn:self.program(15, program15, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "</span>\n  </a>\n</li>\n";
   return buffer;
   }
 function program2(depth0,data) {
@@ -177,22 +177,22 @@ function program2(depth0,data) {
 function program4(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "data-id=\"";
+  buffer += " data-id=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" ";
+    + "\"";
   return buffer;
   }
 
 function program6(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "data-type=\"";
+  buffer += " data-type=\"";
   if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" ";
+    + "\"";
   return buffer;
   }
 
@@ -221,30 +221,51 @@ function program9(depth0,data) {
 function program11(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += " <i>[";
-  if (stack1 = helpers.displayType) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.displayType; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  if (stack1 = helpers.preText) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.preText; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "]</i>";
+    + "<b>";
+  if (stack1 = helpers.typedText) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.typedText; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</b>";
+  if (stack1 = helpers.postText) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.postText; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1);
   return buffer;
   }
 
 function program13(depth0,data) {
   
   var stack1;
-  stack1 = helpers['if'].call(depth0, depth0.type, {hash:{},inverse:self.noop,fn:self.program(14, program14, data),data:data});
-  if(stack1 || stack1 === 0) { return stack1; }
-  else { return ''; }
+  if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.text; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  return escapeExpression(stack1);
   }
-function program14(depth0,data) {
+
+function program15(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += " <i>[";
-  if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  if (stack1 = helpers.preContext) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.preContext; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "]</i>";
+    + "<b>";
+  if (stack1 = helpers.typedContext) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.typedContext; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "</b>";
+  if (stack1 = helpers.postContext) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.postContext; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1);
   return buffer;
+  }
+
+function program17(depth0,data) {
+  
+  var stack1;
+  if (stack1 = helpers.context) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.context; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  return escapeExpression(stack1);
   }
 
   stack1 = helpers.each.call(depth0, depth0.suggestions, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});

@@ -133,32 +133,45 @@ var PYO = (function (PYO, $) {
                 var possibileInputs = inputList.find(options.inputs).not(':disabled').closest(options.inputWrapper);
                 if (options.caseSensitive) {
                     possibilities = possibileInputs.filter(function () {
-                        return $(this).find(options.inputText).text().indexOf(typedText) !== -1;
+                        var el = $(this);
+                        var foundText = el.find(options.inputText).text().indexOf(typedText) !== -1;
+                        var foundContext = el.find(options.inputContext).text().indexOf(typedText) !== -1;
+                        return foundText || foundContext;
                     });
                 } else {
                     possibilities = possibileInputs.filter(function () {
-                        return $(this).find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase()) !== -1;
+                        var el = $(this);
+                        var foundText = el.find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase()) !== -1;
+                        var foundContext = el.find(options.inputContext).text().toLowerCase().indexOf(typedText.toLowerCase()) !== -1;
+                        return foundText || foundContext;
                     });
                 }
                 data = {};
                 data.suggestions = [];
                 possibilities.each(function () {
+                    var el = $(this);
                     var thisSuggestion = {};
-                    var typedIndex;
+                    var typedIndex, typedContextIndex;
                     if (options.caseSensitive) {
-                        typedIndex = $(this).find(options.inputText).text().indexOf(typedText);
+                        typedIndex = el.find(options.inputText).text().indexOf(typedText);
+                        typedContextIndex = el.find(options.inputContext).text().indexOf(typedText);
                     } else {
-                        typedIndex = $(this).find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase());
+                        typedIndex = el.find(options.inputText).text().toLowerCase().indexOf(typedText.toLowerCase());
+                        typedContextIndex = el.find(options.inputContext).text().toLowerCase().indexOf(typedText.toLowerCase());
                     }
-                    thisSuggestion.typedText = typedText;
-                    thisSuggestion.text = $(this).find(options.inputText).text();
-                    thisSuggestion.preText = $(this).find(options.inputText).text().substring(0, typedIndex);
-                    thisSuggestion.postText = $(this).find(options.inputText).text().substring(typedIndex + typedText.length);
-                    thisSuggestion.id = $(this).find(options.inputs).attr('value');
+                    if (typedIndex !== -1) { thisSuggestion.typedText = typedText; }
+                    if (typedContextIndex !== -1) { thisSuggestion.typedContext = typedText; }
+                    thisSuggestion.text = el.find(options.inputText).text();
+                    thisSuggestion.preText = el.find(options.inputText).text().substring(0, typedIndex);
+                    thisSuggestion.postText = el.find(options.inputText).text().substring(typedIndex + typedText.length);
+                    thisSuggestion.context = el.find(options.inputContext).text();
+                    thisSuggestion.preContext = el.find(options.inputContext).text().substring(0, typedContextIndex);
+                    thisSuggestion.postContext = el.find(options.inputContext).text().substring(typedContextIndex + typedText.length);
+                    thisSuggestion.id = el.find(options.inputs).attr('value');
                     if (options.multipleCategories) {
-                        thisSuggestion.type = $(this).find(options.inputs).data('type');
-                        if ($(this).closest(options.inputList).find('.category-title').length) {
-                            thisSuggestion.displayType = $(this).closest(options.inputList).find('.category-title').text();
+                        thisSuggestion.type = el.find(options.inputs).data('type');
+                        if (el.closest(options.inputList).find('.category-title').length) {
+                            thisSuggestion.displayType = el.closest(options.inputList).find('.category-title').text();
                         }
                     }
                     data.suggestions.push(thisSuggestion);
@@ -168,15 +181,16 @@ var PYO = (function (PYO, $) {
             // Create suggestion from new-input types
             if (options.allowNew && !cached && !(options.restrictAllowNew && textbox.data('allow-new') !== true)) {
                 newInputList.each(function () {
+                    var el = $(this);
                     var thisSuggestion = {};
                     thisSuggestion.typedText = typedText;
                     thisSuggestion.text = typedText;
                     thisSuggestion.id = typedText;
                     thisSuggestion.newSuggestion = true;
                     if (options.multipleCategories) {
-                        thisSuggestion.type = $(this).data('type');
-                        if ($(this).find('.category-title').length) {
-                            thisSuggestion.displayType = $(this).find('.category-title').text();
+                        thisSuggestion.type = el.data('type');
+                        if (el.find('.category-title').length) {
+                            thisSuggestion.displayType = el.find('.category-title').text();
                         }
                     }
                     data.suggestions.unshift(thisSuggestion);
@@ -477,6 +491,7 @@ var PYO = (function (PYO, $) {
                 var thisID = el.data('id');
                 var thisInput = inputs.filter('[value="' + thisID + '"]');
                 var inputText = el.data('text').toString();
+                var inputContext = el.data('context').toString();
                 var addInput = function () {
                     newInput = PYO.tpl('autocomplete_input', data);
                     if (thisGroup.children('ul').length) {
@@ -498,6 +513,7 @@ var PYO = (function (PYO, $) {
                 data = {
                     typeName: thisTypeName,
                     inputText: inputText,
+                    inputContext: inputContext,
                     id: thisID,
                     prefix: prefix,
                     labelText: options.labelText
@@ -562,6 +578,7 @@ var PYO = (function (PYO, $) {
             }
         });
 
+        // Select all existing inputs
         selectAll.click(function (e) {
             e.preventDefault();
             $(this).blur();
@@ -570,6 +587,7 @@ var PYO = (function (PYO, $) {
             });
         });
 
+        // Unselect all existing inputs
         selectNone.click(function (e) {
             e.preventDefault();
             $(this).blur();
@@ -578,6 +596,7 @@ var PYO = (function (PYO, $) {
             });
         });
 
+        // Clicking on a token selects that token (unless click is on a label)
         context.on('click', options.inputWrapper, function (e) {
             if (!$(e.target).is('label')) {
                 var el = $(this);
@@ -610,6 +629,7 @@ var PYO = (function (PYO, $) {
         inputs: 'input[type="checkbox"]',               // Selector for inputs
         inputWrapper: '.token',                         // Selector for wrapper around inputs
         inputText: '.token-text',                       // Selector for input text
+        inputContext: '.token-context',                 // Selector for input secondary (con)text
         suggestionList: '.suggest',                     // Selector for list of autocomplete suggestions
         inputList: '.visual',                           // Selector for list of inputs
         formActions: '.form-actions',                   // Select for form-actions (only needed if ``hideFormActions: true``)
