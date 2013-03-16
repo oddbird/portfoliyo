@@ -31,7 +31,7 @@
         <div class="tokens-list">
           {% for elder in elders|sms_eligible %}
             <span class="token">
-              <input class="token-toggle" type="checkbox" name="message-elder" id="message-elder-{{ elder.id }}" value="{{ elder.id }}" checked />
+              <input class="token-toggle" type="checkbox" name="message-elder" id="message-elder-{{ elder.id }}" value="{{ elder.id }}" data-name="{{ elder.name }}" data-role="{{ elder.role_in_context }}" checked />
               <span class="token-body">
                 <label class="token-status sms" for="message-elder-{{ elder.id }}">sms</label>
                 <span class="token-text">{{ elder.role_in_context }}</span>
@@ -40,7 +40,7 @@
             </span>
           {% endfor %}
         </div>
-        <input type="text" id="to-input" name="to" value="" placeholder="Add recipients..." class="token-value" />
+        <input type="text" id="to-input" name="sms-target" value="" placeholder="Add recipients..." class="token-value" />
         <ul class="token-suggest"></ul>
       </div>
     </div>

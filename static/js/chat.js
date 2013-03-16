@@ -114,26 +114,28 @@ var PYO = (function (PYO, $) {
                         { name: 'text', value: text },
                         { name: 'author_sequence_id', value: author_sequence_id }
                     ];
-                    var smsInput = form.find('#to-input');
-                    var smsInputName = smsInput.attr('name');
+                    var smsInputs = form.find('.token-toggle:checked');
+                    var smsInputName = form.find('#to-input').attr('name');
+                    var noInputs = form.find('.no-to-field');
                     var smsTargetArr = [];
                     var postObj, post;
 
-                    if (smsInput.length) {
-                        if (smsInput.val()) {
-                            $.each(smsInput.val().toString().split(','), function (i, v) {
-                                var obj = { name: smsInputName, value: v };
-                                postData.push(obj);
-                                var el = context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile .fn[data-id="' + v + '"]');
-                                var displayName = el.data('name') ? el.data('name') : el.data('role');
-                                smsTargetArr.push(displayName);
-                            });
-                        }
-                    } else {
-                        context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
-                            var name = $(this).find('.fn').data('name');
-                            var role = $(this).find('.fn').data('role');
+                    if (smsInputs.length) {
+                        smsInputs.each(function () {
+                            var el = $(this);
+                            var id = el.val();
+                            var name = el.data('name');
+                            var role = el.data('role');
+                            var obj = { name: smsInputName, value: id };
+                            postData.push(obj);
                             var displayName = name ? name : role;
+                            smsTargetArr.push(displayName);
+                        });
+                    } else if (noInputs.length) {
+                        var namesArr = noInputs.data('elder-names').split(',');
+                        var rolesArr = noInputs.data('elder-roles').split(',');
+                        $.each(namesArr, function (i, v) {
+                            var displayName = v ? v : rolesArr[i];
                             smsTargetArr.push(displayName);
                         });
                     }
@@ -150,11 +152,11 @@ var PYO = (function (PYO, $) {
                         });
                     }
 
-                    textarea.val('').change();
                     // @@@ PYO.feed.find('.howto').remove();
                     PYO.scrollToBottom();
                     PYO.addPostTimeout(post, author_sequence_id, count);
                     form.find('.to-field .bulk-tokens .add-all').click();
+                    textarea.val('').change().focus();
                 }
             });
 

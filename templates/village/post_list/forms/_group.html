@@ -1,5 +1,6 @@
 {% extends "village/post_list/forms/_base.html" %}
 {% load url from future %}
+{% load elders %}
 
 {% block addpost-classes %}group-posts{% endblock %}
 {% block form-action %}{% if group.is_all %}{% url 'create_post' %}{% else %}{% url 'create_post' group_id=group.id %}{% endif %}{% endblock %}
@@ -8,5 +9,5 @@
 {% block post-add-types %}{% endblock %}
 
 {% block to-field %}
-<p class="no-to-field">Group posts are sent to all family members.</p>
+<p class="no-to-field" data-elder-names="{% for elder in elders|sms_eligible %}{{ elder.name }}{% if not forloop.last %},{% endif %}{% endfor %}" data-elder-roles="{% for elder in elders|sms_eligible %}{{ elder.role_in_context }}{% if not forloop.last %},{% endif %}{% endfor %}">Group posts are sent to all family members.</p>
 {% endblock %}
