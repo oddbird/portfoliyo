@@ -124,20 +124,14 @@ var PYO = (function (PYO, $) {
                         smsInputs.each(function () {
                             var el = $(this);
                             var id = el.val();
-                            var name = el.data('name');
-                            var role = el.data('role');
+                            var displayName = el.data('display-name');
                             var obj = { name: smsInputName, value: id };
                             postData.push(obj);
-                            var displayName = name ? name : role;
                             smsTargetArr.push(displayName);
                         });
                     } else if (noInputs.length) {
-                        var namesArr = noInputs.data('elder-names').split(',');
-                        var rolesArr = noInputs.data('elder-roles').split(',');
-                        $.each(namesArr, function (i, v) {
-                            var displayName = v ? v : rolesArr[i];
-                            smsTargetArr.push(displayName);
-                        });
+                        var namesArr = noInputs.data('elders').split(',');
+                        smsTargetArr = smsTargetArr.concat(namesArr);
                     }
 
                     postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
