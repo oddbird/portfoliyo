@@ -69,6 +69,10 @@
     border-width: 0 1px 1px 0;
     text-align: center;
 
+    #{$focus} {
+      @include background-image(linear-gradient(to top, $base3, color($base3,0) 50%));
+    }
+
     &:before {
       @include adjust-font-size-to($normpx);
       vertical-align: middle;
@@ -80,7 +84,7 @@
     &:last-child { margin-left: $tab-width*2; border-right: 0; }
 
     &[for*="message"] { @extend %icon-bubble; }
-    &[for*="note"] { @extend %icon-attachment; }
+    &[for*="note"] { @extend %icon-pushpin; }
     &[for*="conversation"] { @extend %icon-bubbles; }
   }
 }
@@ -117,18 +121,22 @@
 // ---------------------------------------------------------------------------
 // Tokens
 
-.tokens-input {
+%tokens-input {
   @extend %input;
   position: relative;
   width: auto;
-  padding: $box-padding/2 $box-padding;
+  min-height: rhythm(1.5);
+  padding-bottom: $box-padding/2;
   background: rgba(white,.75);
 }
 
 .bulk-tokens {
   float: right;
   padding-left: $box-padding;
-  a { @extend %button-icon; }
+  a {
+    @extend %button-icon;
+    &:before { @include adjust-font-size-to($xxxsmallpx,.9); }
+  }
   .add-all {
     @extend %icon-plus;
     @include button-color($green lightest);
@@ -225,9 +233,9 @@
 }
 
 // ---------------------------------------------------------------------------
-// Messages
+// Helpers
 
-.message-form {
+%post-form-action {
   .action-post {
     @extend %icon;
     @extend %icon-bubble-forward;
@@ -239,23 +247,86 @@
   }
 }
 
-.to-field {
-  .tokens-type {
-    @include padding-leader(.25);
-    float: left;
-    margin-right: rhythm(.5);
-  }
-  .tokens-input { margin-left: rhythm(1.5); }
+%post-form-type {
+  @extend %button;
+  @extend %icon;
+  @include button-color($base3 lighter);
+  @include button-size(.25 $smallpx);
+  @include border-right-radius(0);
+  border-right: 0;
+
+  &:before { @include adjust-leading-to(.75); }
 }
+
+@mixin post-form-type($width: 3, $icon: user) {
+  @extend %post-form-type;
+  @extend %icon-#{$icon};
+  float: left;
+  width: columns($width,$center);
+}
+
+@mixin post-form-input($width: 3) {
+  @extend %tokens-input;
+  float: right;
+  width: space($center - $width, $center);
+  margin-left: rhythm(-1);
+}
+
+// ---------------------------------------------------------------------------
+// Messages
+
+.message-form { @extend %post-form-action; }
+
+.to-field {
+  .tokens-type { @include post-form-type; }
+  .tokens-input { @include post-form-input; }
+}
+
+// ---------------------------------------------------------------------------
+// Notes
+
+.note-form {
+  @extend %post-form-action;
+  .action-post { @extend %icon-pushpin; }
+}
+
+.attach-type { @include post-form-type(4, attachment); }
+.attach-input { @include post-form-input(4); }
+.attach-value { @include gone; }
 
 // ---------------------------------------------------------------------------
 // Conversations
 
-.with-field {
-  .tokens-type {
-    @include padding-leader(.25);
-    float: left;
-    margin-right: rhythm(.5);
+.conversation-form {
+  @extend %post-form-action;
+  .action-post { @extend %icon-bubbles; }
+}
+
+.convo-type-field {
+  @extend %select-buttons;
+  @include adjust-font-size-to($smallpx);
+  float: left;
+  width: columns(4, $center);
+
+  .option {
+    width: 50%;
+    &:last-child .radio-type {
+      @include border-right-radius(0);
+      border-right: 0;
+    }
   }
-  .tokens-input { margin-left: rhythm(2.5); }
+  .radio-type {
+    @extend %icon;
+    width: 100%;
+    &:before { @include adjust-leading-to(.75)}
+  }
+
+  [for*="phone"] { @extend %icon-phone; }
+  [for*="face"] { @extend %icon-users; }
+}
+
+.with-field {
+  &:after { display: none; }
+  .tokens-type { @include gone; }
+  .tokens-input { @include post-form-input(4); }
 }

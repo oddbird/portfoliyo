@@ -59,6 +59,11 @@
 
   {% block post-add-types %}
   <form method="POST" class="note-form post-type">
+    <div class="formfield attach-field">
+      <label class="attach-type" for="attach-file">Attach a file</label>
+      <div class="attach-input"></div>
+      <input type="file" id="attach-file" class="attach-value" />
+    </div>
     <div class="formfield post-textfield">
       <textarea id="note-text" name="text" class="value"></textarea>
     </div>
@@ -69,6 +74,18 @@
   </form>
 
   <form method="POST" class="conversation-form post-type">
+    <div class="formfield convo-type-field">
+      <ul class="radio-options">
+        <li class="option">
+          <input type="radio" id="convo-phone" class="radio-value" value="phone" name="convo-type" checked />
+          <label for="convo-phone" class="radio-type">Phone</label>
+        </li>
+        <li class="option">
+          <input type="radio" id="convo-face" class="radio-value" value="face" name="convo-type" />
+          <label for="convo-face" class="radio-type">Face</label>
+        </li>
+      </ul>
+    </div>
     <div class="formfield with-field">
       <label class="tokens-type" for="with-input">With:</label>
       <div class="tokens-input">
@@ -100,7 +117,7 @@
     </div>
 
     <div class="form-actions">
-      <button type="submit" class="action-post">Post</button>
+      <button type="submit" class="action-post">Log</button>
     </div>
   </form>
   {% endblock %}
