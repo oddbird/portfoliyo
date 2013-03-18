@@ -202,7 +202,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e007";
 }
 
-#messages .close:before {
+#messages .close:before, .post-add-form .action-post:disabled:before {
   content: "\e008";
 }
 
@@ -238,7 +238,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e009";
 }
 
-.parent-signup [for="sms-signup-toggle"]:before, .post-type-tabs .radio-type[for*="message"]:before, .token-status.sms:before, .group-feed:before, .feedstatus:last-child:before, .post-header:before {
+.parent-signup [for="sms-signup-toggle"]:before, .token-status.sms:before, .group-feed:before, .feedstatus:last-child:before, .post-header:before {
   content: "\e01a";
 }
 
@@ -274,7 +274,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e022";
 }
 
-.message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .sms .post-header:before {
+.post-type-tabs .radio-type[for*="message"]:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .mine.sms .post-header:before {
   content: "\e018";
 }
 
@@ -294,7 +294,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e025";
 }
 
-.post-type-tabs .radio-type[for*="note"]:before, .note-form .action-post:before {
+.post-type-tabs .radio-type[for*="note"]:before, .note-form .action-post:before, .no-sms .post-header:before {
   content: "\f08d";
 }
 
@@ -3130,6 +3130,15 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: none;
   border-bottom-color: transparent;
 }
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="message"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="message"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="message"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="message"][for*="conversation-form"]:before {
+  color: #6a7a00;
+}
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="note"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="note"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="note"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="note"][for*="conversation-form"]:before {
+  color: #a23c11;
+}
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="conversation"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="conversation"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="conversation-form"]:before {
+  color: #a82b68;
+}
 .post-add-form .form-actions {
   clear: none;
   margin: 0;
@@ -3197,6 +3206,15 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-left: 66.66667%;
   border-right: 0;
 }
+.post-type-tabs .radio-type[for*="message"]:focus:before, .post-type-tabs .radio-type[for*="message"]:hover:before, .post-type-tabs .radio-type[for*="message"]:active:before {
+  color: #6a7a00;
+}
+.post-type-tabs .radio-type[for*="note"]:focus:before, .post-type-tabs .radio-type[for*="note"]:hover:before, .post-type-tabs .radio-type[for*="note"]:active:before {
+  color: #a23c11;
+}
+.post-type-tabs .radio-type[for*="conversation"]:focus:before, .post-type-tabs .radio-type[for*="conversation"]:hover:before, .post-type-tabs .radio-type[for*="conversation"]:active:before {
+  color: #a82b68;
+}
 
 .post-type {
   padding: 0.63889rem 1.27778rem;
@@ -3217,18 +3235,55 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   padding-left: 0.63889rem;
   resize: none;
 }
+.post-textfield .value:focus + .charcount, .post-textfield .value:hover + .charcount, .post-textfield .value:active + .charcount {
+  opacity: 1;
+}
 .post-textfield .charcount {
   font-size: 12px;
   font-size: 0.66667rem;
   line-height: 23px;
   line-height: 1.27778rem;
+  position: relative;
+  -webkit-box-shadow: black 0 0 0.31944rem;
+  -moz-box-shadow: black 0 0 0.31944rem;
+  box-shadow: black 0 0 0.31944rem;
+  -webkit-transition: all 300ms;
+  -moz-transition: all 300ms;
+  -o-transition: all 300ms;
+  transition: all 300ms;
+  opacity: 0;
   position: absolute;
-  right: .25em;
-  bottom: 0;
-  color: #93a1a1;
+  top: 100%;
+  right: 0;
+  margin-top: 0.31944rem;
+  padding: 0.31944rem 1.27778rem;
+  background: #e6eacc;
+  border: 1px solid #6a7a00;
+}
+.post-textfield .charcount:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  bottom: 100%;
+  border-bottom-color: #6a7a00;
+  border-width: 0.31944rem;
+  left: 50%;
+  margin-left: -0.31944rem;
 }
 .post-textfield .charcount.overlimit {
-  color: #dc322f;
+  opacity: 1;
+  color: #fdf6e3;
+  background: #dc322f;
+  border-color: #073642;
+}
+.post-textfield .charcount.overlimit:after {
+  content: " Message is too long.";
+}
+.post-textfield .charcount.overlimit:before {
+  border-bottom-color: #073642;
 }
 
 .to-field .tokens-input, .attach-input, .with-field .tokens-input {
@@ -3895,6 +3950,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   float: left;
+  width: 1.27778rem;
   margin-left: -3.19444rem;
   padding: 0.31944rem 0.63889rem;
   background: #657b83;

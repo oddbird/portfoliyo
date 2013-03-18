@@ -25,6 +25,9 @@
   %active-tab-title {
     background: none;
     border-bottom-color: transparent;
+    &[for*="message"]:before { color: color($green dark); }
+    &[for*="note"]:before { color: color($orange dark); }
+    &[for*="conversation"]:before { color: color($magenta dark); }
   }
 
   .form-actions {
@@ -35,6 +38,7 @@
   .action-post {
     @include span-columns(2 omega, $center);
     height: rhythm(2.5);
+    &:disabled { @extend %icon-cancel-circle; }
   }
 
   &.group-posts {
@@ -83,9 +87,18 @@
     &:nth-child(2) { margin-left: $tab-width; }
     &:last-child { margin-left: $tab-width*2; border-right: 0; }
 
-    &[for*="message"] { @extend %icon-bubble; }
-    &[for*="note"] { @extend %icon-pushpin; }
-    &[for*="conversation"] { @extend %icon-bubbles; }
+    &[for*="message"] {
+      @extend %icon-bubble-forward;
+      #{$focus} { &:before { color: color($green dark); } }
+    }
+    &[for*="note"] {
+      @extend %icon-pushpin;
+      #{$focus} { &:before { color: color($orange dark); } }
+    }
+    &[for*="conversation"] {
+      @extend %icon-bubbles;
+      #{$focus} { &:before { color: color($magenta dark); } }
+    }
   }
 }
 
@@ -107,14 +120,29 @@
     background: rgba(white,.75);
     padding-left: rhythm(.5);
     resize: none;
+    #{$focus} { + .charcount { opacity: 1; } }
   }
   .charcount {
     @include adjust-font-size-to($xsmallpx);
+    @include arrow(top center color($green dark) $box-padding);
+    @include box-shadow(black 0 0 $box-padding);
+    @include transition(all 300ms);
+    opacity: 0;
     position: absolute;
-    right: .25em;
-    bottom: 0;
-    color: $base1;
-    &.overlimit { color: $red; }
+    top: 100%;
+    right: 0;
+    margin-top: $box-padding;
+    padding: $box-padding rhythm(1);
+    background: color($green lightest);
+    border: 1px solid color($green dark);
+    &.overlimit {
+      @include after(" Message is too long.");
+      opacity: 1;
+      color: $base3;
+      background: $red;
+      border-color: $back;
+      &:before { border-bottom-color: $back; }
+    }
   }
 }
 
