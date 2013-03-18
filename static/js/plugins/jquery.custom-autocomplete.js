@@ -73,14 +73,8 @@ var PYO = (function (PYO, $) {
             }
 
             // Refresh suggestions when an input changes
-            if (newSuggestions) {
-                filterSuggestions();
-                suggestionList.hide().html(filteredSuggestions);
-                // Adds ".selected" to first autocomplete suggestion.
-                if (!(suggestionList.find('.selected').length)) {
-                    suggestionList.find('li:first-child .option').addClass('selected');
-                }
-            }
+            updateSuggestionList();
+            suggestionList.hide();
         };
 
         // Filter autocomplete suggestions, returning those that aren't duplicates.
