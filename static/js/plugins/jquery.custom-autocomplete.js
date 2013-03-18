@@ -493,7 +493,7 @@ var PYO = (function (PYO, $) {
                     } else {
                         thisGroup.removeClass('empty').append(newInput);
                     }
-                    newInput.find(options.inputs).prop('checked', true).change();
+                    newInput.find(options.inputs).change();
                     inputs = inputList.add(newInputList).find(options.inputs);
                 };
                 if (options.multipleCategories) {

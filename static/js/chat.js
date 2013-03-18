@@ -285,6 +285,53 @@ var PYO = (function (PYO, $) {
         }
     };
 
+    // Adding/removing attachments on notes
+    PYO.initializeAttachments = function (formSel) {
+        if ($(formSel).length) {
+            var form = $(formSel);
+            var counter = 0;
+            var label = form.find('label.attach-type');
+            var attachmentList = form.find('.attach-input');
+            var inputList = form.find('.attach-field');
+
+            label.click(function (e) {
+                e.preventDefault();
+                var id = $(this).attr('for');
+                form.find('#' + id).click();
+            });
+
+            form.on('change', 'input.attach-value', function () {
+                var input = $(this);
+                var inputID = input.attr('id');
+                var filename = input.val().replace(/^.*\\/, '');
+                var token, newInput;
+
+                token = PYO.tpl('autocomplete_input', {
+                    newInput: true,
+                    typeName: 'attachment',
+                    index: counter++,
+                    id: inputID,
+                    inputText: filename
+                });
+                newInput = PYO.tpl('note_attachment_input', { index: counter });
+                attachmentList.append(token);
+                inputList.append(newInput);
+                label.attr('for', 'attach-file-' + counter);
+            });
+
+            attachmentList.on('change', '.token-toggle.new', function () {
+                var input = $(this);
+                if (input.prop('checked') === false) {
+                    var inputID = input.val();
+                    var token = input.closest('.token');
+
+                    form.find('#' + inputID).remove();
+                    token.remove();
+                }
+            });
+        }
+    };
+
     PYO.markPostsRead = function () {
         var posts = PYO.feed.find('.post.unread');
 
@@ -380,6 +427,7 @@ var PYO = (function (PYO, $) {
             labelText: 'present',
             prefix: 'conversation'
         });
+        PYO.initializeAttachments('.post-add-form .note-form');
         PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
