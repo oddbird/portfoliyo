@@ -282,7 +282,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
-.attach-type:before {
+.note-form .token-status:before, .attach-type:before {
   content: "\e023";
 }
 

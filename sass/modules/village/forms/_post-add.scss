@@ -316,6 +316,7 @@
 .note-form {
   @extend %post-form-action;
   .action-post { @extend %icon-pushpin; }
+  .token-status { @extend %icon-attachment; }
 }
 
 .attach-type { @include post-form-type(4, attachment); }
