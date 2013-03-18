@@ -3272,6 +3272,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-bottom: 0.15972rem;
   background: #d3e7f6;
   border: 1px solid #739cb9;
+  cursor: default;
 }
 .selected .token-body {
   background: #51a2db;
@@ -3353,14 +3354,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 .token-suggest .option.selected {
   background: #d3e7f6;
-  color: #073642;
 }
-.token-suggest .option .token-context {
-  float: right;
-  font-style: italic;
+.token-suggest .option.selected, .token-suggest .option.selected .suggestion-context {
+  color: #073642;
 }
 .token-suggest li:first-child .option {
   border: none;
+}
+.token-suggest .suggestion-context {
+  float: right;
+  color: #93a1a1;
+}
+.token-suggest .suggestion-context:empty {
+  display: none;
 }
 
 .message-form .action-post:before {

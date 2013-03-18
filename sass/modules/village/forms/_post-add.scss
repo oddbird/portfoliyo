@@ -149,6 +149,7 @@
   margin-bottom: $box-padding/2;
   background: color($blue lightest);
   border: 1px solid color(-50% $blue light);
+  cursor: default;
 
   .selected & {
     background: color($blue light);
@@ -212,15 +213,16 @@
     color: $base;
     &.selected {
       background: color($blue lightest);
-      color: $back;
-    }
-    .token-context {
-      float: right;
-      font-style: italic;
+      &, & .suggestion-context { color: $back; }
     }
   }
   li:first-child .option { border: none; }
+  .suggestion-context {
+    float: right;
+    color: $base1;
+    &:empty { display: none; }
   }
+}
 
 // ---------------------------------------------------------------------------
 // Messages
