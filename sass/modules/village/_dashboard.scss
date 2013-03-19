@@ -1,15 +1,97 @@
 // ---------------------------------------------------------------------------
 // Dashboard
 
-.dashboard {
-  @extend %village-page;
-  @extend %type;
-}
-
-// ---------------------------------------------------------------------------
-// Dashboard Fail
+.dashboard { @extend %overflow-y; }
 
 .no-students {
   @extend %simple-page;
   @extend %type;
+}
+
+// ---------------------------------------------------------------------------
+// Stats
+
+.stats {
+  @include clearfix;
+  .users {
+    @include rhythm-padding(2,2);
+    float: left;
+    width: percentage(1/3);
+    margin-right: -100%;
+    text-align: center;
+
+    &:nth-child(3n + 2) {
+      margin-left: percentage(1/3);
+      border: 2px dashed $base2;
+      border-width: 0 2px;
+    }
+    &:nth-child(3n + 3) { margin-left: percentage(2/3); }
+
+    b {
+      @include serif;
+      @include adjust-font-size-to($xlargepx);
+      display: block;
+
+      @include breakpoint($break-width) {
+        font-size: 6.5vw;
+        line-height: 6.7vw;
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Activity
+
+.activity {
+  @extend %type;
+  @include inset;
+  background: $base2;
+  padding: rhythm(1);
+
+  .action-list { @include trailer(0); }
+}
+
+.activity-title {
+  @include adjust-font-size-to($medpx);
+  @include trailer(.5);
+}
+
+// ---------------------------------------------------------------------------
+// posting
+
+%posting-icon {
+  @extend %icon;
+  &:before {
+    @include adjust-font-size-to($xxlargepx);
+    display: block;
+  }
+}
+
+.posting {
+  text-align: center;
+
+  .select-village, .or, .group-post-link {
+    @include rhythm-padding(2);
+  }
+
+  .select-village {
+    @extend %posting-icon;
+    @extend %icon-undo-2;
+    @include span-columns(7, $center + $right);
+  }
+  .or {
+    @include serif;
+    @include rhythm-padding(4.5);
+    @include span-columns(2, $center + $right);
+    @include background(linear-gradient(to bottom, $base3 50%, $base2 50%) repeat-y scroll center);
+    @include background-size(2px 1rem);
+    @include wrap-content(" - ");
+    text-transform: uppercase;
+  }
+  .group-post-link {
+    @extend %posting-icon;
+    @extend %icon-bubble-forward;
+    @include span-columns(7 omega, $center + $right);
+  }
 }
