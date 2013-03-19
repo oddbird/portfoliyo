@@ -1060,7 +1060,7 @@ button {
   -moz-border-radius: 3px;
   border-radius: 3px;
   position: relative;
-  padding: 0 0.4em;
+  padding: 0 .4em;
   color: inherit;
   background: rgba(255, 255, 255, 0.5);
   border: 1px solid #93a1a1;
@@ -1164,7 +1164,7 @@ button {
 
 .ui-multiselect-all, .ui-multiselect-none {
   width: 100%;
-  padding: 0 0.5em;
+  padding: 0 .5em;
   font-weight: bold;
   text-align: center;
 }
@@ -3212,7 +3212,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   position: absolute;
   right: 9px;
   top: 0.47917rem;
-  padding: 0 0.25em;
+  padding: 0 .25em;
   background: #d33682;
   color: #fdf6e3;
   text-align: center;
