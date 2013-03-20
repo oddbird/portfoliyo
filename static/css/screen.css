@@ -190,7 +190,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e003";
 }
 
-.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before, .feedstatus:before {
+.ui-multiselect-all:before, .ui-multiselect-none:before, .message.success:before {
   content: "\e005";
 }
 
@@ -210,7 +210,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00e";
 }
 
-.message.warning:before, .post .timeout:before, .post-add-form .group-targeting:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+.message.warning:before, .feedstatus.error:before, .post .timeout:before, .post-add-form .group-targeting:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
   content: "\e00f";
 }
 
@@ -3328,15 +3328,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 
 .feedstatus {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  font-size: 23px;
-  font-size: 1.27778rem;
-  line-height: 35px;
-  line-height: 1.91667rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 22px;
-  padding-bottom: 1.22222rem;
   text-shadow: white 0 1px 0;
   background: rgba(238, 232, 213, 0.5) repeat scroll;
   -webkit-transition: color 600ms;
@@ -3347,13 +3338,13 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   display: block;
-  padding: 1.27778rem;
-  border-color: #eee8d5;
+  padding: 0;
+  border-bottom: 1px solid #eee8d5;
   color: rgba(101, 123, 131, 0.5);
   text-align: center;
 }
-.feedstatus:after {
-  content: "Showing all posts.";
+.feedstatus.has-more, .feedstatus.error {
+  padding: 1.27778rem;
 }
 .feedstatus:last-child {
   font-size: 35px;
@@ -3392,6 +3383,14 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -o-animation: loadfeed 1.5s linear infinite both;
   animation: loadfeed 1.5s linear infinite both;
   color: rgba(101, 123, 131, 0.75);
+}
+.feedstatus.error {
+  text-shadow: #073642 0 1px 0;
+  background: #dc322f;
+  color: #fdf6e3;
+}
+.feedstatus.error:after {
+  content: "Error loading older posts. Scroll to retry.";
 }
 
 .feedhead {
