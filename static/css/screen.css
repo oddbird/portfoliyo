@@ -1635,7 +1635,6 @@ button {
   height: 0;
   padding-top: 56.25%;
   width: 100%;
-  border: 1px solid #657b83;
   position: relative;
   overflow: hidden;
 }
@@ -1647,6 +1646,9 @@ button {
   top: 0;
   margin: 0;
   padding: 0;
+}
+.main-image > * {
+  border: 1px solid #eee8d5;
 }
 
 .intro-copy {
@@ -1799,7 +1801,7 @@ button {
   border-style: dashed;
   border-color: #fdf6e3;
 }
-.feature:nth-child(3) {
+.feature:last-child {
   border: none;
 }
 .feature [data-icon] {
@@ -1837,30 +1839,28 @@ button {
     margin-top: 1.27778rem;
     margin-bottom: 23px;
     margin-bottom: 1.27778rem;
-    padding-bottom: 23px;
-    padding-bottom: 1.27778rem;
     float: left;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .feature:nth-child(1), .feature:nth-child(3) {
-    width: 31.83333%;
-  }
-  .feature:nth-child(1) {
-    padding-right: 4%;
-    border: 0;
+    width: 33.33333%;
+    padding: 0 1.27778rem 1.27778rem;
+    margin-right: -100%;
+    border-bottom: 0;
+    border-right: 2px dashed #fdf6e3;
   }
   .feature:nth-child(2) {
-    width: 36.33333%;
-    padding-left: 4%;
-    padding-right: 4%;
-    border: 2px dashed #fdf6e3;
-    border-width: 0 2px;
+    margin-left: 33.33333%;
   }
   .feature:nth-child(3) {
-    float: right;
-    padding-left: 4%;
-    margin-left: -2%;
+    margin-left: 66.66667%;
+  }
+  .feature:nth-child(4) {
+    clear: left;
+    margin-left: 16.66667%;
+  }
+  .feature:nth-child(5) {
+    margin-left: 50.0%;
+  }
+  .feature:nth-child(3), .feature:last-child {
+    border: 0;
   }
 }
 
