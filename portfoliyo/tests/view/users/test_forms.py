@@ -131,6 +131,25 @@ class TestRegistrationForm(object):
         assert not school.postcode
 
 
+    def test_add_dupe_school(self, db):
+        """No integrity error on school-creation race condition."""
+        data = self.base_data.copy()
+        data['addschool'] = '1'
+        data['addschool-name'] = "My School"
+        data['addschool-postcode'] = "12345"
+        form = forms.RegistrationForm(data)
+
+        assert form.is_valid()
+
+        school = factories.SchoolFactory.create(
+            name="My School",
+            postcode="12345",
+            )
+
+        profile = form.save()
+        assert profile.school == school
+
+
 
 class TestEditProfileForm(object):
     def test_update_relationships(self, db):
