@@ -112,8 +112,17 @@ class RegistrationForm(forms.Form):
         """Save and return new user profile."""
         school = self.cleaned_data['school']
         if school.id is None:
-            school.country_code = self.cleaned_data['country_code']
-            school.save()
+            # this could just set country_code and then school.save(), but that
+            # creates a race condition for two users creating same school at
+            # same time, resulting in IntegrityError
+            school, created = model.School.objects.get_or_create(
+                name=school.name,
+                postcode=school.postcode,
+                defaults={
+                    'country_code': self.cleaned_data['country_code'],
+                    'auto': school.auto,
+                    },
+                )
 
         profile = model.Profile.create_with_user(
             name=self.cleaned_data['name'],
