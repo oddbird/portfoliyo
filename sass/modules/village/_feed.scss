@@ -100,8 +100,6 @@ $loading-grad   : color($blue lightest,.325) 25%,
   &:last-child {
     @include trailer(0);
     border: 0;
-
-    .has-instructions & { @include trailer(4); }
   }
 
   &.mine {

@@ -3904,10 +3904,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-bottom: 0rem;
   border: 0;
 }
-.has-instructions .post:last-child {
-  margin-bottom: 92px;
-  margin-bottom: 5.11111rem;
-}
 .post.mine {
   background: rgba(211, 231, 246, 0.5);
 }
