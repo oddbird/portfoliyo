@@ -18,7 +18,8 @@ per_student_patterns = patterns(
 
 per_group_patterns = patterns(
     '',
-    url(r'^$', views.group, name='group'),
+    url(r'^$', views.dashboard, name='group_dash'),
+    url(r'^post/$', views.group, name='group'),
     url(r'^invite/teacher/$',
         views.invite_teacher_to_group,
         name='invite_teacher',
@@ -39,7 +40,7 @@ per_group_patterns = patterns(
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.dashboard, name='dashboard'),
+    url(r'^$', views.dashboard, name='all_students_dash'),
     url(r'^add/$', views.add_student, name='add_student'),
     url(r'^(?P<student_id>\d+)/', include(per_student_patterns)),
     url(r'^all/$', views.group, name='all_students'),

@@ -1,8 +1,9 @@
 {% extends "village/_base.html" %}
+{% load url from future %}
 
 {% block village-title %}
   <span aria-hidden="true" class="icon-group"></span>
-  { group.name }
+  {{ group.name }}
 {% endblock %}
 
 {% block village-content %}
@@ -10,13 +11,13 @@
 
 <ul class="stats">
   <li class="users students">
-    <p class="summary"><b>32</b> Students</p>
+    <p class="summary"><b>{{ student_count }}</b> Student{{ student_count|pluralize }}</p>
   </li>
   <li class="users family">
-    <p class="summary"><b>14</b> Family Members</p>
+    <p class="summary"><b>{{ family_count }}</b> Family Member{{ family_count|pluralize }}</p>
   </li>
   <li class="users teachers">
-    <p class="summary"><b>6</b> Teachers</p>
+    <p class="summary"><b>{{ teacher_count }}</b> Teacher{{ teacher_count|pluralize }}</p>
   </li>
 </ul>
 
@@ -36,7 +37,7 @@
   <p>
     <span class="select-village">Select a student village</span>
     <span class="or">or</span>
-    <a href="#" class="group-post-link">Send a message to the entire group</a>
+    <a href="{% if group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="group-post-link">Send a message to the entire group</a>
   </p>
 </div>
 
