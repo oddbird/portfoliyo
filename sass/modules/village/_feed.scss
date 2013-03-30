@@ -254,6 +254,8 @@ $postaction-size: $smallpx;
     @extend %icon;
     @extend %icon-warning;
     font-weight: bold;
+    color: $red;
+    strong { text-transform: uppercase; }
   }
 }
 

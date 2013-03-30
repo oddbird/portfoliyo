@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/chriseppstein/compass
-  revision: 2408d23b4c3d26925d77c9dcc21fb70c4a4ec1ae
+  revision: cb563c86ec73670521c2be3667f3f0c7e5da0bdc
   branch: master
   specs:
-    compass (0.13.alpha.2.2408d23)
+    compass (0.13.alpha.3.cb563c8)
       chunky_png (~> 1.2)
       listen (<= 0.9.9)
       sass (~> 3.2.5)
@@ -31,7 +31,7 @@ GEM
     breakpoint (1.3)
       compass (>= 0.12.1)
       sass (>= 3.2.0)
-    chunky_png (1.2.7)
+    chunky_png (1.2.8)
     listen (0.7.3)
     modular-scale (1.0.6)
       compass (>= 0.12.1)
