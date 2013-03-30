@@ -1,9 +1,16 @@
 {% extends "village/_base.html" %}
 {% load url from future %}
 
-{% block village-title %}
-  <span aria-hidden="true" class="icon-group"></span>
-  {{ group.name }}
+{% block village-header %}
+  {% if not group.is_all %}
+  <div class="page-actions">
+    <a href="{% url 'edit_group' group_id=group.id %}" class="action-edit ajax-link">Edit</a>
+  </div>
+  {% endif %}
+  <h2 class="village-title">
+    <span aria-hidden="true" class="icon-group"></span>
+    {{ group.name }}
+  </h2>
 {% endblock %}
 
 {% block village-content %}
