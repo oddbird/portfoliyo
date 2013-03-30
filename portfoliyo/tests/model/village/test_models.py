@@ -131,7 +131,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         mock_send_sms.assert_called_with(
@@ -196,7 +196,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids='all',
+                profile_ids='all',
                 )
 
         mock_send_sms.assert_called_with(
@@ -237,7 +237,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         mock_send_sms.assert_called_with(
@@ -262,7 +262,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         assert mock_send_sms.call_count == 0
@@ -286,7 +286,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         assert mock_send_sms.call_count == 0
@@ -479,7 +479,7 @@ class TestBulkPost(object):
         target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.BulkPost.create(
-                rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
+                rel1.elder, group, 'Hey dad', profile_ids=[rel2.elder.id])
 
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "Hey dad --John Doe")
@@ -514,7 +514,7 @@ class TestBulkPost(object):
         target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.BulkPost.create(
-                rel1.elder, group, 'Hey dad', sms_profile_ids='all')
+                rel1.elder, group, 'Hey dad', profile_ids='all')
 
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "Hey dad --John Doe")

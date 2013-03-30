@@ -1026,7 +1026,7 @@ class TestCreatePost(object):
         with mock.patch(target) as mock_send_sms:
             response = no_csrf_client.post(
                 self.url(rel.student),
-                {'text': 'foo', 'sms-target': [other_rel.elder.id]},
+                {'text': 'foo', 'profile-ids': [other_rel.elder.id]},
                 user=rel.elder.user,
                 )
 

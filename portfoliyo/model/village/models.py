@@ -50,7 +50,7 @@ class BasePost(models.Model):
     from_sms = models.BooleanField(default=False)
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
-    # arbitrary additional metadata, currently just SMSes
+    # additional metadata (SMSes sent, users contacted...)
     meta = JSONField(default={})
 
     is_bulk = None
@@ -176,7 +176,7 @@ class BulkPost(BasePost):
 
     @classmethod
     def create(cls, author, group, text,
-               sms_profile_ids=None, sequence_id=None, from_sms=False):
+               profile_ids=None, sequence_id=None, from_sms=False):
         """
         Create/return a BulkPost and all associated Posts.
 
@@ -186,7 +186,7 @@ class BulkPost(BasePost):
 
         It is currently not allowed for both to be ``None``.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive this
+        ``profile_ids`` is a list of Profile IDs who should receive this
         post as an SMS. If set to "all", will send to all SMS-eligible elders
         in the group.
 
@@ -214,7 +214,7 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        post.send_sms(sms_profile_ids)
+        post.send_sms(profile_ids)
 
         post.save()
 
@@ -305,12 +305,13 @@ class Post(BasePost):
 
     @classmethod
     def create(cls, author, student, text,
-               sms_profile_ids=None, sequence_id=None, from_sms=False,
-               in_reply_to=None, notifications=True):
+               profile_ids=None, sequence_id=None, from_sms=False,
+               in_reply_to=None, notifications=True,
+               post_type=None, attachment=None):
         """
         Create/return a Post, triggering a Pusher event and SMSes.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive this
+        ``profile_ids`` is a list of Profile IDs who should receive this
         post as an SMS. If set to "all", all eligible users will receive SMSes.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
@@ -343,7 +344,7 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        post.send_sms(sms_profile_ids, in_reply_to)
+        post.send_sms(profile_ids, in_reply_to)
         post.save()
 
         # mark the post unread by all web users in village (except the author)
