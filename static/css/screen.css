@@ -3740,6 +3740,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 .post-add-form .group-targeting {
   font-weight: bold;
+  color: #dc322f;
+}
+.post-add-form .group-targeting strong {
+  text-transform: uppercase;
 }
 
 .post-textfield {
