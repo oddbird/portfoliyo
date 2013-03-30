@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block village-content %}
-<div class="dashboard">
+<div class="dashboard village-main">
 
 <ul class="stats">
   <li class="users students">
@@ -21,8 +21,15 @@
   </li>
 </ul>
 
+<div class="posting">
+  <p>
+    <span class="select-village">Select a student village</span>
+    <a href="{% if group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="group-post-link">Or send a group message</a>
+  </p>
+</div>
+
 <div class="activity">
-  <h3 class="activity-title">Recent activity for { group.name }</h3>
+  <h3 class="activity-title">Recent activity for {{ group.name }}</h3>
   <ol class="action-list">
     <li class="action">Something happened</li>
     <li class="action">Other things</li>
@@ -33,13 +40,7 @@
   </ol>
 </div>
 
-<div class="posting">
-  <p>
-    <span class="select-village">Select a student village</span>
-    <span class="or">or</span>
-    <a href="{% if group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="group-post-link">Send a message to the entire group</a>
-  </p>
 </div>
 
-</div>
+{% include "village/post_list/_group_info.html" %}
 {% endblock %}
