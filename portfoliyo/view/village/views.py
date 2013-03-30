@@ -42,6 +42,8 @@ def dashboard(request, group_id=None):
         'village/dashboard.html',
         {
             'group': group,
+            'elders': model.contextualized_elders(
+                group.all_elders).order_by('school_staff', 'name'),
             'student_count': group.students.count(),
             'teacher_count': group.all_elders.filter(school_staff=True).count(),
             'family_count': group.all_elders.filter(school_staff=False).count(),
