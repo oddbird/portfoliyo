@@ -136,7 +136,7 @@
     background: color($green lightest);
     border: 1px solid color($green dark);
     &.overlimit {
-      @include after(" Message is too long.");
+      @include after(" Message is too long for SMS.");
       opacity: 1;
       color: $base3;
       background: $red;
@@ -308,6 +308,12 @@
 .to-field {
   .tokens-type { @include post-form-type; }
   .tokens-input { @include post-form-input; }
+}
+
+.no-to-field {
+  color: $red;
+  font-weight: bold;
+  strong { text-transform: uppercase; }
 }
 
 // ---------------------------------------------------------------------------

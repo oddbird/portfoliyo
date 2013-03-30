@@ -3277,7 +3277,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   border-color: #073642;
 }
 .post-textfield .charcount.overlimit:after {
-  content: " Message is too long.";
+  content: " Message is too long for SMS.";
 }
 .post-textfield .charcount.overlimit:before {
   border-bottom-color: #073642;
@@ -3499,6 +3499,14 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   float: right;
   width: 76.59574%;
   margin-left: -1.27778rem;
+}
+
+.no-to-field {
+  color: #dc322f;
+  font-weight: bold;
+}
+.no-to-field strong {
+  text-transform: uppercase;
 }
 
 .attach-type {
@@ -3990,14 +3998,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   line-height: 1.27778rem;
   padding-right: 50%;
   color: #93a1a1;
-}
-
-.no-to-field {
-  color: #dc322f;
-  font-weight: bold;
-}
-.no-to-field strong {
-  text-transform: uppercase;
 }
 
 .feed-error {
