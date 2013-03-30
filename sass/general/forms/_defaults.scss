@@ -48,25 +48,23 @@ $input-rhythm: .25;
 // Select Dropdowns
 
 $select-radius    : rhythm(.25);
-$select-angle     : to bottom;
-$select-gradient  : color($base,0), color($base,.125);
+$select-gradient  : linear-gradient(to bottom, color($base,0), color($base,.125));
 
 .formselect {
   @extend %icon;
   @extend %icon-arrow-down;
   @extend %input;
   @include border-radius($select-radius);
-  @include gradient-background-image($select-angle, $select-gradient);
+  @include background-image($select-gradient);
   position: relative;
   overflow: hidden;
 
   &:before {
     @include stretch-y;
     @include border-right-radius($select-radius);
-    @include gradient-background-image($select-angle, $select-gradient);
+    @include background(color($base3 lighter) $select-gradient);
     right: rhythm(- $input-rhythm)/2;
     padding: rhythm($input-rhythm) rhythm($input-rhythm)*2;
-    background-color: color($base3 lighter);
     border-left: 1px solid $base;
     pointer-events:none;
   }

@@ -374,7 +374,7 @@ var PYO = (function (PYO, $) {
             postData.group = PYO.activeGroupId;
         }
         if (url && !backlogXHR) {
-            feedStatus.addClass('loading');
+            feedStatus.addClass('loading').removeClass('error');
             backlogXHR = $.get(url, postData, function (data) {
                 if (data && data.objects && data.objects.length) {
                     data.objects.reverse();
@@ -388,6 +388,8 @@ var PYO = (function (PYO, $) {
                     if (data.meta) { backlogHasMore = data.meta.more; }
                     if (!backlogHasMore) { feedStatus.removeClass('has-more'); }
                 }
+            }).fail(function () {
+                feedStatus.addClass('error');
             }).always(function () {
                 backlogXHR = false;
                 feedStatus.removeClass('loading');

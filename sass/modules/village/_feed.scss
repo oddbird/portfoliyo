@@ -28,21 +28,18 @@ $loading-grad   : color($blue lightest,.325) 25%,
 .feedstatus {
   @extend %icon;
   @include serif;
-  @include adjust-font-size-to($medpx);
-  @include trailing-border(1px,1);
   @include text-shadow(white 0 1px 0);
   @include background(color($base2,.5) repeat scroll);
   @include transition(color 600ms);
   @include inset;
   display: block;
-  padding: rhythm(1);
-  border-color: $base2;
+  padding: 0;
+  border-bottom: 1px solid $base2;
   color: color($base, .5);
   text-align: center;
 
-  // no more posts to load
-  @extend %icon-checkmark;
-  @include after("Showing all posts.");
+  // more interesting messages
+  &.has-more, &.error { padding: rhythm(1); }
 
   // no posts in village
   &:last-child {
@@ -70,6 +67,14 @@ $loading-grad   : color($blue lightest,.325) 25%,
     }
   }
 
+  // backlog error
+  &.error {
+    @extend %icon-warning;
+    @include after("Error loading older posts. Scroll to retry.");
+    @include text-shadow($back 0 1px 0);
+    background: color($red);
+    color: $base3;
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -172,6 +177,12 @@ $post-icon-width: rhythm(2.5);
   @extend %ellipsis;
   padding-right: 50%;
   color: $base1;
+}
+
+.no-to-field {
+  color: $red;
+  font-weight: bold;
+  strong { text-transform: uppercase; }
 }
 
 // ---------------------------------------------------------------------------

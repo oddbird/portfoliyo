@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/chriseppstein/compass
-  revision: b868089aaf97a9a9b9db52946f86330bde003a80
+  revision: cb563c86ec73670521c2be3667f3f0c7e5da0bdc
   branch: master
   specs:
-    compass (0.13.alpha.2.b868089)
+    compass (0.13.alpha.3.cb563c8)
       chunky_png (~> 1.2)
       listen (<= 0.9.9)
       sass (~> 3.2.5)
@@ -18,10 +18,10 @@ GIT
 
 GIT
   remote: git://github.com/ericam/susy
-  revision: 2e3aad6aa2e3d40838b66520e8d141feebc2f2eb
+  revision: 5865792ceb92055e013a4e1e8242429ca499aa4d
   branch: master
   specs:
-    susy (1.0.6)
+    susy (1.0.8)
       compass (>= 0.12.2)
       sass (>= 3.2.0)
 
@@ -31,7 +31,7 @@ GEM
     breakpoint (1.3)
       compass (>= 0.12.1)
       sass (>= 3.2.0)
-    chunky_png (1.2.7)
+    chunky_png (1.2.8)
     listen (0.7.3)
     modular-scale (1.0.6)
       compass (>= 0.12.1)
