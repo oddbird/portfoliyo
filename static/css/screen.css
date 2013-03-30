@@ -3090,7 +3090,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 .stats .users:nth-child(3n + 2) {
   margin-left: 33.33333%;
-  border: 1px solid #93a1a1;
+  border: 1px solid #eee8d5;
   border-width: 0 1px;
 }
 .stats .users:nth-child(3n + 3) {
