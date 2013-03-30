@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import html, timezone
 from jsonfield import JSONField
+from model_utils import Choices
 
 from portfoliyo import tasks
 from ..users import models as user_models
@@ -266,8 +267,12 @@ class BulkPost(BasePost):
 class Post(BasePost):
     """A Post in a single student's village."""
     # the student in whose village this was posted
+    TYPES = Choices("message", "note", "call", "meeting")
+
     student = models.ForeignKey(
         user_models.Profile, related_name='posts_in_village')
+    post_type = models.CharField(
+        max_length=20, choices=TYPES, default=TYPES.message)
     # relationship between author and student (nullable b/c might be deleted)
     relationship = models.ForeignKey(
         user_models.Relationship,
@@ -276,6 +281,8 @@ class Post(BasePost):
         null=True,
         on_delete=models.SET_NULL,
         )
+    # attached file, if any
+    attachment = models.FileField(upload_to='attachments/%Y/%m/%d/', blank=True)
     # (optional) the bulk-post that triggered this post
     from_bulk = models.ForeignKey(
         BulkPost, blank=True, null=True, related_name='triggered')
