@@ -363,5 +363,8 @@
 .with-field {
   &:after { display: none; }
   .tokens-type { @include gone; }
-  .tokens-input { @include post-form-input(4); }
+  .tokens-input {
+    @include post-form-input(4);
+    @include trailer(.5);
+  }
 }
