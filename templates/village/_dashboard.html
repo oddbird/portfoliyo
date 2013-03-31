@@ -1,14 +1,55 @@
 {% extends "village/_base.html" %}
+{% load url from future %}
 
-{% block village-title %}Welcome to Portfoliyo!{% endblock village-title %}
+{% block village-header %}
+  {% if not group.is_all %}
+  <div class="page-actions">
+    <a href="{% url 'edit_group' group_id=group.id %}" class="action-edit ajax-link">Edit</a>
+  </div>
+  {% endif %}
+  <h2 class="village-title">
+    <span aria-hidden="true" class="icon-group"></span>
+    {{ group.name }}
+  </h2>
+{% endblock %}
 
 {% block village-content %}
-<div class="dashboard">
-  <ul>
-    <li>Create groups to keep your students organized.</li>
-    <li>Add students by printing sign-up directions for parents.</li>
-    <li>All your parent communication in one place.</li>
-    <li>Invite other teachers to the conversation.</li>
-  </ul>
+<div class="dashboard village-main">
+
+<ul class="stats">
+  <li class="users students">
+    <p class="summary"><b>{{ student_count }}</b> Student{{ student_count|pluralize }}</p>
+  </li>
+  <li class="users family">
+    <p class="summary"><b>{{ family_count }}</b> Family Member{{ family_count|pluralize }}</p>
+  </li>
+  <li class="users teachers">
+    <p class="summary"><b>{{ teacher_count }}</b> Teacher{{ teacher_count|pluralize }}</p>
+  </li>
+</ul>
+
+<div class="posting">
+  <p>
+    <span class="select-village">Select a student village</span>
+    <a href="{% if group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="group-post-link ajax-link">Or send a group message</a>
+  </p>
 </div>
-{% endblock village-content %}
+
+{% comment %}
+<div class="activity">
+  <h3 class="activity-title">Recent activity for {{ group.name }}</h3>
+  <ol class="action-list">
+    <li class="action">Something happened</li>
+    <li class="action">Other things</li>
+    <li class="action">Something happened</li>
+    <li class="action">Other things</li>
+    <li class="action">Something happened</li>
+    <li class="action">Other things</li>
+  </ol>
+</div>
+{% endcomment %}
+
+</div>
+
+{% include "village/post_list/_group_info.html" %}
+{% endblock %}

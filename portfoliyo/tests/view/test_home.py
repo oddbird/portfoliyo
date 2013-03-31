@@ -46,7 +46,7 @@ class TestHome(object):
             from_profile=rel.elder, to_profile__name="Student Two")
         response = client.get(self.url, user=rel.elder.user, status=302)
 
-        assert response['Location'] == location(reverse('dashboard'))
+        assert response['Location'] == location(reverse('all_students_dash'))
 
 
     def test_landing_cached(self, client):

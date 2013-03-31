@@ -265,7 +265,7 @@ class SlimGroupResource(PortfoliyoResource):
             kwargs={'resource_name': 'user', 'api_name': 'v1'},
             ) + '?student_in_groups=' + str(bundle.obj.id)
         bundle.data['group_uri'] = reverse(
-            'group',
+            'group_dash',
             kwargs={'group_id': bundle.obj.id},
             )
         bundle.data['edit_uri'] = reverse(
@@ -320,7 +320,7 @@ class GroupResource(SlimGroupResource):
                         'api_dispatch_list',
                         kwargs={'resource_name': 'user', 'api_name': 'v1'},
                         ) + '?elders=%s' % bundle.obj.owner.id,
-                    'group_uri': reverse('all_students'),
+                    'group_uri': reverse('all_students_dash'),
                     'add_student_uri': reverse('add_student'),
                     'owner': reverse(
                         'api_dispatch_detail',

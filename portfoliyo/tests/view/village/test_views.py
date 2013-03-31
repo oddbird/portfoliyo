@@ -75,15 +75,41 @@ class GroupContextTests(object):
 
 
 class TestDashboard(object):
-    def test_dashboard(self, client):
-        """Asks user to pick a student."""
-        rel = factories.RelationshipFactory(to_profile__name="Student Two")
+    def test_all_students_group(self, client):
+        """Dashboard contains group name, student/teacher/family count."""
+        rel = factories.RelationshipFactory(
+            from_profile__school_staff=True, to_profile__name="Student Two")
         factories.RelationshipFactory(
             from_profile=rel.elder, to_profile__name="Student One")
         response = client.get(
-            reverse('dashboard'), user=rel.elder.user, status=200)
+            reverse('all_students_dash'), user=rel.elder.user, status=200)
 
-        response.mustcontain("Welcome to Portfoliyo")
+        response.mustcontain("All Students")
+        response.mustcontain("<b>2</b> Students")
+        response.mustcontain("<b>1</b> Teacher")
+        response.mustcontain("<b>0</b> Family Members")
+
+
+    def test_group_dashboard(self, client):
+        """Group dashboard contains group name, student/teacher/family count."""
+        group = factories.GroupFactory.create(
+            owner__school_staff=True, name="Some Group")
+        rel = factories.RelationshipFactory(
+            from_profile=group.owner, to_profile__name="Student Two")
+        factories.RelationshipFactory(to_profile=rel.student)
+        factories.RelationshipFactory(
+            from_profile__school_staff=True, to_profile=rel.student)
+        group.students.add(rel.student)
+        response = client.get(
+            reverse('group_dash', kwargs={'group_id': group.id}),
+            user=group.owner.user,
+            status=200,
+            )
+
+        response.mustcontain("Some Group")
+        response.mustcontain("<b>1</b> Student")
+        response.mustcontain("<b>2</b> Teachers")
+        response.mustcontain("<b>1</b> Family Member")
 
 
 
