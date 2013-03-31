@@ -150,6 +150,10 @@ class BulkPost(BasePost):
     group = models.ForeignKey(
         user_models.Group, blank=True, null=True, related_name='bulk_posts')
 
+    # bulk posts are always messages, and don't support attachments
+    post_type = 'message'
+    attachment = None
+
 
     is_bulk = True
 

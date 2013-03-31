@@ -28,6 +28,7 @@ def post2dict(post, **extra):
 
     data = {
         'post_id': post.id,
+        'type': post.post_type,
         'author_id': post.author_id if post.author else 0,
         'author': author_name,
         'role': role,
@@ -41,6 +42,7 @@ def post2dict(post, **extra):
         'sms_recipients': ', '.join(sms_recipients),
         'num_sms_recipients': len(sms_recipients),
         'plural_sms': 's' if len(sms_recipients) > 1 else '',
+        'attachment_url': post.attachment.url if post.attachment else '',
         }
 
     data.update(post.extra_data())

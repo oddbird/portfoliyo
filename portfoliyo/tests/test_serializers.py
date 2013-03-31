@@ -80,6 +80,7 @@ def test_post2dict(db):
 
     assert serializers.post2dict(post, extra="extra") == {
         'post_id': post.id,
+        'type': 'message',
         'author_id': rel.elder.id,
         'student_id': rel.student.id,
         'author': 'The Teacher',
@@ -95,6 +96,7 @@ def test_post2dict(db):
         'sms_recipients': '',
         'plural_sms': '',
         'num_sms_recipients': 0,
+        'attachment_url': '',
         }
 
 

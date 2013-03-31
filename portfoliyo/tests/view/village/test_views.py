@@ -1154,6 +1154,23 @@ class TestCreatePost(object):
             }
 
 
+    def test_note_with_attachment(self, no_csrf_client):
+        """Can create a note type post with attachment."""
+        rel = factories.RelationshipFactory.create()
+
+        response = no_csrf_client.post(
+            self.url(rel.student),
+            {'text': "Today I will fly!", 'type': 'note'},
+            upload_files=[('attachment', 'some.txt', 'some text')],
+            user=rel.elder.user,
+            )
+
+        assert response.json['success']
+        assert response.json['objects'][0]['type'] == 'note'
+        assert response.json['objects'][0]['attachment_url'].endswith(
+            '/some.txt')
+
+
 
 class TestMarkPostRead(object):
     def url(self, post):

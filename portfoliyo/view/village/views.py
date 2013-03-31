@@ -439,6 +439,7 @@ def create_post(request, student_id=None, group_id=None):
             content_type='application/json',
             )
 
+    extra_kwargs = {}
     group = None
     rel = None
     post_model = model.BulkPost
@@ -448,6 +449,9 @@ def create_post(request, student_id=None, group_id=None):
         post_model = model.Post
         target = rel.student
         profile_ids = request.POST.getlist('profile-ids')
+        extra_kwargs['post_type'] = request.POST.get('type')
+        if 'attachment' in request.FILES:
+            extra_kwargs['attachment'] = request.FILES['attachment']
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
@@ -476,7 +480,7 @@ def create_post(request, student_id=None, group_id=None):
             text,
             profile_ids=profile_ids,
             sequence_id=sequence_id,
-            )
+            **extra_kwargs)
 
     data = {
         'success': True,
