@@ -51,7 +51,7 @@
 
 .posting {
   @include pie-clearfix;
-  background: $base2;
+  background: color($base3 -3%);
   text-align: center;
 
   .select-village, .or, .group-post-link {

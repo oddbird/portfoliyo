@@ -3119,7 +3119,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .posting {
-  background: #eee8d5;
+  background: #f5eedc;
   text-align: center;
 }
 .posting:after {
