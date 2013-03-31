@@ -354,11 +354,14 @@ class Post(BasePost):
 
         if post.post_type == 'message':
             post.send_sms(profile_ids, in_reply_to)
-        else:
+        elif profile_ids:
             post.meta['present'] = [
                 {'id': e.id, 'name': e.name, 'role': e.role_in_context}
                 for e in post.elders_in_context.filter(pk__in=profile_ids)
                 ]
+
+        if attachment:
+            post.attachment = attachment
 
         post.save()
 

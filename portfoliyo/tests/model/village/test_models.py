@@ -1,6 +1,8 @@
 """Tests for village models and related functions."""
 import datetime
+import os.path
 
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.utils.timezone import utc
 import mock
@@ -369,7 +371,7 @@ class TestPostCreate(object):
 
 
     @pytest.mark.parametrize('post_type', ['meeting', 'call'])
-    def test_meeting(self, post_type, db):
+    def test_meeting_call(self, post_type, db):
         """Can create a meeting/call-type post."""
         rel = factories.RelationshipFactory.create()
         other_rel = factories.RelationshipFactory.create(
@@ -389,6 +391,36 @@ class TestPostCreate(object):
         assert p.post_type == post_type
         assert p.meta['present'] == [
             {'id': other_rel.elder.id, 'role': 'father', 'name': "Mr. Doe"}]
+
+
+    def test_note(self, db):
+        """Can create a note-type post."""
+        rel = factories.RelationshipFactory.create()
+
+        p = models.Post.create(
+            rel.elder,
+            rel.student,
+            "Stood on my head today.",
+            post_type='note',
+            )
+
+        assert p.post_type == 'note'
+
+
+    def test_note_with_attachment(self, db):
+        """Can create a note-type post with an attachment."""
+        rel = factories.RelationshipFactory.create()
+
+        p = models.Post.create(
+            rel.elder,
+            rel.student,
+            "Stood on my head today.",
+            post_type='note',
+            attachment=SimpleUploadedFile('test.txt', 'some text'),
+            )
+
+        assert p.post_type == 'note'
+        assert os.path.basename(p.attachment.name) == 'test.txt'
 
 
 
