@@ -311,8 +311,13 @@ class Post(BasePost):
         """
         Create/return a Post, triggering a Pusher event and SMSes.
 
-        ``profile_ids`` is a list of Profile IDs who should receive this
-        post as an SMS. If set to "all", all eligible users will receive SMSes.
+        ``post_type`` is "message" (default), "note", "call", or "meeting".
+
+        ``profile_ids`` is a list of Profile IDs who are related to this
+        post. If ``post_type`` is "message", it's a list of profiles who should
+        receive this post as an SMS (if "all", all eligible users will receive
+        SMSes). For "call" or "meeting" post types, its a list of who was
+        present at the meeting / on the call.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -344,7 +349,17 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        post.send_sms(profile_ids, in_reply_to)
+        if post_type:
+            post.post_type = post_type
+
+        if post.post_type == 'message':
+            post.send_sms(profile_ids, in_reply_to)
+        else:
+            post.meta['present'] = [
+                {'id': e.id, 'name': e.name, 'role': e.role_in_context}
+                for e in post.elders_in_context.filter(pk__in=profile_ids)
+                ]
+
         post.save()
 
         # mark the post unread by all web users in village (except the author)

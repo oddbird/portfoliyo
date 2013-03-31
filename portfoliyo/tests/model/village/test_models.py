@@ -51,6 +51,7 @@ class TestPostCreate(object):
         assert post.author == rel.elder
         assert post.student == rel.student
         assert post.relationship == rel
+        assert post.post_type == 'message'
         assert post.timestamp == mock_now.return_value
         assert post.original_text == 'Foo\n'
         assert post.html_text == 'Foo<br>'
@@ -365,6 +366,29 @@ class TestPostCreate(object):
             models.Post.create(rel.elder, rel.student, "Hello")
 
         assert mock_notify_post.call_count == 0
+
+
+    @pytest.mark.parametrize('post_type', ['meeting', 'call'])
+    def test_meeting(self, post_type, db):
+        """Can create a meeting/call-type post."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student,
+            description="father",
+            from_profile__name="Mr. Doe",
+            )
+
+        p = models.Post.create(
+            rel.elder,
+            rel.student,
+            "Had a good chat.",
+            post_type=post_type,
+            profile_ids=[other_rel.elder.id],
+            )
+
+        assert p.post_type == post_type
+        assert p.meta['present'] == [
+            {'id': other_rel.elder.id, 'role': 'father', 'name': "Mr. Doe"}]
 
 
 
