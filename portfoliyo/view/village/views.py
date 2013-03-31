@@ -427,7 +427,45 @@ def group(request, group_id=None):
 @login_required
 @require_POST
 def create_post(request, student_id=None, group_id=None):
-    """Create a post."""
+    """
+    Create a post.
+
+    If ``student_id`` is provided in the URL, the post will be a single-village
+    post. If ``group_id`` is provided, it will be a group bulk post. If neither
+    is provided, it will be an all-students bulk post.
+
+    POST parameters accepted:
+
+    ``text``
+
+        The text of the post to create. Must be few enough characters that,
+        when the user's auto-signature is appended, the resulting full SMS
+        message is <160 characters.
+
+    ``type``
+
+        The type of post to create: "message", "note", "call", or
+        "meeting". This parameter is ignored for bulk posts; all bulk posts are
+        of type "message".
+
+    ``profile-ids``
+
+        A list of profile IDs connected with this post. For a "message" type
+        post, these users will receive the post via SMS. For a "meeting" or
+        "call" type post, these are the users who were present on the call or
+        at the meeting.
+
+    For non-bulk posts, an ``attachment`` file-upload parameter is also
+    optionally accepted.
+
+    Returns JSON object with boolean key ``success``. If ``success`` is
+    ``False``, a human-readable message will be provided in the ``error``
+    key. If ``success`` is ``True``, the ``objects`` key will be a list
+    containing one JSON-serialized post object. (Even though this view will
+    only ever return one post, it still returns a list for better compatibility
+    with other client-side JSON-handling code.)
+
+    """
     if 'text' not in request.POST:
         return http.HttpResponseBadRequest(
             json.dumps(
