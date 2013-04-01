@@ -27,12 +27,27 @@ BACKLOG_POSTS = 15
 
 @login_required
 @ajax('village/_dashboard.html')
-def dashboard(request):
-    """Dashboard view for users with multiple students."""
+def dashboard(request, group_id=None):
+    """Group dashboard."""
+    if group_id is None:
+        group = model.AllStudentsGroup(request.user.profile)
+    else:
+        group = get_object_or_404(
+            model.Group.objects.filter(owner=request.user.profile),
+            id=group_id,
+            )
+
     return TemplateResponse(
         request,
         'village/dashboard.html',
-        {},
+        {
+            'group': group,
+            'elders': model.contextualized_elders(
+                group.all_elders).order_by('school_staff', 'name'),
+            'student_count': group.students.count(),
+            'teacher_count': group.all_elders.filter(school_staff=True).count(),
+            'family_count': group.all_elders.filter(school_staff=False).count(),
+            },
         )
 
 

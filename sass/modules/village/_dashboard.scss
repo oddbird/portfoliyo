@@ -1,16 +1,96 @@
 // ---------------------------------------------------------------------------
 // Dashboard
 
-.dashboard {
-  @extend %village-page;
-  @extend %type;
-  li { @include adjust-leading-to(2); }
-}
-
-// ---------------------------------------------------------------------------
-// Dashboard Fail
+.dashboard { @extend %overflow-y; }
 
 .no-students {
   @extend %simple-page;
   @extend %type;
 }
+
+// ---------------------------------------------------------------------------
+// Stats
+
+.stats {
+  @include clearfix;
+  .users {
+    @include rhythm-padding(1);
+    float: left;
+    width: percentage(1/3);
+    margin-right: -100%;
+    text-align: center;
+
+    &:nth-child(3n + 2) {
+      margin-left: percentage(1/3);
+      border: 1px solid $base2;
+      border-width: 0 1px;
+    }
+    &:nth-child(3n + 3) { margin-left: percentage(2/3); }
+
+    b {
+      @include serif;
+      @include adjust-font-size-to($xlargepx);
+      display: block;
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// posting
+
+%posting-section {
+  @extend %icon;
+  float: left;
+  width: 50%;
+  margin-right: -100%;
+  &:before {
+    @include adjust-font-size-to($xlargepx);
+    display: block;
+  }
+}
+
+.posting {
+  @include pie-clearfix;
+  background: color($base3 -3%);
+  text-align: center;
+
+  .select-village, .or, .group-post-link {
+    @include rhythm-padding(1,1.5);
+  }
+
+  .select-village {
+    @extend %posting-section;
+    @extend %icon-undo-2;
+    @include inset;
+    border: 1px solid $base;
+    border-width: 1px 0;
+  }
+  .group-post-link {
+    @extend %button;
+    @extend %posting-section;
+    @extend %icon-bubble-forward;
+    @include border-radius(0);
+    @include button-color(color($base3));
+    margin-left: 50%;
+    border-right: 0;
+    #{$focus} {
+      @include button-color(color($blue lightest));
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Activity
+
+.activity {
+  @extend %type;
+  padding: rhythm(1);
+
+  .action-list { @include trailer(0); }
+}
+
+.activity-title {
+  @include adjust-font-size-to($medpx);
+  @include trailer(.5);
+}
+

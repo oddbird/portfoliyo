@@ -712,15 +712,11 @@ function program2(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"navtitle\">\n  <a href=\"#\" class=\"action-showgroups\" title=\"List groups\">List groups</a>\n  <h2 class=\"group-name\">";
-  if (stack1 = helpers.group_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + "</h2>\n  <a href=\"";
+  buffer += "<div class=\"navtitle\">\n  <a href=\"#\" class=\"action-showgroups\" title=\"List groups\">List groups</a>\n  <h2 class=\"group-name\">\n    <a href=\"";
   if (stack1 = helpers.group_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.group_url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"group-feed ajax-link\" data-group-name=\"";
+    + "\" class=\"ajax-link group-feed\" data-group-name=\"";
   if (stack1 = helpers.group_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -752,11 +748,11 @@ function program2(depth0,data) {
   if (stack1 = helpers.removed) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.removed; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\">\n    Send a message to ";
+    + "\">\n      ";
   if (stack1 = helpers.group_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\n  </a>\n</div>\n\n<ul class=\"itemlist students-list\">\n  ";
+    + "\n    </a>\n  </h2>\n</div>\n\n<ul class=\"itemlist students-list\">\n  ";
   stack1 = self.invokePartial(partials.student_list_items, 'student_list_items', depth0, helpers, partials, data);
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n</ul>\n\n";

@@ -32,20 +32,23 @@ $village-nav-action-color : $base03;
 }
 
 %navname {
+  padding: $box-padding;
   font-weight: bold;
   text-align: center;
 }
 
 .navtitle {
   @include box-shadow($inset-color 0 0 $inset-size);
-  padding: $box-padding;
   background: color($base3 lighter);
   border-bottom: 1px solid $village-border-color;
 }
 
-.group-name {
+.group-name a {
   @extend %navname;
-  padding: 0 rhythm(1.5);
+  display: block;
+  padding: $box-padding rhythm(1.5) + $box-padding;
+  #{$link} { color: inherit; }
+  #{$focus} { color: $accent; }
 }
 
 .action-showgroups {
@@ -53,16 +56,6 @@ $village-nav-action-color : $base03;
   @extend %icon-users-list;
   @include button-color($base3);
   left: $box-padding;
-}
-
-.group-feed {
-  @extend %grouptitle-button;
-  @extend %icon-bubble;
-  right: $box-padding;
-  &.active {
-    @include inset;
-    background-color: $blue;
-  }
 }
 
 .groups-title { @extend %navname; }
