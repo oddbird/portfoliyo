@@ -480,7 +480,7 @@ var PYO = (function (PYO, $) {
         }
         if (type === 'group') {
             el = nav.find('.group .listitem-select[data-group-id="' + id + '"]').closest('.group');
-            title = nav.find('.navtitle .group-feed[data-group-id="' + id + '"]');
+            title = nav.find('.navtitle .group-dashboard[data-group-id="' + id + '"]');
         }
         // Hide the removed student/group.
         if (el && el.length) { el.addClass('removed').slideUp(); }
@@ -551,7 +551,7 @@ var PYO = (function (PYO, $) {
                     student.removeClass('removed').slideDown(function () { $(this).removeAttr('style'); });
                 } else if (PYO.removalQueue.student[id].obj) {
                     obj = PYO.removalQueue.student[id].obj;
-                    var group_titles = nav.find('.navtitle .group-feed');
+                    var group_titles = nav.find('.navtitle .group-dashboard');
                     var all_students_dashboard = group_titles.filter(function () {
                         return $(this).data('group-id').toString().indexOf('all') !== -1;
                     });
