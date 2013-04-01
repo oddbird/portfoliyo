@@ -58,16 +58,6 @@ $village-nav-action-color : $base03;
   left: $box-padding;
 }
 
-.group-feed {
-  @extend %grouptitle-button;
-  @extend %icon-bubble;
-  right: $box-padding;
-  &.active {
-    @include inset;
-    background-color: $blue;
-  }
-}
-
 .groups-title { @extend %navname; }
 
 // ---------------------------------------------------------------------------
