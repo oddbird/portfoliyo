@@ -245,7 +245,7 @@ var PYO = (function (PYO, $) {
 
     PYO.removeGroupFromList = function (id) {
         var group = nav.find('.group .group-link[data-group-id="' + id + '"]');
-        var grouptitle = nav.find('.navtitle .group-feed[data-group-id="' + id + '"]');
+        var grouptitle = nav.find('.navtitle .group-dashboard[data-group-id="' + id + '"]');
         // If viewing the groups-list
         if (group.length) {
             var group_container = group.closest('.group');
@@ -275,7 +275,7 @@ var PYO = (function (PYO, $) {
             links.filter('[href="' + url + '"]').addClass('active');
             links.filter(function () {
                 var id;
-                if ($(this).hasClass('group-link') || $(this).hasClass('group-feed')) {
+                if ($(this).hasClass('group-link') || $(this).hasClass('group-dashboard')) {
                     id = $(this).data('group-id');
                     if (!PYO.activeStudentId) { return id === PYO.activeGroupId; }
                 } else {

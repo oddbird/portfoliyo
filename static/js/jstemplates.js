@@ -437,7 +437,7 @@ function program2(depth0,data) {
   if (stack1 = helpers.group_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.group_url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"ajax-link group-feed\" data-group-name=\"";
+    + "\" class=\"ajax-link group-dashboard\" data-group-name=\"";
   if (stack1 = helpers.group_name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.group_name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
