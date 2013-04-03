@@ -2,7 +2,6 @@
 import datetime
 from django.core.urlresolvers import reverse
 import mock
-import pytest
 
 from portfoliyo.api import resources
 from portfoliyo.model import unread
@@ -407,7 +406,7 @@ class TestGroupResource(object):
             kwargs={'resource_name': 'user', 'api_name': 'v1'},
             ) + '?elders=%s' % rel.elder.id
         assert g['add_student_uri'] == reverse('add_student')
-        assert g['group_uri'] == reverse('all_students')
+        assert g['group_uri'] == reverse('all_students_dash')
         assert g['owner'] == reverse(
             'api_dispatch_detail',
             kwargs={
@@ -450,7 +449,7 @@ class TestGroupResource(object):
     def test_group_uri(self, no_csrf_client):
         """Each group has a group_uri for use in the web UI."""
         g = factories.GroupFactory.create()
-        group_url = reverse('group', kwargs={'group_id': g.id})
+        group_url = reverse('group_dash', kwargs={'group_id': g.id})
 
         response = no_csrf_client.get(self.list_url(), user=g.owner.user)
 

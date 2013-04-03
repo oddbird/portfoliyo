@@ -3,7 +3,7 @@
 
 {% block village-title %}
   <span aria-hidden="true" class="icon-group"></span>
-  {{ group.name }}
+  {{ group.name }} Posts
 {% endblock %}
 
 {% block page-actions %}
@@ -18,7 +18,7 @@
 {% block howto-target %}{% endblock %}
 {% block sms-target %}
   <p class="group-targeting">
-    Group messages will be sent to all family members in the group.
+    Group messages will be sent to <strong>all family members</strong> in the group.
   </p>
   {% endblock %}
 {% block form-action %}{% if group.is_all %}{% url 'create_post' %}{% else %}{% url 'create_post' group_id=group.id %}{% endif %}{% endblock %}
