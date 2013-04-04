@@ -226,6 +226,18 @@ $postaction-size: $smallpx;
   text-align: right;
   &.group-posts { background: mix($blue,$base2,25%); }
 
+  .translate-link {
+    @extend %button-icon;
+    @extend %icon-globe;
+    @include adjust-font-size-to($smallpx);
+    @include button-color($base3);
+    position: relative;
+    float: right;
+    margin-left: rhythm(1);
+    margin-right: space(2,$center);
+    z-index: 10;
+  }
+
   .form-actions {
     clear: none;
     margin: 0;
