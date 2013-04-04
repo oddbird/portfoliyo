@@ -3,7 +3,6 @@
 
 .village-feed {
   position: relative;
-  overflow: hidden;
   height: 100%;
   background: color($base3 lightest);
 }
@@ -220,13 +219,24 @@ $postaction-size: $smallpx;
 .post-add-form {
   @extend %formdefaults;
   @include pie-clearfix;
-  @include box-shadow($base 0 0 $box-padding);
   position: relative;
   padding: rhythm(.5) rhythm(1);
   background: color($base3 lighter);
   border-top: 1px solid $village-border-color;
   text-align: right;
   &.group-posts { background: mix($blue,$base2,25%); }
+
+  .translate-link {
+    @extend %button-icon;
+    @extend %icon-globe;
+    @include adjust-font-size-to($smallpx);
+    @include button-color($base3);
+    position: relative;
+    float: right;
+    margin-left: rhythm(1);
+    margin-right: space(2,$center);
+    z-index: 10;
+  }
 
   .form-actions {
     clear: none;
@@ -269,14 +279,29 @@ $postaction-size: $smallpx;
     background: rgba(white,.75);
     padding-left: rhythm(.5);
     resize: none;
+    &:focus { + .charcount { opacity: 1; } }
   }
   .charcount {
     @include adjust-font-size-to($xsmallpx);
+    @include arrow(top center color($green dark) $box-padding);
+    @include box-shadow(black 0 0 $box-padding);
+    @include transition(all 300ms);
+    opacity: 0;
     position: absolute;
-    right: .25em;
-    bottom: 0;
-    color: $base1;
-    &.overlimit { color: $red; }
+    top: 100%;
+    right: 0;
+    margin-top: $box-padding;
+    padding: $box-padding rhythm(1);
+    background: color($green lightest);
+    border: 1px solid color($green dark);
+    &.overlimit {
+      @include after(" Message is too long for SMS.");
+      opacity: 1;
+      color: $base3;
+      background: $red;
+      border-color: $back;
+      &:before { border-bottom-color: $back; }
+    }
   }
 }
 

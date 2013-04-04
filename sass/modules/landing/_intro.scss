@@ -15,9 +15,9 @@
 .main-image {
   @include leader(1);
   @include fluid-ratio;
-  border: 1px solid $base;
   position: relative;
   overflow: hidden;
+  > * { border: 1px solid $base2; }
 }
 
 .intro-copy {
@@ -34,6 +34,11 @@
     display: block;
     font-weight: bold;
   }
+}
+
+.admin {
+  @include adjust-font-size-to($smallpx);
+  padding: 0 rhythm(1);
 }
 
 .main-register-link {

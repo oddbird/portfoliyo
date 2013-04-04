@@ -3,7 +3,6 @@
 
 [role="main"] {
   @include calc(min-height, "100% - #{rhythm(3.125)}");
-  overflow: hidden;
   padding: 0 $box-padding;
   color: $base;
   background: $base3;
