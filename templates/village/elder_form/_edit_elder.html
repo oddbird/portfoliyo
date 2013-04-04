@@ -4,7 +4,7 @@
 
 {% block village-header %}
   <div class="page-actions">
-    <a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="action-back ajax-link">Back to {% firstof student group %}</a>
+    <a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students_dash' %}{% else %}{% url 'group_dash' group_id=group.id %}{% endif %}" class="action-back ajax-link">Back to {% firstof student group %}</a>
   </div>
   <h2 class="village-title">
     <span aria-hidden="true" class="icon-edit"></span>
@@ -29,7 +29,7 @@
         </button>
       </p>
       {% endif %}
-      <p><a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="cancel ajax-link">Cancel</a> or</p>
+      <p><a href="{% if student %}{% url 'village' student_id=student.id %}{% if group.id %}?group={{ group.id }}{% endif %}{% elif group.is_all %}{% url 'all_students_dash' %}{% else %}{% url 'group_dash' group_id=group.id %}{% endif %}" class="cancel ajax-link">Cancel</a> or</p>
       <button type="submit">Save changes</button>
     </div>
   </form>
