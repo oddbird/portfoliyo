@@ -36,6 +36,11 @@
   }
 }
 
+.admin {
+  @include adjust-font-size-to($smallpx);
+  padding: 0 rhythm(1);
+}
+
 .main-register-link {
   @extend %button;
   @include serif;

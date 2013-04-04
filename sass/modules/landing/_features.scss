@@ -3,13 +3,8 @@
 
 .features {
   @include pie-clearfix;
-  @include bleed(1);
   @include inset;
   background: $base2;
-  @include at-breakpoint($break) {
-    @include bleed(1);
-    @include pad(2,2);
-  }
 }
 
 .feature {
