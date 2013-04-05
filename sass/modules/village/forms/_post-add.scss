@@ -120,7 +120,7 @@
     background: rgba(white,.75);
     padding-left: rhythm(.5);
     resize: none;
-    #{$focus} { + .charcount { opacity: 1; } }
+    &:focus { + .charcount { opacity: 1; } }
   }
   .charcount {
     @include adjust-font-size-to($xsmallpx);
@@ -178,7 +178,7 @@
 .tokens-list { display: inline; }
 
 .token-body {
-  @include border-radius($box-padding);
+  @include border-radius($box-padding/1.5);
   @include adjust-font-size-to($xxsmallpx,.75);
   display: none;
   padding: 0 $box-padding;
@@ -303,11 +303,38 @@
 // ---------------------------------------------------------------------------
 // Messages
 
-.message-form { @extend %post-form-action; }
+.message-form {
+  @extend %post-form-action;
+  .translate-link {
+    @extend %icon-replace;
+    @extend %icon-globe;
+    @include adjust-font-size-to($smallpx);
+    @include rhythm-borders(1px,.25);
+    @include border-right-radius($box-padding);
+    @include button-color(color($base3 lighter));
+    position: relative;
+    float: right;
+    width: space(1,$center);
+    border-left: 0;
+    z-index: 10;
+    &:before {
+      right: 0;
+      padding-top: $box-padding;
+      text-align: center;
+    }
+    &:hover { background-color: color($blue lightest); }
+    &:focus, &:active { @include inset; }
+  }
+}
 
 .to-field {
   .tokens-type { @include post-form-type; }
-  .tokens-input { @include post-form-input; }
+  .tokens-input {
+    @include post-form-input(4);
+    float: left;
+    margin-left: 0;
+    margin-right: rhythm(-1);
+  }
 }
 
 .no-to-field {

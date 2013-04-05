@@ -298,32 +298,36 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\f08d";
 }
 
+.message-form .translate-link:before {
+  content: "\e027";
+}
+
 /* Use the following CSS code if you want to have a class per icon */
-.bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .posting .select-village:before, .posting .group-post-link:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
+.bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .token-status:before, .message-form .translate-link:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .posting .select-village:before, .posting .group-post-link:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .posting .select-village:before, .posting .group-post-link:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+.bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .token-status:before, .message-form .translate-link:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .posting .select-village:before, .posting .group-post-link:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
-.bulk-tokens a, .action-showgroups, #messages .close, .token-status {
+.bulk-tokens a, .action-showgroups, #messages .close, .token-status, .message-form .translate-link {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.bulk-tokens a:focus, .action-showgroups:focus, #messages .close:focus, .token-status:focus {
+.bulk-tokens a:focus, .action-showgroups:focus, #messages .close:focus, .token-status:focus, .message-form .translate-link:focus {
   outline: 0;
 }
-.bulk-tokens a:focus:before, .action-showgroups:focus:before, #messages .close:focus:before, .token-status:focus:before {
+.bulk-tokens a:focus:before, .action-showgroups:focus:before, #messages .close:focus:before, .token-status:focus:before, .message-form .translate-link:focus:before {
   outline: 1px dotted;
 }
-.bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .token-status:before {
+.bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .token-status:before, .message-form .translate-link:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -1656,7 +1660,6 @@ button {
   height: 0;
   padding-top: 56.25%;
   width: 100%;
-  border: 1px solid #657b83;
   position: relative;
   overflow: hidden;
 }
@@ -1668,6 +1671,9 @@ button {
   top: 0;
   margin: 0;
   padding: 0;
+}
+.main-image > * {
+  border: 1px solid #eee8d5;
 }
 
 .intro-copy {
@@ -1695,6 +1701,14 @@ button {
 .tagline strong {
   display: block;
   font-weight: bold;
+}
+
+.admin {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  padding: 0 1.27778rem;
 }
 
 .main-register-link {
@@ -1778,13 +1792,6 @@ button {
   }
 }
 .features {
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  margin-left: -12.90323%;
-  padding-left: 12.90323%;
-  margin-right: -12.90323%;
-  padding-right: 12.90323%;
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
@@ -1794,19 +1801,6 @@ button {
   content: "";
   display: table;
   clear: both;
-}
-@media (min-width: 43.875em) {
-  .features {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    margin-left: -5.06329%;
-    padding-left: 5.06329%;
-    margin-right: -5.06329%;
-    padding-right: 5.06329%;
-    padding-left: 10.12658%;
-    padding-right: 10.12658%;
-  }
 }
 
 .feature {
@@ -1820,7 +1814,7 @@ button {
   border-style: dashed;
   border-color: #fdf6e3;
 }
-.feature:nth-child(3) {
+.feature:last-child {
   border: none;
 }
 .feature [data-icon] {
@@ -1858,30 +1852,28 @@ button {
     margin-top: 1.27778rem;
     margin-bottom: 23px;
     margin-bottom: 1.27778rem;
-    padding-bottom: 23px;
-    padding-bottom: 1.27778rem;
     float: left;
-    padding-left: 0;
-    padding-right: 0;
-  }
-  .feature:nth-child(1), .feature:nth-child(3) {
-    width: 31.83333%;
-  }
-  .feature:nth-child(1) {
-    padding-right: 4%;
-    border: 0;
+    width: 33.33333%;
+    padding: 0 1.27778rem 1.27778rem;
+    margin-right: -100%;
+    border-bottom: 0;
+    border-right: 2px dashed #fdf6e3;
   }
   .feature:nth-child(2) {
-    width: 36.33333%;
-    padding-left: 4%;
-    padding-right: 4%;
-    border: 2px dashed #fdf6e3;
-    border-width: 0 2px;
+    margin-left: 33.33333%;
   }
   .feature:nth-child(3) {
-    float: right;
-    padding-left: 4%;
-    margin-left: -2%;
+    margin-left: 66.66667%;
+  }
+  .feature:nth-child(4) {
+    clear: left;
+    margin-left: 16.66667%;
+  }
+  .feature:nth-child(5) {
+    margin-left: 50.0%;
+  }
+  .feature:nth-child(3), .feature:last-child {
+    border: 0;
   }
 }
 
@@ -2009,7 +2001,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1352308919') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2070,19 +2062,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1352308919');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1352308919');
+  background-image: url('../images/landing/carl.png?1351725897');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1352308919');
+  background-image: url('../images/landing/eric.png?1351725897');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1352308919');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 @-moz-keyframes announce-in {
@@ -2422,10 +2414,10 @@ button {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1359741024');
+  background-image: url('../images/flags/ca.png?1359567924');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1359741024');
+  background-image: url('../images/flags/us.png?1359567924');
 }
 
 .school-field {
@@ -2984,7 +2976,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: 0;
   padding-top: 53.61552%;
   width: 30.15873%;
-  background: url('../images/phone.png?1358884359') no-repeat center;
+  background: url('../images/phone.png?1353558228') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -3232,7 +3224,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   padding-left: 0.63889rem;
   resize: none;
 }
-.post-textfield .value:focus + .charcount, .post-textfield .value:hover + .charcount, .post-textfield .value:active + .charcount {
+.post-textfield .value:focus + .charcount {
   opacity: 1;
 }
 .post-textfield .charcount {
@@ -3333,9 +3325,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .token-body {
-  -webkit-border-radius: 0.31944rem;
-  -moz-border-radius: 0.31944rem;
-  border-radius: 0.31944rem;
+  -webkit-border-radius: 0.21296rem;
+  -moz-border-radius: 0.21296rem;
+  border-radius: 0.21296rem;
   font-size: 12px;
   font-size: 0.66667rem;
   line-height: 17px;
@@ -3491,14 +3483,64 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   line-height: 0.95833rem;
 }
 
+.message-form .translate-link {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 5px;
+  padding: 0.26389rem;
+  -moz-border-radius-topright: 0.31944rem;
+  -webkit-border-top-right-radius: 0.31944rem;
+  border-top-right-radius: 0.31944rem;
+  -moz-border-radius-bottomright: 0.31944rem;
+  -webkit-border-bottom-right-radius: 0.31944rem;
+  border-bottom-right-radius: 0.31944rem;
+  text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
+  background: -moz-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
+  background: -o-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
+  background: linear-gradient(to bottom, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
+  background-color: #fdf9ee;
+  border-color: #829798;
+  color: #657b83;
+  position: relative;
+  float: right;
+  width: 8.51064%;
+  border-left: 0;
+  z-index: 10;
+}
+.message-form .translate-link:link, .message-form .translate-link:visited, .message-form .translate-link:focus, .message-form .translate-link:hover, .message-form .translate-link:active {
+  color: #657b83;
+}
+.message-form .translate-link:before {
+  right: 0;
+  padding-top: 0.31944rem;
+  text-align: center;
+}
+.message-form .translate-link:hover {
+  background-color: #d3e7f6;
+}
+.message-form .translate-link:focus, .message-form .translate-link:active {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+}
+
 .to-field .tokens-type {
   float: left;
   width: 23.40426%;
 }
 .to-field .tokens-input {
   float: right;
-  width: 76.59574%;
+  width: 68.08511%;
   margin-left: -1.27778rem;
+  float: left;
+  margin-left: 0;
+  margin-right: -1.27778rem;
 }
 
 .no-to-field {

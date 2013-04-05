@@ -18,6 +18,8 @@
   <form method="POST" class="message-form post-type" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
     {% csrf_token %}
 
+    <a href="http://translate.google.com/" class="translate-link" target="_blank" title="Translate">Translate</a>
+
     {% block to-field %}
     <div class="formfield to-field">
       <label class="tokens-type" for="to-input">To:</label>
