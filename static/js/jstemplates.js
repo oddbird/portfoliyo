@@ -96,8 +96,6 @@ function program12(depth0,data) {
   stack1 = helpers['if'].call(depth0, depth0.newInput, {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" type=\"checkbox\" name=\"";
-  stack1 = helpers['if'].call(depth0, depth0.prefix, {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
   if (stack1 = helpers.typeName) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.typeName; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -425,7 +423,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   if (stack1 = helpers.index) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.index; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" class=\"attach-value\" />\n";
+    + "\" class=\"attach-value\" name=\"attachment\" />\n";
   return buffer;
   });
 

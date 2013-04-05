@@ -383,8 +383,8 @@
     &:before { @include adjust-leading-to(.75)}
   }
 
-  [for*="phone"] { @extend %icon-phone; }
-  [for*="face"] { @extend %icon-users; }
+  [for*="call"] { @extend %icon-phone; }
+  [for*="meeting"] { @extend %icon-users; }
 }
 
 .with-field {

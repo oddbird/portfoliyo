@@ -303,7 +303,7 @@ var PYO = (function (PYO, $) {
 
                 token = PYO.tpl('autocomplete_input', {
                     newInput: true,
-                    typeName: 'attachment',
+                    typeName: 'attachment-token',
                     index: counter++,
                     id: inputID,
                     inputText: filename

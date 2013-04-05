@@ -20,6 +20,8 @@
 
     <a href="http://translate.google.com/" class="translate-link" target="_blank" title="Translate">Translate</a>
 
+    <input type="hidden" name="type" value="message" />
+
     {% block to-field %}
     <div class="formfield to-field">
       <label class="tokens-type" for="to-input">To:</label>
@@ -33,7 +35,7 @@
         <div class="tokens-list">
           {% for elder in elders|sms_eligible %}
             <span class="token">
-              <input class="token-toggle" type="checkbox" name="message-elder" id="message-elder-{{ elder.id }}" value="{{ elder.id }}" data-display-name="{% firstof elder.name elder.role_in_context %}" checked />
+              <input class="token-toggle" type="checkbox" name="elder" id="message-elder-{{ elder.id }}" value="{{ elder.id }}" data-display-name="{% firstof elder.name elder.role_in_context %}" checked />
               <span class="token-body">
                 <label class="token-status sms" for="message-elder-{{ elder.id }}">sms</label>
                 <span class="token-text">{{ elder.role_in_context }}</span>
@@ -42,7 +44,7 @@
             </span>
           {% endfor %}
         </div>
-        <input type="text" id="to-input" name="profile-ids" value="" placeholder="Add recipients..." class="token-value" />
+        <input type="text" id="to-input" name="to" value="" placeholder="Add recipients..." class="token-value" />
         <ul class="token-suggest"></ul>
       </div>
     </div>
@@ -61,10 +63,12 @@
 
   {% block post-add-types %}
   <form method="POST" class="note-form post-type">
+    {% csrf_token %}
+    <input type="hidden" name="type" value="note" />
     <div class="formfield attach-field">
       <label class="attach-type" for="attach-file">Attach a file</label>
       <div class="attach-input"></div>
-      <input type="file" id="attach-file" class="attach-value" />
+      <input type="file" id="attach-file" class="attach-value" name="attachment" />
     </div>
     <div class="formfield post-textfield">
       <textarea id="note-text" name="text" class="value"></textarea>
@@ -76,15 +80,16 @@
   </form>
 
   <form method="POST" class="conversation-form post-type">
+    {% csrf_token %}
     <div class="formfield convo-type-field">
       <ul class="radio-options">
         <li class="option">
-          <input type="radio" id="convo-phone" class="radio-value" value="phone" name="convo-type" checked />
-          <label for="convo-phone" class="radio-type">Call</label>
+          <input type="radio" id="convo-call" class="radio-value" value="call" name="type" checked />
+          <label for="convo-call" class="radio-type">Call</label>
         </li>
         <li class="option">
-          <input type="radio" id="convo-face" class="radio-value" value="face" name="convo-type" />
-          <label for="convo-face" class="radio-type">Meeting</label>
+          <input type="radio" id="convo-meeting" class="radio-value" value="meeting" name="type" />
+          <label for="convo-meeting" class="radio-type">Meeting</label>
         </li>
       </ul>
     </div>
@@ -100,7 +105,7 @@
         <div class="tokens-list">
           {% for elder in elders %}
             <span class="token">
-              <input class="token-toggle" type="checkbox" name="conversation-elder" id="conversation-elder-{{ elder.id }}" value="{{ elder.id }}" />
+              <input class="token-toggle" type="checkbox" name="elder" id="conversation-elder-{{ elder.id }}" value="{{ elder.id }}" />
               <span class="token-body">
                 <label class="token-status" for="conversation-elder-{{ elder.id }}">present</label>
                 <span class="token-text">{{ elder.role_in_context }}</span>
