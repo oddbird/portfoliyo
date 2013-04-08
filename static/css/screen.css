@@ -2001,7 +2001,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1352308919') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2062,19 +2062,19 @@ button {
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1352308919');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1352308919');
+  background-image: url('../images/landing/carl.png?1351725897');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1352308919');
+  background-image: url('../images/landing/eric.png?1351725897');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1352308919');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 @-moz-keyframes announce-in {
@@ -2414,10 +2414,10 @@ button {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1365014241');
+  background-image: url('../images/flags/ca.png?1359567924');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1365014241');
+  background-image: url('../images/flags/us.png?1359567924');
 }
 
 .school-field {
@@ -2976,7 +2976,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: 0;
   padding-top: 53.61552%;
   width: 30.15873%;
-  background: url('../images/phone.png?1358884359') no-repeat center;
+  background: url('../images/phone.png?1353558228') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;

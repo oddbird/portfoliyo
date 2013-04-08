@@ -1,9 +1,9 @@
 GIT
   remote: git://github.com/chriseppstein/compass
-  revision: cb563c86ec73670521c2be3667f3f0c7e5da0bdc
+  revision: 317a4a18080c36299be97ea722b442c31e2e56ec
   branch: master
   specs:
-    compass (0.13.alpha.3.cb563c8)
+    compass (0.13.alpha.4.317a4a1)
       chunky_png (~> 1.2)
       listen (<= 0.9.9)
       sass (~> 3.2.5)
@@ -18,7 +18,7 @@ GIT
 
 GIT
   remote: git://github.com/ericam/susy
-  revision: 5865792ceb92055e013a4e1e8242429ca499aa4d
+  revision: 96309d6b172e2cf2ae4dacd0ccaa4bbd9579fc27
   branch: master
   specs:
     susy (1.0.8)
