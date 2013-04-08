@@ -236,6 +236,16 @@ $postaction-size: $smallpx;
     margin-left: rhythm(1);
     margin-right: space(2,$center);
     z-index: 10;
+    @include breakpoint(60em) {
+      width: auto;
+      padding: 0 $box-padding;
+      text-indent: 0;
+      &:before {
+        position: static;
+        margin-right: .4em;
+        text-align: left;
+      }
+    }
   }
 
   .form-actions {

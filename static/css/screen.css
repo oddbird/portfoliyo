@@ -3711,6 +3711,18 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .post-add-form .translate-link:link, .post-add-form .translate-link:visited, .post-add-form .translate-link:focus, .post-add-form .translate-link:hover, .post-add-form .translate-link:active {
   color: #657b83;
 }
+@media (min-width: 60em) {
+  .post-add-form .translate-link {
+    width: auto;
+    padding: 0 0.31944rem;
+    text-indent: 0;
+  }
+  .post-add-form .translate-link:before {
+    position: static;
+    margin-right: .4em;
+    text-align: left;
+  }
+}
 .post-add-form .form-actions {
   clear: none;
   margin: 0;
