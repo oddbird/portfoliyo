@@ -96,25 +96,26 @@ def test_post2dict(db):
         'sms_recipients': '',
         'plural_sms': '',
         'num_sms_recipients': 0,
-        'attachment_url': '',
+        'attachment_urls': [],
         'extra_names': [],
         }
 
 
 @pytest.mark.timezone(timezone.utc)
 @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
-def test_post2dict_timestamp_display(mock_now):
+def test_post2dict_timestamp_display(db, mock_now):
     """Natural date for a nearby date."""
-    post = factories.PostFactory.build(
+    post = factories.PostFactory.create(
         timestamp=datetime.datetime(2013, 2, 11, 8, 32, tzinfo=timezone.utc))
+
     assert serializers.post2dict(post)['timestamp_display'] == u"8:32am"
 
 
 
-def test_post2dict_no_author():
+def test_post2dict_no_author(db):
     """Special handling for author-less (automated) posts."""
-    student = factories.ProfileFactory.build()
-    post = factories.PostFactory.build(author=None, student=student)
+    student = factories.ProfileFactory.create()
+    post = factories.PostFactory.create(author=None, student=student)
 
     d = serializers.post2dict(post)
 

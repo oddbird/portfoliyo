@@ -703,7 +703,8 @@ class TestGetPosts(object):
         post1 = factories.PostFactory.create()
         post2 = factories.PostFactory.create(student=post1.student)
 
-        with utils.assert_num_queries(2):
+        # one for posts, one for attachments, one for post-count
+        with utils.assert_num_queries(3):
             self.assert_posts(
                 views._get_posts(profile, student=post1.student),
                 [post1, post2],
@@ -715,6 +716,7 @@ class TestGetPosts(object):
         post1 = factories.BulkPostFactory.create()
         post2 = factories.BulkPostFactory.create(group=post1.group)
 
+        # one for posts, one for post-count
         with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(post1.group.owner, group=post1.group),
@@ -1195,21 +1197,25 @@ class TestCreatePost(object):
             }
 
 
-    def test_note_with_attachment(self, no_csrf_client):
-        """Can create a note type post with attachment."""
+    def test_note_with_attachments(self, no_csrf_client):
+        """Can create a note type post with attachments."""
         rel = factories.RelationshipFactory.create()
 
         response = no_csrf_client.post(
             self.url(rel.student),
             {'text': "Today I will fly!", 'type': 'note'},
-            upload_files=[('attachment', 'some.txt', 'some text')],
+            upload_files=[
+                ('attachment', 'some1.txt', 'some1 text'),
+                ('attachment', 'some2.txt', 'some2 text'),
+                ],
             user=rel.elder.user,
             )
 
         assert response.json['success']
         assert response.json['objects'][0]['type'] == 'note'
-        assert response.json['objects'][0]['attachment_url'].endswith(
-            '/some.txt')
+        attachment_urls = response.json['objects'][0]['attachment_urls']
+        attachment_filenames = set([u.rsplit('/')[-1] for u in attachment_urls])
+        assert attachment_filenames == {'some1.txt', 'some2.txt'}
 
 
 

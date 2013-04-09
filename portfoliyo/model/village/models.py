@@ -152,7 +152,10 @@ class BulkPost(BasePost):
 
     # bulk posts are always messages, and don't support attachments
     post_type = 'message'
-    attachment = None
+
+    @property
+    def attachments(self):
+        return PostAttachment.objects.none()
 
 
     is_bulk = True
@@ -285,8 +288,6 @@ class Post(BasePost):
         null=True,
         on_delete=models.SET_NULL,
         )
-    # attached file, if any
-    attachment = models.FileField(upload_to='attachments/%Y/%m/%d/', blank=True)
     # (optional) the bulk-post that triggered this post
     from_bulk = models.ForeignKey(
         BulkPost, blank=True, null=True, related_name='triggered')
@@ -311,7 +312,7 @@ class Post(BasePost):
     def create(cls, author, student, text,
                profile_ids=None, sequence_id=None, from_sms=False,
                in_reply_to=None, notifications=True,
-               post_type=None, attachment=None, extra_names=None):
+               post_type=None, attachments=None, extra_names=None):
         """
         Create/return a Post, triggering a Pusher event and SMSes.
 
@@ -364,13 +365,13 @@ class Post(BasePost):
                 for e in post.elders_in_context.filter(pk__in=profile_ids)
                 ]
 
-        if attachment:
-            post.attachment = attachment
-
         if extra_names:
             post.meta['extra_names'] = extra_names
 
         post.save()
+
+        for uploaded_file in (attachments or []):
+            post.attachments.create(attachment=uploaded_file)
 
         # mark the post unread by all web users in village (except the author)
         for elder in student.elders:
@@ -403,6 +404,13 @@ class Post(BasePost):
     def get_absolute_url(self):
         """A Post's URL is its village; this is for admin convenience."""
         return reverse('village', kwargs={'student_id': self.student_id})
+
+
+
+class PostAttachment(models.Model):
+    """A file attachment on a Post."""
+    post = models.ForeignKey(Post, related_name='attachments')
+    attachment = models.FileField(upload_to='attachments/%Y/%m/%d/')
 
 
 

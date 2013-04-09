@@ -42,7 +42,7 @@ def post2dict(post, **extra):
         'sms_recipients': ', '.join(sms_recipients),
         'num_sms_recipients': len(sms_recipients),
         'plural_sms': 's' if len(sms_recipients) > 1 else '',
-        'attachment_url': post.attachment.url if post.attachment else '',
+        'attachment_urls': [pa.attachment.url for pa in post.attachments.all()],
         'extra_names': post.meta.get('extra_names', []),
         }
 

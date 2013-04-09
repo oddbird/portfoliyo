@@ -416,11 +416,12 @@ class TestPostCreate(object):
             rel.student,
             "Stood on my head today.",
             post_type='note',
-            attachment=SimpleUploadedFile('test.txt', 'some text'),
+            attachments=[SimpleUploadedFile('test.txt', 'some text')],
             )
 
         assert p.post_type == 'note'
-        assert os.path.basename(p.attachment.name) == 'test.txt'
+        assert os.path.basename(
+            p.attachments.get().attachment.name) == 'test.txt'
 
 
 

@@ -338,7 +338,8 @@ def _get_posts(profile, student=None, group=None):
     if student:
         all_unread = model.unread.all_unread(student, profile)
         queryset = student.posts_in_village.select_related(
-            'author__user', 'student', 'relationship')
+            'author__user', 'student', 'relationship').prefetch_related(
+            'attachments')
     elif group:
         if group.is_all:
             queryset = profile.authored_bulkposts.filter(
@@ -519,7 +520,7 @@ def create_post(request, student_id=None, group_id=None):
         extra_kwargs['extra_names'] = request.POST.getlist('extra_name')
         extra_kwargs['post_type'] = request.POST.get('type')
         if 'attachment' in request.FILES:
-            extra_kwargs['attachment'] = request.FILES['attachment']
+            extra_kwargs['attachments'] = request.FILES.getlist('attachment')
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
