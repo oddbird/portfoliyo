@@ -324,6 +324,12 @@ var PYO = (function (PYO, $) {
                     token.remove();
                 }
             });
+
+            attachmentList.on('click', function (e) {
+                if (e.target === this) {
+                    label.click();
+                }
+            });
         }
     };
 
