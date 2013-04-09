@@ -421,6 +421,7 @@ var PYO = (function (PYO, $) {
         PYO.initializeToField('.post-add-form .message-form', '#message-text', {prefix: 'message'});
         PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text', {
             allowNew: true,
+            newInputName: 'extra_name',
             labelText: 'present',
             prefix: 'conversation'
         });

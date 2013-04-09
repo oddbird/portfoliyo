@@ -539,8 +539,10 @@ var PYO = (function (PYO, $) {
                             existingNewInput.prop('checked', true).change();
                         } else {
                             // ...or add it if it doesn't already exist.
-                            if (!options.multipleCategories) {
-                                thisTypeName = 'new-' + thisTypeName;
+                            if (options.multipleCategories) {
+                                thisTypeName = (options.newInputName || 'new') + '-' + thisTypeName;
+                            } else {
+                                thisTypeName = options.newInputName || 'new-' + thisTypeName;
                             }
                             data.typeName = thisTypeName;
                             data.newInput = true;
@@ -640,6 +642,7 @@ var PYO = (function (PYO, $) {
         initialFocus: false,                            // Set ``true`` to give textbox focus on initial page load
         reset: '.reset',                                // Selector for button to reset all inputs to original state
         inputType: null,                                // Name for input types when using only one category of inputs
+        newInputName: null,                             // Name for new-input types (or prefix with multiple categories)
         inputsNeverRemoved: false,                      // Set ``true`` if non-new inputs are never added or removed (only checked or unchecked)
         caseSensitive: false,                           // Set ``true`` if inputs should be treated as case-sensitive
         prefix: '',                                     // Prefix to apply to each input ID (to avoid ID duplication when using multiple times on one page)
