@@ -463,12 +463,26 @@ def create_post(request, student_id=None, group_id=None):
         "meeting". This parameter is ignored for bulk posts; all bulk posts are
         of type "message".
 
-    ``profile-ids``
+    ``elder``
 
-        A list of profile IDs connected with this post. For a "message" type
+        A list of elder IDs connected with this post. For a "message" type
         post, these users will receive the post via SMS. For a "meeting" or
         "call" type post, these are the users who were present on the call or
         at the meeting.
+
+    ``extra_name``
+
+       A list of additional names connected with this post. (For instance, for
+       a "meeting" or "call" type post, these are names of additional people
+       present at the meeting or on the call, who are not actually elders in
+       the village.)
+
+    ``author_sequence_id``
+
+       An increasing numeric ID for posts authored by this user in this browser
+       session. This value is opaque to the server and not stored anywhere, but
+       is round-tripped through Pusher back to the client, to simplify
+       matching up post data and avoid creating duplicates on the client.
 
     For non-bulk posts, an ``attachment`` file-upload parameter is also
     optionally accepted.
@@ -501,7 +515,8 @@ def create_post(request, student_id=None, group_id=None):
         rel = get_relationship_or_404(student_id, request.user.profile)
         post_model = model.Post
         target = rel.student
-        profile_ids = request.POST.getlist('profile-ids')
+        profile_ids = request.POST.getlist('elder')
+        extra_kwargs['extra_names'] = request.POST.getlist('extra_name')
         extra_kwargs['post_type'] = request.POST.get('type')
         if 'attachment' in request.FILES:
             extra_kwargs['attachment'] = request.FILES['attachment']

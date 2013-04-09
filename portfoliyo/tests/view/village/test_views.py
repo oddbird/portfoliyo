@@ -1052,7 +1052,7 @@ class TestCreatePost(object):
         with mock.patch(target) as mock_send_sms:
             response = no_csrf_client.post(
                 self.url(rel.student),
-                {'text': 'foo', 'profile-ids': [other_rel.elder.id]},
+                {'text': 'foo', 'elder': [other_rel.elder.id]},
                 user=rel.elder.user,
                 )
 
@@ -1060,6 +1060,21 @@ class TestCreatePost(object):
         assert post['sms_recipients'] == 'Recipient'
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
+
+
+    def test_create_post_with_extra_names(self, no_csrf_client):
+        """Creates a post with extra names."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Mr. Doe")
+
+        response = no_csrf_client.post(
+            self.url(rel.student),
+            {'text': 'foo', 'extra_name': ['Foo', 'Bar']},
+            user=rel.elder.user,
+            )
+
+        post = response.json['objects'][0]
+        assert post['extra_names'] == ['Foo', 'Bar']
 
 
     def test_group_post_sms_all(self, no_csrf_client):

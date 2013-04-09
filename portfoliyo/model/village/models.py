@@ -311,7 +311,7 @@ class Post(BasePost):
     def create(cls, author, student, text,
                profile_ids=None, sequence_id=None, from_sms=False,
                in_reply_to=None, notifications=True,
-               post_type=None, attachment=None):
+               post_type=None, attachment=None, extra_names=None):
         """
         Create/return a Post, triggering a Pusher event and SMSes.
 
@@ -366,6 +366,9 @@ class Post(BasePost):
 
         if attachment:
             post.attachment = attachment
+
+        if extra_names:
+            post.meta['extra_names'] = extra_names
 
         post.save()
 
