@@ -9,5 +9,5 @@
 {% block post-add-types %}{% endblock %}
 
 {% block to-field %}
-<p class="no-to-field" data-elders="{% for elder in elders|sms_eligible %}{% firstof elder.name elder.role_in_context %}{% if not forloop.last %},{% endif %}{% endfor %}">Group posts are sent to <strong>all family members</strong>.</p>
+<p class="no-to-field" data-elders="{% for elder in elders|sms_eligible %}{% firstof elder.name elder.role_in_context %}{% if not forloop.last %},{% endif %}{% endfor %}">Group messages will be sent to <strong>all family members</strong> in the group.</p>
 {% endblock %}
