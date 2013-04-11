@@ -430,10 +430,25 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 this["PYO"]["templates"]["post_timeout_msg"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
+  var buffer = "", stack1, self=this;
+
+function program1(depth0,data) {
   
+  
+  return "Please <a class=\"cancel\" href=\"#\">remove this post</a> and try again.";
+  }
 
+function program3(depth0,data) {
+  
+  
+  return "<a class=\"resend\" href=\"#\">Try again?</a> Or <a class=\"cancel\" href=\"#\">cancel this post</a>.";
+  }
 
-  return "<p class=\"timeout\">This message was not sent. You may have lost your connection to the internet. <a class=\"resend\" href=\"#\">Try again?</a> Or <a class=\"cancel\" href=\"#\">cancel this post</a>.</p>\n";
+  buffer += "<p class=\"timeout\">This message was not sent. You may have lost your connection to the internet. ";
+  stack1 = helpers['if'].call(depth0, depth0.attachments, {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "</p>\n";
+  return buffer;
   });
 
 this["PYO"]["templates"]["posts"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {

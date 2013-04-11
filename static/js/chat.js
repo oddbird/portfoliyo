@@ -95,68 +95,81 @@ var PYO = (function (PYO, $) {
     PYO.submitPost = function () {
         if (PYO.feed.length) {
             var context = PYO.feed.closest('.village');
-            var form = context.find('form.message-form');
-            var button = form.find('.action-post');
-            var textarea = form.find('#message-text');
+            var forms = context.find('form.post-type');
+            forms.each(function () {
+                var form = $(this);
+                var button = form.find('.action-post');
+                var textarea = form.find('.post-textfield textarea');
+                var formReset = function () {
+                    form.resetForm();
+                    form.find('.attach-input label').click();
+                    form.find('.tokens-list .token.new label').click();
+                    textarea.focus().change();
+                };
 
-            form.submit(function (event) {
-                event.preventDefault();
-                if (textarea.val().length) {
-                    var text = $.trim(textarea.val());
-                    var author_sequence_id = (PYO.authorPosts || 0) + 1;
-                    var url = PYO.feed.data('post-url');
-                    var count = ++postAjax.count;
-                    var postData = [
-                        { name: 'text', value: text },
-                        { name: 'author_sequence_id', value: author_sequence_id }
-                    ];
-                    var smsInputs = form.find('.token-toggle:checked');
-                    var smsInputName = form.find('#to-input').attr('name');
-                    var noInputs = form.find('.no-to-field');
-                    var smsTargetArr = [];
-                    var postObj, post;
-
-                    if (smsInputs.length) {
-                        smsInputs.each(function () {
-                            var el = $(this);
-                            var id = el.val();
-                            var displayName = el.data('display-name');
-                            var obj = { name: smsInputName, value: id };
-                            postData.push(obj);
-                            smsTargetArr.push(displayName);
-                        });
-                    } else if (noInputs.length) {
-                        var namesArr = noInputs.data('elders').split(',');
-                        smsTargetArr = smsTargetArr.concat(namesArr);
-                    }
-
-                    postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
-                    post = PYO.addPost(postObj);
-
-                    if (url) {
-                        postAjax.XHR[count] = $.post(url, postData, function (response) {
-                            PYO.postAjaxSuccess(response, author_sequence_id, count);
-                        }).error(function (request, status) {
-                            PYO.postAjaxError(post, author_sequence_id, status, count);
-                            postAjax.XHR[count] = null;
-                        });
-                    }
-
-                    PYO.scrollToBottom();
-                    PYO.addPostTimeout(post, author_sequence_id, count);
-                    form.find('.to-field .bulk-tokens .add-all').click();
-                    textarea.val('').change().focus();
-                }
-            });
-
-            // Hijack ENTER to submit the form (instead of adding a newline)
-            textarea.keydown(function (event) {
-                if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
+                form.submit(function (event) {
+                    var attachments = form.find('.attach-value').filter(function () { return $(this).val() !== ''; });
                     event.preventDefault();
-                    if (!button.is(':disabled')) {
-                        form.submit();
+                    if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
+                        var author_sequence_id = (PYO.authorPosts || 0) + 1;
+                        var url = PYO.feed.data('post-url');
+                        var count = ++postAjax.count;
+                        var extraPostData = { author_sequence_id: author_sequence_id };
+                        var smsInputs = form.find('.token-toggle:checked');
+                        var noInputs = form.find('.no-to-field');
+                        var smsTargetArr = [];
+                        var postObj, post;
+
+                        if (smsInputs.length) {
+                            smsInputs.each(function () {
+                                var el = $(this);
+                                var displayName = el.data('display-name');
+                                smsTargetArr.push(displayName);
+                            });
+                        } else if (noInputs.length) {
+                            var namesArr = noInputs.data('elders').split(',');
+                            smsTargetArr = smsTargetArr.concat(namesArr);
+                        }
+
+                        postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
+                        post = PYO.addPost(postObj);
+
+                        if (url) {
+                            form.ajaxSubmit({
+                                url: url,
+                                data: extraPostData,
+                                dataType: 'json',
+                                beforeSubmit: function () {
+                                    post.data('post-data', form.formSerialize());
+                                },
+                                success: function (response) {
+                                    PYO.postAjaxSuccess(response, author_sequence_id, count);
+                                },
+                                error: function (request, status) {
+                                    if (attachments.length) { post.data('attachments', true); }
+                                    PYO.postAjaxError(post, author_sequence_id, status, count);
+                                    postAjax.XHR[count] = null;
+                                    form.removeData('jqxhr');
+                                }
+                            });
+                            postAjax.XHR[count] = form.data('jqxhr');
+                            formReset();
+                        }
+
+                        PYO.scrollToBottom();
+                        PYO.addPostTimeout(post, author_sequence_id, count);
                     }
-                }
+                });
+
+                // Hijack ENTER to submit the form (instead of adding a newline)
+                textarea.keydown(function (event) {
+                    if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
+                        event.preventDefault();
+                        if (!button.is(':disabled')) {
+                            form.submit();
+                        }
+                    }
+                });
             });
         }
     };
@@ -177,11 +190,10 @@ var PYO = (function (PYO, $) {
 
     PYO.postAjaxError = function (post, author_sequence_id, status, xhr_count) {
         if (status !== 'abort' && status !== 'timeout') {
-            var msg = PYO.tpl('post_timeout_msg');
+            var msg = PYO.tpl('post_timeout_msg', { attachments: post.data('attachments') });
             msg.find('.resend').click(function (e) {
                 e.preventDefault();
-                var thisPost = $(this).closest('.post');
-                PYO.resendPost(thisPost);
+                PYO.resendPost(post);
                 if (postAjax.XHR[xhr_count]) { postAjax.XHR[xhr_count].abort(); }
             });
             msg.find('.cancel').click(function (e) {
@@ -208,14 +220,9 @@ var PYO = (function (PYO, $) {
     PYO.resendPost = function (post) {
         var url = PYO.feed.data('post-url');
         var author_sequence_id = post.data('author-sequence');
-        var text = $.trim(post.find('.post-text').text());
-        var postData = {
-            author_sequence_id: author_sequence_id,
-            text: text
-        };
         var count = ++postAjax.count;
-
         if (url) {
+            var postData = post.data('post-data') + '&author_sequence_id=' + author_sequence_id;
             postAjax.XHR[count] = $.post(url, postData, function (response) {
                 PYO.postAjaxSuccess(response, author_sequence_id, count);
             }).error(function (request, status) {
@@ -298,7 +305,7 @@ var PYO = (function (PYO, $) {
             form.on('change', 'input.attach-value', function () {
                 var input = $(this);
                 var inputID = input.attr('id');
-                var filename = input.val().replace(/^.*\\/, '');
+                var filename = input.get(0).files[0].name;
                 var token, newInput;
 
                 token = PYO.tpl('autocomplete_input', {
