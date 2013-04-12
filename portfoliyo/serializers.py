@@ -28,6 +28,7 @@ def post2dict(post, **extra):
     timestamp = timezone.localtime(post.timestamp)
 
     sms_recipients = [s['name'] or s['role'] for s in post.meta.get('sms', [])]
+    present = [s['name'] or s['role'] for s in post.meta.get('present', [])]
 
     type_dict = {'name': post.post_type}
     for type_name, _ in model.Post.TYPES:
@@ -49,6 +50,9 @@ def post2dict(post, **extra):
         'sms_recipients': ', '.join(sms_recipients),
         'num_sms_recipients': len(sms_recipients),
         'plural_sms': 's' if len(sms_recipients) > 1 else '',
+        'present': ', '.join(present),
+        'num_present': len(present),
+        'plural_present': 's' if len(present) > 1 else '',
         'attachments': [
             {'name': os.path.basename(pa.attachment.name), 'url': pa.attachment.url}
             for pa in post.attachments.all()

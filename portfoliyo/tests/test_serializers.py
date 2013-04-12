@@ -102,6 +102,9 @@ def test_post2dict(db):
         'sms_recipients': '',
         'plural_sms': '',
         'num_sms_recipients': 0,
+        'present': '',
+        'plural_present': '',
+        'num_present': 0,
         'attachments': [],
         'extra_names': [],
         }

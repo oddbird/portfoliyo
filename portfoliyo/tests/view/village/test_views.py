@@ -1064,18 +1064,29 @@ class TestCreatePost(object):
             "+13216540987", "+13336660000", "foo --Mr. Doe")
 
 
-    def test_create_post_with_extra_names(self, no_csrf_client):
-        """Creates a post with extra names."""
+    def test_create_meeting_with_present_and_extra_names(self, no_csrf_client):
+        """Creates a meeting post with present profiles and extra names."""
         rel = factories.RelationshipFactory.create(
             from_profile__name="Mr. Doe")
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student, from_profile__name='Mr. Ed')
 
         response = no_csrf_client.post(
             self.url(rel.student),
-            {'text': 'foo', 'extra_name': ['Foo', 'Bar']},
+            {
+                'text': 'foo',
+                'type': 'meeting',
+                'elder': other_rel.from_profile_id,
+                'extra_name': ['Foo', 'Bar'],
+                },
             user=rel.elder.user,
             )
 
         post = response.json['objects'][0]
+        assert post['type']['is_meeting']
+        assert post['present'] == "Mr. Ed"
+        assert post['num_present'] == 1
+        assert post['plural_present'] == ''
         assert post['extra_names'] == ['Foo', 'Bar']
 
 
