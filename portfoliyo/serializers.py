@@ -54,7 +54,10 @@ def post2dict(post, **extra):
         'num_present': len(present),
         'plural_present': 's' if len(present) > 1 else '',
         'attachments': [
-            {'name': os.path.basename(pa.attachment.name), 'url': pa.attachment.url}
+            {
+                'name': os.path.basename(pa.attachment.name),
+                'url': pa.attachment.url
+                }
             for pa in post.attachments.all()
             ],
         'extra_names': post.meta.get('extra_names', []),
