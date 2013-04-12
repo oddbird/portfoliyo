@@ -1087,6 +1087,7 @@ class TestCreatePost(object):
         assert post['present'] == "Mr. Ed"
         assert post['num_present'] == 1
         assert post['plural_present'] == ''
+        assert not post['sms_recipients']
         assert post['extra_names'] == ['Foo', 'Bar']
 
 
