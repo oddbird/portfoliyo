@@ -86,9 +86,16 @@ var PYO = (function (PYO, $) {
                 sms: smsTargetArr.length ? true : false,
                 to_sms: smsTargetArr.length ? true : false,
                 sms_recipients: smsTargetArr,
-                type: type
+                type: {
+                    name: type,
+                    is_call: false,
+                    is_meeting: false,
+                    is_message: false,
+                    is_note: false
+                }
             }]
         };
+        postObj.objects[0].type['is_' + type] = true;
         return postObj;
     };
 
