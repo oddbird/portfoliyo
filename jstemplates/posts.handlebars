@@ -10,20 +10,26 @@
       <span class="fn">{{#if school_staff}}{{author}}{{else}}{{role}}{{/if}}</span>
     </h3>
 
-    <p class="recipients">
-      {{#if type.is_message }}
-        {{#if sms}}
-          {{#if pending}}
-            {{#if to_sms}}Sending text{{plural_sms}}{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
+    {{#unless type.is_note}}
+      <p class="recipients">
+        {{#if type.is_message}}
+          {{#if sms}}
+            {{#if pending}}
+              {{#if to_sms}}Sending text{{#plural sms_recipients}}s{{/plural}}{{#if sms_recipients}} to {{#comma_list sms_recipients}}{{this}}{{/comma_list}}{{/if}}.{{/if}}
+            {{else}}
+              {{#if from_sms}}Sent from phone. {{/if}}
+              {{#if to_sms}}Text{{#plural sms_recipients}}s{{/plural}} sent{{#if sms_recipients}} to {{#comma_list sms_recipients}}{{this}}{{/comma_list}}{{/if}}.{{/if}}
+            {{/if}}
           {{else}}
-            {{#if from_sms}}Sent from phone. {{/if}}
-            {{#if to_sms}}Text{{plural_sms}} sent{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
+            No text messages sent.
           {{/if}}
-        {{else}}
-          No text messages sent.
         {{/if}}
-      {{/if}}
-    </p>
+        {{#iff type.is_call '||' type.is_meeting}}
+          With {{#if present}}{{#comma_list present}}{{this}}{{/comma_list}}{{#if extra_names}}, {{/if}}{{/if}}
+          {{#if extra_names}}{{#comma_list extra_names}}{{this}}{{/comma_list}}{{/if}}.
+        {{/iff}}
+      </p>
+    {{/unless}}
   </header>
 
   <div class="post-body">
@@ -32,11 +38,15 @@
     </div>
   </div>
 
-  {{#each attachments}}
+  {{#if attachments}}
   <div class="attachments">
-    <a href="{{url}}">{{name}}</a>
+    <ul>
+      {{#each attachments}}
+      <li><a href="{{url}}">{{name}}</a></li>
+      {{/each}}
+    </ul>
   </div>
-  {{/each}}
+  {{/if}}
 
 </article>
 {{/each}}

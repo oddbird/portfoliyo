@@ -23,6 +23,24 @@ var PYO = (function (PYO, $) {
         //         console.log(optionalValue);
         //     }
         // });
+
+        Handlebars.registerHelper('comma_list', function (context, options) {
+            var ret = "";
+            for (var i = 0, j = context.length; i < j; i++) {
+                ret = ret + options.fn(context[i]);
+                if (i < j - 1) {
+                    ret = ret + ", ";
+                }
+            }
+            return ret;
+        });
+
+        Handlebars.registerHelper('plural', function (context, options) {
+            if (context.length > 1) {
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        });
     });
 
     return PYO;

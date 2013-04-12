@@ -454,7 +454,7 @@ function program3(depth0,data) {
 this["PYO"]["templates"]["posts"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, self=this, functionType="function", escapeExpression=this.escapeExpression;
+  var buffer = "", stack1, self=this, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
   
@@ -499,14 +499,14 @@ function program1(depth0,data) {
     + "\n    </time>\n\n    <h3 class=\"byline vcard\">\n      <span class=\"fn\">";
   stack2 = helpers['if'].call(depth0, depth0.school_staff, {hash:{},inverse:self.program(23, program23, data),fn:self.program(21, program21, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "</span>\n    </h3>\n\n    <p class=\"recipients\">\n      ";
-  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_message), {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data});
+  buffer += "</span>\n    </h3>\n\n    ";
+  stack2 = helpers.unless.call(depth0, ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_note), {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n    </p>\n  </header>\n\n  <div class=\"post-body\">\n    <div class=\"post-text\">\n      <p>";
-  stack2 = helpers['if'].call(depth0, depth0.pending, {hash:{},inverse:self.program(40, program40, data),fn:self.program(38, program38, data),data:data});
+  buffer += "\n  </header>\n\n  <div class=\"post-body\">\n    <div class=\"post-text\">\n      <p>";
+  stack2 = helpers['if'].call(depth0, depth0.pending, {hash:{},inverse:self.program(50, program50, data),fn:self.program(48, program48, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "</p>\n    </div>\n  </div>\n\n  ";
-  stack2 = helpers.each.call(depth0, depth0.attachments, {hash:{},inverse:self.noop,fn:self.program(42, program42, data),data:data});
+  stack2 = helpers['if'].call(depth0, depth0.attachments, {hash:{},inverse:self.noop,fn:self.program(52, program52, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n\n</article>\n";
   return buffer;
@@ -605,18 +605,22 @@ function program23(depth0,data) {
 
 function program25(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, stack2, options;
+  buffer += "\n      <p class=\"recipients\">\n        ";
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_message), {hash:{},inverse:self.noop,fn:self.program(26, program26, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n        ";
-  stack1 = helpers['if'].call(depth0, depth0.sms, {hash:{},inverse:self.program(36, program36, data),fn:self.program(26, program26, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n      ";
+  options = {hash:{},inverse:self.noop,fn:self.program(42, program42, data),data:data};
+  stack2 = ((stack1 = helpers.iff),stack1 ? stack1.call(depth0, ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_call), "||", ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_meeting), options) : helperMissing.call(depth0, "iff", ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_call), "||", ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_meeting), options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += "\n      </p>\n    ";
   return buffer;
   }
 function program26(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n          ";
-  stack1 = helpers['if'].call(depth0, depth0.pending, {hash:{},inverse:self.program(31, program31, data),fn:self.program(27, program27, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.sms, {hash:{},inverse:self.program(40, program40, data),fn:self.program(27, program27, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n        ";
   return buffer;
@@ -625,7 +629,7 @@ function program27(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n            ";
-  stack1 = helpers['if'].call(depth0, depth0.to_sms, {hash:{},inverse:self.noop,fn:self.program(28, program28, data),data:data});
+  stack1 = helpers['if'].call(depth0, depth0.pending, {hash:{},inverse:self.program(35, program35, data),fn:self.program(28, program28, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n          ";
   return buffer;
@@ -633,64 +637,121 @@ function program27(depth0,data) {
 function program28(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "Sending text";
-  if (stack1 = helpers.plural_sms) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.plural_sms; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1);
-  stack1 = helpers['if'].call(depth0, depth0.sms_recipients, {hash:{},inverse:self.noop,fn:self.program(29, program29, data),data:data});
+  buffer += "\n              ";
+  stack1 = helpers['if'].call(depth0, depth0.to_sms, {hash:{},inverse:self.noop,fn:self.program(29, program29, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += ".";
+  buffer += "\n            ";
   return buffer;
   }
 function program29(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += " to ";
-  if (stack1 = helpers.sms_recipients) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.sms_recipients; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1);
+  var buffer = "", stack1, stack2, options;
+  buffer += "Sending text";
+  options = {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data};
+  stack2 = ((stack1 = helpers.plural),stack1 ? stack1.call(depth0, depth0.sms_recipients, options) : helperMissing.call(depth0, "plural", depth0.sms_recipients, options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  stack2 = helpers['if'].call(depth0, depth0.sms_recipients, {hash:{},inverse:self.noop,fn:self.program(32, program32, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += ".";
   return buffer;
+  }
+function program30(depth0,data) {
+  
+  
+  return "s";
   }
 
-function program31(depth0,data) {
+function program32(depth0,data) {
   
-  var buffer = "", stack1;
-  buffer += "\n            ";
-  stack1 = helpers['if'].call(depth0, depth0.from_sms, {hash:{},inverse:self.noop,fn:self.program(32, program32, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            ";
-  stack1 = helpers['if'].call(depth0, depth0.to_sms, {hash:{},inverse:self.noop,fn:self.program(34, program34, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n          ";
+  var buffer = "", stack1, stack2, options;
+  buffer += " to ";
+  options = {hash:{},inverse:self.noop,fn:self.program(33, program33, data),data:data};
+  stack2 = ((stack1 = helpers.comma_list),stack1 ? stack1.call(depth0, depth0.sms_recipients, options) : helperMissing.call(depth0, "comma_list", depth0.sms_recipients, options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   return buffer;
   }
-function program32(depth0,data) {
+function program33(depth0,data) {
+  
+  
+  return escapeExpression((typeof depth0 === functionType ? depth0.apply(depth0) : depth0));
+  }
+
+function program35(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n              ";
+  stack1 = helpers['if'].call(depth0, depth0.from_sms, {hash:{},inverse:self.noop,fn:self.program(36, program36, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n              ";
+  stack1 = helpers['if'].call(depth0, depth0.to_sms, {hash:{},inverse:self.noop,fn:self.program(38, program38, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n            ";
+  return buffer;
+  }
+function program36(depth0,data) {
   
   
   return "Sent from phone. ";
   }
 
-function program34(depth0,data) {
+function program38(depth0,data) {
   
-  var buffer = "", stack1;
+  var buffer = "", stack1, stack2, options;
   buffer += "Text";
-  if (stack1 = helpers.plural_sms) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
-  else { stack1 = depth0.plural_sms; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1)
-    + " sent";
-  stack1 = helpers['if'].call(depth0, depth0.sms_recipients, {hash:{},inverse:self.noop,fn:self.program(29, program29, data),data:data});
-  if(stack1 || stack1 === 0) { buffer += stack1; }
+  options = {hash:{},inverse:self.noop,fn:self.program(30, program30, data),data:data};
+  stack2 = ((stack1 = helpers.plural),stack1 ? stack1.call(depth0, depth0.sms_recipients, options) : helperMissing.call(depth0, "plural", depth0.sms_recipients, options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  buffer += " sent";
+  stack2 = helpers['if'].call(depth0, depth0.sms_recipients, {hash:{},inverse:self.noop,fn:self.program(32, program32, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += ".";
   return buffer;
   }
 
-function program36(depth0,data) {
+function program40(depth0,data) {
   
   
-  return "\n          No text messages sent.\n        ";
+  return "\n            No text messages sent.\n          ";
   }
 
-function program38(depth0,data) {
+function program42(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n          With ";
+  stack1 = helpers['if'].call(depth0, depth0.present, {hash:{},inverse:self.noop,fn:self.program(43, program43, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n          ";
+  stack1 = helpers['if'].call(depth0, depth0.extra_names, {hash:{},inverse:self.noop,fn:self.program(46, program46, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += ".\n        ";
+  return buffer;
+  }
+function program43(depth0,data) {
+  
+  var buffer = "", stack1, stack2, options;
+  options = {hash:{},inverse:self.noop,fn:self.program(33, program33, data),data:data};
+  stack2 = ((stack1 = helpers.comma_list),stack1 ? stack1.call(depth0, depth0.present, options) : helperMissing.call(depth0, "comma_list", depth0.present, options));
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  stack2 = helpers['if'].call(depth0, depth0.extra_names, {hash:{},inverse:self.noop,fn:self.program(44, program44, data),data:data});
+  if(stack2 || stack2 === 0) { buffer += stack2; }
+  return buffer;
+  }
+function program44(depth0,data) {
+  
+  
+  return ", ";
+  }
+
+function program46(depth0,data) {
+  
+  var stack1, stack2, options;
+  options = {hash:{},inverse:self.noop,fn:self.program(33, program33, data),data:data};
+  stack2 = ((stack1 = helpers.comma_list),stack1 ? stack1.call(depth0, depth0.extra_names, options) : helperMissing.call(depth0, "comma_list", depth0.extra_names, options));
+  if(stack2 || stack2 === 0) { return stack2; }
+  else { return ''; }
+  }
+
+function program48(depth0,data) {
   
   var stack1;
   if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -698,7 +759,7 @@ function program38(depth0,data) {
   return escapeExpression(stack1);
   }
 
-function program40(depth0,data) {
+function program50(depth0,data) {
   
   var stack1;
   if (stack1 = helpers.text) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -707,10 +768,19 @@ function program40(depth0,data) {
   else { return ''; }
   }
 
-function program42(depth0,data) {
+function program52(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n  <div class=\"attachments\">\n    <a href=\"";
+  buffer += "\n  <div class=\"attachments\">\n    <ul>\n      ";
+  stack1 = helpers.each.call(depth0, depth0.attachments, {hash:{},inverse:self.noop,fn:self.program(53, program53, data),data:data});
+  if(stack1 || stack1 === 0) { buffer += stack1; }
+  buffer += "\n    </ul>\n  </div>\n  ";
+  return buffer;
+  }
+function program53(depth0,data) {
+  
+  var buffer = "", stack1;
+  buffer += "\n      <li><a href=\"";
   if (stack1 = helpers.url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
@@ -718,7 +788,7 @@ function program42(depth0,data) {
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</a>\n  </div>\n  ";
+    + "</a></li>\n      ";
   return buffer;
   }
 

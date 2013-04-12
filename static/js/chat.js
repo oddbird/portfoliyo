@@ -180,7 +180,7 @@ var PYO = (function (PYO, $) {
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
         if (response && response.objects && response.objects.length) {
             $.each(response.objects, function () {
-                PYO.feed.trigger('successful-post', {smsRecipients: this.num_sms_recipients, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
+                PYO.feed.trigger('successful-post', {smsRecipients: this.sms_recipients.length, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
                     var oldPost = PYO.feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
                     if (oldPost.length) { PYO.replacePost(this, oldPost); }
