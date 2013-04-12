@@ -80,7 +80,13 @@ def test_post2dict(db):
 
     assert serializers.post2dict(post, extra="extra") == {
         'post_id': post.id,
-        'type': 'message',
+        'type': {
+            'name': 'message',
+            'is_message': True,
+            'is_note': False,
+            'is_meeting': False,
+            'is_call': False,
+            },
         'author_id': rel.elder.id,
         'student_id': rel.student.id,
         'author': 'The Teacher',

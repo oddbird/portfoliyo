@@ -11,7 +11,7 @@
     </h3>
 
     <p class="recipients">
-      {{#if_eq type compare='message'}}
+      {{#if type.is_message }}
         {{#if sms}}
           {{#if pending}}
             {{#if to_sms}}Sending text{{plural_sms}}{{#if sms_recipients}} to {{sms_recipients}}{{/if}}.{{/if}}
@@ -22,7 +22,7 @@
         {{else}}
           No text messages sent.
         {{/if}}
-      {{/if_eq}}
+      {{/if}}
     </p>
   </header>
 

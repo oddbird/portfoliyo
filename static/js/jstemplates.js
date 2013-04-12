@@ -454,11 +454,11 @@ function program3(depth0,data) {
 this["PYO"]["templates"]["posts"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [2,'>= 1.0.0-rc.3'];
 helpers = helpers || Handlebars.helpers; data = data || {};
-  var buffer = "", stack1, self=this, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
+  var buffer = "", stack1, self=this, functionType="function", escapeExpression=this.escapeExpression;
 
 function program1(depth0,data) {
   
-  var buffer = "", stack1, stack2, options;
+  var buffer = "", stack1, stack2;
   buffer += "\n<article class=\"post ";
   if (stack1 = helpers.type) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.type; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
@@ -502,10 +502,7 @@ function program1(depth0,data) {
   stack1 = helpers['if'].call(depth0, depth0.school_staff, {hash:{},inverse:self.program(23, program23, data),fn:self.program(21, program21, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "</span>\n    </h3>\n\n    <p class=\"recipients\">\n      ";
-  options = {hash:{
-    'compare': ("message")
-  },inverse:self.noop,fn:self.program(25, program25, data),data:data};
-  stack2 = ((stack1 = helpers.if_eq),stack1 ? stack1.call(depth0, depth0.type, options) : helperMissing.call(depth0, "if_eq", depth0.type, options));
+  stack2 = helpers['if'].call(depth0, ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_message), {hash:{},inverse:self.noop,fn:self.program(25, program25, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\n    </p>\n  </header>\n\n  <div class=\"post-body\">\n    <div class=\"post-text\">\n      <p>";
   stack2 = helpers['if'].call(depth0, depth0.pending, {hash:{},inverse:self.program(40, program40, data),fn:self.program(38, program38, data),data:data});

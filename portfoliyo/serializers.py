@@ -3,6 +3,8 @@ import datetime
 
 from django.utils import dateformat, timezone
 
+from portfoliyo import model
+
 
 
 def post2dict(post, **extra):
@@ -26,9 +28,13 @@ def post2dict(post, **extra):
 
     sms_recipients = [s['name'] or s['role'] for s in post.meta.get('sms', [])]
 
+    type_dict = {'name': post.post_type}
+    for type_name, _ in model.Post.TYPES:
+        type_dict['is_%s' % type_name] = (post.post_type == type_name)
+
     data = {
         'post_id': post.id,
-        'type': post.post_type,
+        'type': type_dict,
         'author_id': post.author_id if post.author else 0,
         'author': author_name,
         'role': role,
