@@ -51,7 +51,7 @@ class BasePost(models.Model):
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
     # additional metadata (SMSes sent, users contacted...)
-    meta = JSONField(default={})
+    meta = JSONField(default=lambda: {})
 
     is_bulk = None
 

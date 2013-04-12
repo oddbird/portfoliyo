@@ -424,6 +424,17 @@ class TestPostCreate(object):
             p.attachments.get().attachment.name) == 'test.txt'
 
 
+    def test_no_mutable_meta_default(self, db):
+        """Default meta value is not shared between instances."""
+        rel = factories.RelationshipFactory.create()
+
+        p = models.Post.create(rel.elder, rel.student, 'yo', post_type='note')
+        p.meta['foo'] = 'bar'
+
+        p2 = models.Post.create(rel.elder, rel.student, 'yo2', post_type='note')
+        assert p2.meta == {}
+
+
 
 class TestBulkPost(object):
     def test_create(self, db):
