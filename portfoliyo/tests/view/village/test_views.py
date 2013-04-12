@@ -1059,7 +1059,7 @@ class TestCreatePost(object):
                 )
 
         post = response.json['objects'][0]
-        assert post['sms_recipients'] == 'Recipient'
+        assert post['sms_recipients'] == ['Recipient']
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
 
@@ -1084,9 +1084,7 @@ class TestCreatePost(object):
 
         post = response.json['objects'][0]
         assert post['type']['is_meeting']
-        assert post['present'] == "Mr. Ed"
-        assert post['num_present'] == 1
-        assert post['plural_present'] == ''
+        assert post['present'] == ['Mr. Ed']
         assert not post['sms_recipients']
         assert post['extra_names'] == ['Foo', 'Bar']
 
@@ -1114,7 +1112,7 @@ class TestCreatePost(object):
                 )
 
         post = response.json['objects'][0]
-        assert post['sms_recipients'] == 'Recipient'
+        assert post['sms_recipients'] == ['Recipient']
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
 
@@ -1140,7 +1138,7 @@ class TestCreatePost(object):
                 )
 
         post = response.json['objects'][0]
-        assert post['sms_recipients'] == 'Recipient'
+        assert post['sms_recipients'] == ['Recipient']
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
 

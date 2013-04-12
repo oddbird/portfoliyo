@@ -85,8 +85,7 @@ var PYO = (function (PYO, $) {
                 mine: true,
                 sms: smsTargetArr.length ? true : false,
                 to_sms: smsTargetArr.length ? true : false,
-                plural_sms: smsTargetArr.length > 1 ? 's' : '',
-                sms_recipients: smsTargetArr.join(', '),
+                sms_recipients: smsTargetArr,
                 type: type
             }]
         };
