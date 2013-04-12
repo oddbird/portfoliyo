@@ -1,5 +1,6 @@
 """Serialization."""
 import datetime
+import os.path
 
 from django.utils import dateformat, timezone
 
@@ -48,7 +49,10 @@ def post2dict(post, **extra):
         'sms_recipients': ', '.join(sms_recipients),
         'num_sms_recipients': len(sms_recipients),
         'plural_sms': 's' if len(sms_recipients) > 1 else '',
-        'attachment_urls': [pa.attachment.url for pa in post.attachments.all()],
+        'attachments': [
+            {'name': os.path.basename(pa.attachment.name), 'url': pa.attachment.url}
+            for pa in post.attachments.all()
+            ],
         'extra_names': post.meta.get('extra_names', []),
         }
 

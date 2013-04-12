@@ -1213,8 +1213,8 @@ class TestCreatePost(object):
 
         assert response.json['success']
         assert response.json['objects'][0]['type']['is_note']
-        attachment_urls = response.json['objects'][0]['attachment_urls']
-        attachment_filenames = set([u.rsplit('/')[-1] for u in attachment_urls])
+        attachments = response.json['objects'][0]['attachments']
+        attachment_filenames = set([a['name'] for a in attachments])
         assert attachment_filenames == {'some1.txt', 'some2.txt'}
 
 
