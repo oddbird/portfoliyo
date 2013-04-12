@@ -59,7 +59,7 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr) {
+    PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr, type) {
         var textarea = $('#message-text');
         var author = PYO.feed.data('author');
         var role = PYO.feed.data('author-role');
@@ -86,7 +86,8 @@ var PYO = (function (PYO, $) {
                 sms: smsTargetArr.length ? true : false,
                 to_sms: smsTargetArr.length ? true : false,
                 plural_sms: smsTargetArr.length > 1 ? 's' : '',
-                sms_recipients: smsTargetArr.join(', ')
+                sms_recipients: smsTargetArr.join(', '),
+                type: type
             }]
         };
         return postObj;
@@ -101,6 +102,7 @@ var PYO = (function (PYO, $) {
                 var button = form.find('.action-post');
                 var textarea = form.find('.post-textfield textarea');
                 var formReset = function () {
+                    form.find('.attach-value:disabled').removeAttr('disabled');
                     form.resetForm();
                     form.find('.attach-input label').click();
                     form.find('.tokens-list .token.new label').click();
@@ -108,13 +110,15 @@ var PYO = (function (PYO, $) {
                 };
 
                 form.submit(function (event) {
-                    var attachments = form.find('.attach-value').filter(function () { return $(this).val() !== ''; });
+                    var fileInputs = form.find('.attach-value');
+                    var attachments = fileInputs.filter(function () { return $(this).val() !== ''; });
                     event.preventDefault();
                     if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
                         var author_sequence_id = (PYO.authorPosts || 0) + 1;
                         var url = PYO.feed.data('post-url');
                         var count = ++postAjax.count;
                         var extraPostData = { author_sequence_id: author_sequence_id };
+                        var type = form.find('input[name="type"]').fieldValue()[0];
                         var smsInputs = form.find('.token-toggle:checked');
                         var noInputs = form.find('.no-to-field');
                         var smsTargetArr = [];
@@ -131,17 +135,16 @@ var PYO = (function (PYO, $) {
                             smsTargetArr = smsTargetArr.concat(namesArr);
                         }
 
-                        postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
+                        postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr, type);
                         post = PYO.addPost(postObj);
+                        post.data('post-data', form.formSerialize());
+                        fileInputs.filter(function () { return $(this).val() === ''; }).attr('disabled', true);
 
                         if (url) {
                             form.ajaxSubmit({
                                 url: url,
                                 data: extraPostData,
                                 dataType: 'json',
-                                beforeSubmit: function () {
-                                    post.data('post-data', form.formSerialize());
-                                },
                                 success: function (response) {
                                     PYO.postAjaxSuccess(response, author_sequence_id, count);
                                 },
