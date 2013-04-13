@@ -75,6 +75,6 @@ Handlebars.registerHelper('iff', function(){
 	}
 
 	if(!operators[operator]){
-		throw new Error("Handlerbars Helper 'compare' doesn't know the operator " + operator);
+		throw new Error("Handlebars Helper 'iff' doesn't know the operator " + operator);
 	}
 });

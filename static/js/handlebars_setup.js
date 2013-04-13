@@ -24,19 +24,19 @@ var PYO = (function (PYO, $) {
         //     }
         // });
 
-        Handlebars.registerHelper('comma_list', function (context, options) {
+        Handlebars.registerHelper('join', function (ary, joiner) {
             var ret = "";
-            for (var i = 0, j = context.length; i < j; i++) {
-                ret = ret + options.fn(context[i]);
+            for (var i = 0, j = ary.length; i < j; i++) {
+                ret = ret + ary[i];
                 if (i < j - 1) {
-                    ret = ret + ", ";
+                    ret = ret + joiner;
                 }
             }
             return ret;
         });
 
-        Handlebars.registerHelper('plural', function (context, options) {
-            if (context.length > 1) {
+        Handlebars.registerHelper('plural', function (ary, options) {
+            if (ary.length > 1) {
                 return options.fn(this);
             }
             return options.inverse(this);

@@ -15,18 +15,18 @@
         {{#if type.is_message}}
           {{#if sms}}
             {{#if pending}}
-              {{#if to_sms}}Sending text{{#plural sms_recipients}}s{{/plural}}{{#if sms_recipients}} to {{#comma_list sms_recipients}}{{this}}{{/comma_list}}{{/if}}.{{/if}}
+              {{#if to_sms}}Sending text{{#plural sms_recipients}}s{{/plural}}{{#if sms_recipients}} to {{{join sms_recipients ", "}}}{{/if}}.{{/if}}
             {{else}}
               {{#if from_sms}}Sent from phone. {{/if}}
-              {{#if to_sms}}Text{{#plural sms_recipients}}s{{/plural}} sent{{#if sms_recipients}} to {{#comma_list sms_recipients}}{{this}}{{/comma_list}}{{/if}}.{{/if}}
+              {{#if to_sms}}Text{{#plural sms_recipients}}s{{/plural}} sent{{#if sms_recipients}} to {{{join sms_recipients ", "}}}{{/if}}.{{/if}}
             {{/if}}
           {{else}}
             No text messages sent.
           {{/if}}
         {{/if}}
-        {{#iff type.is_call '||' type.is_meeting}}
-          With {{#if present}}{{#comma_list present}}{{this}}{{/comma_list}}{{#if extra_names}}, {{/if}}{{/if}}
-          {{#if extra_names}}{{#comma_list extra_names}}{{this}}{{/comma_list}}{{/if}}.
+        {{#iff type.is_call "||" type.is_meeting}}
+          With {{#if present}}{{{join present ", "}}}{{#if extra_names}}, {{/if}}{{/if}}
+          {{#if extra_names}}{{{join extra_names ", "}}}{{/if}}.
         {{/iff}}
       </p>
     {{/unless}}
