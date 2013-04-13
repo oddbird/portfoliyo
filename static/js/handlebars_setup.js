@@ -36,10 +36,10 @@ var PYO = (function (PYO, $) {
         });
 
         Handlebars.registerHelper('plural', function (ary, options) {
-            if (ary.length > 1) {
-                return options.fn(this);
+            if (ary.length === 1) {
+                return options.inverse(this);
             }
-            return options.inverse(this);
+            return options.fn(this);
         });
     });
 
