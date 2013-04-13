@@ -1084,9 +1084,8 @@ class TestCreatePost(object):
 
         post = response.json['objects'][0]
         assert post['type']['is_meeting']
-        assert post['present'] == ['Mr. Ed']
+        assert post['present'] == ['Mr. Ed', 'Foo', 'Bar']
         assert not post['sms_recipients']
-        assert post['extra_names'] == ['Foo', 'Bar']
 
 
     def test_group_post_sms_all(self, no_csrf_client):

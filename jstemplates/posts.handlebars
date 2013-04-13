@@ -23,11 +23,11 @@
           {{else}}
             No text messages sent.
           {{/if}}
+        {{else}}
+          {{#if present}}
+            With {{{join present ", "}}}.
+          {{/if}}
         {{/if}}
-        {{#iff type.is_call "||" type.is_meeting}}
-          With {{#if present}}{{{join present ", "}}}{{#if extra_names}}, {{/if}}{{/if}}
-          {{#if extra_names}}{{{join extra_names ", "}}}{{/if}}.
-        {{/iff}}
       </p>
     {{/unless}}
   </header>
