@@ -39,11 +39,10 @@
 // posting
 
 %posting-section {
-  @extend %icon;
   float: left;
   width: 50%;
   margin-right: -100%;
-  &:before {
+  [data-icon] {
     @include adjust-font-size-to($xlargepx);
     display: block;
   }
@@ -54,13 +53,13 @@
   background: color($base3 -3%);
   text-align: center;
 
-  .select-village, .or, .group-post-link {
+  .select-village, .group-post-link {
     @include rhythm-padding(1,1.5);
+    display: block;
   }
 
   .select-village {
     @extend %posting-section;
-    @extend %icon-undo-2;
     @include inset;
     border: 1px solid $base;
     border-width: 1px 0;
@@ -68,7 +67,6 @@
   .group-post-link {
     @extend %button;
     @extend %posting-section;
-    @extend %icon-bubble-forward;
     @include border-radius(0);
     @include button-color(color($base3));
     margin-left: 50%;

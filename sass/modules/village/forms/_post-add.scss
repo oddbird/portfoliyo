@@ -203,7 +203,8 @@
   padding-left: $box-padding;
   a {
     @extend %button-icon;
-    &:before { @include adjust-font-size-to($xxxsmallpx,.9); }
+    @include adjust-font-size-to($xxxsmallpx,.9);
+    vertical-align: top;
   }
   .add-all {
     @extend %icon-plus;
