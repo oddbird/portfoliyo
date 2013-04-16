@@ -15,17 +15,17 @@
         {{#if type.is_message}}
           {{#if sms}}
             {{#if pending}}
-              {{#if to_sms}}Sending text{{#plural sms_recipients}}s{{/plural}}{{#if sms_recipients}} to {{{join sms_recipients ", "}}}{{/if}}.{{/if}}
+              {{#if to_sms}}Sending text{{#plural sms_recipients}}s{{/plural}}{{#if sms_recipients}} to {{join sms_recipients ", "}}{{/if}}.{{/if}}
             {{else}}
               {{#if from_sms}}Sent from phone. {{/if}}
-              {{#if to_sms}}Text{{#plural sms_recipients}}s{{/plural}} sent{{#if sms_recipients}} to {{{join sms_recipients ", "}}}{{/if}}.{{/if}}
+              {{#if to_sms}}Text{{#plural sms_recipients}}s{{/plural}} sent{{#if sms_recipients}} to {{join sms_recipients ", "}}{{/if}}.{{/if}}
             {{/if}}
           {{else}}
             No text messages sent.
           {{/if}}
         {{else}}
           {{#if present}}
-            With {{{join present ", "}}}.
+            With {{join present ", "}}.
           {{/if}}
         {{/if}}
       </p>
@@ -42,7 +42,7 @@
   <div class="attachments">
     <ul>
       {{#each attachments}}
-      <li><a href="{{url}}">{{name}}</a></li>
+      <li>{{#if ../pending}}{{name}}{{else}}<a href="{{url}}">{{name}}</a>{{/if}}</li>
       {{/each}}
     </ul>
   </div>

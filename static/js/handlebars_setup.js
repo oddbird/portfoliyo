@@ -24,10 +24,10 @@ var PYO = (function (PYO, $) {
         //     }
         // });
 
-        Handlebars.registerHelper('join', function (ary, joiner) {
-            var ret = "";
-            for (var i = 0, j = ary.length; i < j; i++) {
-                ret = ret + ary[i];
+        Handlebars.registerHelper('join', function (arr, joiner) {
+            var ret = '';
+            for (var i = 0, j = arr.length; i < j; i++) {
+                ret = ret + arr[i];
                 if (i < j - 1) {
                     ret = ret + joiner;
                 }
@@ -35,8 +35,8 @@ var PYO = (function (PYO, $) {
             return ret;
         });
 
-        Handlebars.registerHelper('plural', function (ary, options) {
-            if (ary.length === 1) {
+        Handlebars.registerHelper('plural', function (arr, options) {
+            if (arr.length === 1) {
                 return options.inverse(this);
             }
             return options.fn(this);

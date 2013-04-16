@@ -105,7 +105,7 @@
         <div class="tokens-list">
           {% for elder in elders %}
             <span class="token">
-              <input class="token-toggle" type="checkbox" name="elder" id="conversation-elder-{{ elder.id }}" value="{{ elder.id }}" />
+              <input class="token-toggle" type="checkbox" name="elder" id="conversation-elder-{{ elder.id }}" value="{{ elder.id }}" data-display-name="{% firstof elder.name elder.role_in_context %}" />
               <span class="token-body">
                 <label class="token-status" for="conversation-elder-{{ elder.id }}">present</label>
                 <span class="token-text">{{ elder.role_in_context }}</span>

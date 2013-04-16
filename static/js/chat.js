@@ -59,8 +59,7 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr, type) {
-        var textarea = $('#message-text');
+    PYO.createPostObj = function (text, author_sequence, xhr_count, smsTargetArr, presentArr, attachmentsArr, type) {
         var author = PYO.feed.data('author');
         var role = PYO.feed.data('author-role');
         var today = new Date();
@@ -70,7 +69,6 @@ var PYO = (function (PYO, $) {
         var period = (hour > 12) ? 'pm' : 'am';
         hour = (hour > 12) ? hour - 12 : hour;
         var time = hour + ':' + minute + period;
-        var text = $.trim(textarea.val());
         var postObj = {
             objects: [{
                 author: author,
@@ -92,7 +90,9 @@ var PYO = (function (PYO, $) {
                     is_meeting: false,
                     is_message: false,
                     is_note: false
-                }
+                },
+                present: presentArr,
+                attachments: attachmentsArr
             }]
         };
         postObj.objects[0].type['is_' + type] = true;
@@ -120,28 +120,45 @@ var PYO = (function (PYO, $) {
                     var attachments = fileInputs.filter(function () { return $(this).val() !== ''; });
                     event.preventDefault();
                     if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
+                        var text = $.trim(textarea.val());
                         var author_sequence_id = (PYO.authorPosts || 0) + 1;
                         var url = PYO.feed.data('post-url');
                         var count = ++postAjax.count;
                         var extraPostData = { author_sequence_id: author_sequence_id };
                         var type = form.find('input[name="type"]').fieldValue()[0];
-                        var smsInputs = form.find('.token-toggle:checked');
+                        var elderInputs = form.find('.token-toggle:checked');
                         var noInputs = form.find('.no-to-field');
                         var smsTargetArr = [];
+                        var presentArr = [];
+                        var attachmentsArr = [];
                         var postObj, post;
 
-                        if (smsInputs.length) {
-                            smsInputs.each(function () {
+                        if (elderInputs.length) {
+                            elderInputs.each(function () {
                                 var el = $(this);
-                                var displayName = el.data('display-name');
-                                smsTargetArr.push(displayName);
+                                var displayName;
+                                if (type === 'message') {
+                                    displayName = el.data('display-name');
+                                    smsTargetArr.push(displayName);
+                                } else if (type === 'call' || type === 'meeting') {
+                                    displayName = el.hasClass('new') ? el.val() : el.data('display-name');
+                                    presentArr.push(displayName);
+                                }
                             });
                         } else if (noInputs.length) {
                             var namesArr = noInputs.data('elders').split(',');
                             smsTargetArr = smsTargetArr.concat(namesArr);
                         }
 
-                        postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr, type);
+                        if (attachments.length) {
+                            attachments.each(function () {
+                                var el = $(this);
+                                var name = el.get(0).files[0].name;
+                                attachmentsArr.push({name: name});
+                            });
+                        }
+
+                        postObj = PYO.createPostObj(text, author_sequence_id, count, smsTargetArr, presentArr, attachmentsArr, type);
                         post = PYO.addPost(postObj);
                         post.data('post-data', form.formSerialize());
                         fileInputs.filter(function () { return $(this).val() === ''; }).attr('disabled', true);
