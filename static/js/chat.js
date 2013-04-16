@@ -118,72 +118,79 @@ var PYO = (function (PYO, $) {
                 form.submit(function (event) {
                     var fileInputs = form.find('.attach-value');
                     var attachments = fileInputs.filter(function () { return $(this).val() !== ''; });
-                    event.preventDefault();
-                    if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
-                        var text = $.trim(textarea.val());
-                        var author_sequence_id = (PYO.authorPosts || 0) + 1;
-                        var url = PYO.feed.data('post-url');
-                        var count = ++postAjax.count;
-                        var extraPostData = { author_sequence_id: author_sequence_id };
-                        var type = form.find('input[name="type"]').fieldValue()[0];
-                        var elderInputs = form.find('.token-toggle:checked');
-                        var noInputs = form.find('.no-to-field');
-                        var smsTargetArr = [];
-                        var presentArr = [];
-                        var attachmentsArr = [];
-                        var postObj, post;
+                    if (!attachments.length || ($("<input type='file'/>").get(0).files !== undefined && window.FormData !== undefined)) {
+                        event.preventDefault();
+                        if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
+                            var text = $.trim(textarea.val());
+                            var author_sequence_id = (PYO.authorPosts || 0) + 1;
+                            var url = PYO.feed.data('post-url');
+                            var count = ++postAjax.count;
+                            var extraPostData = { author_sequence_id: author_sequence_id };
+                            var type = form.find('input[name="type"]').fieldValue()[0];
+                            var elderInputs = form.find('.token-toggle:checked');
+                            var noInputs = form.find('.no-to-field');
+                            var smsTargetArr = [];
+                            var presentArr = [];
+                            var attachmentsArr = [];
+                            var postObj, post;
 
-                        if (elderInputs.length) {
-                            elderInputs.each(function () {
-                                var el = $(this);
-                                var displayName;
-                                if (type === 'message') {
-                                    displayName = el.data('display-name');
-                                    smsTargetArr.push(displayName);
-                                } else if (type === 'call' || type === 'meeting') {
-                                    displayName = el.hasClass('new') ? el.val() : el.data('display-name');
-                                    presentArr.push(displayName);
-                                }
-                            });
-                        } else if (noInputs.length) {
-                            var namesArr = noInputs.data('elders').split(',');
-                            smsTargetArr = smsTargetArr.concat(namesArr);
+                            if (elderInputs.length) {
+                                elderInputs.each(function () {
+                                    var el = $(this);
+                                    var displayName;
+                                    if (type === 'message') {
+                                        displayName = el.data('display-name');
+                                        smsTargetArr.push(displayName);
+                                    } else if (type === 'call' || type === 'meeting') {
+                                        displayName = el.hasClass('new') ? el.val() : el.data('display-name');
+                                        presentArr.push(displayName);
+                                    }
+                                });
+                            } else if (noInputs.length) {
+                                var namesArr = noInputs.data('elders').split(',');
+                                smsTargetArr = smsTargetArr.concat(namesArr);
+                            }
+
+                            if (attachments.length) {
+                                attachments.each(function () {
+                                    var el = $(this);
+                                    var name;
+                                    if (el.get(0).files && el.get(0).files.length && el.get(0).files[0].name) {
+                                        name = el.get(0).files[0].name;
+                                    } else {
+                                        name = el.val().replace(/^.*\\/, '');
+                                    }
+                                    attachmentsArr.push({name: name});
+                                });
+                            }
+
+                            postObj = PYO.createPostObj(text, author_sequence_id, count, smsTargetArr, presentArr, attachmentsArr, type);
+                            post = PYO.addPost(postObj);
+                            post.data('post-data', form.formSerialize());
+                            fileInputs.filter(function () { return $(this).val() === ''; }).attr('disabled', true);
+
+                            if (url) {
+                                form.ajaxSubmit({
+                                    url: url,
+                                    data: extraPostData,
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        PYO.postAjaxSuccess(response, author_sequence_id, count);
+                                    },
+                                    error: function (request, status) {
+                                        if (attachments.length) { post.data('attachments', true); }
+                                        PYO.postAjaxError(post, author_sequence_id, status, count);
+                                        postAjax.XHR[count] = null;
+                                        form.removeData('jqxhr');
+                                    }
+                                });
+                                postAjax.XHR[count] = form.data('jqxhr');
+                                formReset();
+                            }
+
+                            PYO.scrollToBottom();
+                            PYO.addPostTimeout(post, author_sequence_id, count);
                         }
-
-                        if (attachments.length) {
-                            attachments.each(function () {
-                                var el = $(this);
-                                var name = el.get(0).files[0].name;
-                                attachmentsArr.push({name: name});
-                            });
-                        }
-
-                        postObj = PYO.createPostObj(text, author_sequence_id, count, smsTargetArr, presentArr, attachmentsArr, type);
-                        post = PYO.addPost(postObj);
-                        post.data('post-data', form.formSerialize());
-                        fileInputs.filter(function () { return $(this).val() === ''; }).attr('disabled', true);
-
-                        if (url) {
-                            form.ajaxSubmit({
-                                url: url,
-                                data: extraPostData,
-                                dataType: 'json',
-                                success: function (response) {
-                                    PYO.postAjaxSuccess(response, author_sequence_id, count);
-                                },
-                                error: function (request, status) {
-                                    if (attachments.length) { post.data('attachments', true); }
-                                    PYO.postAjaxError(post, author_sequence_id, status, count);
-                                    postAjax.XHR[count] = null;
-                                    form.removeData('jqxhr');
-                                }
-                            });
-                            postAjax.XHR[count] = form.data('jqxhr');
-                            formReset();
-                        }
-
-                        PYO.scrollToBottom();
-                        PYO.addPostTimeout(post, author_sequence_id, count);
                     }
                 });
 
@@ -331,8 +338,13 @@ var PYO = (function (PYO, $) {
             form.on('change', 'input.attach-value', function () {
                 var input = $(this);
                 var inputID = input.attr('id');
-                var filename = input.get(0).files[0].name;
-                var token, newInput;
+                var token, newInput, filename;
+
+                if (input.get(0).files && input.get(0).files.length && input.get(0).files[0].name) {
+                    filename = input.get(0).files[0].name;
+                } else {
+                    filename = input.val().replace(/^.*\\/, '');
+                }
 
                 token = PYO.tpl('autocomplete_input', {
                     newInput: true,
