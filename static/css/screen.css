@@ -282,7 +282,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e019";
 }
 
-.note-form .token-status:before, .attach-type:before, .attachments a:before {
+.note-form .token-status:before, .attach-type:before, .post-type-message.no-sms.has-attachment .post-header:before, .post-type-note.no-sms.has-attachment .post-header:before, .attachments a:before {
   content: "\e023";
 }
 
@@ -4183,10 +4183,6 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   color: #93a1a1;
 }
 
-.attachments {
-  margin-top: 6px;
-  margin-top: 0.31944rem;
-}
 .attachments ul {
   margin: 0;
   padding: 0;
@@ -4208,6 +4204,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   line-height: 17px;
   line-height: 0.95833rem;
   vertical-align: top;
+}
+.attachments + .post-text {
+  margin-top: 6px;
+  margin-top: 0.31944rem;
 }
 
 .feed-error {

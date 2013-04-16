@@ -1,5 +1,5 @@
 {{#each objects}}
-<article class="post post-type-{{type.name}}{{#if pending}} pending{{else}}{{#if from_sms}} from-sms{{else}}{{#if to_sms}} sms{{else}} no-sms{{/if}}{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if mine}} mine{{else}}{{#if unread}} unread{{/if}}{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
+<article class="post post-type-{{type.name}}{{#if pending}} pending{{else}}{{#if from_sms}} from-sms{{else}}{{#if to_sms}} sms{{else}} no-sms{{/if}}{{/if}}{{#unless unread}} old{{/unless}}{{/if}}{{#if mine}} mine{{else}}{{#if unread}} unread{{/if}}{{/if}}{{#if attachments}} has-attachment{{/if}}" data-author-id="{{author_id}}" data-post-id="{{post_id}}" data-author-sequence="{{author_sequence_id}}" data-xhr-count="{{xhr_count}}" data-mark-read-url="{{mark_read_url}}">
 
   <header class="post-header">
     <time class="pubdate"{{#if timestamp}} datetime="{{timestamp}}"{{/if}} title="{{timestamp_display}}">
@@ -33,18 +33,18 @@
   </header>
 
   <div class="post-body">
+    {{#if attachments}}
+    <div class="attachments">
+      <ul>
+        {{#each attachments}}
+        <li>{{#if ../pending}}{{name}}{{else}}<a href="{{url}}">{{name}}</a>{{/if}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/if}}
     <div class="post-text">
       <p>{{#if pending}}{{text}}{{else}}{{{text}}}{{/if}}</p>
     </div>
-  {{#if attachments}}
-  <div class="attachments">
-    <ul>
-      {{#each attachments}}
-      <li>{{#if ../pending}}{{name}}{{else}}<a href="{{url}}">{{name}}</a>{{/if}}</li>
-      {{/each}}
-    </ul>
-  </div>
-  {{/if}}
   </div>
 
 </article>

@@ -164,6 +164,10 @@ $post-icon-width: rhythm(2.5);
     @extend %icon-pushpin;
     &:before { background: color($orange dark); }
   }
+
+  &.no-sms.has-attachment .post-header {
+    @extend %icon-attachment;
+  }
 }
 
 .byline {
@@ -191,8 +195,6 @@ $post-icon-width: rhythm(2.5);
 }
 
 .attachments {
-  @include leader(.25);
-
   ul { @include inline-block-list; }
   li { @extend .token-body; }
   a {
@@ -203,6 +205,8 @@ $post-icon-width: rhythm(2.5);
       vertical-align: top;
     }
   }
+
+  + .post-text { @include leader(.25); }
 }
 
 // ---------------------------------------------------------------------------
