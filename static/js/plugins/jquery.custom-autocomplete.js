@@ -80,13 +80,15 @@ var PYO = (function (PYO, $) {
         // Filter autocomplete suggestions, returning those that aren't duplicates.
         var filterSuggestions = function () {
             filteredSuggestions = newSuggestions.filter(function () {
-                var thisSuggestionID = $(this).find('.option').data('id');
-                var thisSuggestionText = $(this).find('.option').data('text').toString();
-                var thisSuggestionType = $(this).find('.option').data('type') || options.inputType;
+                var el = $(this);
+                var option = el.find('.option');
+                var thisSuggestionID = option.data('id');
+                var thisSuggestionText = option.data('text').toString();
+                var thisSuggestionType = option.data('type') || options.inputType;
                 var existingInputs;
 
                 if (thisSuggestionText && !options.caseSensitive) { thisSuggestionText = thisSuggestionText.toLowerCase(); }
-                if ($(this).find('.option').hasClass('new')) {
+                if (option.hasClass('new')) {
                     // Checked inputs of the same type, with the same text
                     existingInputs = inputs.filter('[name="' + thisSuggestionType + '"]:checked').filter(function () {
                         return $(this).closest(options.inputWrapper).find(options.inputText).text() === thisSuggestionText;
@@ -95,7 +97,7 @@ var PYO = (function (PYO, $) {
                     var existingSuggestions = newSuggestions.find('.option').not('.new').filter(function () {
                         var thisText = $(this).data('text').toString();
                         if (!options.caseSensitive) { thisText = thisText.toLowerCase(); }
-                        if (options.multipleCategories) {
+                        if ($(this).data('type')) {
                             return thisText === thisSuggestionText && $(this).data('type') === thisSuggestionType;
                         } else {
                             return thisText === thisSuggestionText;
@@ -167,6 +169,8 @@ var PYO = (function (PYO, $) {
                         if (el.closest(options.inputList).find('.category-title').length) {
                             thisSuggestion.displayType = el.closest(options.inputList).find('.category-title').text();
                         }
+                    } else if (options.newInputName && el.hasClass('new')) {
+                        thisSuggestion.type = options.newInputName;
                     }
                     data.suggestions.push(thisSuggestion);
                 });
@@ -186,6 +190,8 @@ var PYO = (function (PYO, $) {
                         if (el.find('.category-title').length) {
                             thisSuggestion.displayType = el.find('.category-title').text();
                         }
+                    } else if (options.newInputName) {
+                        thisSuggestion.type = options.newInputName;
                     }
                     data.suggestions.unshift(thisSuggestion);
                 });
@@ -496,7 +502,7 @@ var PYO = (function (PYO, $) {
                     newInput.find(options.inputs).change();
                     inputs = inputList.add(newInputList).find(options.inputs);
                 };
-                if (options.multipleCategories) {
+                if (el.data('type')) {
                     thisTypeName = el.data('type');
                 } else {
                     thisTypeName = options.inputType;
