@@ -521,12 +521,15 @@ def create_post(request, student_id=None, group_id=None):
         extra_kwargs['post_type'] = request.POST.get('type')
         if 'attachment' in request.FILES:
             extra_kwargs['attachments'] = request.FILES.getlist('attachment')
+        redirect_url = reverse('village', kwargs={'student_id': student_id})
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
         target = group
+        redirect_url = reverse('group', kwargs={'group_id': group_id})
     else:
         target = None
+        redirect_url = reverse('all_students')
 
     text = request.POST['text']
     sequence_id = request.POST.get('author_sequence_id')
@@ -551,16 +554,19 @@ def create_post(request, student_id=None, group_id=None):
             sequence_id=sequence_id,
             **extra_kwargs)
 
-    data = {
-        'success': True,
-        'objects': [
-            serializers.post2dict(
-                post, author_sequence_id=sequence_id, unread=False, mine=True)
-            ],
-        }
+    if request.is_ajax():
+        data = {
+            'success': True,
+            'objects': [
+                serializers.post2dict(
+                    post, author_sequence_id=sequence_id, unread=False, mine=True)
+                ],
+            }
 
-    return http.HttpResponse(
-        json.dumps(data), content_type='application/json')
+        return http.HttpResponse(
+            json.dumps(data), content_type='application/json')
+    else:
+        return http.HttpResponseRedirect(redirect_url)
 
 
 

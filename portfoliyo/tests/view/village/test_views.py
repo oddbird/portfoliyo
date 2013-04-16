@@ -989,7 +989,11 @@ class TestCreatePost(object):
         rel = factories.RelationshipFactory.create()
 
         response = no_csrf_client.post(
-            self.url(rel.student), {'text': 'foo'}, user=rel.elder.user)
+            self.url(rel.student),
+            {'text': 'foo'},
+            user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
 
         assert response.json['success']
         posts = response.json['objects']
@@ -1011,6 +1015,7 @@ class TestCreatePost(object):
             {'text': 'foo'},
             user=elder.user,
             status=404,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
 
@@ -1024,6 +1029,7 @@ class TestCreatePost(object):
             {'text': 'foo'},
             user=elder.user,
             status=404,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
 
@@ -1056,6 +1062,7 @@ class TestCreatePost(object):
                 self.url(rel.student),
                 {'text': 'foo', 'elder': [other_rel.elder.id]},
                 user=rel.elder.user,
+                headers={'X-Requested-With': 'XMLHttpRequest'},
                 )
 
         post = response.json['objects'][0]
@@ -1080,6 +1087,7 @@ class TestCreatePost(object):
                 'extra_name': ['Foo', 'Bar'],
                 },
             user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
         post = response.json['objects'][0]
@@ -1108,6 +1116,7 @@ class TestCreatePost(object):
                 self.url(group=group),
                 {'text': 'foo'},
                 user=rel.elder.user,
+                headers={'X-Requested-With': 'XMLHttpRequest'},
                 )
 
         post = response.json['objects'][0]
@@ -1134,6 +1143,7 @@ class TestCreatePost(object):
                 self.url(),
                 {'text': 'foo'},
                 user=rel.elder.user,
+                headers={'X-Requested-With': 'XMLHttpRequest'},
                 )
 
         post = response.json['objects'][0]
@@ -1147,7 +1157,11 @@ class TestCreatePost(object):
         group = factories.GroupFactory.create()
 
         response = no_csrf_client.post(
-            self.url(group=group), {'text': 'foo'}, user=group.owner.user)
+            self.url(group=group),
+            {'text': 'foo'},
+            user=group.owner.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
 
         assert response.json['success']
         posts = response.json['objects']
@@ -1163,7 +1177,10 @@ class TestCreatePost(object):
         elder = factories.ProfileFactory.create()
 
         response = no_csrf_client.post(
-            self.url(), {'text': 'foo'}, user=elder.user)
+            self.url(), {'text': 'foo'},
+            user=elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
 
         assert response.json['success']
         posts = response.json['objects']
@@ -1182,6 +1199,7 @@ class TestCreatePost(object):
             self.url(rel.student),
             {'text': 'foo', 'author_sequence_id': '5'},
             user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
         assert response.json['objects'][0]['author_sequence_id'] == '5'
@@ -1196,6 +1214,7 @@ class TestCreatePost(object):
             self.url(rel.student),
             {'text': 'f' * 160},
             user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             status=400,
             )
 
@@ -1218,6 +1237,7 @@ class TestCreatePost(object):
                 ('attachment', 'some2.txt', 'some2 text'),
                 ],
             user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
         assert response.json['success']
@@ -1225,6 +1245,25 @@ class TestCreatePost(object):
         attachments = response.json['objects'][0]['attachments']
         attachment_filenames = set([a['name'] for a in attachments])
         assert attachment_filenames == {'some1.txt', 'some2.txt'}
+
+
+    def test_note_no_ajax(self, client):
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        village_url = reverse(
+            'village', kwargs={'student_id': rel.to_profile_id})
+
+        form = client.get(
+            village_url, user=rel.elder.user).forms['posting-form']
+
+        form['type'] = 'note'
+        form['text'] = "Today I will fly!"
+
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(village_url)
+        assert model.Post.objects.get().original_text == "Today I will fly!"
 
 
 
