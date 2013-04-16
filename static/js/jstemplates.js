@@ -505,10 +505,10 @@ function program1(depth0,data) {
   buffer += "\n  </header>\n\n  <div class=\"post-body\">\n    <div class=\"post-text\">\n      <p>";
   stack2 = helpers['if'].call(depth0, depth0.pending, {hash:{},inverse:self.program(46, program46, data),fn:self.program(44, program44, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "</p>\n    </div>\n  </div>\n\n  ";
+  buffer += "</p>\n    </div>\n  ";
   stack2 = helpers['if'].call(depth0, depth0.attachments, {hash:{},inverse:self.noop,fn:self.program(48, program48, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n\n</article>\n";
+  buffer += "\n  </div>\n\n</article>\n";
   return buffer;
   }
 function program2(depth0,data) {

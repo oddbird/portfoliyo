@@ -141,13 +141,26 @@ $post-icon-width: rhythm(2.5);
   }
 
   .pending & { @extend %icon-bubble-dots; }
-  .mine.sms & {
+
+  .post-type-call & {
+    @extend %icon-phone;
+    &:before { background: color($magenta dark); }
+  }
+
+  .post-type-meeting & {
+    @extend %icon-users;
+    &:before { background: color($magenta dark); }
+  }
+}
+
+.post-type-message, .post-type-note {
+  &.mine.sms .post-header {
     @extend %icon-bubble-forward;
     &:before { background: color($green dark); }
   }
-  .from-sms & { @extend %icon-bubble-reply; }
+  &.from-sms  .post-header { @extend %icon-bubble-reply; }
 
-  .no-sms & {
+  &.no-sms  .post-header {
     @extend %icon-pushpin;
     &:before { background: color($orange dark); }
   }
@@ -175,6 +188,21 @@ $post-icon-width: rhythm(2.5);
   @extend %ellipsis;
   padding-right: 50%;
   color: $base1;
+}
+
+.attachments {
+  @include leader(.25);
+
+  ul { @include inline-block-list; }
+  li { @extend .token-body; }
+  a {
+    @extend %icon;
+    @extend %icon-attachment;
+    &:before {
+      @include adjust-font-size-to($xxxsmallpx,.75);
+      vertical-align: top;
+    }
+  }
 }
 
 // ---------------------------------------------------------------------------
