@@ -134,6 +134,9 @@ var PYO = (function (PYO, $) {
                             var attachmentsArr = [];
                             var postObj, post;
 
+                            // Prevent notes without attachments from submitting as multipart/form-data
+                            form.removeAttr('enctype');
+
                             if (elderInputs.length) {
                                 elderInputs.each(function () {
                                     var el = $(this);
@@ -191,6 +194,10 @@ var PYO = (function (PYO, $) {
                             PYO.scrollToBottom();
                             PYO.addPostTimeout(post, author_sequence_id, count);
                         }
+                    } else {
+                        form.attr('enctype', 'multipart/form-data');
+                        form.loadingOverlay();
+                        return true;
                     }
                 });
 
