@@ -62,7 +62,7 @@
   </form>
 
   {% block post-add-types %}
-  <form method="POST" class="note-form post-type" action="{{ posting_url }}{% if group %}?group={{ group.id }}{% endif %}" id="note-posting-form">
+  <form method="POST" class="note-form post-type" action="{{ posting_url }}{% if group %}?group={{ group.id }}{% endif %}" id="note-posting-form" enctype="multipart/form-data">
     {% csrf_token %}
     <input type="hidden" name="type" value="note" />
     <div class="formfield attach-field">
