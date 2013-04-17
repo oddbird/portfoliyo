@@ -347,6 +347,8 @@ var PYO = (function (PYO, $) {
                 var inputID = input.attr('id');
                 var token, newInput, filename;
 
+                inputList.find('.attach-value').removeClass('ie-fix-active');
+
                 if (input.get(0).files && input.get(0).files.length && input.get(0).files[0].name) {
                     filename = input.get(0).files[0].name;
                 } else {
