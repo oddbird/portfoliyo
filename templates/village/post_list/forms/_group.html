@@ -3,7 +3,6 @@
 {% load elders %}
 
 {% block addpost-classes %}group-posts{% endblock %}
-{% block form-action %}{% if group.is_all %}{% url 'create_post' %}{% else %}{% url 'create_post' group_id=group.id %}{% endif %}{% endblock %}
 
 {% block post-add-tabs %}{% endblock %}
 {% block post-add-types %}{% endblock %}

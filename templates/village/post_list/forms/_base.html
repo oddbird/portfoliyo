@@ -15,7 +15,7 @@
   </div>
   {% endblock %}
 
-  <form method="POST" class="message-form post-type" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}" id="posting-form">
+  <form method="POST" class="message-form post-type" action="{{ posting_url }}" data-char-limit="{{ post_char_limit }}" id="message-posting-form">
     {% csrf_token %}
 
     <a href="http://translate.google.com/" class="translate-link" target="_blank" title="Translate">Translate</a>
@@ -62,7 +62,7 @@
   </form>
 
   {% block post-add-types %}
-  <form method="POST" class="note-form post-type">
+  <form method="POST" class="note-form post-type" action="{{ posting_url }}" id="note-posting-form">
     {% csrf_token %}
     <input type="hidden" name="type" value="note" />
     <div class="formfield attach-field">
@@ -79,7 +79,7 @@
     </div>
   </form>
 
-  <form method="POST" class="conversation-form post-type">
+  <form method="POST" class="conversation-form post-type" action="{{ posting_url }}" id="conversation-posting-form">
     {% csrf_token %}
     <div class="formfield convo-type-field">
       <ul class="radio-options">

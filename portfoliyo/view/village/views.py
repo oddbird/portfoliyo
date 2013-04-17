@@ -408,6 +408,8 @@ def village(request, student_id):
             'read_only': rel is None,
             'posts': posts,
             'post_char_limit': model.post_char_limit(rel) if rel else 0,
+            'posting_url': reverse(
+                'create_post', kwargs={'student_id': student.id}),
             },
         )
 
@@ -419,11 +421,13 @@ def group(request, group_id=None):
     """The main chat view for a group."""
     if group_id is None:
         group = model.AllStudentsGroup(request.user.profile)
+        posting_url = reverse('create_post')
     else:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile),
             id=group_id,
             )
+        posting_url = reverse('create_post', kwargs={'group_id': group.id})
 
     return TemplateResponse(
         request,
@@ -434,6 +438,7 @@ def group(request, group_id=None):
                 group.all_elders).order_by('school_staff', 'name'),
             'posts': _get_posts(request.user.profile, group=group),
             'post_char_limit': model.post_char_limit(request.user.profile),
+            'posting_url': posting_url,
             },
         )
 

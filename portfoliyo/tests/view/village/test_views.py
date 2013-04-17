@@ -1255,9 +1255,8 @@ class TestCreatePost(object):
             'village', kwargs={'student_id': rel.to_profile_id})
 
         form = client.get(
-            village_url, user=rel.elder.user).forms['posting-form']
+            village_url, user=rel.elder.user).forms['note-posting-form']
 
-        form['type'] = 'note'
         form['text'] = "Today I will fly!"
 
         response = form.submit(status=302)
