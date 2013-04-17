@@ -1265,6 +1265,28 @@ class TestCreatePost(object):
         assert model.Post.objects.get().original_text == "Today I will fly!"
 
 
+    def test_maintain_group_context(self, client):
+        """Can take ?group=id to maintain group nav context on redirect."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        village_url = reverse(
+            'village',
+            kwargs={'student_id': rel.to_profile_id},
+            ) + "?group=%s" % group.id
+
+        form = client.get(
+            village_url, user=rel.elder.user).forms['note-posting-form']
+
+        form['text'] = "Today I will fly!"
+
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(village_url)
+
+
 
 class TestMarkPostRead(object):
     def url(self, post):

@@ -527,6 +527,9 @@ def create_post(request, student_id=None, group_id=None):
         if 'attachment' in request.FILES:
             extra_kwargs['attachments'] = request.FILES.getlist('attachment')
         redirect_url = reverse('village', kwargs={'student_id': student_id})
+        qs_group = get_querystring_group(request, rel.student)
+        if qs_group:
+            redirect_url += "?group=%s" % qs_group.id
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
