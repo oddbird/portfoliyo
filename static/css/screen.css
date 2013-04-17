@@ -3598,6 +3598,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   top: -9999px;
   left: -9999px;
 }
+.attach-value.ie-fix-active {
+  font-size: 44px;
+  font-size: 2.44444rem;
+  line-height: 58px;
+  line-height: 3.19444rem;
+  opacity: 0;
+  top: 0;
+  left: 0;
+  width: 31.91489%;
+  height: 1.91667rem;
+  overflow: hidden;
+  cursor: pointer;
+}
 
 .convo-type-field {
   font-size: 14px;

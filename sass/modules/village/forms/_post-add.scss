@@ -373,7 +373,19 @@
 
 .attach-type { @include post-form-type(4, attachment); }
 .attach-input { @include post-form-input(4); }
-.attach-value { @include gone; }
+.attach-value {
+  @include gone;
+  &.ie-fix-active {
+    @include adjust-font-size-to($xlargepx);
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: columns(4,$center);
+    height: rhythm(1.5);
+    overflow: hidden;
+    cursor: pointer;
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Conversations
