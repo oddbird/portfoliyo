@@ -4,21 +4,21 @@
 // JS-add .loading and span.overlay
 
 @include keyframes(loading) {
-  0%{ @include opacity(.25); }
+  0%{ @include opacity(0); }
   100% { @include opacity(1); }
 }
 
 .loading {
-  position: relative;
-
   .overlay {
     @include stretch;
-    @include text-shadow($base03 0 0 3px);
-    @include animation(loading 1s linear alternate infinite both);
+    @include adjust-font-size-to($medpx);
+    @include text-shadow(white 0 0 1em);
+    @include animation(loading 1.5s 300ms linear alternate infinite both);
+    position: fixed;
+    color: color(darkest);
+    text-transform: uppercase;
     font-weight: bold;
     text-align: center;
-    color: $base3;
-    background: rgba($base03,.25);
-    z-index: 100;
+    z-index: 990;
   }
 }
