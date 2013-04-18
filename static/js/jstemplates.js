@@ -435,7 +435,7 @@ helpers = helpers || Handlebars.helpers; data = data || {};
 function program1(depth0,data) {
   
   
-  return "Please <a class=\"cancel\" href=\"#\">remove this post</a> and try again.";
+  return "Please try again. (<a class=\"cancel\" href=\"#\">remove this post</a>)";
   }
 
 function program3(depth0,data) {
