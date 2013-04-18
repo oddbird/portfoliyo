@@ -100,8 +100,6 @@ $loading-grad   : color($blue lightest,.325) 25%,
   &:last-child {
     @include trailer(0);
     border: 0;
-
-    .has-instructions & { @include trailer(4); }
   }
 
   &.mine {
@@ -130,26 +128,46 @@ $post-icon-width: rhythm(2.5);
   @extend %icon;
   @extend %icon-bubble;
   &:before {
-    @include adjust-font-size-to($medpx);
     @include border-radius($box-padding);
     @include inset;
     float: left;
+    width: rhythm(1);
+    height: rhythm(1.5);
     margin-left: - $post-icon-width;
-    padding: rhythm(.25) rhythm(.5);
+    padding: rhythm(.5) rhythm(.5) 0;
     background: $base;
     color: $base3;
+    font-size: $medpx;
     text-align: center;
   }
 
-  .pending & { @extend %icon-bubble-dots; }
+  [class*="post-type-"].pending & { @extend %icon-bubble-dots; }
 
-  .sms & { @extend %icon-bubble-forward; }
-  .mine.sms &:before { background: color($green dark); }
-  .from-sms & { @extend %icon-bubble-reply; }
+  [class~="post-type-call"] & {
+    @extend %icon-phone;
+    &:before { background: color($magenta dark); }
+  }
 
-  .no-sms & {
-    @extend %icon-bubble;
+  [class~="post-type-meeting"] & {
+    @extend %icon-users;
+    &:before { background: color($magenta dark); }
+  }
+}
+
+[class~="post-type-message"], [class~="post-type-note"] {
+  &.mine.sms .post-header {
+    @extend %icon-bubble-forward;
+    &:before { background: color($green dark); }
+  }
+  &.from-sms  .post-header { @extend %icon-bubble-reply; }
+
+  &.no-sms  .post-header {
+    @extend %icon-pushpin;
     &:before { background: color($orange dark); }
+  }
+
+  &.no-sms.has-attachment .post-header {
+    @extend %icon-attachment;
   }
 }
 
@@ -177,142 +195,16 @@ $post-icon-width: rhythm(2.5);
   color: $base1;
 }
 
-// ---------------------------------------------------------------------------
-// Instructions
-
-.howto {
-  @include pie-clearfix;
-  @include stretch-x;
-  bottom: 100%;
-  margin: rhythm(.5) rhythm(1);
-}
-
-[class^="howto-"] {
-  @include adjust-font-size-to($smallpx);
-  @include nth-omega(even);
-  @include border-radius($box-padding);
-  @include rhythm-borders(2px,.5);
-  @include box-shadow($base 0 0 $box-padding);
-  @include arrow(bottom center $orange rhythm(.5));
-  position: absolute;
-  bottom: 0;
-  width: columns(floor($center/2),$center);
-  border-color: $orange;
-  background: $base3;
-  text-align: center;
-  &:first-child { left: 0; }
-  &:last-child { right: 0; }
-}
-
-// ---------------------------------------------------------------------------
-// Post Add Form
-
-$addnote-fontsize: $input-font-size;
-$postaction-size: $smallpx;
-
-%post-targeting {
-  @include adjust-font-size-to($postaction-size);
-  @include trailer(.5);
-  text-align: left;
-}
-
-.post-add-form {
-  @extend %formdefaults;
-  @include pie-clearfix;
-  position: relative;
-  padding: rhythm(.5) rhythm(1);
-  background: color($base3 lighter);
-  border-top: 1px solid $village-border-color;
-  text-align: right;
-  &.group-posts { background: mix($blue,$base2,25%); }
-
-  .translate-link {
-    @extend %button-icon;
-    @extend %icon-globe;
-    @include adjust-font-size-to($smallpx);
-    @include button-color($base3);
-    position: relative;
-    float: right;
-    margin-left: rhythm(1);
-    margin-right: space(2,$center);
-    z-index: 10;
-    @include breakpoint(60em) {
-      width: auto;
-      padding: 0 $box-padding;
-      text-indent: 0;
-      &:before {
-        position: static;
-        margin-right: .4em;
-        text-align: left;
-      }
-    }
-  }
-
-  .form-actions {
-    clear: none;
-    margin: 0;
-    .action-post {
-      @include span-columns(2 omega, $center);
-      @include adjust-font-size-to($smallpx);
-      height: rhythm(2.5);
-      font-weight: bold;
-    }
-  }
-
-  .sms-targeting {
-    @extend %post-targeting;
-    > .type {
-      display: inline;
-      font-weight: bold;
-      cursor: default;
-    }
-    .multiselect-dropdown { min-width: columns(2, $center); }
-    .ui-multiselect { width: 100%; }
-  }
-  .group-targeting {
-    @extend %post-targeting;
+.attachments {
+  ul { @include inline-block-list; }
+  li { @extend .token-body; }
+  a {
     @extend %icon;
-    @extend %icon-warning;
-    font-weight: bold;
-    color: $red;
-    strong { text-transform: uppercase; }
+    @extend %icon-attachment;
+    &:before { font-size: $xxxsmallpx; }
   }
-}
 
-.post-textfield {
-  @include span-columns($center - 2, $center);
-  margin: 0;
-  .value {
-    @include trailer(.125);
-    height: rhythm(2.5);
-    margin: 0;
-    background: rgba(white,.75);
-    padding-left: rhythm(.5);
-    resize: none;
-    &:focus { + .charcount { opacity: 1; } }
-  }
-  .charcount {
-    @include adjust-font-size-to($xsmallpx);
-    @include arrow(top center color($green dark) $box-padding);
-    @include box-shadow(black 0 0 $box-padding);
-    @include transition(all 300ms);
-    opacity: 0;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    margin-top: $box-padding;
-    padding: $box-padding rhythm(1);
-    background: color($green lightest);
-    border: 1px solid color($green dark);
-    &.overlimit {
-      @include after(" Message is too long for SMS.");
-      opacity: 1;
-      color: $base3;
-      background: $red;
-      border-color: $back;
-      &:before { border-bottom-color: $back; }
-    }
-  }
+  + .post-text { @include leader(.25); }
 }
 
 // ---------------------------------------------------------------------------

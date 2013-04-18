@@ -15,50 +15,14 @@
 <div class="village-main">
   {% block village-main %}
   <section class="village-feed" data-author="{% firstof user.profile.name user.email %}" data-author-role="{% firstof relationship.description_or_role user.profile.role %}" {% block village-feed-attrs %}{% endblock %}>
-    <div class="feed-posts{% if not user.profile.has_posted %} has-instructions{% endif %}"{% if posts.meta.more %} data-more="true"{% endif %}>
+    <div class="feed-posts"{% if posts.meta.more %} data-more="true"{% endif %}>
       <span class="feedstatus{% if posts.meta.more %} has-more{% endif %}"> </span>
       {{ posts|handlebars:"posts" }}
     </div>
 
-    {% if not read_only %}
-    <form method="POST" class="post-add-form {% block addpost-classes %}{% endblock addpost-classes %}" action="{% block form-action %}{% endblock %}" data-char-limit="{{ post_char_limit }}">
-      {% csrf_token %}
+    {% block addposts %}
+    {% endblock %}
 
-      {% if not user.profile.has_posted %}
-      <ol class="howto">
-        {% block howto-target %}
-        <li class="howto-sms"><p>Select family members to receive a&nbsp;text.</p></li>
-        {% endblock %}
-        <li class="howto-post"><p>Write a short message and hit&nbsp;send!</p></li>
-      </ol>
-      {% endif %}
-
-      <a href="http://translate.google.com/" class="translate-link" target="_blank" title="Translate">Translate</a>
-
-      {% block sms-target %}
-      <div class="formfield sms-targeting">
-        <label for="sms-target" class="type">Send text messages to</label>
-        <div class="multiselect-dropdown">
-          <select id="sms-target" class="value" name="sms-target" multiple="multiple">
-            {% for elder in elders|sms_eligible %}
-              <option value="{{ elder.id }}" data-role="{{ elder.role_in_context }}" data-name="{% firstof elder.name elder.user.email elder.phone|display_phone %}" data-actual-name="{{ elder.name }}" selected>{{ elder.role_in_context }}: {% firstof elder.name elder.user.email elder.phone|display_phone %}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      {% endblock %}
-
-      <div class="formfield post-textfield">
-        <textarea id="post-text" name="text" class="value"></textarea>
-        <span class="charcount">{{ post_char_limit }} characters remaining...</span>
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" class="action-post">Send</button>
-      </div>
-
-    </form>
-    {% endif %}
   </section>
   {% endblock village-main %}
 </div>

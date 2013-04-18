@@ -263,7 +263,11 @@ var PYO = (function (PYO, $) {
             tags: 'warning',
             message: 'The ' + item + ' you are viewing has been removed. Any further changes will be lost. Please <a href="/">reload your page</a>.'
         }, {escapeHTML: false});
-        if (disable_form) { $('.post-add-form .form-actions .action-post').addClass('disabled').attr('disabled', 'disabled'); }
+        if (disable_form) {
+            $('.post-add-form .form-actions .action-post').each(function () {
+                $(this).addClass('disabled').attr('disabled', 'disabled');
+            });
+        }
     };
 
     PYO.updateNavActiveClasses = function (container) {

@@ -145,6 +145,30 @@ $select-gradient  : linear-gradient(to bottom, color($base,0), color($base,.125)
   }
 }
 
+%textarea {
+  @extend %input;
+  @include transition(200ms min-height);
+  @include rem(min-height, rhythm(1 + $input-rhythm*2));
+}
+
+$form-action-note-size: $smallpx;
+
+%form-actions {
+  @include rhythm(.5,0,0,.5);
+  position: relative;
+  clear: both;
+  text-align: right;
+  p {
+    @include adjust-font-size-to($form-action-note-size);
+    @include rem(margin, 0 .4em rhythm(.5) 0);
+    display: inline-block;
+  }
+  button:not([class~="secondary"]) {
+    @extend %button;
+    text-transform: capitalize;
+  }
+}
+
 %formdefaults {
   .type {
     display: block;
@@ -164,9 +188,7 @@ $select-gradient  : linear-gradient(to bottom, color($base,0), color($base,.125)
   }
 
   textarea {
-    @extend %input;
-    @include transition(200ms min-height);
-    @include rem(min-height, rhythm(1 + $input-rhythm*2));
+    @extend %textarea;
   }
 
   fieldset {
@@ -177,17 +199,17 @@ $select-gradient  : linear-gradient(to bottom, color($base,0), color($base,.125)
     background: $base2;
   }
 
-  .fieldset-header {
+  [class~="fieldset-header"] {
     @include trailer;
   }
 
-  .fieldset-help {
+  [class~="fieldset-help"] {
     @include leader;
     @include trailer(.5);
     font-style: italic;
   }
 
-  .formfield-help {
+  [class~="formfield-help"] {
     @include adjust-font-size-to($smallpx);
     display: block;
     clear: both;
@@ -197,28 +219,14 @@ $select-gradient  : linear-gradient(to bottom, color($base,0), color($base,.125)
     text-align: right;
   }
 
-  .formfield-optional, .fieldset-optional {
+  [class~="formfield-optional"], [class~="fieldset-optional"] {
     @include adjust-font-size-to($smallpx);
     color: $base1;
   }
-  .optional-fieldset { .formfield-optional { @include gone; } }
+  [class~="optional-fieldset"] { .formfield-optional { @include gone; } }
 
-  $form-action-note-size: $smallpx;
-
-  .form-actions {
-    @include rhythm(.5,0,0,.5);
-    position: relative;
-    clear: both;
-    text-align: right;
-    p {
-      @include adjust-font-size-to($form-action-note-size);
-      @include rem(margin, 0 .4em rhythm(.5) 0);
-      display: inline-block;
-    }
-    button:not([class~="secondary"]) {
-      @extend %button;
-      text-transform: capitalize;
-    }
+  [class~="form-actions"] {
+    @extend %form-actions;
   }
   [class~="secondary"] {
     @include link($non-links: true);

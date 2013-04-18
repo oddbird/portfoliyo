@@ -46,6 +46,7 @@ $button-radius: .25em;
 @mixin button-color(
   $color: $green
 ) {
+  $color    : color($color);
   $light    : color($color light);
   $dark     : color($color dark);
   $contrast : contrast($color);

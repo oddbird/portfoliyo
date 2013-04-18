@@ -37,11 +37,9 @@ var PYO = (function (PYO, $) {
 
     PYO.addPost = function (data) {
         if (data) {
-            var instructions = PYO.feedPosts.find('.howto');
             var posts = PYO.renderPost(data);
             posts.find('.details').html5accordion();
-            if (instructions.length) { instructions.before(posts); }
-            else { PYO.feedPosts.append(posts); }
+            PYO.feedPosts.append(posts);
             PYO.authorPosts = PYO.feedPosts.find('.post.mine').length;
             return posts;
         }
@@ -61,8 +59,7 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.createPostObj = function (author_sequence, xhr_count, smsTargetArr) {
-        var textarea = $('#post-text');
+    PYO.createPostObj = function (text, author_sequence, xhr_count, smsTargetArr, presentArr, attachmentsArr, type) {
         var author = PYO.feed.data('author');
         var role = PYO.feed.data('author-role');
         var today = new Date();
@@ -72,7 +69,6 @@ var PYO = (function (PYO, $) {
         var period = (hour > 12) ? 'pm' : 'am';
         hour = (hour > 12) ? hour - 12 : hour;
         var time = hour + ':' + minute + period;
-        var text = $.trim(textarea.val());
         var postObj = {
             objects: [{
                 author: author,
@@ -87,79 +83,133 @@ var PYO = (function (PYO, $) {
                 mine: true,
                 sms: smsTargetArr.length ? true : false,
                 to_sms: smsTargetArr.length ? true : false,
-                plural_sms: smsTargetArr.length > 1 ? 's' : '',
-                sms_recipients: smsTargetArr.join(', ')
+                sms_recipients: smsTargetArr,
+                type: {
+                    name: type,
+                    is_call: false,
+                    is_meeting: false,
+                    is_message: false,
+                    is_note: false
+                },
+                present: presentArr,
+                attachments: attachmentsArr
             }]
         };
+        postObj.objects[0].type['is_' + type] = true;
         return postObj;
     };
 
     PYO.submitPost = function () {
         if (PYO.feed.length) {
             var context = PYO.feed.closest('.village');
-            var form = context.find('form.post-add-form');
-            var button = form.find('.action-post');
-            var textarea = form.find('#post-text');
+            var forms = context.find('form.post-type');
+            forms.each(function () {
+                var form = $(this);
+                var button = form.find('.action-post');
+                var textarea = form.find('.post-textfield textarea');
+                var formReset = function () {
+                    form.find('.attach-value:disabled').removeAttr('disabled');
+                    form.resetForm();
+                    form.find('.attach-input label').click();
+                    form.find('.tokens-list .token.new label').click();
+                    textarea.focus().change();
+                };
 
-            form.submit(function (event) {
-                event.preventDefault();
-                if (textarea.val().length) {
-                    var text = $.trim(textarea.val());
-                    var author_sequence_id = (PYO.authorPosts || 0) + 1;
-                    var url = PYO.feed.data('post-url');
-                    var count = ++postAjax.count;
-                    var postData = [
-                        { name: 'text', value: text },
-                        { name: 'author_sequence_id', value: author_sequence_id }
-                    ];
-                    var smsSelect = form.find('.sms-targeting');
-                    var smsInputName = smsSelect.find('#sms-target').attr('name');
-                    var smsTargetArr = [];
-                    var postObj, post;
+                form.submit(function (event) {
+                    var fileInputs = form.find('.attach-value');
+                    var attachments = fileInputs.filter(function () { return $(this).val() !== ''; });
+                    if (!attachments.length || ($("<input type='file'/>").get(0).files !== undefined && window.FormData !== undefined)) {
+                        event.preventDefault();
+                        if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
+                            var text = $.trim(textarea.val());
+                            var author_sequence_id = (PYO.authorPosts || 0) + 1;
+                            var url = PYO.feed.data('post-url');
+                            var count = ++postAjax.count;
+                            var extraPostData = { author_sequence_id: author_sequence_id };
+                            var type = form.find('input[name="type"]').fieldValue()[0];
+                            var elderInputs = form.find('.token-toggle:checked');
+                            var noInputs = form.find('.no-to-field');
+                            var smsTargetArr = [];
+                            var presentArr = [];
+                            var attachmentsArr = [];
+                            var postObj, post;
 
-                    if (smsSelect.length) {
-                        smsSelect.find('.ui-multiselect-checkboxes input:checked').each(function () {
-                            var obj = { name: smsInputName, value: $(this).val() };
-                            var displayName = $(this).data('actual-name') ? $(this).data('actual-name') : $(this).data('role');
-                            postData.push(obj);
-                            smsTargetArr.push(displayName);
-                        });
+                            // Prevent notes without attachments from submitting as multipart/form-data
+                            form.removeAttr('enctype');
+
+                            if (elderInputs.length) {
+                                elderInputs.each(function () {
+                                    var el = $(this);
+                                    var displayName;
+                                    if (type === 'message') {
+                                        displayName = el.data('display-name');
+                                        smsTargetArr.push(displayName);
+                                    } else if (type === 'call' || type === 'meeting') {
+                                        displayName = el.hasClass('new') ? el.val() : el.data('display-name');
+                                        presentArr.push(displayName);
+                                    }
+                                });
+                            } else if (noInputs.length) {
+                                var namesArr = noInputs.data('elders').split(',');
+                                smsTargetArr = smsTargetArr.concat(namesArr);
+                            }
+
+                            if (attachments.length) {
+                                attachments.each(function () {
+                                    var el = $(this);
+                                    var name;
+                                    if (el.get(0).files && el.get(0).files.length && el.get(0).files[0].name) {
+                                        name = el.get(0).files[0].name;
+                                    } else {
+                                        name = el.val().replace(/^.*\\/, '');
+                                    }
+                                    attachmentsArr.push({name: name});
+                                });
+                            }
+
+                            postObj = PYO.createPostObj(text, author_sequence_id, count, smsTargetArr, presentArr, attachmentsArr, type);
+                            post = PYO.addPost(postObj);
+                            post.data('post-data', form.formSerialize());
+                            fileInputs.filter(function () { return $(this).val() === ''; }).attr('disabled', true);
+
+                            if (url) {
+                                form.ajaxSubmit({
+                                    url: url,
+                                    data: extraPostData,
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        PYO.postAjaxSuccess(response, author_sequence_id, count);
+                                    },
+                                    error: function (request, status) {
+                                        if (attachments.length) { post.data('attachments', true); }
+                                        PYO.postAjaxError(post, author_sequence_id, status, count);
+                                        postAjax.XHR[count] = null;
+                                        form.removeData('jqxhr');
+                                    }
+                                });
+                                postAjax.XHR[count] = form.data('jqxhr');
+                                formReset();
+                            }
+
+                            PYO.scrollToBottom();
+                            PYO.addPostTimeout(post, author_sequence_id, count);
+                        }
                     } else {
-                        context.find('.village-info .elder-list.family .parents-list .parent .vcard.mobile').each(function () {
-                            var name = $(this).find('.fn').data('name');
-                            var role = $(this).find('.fn').data('role');
-                            var displayName = name ? name : role;
-                            smsTargetArr.push(displayName);
-                        });
+                        form.attr('enctype', 'multipart/form-data');
+                        form.loadingOverlay();
+                        return true;
                     }
+                });
 
-                    postObj = PYO.createPostObj(author_sequence_id, count, smsTargetArr);
-                    post = PYO.addPost(postObj);
-
-                    if (url) {
-                        postAjax.XHR[count] = $.post(url, postData, function (response) {
-                            PYO.postAjaxSuccess(response, author_sequence_id, count);
-                        }).error(function (request, status) {
-                            PYO.postAjaxError(post, author_sequence_id, status, count);
-                            postAjax.XHR[count] = null;
-                        });
+                // Hijack ENTER to submit the form (instead of adding a newline)
+                textarea.keydown(function (event) {
+                    if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
+                        event.preventDefault();
+                        if (!button.is(':disabled')) {
+                            form.submit();
+                        }
                     }
-
-                    textarea.val('').change();
-                    PYO.feed.find('.howto').remove();
-                    PYO.scrollToBottom();
-                    PYO.addPostTimeout(post, author_sequence_id, count);
-                    $('#sms-target').multiselect('checkAll');
-                }
-            });
-
-            textarea.keydown(function (event) {
-                if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
-                    event.preventDefault();
-                    if (!button.is(':disabled')) {
-                        form.submit();
-                    }
-                }
+                });
             });
         }
     };
@@ -167,7 +217,7 @@ var PYO = (function (PYO, $) {
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
         if (response && response.objects && response.objects.length) {
             $.each(response.objects, function () {
-                PYO.feed.trigger('successful-post', {smsRecipients: this.num_sms_recipients, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
+                PYO.feed.trigger('successful-post', {smsRecipients: this.sms_recipients.length, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
                 if (this.author_sequence_id) {
                     var oldPost = PYO.feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
                     if (oldPost.length) { PYO.replacePost(this, oldPost); }
@@ -180,11 +230,10 @@ var PYO = (function (PYO, $) {
 
     PYO.postAjaxError = function (post, author_sequence_id, status, xhr_count) {
         if (status !== 'abort' && status !== 'timeout') {
-            var msg = PYO.tpl('post_timeout_msg');
+            var msg = PYO.tpl('post_timeout_msg', { attachments: post.data('attachments') });
             msg.find('.resend').click(function (e) {
                 e.preventDefault();
-                var thisPost = $(this).closest('.post');
-                PYO.resendPost(thisPost);
+                PYO.resendPost(post);
                 if (postAjax.XHR[xhr_count]) { postAjax.XHR[xhr_count].abort(); }
             });
             msg.find('.cancel').click(function (e) {
@@ -211,14 +260,9 @@ var PYO = (function (PYO, $) {
     PYO.resendPost = function (post) {
         var url = PYO.feed.data('post-url');
         var author_sequence_id = post.data('author-sequence');
-        var text = $.trim(post.find('.post-text').text());
-        var postData = {
-            author_sequence_id: author_sequence_id,
-            text: text
-        };
         var count = ++postAjax.count;
-
         if (url) {
+            var postData = post.data('post-data') + '&author_sequence_id=' + author_sequence_id;
             postAjax.XHR[count] = $.post(url, postData, function (response) {
                 PYO.postAjaxSuccess(response, author_sequence_id, count);
             }).error(function (request, status) {
@@ -235,8 +279,8 @@ var PYO = (function (PYO, $) {
     PYO.characterCount = function (container) {
         if ($(container).length) {
             var context = $(container);
-            var form = context.find('form.post-add-form');
-            var textarea = form.find('#post-text');
+            var form = context.find('form.message-form');
+            var textarea = form.find('#message-text');
             var limit = form.data('char-limit');
             var count = form.find('.charcount');
             var button = form.find('.action-post');
@@ -257,26 +301,92 @@ var PYO = (function (PYO, $) {
         }
     };
 
-    PYO.initializeMultiselect = function () {
-        var context = $('.village-main');
-        var form = context.find('.post-add-form');
-        var select = form.find('#sms-target');
-        select.multiselect({
-            checkAllText: 'all',
-            uncheckAllText: 'none',
-            noneSelectedText: 'no one',
-            selectedText: function (checked, total, arr) {
-                if (checked < 4) {
-                    return $(arr).map(function () { return $(this).data('role'); }).get().join(', ');
+    PYO.initializeToField = function (containerSel, textareaSel, opts) {
+        if ($(containerSel).length) {
+            var container = $(containerSel);
+            var defaults = {
+                textbox: 'input.token-value',
+                inputs: 'input.token-toggle',
+                suggestionList: '.token-suggest',
+                inputList: '.tokens-list',
+                triggerSubmit: function (context) {
+                    context.find(textareaSel).focus();
+                },
+                inputsNeverRemoved: true,
+                inputType: 'elder',
+                selectAll: '.bulk-tokens .add-all',
+                selectNone: '.bulk-tokens .remove-all'
+            };
+            var options = $.extend({}, defaults, opts);
+
+            container.customAutocomplete(options);
+
+            container.on('click', '.tokens-input', function () {
+                container.find('input.token-value').focus();
+            });
+        }
+    };
+
+    // Adding/removing attachments on notes
+    PYO.initializeAttachments = function (formSel) {
+        if ($(formSel).length) {
+            var form = $(formSel);
+            var counter = 0;
+            var label = form.find('label.attach-type');
+            var attachmentList = form.find('.attach-input');
+            var inputList = form.find('.attach-field');
+            var textarea = form.find('.post-textfield textarea');
+
+            label.click(function (e) {
+                e.preventDefault();
+                var id = $(this).attr('for');
+                form.find('#' + id).click();
+            });
+
+            form.on('change', 'input.attach-value', function () {
+                var input = $(this);
+                var inputID = input.attr('id');
+                var token, newInput, filename;
+
+                inputList.find('.attach-value').removeClass('ie-fix-active');
+
+                if (input.get(0).files && input.get(0).files.length && input.get(0).files[0].name) {
+                    filename = input.get(0).files[0].name;
                 } else {
-                    if (checked === total) {
-                        return 'all family members';
-                    } else {
-                        return checked + ' family members';
-                    }
+                    filename = input.val().replace(/^.*\\/, '');
                 }
-            }
-        });
+
+                token = PYO.tpl('autocomplete_input', {
+                    newInput: true,
+                    typeName: 'attachment-token',
+                    index: counter++,
+                    id: inputID,
+                    inputText: filename
+                });
+                newInput = PYO.tpl('note_attachment_input', { index: counter });
+                attachmentList.append(token);
+                inputList.append(newInput);
+                label.attr('for', 'attach-file-' + counter);
+                textarea.focus();
+            });
+
+            attachmentList.on('change', '.token-toggle.new', function () {
+                var input = $(this);
+                if (input.prop('checked') === false) {
+                    var inputID = input.val();
+                    var token = input.closest('.token');
+
+                    form.find('#' + inputID).remove();
+                    token.remove();
+                }
+            });
+
+            attachmentList.on('click', function (e) {
+                if (e.target === this && !$('html').hasClass('ie9')) {
+                    label.click();
+                }
+            });
+        }
     };
 
     PYO.markPostsRead = function () {
@@ -369,12 +479,23 @@ var PYO = (function (PYO, $) {
         PYO.authorPosts = posts.filter('.mine').length;
         posts.filter('.unread').removeClass('unread');
 
-        PYO.initializeMultiselect();
         PYO.watchForReadPosts();
+        PYO.initializeToField('.post-add-form .message-form', '#message-text', {prefix: 'message'});
+        PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text', {
+            allowNew: true,
+            newInputName: 'extra_name',
+            labelText: 'present',
+            prefix: 'conversation'
+        });
+        PYO.initializeAttachments('.post-add-form .note-form');
         PYO.submitPost();
         PYO.characterCount('.village-main');
         PYO.scrollToBottom();
         PYO.scrollForBacklog();
+
+        $('.post-add-form').resize(function () {
+            PYO.updateContentHeight('.village-feed', '.feed-posts', true);
+        });
     };
 
     return PYO;

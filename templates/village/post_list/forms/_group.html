@@ -1,0 +1,12 @@
+{% extends "village/post_list/forms/_base.html" %}
+{% load url from future %}
+{% load elders %}
+
+{% block addpost-classes %}group-posts{% endblock %}
+
+{% block post-add-tabs %}{% endblock %}
+{% block post-add-types %}{% endblock %}
+
+{% block to-field %}
+<p class="no-to-field" data-elders="{% for elder in elders|sms_eligible %}{% firstof elder.name elder.role_in_context %}{% if not forloop.last %},{% endif %}{% endfor %}">Group messages will be sent to <strong>all family members</strong> in the group.</p>
+{% endblock %}

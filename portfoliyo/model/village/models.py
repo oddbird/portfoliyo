@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils import html, timezone
 from jsonfield import JSONField
+from model_utils import Choices
 
 from portfoliyo import tasks
 from ..users import models as user_models
@@ -49,8 +50,8 @@ class BasePost(models.Model):
     from_sms = models.BooleanField(default=False)
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
-    # arbitrary additional metadata, currently just SMSes
-    meta = JSONField(default={})
+    # additional metadata (SMSes sent, users contacted...)
+    meta = JSONField(default=lambda: {})
 
     is_bulk = None
 
@@ -149,6 +150,13 @@ class BulkPost(BasePost):
     group = models.ForeignKey(
         user_models.Group, blank=True, null=True, related_name='bulk_posts')
 
+    # bulk posts are always messages, and don't support attachments
+    post_type = 'message'
+
+    @property
+    def attachments(self):
+        return PostAttachment.objects.none()
+
 
     is_bulk = True
 
@@ -175,7 +183,7 @@ class BulkPost(BasePost):
 
     @classmethod
     def create(cls, author, group, text,
-               sms_profile_ids=None, sequence_id=None, from_sms=False):
+               profile_ids=None, sequence_id=None, from_sms=False):
         """
         Create/return a BulkPost and all associated Posts.
 
@@ -185,7 +193,7 @@ class BulkPost(BasePost):
 
         It is currently not allowed for both to be ``None``.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive this
+        ``profile_ids`` is a list of Profile IDs who should receive this
         post as an SMS. If set to "all", will send to all SMS-eligible elders
         in the group.
 
@@ -213,7 +221,7 @@ class BulkPost(BasePost):
             from_sms=from_sms,
             )
 
-        post.send_sms(sms_profile_ids)
+        post.send_sms(profile_ids)
 
         post.save()
 
@@ -266,8 +274,12 @@ class BulkPost(BasePost):
 class Post(BasePost):
     """A Post in a single student's village."""
     # the student in whose village this was posted
+    TYPES = Choices("message", "note", "call", "meeting")
+
     student = models.ForeignKey(
         user_models.Profile, related_name='posts_in_village')
+    post_type = models.CharField(
+        max_length=20, choices=TYPES, default=TYPES.message)
     # relationship between author and student (nullable b/c might be deleted)
     relationship = models.ForeignKey(
         user_models.Relationship,
@@ -298,13 +310,19 @@ class Post(BasePost):
 
     @classmethod
     def create(cls, author, student, text,
-               sms_profile_ids=None, sequence_id=None, from_sms=False,
-               in_reply_to=None, notifications=True):
+               profile_ids=None, sequence_id=None, from_sms=False,
+               in_reply_to=None, notifications=True,
+               post_type=None, attachments=None, extra_names=None):
         """
         Create/return a Post, triggering a Pusher event and SMSes.
 
-        ``sms_profile_ids`` is a list of Profile IDs who should receive this
-        post as an SMS. If set to "all", all eligible users will receive SMSes.
+        ``post_type`` is "message" (default), "note", "call", or "meeting".
+
+        ``profile_ids`` is a list of Profile IDs who are related to this
+        post. If ``post_type`` is "message", it's a list of profiles who should
+        receive this post as an SMS (if "all", all eligible users will receive
+        SMSes). For "call" or "meeting" post types, its a list of who was
+        present at the meeting / on the call.
 
         ``sequence_id`` is an arbitrary ID generated on the client-side to
         uniquely identify posts by the current user within a given browser
@@ -336,8 +354,24 @@ class Post(BasePost):
             from_sms=from_sms,
             )
 
-        post.send_sms(sms_profile_ids, in_reply_to)
+        if post_type:
+            post.post_type = post_type
+
+        if post.post_type == 'message':
+            post.send_sms(profile_ids, in_reply_to)
+        elif profile_ids:
+            post.meta['present'] = [
+                {'id': e.id, 'name': e.name, 'role': e.role_in_context}
+                for e in post.elders_in_context.filter(pk__in=profile_ids)
+                ]
+
+        if extra_names:
+            post.meta['extra_names'] = extra_names
+
         post.save()
+
+        for uploaded_file in (attachments or []):
+            post.attachments.create(attachment=uploaded_file)
 
         # mark the post unread by all web users in village (except the author)
         for elder in student.elders:
@@ -370,6 +404,13 @@ class Post(BasePost):
     def get_absolute_url(self):
         """A Post's URL is its village; this is for admin convenience."""
         return reverse('village', kwargs={'student_id': self.student_id})
+
+
+
+class PostAttachment(models.Model):
+    """A file attachment on a Post."""
+    post = models.ForeignKey(Post, related_name='attachments')
+    attachment = models.FileField(upload_to='attachments/%Y/%m/%d/')
 
 
 

@@ -1,16 +1,16 @@
 GIT
   remote: git://github.com/chriseppstein/compass
-  revision: 317a4a18080c36299be97ea722b442c31e2e56ec
+  revision: d1689f8a6519f2ffd8e991f45055576056153d1a
   branch: master
   specs:
-    compass (0.13.alpha.4.317a4a1)
+    compass (0.13.alpha.4.d1689f8)
       chunky_png (~> 1.2)
       listen (<= 0.9.9)
       sass (~> 3.2.5)
 
 GIT
   remote: git://github.com/ericam/accoutrement
-  revision: 92b0099dd21f0a2238bea582c2559dc71cdddd82
+  revision: 0db3769371dbaf75ecc02d4731c066034be64e19
   branch: master
   specs:
     accoutrement (0.0.5)
@@ -18,7 +18,7 @@ GIT
 
 GIT
   remote: git://github.com/ericam/susy
-  revision: 96309d6b172e2cf2ae4dacd0ccaa4bbd9579fc27
+  revision: 47cf7bb5447f2d01115ec5728e5b6694403528ae
   branch: master
   specs:
     susy (1.0.8)

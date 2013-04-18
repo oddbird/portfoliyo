@@ -338,7 +338,8 @@ def _get_posts(profile, student=None, group=None):
     if student:
         all_unread = model.unread.all_unread(student, profile)
         queryset = student.posts_in_village.select_related(
-            'author__user', 'student', 'relationship')
+            'author__user', 'student', 'relationship').prefetch_related(
+            'attachments')
     elif group:
         if group.is_all:
             queryset = profile.authored_bulkposts.filter(
@@ -407,6 +408,8 @@ def village(request, student_id):
             'read_only': rel is None,
             'posts': posts,
             'post_char_limit': model.post_char_limit(rel) if rel else 0,
+            'posting_url': reverse(
+                'create_post', kwargs={'student_id': student.id}),
             },
         )
 
@@ -418,11 +421,13 @@ def group(request, group_id=None):
     """The main chat view for a group."""
     if group_id is None:
         group = model.AllStudentsGroup(request.user.profile)
+        posting_url = reverse('create_post')
     else:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile),
             id=group_id,
             )
+        posting_url = reverse('create_post', kwargs={'group_id': group.id})
 
     return TemplateResponse(
         request,
@@ -433,6 +438,7 @@ def group(request, group_id=None):
                 group.all_elders).order_by('school_staff', 'name'),
             'posts': _get_posts(request.user.profile, group=group),
             'post_char_limit': model.post_char_limit(request.user.profile),
+            'posting_url': posting_url,
             },
         )
 
@@ -442,7 +448,59 @@ def group(request, group_id=None):
 @login_required
 @require_POST
 def create_post(request, student_id=None, group_id=None):
-    """Create a post."""
+    """
+    Create a post.
+
+    If ``student_id`` is provided in the URL, the post will be a single-village
+    post. If ``group_id`` is provided, it will be a group bulk post. If neither
+    is provided, it will be an all-students bulk post.
+
+    POST parameters accepted:
+
+    ``text``
+
+        The text of the post to create. Must be few enough characters that,
+        when the user's auto-signature is appended, the resulting full SMS
+        message is <160 characters.
+
+    ``type``
+
+        The type of post to create: "message", "note", "call", or
+        "meeting". This parameter is ignored for bulk posts; all bulk posts are
+        of type "message".
+
+    ``elder``
+
+        A list of elder IDs connected with this post. For a "message" type
+        post, these users will receive the post via SMS. For a "meeting" or
+        "call" type post, these are the users who were present on the call or
+        at the meeting.
+
+    ``extra_name``
+
+       A list of additional names connected with this post. (For instance, for
+       a "meeting" or "call" type post, these are names of additional people
+       present at the meeting or on the call, who are not actually elders in
+       the village.)
+
+    ``author_sequence_id``
+
+       An increasing numeric ID for posts authored by this user in this browser
+       session. This value is opaque to the server and not stored anywhere, but
+       is round-tripped through Pusher back to the client, to simplify
+       matching up post data and avoid creating duplicates on the client.
+
+    For non-bulk posts, an ``attachment`` file-upload parameter is also
+    optionally accepted.
+
+    Returns JSON object with boolean key ``success``. If ``success`` is
+    ``False``, a human-readable message will be provided in the ``error``
+    key. If ``success`` is ``True``, the ``objects`` key will be a list
+    containing one JSON-serialized post object. (Even though this view will
+    only ever return one post, it still returns a list for better compatibility
+    with other client-side JSON-handling code.)
+
+    """
     if 'text' not in request.POST:
         return http.HttpResponseBadRequest(
             json.dumps(
@@ -454,21 +512,32 @@ def create_post(request, student_id=None, group_id=None):
             content_type='application/json',
             )
 
+    extra_kwargs = {}
     group = None
     rel = None
     post_model = model.BulkPost
-    sms_profile_ids = 'all'
+    profile_ids = 'all'
     if student_id is not None:
         rel = get_relationship_or_404(student_id, request.user.profile)
         post_model = model.Post
         target = rel.student
-        sms_profile_ids = request.POST.getlist('sms-target')
+        profile_ids = request.POST.getlist('elder')
+        extra_kwargs['extra_names'] = request.POST.getlist('extra_name')
+        extra_kwargs['post_type'] = request.POST.get('type')
+        if 'attachment' in request.FILES:
+            extra_kwargs['attachments'] = request.FILES.getlist('attachment')
+        redirect_url = reverse('village', kwargs={'student_id': student_id})
+        qs_group = get_querystring_group(request, rel.student)
+        if qs_group:
+            redirect_url += "?group=%s" % qs_group.id
     elif group_id is not None:
         group = get_object_or_404(
             model.Group.objects.filter(owner=request.user.profile), pk=group_id)
         target = group
+        redirect_url = reverse('group', kwargs={'group_id': group_id})
     else:
         target = None
+        redirect_url = reverse('all_students')
 
     text = request.POST['text']
     sequence_id = request.POST.get('author_sequence_id')
@@ -489,20 +558,23 @@ def create_post(request, student_id=None, group_id=None):
             request.user.profile,
             target,
             text,
-            sms_profile_ids=sms_profile_ids,
+            profile_ids=profile_ids,
             sequence_id=sequence_id,
-            )
+            **extra_kwargs)
 
-    data = {
-        'success': True,
-        'objects': [
-            serializers.post2dict(
-                post, author_sequence_id=sequence_id, unread=False, mine=True)
-            ],
-        }
+    if request.is_ajax():
+        data = {
+            'success': True,
+            'objects': [
+                serializers.post2dict(
+                    post, author_sequence_id=sequence_id, unread=False, mine=True)
+                ],
+            }
 
-    return http.HttpResponse(
-        json.dumps(data), content_type='application/json')
+        return http.HttpResponse(
+            json.dumps(data), content_type='application/json')
+    else:
+        return http.HttpResponseRedirect(redirect_url)
 
 
 

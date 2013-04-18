@@ -1,7 +1,10 @@
 """Serialization."""
 import datetime
+import os.path
 
 from django.utils import dateformat, timezone
+
+from portfoliyo import model
 
 
 
@@ -25,9 +28,17 @@ def post2dict(post, **extra):
     timestamp = timezone.localtime(post.timestamp)
 
     sms_recipients = [s['name'] or s['role'] for s in post.meta.get('sms', [])]
+    present = [
+        s['name'] or s['role'] for s in post.meta.get('present', [])
+        ] + post.meta.get('extra_names', [])
+
+    type_dict = {'name': post.post_type}
+    for type_name, _ in model.Post.TYPES:
+        type_dict['is_%s' % type_name] = (post.post_type == type_name)
 
     data = {
         'post_id': post.id,
+        'type': type_dict,
         'author_id': post.author_id if post.author else 0,
         'author': author_name,
         'role': role,
@@ -38,9 +49,15 @@ def post2dict(post, **extra):
         'sms': post.sms,
         'to_sms': post.to_sms,
         'from_sms': post.from_sms,
-        'sms_recipients': ', '.join(sms_recipients),
-        'num_sms_recipients': len(sms_recipients),
-        'plural_sms': 's' if len(sms_recipients) > 1 else '',
+        'sms_recipients': sms_recipients,
+        'present': present,
+        'attachments': [
+            {
+                'name': os.path.basename(pa.attachment.name),
+                'url': pa.attachment.url
+                }
+            for pa in post.attachments.all()
+            ],
         }
 
     data.update(post.extra_data())

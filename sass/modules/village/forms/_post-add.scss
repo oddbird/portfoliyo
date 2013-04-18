@@ -1,0 +1,428 @@
+// ---------------------------------------------------------------------------
+// Post Add Form
+
+.post-add-form {
+  @include pie-clearfix;
+  @include stretch-x;
+  bottom: 0;
+  background: color($base3 lighter);
+  border-top: 1px solid $village-border-color;
+  &.group-posts { background: mix($blue,$base2,25%); }
+
+  @include tabs(message-form note-form conversation-form, '.post-type-tabs' null);
+
+  %hide-tab-content {
+    visibility: hidden;
+    float: left;
+    width: 100%;
+    margin-right: -100%;
+  }
+  %show-tab-content {
+    position: relative;
+    visibility: visible;
+    z-index: 10;
+  }
+  %active-tab-title {
+    background: none;
+    border-bottom-color: transparent;
+    &[for*="message"]:before { color: color($green dark); }
+    &[for*="note"]:before { color: color($orange dark); }
+    &[for*="conversation"]:before { color: color($magenta dark); }
+  }
+
+  .form-actions {
+    @extend %form-actions;
+    clear: none;
+    margin: 0;
+  }
+  .action-post {
+    @include span-columns(2 omega, $center);
+    height: rhythm(2.5);
+    &:disabled { @extend %icon-cancel-circle; }
+  }
+
+  &.group-posts {
+    .message-form { @extend %show-tab-content; }
+    .no-to-field {
+      @extend %icon;
+      @extend %icon-warning;
+      @include adjust-font-size-to($smallpx);
+      @include trailer(.25);
+    }
+  }
+}
+
+.translate-link {
+  @extend %icon-globe;
+  @include adjust-font-size-to($smallpx);
+  @include button-color(color($base3 lighter));
+  position: relative;
+  float: right;
+  .group-posts & {
+    @extend %button-icon;
+    @include button-color(color($base3 lighter));
+    margin-left: rhythm(1);
+    margin-right: space(2,$center);
+    z-index: 10;
+    @include breakpoint(60em) {
+      width: auto;
+      padding: 0 $box-padding;
+      text-indent: 0;
+      &:before {
+        position: static;
+        margin-right: .4em;
+        text-align: left;
+      }
+    }
+  }
+  .village-posts & {
+    @extend %icon-replace;
+    @include rhythm-borders(1px,.25);
+    @include border-right-radius($box-padding);
+    width: space(1,$center);
+    border-left: 0;
+    z-index: 10;
+    &:before {
+      right: 0;
+      padding-top: $box-padding;
+      text-align: center;
+    }
+    &:hover { background-color: color($blue lightest); }
+    &:focus, &:active { @include inset; }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tabs
+
+.post-type-tabs {
+  $tabs: 3;
+  $tab-width: percentage(1/$tabs);
+  @include pie-clearfix;
+  .radio-type {
+    @extend %ellipsis;
+    @extend %icon;
+    @include adjust-font-size-to($smallpx,1);
+    @include rhythm-borders(1px,.5);
+    float: left;
+    width: $tab-width;
+    margin-right: -100%;
+    padding: $box-padding;
+    background: $base2;
+    border-color: $base1;
+    border-width: 0 1px 1px 0;
+    text-align: center;
+
+    #{$focus} {
+      @include background-image(linear-gradient(to top, $base3, color($base3,0) 50%));
+    }
+
+    &:before {
+      @include adjust-font-size-to($normpx);
+      vertical-align: middle;
+      margin-right: .4em;
+    }
+
+    &:first-child { margin-left: 0; }
+    &:nth-child(2) { margin-left: $tab-width; }
+    &:last-child { margin-left: $tab-width*2; border-right: 0; }
+
+    &[for*="message"] {
+      @extend %icon-bubble-forward;
+      #{$focus} { &:before { color: color($green dark); } }
+    }
+    &[for*="note"] {
+      @extend %icon-pushpin;
+      #{$focus} { &:before { color: color($orange dark); } }
+    }
+    &[for*="conversation"] {
+      @extend %icon-bubbles;
+      #{$focus} { &:before { color: color($magenta dark); } }
+    }
+  }
+}
+
+.post-type {
+  padding: rhythm(.5) rhythm(1);
+}
+
+// ---------------------------------------------------------------------------
+// Main text field
+
+.post-textfield {
+  @include span-columns($center - 2, $center);
+  margin: 0;
+  .value {
+    @extend %textarea;
+    @include trailer(.125);
+    height: rhythm(2.5);
+    margin: 0;
+    background: rgba(white,.75);
+    padding-left: rhythm(.5);
+    resize: none;
+    &:focus { + .charcount { opacity: 1; } }
+  }
+  .charcount {
+    @include adjust-font-size-to($xsmallpx);
+    @include arrow(top center color($green dark) $box-padding);
+    @include box-shadow(black 0 0 $box-padding);
+    @include transition(all 300ms);
+    opacity: 0;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin-top: $box-padding;
+    padding: $box-padding rhythm(1);
+    background: color($green lightest);
+    border: 1px solid color($green dark);
+    &.overlimit {
+      @include after(" Message is too long for SMS.");
+      opacity: 1;
+      color: $base3;
+      background: $red;
+      border-color: $back;
+      &:before { border-bottom-color: $back; }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tokens
+
+%tokens-input {
+  @extend %input;
+  position: relative;
+  width: auto;
+  min-height: rhythm(1.5);
+  padding-bottom: $box-padding/2;
+  background: rgba(white,.75);
+}
+
+.bulk-tokens {
+  float: right;
+  padding-left: $box-padding;
+  a {
+    @extend %button-icon;
+    @include adjust-font-size-to($xxxsmallpx,.9);
+    vertical-align: top;
+  }
+  .add-all {
+    @extend %icon-plus;
+    @include button-color($green lightest);
+  }
+  .remove-all {
+    @extend %icon-close;
+    @include button-color($red lightest);
+  }
+}
+
+.tokens-list { display: inline; }
+
+.token-body {
+  @include border-radius($box-padding/1.5);
+  @include adjust-font-size-to($xxsmallpx,.75);
+  display: none;
+  padding: 0 $box-padding;
+  margin-bottom: $box-padding/2;
+  background: color($blue lightest);
+  border: 1px solid color(-50% $blue light);
+  cursor: default;
+
+  .selected & {
+    background: color($blue light);
+    color: $base3;
+  }
+  .token-context { @include gone; }
+
+  #{$focus} {
+    .token-status {
+      @extend %icon-close;
+      color: $red;
+    }
+  }
+}
+
+.token-status {
+  @extend %icon-replace;
+  @extend %icon-user;
+  @include adjust-font-size-to($xxxsmallpx,.75);
+  vertical-align: top;
+
+  &.sms { @extend %icon-bubble; }
+}
+
+.token-toggle {
+  @include gone;
+  &:checked + .token-body { display: inline-block; }
+}
+
+.token-value {
+  @include adjust-leading-to(.75);
+  height: rhythm(.75);
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: 0;
+  &:focus { outline: none; }
+}
+
+.token-suggest {
+  @include adjust-font-size-to($xsmallpx);
+  @include box-shadow(color($back,.5) 0 $box-padding $box-padding);
+  position: absolute;
+  top: 100%;
+  right: -1px;
+  left: -1px;
+  max-height: rhythm(4.5);
+  margin-top: 1px;
+  border: 1px solid $base;
+  border-top: 0;
+  background: $base3;
+  overflow-x: hidden;
+  overflow-y: auto;
+  z-index: 20;
+  b { font-weight: bold; }
+  .option {
+    @include leading-border(1px, .25);
+    padding: $box-padding/2 $box-padding;
+    display: block;
+    border-color: $base2;
+    color: $base;
+    &.selected {
+      background: color($blue lightest);
+      &, & .suggestion-context { color: $back; }
+    }
+  }
+  li:first-child .option { border: none; }
+  .suggestion-context {
+    float: right;
+    color: $base1;
+    &:empty { display: none; }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Helpers
+
+%post-form-action {
+  .action-post {
+    @extend %icon;
+    @extend %icon-bubble-forward;
+    &:before {
+      display: none;
+      margin-right: .4em;
+      @include breakpoint(55em) { display: inline; }
+    }
+  }
+}
+
+%post-form-type {
+  @extend %button;
+  @extend %icon;
+  @include button-color($base3 lighter);
+  @include button-size(.25 $smallpx);
+  @include border-right-radius(0);
+  border-right: 0;
+
+  &:before { @include adjust-leading-to(.75); }
+}
+
+@mixin post-form-type($width: 3, $icon: user) {
+  @extend %post-form-type;
+  @extend %icon-#{$icon};
+  float: left;
+  width: columns($width,$center);
+}
+
+@mixin post-form-input($width: 3) {
+  @extend %tokens-input;
+  float: right;
+  width: space($center - $width, $center);
+  margin-left: rhythm(-1);
+}
+
+// ---------------------------------------------------------------------------
+// Messages
+
+.message-form { @extend %post-form-action; }
+
+.to-field {
+  .tokens-type { @include post-form-type; }
+  .tokens-input {
+    @include post-form-input(4);
+    float: left;
+    margin-left: 0;
+    margin-right: rhythm(-1);
+  }
+}
+
+.no-to-field {
+  color: $red;
+  font-weight: bold;
+  strong { text-transform: uppercase; }
+}
+
+// ---------------------------------------------------------------------------
+// Notes
+
+.note-form {
+  @extend %post-form-action;
+  .action-post { @extend %icon-pushpin; }
+  .token-status { @extend %icon-attachment; }
+}
+
+.attach-type { @include post-form-type(4, attachment); }
+.attach-input { @include post-form-input(4); }
+.attach-value {
+  @include gone;
+  &.ie-fix-active {
+    @include adjust-font-size-to($xlargepx);
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: columns(4,$center);
+    height: rhythm(1.5);
+    overflow: hidden;
+    cursor: pointer;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Conversations
+
+.conversation-form {
+  @extend %post-form-action;
+  .action-post { @extend %icon-bubbles; }
+}
+
+.convo-type-field {
+  @extend %select-buttons;
+  @include adjust-font-size-to($smallpx);
+  float: left;
+  width: columns(4, $center);
+
+  .option {
+    width: 50%;
+    &:last-child .radio-type {
+      @include border-right-radius(0);
+      border-right: 0;
+    }
+  }
+  .radio-type {
+    @extend %icon;
+    width: 100%;
+    &:before { @include adjust-leading-to(.75)}
+  }
+
+  [for*="call"] { @extend %icon-phone; }
+  [for*="meeting"] { @extend %icon-users; }
+}
+
+.with-field {
+  &:after { display: none; }
+  .tokens-type { @include gone; }
+  .tokens-input {
+    @include post-form-input(4);
+    @include trailer(.5);
+  }
+}

@@ -84,6 +84,14 @@ STATICFILES_FINDERS = [
     'compressor.finders.CompressorFinder',
 ]
 
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+# Example: "/home/media/media.lawrence.com/media/"
+MEDIA_ROOT = join(BASE_PATH, 'uploads')
+
+# URL that handles the media served from MEDIA_ROOT.
+# Example: "http://media.lawrence.com/media/"
+MEDIA_URL = '/uploads/'
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '-p++6p5gmhd_3wz43nl5&_6==tz_d*^yaf)@w@=w)3o!glwixd'
 

@@ -27,3 +27,31 @@ $half-break     : floor($break-cols/2);
 $left           : 4;
 $right          : 4;
 $center         : $break-cols - $left - $right;
+
+// ---------------------------------------------------------------------------
+// OOCSS lastUnit
+
+@mixin lastUnit {
+  display: table-cell;
+  float: none;
+  width: auto;
+
+  @if $legacy-support-for-ie6 or $legacy-support-for-ie7 {
+    *display: block;
+    *zoom: 1;
+    @if $legacy-support-for-ie6 {
+      _position: relative;
+      _left: -3px;
+      _margin-right: -3px;
+    }
+  }
+
+  &:after {
+    content: " . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
+    visibility: hidden;
+    clear: both;
+    height: 0 !important;
+    display: block;
+    line-height: 0;
+  }
+}

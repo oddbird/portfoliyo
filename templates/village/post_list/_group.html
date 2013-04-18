@@ -14,14 +14,8 @@
 
 {% block village-feed-attrs %} data-posts-url="{% url 'api_dispatch_list' resource_name='bulkpost' api_name='v1' %}"{% if group.is_all %} data-post-url="{% url 'create_post' %}"{% else %} data-post-url="{% url 'create_post' group_id=group.id %}"{% endif %}{% endblock %}
 {% block empty-feed %}There are no posts in this group.{% endblock %}
-{% block addpost-classes %}group-posts{% endblock %}
-{% block howto-target %}{% endblock %}
-{% block sms-target %}
-  <p class="group-targeting">
-    Group messages will be sent to <strong>all family members</strong> in the group.
-  </p>
-  {% endblock %}
-{% block form-action %}{% if group.is_all %}{% url 'create_post' %}{% else %}{% url 'create_post' group_id=group.id %}{% endif %}{% endblock %}
+
+{% block addposts %}{% include "village/post_list/forms/_group.html" %}{% endblock %}
 
 {% block info-bar %}
   {% include "village/post_list/_group_info.html" %}

@@ -80,6 +80,13 @@ def test_post2dict(db):
 
     assert serializers.post2dict(post, extra="extra") == {
         'post_id': post.id,
+        'type': {
+            'name': 'message',
+            'is_message': True,
+            'is_note': False,
+            'is_meeting': False,
+            'is_call': False,
+            },
         'author_id': rel.elder.id,
         'student_id': rel.student.id,
         'author': 'The Teacher',
@@ -92,26 +99,27 @@ def test_post2dict(db):
         'sms': False,
         'to_sms': False,
         'from_sms': False,
-        'sms_recipients': '',
-        'plural_sms': '',
-        'num_sms_recipients': 0,
+        'sms_recipients': [],
+        'present': [],
+        'attachments': [],
         }
 
 
 @pytest.mark.timezone(timezone.utc)
 @pytest.mark.mock_now(2013, 2, 11, tzinfo=timezone.utc)
-def test_post2dict_timestamp_display(mock_now):
+def test_post2dict_timestamp_display(db, mock_now):
     """Natural date for a nearby date."""
-    post = factories.PostFactory.build(
+    post = factories.PostFactory.create(
         timestamp=datetime.datetime(2013, 2, 11, 8, 32, tzinfo=timezone.utc))
+
     assert serializers.post2dict(post)['timestamp_display'] == u"8:32am"
 
 
 
-def test_post2dict_no_author():
+def test_post2dict_no_author(db):
     """Special handling for author-less (automated) posts."""
-    student = factories.ProfileFactory.build()
-    post = factories.PostFactory.build(author=None, student=student)
+    student = factories.ProfileFactory.create()
+    post = factories.PostFactory.create(author=None, student=student)
 
     d = serializers.post2dict(post)
 
