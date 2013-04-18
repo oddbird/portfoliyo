@@ -118,8 +118,11 @@ var PYO = (function (PYO, $) {
                 form.submit(function (event) {
                     var fileInputs = form.find('.attach-value');
                     var attachments = fileInputs.filter(function () { return $(this).val() !== ''; });
+                    // Only continue with ajax-submit if there are no attachments, or if using a modern browser
+                    // that supports the html5 file api: http://caniuse.com/#feat=xhr2
                     if (!attachments.length || ($("<input type='file'/>").get(0).files !== undefined && window.FormData !== undefined)) {
                         event.preventDefault();
+                        // Only submit the form if there is relevant info (text, attachment, or person connected with a meeting/call)
                         if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
                             var text = $.trim(textarea.val());
                             var author_sequence_id = (PYO.authorPosts || 0) + 1;
@@ -134,9 +137,12 @@ var PYO = (function (PYO, $) {
                             var attachmentsArr = [];
                             var postObj, post;
 
-                            // Prevent notes without attachments from submitting as multipart/form-data
+                            // Prevent form enctype from overriding jquery.form.js plugin,
+                            // which intelligently switches to multipart if file inputs exist.
+                            // Otherwise notes without attachments submit as multipart/form-data.
                             form.removeAttr('enctype');
 
+                            // Create local arrays with names of sms-targets and people present for a call/meeting.
                             if (elderInputs.length) {
                                 elderInputs.each(function () {
                                     var el = $(this);
@@ -154,6 +160,7 @@ var PYO = (function (PYO, $) {
                                 smsTargetArr = smsTargetArr.concat(namesArr);
                             }
 
+                            // Create local array of attachment filenames.
                             if (attachments.length) {
                                 attachments.each(function () {
                                     var el = $(this);
@@ -169,7 +176,9 @@ var PYO = (function (PYO, $) {
 
                             postObj = PYO.createPostObj(text, author_sequence_id, count, smsTargetArr, presentArr, attachmentsArr, type);
                             post = PYO.addPost(postObj);
+                            // Store serialized form data for resubmission later if the ajax call fails.
                             post.data('post-data', form.formSerialize());
+                            // Disable empty file inputs to prevent jquery.form.js from switching to multipart/form-data.
                             fileInputs.filter(function () { return $(this).val() === ''; }).attr('disabled', true);
 
                             if (url) {
@@ -195,6 +204,8 @@ var PYO = (function (PYO, $) {
                             PYO.addPostTimeout(post, author_sequence_id, count);
                         }
                     } else {
+                        // If there are attachments, and browser doesn't support xhr 2,
+                        // set the form enctype to multipart/form-data before submitting form.
                         form.attr('enctype', 'multipart/form-data');
                         form.loadingOverlay();
                         return true;
@@ -321,6 +332,7 @@ var PYO = (function (PYO, $) {
 
             container.customAutocomplete(options);
 
+            // Clicking anywhere in the fake textarea gives focus to the text input
             container.on('click', '.tokens-input', function () {
                 container.find('input.token-value').focus();
             });
@@ -337,12 +349,14 @@ var PYO = (function (PYO, $) {
             var inputList = form.find('.attach-field');
             var textarea = form.find('.post-textfield textarea');
 
+            // Clicking on a label performs a click on the corresponding input
             label.click(function (e) {
                 e.preventDefault();
                 var id = $(this).attr('for');
                 form.find('#' + id).click();
             });
 
+            // When a file-input changes, add a new attachment token and a new (empty) file input
             form.on('change', 'input.attach-value', function () {
                 var input = $(this);
                 var inputID = input.attr('id');
@@ -366,10 +380,12 @@ var PYO = (function (PYO, $) {
                 newInput = PYO.tpl('note_attachment_input', { index: counter });
                 attachmentList.append(token);
                 inputList.append(newInput);
+                // Update the label to point to the new (empty) file input
                 label.attr('for', 'attach-file-' + counter);
                 textarea.focus();
             });
 
+            // When a token is clicked, remove the token and the connected file input
             attachmentList.on('change', '.token-toggle.new', function () {
                 var input = $(this);
                 if (input.prop('checked') === false) {
@@ -381,6 +397,8 @@ var PYO = (function (PYO, $) {
                 }
             });
 
+            // Clicking anywhere in the fake textarea (except on a token, or in ie9)
+            // triggers the file input.
             attachmentList.on('click', function (e) {
                 if (e.target === this && !$('html').hasClass('ie9')) {
                     label.click();
