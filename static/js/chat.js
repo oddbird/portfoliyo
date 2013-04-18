@@ -335,6 +335,7 @@ var PYO = (function (PYO, $) {
             var label = form.find('label.attach-type');
             var attachmentList = form.find('.attach-input');
             var inputList = form.find('.attach-field');
+            var textarea = form.find('.post-textfield textarea');
 
             label.click(function (e) {
                 e.preventDefault();
@@ -366,6 +367,7 @@ var PYO = (function (PYO, $) {
                 attachmentList.append(token);
                 inputList.append(newInput);
                 label.attr('for', 'attach-file-' + counter);
+                textarea.focus();
             });
 
             attachmentList.on('change', '.token-toggle.new', function () {
