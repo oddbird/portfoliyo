@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.conf.urls.defaults import patterns, url, include
+from django.conf.urls.static import static
 from django.views.generic.simple import direct_to_template
 
 from .. import admin
@@ -33,6 +34,10 @@ urlpatterns = patterns(
     url(r'^api/', include(api_v1.urls)),
     url(r'^', include('portfoliyo.view.users.urls')),
     )
+
+
+if settings.DEBUG and "://" not in settings.MEDIA_URL:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 if settings.DEBUG_URLS: # pragma: no cover

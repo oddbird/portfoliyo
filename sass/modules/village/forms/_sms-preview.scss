@@ -1,0 +1,33 @@
+// ---------------------------------------------------------------------------
+// SMS preview
+
+.sms-preview {
+  @include transition(all 300ms);
+  background: $base2;
+  border-color: $base1;
+  text-align: left;
+  h3 {
+    display: inline;
+    font-weight: bold;
+  }
+  .form-actions &, .invite-family-fieldset & {
+    @include adjust-font-size-to($smallpx);
+    @include rhythm-margins;
+    @include rhythm-borders(1px,.5);
+  }
+  .invite-family-fieldset & {
+    margin-bottom: 0;
+    background: rgba($base3,.5);
+  }
+  .formfield-help & {
+    max-height: rhythm(0);
+    overflow: hidden;
+    font-style: normal;
+    color: $base;
+    input:focus ~ &, .changed & {
+      @include rhythm-margins(.5);
+      @include rhythm-borders(1px,.5);
+      max-height: rhythm(4);
+    }
+  }
+}

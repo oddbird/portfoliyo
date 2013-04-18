@@ -10,8 +10,7 @@
 
 {% block village-feed-attrs %} data-post-url="{% url 'create_post' student_id=student.id %}" data-posts-url="{% url 'api_dispatch_list' resource_name='post' api_name='v1' %}"{% endblock %}
 
-{% block addpost-classes %}village-posts{% endblock %}
-{% block form-action %}{% url 'create_post' student_id=student.id %}{% endblock %}
+{% block addposts %}{% include "village/post_list/forms/_village.html" %}{% endblock %}
 
 {% block info-bar %}
 {% include "village/post_list/_village_info.html" %}

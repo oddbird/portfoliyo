@@ -5,10 +5,28 @@ from django.conf import settings
 import pybars
 
 
-compiler = pybars.Compiler()
-
-
 JSTEMPLATES_PATH = os.path.join(settings.BASE_PATH, 'jstemplates')
+
+
+# helpers
+
+def join(this, ary, joiner):
+    return joiner.join(ary)
+
+
+def plural(this, options, ary):
+    if len(ary) == 1:
+        return options['inverse'](this)
+    return options['fn'](this)
+
+
+helpers = {
+    u'join': join,
+    u'plural': plural,
+    }
+
+
+compiler = pybars.Compiler()
 
 
 def _compile(template_name):
@@ -21,3 +39,7 @@ def _compile(template_name):
 templates = {
     'posts': _compile('posts'),
     }
+
+
+def render(template_name, context):
+    return templates[template_name](context, helpers=helpers)

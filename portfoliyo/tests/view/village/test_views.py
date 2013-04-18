@@ -703,7 +703,8 @@ class TestGetPosts(object):
         post1 = factories.PostFactory.create()
         post2 = factories.PostFactory.create(student=post1.student)
 
-        with utils.assert_num_queries(2):
+        # one for posts, one for attachments, one for post-count
+        with utils.assert_num_queries(3):
             self.assert_posts(
                 views._get_posts(profile, student=post1.student),
                 [post1, post2],
@@ -715,6 +716,7 @@ class TestGetPosts(object):
         post1 = factories.BulkPostFactory.create()
         post2 = factories.BulkPostFactory.create(group=post1.group)
 
+        # one for posts, one for post-count
         with utils.assert_num_queries(2):
             self.assert_posts(
                 views._get_posts(post1.group.owner, group=post1.group),
@@ -809,24 +811,6 @@ class TestVillage(GroupContextTests):
         if student is None:
             student = factories.ProfileFactory.create()
         return reverse('village', kwargs=dict(student_id=student.id))
-
-
-    def test_instructions_only_if_never_posted(self, client):
-        "Posting instructions appear only if you've never posted."""
-        rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True, from_profile__has_posted=True)
-        newbie_rel = factories.RelationshipFactory.create(
-            from_profile__school_staff=True,
-            from_profile__has_posted=False,
-            to_profile=rel.student,
-            )
-
-        url = self.url(rel.student)
-        response = client.get(url, user=rel.elder.user)
-        newbie_response = client.get(url, user=newbie_rel.elder.user)
-
-        assert not len(response.html.findAll('ol', 'howto'))
-        assert len(newbie_response.html.findAll('ol', 'howto')) == 1
 
 
     @pytest.mark.parametrize('link_target', ['invite_teacher', 'invite_family'])
@@ -1005,7 +989,11 @@ class TestCreatePost(object):
         rel = factories.RelationshipFactory.create()
 
         response = no_csrf_client.post(
-            self.url(rel.student), {'text': 'foo'}, user=rel.elder.user)
+            self.url(rel.student),
+            {'text': 'foo'},
+            user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
 
         assert response.json['success']
         posts = response.json['objects']
@@ -1027,6 +1015,7 @@ class TestCreatePost(object):
             {'text': 'foo'},
             user=elder.user,
             status=404,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
 
@@ -1040,6 +1029,7 @@ class TestCreatePost(object):
             {'text': 'foo'},
             user=elder.user,
             status=404,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
 
@@ -1070,14 +1060,40 @@ class TestCreatePost(object):
         with mock.patch(target) as mock_send_sms:
             response = no_csrf_client.post(
                 self.url(rel.student),
-                {'text': 'foo', 'sms-target': [other_rel.elder.id]},
+                {'text': 'foo', 'elder': [other_rel.elder.id]},
                 user=rel.elder.user,
+                headers={'X-Requested-With': 'XMLHttpRequest'},
                 )
 
         post = response.json['objects'][0]
-        assert post['sms_recipients'] == 'Recipient'
+        assert post['sms_recipients'] == ['Recipient']
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
+
+
+    def test_create_meeting_with_present_and_extra_names(self, no_csrf_client):
+        """Creates a meeting post with present profiles and extra names."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__name="Mr. Doe")
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student, from_profile__name='Mr. Ed')
+
+        response = no_csrf_client.post(
+            self.url(rel.student),
+            {
+                'text': 'foo',
+                'type': 'meeting',
+                'elder': other_rel.from_profile_id,
+                'extra_name': ['Foo', 'Bar'],
+                },
+            user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
+
+        post = response.json['objects'][0]
+        assert post['type']['is_meeting']
+        assert post['present'] == ['Mr. Ed', 'Foo', 'Bar']
+        assert not post['sms_recipients']
 
 
     def test_group_post_sms_all(self, no_csrf_client):
@@ -1100,10 +1116,11 @@ class TestCreatePost(object):
                 self.url(group=group),
                 {'text': 'foo'},
                 user=rel.elder.user,
+                headers={'X-Requested-With': 'XMLHttpRequest'},
                 )
 
         post = response.json['objects'][0]
-        assert post['sms_recipients'] == 'Recipient'
+        assert post['sms_recipients'] == ['Recipient']
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
 
@@ -1126,10 +1143,11 @@ class TestCreatePost(object):
                 self.url(),
                 {'text': 'foo'},
                 user=rel.elder.user,
+                headers={'X-Requested-With': 'XMLHttpRequest'},
                 )
 
         post = response.json['objects'][0]
-        assert post['sms_recipients'] == 'Recipient'
+        assert post['sms_recipients'] == ['Recipient']
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "foo --Mr. Doe")
 
@@ -1139,7 +1157,11 @@ class TestCreatePost(object):
         group = factories.GroupFactory.create()
 
         response = no_csrf_client.post(
-            self.url(group=group), {'text': 'foo'}, user=group.owner.user)
+            self.url(group=group),
+            {'text': 'foo'},
+            user=group.owner.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
 
         assert response.json['success']
         posts = response.json['objects']
@@ -1155,7 +1177,10 @@ class TestCreatePost(object):
         elder = factories.ProfileFactory.create()
 
         response = no_csrf_client.post(
-            self.url(), {'text': 'foo'}, user=elder.user)
+            self.url(), {'text': 'foo'},
+            user=elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
 
         assert response.json['success']
         posts = response.json['objects']
@@ -1174,6 +1199,7 @@ class TestCreatePost(object):
             self.url(rel.student),
             {'text': 'foo', 'author_sequence_id': '5'},
             user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             )
 
         assert response.json['objects'][0]['author_sequence_id'] == '5'
@@ -1188,6 +1214,7 @@ class TestCreatePost(object):
             self.url(rel.student),
             {'text': 'f' * 160},
             user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
             status=400,
             )
 
@@ -1196,6 +1223,68 @@ class TestCreatePost(object):
             'success': False,
             'error': "Posts are limited to 153 characters."
             }
+
+
+    def test_note_with_attachments(self, no_csrf_client):
+        """Can create a note type post with attachments."""
+        rel = factories.RelationshipFactory.create()
+
+        response = no_csrf_client.post(
+            self.url(rel.student),
+            {'text': "Today I will fly!", 'type': 'note'},
+            upload_files=[
+                ('attachment', 'some1.txt', 'some1 text'),
+                ('attachment', 'some2.txt', 'some2 text'),
+                ],
+            user=rel.elder.user,
+            headers={'X-Requested-With': 'XMLHttpRequest'},
+            )
+
+        assert response.json['success']
+        assert response.json['objects'][0]['type']['is_note']
+        attachments = response.json['objects'][0]['attachments']
+        attachment_filenames = set([a['name'] for a in attachments])
+        assert attachment_filenames == {'some1.txt', 'some2.txt'}
+
+
+    def test_note_no_ajax(self, client):
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+
+        village_url = reverse(
+            'village', kwargs={'student_id': rel.to_profile_id})
+
+        form = client.get(
+            village_url, user=rel.elder.user).forms['note-posting-form']
+
+        form['text'] = "Today I will fly!"
+
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(village_url)
+        assert model.Post.objects.get().original_text == "Today I will fly!"
+
+
+    def test_maintain_group_context(self, client):
+        """Can take ?group=id to maintain group nav context on redirect."""
+        rel = factories.RelationshipFactory.create(
+            from_profile__school_staff=True)
+        group = factories.GroupFactory.create(owner=rel.elder)
+        group.students.add(rel.student)
+
+        village_url = reverse(
+            'village',
+            kwargs={'student_id': rel.to_profile_id},
+            ) + "?group=%s" % group.id
+
+        form = client.get(
+            village_url, user=rel.elder.user).forms['note-posting-form']
+
+        form['text'] = "Today I will fly!"
+
+        response = form.submit(status=302)
+
+        assert response['Location'] == utils.location(village_url)
 
 
 

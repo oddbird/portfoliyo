@@ -30,8 +30,14 @@
 
 <div class="posting">
   <p>
-    <span class="select-village">Select a student village</span>
-    <a href="{% if group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="group-post-link ajax-link">Or send a group message</a>
+    <span class="select-village">
+      <span aria-hidden="true" data-icon="&#xe01e;"></span>
+      Select a student village
+    </span>
+    <a href="{% if group.is_all %}{% url 'all_students' %}{% else %}{% url 'group' group_id=group.id %}{% endif %}" class="group-post-link ajax-link">
+      <span aria-hidden="true" data-icon="&#xe018;"></span>
+      Or send a group message
+    </a>
   </p>
 </div>
 

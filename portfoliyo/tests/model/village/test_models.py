@@ -1,6 +1,8 @@
 """Tests for village models and related functions."""
 import datetime
+import os.path
 
+from django.core.files.uploadedfile import SimpleUploadedFile
 from django.core.urlresolvers import reverse
 from django.utils.timezone import utc
 import mock
@@ -51,6 +53,7 @@ class TestPostCreate(object):
         assert post.author == rel.elder
         assert post.student == rel.student
         assert post.relationship == rel
+        assert post.post_type == 'message'
         assert post.timestamp == mock_now.return_value
         assert post.original_text == 'Foo\n'
         assert post.html_text == 'Foo<br>'
@@ -131,7 +134,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         mock_send_sms.assert_called_with(
@@ -196,7 +199,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids='all',
+                profile_ids='all',
                 )
 
         mock_send_sms.assert_called_with(
@@ -237,7 +240,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         mock_send_sms.assert_called_with(
@@ -262,7 +265,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         assert mock_send_sms.call_count == 0
@@ -286,7 +289,7 @@ class TestPostCreate(object):
                 rel1.elder,
                 rel1.student,
                 'Hey dad',
-                sms_profile_ids=[rel2.elder.id],
+                profile_ids=[rel2.elder.id],
                 )
 
         assert mock_send_sms.call_count == 0
@@ -365,6 +368,71 @@ class TestPostCreate(object):
             models.Post.create(rel.elder, rel.student, "Hello")
 
         assert mock_notify_post.call_count == 0
+
+
+    @pytest.mark.parametrize('post_type', ['meeting', 'call'])
+    def test_meeting_call(self, post_type, db):
+        """Can create a meeting/call-type post."""
+        rel = factories.RelationshipFactory.create()
+        other_rel = factories.RelationshipFactory.create(
+            to_profile=rel.student,
+            description="father",
+            from_profile__name="Mr. Doe",
+            )
+
+        p = models.Post.create(
+            rel.elder,
+            rel.student,
+            "Had a good chat.",
+            post_type=post_type,
+            profile_ids=[other_rel.elder.id],
+            )
+
+        assert p.post_type == post_type
+        assert p.meta['present'] == [
+            {'id': other_rel.elder.id, 'role': 'father', 'name': "Mr. Doe"}]
+
+
+    def test_note(self, db):
+        """Can create a note-type post."""
+        rel = factories.RelationshipFactory.create()
+
+        p = models.Post.create(
+            rel.elder,
+            rel.student,
+            "Stood on my head today.",
+            post_type='note',
+            )
+
+        assert p.post_type == 'note'
+
+
+    def test_note_with_attachment(self, db):
+        """Can create a note-type post with an attachment."""
+        rel = factories.RelationshipFactory.create()
+
+        p = models.Post.create(
+            rel.elder,
+            rel.student,
+            "Stood on my head today.",
+            post_type='note',
+            attachments=[SimpleUploadedFile('test.txt', 'some text')],
+            )
+
+        assert p.post_type == 'note'
+        assert os.path.basename(
+            p.attachments.get().attachment.name) == 'test.txt'
+
+
+    def test_no_mutable_meta_default(self, db):
+        """Default meta value is not shared between instances."""
+        rel = factories.RelationshipFactory.create()
+
+        p = models.Post.create(rel.elder, rel.student, 'yo', post_type='note')
+        p.meta['foo'] = 'bar'
+
+        p2 = models.Post.create(rel.elder, rel.student, 'yo2', post_type='note')
+        assert p2.meta == {}
 
 
 
@@ -479,7 +547,7 @@ class TestBulkPost(object):
         target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.BulkPost.create(
-                rel1.elder, group, 'Hey dad', sms_profile_ids=[rel2.elder.id])
+                rel1.elder, group, 'Hey dad', profile_ids=[rel2.elder.id])
 
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "Hey dad --John Doe")
@@ -514,7 +582,7 @@ class TestBulkPost(object):
         target = 'portfoliyo.model.village.models.tasks.send_sms.delay'
         with mock.patch(target) as mock_send_sms:
             post = models.BulkPost.create(
-                rel1.elder, group, 'Hey dad', sms_profile_ids='all')
+                rel1.elder, group, 'Hey dad', profile_ids='all')
 
         mock_send_sms.assert_called_with(
             "+13216540987", "+13336660000", "Hey dad --John Doe")
