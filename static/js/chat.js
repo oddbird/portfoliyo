@@ -380,7 +380,7 @@ var PYO = (function (PYO, $) {
             });
 
             attachmentList.on('click', function (e) {
-                if (e.target === this && !$('body').hasClass('ie9')) {
+                if (e.target === this && !$('html').hasClass('ie9')) {
                     label.click();
                 }
             });
