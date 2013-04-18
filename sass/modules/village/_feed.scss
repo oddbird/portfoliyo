@@ -141,20 +141,20 @@ $post-icon-width: rhythm(2.5);
     text-align: center;
   }
 
-  .pending & { @extend %icon-bubble-dots; }
+  [class*="post-type-"].pending & { @extend %icon-bubble-dots; }
 
-  .post-type-call & {
+  [class~="post-type-call"] & {
     @extend %icon-phone;
     &:before { background: color($magenta dark); }
   }
 
-  .post-type-meeting & {
+  [class~="post-type-meeting"] & {
     @extend %icon-users;
     &:before { background: color($magenta dark); }
   }
 }
 
-.post-type-message, .post-type-note {
+[class~="post-type-message"], [class~="post-type-note"] {
   &.mine.sms .post-header {
     @extend %icon-bubble-forward;
     &:before { background: color($green dark); }

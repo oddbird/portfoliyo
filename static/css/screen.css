@@ -262,7 +262,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01d";
 }
 
-.icon-group:before, .convo-type-field [for*="meeting"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .post-type-meeting .post-header:before {
+.icon-group:before, .convo-type-field [for*="meeting"]:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, [class~="post-type-meeting"] .post-header:before {
   content: "\e01b";
 }
 
@@ -270,23 +270,23 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01c";
 }
 
-.feedstatus.has-more:before, .pending .post-header:before {
+.feedstatus.has-more:before, [class*="post-type-"].pending .post-header:before {
   content: "\e022";
 }
 
-.post-type-tabs .radio-type[for*="message"]:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .post-type-message.mine.sms .post-header:before, .post-type-note.mine.sms .post-header:before {
+.post-type-tabs .radio-type[for*="message"]:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, [class~="post-type-message"].mine.sms .post-header:before, [class~="post-type-note"].mine.sms .post-header:before {
   content: "\e018";
 }
 
-.post-type-message.from-sms .post-header:before, .post-type-note.from-sms .post-header:before {
+[class~="post-type-message"].from-sms .post-header:before, [class~="post-type-note"].from-sms .post-header:before {
   content: "\e019";
 }
 
-.note-form .token-status:before, .attach-type:before, .post-type-message.no-sms.has-attachment .post-header:before, .post-type-note.no-sms.has-attachment .post-header:before, .attachments a:before {
+.note-form .token-status:before, .attach-type:before, [class~="post-type-message"].no-sms.has-attachment .post-header:before, [class~="post-type-note"].no-sms.has-attachment .post-header:before, .attachments a:before {
   content: "\e023";
 }
 
-.convo-type-field [for*="call"]:before, .post-type-call .post-header:before {
+.convo-type-field [for*="call"]:before, [class~="post-type-call"] .post-header:before {
   content: "\e024";
 }
 
@@ -294,7 +294,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e025";
 }
 
-.post-type-tabs .radio-type[for*="note"]:before, .note-form .action-post:before, .post-type-message.no-sms .post-header:before, .post-type-note.no-sms .post-header:before {
+.post-type-tabs .radio-type[for*="note"]:before, .note-form .action-post:before, [class~="post-type-message"].no-sms .post-header:before, [class~="post-type-note"].no-sms .post-header:before {
   content: "\f08d";
 }
 
@@ -4188,17 +4188,17 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-size: 23px;
   text-align: center;
 }
-.post-type-call .post-header:before {
+[class~="post-type-call"] .post-header:before {
   background: #a82b68;
 }
-.post-type-meeting .post-header:before {
+[class~="post-type-meeting"] .post-header:before {
   background: #a82b68;
 }
 
-.post-type-message.mine.sms .post-header:before, .post-type-note.mine.sms .post-header:before {
+[class~="post-type-message"].mine.sms .post-header:before, [class~="post-type-note"].mine.sms .post-header:before {
   background: #6a7a00;
 }
-.post-type-message.no-sms .post-header:before, .post-type-note.no-sms .post-header:before {
+[class~="post-type-message"].no-sms .post-header:before, [class~="post-type-note"].no-sms .post-header:before {
   background: #a23c11;
 }
 
