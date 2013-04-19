@@ -1,3 +1,7 @@
+v0.5.3:
+  date: 2013-02-23
+  changes:
+    - use MIT licensed zlib-browserify instead of unlicensed gzip-js
 v0.5.2:
   date: 2013-01-24
   changes:

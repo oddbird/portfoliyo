@@ -103,13 +103,13 @@ exports.lib = {
     'use strict';
     test.expect(1);
 
-    var max = '1234567890';
-    var min = '12345';
+    var max = new Array(100).join('blah ');
+    var min = max.replace(/\s+/g, '');
 
     var actual = '';
     var expected = [
-      'Uncompressed size: 10 bytes.',
-      'Compressed size: 25 bytes gzipped (5 bytes minified).'
+      'Uncompressed size: 495 bytes.',
+      'Compressed size: 36 bytes gzipped (396 bytes minified).'
     ].join(grunt.util.linefeed) + grunt.util.linefeed;
 
     grunt.util.hooker.hook(grunt.log, 'writeln', {

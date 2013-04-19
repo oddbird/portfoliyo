@@ -79,7 +79,7 @@ exports.init = function(grunt) {
 
   // Log min and max info
   function minMaxGzip(src) {
-    return src ? require('gzip-js').zip(src, {}) : '';
+    return src ? require('zlib-browserify').gzipSync(src) : '';
   }
   exports.minMaxInfo = function(min, max) {
     var gzipSize = String(minMaxGzip(min).length);
