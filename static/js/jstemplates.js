@@ -614,10 +614,18 @@ function program25(depth0,data) {
 function program27(depth0,data) {
   
   var buffer = "", stack1, stack2;
-  buffer += "\n      <p class=\"recipients\">\n        ";
+  buffer += "\n      <div class=\"post-meta\">\n        <input type=\"checkbox\" id=\"recipients-toggle-";
+  if (stack1 = helpers.post_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.post_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\">\n        <label for=\"recipients-toggle-";
+  if (stack1 = helpers.post_id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
+  else { stack1 = depth0.post_id; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
+  buffer += escapeExpression(stack1)
+    + "\" title=\"more information\">show/hide</label>\n        <p class=\"recipients\">\n        ";
   stack2 = helpers['if'].call(depth0, ((stack1 = depth0.type),stack1 == null || stack1 === false ? stack1 : stack1.is_message), {hash:{},inverse:self.program(43, program43, data),fn:self.program(28, program28, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n      </p>\n    ";
+  buffer += "\n        </p>\n      </div>\n    ";
   return buffer;
   }
 function program28(depth0,data) {
