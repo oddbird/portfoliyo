@@ -12,26 +12,28 @@
 
     {{#unless type.is_note}}
       <div class="post-meta">
-        <input type="checkbox" id="recipients-toggle-{{post_id}}">
-        <label for="recipients-toggle-{{post_id}}" title="more information">show/hide</label>
-        <p class="recipients">
         {{#if type.is_message}}
           {{#if sms}}
+            <input type="checkbox" id="recipients-toggle-{{post_id}}">
+            <label for="recipients-toggle-{{post_id}}" title="more information">show/hide</label>
+            <p class="recipients">
             {{#if pending}}
               {{#if to_sms}}Sending text{{#plural sms_recipients}}s{{/plural}}{{#if sms_recipients}} to {{join sms_recipients ", "}}{{/if}}.{{/if}}
             {{else}}
               {{#if from_sms}}Sent from phone. {{/if}}
               {{#if to_sms}}Text{{#plural sms_recipients}}s{{/plural}} sent{{#if sms_recipients}} to {{join sms_recipients ", "}}{{/if}}.{{/if}}
             {{/if}}
+            </p>
           {{else}}
             No text messages sent.
           {{/if}}
         {{else}}
           {{#if present}}
-            With {{join present ", "}}.
+            <input type="checkbox" id="recipients-toggle-{{post_id}}">
+            <label for="recipients-toggle-{{post_id}}" title="more information">show/hide</label>
+            <p class="recipients">With {{join present ", "}}.</p>
           {{/if}}
         {{/if}}
-        </p>
       </div>
     {{/unless}}
   </header>
