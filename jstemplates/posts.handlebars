@@ -11,7 +11,10 @@
     </h3>
 
     {{#unless type.is_note}}
-      <p class="recipients">
+      <div class="post-meta">
+        <input type="checkbox" id="recipients-toggle-{{post_id}}">
+        <label for="recipients-toggle-{{post_id}}" title="more information">show/hide</label>
+        <p class="recipients">
         {{#if type.is_message}}
           {{#if sms}}
             {{#if pending}}
@@ -28,7 +31,8 @@
             With {{join present ", "}}.
           {{/if}}
         {{/if}}
-      </p>
+        </p>
+      </div>
     {{/unless}}
   </header>
 

@@ -10,7 +10,7 @@
   left: -9999px;
 }
 
-.parent-signup [id*="sms-signup"], .parent-signup [id*="form-signup"], .post-add-form [id*="message-form"], .post-add-form [id*="note-form"], .post-add-form [id*="conversation-form"] {
+.parent-signup [id*="sms-signup"], .parent-signup [id*="form-signup"], .post-add-form [id*="message-form"], .post-add-form [id*="note-form"], .post-add-form [id*="conversation-form"], .post [id*="recipients"] {
   position: absolute;
   top: -9999px;
   left: -9999px;
@@ -206,7 +206,11 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e008";
 }
 
-.formselect:before, .ui-multiselect [class*="ui-icon-triangle"]:before {
+.post-meta [for*="toggle"]:before {
+  content: "\e00b";
+}
+
+.formselect:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .post .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post [for*="sms-signup"]:before, .post .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post [for*="form-signup"]:before, .post .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs .post [for*="message-form"]:before, .post .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs .post [for*="note-form"]:before, .post .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs .post [for*="conversation-form"]:before, .post [id*="recipients"]:checked ~ [for*="recipients"]:before {
   content: "\e00c";
 }
 
@@ -303,31 +307,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .message.success:before, .message.warning:before, .message.error:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
-.group-posts .translate-link, .bulk-tokens a, .action-showgroups, #messages .close, .village-posts .translate-link, .token-status {
+.group-posts .translate-link, .bulk-tokens a, .action-showgroups, #messages .close, .village-posts .translate-link, .token-status, .post-meta [for*="toggle"] {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.group-posts .translate-link:focus, .bulk-tokens a:focus, .action-showgroups:focus, #messages .close:focus, .village-posts .translate-link:focus, .token-status:focus {
+.group-posts .translate-link:focus, .bulk-tokens a:focus, .action-showgroups:focus, #messages .close:focus, .village-posts .translate-link:focus, .token-status:focus, .post-meta [for*="toggle"]:focus {
   outline: 0;
 }
-.group-posts .translate-link:focus:before, .bulk-tokens a:focus:before, .action-showgroups:focus:before, #messages .close:focus:before, .village-posts .translate-link:focus:before, .token-status:focus:before {
+.group-posts .translate-link:focus:before, .bulk-tokens a:focus:before, .action-showgroups:focus:before, #messages .close:focus:before, .village-posts .translate-link:focus:before, .token-status:focus:before, .post-meta [for*="toggle"]:focus:before {
   outline: 1px dotted;
 }
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -413,7 +417,7 @@ a:focus, a:hover, a:active {
   color: #eeb2c1;
 }
 
-.meta .settingslink, .post-type-tabs .radio-type, .additems [class*="additem-"], .byline, .recipients, .elder-title {
+.meta .settingslink, .post-type-tabs .radio-type, .additems [class*="additem-"], .post .parent-signup [class*="sms-signup"], .parent-signup .post [class*="sms-signup"], .post .parent-signup [class*="form-signup"], .parent-signup .post [class*="form-signup"], .post .post-add-form [class*="message-form"], .post-add-form .post [class*="message-form"], .post .post-add-form [class*="note-form"], .post-add-form .post [class*="note-form"], .post .post-add-form [class*="conversation-form"], .post-add-form .post [class*="conversation-form"], .post [class*="recipients"], .byline, .elder-title {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -1019,7 +1023,7 @@ button {
   color: #657b83;
 }
 
-.country_code-field .radio-value:checked + .radio-type, .convo-type-field .radio-value:checked + .radio-type, .parent-signup .tab-options .radio-type .radio-value:checked + .radio-type, .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs .parent-signup [for*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs .parent-signup [for*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs .parent-signup [for*="conversation-form"] {
+.country_code-field .radio-value:checked + .radio-type, .convo-type-field .radio-value:checked + .radio-type, .parent-signup .tab-options .radio-type .radio-value:checked + .radio-type, .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs .parent-signup [for*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs .parent-signup [for*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs .parent-signup [for*="conversation-form"], .parent-signup .post [id*="recipients"]:checked ~ [for*="recipients"], .post .parent-signup [id*="recipients"]:checked ~ [for*="recipients"] {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
@@ -2910,10 +2914,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   color: #e8f2a6;
 }
 
-.parent-signup [class*="sms-signup"], .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="message-form"], .post-add-form .parent-signup [class*="message-form"], .parent-signup .post-add-form [class*="note-form"], .post-add-form .parent-signup [class*="note-form"], .parent-signup .post-add-form [class*="conversation-form"], .post-add-form .parent-signup [class*="conversation-form"] {
+.parent-signup [class*="sms-signup"], .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="message-form"], .post-add-form .parent-signup [class*="message-form"], .parent-signup .post-add-form [class*="note-form"], .post-add-form .parent-signup [class*="note-form"], .parent-signup .post-add-form [class*="conversation-form"], .post-add-form .parent-signup [class*="conversation-form"], .parent-signup .post [class*="recipients"], .post .parent-signup [class*="recipients"] {
   display: none;
 }
-.parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .parent-signup [id*="message-form"]:checked ~ [class*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .parent-signup [id*="note-form"]:checked ~ [class*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .parent-signup [id*="conversation-form"]:checked ~ [class*="conversation-form"], .parent-signup .post-add-form.group-posts .message-form, .post-add-form.group-posts .parent-signup .message-form {
+.parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .parent-signup [id*="message-form"]:checked ~ [class*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .parent-signup [id*="note-form"]:checked ~ [class*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .parent-signup [id*="conversation-form"]:checked ~ [class*="conversation-form"], .parent-signup .post-add-form.group-posts .message-form, .post-add-form.group-posts .parent-signup .message-form, .parent-signup .post [id*="recipients"]:checked ~ [class*="recipients"], .post .parent-signup [id*="recipients"]:checked ~ [class*="recipients"] {
   display: block;
 }
 .parent-signup .tab-options {
@@ -3142,28 +3146,28 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .post-add-form.group-posts {
   background: #bcd0d4;
 }
-.post-add-form .parent-signup [class*="sms-signup"], .parent-signup .post-add-form [class*="sms-signup"], .post-add-form .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="form-signup"], .post-add-form [class*="message-form"], .post-add-form [class*="note-form"], .post-add-form [class*="conversation-form"] {
+.post-add-form .parent-signup [class*="sms-signup"], .parent-signup .post-add-form [class*="sms-signup"], .post-add-form .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="form-signup"], .post-add-form [class*="message-form"], .post-add-form [class*="note-form"], .post-add-form [class*="conversation-form"], .post-add-form .post [class*="recipients"], .post .post-add-form [class*="recipients"] {
   visibility: hidden;
   float: left;
   width: 100%;
   margin-right: -100%;
 }
-.post-add-form .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .post-add-form [id*="sms-signup"]:checked ~ [class*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="form-signup"]:checked ~ [class*="form-signup"], .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form.group-posts .message-form {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .post-add-form [id*="sms-signup"]:checked ~ [class*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="form-signup"]:checked ~ [class*="form-signup"], .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form.group-posts .message-form, .post-add-form .post [id*="recipients"]:checked ~ [class*="recipients"], .post .post-add-form [id*="recipients"]:checked ~ [class*="recipients"] {
   position: relative;
   visibility: visible;
   z-index: 10;
 }
-.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="form-signup"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"] {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="form-signup"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"], .post-add-form .post [id*="recipients"]:checked ~ [for*="recipients"], .post .post-add-form [id*="recipients"]:checked ~ [for*="recipients"] {
   background: none;
   border-bottom-color: transparent;
 }
-.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="message"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="message"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="message"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="message"][for*="conversation-form"]:before {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="message"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="message"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="message"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="message"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="message"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="message"][for*="recipients"]:before {
   color: #6a7a00;
 }
-.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="note"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="note"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="note"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="note"][for*="conversation-form"]:before {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="note"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="note"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="note"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="note"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="note"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="note"][for*="recipients"]:before {
   color: #a23c11;
 }
-.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="conversation"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="conversation"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="conversation-form"]:before {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="conversation"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="conversation"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="conversation"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="conversation"][for*="recipients"]:before {
   color: #a82b68;
 }
 .post-add-form .form-actions {
@@ -4140,6 +4144,14 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: table;
   clear: both;
 }
+.post .parent-signup [class*="sms-signup"], .parent-signup .post [class*="sms-signup"], .post .parent-signup [class*="form-signup"], .parent-signup .post [class*="form-signup"], .post .post-add-form [class*="message-form"], .post-add-form .post [class*="message-form"], .post .post-add-form [class*="note-form"], .post-add-form .post [class*="note-form"], .post .post-add-form [class*="conversation-form"], .post-add-form .post [class*="conversation-form"], .post [class*="recipients"] {
+  max-width: 75%;
+}
+.post .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .post [id*="sms-signup"]:checked ~ [class*="sms-signup"], .post .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post [id*="form-signup"]:checked ~ [class*="form-signup"], .post .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .post [id*="message-form"]:checked ~ [class*="message-form"], .post .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .post [id*="note-form"]:checked ~ [class*="note-form"], .post .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .post [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post .post-add-form.group-posts .message-form, .post-add-form.group-posts .post .message-form, .post [id*="recipients"]:checked ~ [class*="recipients"] {
+  max-width: 100%;
+  white-space: normal;
+  color: #657b83;
+}
 .post:last-child {
   margin-bottom: 0px;
   margin-bottom: 0rem;
@@ -4225,13 +4237,26 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-weight: normal;
 }
 
-.recipients {
+.post-meta {
   font-size: 12px;
   font-size: 0.66667rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  padding-right: 50%;
-  color: #93a1a1;
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+  color: rgba(101, 123, 131, 0.75);
+}
+.post-meta [for*="toggle"] {
+  float: left;
+  margin-right: .4em;
+}
+.post-meta [for*="toggle"]:link, .post-meta [for*="toggle"]:visited {
+  color: #268bd2;
+  text-decoration: none;
+}
+.post-meta [for*="toggle"]:focus, .post-meta [for*="toggle"]:hover, .post-meta [for*="toggle"]:active {
+  color: #d33682;
+  cursor: pointer;
 }
 
 .attachments ul {
@@ -4253,8 +4278,8 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   font-size: 9px;
 }
 .attachments + .post-text {
-  margin-top: 6px;
-  margin-top: 0.31944rem;
+  margin-top: 12px;
+  margin-top: 0.63889rem;
 }
 
 .feed-error {

@@ -97,6 +97,20 @@ $loading-grad   : color($blue lightest,.325) 25%,
   border-bottom: 1px solid color($base2,.5);
   margin-bottom: -1px;
 
+  %hide-tab-content {
+    @extend %ellipsis;
+    max-width: 75%;
+  }
+  %show-tab-content {
+    max-width: 100%;
+    white-space: normal;
+    color: $base;
+  }
+  %active-tab-title {
+    @extend %icon-arrow-down;
+  }
+  @include tabs(recipients);
+
   &:last-child {
     @include trailer(0);
     border: 0;
@@ -188,11 +202,17 @@ $post-icon-width: rhythm(2.5);
   .old & { font-weight: normal; }
 }
 
-.recipients {
+.post-meta {
   @include adjust-font-size-to($xsmallpx);
-  @extend %ellipsis;
-  padding-right: 50%;
-  color: $base1;
+  @include trailer(.5);
+  color: color($base,.75);
+  [for*="toggle"] {
+    @extend %icon-replace;
+    @extend %icon-arrow-right;
+    @include link;
+    float: left;
+    margin-right: .4em;
+  }
 }
 
 .attachments {
@@ -204,7 +224,7 @@ $post-icon-width: rhythm(2.5);
     &:before { font-size: $xxxsmallpx; }
   }
 
-  + .post-text { @include leader(.25); }
+  + .post-text { @include leader(.5); }
 }
 
 // ---------------------------------------------------------------------------
