@@ -24,15 +24,21 @@
     </div>
 
     {% include "forms/_field.html" with field=form.country_code label="Country" %}
-    {% include "forms/_field.html" with field=form.school label="School or program" helptext="Don't see yours listed? <a href='#add-school' class='add-school-link'>Add a new one</a>." %}
 
-    <div class="fieldset add-school">
-      {{ form.addschool }}
-      {% include "forms/_field.html" with field=form.addschool_form.name label="School or program name" %}
-      {% include "forms/_field.html" with field=form.addschool_form.postcode label="Postal code" helptext="Don't want to add a school or program? <a href='#school-field' class='select-school-link'>Return to the full list</a>." %}
+
+    <input type="checkbox" id="school-network-toggle">
+    <div class="school-network">
+      {% include "forms/_field.html" with field=form.school label="School or program" helptext="Don't see yours listed? <a href='#add-school' class='add-school-link'>Add a new one</a>." %}
+
+      <div class="fieldset add-school">
+        {{ form.addschool }}
+        {% include "forms/_field.html" with field=form.addschool_form.name label="School or program name" %}
+        {% include "forms/_field.html" with field=form.addschool_form.postcode label="Postal code" helptext="Don't want to add a school or program? <a href='#school-field' class='select-school-link'>Return to the full list</a>." %}
+      </div>
     </div>
 
     <div class="form-actions">
+      <p class="toggle-info"><label for="school-network-toggle">Optionally join a school/program network.</label> or</p>
       <button type="submit" class="go-network">Continue</button>
     </div>
   </form>
