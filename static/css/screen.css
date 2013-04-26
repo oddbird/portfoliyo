@@ -1693,8 +1693,8 @@ button {
 
 .intro {
   overflow: hidden;
-  margin-bottom: 46px;
-  margin-bottom: 2.55556rem;
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
   text-align: center;
 }
 
@@ -1836,6 +1836,40 @@ button {
     line-height: 3.19444rem;
   }
 }
+.schools {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  text-align: center;
+}
+.schools img {
+  max-width: 100%;
+}
+@media (max-width: 39rem) {
+  .schools img:nth-child(4) ~ img {
+    display: none;
+  }
+}
+
+.schools-title {
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  padding: 0.31944rem 1.27778rem;
+  background-color: #eee8d5;
+  text-align: left;
+}
+@media (min-width: 43.875em) {
+  .schools-title {
+    font-size: 23px;
+    font-size: 1.27778rem;
+    line-height: 35px;
+    line-height: 1.91667rem;
+  }
+}
+
 .features {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
