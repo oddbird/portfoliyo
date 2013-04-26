@@ -1873,10 +1873,10 @@ button {
 }
 @media (min-width: 43.875em) {
   .feature [data-icon] {
-    font-size: 107px;
-    font-size: 5.94444rem;
-    line-height: 115px;
-    line-height: 6.38889rem;
+    font-size: 72px;
+    font-size: 4rem;
+    line-height: 81px;
+    line-height: 4.47222rem;
   }
 }
 @media (min-width: 20em) {
@@ -1891,18 +1891,9 @@ button {
     padding-right: 25.80645%;
   }
 }
-@media (min-width: 43.875em) {
+@media (min-width: 43.875em) and (max-width: 65.25em) {
   .feature {
-    margin-top: 23px;
-    margin-top: 1.27778rem;
-    margin-bottom: 23px;
-    margin-bottom: 1.27778rem;
-    float: left;
     width: 33.33333%;
-    padding: 0 1.27778rem 1.27778rem;
-    margin-right: -100%;
-    border-bottom: 0;
-    border-right: 2px dashed #fdf6e3;
   }
   .feature:nth-child(2) {
     margin-left: 33.33333%;
@@ -1921,6 +1912,37 @@ button {
     border: 0;
   }
 }
+@media (min-width: 43.875em) {
+  .feature {
+    margin-top: 23px;
+    margin-top: 1.27778rem;
+    margin-bottom: 23px;
+    margin-bottom: 1.27778rem;
+    float: left;
+    margin-right: -100%;
+    padding: 0 1.27778rem 1.27778rem;
+    border-bottom: 0;
+    border-right: 2px dashed #fdf6e3;
+  }
+}
+@media (min-width: 65.25em) {
+  .feature {
+    width: 20%;
+  }
+  .feature:nth-child(5n + 2) {
+    margin-left: 20%;
+  }
+  .feature:nth-child(5n + 3) {
+    margin-left: 40%;
+  }
+  .feature:nth-child(5n + 4) {
+    margin-left: 60%;
+  }
+  .feature:nth-child(5n + 5) {
+    margin-left: 80%;
+    border: 0;
+  }
+}
 
 .feature-title {
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
@@ -1928,6 +1950,7 @@ button {
   margin-bottom: 0.63889rem;
   font-weight: bold;
   text-align: center;
+  white-space: normal;
 }
 
 .feature-details {
