@@ -8,7 +8,7 @@
 
 .intro {
   @include clearfix;
-  @include trailer(2);
+  @include trailer(.5);
   text-align: center;
 }
 
@@ -77,4 +77,28 @@
 
 @include at-breakpoint($break-cols) {
   .tagline { @include adjust-font-size-to($xlargepx); }
+}
+
+// ---------------------------------------------------------------------------
+// Schools
+
+.schools {
+  @include trailer(1);
+  text-align: center;
+  img { max-width: 100%; }
+  @include breakpoint(max-width $break-width) {
+    img:nth-child(4) ~ img { display: none; }
+  }
+}
+
+.schools-title {
+  @include trailer(1);
+  @include serif;
+  @include inset;
+  padding: rhythm(.25) rhythm(1);
+  background-color: $base2;
+  text-align: left;
+  @include at-breakpoint($break) {
+    @include adjust-font-size-to($medpx);
+  }
 }

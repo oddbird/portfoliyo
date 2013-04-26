@@ -1,4 +1,19 @@
-.register { @extend %simple-form; }
+.register {
+  @extend %simple-form;
+
+  %hide-tab-content { display: none; }
+  %show-tab-content { display: block; }
+  @include tabs(school-network);
+
+  [id*="toggle"]:checked ~ .form-actions .toggle-info {
+    display: none;
+  }
+  [for*="toggle"] {
+    @include adjust-font-size-to($smallpx);
+    @include link;
+    color: $alt;
+  }
+}
 
 .email_notifications-field {
   @extend %radio-check-defaults;
