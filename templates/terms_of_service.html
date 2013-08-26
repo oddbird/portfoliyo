@@ -2,9 +2,9 @@
 
 {% block maincontent %}
 <article class="terms-of-service" id="tos">
-  <h2 class="pagehead">Terms of Service for K Network, owner of the Portfoliyo Web Application</h2>
+  <h2 class="pagehead">Terms of Service for The K Network, owner of the Portfoliyo Web Application</h2>
   <p>
-    Thank you for your interest in Portfoliyo, own and run by K Network, a 501(c)(3) organization (“<em>Portfoliyo</em>”), which operates the web site and online services located at <a href="{% url home %}">http://www.portfoliyo.org</a> and all related domains, websites, services an¬d pages owned or operated by Portfoliyo (collectively the “<em>Website</em>”). The following Terms of Service for the Website is a legal contract (collectively, the “<em>Agreement</em>”) between you, i.e. an individual subscriber, customer, member, or user (“You”), and Portfoliyo regarding your use of the Website. Visitors and users of the Website are referred to individually as “User” and collectively as “Users”.
+    Thank you for your interest in Portfoliyo, owned and run by The K Network, a 501(c)(3) organization (“<em>Portfoliyo</em>”), which operates the web site and online services located at <a href="{% url home %}">http://www.portfoliyo.org</a> and all related domains, websites, services an¬d pages owned or operated by Portfoliyo (collectively the “<em>Website</em>”). The following Terms of Service for the Website is a legal contract (collectively, the “<em>Agreement</em>”) between you, i.e. an individual subscriber, customer, member, or user (“You”), and Portfoliyo regarding your use of the Website. Visitors and users of the Website are referred to individually as “User” and collectively as “Users”.
   </p>
 
   <p>
@@ -16,7 +16,7 @@
     <ol>
       <li><a href="#eligibility">Eligibility</a></li>
       <li><a href="#privacy_notice">Privacy Notice</a></li>
-      <li><a href="#additional_terms">Additional Terms; Other Guidelines</a></li>
+      <li><a href="#other_guidelines">Other Guidelines</a></li>
       <li><a href="#modification_of_the_agreement">Modification of the Agreement</a></li>
       <li><a href="#submissions_license_grant">Your Submissions License Grant; Representations and Warranties</a></li>
       <li><a href="#content">Content on the Website</a></li>
@@ -53,14 +53,17 @@
     </li>
 
     <li>
-      <h3 id="additional_terms">Additional Terms; Other Guidelines</h3>
+      <h3 id="other_guidelines">Other Guidelines</h3>
       <ol>
+        {% comment %}
+        @@@ needs api terms
         <li>
           <h4>Additional Terms</h4>
           <p>
-            Users who utilize any of Portfoliyo’s APIs are bound by the API terms of service (“<em>API Terms</em>”). Portfoliyo's <a href="#">{# @@@ link to api terms #}API Terms</a> are hereby incorporated into this Agreement.
+            Users who utilize any of Portfoliyo’s APIs are bound by the API terms of service (“<em>API Terms</em>”). Portfoliyo's <a href="#">API Terms</a> are hereby incorporated into this Agreement.
           </p>
         </li>
+        {% endcomment %}
         <li>
           <h4>Other Guidelines</h4>
           <p>
@@ -74,7 +77,7 @@
     <li>
       <h3 id="modification_of_the_agreement">Modification of the Agreement</h3>
       <p>
-        You acknowledge that Portfoliyo shall have the right, at its sole discretion, to modify, add or remove any terms or conditions of this Agreement without notice or liability to you. Any changes to this Agreement shall be effective immediately following the posting of such changes on the Website. The most recent version of this Agreement may always be found at <a href="{% url terms_of_service %}">@@@ http://www.portfoliyo.org</a>. You agree to review this Agreement from time to time and agree that any subsequent access or use by you of this Website following changes to this Agreement shall constitute your acceptance of all such changes.
+        You acknowledge that Portfoliyo shall have the right, at its sole discretion, to modify, add or remove any terms or conditions of this Agreement without notice or liability to you. Any changes to this Agreement shall be effective immediately following the posting of such changes on the Website. The most recent version of this Agreement may always be found at <a href="{% url terms_of_service %}">http://www.portfoliyo.org/terms</a>. You agree to review this Agreement from time to time and agree that any subsequent access or use by you of this Website following changes to this Agreement shall constitute your acceptance of all such changes.
       </p>
       <a href="#tos" class="top-link">Back to Top</a>
     </li>
@@ -130,7 +133,7 @@
     <li>
       <h3 id="dmca">Digital Millennium Copyright Act</h3>
       <p>
-        It is Portfoliyo’s policy to respond to notices of alleged copyright infringement that comply with the Digital Millennium Copyright Act. For more information, please go to Portfoliyo’s <a href="#">{# @@@ link #}DMCA Notification Guidelines</a>. Portfoliyo will promptly terminate without notice your access to the Website if You are determined by Portfoliyo to be a “repeat infringer.” A repeat infringer is a User who has been notified by Portfoliyo of infringing activity violations more than twice and/or who has had a User Posting or any other user-submitted content removed from the Website more than twice.
+        It is Portfoliyo’s policy to respond to notices of alleged copyright infringement that comply with the Digital Millennium Copyright Act. {# @@@ need dmca notification guidelines: For more information, please go to Portfoliyo’s <a href="#">DMCA Notification Guidelines</a>. #}Portfoliyo will promptly terminate without notice your access to the Website if You are determined by Portfoliyo to be a “repeat infringer.” A repeat infringer is a User who has been notified by Portfoliyo of infringing activity violations more than twice and/or who has had a User Posting or any other user-submitted content removed from the Website more than twice.
       </p>
       <a href="#tos" class="top-link">Back to Top</a>
     </li>
@@ -514,7 +517,7 @@
         <li>
           <h4>Disclosures</h4>
           <p>
-            The Website is hosted in the United States, and the services provided hereunder are offered by Portfoliyo: @@@ ADDRESS <span class="email">support(put the 'at' sign here)theknetwork.org</span>
+            The Website is hosted in the United States, and the services provided hereunder are offered by Portfoliyo: 75 Arbor Road, Suite L, Menlo Park, CA 94025 USA, <span class="email">support(put the 'at' sign here)theknetwork.org</span>
           </p>
         </li>
       </ol>
