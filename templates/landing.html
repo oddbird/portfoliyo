@@ -1,133 +1,168 @@
 {% extends "base_site.html" %}
-{% load compress %}
+
+{% block bodyclasses %}village-landing{% endblock bodyclasses %}
 
 {% block brand %}
-<span class="wordmark">
-  <b>Portfoliyo</b>
-  Village
-</span>
+<span class="wordmark">Portfoliyo</span>
 {% endblock brand %}
 
-{% block metanav %}
-<nav class="main-login">
-  <a href="{% url login %}" class="login-link">Login</a>
-  {% include "users/_login_form.html" with form=login_form %}
-</nav>
-{% endblock metanav %}
+{% block maincontent %}
+<article class="landing">
 
-{% block content %}
-{% include "messages_ui/_messages.html" %}
-<article class="village-landing">
+  {% include "_ie-warning.html" %}
 
+  {# Introduction ------------------------------------- #}
   <section class="intro">
-    <h2 class="tagline">
-      It takes a village to raise a child. <b>Keep the village connected.</b>
-    </h2>
-
-    <ul class="summary">
-      <li>Built <strong>for teachers</strong>, <strong>by teachers</strong>.</li>
-      <li>Use your computer to <strong>text parents</strong> in seconds.</li>
-      <li><strong>Parents respond</strong> using any phone or computer.</li>
-      <li><strong>Keep a record</strong> of parent communication.</li>
-    </ul>
-
-    <figure class="screenshot">
-      <img src="{{ STATIC_URL }}images/screenshot.png" alt="Portfoliyo Village Screenshot">
-      <figcaption>
-        Contact Harsh Patel at
-        <span class="email">harsh(put the 'at' sign here)portfoliyo.org</span>
-        or  314-537-1024
-        for more information.
-      </figcaption>
+    <figure class="main-image">
+      <iframe src="https://player.vimeo.com/video/56562985?title=0&amp;byline=0&amp;portrait=0&amp;color=268bd2" width="624" height="351" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>
     </figure>
-
-    <section class="membership">
-      <h3 class="offer">Start your Portfoliyo village.</h3>
-      <p class="offernote">Free during beta!</p>
-      {% include "landing/_form.html" %}
-      <ul class="benefits">
-        <li>Immediate updates as we launch.</li>
-        <li>24/7 on-call help.</li>
-        <li>Discounted lifetime membership.</li>
-        <li>Help shape the future of the project.</li>
-      </ul>
-    </section>
+    <div class="intro-copy">
+      <h2 class="tagline">
+        <strong>Use your computer to text parents in&nbsp;seconds.</strong>
+        Free. Simple. Organized.
+      </h2>
+      <p class="action"><a href="{% url register %}" class="main-register-link">Get Started&nbsp;»</a></p>
+      <p class="admin">
+        Want to use Portfoliyo
+        for your entire school, organization, district, or state?
+        <a href="#" onClick="return SnapABug.startLink();">Contact us</a> for more information.
+      </p>
+    </div>
   </section>
 
-  <section class="team">
-  <div class="container">
+  {# Schools ------------------------------------- #}
+  <section class="schools">
+    <h3 class="schools-title">Schools already using Portfoliyo:</h3>
+    <img src="{{ STATIC_URL }}images/schools/Achievement_First.png" alt="Achievement First" />
+    <img src="{{ STATIC_URL }}images/schools/Democracy_Prep.png" alt="Democracy Prep" />
+    <img src="{{ STATIC_URL }}images/schools/Harlem_Village_Academies.png" alt="Harlem_Village_Academies" />
+    <img src="{{ STATIC_URL }}images/schools/Rocketship.png" alt="Rocketship" />
+    <img src="{{ STATIC_URL }}images/schools/Success_Academy.png" alt="Success_Academy" />
+    <img src="{{ STATIC_URL }}images/schools/UNO.png" alt="UNO" />
+  </section>
 
-    <article class="vcard pyo">
-      <h3><b class="fn org">Portfoliyo</b> is a tax-exempt 501(c)(3) nonprofit.</h3>
-      <p>
-        We're not trying to become millionaires,
-        we just want to make awesome products
-        for teachers, students, and parents.
-        Your donations are tax-deductible as allowed by law
-        (tax&nbsp;ID&nbsp;46-5167493).
+  {# Features ------------------------------------- #}
+  <section class="features">
+    <article class="feature signup-feature">
+      <span aria-hidden="true" data-icon="&#xe01c;"></span>
+      <h3 class="feature-title">Easy parent&nbsp;sign-up</h3>
+      <p class="feature-details">
+        Parents text your code from any phone to get started,
+        and Portfoliyo takes care of the&nbsp;rest.
       </p>
     </article>
 
+    <article class="feature twoway-feature">
+      <span aria-hidden="true" data-icon="&#xe01f;"></span>
+      <h3 class="feature-title">Two-way communication</h3>
+      <p class="feature-details">
+        Have one-on-one conversations with a parent,
+        or send updates to the entire&nbsp;class.
+      </p>
+    </article>
+
+    <article class="feature lang-feature">
+      <span aria-hidden="true" data-icon="&#xe027;"></span>
+      <h3 class="feature-title">Multiple languages</h3>
+      <p class="feature-details">
+        Communicate with every student's family
+        in their own&nbsp;language.
+      </p>
+    </article>
+
+    <article class="feature elders-feature">
+      <span aria-hidden="true" data-icon="&#xe01b;"></span>
+      <h3 class="feature-title">Work as a&nbsp;team</h3>
+      <p class="feature-details">
+        Invite other teachers
+        and family members,
+        to keep every child's village working&nbsp;together.
+      </p>
+    </article>
+
+    <article class="feature record-feature">
+      <span aria-hidden="true" data-icon="&#xe013;"></span>
+      <h3 class="feature-title">Simple, secure&nbsp;records</h3>
+      <p class="feature-details">
+        Keep safe & secure records of all parent communication,
+        without the hassle of paperwork.
+      </p>
+    </article>
+
+  </section>
+
+  {# Team ------------------------------------- #}
+  <section class="team">
     <article id="harsh" class="vcard dev">
       <h3 class="fn">Harsh Patel</h3>
-      <img src="{{ STATIC_URL }}images/landing/harsh.png" alt="" class="photo" />
       <p class="bio">
         Harsh is a former 5th and 8th grade teacher who loves inspiring kids to be
         creative, confident, and productive.
         His fridge is always stocked with hummus
-        and he will drop anything for a good game of frisbee.
+        and he will drop anything for a good game of&nbsp;frisbee.
       </p>
     </article>
 
     <article id="carl" class="vcard dev">
       <h3 class="fn">Carl Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/carl.png" alt="" class="photo" />
       <p class="bio">
         Carl is a coder, Pythonista, and Django core developer.
         When he’s not chasing a more elegant algorithm,
-        he chases frisbees, hockey pucks, and a five-year-old son.
+        he chases frisbees, hockey pucks, and a five-year-old&nbsp;son.
       </p>
     </article>
 
     <article id="peter" class="vcard dev">
       <h3 class="fn">Peter Kuperman</h3>
-      <img src="{{ STATIC_URL }}images/landing/peter.png" alt="" class="photo" />
       <p class="bio">
         Peter has a background in money management
         and loves to inspire the people around him to greater heights.
-        He goes by the title "Chef by Night",
-        which probably means he can cook.
+        He goes by the title “Chef by Night”,
+        which probably means he can&nbsp;cook.
       </p>
     </article>
 
     <article id="jonny" class="vcard dev">
       <h3 class="fn">Jonny Gerig Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/jonny.png" alt="" class="photo" />
       <p class="bio">
         Jonny
-        is a web developer
+        is a front-end developer,
+        ultimate frisbee D-line cutter,
         and occasional college philosophy professor.
-        He likes his frisbees thrown deep,
-        his students smart-alecky,
-        and his nephew chasing him around the house.
+        He likes complicated board games,
+        talkative students,
+        and the color&nbsp;green.
       </p>
     </article>
 
     <article id="eric" class="vcard dev">
       <h3 class="fn">Eric Meyer</h3>
-      <img src="{{ STATIC_URL }}images/landing/eric.png" alt="" class="photo" />
       <p class="bio">
         Eric
         is a multimedia artist,
         cousin, and uncle,
         with a special focus in
         co-creating silly stories
-        and re-enacting video games in the park.
+        and re-enacting video games in the&nbsp;park.
       </p>
     </article>
 
-  </div>
   </section>
-
 </article>
-{% endblock content %}
+{% endblock maincontent %}
+
+{% block intercom %}{% endblock %}
+
+{% block extrafooter %}
+<p class="nonprofit">
+  Portfoliyo is a tax-exempt 501(c)(3) nonprofit.
+  Your donations are tax-deductible
+  as allowed by law (tax ID&nbsp;46-5167493).
+</p>
+{% endblock extrafooter %}
+
+{% block extrajs %}
+{% include "_crazyegg.html" %}
+{% endblock %}
+
+{% block last %}{% endblock last %}

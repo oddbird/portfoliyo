@@ -1,43 +1,56 @@
+GIT
+  remote: git://github.com/chriseppstein/compass
+  revision: d1689f8a6519f2ffd8e991f45055576056153d1a
+  branch: master
+  specs:
+    compass (0.13.alpha.4.d1689f8)
+      chunky_png (~> 1.2)
+      listen (<= 0.9.9)
+      sass (~> 3.2.5)
+
+GIT
+  remote: git://github.com/ericam/accoutrement
+  revision: 0db3769371dbaf75ecc02d4731c066034be64e19
+  branch: master
+  specs:
+    accoutrement (0.0.5)
+      compass (>= 0.12.2)
+
+GIT
+  remote: git://github.com/ericam/susy
+  revision: 47cf7bb5447f2d01115ec5728e5b6694403528ae
+  branch: master
+  specs:
+    susy (1.0.8)
+      compass (>= 0.12.2)
+      sass (>= 3.2.0)
+
 GEM
   remote: http://rubygems.org/
   specs:
     breakpoint (1.3)
       compass (>= 0.12.1)
       sass (>= 3.2.0)
-    chunky_png (1.2.6)
-    compass (0.13.alpha.0)
-      chunky_png (~> 1.2)
-      fssm (>= 0.2.7)
-      sass (~> 3.2.0.alpha.93)
-    compass-css-arrow (0.0.3)
-      compass (>= 0.11)
-    compass-rgbapng (0.1.1)
-      chunky_png (>= 0.8.0)
-      compass (>= 0.10.0)
-    fssm (0.2.9)
-    modular-scale (1.0.2)
-      compass (>= 0.11.5)
-      sassy-math (>= 1.2)
-    sass (3.2.1)
-    sassy-buttons (0.1.4)
-      compass (>= 0.12.2)
+    chunky_png (1.2.8)
+    listen (0.7.3)
+    modular-scale (1.0.6)
+      compass (>= 0.12.1)
       sass (>= 3.2.0)
-    sassy-math (1.2)
+      sassy-math (>= 1.5)
+    rb-fsevent (0.9.3)
+    sass (3.2.7)
+    sassy-math (1.5)
       compass (~> 0.11)
-    susy (1.0.1)
-      compass (>= 0.12.2)
-      sass (>= 3.2.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  breakpoint (~> 1.2)
+  accoutrement!
+  breakpoint (~> 1.3)
   chunky_png (~> 1.2.6)
-  compass (~> 0.13.alpha.0)
-  compass-css-arrow (~> 0.0.3)
-  compass-rgbapng (~> 0.1.1)
+  compass!
   modular-scale (~> 1.0.2)
-  sass (~> 3.2.1)
-  sassy-buttons (~> 0.1.3)
-  susy (~> 1.0.1)
+  rb-fsevent (~> 0.9.1)
+  sass (~> 3.2.3)
+  susy!

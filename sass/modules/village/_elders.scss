@@ -1,65 +1,89 @@
 // ---------------------------------------------------------------------------
 // Village Elders
 
-.village-elders {
-  h2 { @extend %gone; }
-
-  .elder {
-    @extend %icon;
-    @extend %icon-record;
-    @include padding-leader(.25,$village-list-size);
-    @include trailing-border(1px,.25,$village-list-size);
-    @include bleed($village-bleed);
-    border-color: $base2;
-    &:before {
-      position: relative;
-      float: left;
-      color: $green;
-      z-index: 2;
-    }
-    &.offline { &:before { color: $yellow; } }
-    &.inactive {
-      @extend %icon-warning;
-      background: lighten($yellow,50);
-      &:before { color: $base1; }
-    }
-    &.mobile {
-      @extend %icon-phone;
-      &:before { color: $base; }
-    }
-    &.declined {
-      @extend %icon-x;
-      @include rgba-background(rgba($red,.125));
-      &:before { color: $red; }
-    }
-  }
-
-  .edit-elder {
-    #{$link} {
-      @extend %village-activenav;
-      @include bleed($village-bleed);
-      @include bleed(rhythm(.25,$village-list-size),top bottom);
-      position: relative;
-      display: block;
-    }
-    #{$focus} { background: $base2; }
-  }
-
-  .title, .fn {
-    @include ellipsis;
-    display: block;
-    margin-left: 1.5em;
-  }
-  .title { font-weight: bold; }
-  .fn { color: $base1; }
+%elder-listitem {
+  @include padding-leader(.25);
+  @include trailing-border(1px,.25);
+  padding-left: $box-padding;
+  padding-right: $box-padding*2 + rhythm(1);
+  position: relative;
+  display: block;
+  border-color: $base2;
 }
 
-.addelder-link {
-  @extend %village-addlink;
-  @include bleed($village-bleed);
-  @include trailer(.5,$village-list-size);
-  @include rhythm-borders(1px,.25,$village-list-size);
-  display: block;
+.elder-list {
+  height: 50%;
+  .itemlist { @include calc(height, '100% - 2rem', rhythm(6)); }
+}
+
+.elder-header {
+  @extend %elder-listitem;
+  @include pie-clearfix;
+  position: relative;
+  padding: $box-padding;
+  background: color($base3 lighter);
   border-color: $village-border-color;
-  padding-left: $village-bleed;
+  font-weight: bold;
+  .teachers & { @include leading-border(1px,.25); }
+}
+
+.additem-elder {
+  @extend %button;
+  @extend %icon;
+  @extend %icon-user-plus;
+  @include button-size;
+  @include button-color(color($green lightest));
+  float: right;
+  margin-left: $box-padding;
+  &.active {
+    @include inset;
+    background: $base01;
+    color: $base3;
+  }
+}
+
+.elder-title {
+  @extend %ellipsis;
+  @include padding-leader(.125);
+  margin-top: 1px;
+}
+
+.elder {
+  position: relative;
+
+  .title, .type { font-weight: bold; }
+  .fn, .value { color: $base1; }
+
+  .vcard {
+    @extend %elder-listitem;
+    @extend %village-activenav;
+    color: $base;
+
+    &:before {
+      position: absolute;
+      right: $box-padding;
+      width: rhythm(1);
+      text-align: center;
+      z-index: 5;
+    }
+
+    &.declined {
+      @extend %icon;
+      @extend %icon-warning;
+      background: color($red lightest);
+      &:before { color: color($red dark); }
+    }
+    &.inactive {
+      @extend %icon;
+      @extend %icon-warning;
+      padding-right: ($box-padding*2) + rhythm(1);
+      background: color($yellow lightest);
+      &:before { color: color($yellow dark); }
+    }
+    &.active {
+      background: $base01;
+      color: $base3;
+      &:before, .fn, .value { color: $base2; }
+    }
+  }
 }

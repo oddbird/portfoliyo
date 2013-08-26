@@ -1,0 +1,2 @@
+Hi! {% if student %}{{ student }}'s {% endif %}{{ inviter.role_in_context }}{% if inviter.name %}, {{ inviter.name }},{% endif %} will text you from this number.
+Text 'stop' any time if you don't want this.

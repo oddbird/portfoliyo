@@ -1,4 +1,6 @@
 {% extends "base_site.html" %}
+{% load widget_tweaks %}
+{% load url from future %}
 
 {% block maincontent %}
 
@@ -11,11 +13,23 @@
     {{ form.non_field_errors }}
 
     <div class="fieldset bio">
-      {% include "forms/_field.html" with field=form.name %}
-      {% include "forms/_field.html" with field=form.role label="Relation to student(s)" %}
+      {% include "forms/_field.html" with field=form.name label="Students call me..." %}
+      {% include "forms/_field.html" with field=form.role|attr:"placeholder:e.g. Math Teacher, Science Teacher, ELA Teacher, etc." label="I am their..." %}
+    </div>
+
+    <div class="fieldset notifications">
+      <p class="fieldset-header">Email me when...</p>
+
+      {% include "forms/_field.html" with field=form.notify_new_parent label="A parent signs up." %}
+      {% include "forms/_field.html" with field=form.notify_parent_text label="A parent sends a message." %}
+      {% include "forms/_field.html" with field=form.notify_teacher_post label="Another teacher sends a message." %}
+      {% include "forms/_field.html" with field=form.notify_added_to_village label="Another teacher adds me to a village." %}
+      {% include "forms/_field.html" with field=form.notify_joined_my_village label="Another teacher joins one of my villages." %}
+
     </div>
 
     <div class="form-actions">
+      <p><a href="{% url 'password_change' %}" class="changepassword-link">Change password</a> or</p>
       <button type="submit">Save changes</button>
     </div>
   </form>

@@ -10,3 +10,5 @@ django-pylibmc-sasl==0.2.4
 
 raven==2.0.6
 simplejson==2.6.1
+
+newrelic==1.8.0.13

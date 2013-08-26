@@ -1,0 +1,29 @@
+{% extends "village/invite_elder/_base.html" %}
+{% load url from future %}
+{% load widget_tweaks %}
+
+{% block form-action %}{% url 'invite_teacher' student_id=student.id %}{% if group %}?group={{ group.id }}{% endif %}{% endblock %}
+
+{% block form-id %}invite-teacher-form{% endblock %}
+
+{% block form-header %}
+  <span aria-hidden="true" class="icon-invite"></span>
+  Invite Teacher <b>of</b> {{ student }}
+{% endblock %}
+
+{% block form-fields %}
+  {% include "forms/_field.html" with field=form.email|attr:"placeholder: teacher@example.com" %}
+  {% include "forms/_field.html" with field=form.role|attr:"placeholder: e.g. 'Math Teacher', 'Science Teacher', etc." %}
+
+  <div class="fieldset relation-fieldset">
+    <p class="fieldset-help">
+      Select existing students and groups of students to associate with this teacher.
+    </p>
+    {% include "forms/_field.html" with field=form.groups %}
+    {% include "forms/_field.html" with field=form.students %}
+  </div>
+{% endblock %}
+
+{% block info-bar %}
+{% include "village/post_list/_village_info.html" with invite_teacher_active="true" %}
+{% endblock %}

@@ -2,156 +2,233 @@
 // Village Feed
 
 .village-feed {
+  position: relative;
+  height: 100%;
+  background: color($base3 lightest);
+}
+
+.feed-posts {
   @extend %overflow-y;
-  left: 0;
-  right: 0;
-  bottom: rhythm(3.5);
+  @include calc(height, '100% - #{rhythm(5.125)}');
 }
 
-$post-byline-cols : 2;
-$post-size        : $smallpx;
-$post-time-size   : $xsmallpx;
-$post-padding     : .25;
+$loading-angle  : -45deg;
+$loading-grad   : color($blue lightest,.325) 25%,
+                  color($blue lightest,0) 25%,
+                  color($blue lightest,0) 50%,
+                  color($blue lightest,.325) 50%,
+                  color($blue lightest,.325) 75%,
+                  color($blue lightest,0) 75%;
 
-.post {
-  @include pie-clearfix;
-  @include adjust-font-size-to($post-size);
-  @include trailing-border(1px, $post-padding, $post-size);
-  padding-left: gutter($center);
-  padding-right: gutter($center);
-  border-color: $base1;
-  .byline {
-    @include clearfix;
-    color: $base1;
-
-    h3, time { @include ellipsis; }
-    h3 {
-      float: left;
-      width: 50%;
-    }
-    b {
-      color: $base;
-      font-weight: bold;
-    }
-    time {
-     @include adjust-font-size-to($post-time-size, 1, $post-size);
-      float: right;
-      width: 49%;
-      text-align: right;
-    }
-  }
-
-  &.mine { background: lighten($blue,45); }
-  &.not-posted { background: lighten($red,45); }
-
-  .timeout {
-    @extend %error;
-    @include bleed(gutter($center));
-  }
+@include keyframes(loadfeed) {
+  0% { background-position: 0 0; }
+  100% { background-position: 4em 0; }
 }
 
-.post-text {
+.feedstatus {
   @extend %icon;
-  @include clearfix;
-  &:before { margin-right: 0; }
-  &.sms { @extend %icon-phone; }
-  &.no-sms { @extend %icon-no-phone; }
-}
+  @include serif;
+  @include text-shadow(white 0 1px 0);
+  @include background(color($base2,.5) repeat scroll);
+  @include transition(color 600ms);
+  @include inset;
+  display: block;
+  padding: 0;
+  border-bottom: 1px solid $base2;
+  color: color($base, .5);
+  text-align: center;
 
-.nametag {
-  @include border-radius(4px);
-  @include rgba-background(rgba($base1,.25));
-  display: inline-block;
-  padding: 0 .4em;
-  border: 1px solid $base01;
-  &.me {
-    background: $blue;
+  // more interesting messages
+  &.has-more, &.error { padding: rhythm(1); }
+
+  // no posts in village
+  &:last-child {
+    @extend %icon-bubble;
+    @include adjust-font-size-to($largepx);
+    @include padding-leader(4);
+    @include after("No posts in this village.");
+    height: 100%;
+    border: 0;
+    &:before {
+      @include adjust-font-size-to($xxlargepx);
+      display: block;
+    }
+  }
+
+  // more posts to load
+  &.has-more {
+    @extend %icon-bubble-dots;
+    @include after("Loading older posts...");
+    &.loading {
+      @include background-image(linear-gradient($loading-angle, $loading-grad...));
+      @include background-size(4em 4em);
+      @include animation(loadfeed 1.5s linear infinite both);
+      color: color($base, .75);
+    }
+  }
+
+  // backlog error
+  &.error {
+    @extend %icon-warning;
+    @include after("Error loading older posts. Scroll to retry.");
+    @include text-shadow($back 0 1px 0);
+    background: color($red);
     color: $base3;
   }
 }
 
-.getting-started {
-  @extend %type;
-  @include padding-leader;
-  @include trailing-border(1px, 1);
-  padding-left: gutter($center);
-  padding-right: gutter($center);
-  border-color: $base1;
-  background: lighten($base3,10);
-  h2 {
-    @include adjust-font-size-to($largepx);
-    @include trailer(1,$largepx);
-  }
-  li { @include padding-trailer(.25); }
-  :last-child { margin-bottom: 0; }
-  .mobile {
-    @extend %icon-replace;
-    @extend %icon-phone;
-    display: inline-block;
-  }
+// ---------------------------------------------------------------------------
+// Getting Started
+
+.feedhead {
+  @include serif;
+  @include adjust-font-size-to($medpx);
+  @include trailer(.5);
+  padding: 0 rhythm(.5);
 }
 
 // ---------------------------------------------------------------------------
-// Note Add Form
+// Posts
 
-$addnote-fontsize: $input-font-size;
+.post {
+  @include pie-clearfix;
+  @include adjust-font-size-to($smallpx);
+  padding: rhythm(.5);
+  border-bottom: 1px solid color($base2,.5);
+  margin-bottom: -1px;
 
-.post-add-form {
-  @include stretch-x;
-  bottom: 0;
-  padding: rhythm(.5) gutter();
-  border-top: 1px solid $base;
-  background: $base1;
+  %hide-tab-content {
+    @extend %ellipsis;
+    max-width: 75%;
+  }
+  %show-tab-content {
+    max-width: 100%;
+    white-space: normal;
+    color: $base;
+  }
+  %active-tab-title {
+    @extend %icon-arrow-down;
+  }
+  @include tabs(recipients);
 
-  .formfield {
+  &:last-child {
+    @include trailer(0);
+    border: 0;
+  }
+
+  &.mine {
+    background: color($blue lightest, .5);
+  }
+  .timeout {
+    @extend %error;
+    @extend %icon;
+    @extend %icon-warning;
+    @include trailer(.5);
+    @include border-radius($box-padding);
+    @include inset;
+    clear: both;
+    padding: $box-padding rhythm(1);
+    &:before { @include adjust-font-size-to($normpx); }
+  }
+}
+
+$post-icon-width: rhythm(2.5);
+
+.post-header, .post-body {
+  padding-left: $post-icon-width;
+}
+
+.post-header {
+  @extend %icon;
+  @extend %icon-bubble;
+  &:before {
+    @include border-radius($box-padding);
+    @include inset;
     float: left;
-    width: columns($center - 2, $center);
-    margin: 0;
-  }
-  textarea {
-    height: rhythm(2.5, $addnote-fontsize);
-    min-height: rhythm(2.5, $addnote-fontsize);
-    background: rgba(white,.75);
-    padding-left: rhythm(.5, $addnote-fontsize);
-    resize: none;
-  }
-  .charcount {
-    @include adjust-font-size-to($xsmallpx);
-    position: absolute;
-    right: .25em;
-    bottom: 0;
-    color: $base1;
-    &.overlimit { color: $red; }
+    width: rhythm(1);
+    height: rhythm(1.5);
+    margin-left: - $post-icon-width;
+    padding: rhythm(.5) rhythm(.5) 0;
+    background: $base;
+    color: $base3;
+    font-size: $medpx;
+    text-align: center;
   }
 
-  .form-actions {
-    clear: none;
-    float: right;
-    margin: 0;
-    width: space(2,$center);
+  [class*="post-type-"].pending & { @extend %icon-bubble-dots; }
+
+  [class~="post-type-call"] & {
+    @extend %icon-phone;
+    &:before { background: color($magenta dark); }
   }
-  button {
-    @include border-left-radius(0);
-    position: relative;
-    top: 1px;
-    padding: 0;
-    height: rhythm(2.5);
-    width: 100%;
-    text-transform: uppercase;
+
+  [class~="post-type-meeting"] & {
+    @extend %icon-users;
+    &:before { background: color($magenta dark); }
   }
+}
+
+[class~="post-type-message"], [class~="post-type-note"] {
+  &.mine.sms .post-header {
+    @extend %icon-bubble-forward;
+    &:before { background: color($green dark); }
+  }
+  &.from-sms  .post-header { @extend %icon-bubble-reply; }
+
+  &.no-sms  .post-header {
+    @extend %icon-pushpin;
+    &:before { background: color($orange dark); }
+  }
+
+  &.no-sms.has-attachment .post-header {
+    @extend %icon-attachment;
+  }
+}
+
+.byline {
+  @extend %ellipsis;
+  @include adjust-font-size-to($normpx);
+  @include serif;
+  font-weight: bold;
+  .old & { font-weight: normal; }
+}
+
+.pubdate {
+  @include cond;
+  float: right;
+  padding-left: rhythm(1);
+  color: $base1;
+  font-weight: bold;
+  .old & { font-weight: normal; }
+}
+
+.post-meta {
+  @include adjust-font-size-to($xsmallpx);
+  @include trailer(.5);
+  color: color($base,.75);
+  [for*="toggle"] {
+    @extend %icon-replace;
+    @extend %icon-arrow-right;
+    @include link;
+    float: left;
+    margin-right: .4em;
+  }
+}
+
+.attachments {
+  ul { @include inline-block-list; }
+  li { @extend .token-body; }
+  a {
+    @extend %icon;
+    @extend %icon-attachment;
+    &:before { font-size: $xxxsmallpx; }
+  }
+
+  + .post-text { @include leader(.5); }
 }
 
 // ---------------------------------------------------------------------------
 // Errors
-
-%error {
-  background: $red;
-  color: $base3;
-  a {
-    #{$link} { color: mix($base3, $alt, 65%); }
-    #{$focus} { color: mix($base3, $accent, 65%); }
-  }
-}
 
 .feed-error {
   @extend %error;

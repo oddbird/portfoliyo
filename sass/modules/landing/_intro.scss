@@ -1,0 +1,104 @@
+// ---------------------------------------------------------------------------
+// Landing Intro
+
+%landing-title {
+  @include serif;
+  @include adjust-font-size-to($medpx);
+}
+
+.intro {
+  @include clearfix;
+  @include trailer(.5);
+  text-align: center;
+}
+
+.main-image {
+  @include leader(1);
+  @include fluid-ratio;
+  position: relative;
+  overflow: hidden;
+  > * { border: 1px solid $base2; }
+}
+
+.intro-copy {
+  text-align: left;
+  p { @include trailer; }
+}
+
+.tagline {
+  @extend %landing-title;
+  @include adjust-font-size-to($largepx);
+  @include rhythm-margins(1);
+  @include transition(all 300ms);
+  strong {
+    display: block;
+    font-weight: bold;
+  }
+}
+
+.admin {
+  @include adjust-font-size-to($smallpx);
+  padding: 0 rhythm(1);
+}
+
+.main-register-link {
+  @extend %button;
+  @include serif;
+  @include adjust-font-size-to($largepx);
+  @include rhythm-borders(1px,.25,$largepx);
+  width: 100%;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+@include at-breakpoint(append($break, 50rem)) {
+  .main-image {
+    @include push(1);
+    @include fluid-ratio(16/9, columns(18));
+  }
+  .intro-copy {
+    @include push(1);
+    width: columns(18);
+  }
+}
+
+@include at-breakpoint(50rem $break-cols) {
+  .intro { @include padding-leader; }
+  .main-image {
+    @include span-columns(9);
+    @include fluid-ratio(16/9, columns(9));
+    @include pre(1);
+  }
+  .intro-copy {
+    @include span-columns(10 omega);
+    @include suffix(1);
+  }
+}
+
+@include at-breakpoint($break-cols) {
+  .tagline { @include adjust-font-size-to($xlargepx); }
+}
+
+// ---------------------------------------------------------------------------
+// Schools
+
+.schools {
+  @include trailer(1);
+  text-align: center;
+  img { max-width: 100%; }
+  @include breakpoint(max-width $break-width) {
+    img:nth-child(4) ~ img { display: none; }
+  }
+}
+
+.schools-title {
+  @include trailer(1);
+  @include serif;
+  @include inset;
+  padding: rhythm(.25) rhythm(1);
+  background-color: $base2;
+  text-align: left;
+  @include at-breakpoint($break) {
+    @include adjust-font-size-to($medpx);
+  }
+}

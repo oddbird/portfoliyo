@@ -1,11 +1,11 @@
 // ---------------------------------------------------------------------------
 // Village Nav
 
-$village-nav-bg       : $base2;
+$village-nav-title-bg : $blue;
 $village-nav-rhythm   : .25;
+$village-nav-action-color : $base03;
 
 %village-nav-span {
-  @include bleed($village-bleed, left);
   display: block;
   position: relative;
 }
@@ -14,94 +14,132 @@ $village-nav-rhythm   : .25;
   @extend %village-nav-span;
   @include trailing-border(1px,$village-nav-rhythm,$village-list-size);
   @include padding-leader($village-nav-rhythm,$village-list-size);
-  border-color: $village-border-color;
+  border-color: $base2;
+  padding-left: $box-padding;
 }
+
+.nav-error, .remove-error {
+  @extend %error;
+}
+
+// ---------------------------------------------------------------------------
+// Group Titles
+
+%grouptitle-button {
+  @extend %button-icon;
+  position: absolute;
+  top: $box-padding;
+}
+
+%navname {
+  padding: $box-padding;
+  font-weight: bold;
+  text-align: center;
+}
+
+.navtitle {
+  @include box-shadow($inset-color 0 0 $inset-size);
+  background: color($base3 lighter);
+  border-bottom: 1px solid $village-border-color;
+}
+
+.group-name a {
+  @extend %navname;
+  display: block;
+  padding: $box-padding rhythm(1.5) + $box-padding;
+  #{$link} { color: inherit; }
+  #{$focus} { color: $accent; }
+}
+
+.action-showgroups {
+  @extend %grouptitle-button;
+  @extend %icon-users-list;
+  @include button-color($base3);
+  left: $box-padding;
+}
+
+.groups-title { @extend %navname; }
+
+// ---------------------------------------------------------------------------
+// Lists
 
 .village-nav {
   @extend %village-lists;
-  @extend %overflow-y;
-  @include box-sizing(content-box);
-  left: - $village-bleed;
-  width: columns($left);
-  padding-left: $village-bleed;
+  @include span-columns($left);
+  position: relative;
+  height: 100%;
+  margin: 0;
   border: 1px solid $village-border-color;
   border-width: 0 1px;
-  z-index: 5;
+  z-index: 50;
+  .itemlist { height: rhythm(12); }
+  .students-list { @include calc(height, '100% - #{rhythm(4.25)}'); }
+  .groups-list { @include calc(height, '100% - #{rhythm(6)}'); }
+  .additems {
+    @include leading-border(1px,.25);
+    @include box-shadow($inset-color 0 0 $inset-size);
+    border-color: $village-border-color;
+  }
 }
 
-.student { position: relative; }
+.listitem {
+  position: relative;
+  &.student, &.group { @include sans; }
+}
 
-.select-student {
+.listitem-select {
   @extend %village-nav-item;
+  @extend %village-activenav;
   #{$link} {
-    @extend %village-activenav;
-    @include rgba-background(rgba($village-nav-bg,.25));
-    @include background(linear-gradient(bottom, rgba($village-nav-bg,.5), rgba($village-nav-bg,.125)));
+    .group & {
+      @extend %icon;
+      @extend %icon-users;
+    }
   }
-  #{$focus} {
-    @include rgba-background(rgba($village-nav-bg,.5));
-    @include background(linear-gradient(bottom, rgba($village-nav-bg,1), rgba($village-nav-bg,.25)));
-  }
+  #{$focus} { background: rgba($base2,.5); }
+
   .unread {
-    display: none; // @@@ TEMPORARY DISABLING
-    @include border-radius(30em);
-    @include box-shadow($back 0 0 1px);
+    @include adjust-font-size-to($smallpx,.75,$village-list-size);
+    @include border-radius(.25em);
+    @include box-shadow(rgba($back,.5) 0 0 3px inset);
     position: absolute;
-    right: $xxxsmallem;
-    min-width: rhythm(1,$village-list-size);
+    right: $xxxsmallpx;
+    top: rhythm(.375,$smallpx);
+    padding: 0 .25em;
     background: $accent;
     color: $base3;
-    font-weight: bold;
     text-align: center;
     &.zero { display: none; }
   }
-  &.editing {
-    @include mono;
-    background: lighten($orange,40);
-    min-height: rhythm(1,$village-list-size);
-  }
 }
 
-$student-action-color : $base03;
+// ----------------------------------------------------------------------------
+// Add Items
 
-.student-actions {
-  @include transition(all 400ms);
-  @include css-arrow(left, rhythm($village-nav-rhythm,$village-list-size), $student-action-color);
-  position: absolute;
-  top: -1px;
-  right: 0;
-  bottom: 0px;
-  padding: rhythm($village-nav-rhythm,$village-list-size);
-  padding-right: rhythm(.5,$village-list-size);
-  background: $student-action-color;
-  color: $back;
-  text-transform: capitalize;
+.additems {
+  padding: $box-padding*2;
 
-  @include opacity(0);
-  .student:hover & {
-    @include opacity(1);
-    z-index: 100;
+  [class*="additem-"] {
+    @extend %button;
+    @extend %icon;
+    @extend %icon-user-plus;
+    @extend %ellipsis;
+    @include button-color(color($green lightest));
+    margin: $box-padding 0;
+    display: block;
+    font-weight: bold;
+    text-align: left;
+
+    .additems & { margin: $box-padding*2 0; }
+
+    &[class*="-group"] {
+      @extend %icon-users-plus;
+      @include button-color(color($blue lightest));
+    }
+
+    &.active {
+      @include button-color(color($base));
+      @include inset;
+    }
   }
-
-  form { display: inline; }
-
-  a, button {
-    @extend %icon-replace;
-    @include link(light,true);
-    margin-left: rhythm(.5,$village-list-size);
-  }
-  .edit-student { @extend %icon-pencil; }
-  .save-student {
-    @extend %icon-checkmark;
-    display: none;
-  }
-  .remove-student { @extend %icon-trashcan; }
-}
-
-.addstudent-link {
-  @extend %village-nav-item;
-  @extend %village-addlink;
-  @extend %icon;
-  @extend %icon-plus;
-  font-weight: bold;
 }

@@ -1,52 +1,24 @@
 // ---------------------------------------------------------------------------
-// Links
-
-@mixin link($light: false, $non-links: false) {
-  $color  : if($light, $base3, $alt);
-  $hover  : if($light, mix($base3,$accent), $accent);
-  $link   : if($non-links, '&, ' + $link, $link);
-  #{$link} {
-    color: $color;
-    text-decoration: none;
-  }
-  #{$focus} { color: $hover; }
-}
-
-a {
-  &:hover, &:active { outline: none; }
-  @include link;
-}
-
-%camolink { @include camolink; }
-%ellipsis { @include ellipsis; }
-%gone { @include gone; }
-
-// ---------------------------------------------------------------------------
-// Images
-
-img {
-  @include box-shadow($back 0 0 .125em);
-  max-width: 100%;
-  border: 1px solid $back;
-}
-
-// ---------------------------------------------------------------------------
 // Typography
+
+%ellipsis { @include ellipsis; }
+
+.alt-text { @extend %alt-text; }
 
 %type {
 
   h1, h2, h3, h4, h5, h6 {
     @include serif;
-    font-weight: bold;
   }
 
   p, ul, ol {
-    @include trailer(1);
+    @include trailer;
   }
 
   ul {
     list-style: disc;
     padding-left: 1.5em;
+    &.radio-options { padding-left: 0; }
   }
 
   ol {

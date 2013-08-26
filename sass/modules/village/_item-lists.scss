@@ -1,0 +1,22 @@
+// ---------------------------------------------------------------------------
+// Village Lists
+
+$village-list-size      : $smallpx;
+
+%village-lists {
+  @include cond;
+  @include adjust-font-size-to($village-list-size);
+  ul { @include no-style-list; }
+}
+
+%village-activenav {
+  &.active {
+    #{$link}, #{$focus} {
+      @extend %inset;
+      background: $base01;
+      color: $base3;
+    }
+  }
+}
+
+.itemlist { @extend %overflow-y; }

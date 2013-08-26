@@ -1,6 +1,6 @@
 {% load form_utils %}
 
-<div class="formfield {% if label %}{{ label|slugify }}{% else %}{{ field.label|slugify }}{% endif %}-field{% if field|optional %} optional{% endif %}{% if field.errors %} errors{% endif %}">
+<div class="formfield {{ field.html_name }}-field{% if field|optional %} optional{% endif %}{% if field.errors %} errors{% endif %}">
 
   {% if not errorslast %}
     {{ field.errors }}
@@ -14,8 +14,11 @@
     {% include "forms/field/_input.html" %}
   {% endif %}
 
-  {% if field|optional %}
-    <p class="formhelp">optional</p>
+  {% if helptext or helpinclude %}
+    <div class="formfield-help">
+      {% if helptext %}{{ helptext }}{% endif %}
+      {% if helpinclude %}{% include helpinclude %}{% endif %}
+    </div>
   {% endif %}
 
   {% if errorslast %}

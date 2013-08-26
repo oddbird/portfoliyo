@@ -8,26 +8,45 @@
     min-width: $break-width;
     max-width: 100%;
   }
+  [role="main"] { padding: 0; }
+  [role="contentinfo"] { padding: $box-padding; }
 }
 
 .village {
   @include pie-clearfix;
-  @include transition(height 150ms);
   position: relative;
   height: rhythm(24);
 }
 
+// ---------------------------------------------------------------------------
+// Village Content
+
+$village-border-color   : $base1;
+$content-width          : $center + $right;
+
 .village-content {
-  position: relative;
+  float: right;
+  width: space($center + $right);
   height: 100%;
-  margin-left: columns($left);
 }
 
-$content-width: $center + $right;
+// ---------------------------------------------------------------------------
+// Village Main
 
 .village-main {
   position: relative;
   float: left;
-  width: columns($center, $content-width);
+  width: space($center, $content-width);
+  height: 100%;
+  border-right: 1px solid $village-border-color;
+}
+
+// ---------------------------------------------------------------------------
+// Village Info
+
+.village-info {
+  @extend %village-lists;
+  @include span-columns($right omega, $content-width);
+  margin: 0;
   height: 100%;
 }

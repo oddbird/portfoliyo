@@ -1,15 +1,16 @@
 """Village models."""
 from __future__ import absolute_import
 
-from collections import defaultdict
-import re
-
+from django.core.urlresolvers import reverse
 from django.db import models
-from django.utils import dateformat, html, timezone
+from django.utils import html, timezone
+from jsonfield import JSONField
+from model_utils import Choices
 
-from portfoliyo.pusher import get_pusher
-from portfoliyo import sms
+from portfoliyo import tasks
 from ..users import models as user_models
+from . import unread
+
 
 
 def now():
@@ -17,24 +18,46 @@ def now():
     return timezone.now()
 
 
-class Post(models.Model):
+
+def sms_eligible(elders):
+    """Given queryset of elders, return queryset of SMS-eligible elders."""
+    return elders.filter(
+        declined=False,
+        user__is_active=True,
+        phone__isnull=False,
+        )
+
+
+def is_sms_eligible(elder):
+    """Return True if given elder is eligible to receive SMSes."""
+    return elder.phone and not elder.declined and elder.user.is_active
+
+
+
+class BasePost(models.Model):
+    """Common Post fields and methods."""
     author = models.ForeignKey(
         user_models.Profile,
-        related_name='authored_posts',
+        related_name='authored_%(class)ss',
         blank=True, null=True,
         ) # null author means "automated message sent by Portfoliyo"
     timestamp = models.DateTimeField(default=now)
-    # the student in whose village this was posted
-    student = models.ForeignKey(
-        user_models.Profile, related_name='posts_in_village')
     # the original text as entered by a user
     original_text = models.TextField()
-    # the parsed text as HTML, with highlights wrapped in <b>
+    # the parsed text as HTML
     html_text = models.TextField()
     # message was received via SMS
     from_sms = models.BooleanField(default=False)
     # message was sent to at least one SMS
     to_sms = models.BooleanField(default=False)
+    # additional metadata (SMSes sent, users contacted...)
+    meta = JSONField(default=lambda: {})
+
+    is_bulk = None
+
+
+    class Meta:
+        abstract = True
 
 
     def __unicode__(self):
@@ -47,206 +70,361 @@ class Post(models.Model):
         return self.from_sms or self.to_sms
 
 
+    def extra_data(self):
+        """Return any extra data for serialization."""
+        return {}
+
+
+    def send_sms(self, profile_ids=None, in_reply_to=None):
+        """
+        Send SMS notifications for this post.
+
+        ``profile_ids`` is a list of Profile IDs who should receive SMSes. Only
+        profiles in this list who also are active, have phone numbers, and have
+        not declined SMSes, will receive texts. If set to "all", all eligible
+        users will receive SMSes.
+
+        Sets self.to_sms to True if any texts were sent, False otherwise, and
+        self.meta['sms'] to a list of dictionaries containing basic metadata
+        about each SMS sent.
+
+        """
+        meta_sms = []
+        sms_sent = False
+        if self.author:
+            suffix = sms_suffix(self.get_relationship() or self.author)
+        else:
+            suffix = u""
+        sms_body = self.original_text + suffix
+
+        to_sms = sms_eligible(self.elders_in_context)
+
+        if profile_ids != 'all':
+            filters = models.Q(pk__in=profile_ids or [])
+            if in_reply_to:
+                filters = filters | models.Q(phone=in_reply_to)
+            to_sms = to_sms.filter(filters)
+
+        to_mark_done = []
+
+        for elder in to_sms:
+            sms_data = {
+                'id': elder.id,
+                'role': elder.role_in_context,
+                'name': elder.name,
+                'phone': elder.phone,
+                }
+            # with in_reply_to we assume caller sent SMS
+            if elder.phone != in_reply_to:
+                elder.send_sms(sms_body)
+                to_mark_done.append(elder)
+            sms_sent = True
+
+            meta_sms.append(sms_data)
+
+        # when we send an elder who didn't finish answering their signup
+        # questions an SMS, we can no longer assume their next reply is
+        # answering the last question we asked. So we mark all in-process
+        # signups done for all users we are sending an SMS to.
+        user_models.TextSignup.objects.filter(family__in=to_mark_done).update(
+            state=user_models.TextSignup.STATE.done)
+
+        self.to_sms = sms_sent
+        self.meta['sms'] = meta_sms
+
+
+
+    def notify(self):
+        """Record notifications for eligible users."""
+        tasks.record_notification.delay('post_all', self)
+
+
+    def get_relationship(self):
+        return None
+
+
+
+class BulkPost(BasePost):
+    """A Post in multiple villages at once."""
+    # the group this was posted to (null means all-students for this author)
+    group = models.ForeignKey(
+        user_models.Group, blank=True, null=True, related_name='bulk_posts')
+
+    # bulk posts are always messages, and don't support attachments
+    post_type = 'message'
+
+    @property
+    def attachments(self):
+        return PostAttachment.objects.none()
+
+
+    is_bulk = True
+
+
+    def extra_data(self):
+        """Return any extra data for serialization."""
+        return {
+            'group_id': (
+                self.group_id or user_models.AllStudentsGroup(self.author).id)
+            }
+
+
+    @property
+    def safe_group(self):
+        """Return self.group or AllStudentsGroup."""
+        return self.group or user_models.AllStudentsGroup(self.author)
+
+
+    @property
+    def elders_in_context(self):
+        """Queryset of elders in context."""
+        return user_models.contextualized_elders(self.safe_group.all_elders)
+
+
+    @classmethod
+    def create(cls, author, group, text,
+               profile_ids=None, sequence_id=None, from_sms=False):
+        """
+        Create/return a BulkPost and all associated Posts.
+
+        If ``author`` is ``None``, the post is system-originated.
+
+        If ``group`` is ``None``, the post goes to all students of ``author``.
+
+        It is currently not allowed for both to be ``None``.
+
+        ``profile_ids`` is a list of Profile IDs who should receive this
+        post as an SMS. If set to "all", will send to all SMS-eligible elders
+        in the group.
+
+        ``sequence_id`` is an arbitrary ID generated on the client-side to
+        uniquely identify posts by the current user within a given browser
+        session; we just pass it through to the Pusher event(s).
+
+        ``from_sms`` indicates whether this post was received over SMS.
+
+        """
+        if author is None and group is None:
+            raise ValueError("BulkPost must have either author or group.""")
+
+        orig_group = group
+        if group is None:
+            group = user_models.AllStudentsGroup(author)
+
+        html_text = text2html(text)
+
+        post = cls(
+            author=author,
+            group=orig_group,
+            original_text=text,
+            html_text=html_text,
+            from_sms=from_sms,
+            )
+
+        post.send_sms(profile_ids)
+
+        post.save()
+
+        students = list(group.students.all())
+
+        relationships = user_models.Relationship.objects.filter(
+            from_profile=author, to_profile__in=students).select_related(
+            'to_profile')
+        rels_by_student = {}
+        for rel in relationships:
+            rels_by_student[rel.student] = rel
+
+        for student in group.students.all():
+            sub = Post.objects.create(
+                author=author,
+                student=student,
+                relationship=rels_by_student.get(student, None),
+                original_text=text,
+                html_text=html_text,
+                from_sms=from_sms,
+                to_sms=post.to_sms,
+                meta=post.meta,
+                from_bulk=post,
+                )
+            tasks.push_event.delay(
+                'posted',
+                sub.id,
+                author_sequence_id=sequence_id,
+                mark_read_url=reverse(
+                    'mark_post_read', kwargs={'post_id': sub.id}),
+                )
+            # mark the subpost unread by all web users in village (not author)
+            for elder in student.elders:
+                if elder.user.email and elder != author:
+                    unread.mark_unread(sub, elder)
+
+        tasks.push_event.delay(
+            'bulk_posted', post.id, author_sequence_id=sequence_id)
+
+        post.notify()
+
+        if author and not author.has_posted:
+            user_models.Profile.objects.filter(pk=author.pk).update(
+                has_posted=True)
+
+        return post
+
+
+
+class Post(BasePost):
+    """A Post in a single student's village."""
+    # the student in whose village this was posted
+    TYPES = Choices("message", "note", "call", "meeting")
+
+    student = models.ForeignKey(
+        user_models.Profile, related_name='posts_in_village')
+    post_type = models.CharField(
+        max_length=20, choices=TYPES, default=TYPES.message)
+    # relationship between author and student (nullable b/c might be deleted)
+    relationship = models.ForeignKey(
+        user_models.Relationship,
+        related_name='posts',
+        blank=True,
+        null=True,
+        on_delete=models.SET_NULL,
+        )
+    # (optional) the bulk-post that triggered this post
+    from_bulk = models.ForeignKey(
+        BulkPost, blank=True, null=True, related_name='triggered')
+
+
+    is_bulk = False
+
+
+    def extra_data(self):
+        """Return any extra data for serialization."""
+        return {'student_id': self.student_id}
+
+
+    @property
+    def elders_in_context(self):
+        """Queryset of elders."""
+        return user_models.contextualized_elders(
+            self.student.elder_relationships)
+
+
     @classmethod
     def create(cls, author, student, text,
-               sequence_id=None, from_sms=False, to_sms=False, notify=True):
-        """Create and return a Post."""
-        html_text, highlights = process_text(text, student)
+               profile_ids=None, sequence_id=None, from_sms=False,
+               in_reply_to=None, notifications=True,
+               post_type=None, attachments=None, extra_names=None):
+        """
+        Create/return a Post, triggering a Pusher event and SMSes.
+
+        ``post_type`` is "message" (default), "note", "call", or "meeting".
+
+        ``profile_ids`` is a list of Profile IDs who are related to this
+        post. If ``post_type`` is "message", it's a list of profiles who should
+        receive this post as an SMS (if "all", all eligible users will receive
+        SMSes). For "call" or "meeting" post types, its a list of who was
+        present at the meeting / on the call.
+
+        ``sequence_id`` is an arbitrary ID generated on the client-side to
+        uniquely identify posts by the current user within a given browser
+        session; we just pass it through to the Pusher event.
+
+        ``from_sms`` indicates whether this post was received over SMS.
+
+        ``in_reply_to`` can be set to a phone number, in which case it will be
+        assumed that an SMS was already sent to that number.
+
+        If ``notifications`` is ``False``, this post won't be included in
+        activity notifications.
+
+        """
+        html_text = text2html(text)
+
+        try:
+            rel = user_models.Relationship.objects.get(
+                from_profile=author, to_profile=student)
+        except user_models.Relationship.DoesNotExist:
+            rel = None
 
         post = cls(
             author=author,
             student=student,
+            relationship=rel,
             original_text=text,
             html_text=html_text,
             from_sms=from_sms,
-            to_sms=to_sms,
             )
 
-        # notify highlighted text-only users
-        if notify:
-            for rel in highlights:
-                if (rel.elder.user.is_active and rel.elder.phone):
-                    sender_rel = post.get_relationship()
-                    prefix = text_notification_prefix(sender_rel)
-                    sms_body = prefix + post.original_text
-                    sms.send(rel.elder.phone, sms_body)
-                    post.to_sms = True
+        if post_type:
+            post.post_type = post_type
+
+        if post.post_type == 'message':
+            post.send_sms(profile_ids, in_reply_to)
+        elif profile_ids:
+            post.meta['present'] = [
+                {'id': e.id, 'name': e.name, 'role': e.role_in_context}
+                for e in post.elders_in_context.filter(pk__in=profile_ids)
+                ]
+
+        if extra_names:
+            post.meta['extra_names'] = extra_names
 
         post.save()
 
-        # trigger Pusher event, if configured
-        pusher = get_pusher()
-        if pusher is not None:
-            channel = 'student_%s' % student.id
-            pusher[channel].trigger(
-                'message_posted',
-                {'posts': [post_dict(post, author_sequence_id=sequence_id)]},
-                )
+        for uploaded_file in (attachments or []):
+            post.attachments.create(attachment=uploaded_file)
+
+        # mark the post unread by all web users in village (except the author)
+        for elder in student.elders:
+            if elder.user.email and elder != author:
+                unread.mark_unread(post, elder)
+
+        tasks.push_event.delay(
+            'posted',
+            post.id,
+            author_sequence_id=sequence_id,
+            mark_read_url=reverse(
+                'mark_post_read', kwargs={'post_id': post.id}),
+            )
+
+        if notifications:
+            post.notify()
+
+        if author and not author.has_posted:
+            user_models.Profile.objects.filter(pk=author.pk).update(
+                has_posted=True)
 
         return post
 
 
     def get_relationship(self):
-        """The Relationship object between the author and the student."""
-        try:
-            return user_models.Relationship.objects.select_related().get(
-                kind=user_models.Relationship.KIND.elder,
-                from_profile=self.author,
-                to_profile=self.student,
-                )
-        except user_models.Relationship.DoesNotExist:
-            return None
+        """Return Relationship between author and student, or None."""
+        return self.relationship
+
+
+    def get_absolute_url(self):
+        """A Post's URL is its village; this is for admin convenience."""
+        return reverse('village', kwargs={'student_id': self.student_id})
 
 
 
-def process_text(text, student):
-    """
-    Process given post text in given student's village.
-
-    Escapes HTML, replaces newlines with <br>, replaces highlights.
-
-    Returns tuple of (rendered-text, set-of-highlighted-relationships).
-
-    """
-    name_map = get_highlight_names(student)
-    html_text, highlights = replace_highlights(html.escape(text), name_map)
-    html_text = html_text.replace('\n', '<br>')
-    return html_text, highlights
+class PostAttachment(models.Model):
+    """A file attachment on a Post."""
+    post = models.ForeignKey(Post, related_name='attachments')
+    attachment = models.FileField(upload_to='attachments/%Y/%m/%d/')
 
 
 
-# The ending delimiter here must use a lookahead assertion rather than a simple
-# match, otherwise adjacent highlights separated by a single space fail to
-# match the second highlight, because re.finditer returns only non-overlapping
-# matches, and without the lookahead both highlight matches would want to grab
-# that same intervening space. We could use lookbehind for the initial
-# delimiter as well, except that lookbehind requires a fixed-width pattern, and
-# our delimiter pattern is not fixed-width (it's zero or one).
-highlight_re = re.compile(
-    r"""(\A|[\s[(])          # string-start or whitespace/punctuation
-        (@(\S+?))            # @ followed by (non-greedy) non-whitespace
-        (?=\Z|[\s,;:)\]?])  # string-end or whitespace/punctuation
-    """,
-    re.VERBOSE,
-    )
+def text2html(text):
+    """Process given post text to HTML."""
+    return html.escape(text).replace('\n', '<br>')
+
+
+def sms_suffix(elder_or_rel):
+    """The suffix for texts sent out from this elder or relationship."""
+    return u' --%s' % elder_or_rel.name_or_role
 
 
 
-def replace_highlights(text, name_map):
-    """
-    Detect highlights and wrap with HTML element.
-
-    Returns a tuple of (rendered-text, set-of-highlighted-relationships).
-
-    ``name_map`` should be a mapping of highlightable names to the Relationship
-    with the elder who has that name (such as the map returned by
-    ``get_highlight_names``).
-
-    """
-    highlighted = set()
-    offset = 0 # how much we've increased the length of ``text``
-    for match in highlight_re.finditer(text):
-        full_highlight = match.group(2)
-        highlight_name = match.group(3)
-        # special handling for period (rather than putting it into the regex as
-        # highlight-terminating punctuation) so that we can support highlights
-        # with internal periods (i.e. email addresses)
-        stripped = 0
-        while highlight_name.endswith('.'):
-            highlight_name = highlight_name[:-1]
-            full_highlight = full_highlight[:-1]
-            stripped += 1
-        highlight_rels = name_map.get(normalize_name(highlight_name))
-        if highlight_rels:
-            replace_with = u'<b class="nametag%s" data-user-id="%s">%s</b>' % (
-                u' all me' if highlight_name == 'all' else u'',
-                u','.join([unicode(r.elder.id) for r in highlight_rels]),
-                full_highlight,
-                )
-            start, end = match.span(2)
-            end -= stripped
-            text = text[:start+offset] + replace_with + text[end+offset:]
-            offset += len(replace_with) - (end - start)
-            highlighted.update(highlight_rels)
-    return text, highlighted
-
-
-
-def get_highlight_names(student):
-    """
-    Get highlightable names in given student's village.
-
-    Returns dictionary mapping names to sets of relationships.
-
-    """
-    name_map = defaultdict(set)
-    for elder_rel in student.elder_relationships:
-        elder = elder_rel.elder
-        possible_names = []
-        if elder.name:
-            possible_names.append(normalize_name(elder.name))
-        if elder.phone:
-            possible_names.append(normalize_name(elder.phone))
-            possible_names.append(
-                normalize_name(elder.phone.lstrip('+').lstrip('1')))
-        if elder.user.email:
-            possible_names.append(normalize_name(elder.user.email))
-        possible_names.append(normalize_name(elder_rel.description_or_role))
-        for name in possible_names:
-            name_map[name].add(elder_rel)
-        name_map['all'].add(elder_rel)
-    return name_map
-
-
-
-def normalize_name(name):
-    """Normalize a name for highlight detection (lower-case, strip spaces)."""
-    return name.lower().replace(' ', '')
-
-
-def text_notification_prefix(relationship):
-    """The prefix for texts sent out from this elder/student relationship."""
-    return u'%s: ' % (
-        relationship.elder.name or relationship.description_or_role,)
-
-
-def post_char_limit(relationship):
-    """Max length for posts from this profile/student relationship."""
-    return 160 - len(text_notification_prefix(relationship))
-
-
-
-def post_dict(post, **extra):
-    """Return given post rendered as dictionary, ready for JSONification."""
-    if post.author:
-        author_name = (
-            post.author.name or post.author.user.email or post.author.phone
-            )
-
-        relationship = post.get_relationship()
-
-        if relationship is None:
-            role = post.author.role
-        else:
-            role = relationship.description or post.author.role
-    else:
-        author_name = ""
-        role = "Portfoliyo"
-
-    timestamp = timezone.localtime(post.timestamp)
-
-    data = {
-        'author_id': post.author_id if post.author else 0,
-        'student_id': post.student_id,
-        'author': author_name,
-        'role': role,
-        'timestamp': timestamp.isoformat(),
-        'date': dateformat.format(timestamp, 'n/j/Y'),
-        'time': dateformat.time_format(timestamp, 'P'),
-        'text': post.html_text,
-        'sms': post.sms,
-        }
-
-    data.update(extra)
-
-    return data
+def post_char_limit(elder_or_rel):
+    """Max length for posts from this elder or relationship."""
+    return 160 - len(sms_suffix(elder_or_rel))

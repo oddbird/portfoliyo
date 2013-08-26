@@ -11,3 +11,23 @@ if DEBUG:
         EMAIL_BACKEND
     except NameError:
         EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+if DEBUG_TOOLBAR:
+    INSTALLED_APPS += ['debug_toolbar']
+    MIDDLEWARE_CLASSES += [
+        'portfoliyo.view.debug.middleware.DebugToolbarMiddleware']
+    INTERNAL_IPS = ['127.0.0.1']
+    DEBUG_TOOLBAR_CONFIG = {
+        'INTERCEPT_REDIRECTS': True,
+        'HIDE_DJANGO_SQL': True,
+        }
+
+
+if SPEED_TRACER:
+    INSTALLED_APPS += ['speedtracer']
+    MIDDLEWARE_CLASSES.insert(0, 'speedtracer.middleware.SpeedTracerMiddleware')
+
+
+DEFAULT_COUNTRY_CODE = PORTFOLIYO_COUNTRIES[0][0]
+DEFAULT_NUMBER = PORTFOLIYO_NUMBERS[DEFAULT_COUNTRY_CODE]

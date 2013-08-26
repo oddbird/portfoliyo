@@ -16,8 +16,8 @@ class TestLogin(object):
 
     def test_login(self, client):
         """Successful login redirects."""
-        factories.UserFactory.create(
-            email='test@example.com', password='sekrit')
+        factories.ProfileFactory.create(
+            user__email='test@example.com', user__password='sekrit')
 
         form = client.get(self.url).forms['loginform']
         form['username'] = 'test@example.com'
@@ -29,8 +29,8 @@ class TestLogin(object):
 
     def test_login_failed(self, client):
         """Failed login returns error message."""
-        factories.UserFactory.create(
-            email='test@example.com', password='sekrit')
+        factories.ProfileFactory.create(
+            user__email='test@example.com', user__password='sekrit')
 
         form = client.get(self.url).forms['loginform']
         form['username'] = 'test@example.com'
@@ -75,8 +75,8 @@ class TestLogin(object):
 
     def test_good_captcha(self, client):
         """Good value for captcha allows login."""
-        factories.UserFactory.create(
-            email='test@example.com', password='sekrit')
+        factories.ProfileFactory.create(
+            user__email='test@example.com', user__password='sekrit')
 
         session_data = {}
 
@@ -111,11 +111,11 @@ class TestLogout(object):
 
     def test_logout_redirect(self, client):
         """Successful logout POST redirects to the home page."""
-        user = factories.UserFactory.create()
+        profile = factories.ProfileFactory.create()
 
         url = reverse('no_students')
 
-        form = client.get(url, user=user).forms['logoutform']
+        form = client.get(url, user=profile.user).forms['logoutform']
         res = form.submit(status=302)
 
         assert res['Location'] == utils.location(reverse('home'))
@@ -144,8 +144,9 @@ class TestPasswordChange(object):
 
     def test_change_password(self, client):
         """Get a confirmation message after changing password."""
-        user = factories.UserFactory.create(password='sekrit')
-        form = client.get(self.url, user=user).forms['change-password-form']
+        profile = factories.ProfileFactory.create(user__password='sekrit')
+        form = client.get(
+            self.url, user=profile.user).forms['change-password-form']
         new_password = 'sekrit123'
         form['old_password'] = 'sekrit'
         form['new_password1'] = new_password
@@ -167,6 +168,20 @@ class TestPasswordReset(object):
     def test_reset_password(self, client):
         """Get a confirmation message and reset email."""
         factories.UserFactory.create(email='user@example.com')
+
+        form = client.get(self.url).forms['reset-password-form']
+        form['email'] = 'user@example.com'
+
+        res = form.submit(status=302).follow()
+
+        res.mustcontain("Password reset email sent")
+        assert len(mail.outbox) == 1
+        assert mail.outbox[0].to == ['user@example.com']
+
+
+    def test_inactive_user(self, client):
+        """An inactive user can get a password reset email."""
+        factories.UserFactory.create(email='user@example.com', is_active=False)
 
         form = client.get(self.url).forms['reset-password-form']
         form['email'] = 'user@example.com'
@@ -219,6 +234,19 @@ class TestPasswordResetConfirm(object):
         res.mustcontain("Password changed")
 
 
+    def test_inactive_user_becomes_active(self, client):
+        """An inactive user who completes a reset becomes active."""
+        user = factories.UserFactory.create(
+            email='user@example.com', is_active=False)
+        form = client.get(self.url(client, user)).forms['set-password-form']
+        new_password = 'sekrit123'
+        form['new_password1'] = new_password
+        form['new_password2'] = new_password
+        form.submit(status=302).follow()
+
+        assert utils.refresh(user).is_active
+
+
 
 class TestRegister(object):
     """Tests for register view."""
@@ -229,51 +257,75 @@ class TestRegister(object):
 
 
     def test_register(self, client):
-        """Get a confirmation message after registering."""
+        """Get logged in and redirected to home after registering."""
+        school = factories.SchoolFactory.create()
         form = client.get(self.url).forms['register-form']
         form['name'] = 'Some Body'
         form['email'] = 'some@example.com'
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
-        res = form.submit(status=302).follow()
+        form['country_code'] = 'us'
+        form['school'] = str(school.id)
+        res = form.submit(status=302)
 
-        res.mustcontain("confirm your email")
+        assert res['Location'] == utils.location(reverse('add_student'))
+
+        res.follow(status=200)
+
+
+    def test_register_failed(self, client):
+        """Form redisplayed with any errors."""
+        school = factories.SchoolFactory.create()
+        form = client.get(self.url).forms['register-form']
+        form['email'] = 'some@example.com'
+        form['password'] = 'sekrit123'
+        form['password_confirm'] = 'sekrit123'
+        form['role'] = 'Test User'
+        form['school'] = str(school.id)
+        res = form.submit(status=200)
+
+        res.mustcontain('field is required')
 
 
 
-class TestActivate(object):
-    """Tests for activate view."""
+class TestConfirmEmail(object):
+    """Tests for confirm_email view."""
     def url(self, client):
-        """Shortcut for activate url."""
+        """Shortcut for confirm_email url."""
+        school = factories.SchoolFactory.create()
         form = client.get(reverse('register')).forms['register-form']
         form['name'] = 'New Body'
         form['email'] = 'new@example.com'
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'New Role'
+        form['country_code'] = 'us'
+        form['school'] = str(school.id)
         form.submit(status=302)
 
         for line in mail.outbox[0].body.splitlines():
             if '://' in line:
                 return line.strip()
 
-        assert False, "Activation link not found in activation email."
+        assert False, "Email-confirm link not found in activation email."
 
 
-    def test_activate(self, client):
+    def test_confirm(self, client):
         """Get a confirmation message after activating."""
         res = client.get(self.url(client), status=302).follow()
 
-        res.mustcontain("Account activated")
+        res.mustcontain("address new@example.com confirmed")
 
 
-    def test_failed_activate(self, client):
-        """Failed activation returns a failure message."""
+    def test_failed_confirm(self, client):
+        """Failed confirm returns a failure message."""
         res = client.get(
-            reverse('activate', kwargs={'activation_key': 'foo'}))
+            reverse(
+                'confirm_email', kwargs={'uidb36': 'foo', 'token': 'foo-bar'})
+            )
 
-        res.mustcontain("that activation key is not valid")
+        res.mustcontain("doesn't seem to be valid")
 
 
 
@@ -283,12 +335,12 @@ class TestAcceptEmailInvite(object):
         """Shortcut for accept-email-invite url."""
         rel = factories.RelationshipFactory(from_profile=profile)
         response = client.get(
-            reverse('invite_elders', kwargs=dict(student_id=rel.student.id)),
+            reverse('invite_teacher', kwargs=dict(student_id=rel.student.id)),
             user=profile.user,
             )
-        form = response.forms['invite-elders-form']
-        form['elders-0-contact'] = 'new@example.com'
-        form['elders-0-relationship'] = 'teacher'
+        form = response.forms['invite-teacher-form']
+        form['email'] = 'new@example.com'
+        form['role'] = 'teacher'
         form.submit(status=302)
 
         for line in mail.outbox[0].body.splitlines():

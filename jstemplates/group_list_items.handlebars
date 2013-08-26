@@ -1,0 +1,10 @@
+{{#each objects}}
+<li class="listitem group">
+  <a href="{{group_uri}}" class="group-link ajax-link listitem-select" data-group-name="{{name}}" data-group-id="{{id}}" data-group-students-url="{{students_uri}}" data-group-resource-url="{{resource_uri}}" data-group-edit-url="{{edit_uri}}" data-group-add-student-url="{{add_student_uri}}" data-group-add-students-bulk-url="{{add_students_bulk_uri}}" data-students="{{#each students}}{{id}} {{/each}}">
+    <span class="listitem-name">{{name}}</span>
+    <span class="unread{{#unless unread_count}} zero{{/unless}}">
+      {{#if unread_count}}{{unread_count}}{{else}}0{{/if}}
+    </span>
+  </a>
+</li>
+{{/each}}

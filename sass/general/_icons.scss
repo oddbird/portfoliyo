@@ -1,14 +1,5 @@
-@include font-face (
-  'pyo',
-  font-files(
-    'pyo.svg#pyo', svg,
-    'pyo.woff', woff,
-    'pyo.ttf', truetype
-  ),
-  'pyo.eot',
-  normal,
-  normal
-);
+// ---------------------------------------------------------------------------
+// Icon Setup
 
 /* Use the following CSS code if you want to have a class per icon */
 %icon-content {
@@ -20,14 +11,14 @@
 
 %icon:before {
   @extend %icon-content;
-  margin-right: .4em;
+  margin-right: .2em;
 }
 
 %icon-replace {
   @extend %icon;
   display: inline-block;
   position: relative;
-  min-width: 1em;
+  width: 1em;
   text-indent: -9999px;
   text-align: left;
   &:focus {
@@ -35,11 +26,11 @@
     &:before { outline: 1px dotted; }
   }
   &:before {
-    position: absolute;
-    top: 0;
-    left: 0;
+    @include stretch;
     text-indent: 0;
-    margin-right: 0;
+    margin: 0;
+    padding: 0;
+    text-align: center;
   }
 }
 
@@ -49,31 +40,17 @@
   content: attr(data-icon);
 }
 
-%icon-partial:before { content: "\25a3"; }
-%icon-unchecked:before { content: "\2610"; }
-%icon-checked:before { content: "\2611"; }
-%icon-radio-checked:before { content: "\25c9"; }
-%icon-radio-unchecked:before { content: "\25ef"; }
-%icon-user:before { content: "\265f"; }
-%icon-users:before { content: "\265b"; }
-%icon-settings:before { content: "\2731"; }
-%icon-comments:before { content: "\2601"; }
-%icon-exit:before { content: "\261b"; }
-%icon-key:before { content: "\2762"; }
-%icon-pencil:before { content: "\270e"; }
-%icon-checkmark:before { content: "\2713"; }
-%icon-x:before { content: "\2717"; }
-%icon-x-alt:before { content: "\2718"; }
-%icon-info-circle:before { content: "\69"; }
-%icon-warning:before { content: "\26a0"; }
-%icon-home:before { content: "\2617"; }
-%icon-help:before { content: "\3f"; }
-%icon-plus:before { content: "\2b"; }
-%icon-plus-alt:before { content: "\271a"; }
-%icon-record:before { content: "\25cf"; }
-%icon-fire:before { content: "\2668"; }
-%icon-document-alt-stroke:before { content: "\274f"; }
-%icon-floppy:before { content: "\25e9"; }
-%icon-trashcan:before { content: "\27f0"; }
-%icon-phone:before { content: "\e000"; }
-%icon-no-phone:before { content: "\e001"; }
+[class^="icon-"] { @extend %icon; }
+
+// ---------------------------------------------------------------------------
+// Icons
+
+.icon-edit { @extend %icon-pencil; }
+.icon-invite { @extend %icon-user-plus; }
+
+.icon-student { @extend %icon-user; }
+.icon-add-student { @extend %icon-user-plus; }
+
+.icon-group { @extend %icon-users; }
+.icon-add-group { @extend %icon-users-plus; }
+

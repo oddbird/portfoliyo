@@ -2,155 +2,238 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
+    var nav = $('.village-nav');
+
     var postAjax = {
         XHR: {},
         count: 0
     };
-    var feedAjax = {
-        XHR: null,
-        count: 0
+
+    var backlogXHR = false;
+    var backlogHasMore;
+
+    PYO.scrollToBottom = function () {
+        if (PYO.feedPosts.length) {
+            var height = parseInt(PYO.feedPosts.get(0).scrollHeight, 10);
+            PYO.feedPosts.scrollTop(height).scroll();
+        }
+    };
+
+    PYO.scrolledToBottom = function () {
+        var bottom = false;
+        if (PYO.feedPosts.length && PYO.feedPosts.get(0).scrollHeight - PYO.feedPosts.scrollTop() - PYO.feedPosts.outerHeight() <= 50) {
+            bottom = true;
+        }
+        return bottom;
     };
 
     PYO.renderPost = function (data) {
         var posts;
         if (data) {
-            posts = ich.post(data);
+            posts = PYO.tpl('posts', data);
         }
-        if (posts) {
-            var nametag = posts.find('.nametag');
-            nametag.each(function () {
-                var thisTag = $(this);
-                var userID = thisTag.data('user-id');
-                if (userID) {
-                    var mentions = userID.toString().split(',');
-                    if ($.inArray(PYO.activeUserId.toString(), mentions) !== -1) {
-                        thisTag.addClass('me');
-                    }
-                }
-            });
-            posts.filter('.post[data-author-id="' + PYO.activeUserId + '"]').addClass('mine');
-            return posts;
-        }
+        return posts;
     };
 
     PYO.addPost = function (data) {
         if (data) {
             var posts = PYO.renderPost(data);
-            $('.village-feed').append(posts);
+            posts.find('.details').html5accordion();
+            PYO.feedPosts.append(posts);
+            PYO.authorPosts = PYO.feedPosts.find('.post.mine').length;
             return posts;
         }
     };
 
-    PYO.replacePost = function (data) {
-        if (data && data.posts[0] && data.posts[0].author_sequence_id && data.posts[0].author_id) {
-            var feed = $('.village-feed');
-            var author_sequence_id = data.posts[0].author_sequence_id;
-            var author_id = data.posts[0].author_id;
-            var oldPost = feed.find('.post[data-author-id="' + author_id + '"][data-author-sequence="' + author_sequence_id + '"]');
-            if (oldPost && oldPost.length) {
-                var newPost = PYO.renderPost(data);
-                oldPost.replaceWith(newPost);
-                $.doTimeout('new-post-' + author_sequence_id);
-                return true;
-            }
+    PYO.replacePost = function (newPostData, oldPost) {
+        if (newPostData && oldPost && oldPost.length) {
+            var post_obj = { objects: [newPostData] };
+            var newPost = PYO.renderPost(post_obj);
+            var scroll = PYO.scrolledToBottom();
+            newPost.filter('.post.mine').removeClass('old');
+            newPost.find('.details').html5accordion();
+            oldPost.loadingOverlay('remove');
+            oldPost.replaceWith(newPost);
+            $.doTimeout('new-post-' + newPostData.author_sequence_id);
+            if (scroll) { PYO.scrollToBottom(); }
         }
     };
 
-    PYO.createPostObj = function (author_sequence, xhr_count) {
-        var feed = $('.village-feed');
-        var textarea = $('#post-text');
-        var author = feed.data('author');
-        var role = feed.data('author-role');
+    PYO.createPostObj = function (text, author_sequence, xhr_count, smsTargetArr, presentArr, attachmentsArr, type) {
+        var author = PYO.feed.data('author');
+        var role = PYO.feed.data('author-role');
         var today = new Date();
-        var day = today.getDate();
-        var month = today.getMonth() + 1;
-        var year = today.getFullYear();
-        var date = month + '/' + day + '/' + year;
         var hour = today.getHours();
         var minute = today.getMinutes();
         minute = (minute < 10) ? '0' + minute : minute;
-        var period = (hour > 12) ? 'p.m.' : 'a.m.';
+        var period = (hour > 12) ? 'pm' : 'am';
         hour = (hour > 12) ? hour - 12 : hour;
-        var time = hour + ':' + minute + ' ' + period;
-        var text = $.trim(textarea.val());
+        var time = hour + ':' + minute + period;
         var postObj = {
-            posts: {
+            objects: [{
                 author: author,
                 author_id: PYO.activeUserId,
                 role: role,
-                date: date,
-                time: time,
+                timestamp_display: time,
                 text: text,
                 author_sequence_id: author_sequence,
                 xhr_count: xhr_count,
-                local: true,
-                escape: true
-            }
+                pending: true,
+                school_staff: true,
+                mine: true,
+                sms: smsTargetArr.length ? true : false,
+                to_sms: smsTargetArr.length ? true : false,
+                sms_recipients: smsTargetArr,
+                type: {
+                    name: type,
+                    is_call: false,
+                    is_meeting: false,
+                    is_message: false,
+                    is_note: false
+                },
+                present: presentArr,
+                attachments: attachmentsArr
+            }]
         };
+        postObj.objects[0].type['is_' + type] = true;
         return postObj;
     };
 
-    PYO.submitPost = function (container) {
-        if ($(container).length) {
-            var feed = $(container);
-            var context = feed.closest('.village');
-            var form = context.find('form.post-add-form');
-            var button = form.find('.action-post');
-            var textarea = form.find('#post-text');
+    PYO.submitPost = function () {
+        if (PYO.feed.length) {
+            var context = PYO.feed.closest('.village');
+            var forms = context.find('form.post-type');
+            forms.each(function () {
+                var form = $(this);
+                var button = form.find('.action-post');
+                var textarea = form.find('.post-textfield textarea');
+                var formReset = function () {
+                    form.find('.attach-value:disabled').removeAttr('disabled');
+                    form.resetForm();
+                    form.find('.attach-input label').click();
+                    form.find('.tokens-list .token.new label').click();
+                    textarea.focus().change();
+                };
 
-            form.submit(function (event) {
-                event.preventDefault();
-                if (textarea.val().length) {
-                    var text = $.trim(textarea.val());
-                    var author_sequence_id = ++PYO.authorPosts;
-                    var url = feed.data('post-url');
-                    var count = ++postAjax.count;
-                    var postObj = PYO.createPostObj(author_sequence_id, count);
-                    var post = PYO.addPost(postObj);
-                    var postData = {
-                        text: text,
-                        author_sequence_id: author_sequence_id
-                    };
+                form.submit(function (event) {
+                    var fileInputs = form.find('.attach-value');
+                    var attachments = fileInputs.filter(function () { return $(this).val() !== ''; });
+                    // Only continue with ajax-submit if there are no attachments, or if using a modern browser
+                    // that supports the html5 file api: http://caniuse.com/#feat=xhr2
+                    if (!attachments.length || ($("<input type='file'/>").get(0).files !== undefined && window.FormData !== undefined)) {
+                        event.preventDefault();
+                        // Only submit the form if there is relevant info (text, attachment, or person connected with a meeting/call)
+                        if (textarea.val().length || attachments.length || (form.hasClass('conversation-form') && form.find('.token-toggle:checked').length)) {
+                            var text = $.trim(textarea.val());
+                            var author_sequence_id = (PYO.authorPosts || 0) + 1;
+                            var url = PYO.feed.data('post-url');
+                            var count = ++postAjax.count;
+                            var extraPostData = { author_sequence_id: author_sequence_id };
+                            var type = form.find('input[name="type"]').fieldValue()[0];
+                            var elderInputs = form.find('.token-toggle:checked');
+                            var noInputs = form.find('.no-to-field');
+                            var smsTargetArr = [];
+                            var presentArr = [];
+                            var attachmentsArr = [];
+                            var postObj, post;
 
-                    if (url) {
-                        postAjax.XHR[count] = $.post(url, postData, function (response) {
-                            PYO.postAjaxSuccess(response, author_sequence_id, count);
-                        }).error(function (request, status, error) {
-                            PYO.postAjaxError(post, author_sequence_id, status, count);
-                            postAjax.XHR[count] = null;
-                        });
+                            // Prevent form enctype from overriding jquery.form.js plugin,
+                            // which intelligently switches to multipart if file inputs exist.
+                            // Otherwise notes without attachments submit as multipart/form-data.
+                            form.removeAttr('enctype');
+
+                            // Create local arrays with names of sms-targets and people present for a call/meeting.
+                            if (elderInputs.length) {
+                                elderInputs.each(function () {
+                                    var el = $(this);
+                                    var displayName;
+                                    if (type === 'message') {
+                                        displayName = el.data('display-name');
+                                        smsTargetArr.push(displayName);
+                                    } else if (type === 'call' || type === 'meeting') {
+                                        displayName = el.hasClass('new') ? el.val() : el.data('display-name');
+                                        presentArr.push(displayName);
+                                    }
+                                });
+                            } else if (noInputs.length) {
+                                var namesArr = noInputs.data('elders').split(',');
+                                smsTargetArr = smsTargetArr.concat(namesArr);
+                            }
+
+                            // Create local array of attachment filenames.
+                            if (attachments.length) {
+                                attachments.each(function () {
+                                    var el = $(this);
+                                    var name;
+                                    if (el.get(0).files && el.get(0).files.length && el.get(0).files[0].name) {
+                                        name = el.get(0).files[0].name;
+                                    } else {
+                                        name = el.val().replace(/^.*\\/, '');
+                                    }
+                                    attachmentsArr.push({name: name});
+                                });
+                            }
+
+                            postObj = PYO.createPostObj(text, author_sequence_id, count, smsTargetArr, presentArr, attachmentsArr, type);
+                            post = PYO.addPost(postObj);
+                            // Store serialized form data for resubmission later if the ajax call fails.
+                            post.data('post-data', form.formSerialize());
+                            // Disable empty file inputs to prevent jquery.form.js from switching to multipart/form-data.
+                            fileInputs.filter(function () { return $(this).val() === ''; }).attr('disabled', true);
+
+                            if (url) {
+                                form.ajaxSubmit({
+                                    url: url,
+                                    data: extraPostData,
+                                    dataType: 'json',
+                                    success: function (response) {
+                                        PYO.postAjaxSuccess(response, author_sequence_id, count);
+                                    },
+                                    error: function (request, status) {
+                                        if (attachments.length) { post.data('attachments', true); }
+                                        PYO.postAjaxError(post, author_sequence_id, status, count);
+                                        postAjax.XHR[count] = null;
+                                        form.removeData('jqxhr');
+                                    }
+                                });
+                                postAjax.XHR[count] = form.data('jqxhr');
+                                formReset();
+                            }
+
+                            PYO.scrollToBottom();
+                            PYO.addPostTimeout(post, author_sequence_id, count);
+                        }
+                    } else {
+                        // If there are attachments, and browser doesn't support xhr 2,
+                        // set the form enctype to multipart/form-data before submitting form.
+                        form.attr('enctype', 'multipart/form-data');
+                        form.loadingOverlay();
+                        return true;
                     }
+                });
 
-                    textarea.val('').change();
-                    PYO.scrollToBottom('.village-feed');
-                    PYO.addPostTimeout(post, author_sequence_id, count);
-                }
-            });
-
-            textarea.keydown(function (event) {
-                if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
-                    event.preventDefault();
-                    if (!button.is(':disabled')) {
-                        form.submit();
+                // Hijack ENTER to submit the form (instead of adding a newline)
+                textarea.keydown(function (event) {
+                    if (event.keyCode === PYO.keycodes.ENTER && !event.shiftKey) {
+                        event.preventDefault();
+                        if (!button.is(':disabled')) {
+                            form.submit();
+                        }
                     }
-                }
+                });
             });
         }
     };
 
     PYO.postAjaxSuccess = function (response, old_author_sequence, xhr_count) {
-        if (response && response.posts[0] && response.posts[0].student_id && response.posts[0].student_id === PYO.activeStudentId) {
-            if (response.posts[0].author_sequence_id) {
-                var feed = $('.village-feed');
-                var author_sequence_id = response.posts[0].author_sequence_id;
-                var oldPost = feed.find('.post.mine[data-author-sequence="' + author_sequence_id + '"]');
-                if (oldPost && oldPost.length) {
-                    oldPost.loadingOverlay('remove');
+        if (response && response.objects && response.objects.length) {
+            $.each(response.objects, function () {
+                PYO.feed.trigger('successful-post', {smsRecipients: this.sms_recipients.length, studentId: PYO.activeStudentId, groupId: PYO.activeGroupId});
+                if (this.author_sequence_id) {
+                    var oldPost = PYO.feed.find('.post.mine.pending[data-author-sequence="' + this.author_sequence_id + '"]');
+                    if (oldPost.length) { PYO.replacePost(this, oldPost); }
                 }
-            }
-            if (response.success && !PYO.pusherKey) {
-                PYO.replacePost(response);
-            }
+            });
         }
         PYO.removePostTimeout(old_author_sequence);
         postAjax.XHR[xhr_count] = null;
@@ -158,11 +241,10 @@ var PYO = (function (PYO, $) {
 
     PYO.postAjaxError = function (post, author_sequence_id, status, xhr_count) {
         if (status !== 'abort' && status !== 'timeout') {
-            var msg = ich.post_timeout_msg();
+            var msg = PYO.tpl('post_timeout_msg', { attachments: post.data('attachments') });
             msg.find('.resend').click(function (e) {
                 e.preventDefault();
-                var thisPost = $(this).closest('.post');
-                PYO.resendPost(thisPost);
+                PYO.resendPost(post);
                 if (postAjax.XHR[xhr_count]) { postAjax.XHR[xhr_count].abort(); }
             });
             msg.find('.cancel').click(function (e) {
@@ -171,7 +253,7 @@ var PYO = (function (PYO, $) {
                 if (postAjax.XHR[xhr_count]) { postAjax.XHR[xhr_count].abort(); }
             });
             post.addClass('not-posted').prepend(msg).loadingOverlay('remove');
-            PYO.scrollToBottom('.village-feed');
+            PYO.scrollToBottom();
             PYO.removePostTimeout(author_sequence_id);
         }
     };
@@ -187,20 +269,14 @@ var PYO = (function (PYO, $) {
     };
 
     PYO.resendPost = function (post) {
-        var feed = $('.village-feed');
-        var url = feed.data('post-url');
+        var url = PYO.feed.data('post-url');
         var author_sequence_id = post.data('author-sequence');
-        var text = $.trim(post.find('.post-text').text());
-        var postData = {
-            author_sequence_id: author_sequence_id,
-            text: text
-        };
         var count = ++postAjax.count;
-
         if (url) {
+            var postData = post.data('post-data') + '&author_sequence_id=' + author_sequence_id;
             postAjax.XHR[count] = $.post(url, postData, function (response) {
                 PYO.postAjaxSuccess(response, author_sequence_id, count);
-            }).error(function (request, status, error) {
+            }).error(function (request, status) {
                 PYO.postAjaxError(post, author_sequence_id, status, count);
                 postAjax.XHR[count] = null;
             });
@@ -211,76 +287,11 @@ var PYO = (function (PYO, $) {
         PYO.addPostTimeout(post, author_sequence_id, count);
     };
 
-    PYO.listenForPosts = function (container) {
-        if ($(container).length && PYO.pusherKey) {
-            var pusher = new Pusher(PYO.pusherKey, {encrypted: true});
-            var students = $('.village-nav .student a');
-
-            students.each(function () {
-                var el = $(this);
-                var id = el.data('id');
-                var unread = el.find('.unread');
-                var channel = pusher.subscribe('student_' + id);
-
-                channel.bind('message_posted', function (data) {
-                    if (id === PYO.activeStudentId) {
-                        var scroll = PYO.scrolledToBottom('.village-feed');
-                        if (!PYO.replacePost(data)) {
-                            PYO.addPost(data);
-                            if (scroll) { PYO.scrollToBottom('.village-feed'); }
-                        }
-                    } else {
-                        var count = parseInt(unread.text(), 10);
-                        unread.removeClass('zero').text(++count);
-                    }
-                });
-            });
-        }
-    };
-
-    PYO.fetchBacklog = function (container) {
-        if (feedAjax.XHR) { feedAjax.XHR.abort(); }
-        if ($(container).length) {
-            var feed = $(container);
-            var context = feed.closest('.village-main');
-            var url = feed.data('backlog-url');
-            var count = ++feedAjax.count;
-            var loadFeed = function () {
-                if (url) {
-                    context.loadingOverlay();
-                    feedAjax.XHR = $.get(url, function (response) {
-                        context.loadingOverlay('remove');
-                        if (response && feedAjax.count === count) {
-                            PYO.addPost(response);
-                            PYO.scrollToBottom('.village-feed');
-                            PYO.authorPosts = feed.find('.post.mine').length;
-                        }
-                        feedAjax.XHR = null;
-                    }).error(function (request, status, error) {
-                        if (status !== 'abort') {
-                            var msg = ich.feed_error_msg();
-                            msg.find('.reload-feed').click(function (e) {
-                                e.preventDefault();
-                                msg.remove();
-                                loadFeed();
-                            });
-                            feed.prepend(msg);
-                        }
-                        context.loadingOverlay('remove');
-                        feedAjax.XHR = null;
-                    });
-                }
-            };
-
-            loadFeed();
-        }
-    };
-
     PYO.characterCount = function (container) {
         if ($(container).length) {
             var context = $(container);
-            var form = context.find('form.post-add-form');
-            var textarea = form.find('#post-text');
+            var form = context.find('form.message-form');
+            var textarea = form.find('#message-text');
             var limit = form.data('char-limit');
             var count = form.find('.charcount');
             var button = form.find('.action-post');
@@ -289,16 +300,220 @@ var PYO = (function (PYO, $) {
                 var remain = limit - chars;
                 if (remain < 0) {
                     count.addClass('overlimit');
-                    button.attr('disabled', 'true');
+                    button.not('.disabled').attr('disabled', 'disabled');
                 } else {
                     count.removeClass('overlimit');
-                    button.removeAttr('disabled');
+                    button.not('.disabled').removeAttr('disabled');
                 }
                 count.text(remain + ' characters remaining...');
             };
 
             textarea.keyup(updateCount).change(updateCount);
         }
+    };
+
+    PYO.initializeToField = function (containerSel, textareaSel, opts) {
+        if ($(containerSel).length) {
+            var container = $(containerSel);
+            var defaults = {
+                textbox: 'input.token-value',
+                inputs: 'input.token-toggle',
+                suggestionList: '.token-suggest',
+                inputList: '.tokens-list',
+                triggerSubmit: function (context) {
+                    context.find(textareaSel).focus();
+                },
+                inputsNeverRemoved: true,
+                inputType: 'elder',
+                selectAll: '.bulk-tokens .add-all',
+                selectNone: '.bulk-tokens .remove-all'
+            };
+            var options = $.extend({}, defaults, opts);
+
+            container.customAutocomplete(options);
+
+            // Clicking anywhere in the fake textarea gives focus to the text input
+            container.on('click', '.tokens-input', function () {
+                container.find('input.token-value').focus();
+            });
+        }
+    };
+
+    // Adding/removing attachments on notes
+    PYO.initializeAttachments = function (formSel) {
+        if ($(formSel).length) {
+            var form = $(formSel);
+            var counter = 0;
+            var label = form.find('label.attach-type');
+            var attachmentList = form.find('.attach-input');
+            var inputList = form.find('.attach-field');
+            var textarea = form.find('.post-textfield textarea');
+
+            // Clicking on a label performs a click on the corresponding input
+            label.click(function (e) {
+                e.preventDefault();
+                var id = $(this).attr('for');
+                form.find('#' + id).click();
+            });
+
+            // When a file-input changes, add a new attachment token and a new (empty) file input
+            form.on('change', 'input.attach-value', function () {
+                var input = $(this);
+                var inputID = input.attr('id');
+                var token, newInput, filename;
+
+                inputList.find('.attach-value').removeClass('ie-fix-active');
+
+                if (input.get(0).files && input.get(0).files.length && input.get(0).files[0].name) {
+                    filename = input.get(0).files[0].name;
+                } else {
+                    filename = input.val().replace(/^.*\\/, '');
+                }
+
+                token = PYO.tpl('autocomplete_input', {
+                    newInput: true,
+                    typeName: 'attachment-token',
+                    index: counter++,
+                    id: inputID,
+                    inputText: filename
+                });
+                newInput = PYO.tpl('note_attachment_input', { index: counter });
+                attachmentList.append(token);
+                inputList.append(newInput);
+                // Update the label to point to the new (empty) file input
+                label.attr('for', 'attach-file-' + counter);
+                textarea.focus();
+            });
+
+            // When a token is clicked, remove the token and the connected file input
+            attachmentList.on('change', '.token-toggle.new', function () {
+                var input = $(this);
+                if (input.prop('checked') === false) {
+                    var inputID = input.val();
+                    var token = input.closest('.token');
+
+                    form.find('#' + inputID).remove();
+                    token.remove();
+                }
+            });
+
+            // Clicking anywhere in the fake textarea (except on a token, or in ie9)
+            // triggers the file input.
+            attachmentList.on('click', function (e) {
+                if (e.target === this && !$('html').hasClass('ie9')) {
+                    label.click();
+                }
+            });
+        }
+    };
+
+    PYO.markPostsRead = function () {
+        var posts = PYO.feed.find('.post.unread');
+
+        nav.find('.student .listitem-select[data-id="' + PYO.activeStudentId + '"] .unread').addClass('zero').text('0');
+
+        if (posts.length) {
+            posts.each(function () {
+                var thisPost = $(this);
+                var url = thisPost.data('mark-read-url');
+                if (url) {
+                    $.post(url, function () {
+                        thisPost.removeClass('unread');
+                    });
+                }
+            });
+        }
+    };
+
+    PYO.watchForReadPosts = function () {
+        PYO.feedPosts.scroll(function () {
+            $.doTimeout('scroll', 150, function () {
+                if (PYO.scrolledToBottom()) {
+                    PYO.markPostsRead();
+                }
+            });
+        });
+    };
+
+    PYO.fetchBacklog = function () {
+        var feedStatus = PYO.feedPosts.find('.feedstatus');
+        var url = PYO.feed.data('posts-url');
+        var timestamp = PYO.feedPosts.find('.post').first().find('time.pubdate').attr('datetime');
+        var postData = {
+            order_by: '-timestamp',
+            timestamp__lt: timestamp
+        };
+        if (PYO.activeStudentId) {
+            postData.student = PYO.activeStudentId;
+        } else if (PYO.activeGroupId) {
+            postData.group = PYO.activeGroupId;
+        }
+        if (url && !backlogXHR) {
+            feedStatus.addClass('loading').removeClass('error');
+            backlogXHR = $.get(url, postData, function (data) {
+                if (data && data.objects && data.objects.length) {
+                    data.objects.reverse();
+                    var posts = PYO.renderPost(data);
+                    posts.find('.details').html5accordion();
+                    var scrollBottom = PYO.feedPosts.get(0).scrollHeight - PYO.feedPosts.scrollTop() - PYO.feedPosts.outerHeight();
+                    feedStatus.after(posts);
+                    var scrollTo = PYO.feedPosts.get(0).scrollHeight - PYO.feedPosts.outerHeight() - scrollBottom;
+                    PYO.feedPosts.scrollTop(scrollTo);
+                    PYO.authorPosts = PYO.feedPosts.find('.post.mine').length;
+                    if (data.meta) { backlogHasMore = data.meta.more; }
+                    if (!backlogHasMore) { feedStatus.removeClass('has-more'); }
+                }
+            }).fail(function () {
+                feedStatus.addClass('error');
+            }).always(function () {
+                backlogXHR = false;
+                feedStatus.removeClass('loading');
+            });
+        }
+    };
+
+    PYO.scrollForBacklog = function () {
+        var scrolledToTop = function () {
+            var top = false;
+            if (PYO.feedPosts.scrollTop() <= 80) {
+                top = true;
+            }
+            return top;
+        };
+        backlogHasMore = PYO.feedPosts.data('more');
+        PYO.feedPosts.scroll(function () {
+            $.doTimeout('scroll', 150, function () {
+                if (scrolledToTop() && !backlogXHR && backlogHasMore) {
+                    PYO.fetchBacklog();
+                }
+            });
+        });
+    };
+
+    PYO.initializeFeed = function () {
+        var posts = PYO.feed.find('.post');
+
+        posts.find('.details').html5accordion();
+        PYO.authorPosts = posts.filter('.mine').length;
+        posts.filter('.unread').removeClass('unread');
+
+        PYO.watchForReadPosts();
+        PYO.initializeToField('.post-add-form .message-form', '#message-text', {prefix: 'message'});
+        PYO.initializeToField('.post-add-form .conversation-form', '#conversation-text', {
+            allowNew: true,
+            newInputName: 'extra_name',
+            labelText: 'present',
+            prefix: 'conversation'
+        });
+        PYO.initializeAttachments('.post-add-form .note-form');
+        PYO.submitPost();
+        PYO.characterCount('.village-main');
+        PYO.scrollToBottom();
+        PYO.scrollForBacklog();
+
+        $('.post-add-form').resize(function () {
+            PYO.updateContentHeight('.village-feed', '.feed-posts', true);
+        });
     };
 
     return PYO;

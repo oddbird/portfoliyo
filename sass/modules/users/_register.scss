@@ -1,0 +1,65 @@
+.register {
+  @extend %simple-form;
+
+  %hide-tab-content { display: none; }
+  %show-tab-content { display: block; }
+  @include tabs(school-network);
+
+  [id*="toggle"]:checked ~ .form-actions .toggle-info {
+    display: none;
+  }
+  [for*="toggle"] {
+    @include adjust-font-size-to($smallpx);
+    @include link;
+    color: $alt;
+  }
+}
+
+.email_notifications-field {
+  @extend %radio-check-defaults;
+  @include inline-radio-checkbox;
+  @include adjust-font-size-to($smallpx);
+  @include leader(-.5, $smallpx);
+  font-style: italic;
+}
+
+.initial-password {
+  @extend %notice;
+  @extend %simple-inline-form;
+  @include at-breakpoint($break) {
+    @include bleed(space($simple-side,$simple-center));
+    @include padding-leader(1);
+    label{ padding-left: rhythm(1); }
+  }
+}
+
+.country_code-field {
+  @extend %select-buttons;
+  .radio-type {
+    @include before(" ") {
+      display: inline-block;
+      min-width: image-width('flags/us.png');
+      min-height: image-height('flags/us.png');
+      margin-right: .4em;
+    }
+  }
+  [value="ca"] + .radio-type:before { background-image: image-url('flags/ca.png'); }
+  [value="us"] + .radio-type:before { background-image: image-url('flags/us.png'); }
+}
+
+.school-field {
+  @include trailer;
+  .school-name { @include span-columns(8,$center); }
+  .school-zip {
+    @include span-columns(4 omega,$center);
+    text-align: right;
+  }
+  .radio-options { @extend %check-options; }
+  .zip {
+    position: absolute;
+    right: rhythm(.25,$input-font-size);
+    color: $base1;
+  }
+}
+
+.add-school.fieldset { display: none; }

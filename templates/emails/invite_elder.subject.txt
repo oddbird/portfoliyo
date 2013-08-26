@@ -1,0 +1,1 @@
+{{ inviter }} invites you to join {% if student %}{{ student }}'s Portfoliyo Village{% else %}{{ group }} on Portfoliyo{% endif %}

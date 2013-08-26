@@ -1,0 +1,44 @@
+// ---------------------------------------------------------------------------
+// Select buttons
+
+%select-button-inactive {
+  @extend %button;
+  @include button-color($base3);
+  border-radius: 0;
+}
+
+%select-button-active {
+  @include inset;
+  background: color($blue lightest);
+}
+
+%select-button-base {
+  .radio-value {
+    display: none;
+    & + .radio-type { @extend %select-button-inactive; }
+    &:checked + .radio-type { @extend %select-button-active; }
+  }
+}
+
+%select-buttons {
+  @extend %select-button-base;
+  .radio-options { padding-top: 0; }
+  .option {
+    float: left;
+    &:first-child .radio-type { @include border-left-radius($button-radius); }
+    &:last-child .radio-type { @include border-right-radius($button-radius); }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Tab buttons
+
+%tab-buttons {
+  .radio-type {
+    @extend %select-button-base;
+    @extend %select-button-inactive;
+    float: left;
+    &:first-child { @include border-left-radius($button-radius); }
+    &:last-child { @include border-right-radius($button-radius); }
+  }
+}

@@ -2,7 +2,7 @@ from .base import *
 
 import os
 import urlparse
-env = lambda key, returntype=str: returntype(os.environ[key])
+env = lambda key, returntype=str: returntype(os.environ.get(key, ''))
 
 DATABASES = dict(default={})
 def parse_database_url(database, environment_variable='DATABASE_URL'):
@@ -14,13 +14,22 @@ def parse_database_url(database, environment_variable='DATABASE_URL'):
         'HOST': url.hostname,
         'PORT': url.port,
         'ENGINE' : {
-            'postgres': 'django.db.backends.postgresql_psycopg2',
+            'postgres': 'django_postgrespool',
             'mysql': 'django.db.backends.mysql',
             'sqlite': 'django.db.backends.sqlite3',
         }[url.scheme],
+        'OPTIONS': {'autocommit': True},
     })
 parse_database_url(DATABASES['default'])
 del parse_database_url
+
+# support memcachier add-on as well as default memcache add-on
+if 'MEMCACHE_SERVERS' not in os.environ:
+    os.environ['MEMCACHE_SERVERS'] = os.environ.get('MEMCACHIER_SERVERS', '').replace(',', ';')
+if 'MEMCACHE_USERNAME' not in os.environ:
+    os.environ['MEMCACHE_USERNAME'] = os.environ.get('MEMCACHIER_USERNAME', '')
+if 'MEMCACHE_PASSWORD' not in os.environ:
+    os.environ['MEMCACHE_PASSWORD'] = os.environ.get('MEMCACHIER_PASSWORD', '')
 
 # pylibmc can't be imported at build time, so we need a fallback
 try:
@@ -35,11 +44,18 @@ else:
     CACHES = {
         'default': {
             'BACKEND': 'django_pylibmc.memcached.PyLibMCCache',
+            'TIMEOUT': 500,
+            'BINARY': True,
         }
     }
 
 DEBUG = False
 TEMPLATE_DEBUG = False
+
+TEMPLATE_LOADERS = [
+    ('django.template.loaders.cached.Loader', TEMPLATE_LOADERS)
+    ]
+
 
 # This email address will get emailed on 500 server errors.
 ADMINS = [
@@ -60,7 +76,7 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_SSL_REDIRECT = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-# staticfiles / compressor
+# staticfiles / compressor / uploads
 AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
@@ -76,6 +92,8 @@ COMPRESS_ENABLED = True
 COMPRESS_OFFLINE = True
 COMPRESS_STORAGE = 'portfoliyo.storage.CachedS3BotoStorage'
 STATICFILES_STORAGE = COMPRESS_STORAGE
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+MEDIA_URL = STATIC_URL
 
 # Mailgun
 EMAIL_HOST = env('MAILGUN_SMTP_SERVER')
@@ -88,7 +106,12 @@ EMAIL_HOST_PASSWORD = env('MAILGUN_SMTP_PASSWORD')
 PORTFOLIYO_SMS_BACKEND = env('PORTFOLIYO_SMS_BACKEND')
 TWILIO_ACCOUNT_SID = env('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = env('TWILIO_AUTH_TOKEN')
-PORTFOLIYO_SMS_DEFAULT_FROM = env('PORTFOLIYO_SMS_DEFAULT_FROM')
+PORTFOLIYO_NUMBERS = {
+    'us': env('US_NUMBER'),
+    'ca': env('CA_NUMBER'),
+    }
+DEFAULT_COUNTRY_CODE = PORTFOLIYO_COUNTRIES[0][0]
+DEFAULT_NUMBER = PORTFOLIYO_NUMBERS[DEFAULT_COUNTRY_CODE]
 
 # Pusher
 PUSHER_APPID = env('PUSHER_APPID')
@@ -111,7 +134,7 @@ LOGGING = {
     },
     'handlers': {
         'sentry': {
-            'level': 'ERROR',
+            'level': 'WARNING',
             'class': 'raven.contrib.django.handlers.SentryHandler',
         },
         'console': {
@@ -139,5 +162,18 @@ LOGGING = {
     },
 }
 
-GOOGLE_ANALYTICS_ID=env('GOOGLE_ANALYTICS_ID')
-USERVOICE_ID=env('USERVOICE_ID')
+REDIS_URL = env('REDISTOGO_URL')
+CELERY_ALWAYS_EAGER = False
+
+GOOGLE_ANALYTICS_ID = env('GOOGLE_ANALYTICS_ID')
+USERVOICE_ID = env('USERVOICE_ID')
+SNAPENGAGE_ID = env('SNAPENGAGE_ID')
+MIXPANEL_ID = env('MIXPANEL_ID')
+INTERCOM_ID = env('INTERCOM_ID')
+CRAZYEGG_ID = env('CRAZYEGG_ID')
+
+PORTFOLIYO_BASE_URL = env('PORTFOLIYO_BASE_URL')
+
+NOTIFICATION_EMAILS = env('PORTFOLIYO_NOTIFICATION_EMAILS', bool)
+NOTIFICATION_EXPIRY_SECONDS = env('PORTFOLIYO_NOTIFICATION_EXPIRY_SECONDS', int)
+DEBUG_URLS = env('PORTFOLIYO_DEBUG_URLS', bool)

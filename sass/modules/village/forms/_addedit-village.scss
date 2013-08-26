@@ -1,0 +1,138 @@
+// ---------------------------------------------------------------------------
+// Groups
+
+.group-add-form, .group-edit-form { @extend %village-page; }
+
+// ---------------------------------------------------------------------------
+// Parent Signup
+
+.parent-signup, .village-edit-form { @extend %village-page; }
+
+.parent-signup {
+  @include tabs(sms-signup form-signup, '.tab-options' null);
+
+  %hide-tab-content { display: none; }
+  %show-tab-content { display: block; }
+  %active-tab-title { @extend %select-button-active; }
+
+  .tab-options {
+    @extend %tab-buttons;
+    position: relative;
+    float: right;
+    z-index: 10;
+    .radio-type {
+      @extend %icon;
+      &:before { margin-right: rhythm(.5); }
+    }
+  }
+  [for="sms-signup-toggle"] { @extend %icon-bubble; }
+  [for="form-signup-toggle"] { @extend %icon-pencil; }
+}
+
+.sms-signup, .form-signup { clear: both; }
+
+$phone: 5;
+$non-phone: $content-width - 5;
+$instruction-background: $base01;
+
+.sms-signup {
+  @include pie-clearfix;
+  position: relative;
+}
+
+.sms-instructions {
+  clear: both;
+  p {
+    @include span-columns($non-phone omega, $content-width);
+    @include rhythm-borders(1px,1);
+    @include trailer;
+    @include arrow(1em left $instruction-background);
+    background: $instruction-background;
+    border-color: $instruction-background;
+    color: contrast($instruction-background);
+    text-transform: uppercase;
+    &:first-of-type { @include leader(1); }
+  }
+  strong {
+    @include adjust-font-size-to($xlargepx);
+    display: block;
+    text-transform: none;
+  }
+}
+
+.group-add-notice {
+  @include adjust-font-size-to($xsmallpx);
+  @include leader(.5);
+  @include bleed(rhythm(1), left right bottom);
+  padding: rhythm(.5) rhythm(1);
+  display: block;
+  color: rgba($base3,.75);
+  background: rgba($back,.25);
+  b { font-weight: bold; }
+}
+
+.phone-img {
+  @include fluid-ratio(9/16,columns($phone,$content-width));
+  @include background(image-url('phone.png') no-repeat center);
+  @include background-size(contain);
+  float: left;
+  margin-right: gutter($content-width);
+}
+
+$burst-color: $red;
+$burst-size: rhythm(5);
+
+.try-it {
+  @include transition(all 400ms ease);
+  position: absolute;
+  bottom: 0;
+  width: $burst-size;
+  height: $burst-size;
+  color: contrast($burst-color);
+  background: $burst-color;
+  text-align: center;
+  b {
+    position: relative;
+    display: block;
+    padding: rhythm(1.25) rhythm(.5);
+    font-weight: bold;
+    z-index: 10;
+  }
+  &:before, &:after {
+    @include stretch;
+    content: "";
+    background: $burst-color;
+  }
+  &:before { @include rotate(30deg); }
+  &:after { @include rotate(60deg); }
+  &:hover { @include rotate(360deg); }
+}
+
+.sms-downloads { @include span-columns($non-phone omega, $content-width); }
+
+.download-title {
+  @include trailer(.5);
+  font-weight: bold;
+}
+
+.download-pdf {
+  @extend %button;
+  @extend %icon;
+  @extend %icon-download;
+  @include button-color(color($green lightest));
+}
+
+// ---------------------------------------------------------------------------
+// Manual Add/Edit
+
+.student-form-details {
+  .summary {
+    display: block;
+    text-align: right;
+    font-style: italic;
+    &:after { content: " »"; }
+  }
+  &.open .summary {
+    display: none;
+  }
+}

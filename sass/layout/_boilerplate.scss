@@ -1,14 +1,17 @@
 // ---------------------------------------------------------------------------
 // Boilerplate
 
+$box-padding: rhythm(.25);
+
 %container {
   @include container($total-columns, $break);
   @include susy-grid-background;
+  @include transition(all 300ms);
 }
 
 %boilerplate {
   @extend %container;
   clear: both;
+  color: mix($base1,$base2);
   a { @include link(light); }
-  @include placeholder { color: rgba($base2,.75); }
 }

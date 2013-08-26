@@ -1,0 +1,15 @@
+<div class="navtitle">
+  <h2 class="groups-title">All Groups</h2>
+</div>
+
+<ul class="itemlist groups-list">
+  {{> group_list_items}}
+</ul>
+
+{{#if staff}}
+<div class="additems">
+  <a href="{{add_group_url}}" class="additem-group ajax-link">Add Group</a>
+
+  {{#if add_student_url}}<a href="{{add_student_url}}" class="ajax-link additem-village">Signup Parents</a>{{/if}}
+</div>
+{{/if}}

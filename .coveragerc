@@ -5,3 +5,5 @@ omit =
   */settings/*
   */wsgi.py
   */tests/*
+  */selenium/*
+  portfoliyo/view/debug/*

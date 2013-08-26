@@ -3,22 +3,30 @@
 //
 // JS-add .loading and span.overlay
 
-@include keyframes(loading) {
-  0%{ @include opacity(.25); }
+@include keyframes(loadingStart) {
+  0%{ @include opacity(0); }
   100% { @include opacity(1); }
+}
+
+@include keyframes(loading) {
+  0% { color: color(darkest); }
+  100% { color: color($blue); }
 }
 
 .loading {
   position: relative;
-
   .overlay {
     @include stretch;
-    @include text-shadow($base03 0 0 3px);
-    @include animation(loading 1s linear alternate infinite both);
-    @include rgba-background(rgba($base03,.25));
+    @include text-shadow(white 0 0 1em, white 0 0 .5em, white 0 0 .25em);
+    @include animation(
+      loadingStart 1.5s 300ms linear 1 backwards,
+      loading 1.5s 2s linear alternate infinite forwards
+    );
+    color: color(darkest);
+    background: color(white, .5);
+    text-transform: uppercase;
     font-weight: bold;
     text-align: center;
-    color: $base3;
-    z-index: 100;
+    z-index: 990;
   }
 }

@@ -9,6 +9,10 @@ other Python projects on your system, create a virtualenv and activate
 it.  Then run ``bin/install-reqs`` to install the dependencies for this
 project into your Python environment.
 
+In order to run Portfoliyo (or its tests), you'll need a PostgreSQL
+database. By default, Portfoliyo will look for a PostgreSQL database named
+"portfoliyo" on localhost.
+
 You may need to create a ``portfoliyo/settings/local.py`` file with some
 details of your local configuration.  See
 ``portfoliyo/settings/local.sample.py`` for a sample that can be copied to
@@ -18,11 +22,20 @@ Once this configuration is done, you should be able to run ``./manage.py
 syncdb --migrate``, then ``./manage.py runserver`` and access the site
 in your browser at ``http://localhost:8000``.
 
+You can run the tests with ``py.test``, or the ``Selenium`` tests with
+``py.test portfoliyo/tests/selenium``.
+
 .. _virtualenv: http://www.virtualenv.org
+.. _Selenium: http://seleniumhq.org
 
 To install the necessary Ruby gems for Compass/Sass development (only
 necessary if you plan to modify Sass files and re-generate CSS), install
 Bundler (``gem install bundler``) and then run ``bundle install``.
+
+If you make changes to the client-side Handlebars templates in
+``jstemplates/``, run ``bin/grunt`` to recompile the templates.
+Alternatively, run ``bin/grunt watch`` (takes over a terminal) to watch for
+changes to the templates and recompile automatically.
 
 Deployment
 ----------

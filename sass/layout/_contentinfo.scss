@@ -3,11 +3,11 @@
 
 [role="contentinfo"] {
   @extend %boilerplate;
+  @include adjust-font-size-to($xxsmallpx);
   @include rhythm(0,.25,.25,0);
-  .author {
-    @include adjust-font-size-to($xxsmallpx);
-    @include trailer(0);
-    text-transform: uppercase;
-  }
+  padding-left: $box-padding;
+  padding-right: $box-padding;
+
+  .author { text-transform: uppercase; }
   strong { font-weight: bold; }
 }

@@ -1,11 +1,7 @@
 """Core/home views."""
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
-
-from session_csrf import anonymous_csrf
-
-from portfoliyo.landing.views import landing
-
+from django.shortcuts import redirect, render
+from django.views.decorators.cache import cache_page
 
 
 
@@ -25,15 +21,19 @@ def redirect_home(user):
         if user.profile.school_staff:
             return reverse('add_student')
         return reverse('no_students')
-    elif len(students) == 1:
-        return reverse('village', kwargs=dict(student_id=students[0].id))
-    return reverse('dashboard')
+    return reverse('all_students_dash')
 
 
-@anonymous_csrf
+
 def home(request):
     """Home view. Redirects appropriately or displays landing page."""
     if request.user.is_authenticated():
         return redirect(redirect_home(request.user))
     else:
         return landing(request)
+
+
+
+@cache_page(600)
+def landing(request):
+    return render(request, 'landing.html')

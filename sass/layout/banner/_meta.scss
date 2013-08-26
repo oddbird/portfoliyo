@@ -1,0 +1,95 @@
+// ---------------------------------------------------------------------------
+// Meta
+
+%metanav-base {
+  @include adjust-font-size-to($banner-size);
+  @include span-columns(5 omega);
+  @include at-breakpoint($break) { @include span-columns($meta-width omega); }
+  .village-app & { @include span-columns($meta-width omega, $break-cols); }
+  position: relative;
+  text-align: right;
+}
+
+%meta-button {
+  @extend %banner-item;
+  @include text-shadow(rgba(black,.75) 0 -1px 0);
+  padding: {
+    left: 1em;
+    right: 1em;
+  }
+  border: 1px solid $base03;
+  border-width: 0 0 0 2px;
+  background: mix($base01,$base02);
+  #{$link}, & { color: $base3; }
+  #{$focus} {
+    @include box-shadow($base3 0 0 1px inset);
+    @include background-image(linear-gradient(to bottom, rgba(white,.25), rgba(white,0) 50%));
+    color: $base3 !important;
+  }
+  &:active { @include box-shadow(rgba(black,.5) 0 0 1px inset); }
+
+  .alt-text { @include at-breakpoint($break) { @include here; } }
+}
+
+// ---------------------------------------------------------------------------
+// Help Link
+
+.helplink {
+  @extend %meta-button;
+  float: right;
+  #{$focus} { background-color: $orange; }
+}
+
+// ---------------------------------------------------------------------------
+// Login Meta
+
+.login-nav {
+  @extend %metanav-base;
+  white-space: nowrap;
+
+  ul { @include inline-list; }
+  a { display: inline-block; }
+
+  .register-link {
+    @include gone;
+    @include after(' or') { color: $base; }
+    @include at-breakpoint($break) { @include here; }
+  }
+
+  .login-link {
+    @extend %meta-button;
+    margin-left: .25em;
+    background: $blue;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Account Meta
+
+.meta {
+  @extend %metanav-base;
+
+  a {
+    @extend %icon;
+    @extend %banner-item;
+    display: block;
+  }
+
+  .settingslink {
+    @extend %icon-cog;
+    @extend %ellipsis;
+    float: right;
+    padding: {
+      left: 1em;
+      right: .5em;
+    }
+  }
+
+  .action-logout {
+    @extend %reset-button;
+    @extend %meta-button;
+    @include link(light);
+    float: right;
+    #{$focus} { background-color: $red; }
+  }
+}

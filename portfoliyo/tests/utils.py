@@ -31,6 +31,12 @@ def refresh(obj):
 
 
 
+def deleted(obj):
+    """Return True if given obj has been deleted."""
+    return not obj.__class__._base_manager.filter(pk=obj.pk).exists()
+
+
+
 class FakeTestCase(object):
     """
     Fake TestCase class with an assertEqual implementation.
@@ -49,3 +55,12 @@ def assert_num_queries(num):
     """Context manager: assert ``num`` queries occur within block."""
     return _AssertNumQueriesContext(FakeTestCase(), num, connection)
 
+
+@contextmanager
+def assert_num_calls(redis, num):
+    """Context manager: assert ``num`` redis queries occur within block."""
+    start_calls = redis.num_calls
+    yield
+    total_calls = redis.num_calls - start_calls
+    assert total_calls == num, 'Expected %s redis quer%s, saw %s' % (
+        num, 'y' if num == 1 else 'ies', total_calls)

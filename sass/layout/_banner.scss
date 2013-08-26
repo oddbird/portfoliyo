@@ -1,14 +1,16 @@
 // ---------------------------------------------------------------------------
 // Settings
 
-$banner-size    : $smallpx;
-$banner-rhythm  : .25;
-$banner-leading : 1 + $banner-rhythm*2;
+$banner-size      : $smallpx;
+$banner-rhythm    : .25;
 
-%banner-item {
-  @include padding-leader($banner-rhythm);
-  @include padding-trailer($banner-rhythm);
-}
+$brand-width      : floor($break-cols/2);
+$meta-width       : $brand-width;
+
+// ---------------------------------------------------------------------------
+// Guides
+
+%banner-item { @include rhythm-padding($banner-rhythm); }
 
 // ---------------------------------------------------------------------------
 // Banner
@@ -16,91 +18,7 @@ $banner-leading : 1 + $banner-rhythm*2;
 [role="banner"] { @extend %boilerplate; }
 
 // ---------------------------------------------------------------------------
-// Brand
+// Modules
 
-.brand {
-  @include adjust-font-size-to($banner-size);
-  @include span-columns($half-small);
-  @include at-breakpoint($break) { @include span-columns($left + $right); }
-  .wordmark {
-    @extend %icon;
-    @extend %icon-fire;
-    @include adjust-leading-to($banner-leading, $banner-size);
-    height: rhythm($banner-leading, $banner-size);
-    display: block;
-    overflow: hidden;
-    &:before { margin: 0; }
-  }
-  b { font-weight: bold; }
-}
-
-// ---------------------------------------------------------------------------
-// Navigation
-
-// $nav-span: $center;
-
-// [role="navigation"] {
-//   @include span-columns($nav-span);
-//   ul { @include no-style-list; }
-//   li {
-//     float: left;
-//     width: auto;
-//     margin-right: gutter($nav-span);
-//     min-width: columns(1,$nav-span);
-//   }
-//   .me { @extend %icon; @extend %icon-comments; }
-//   .net { @extend %icon; @extend %icon-users; }
-//   .myvillage { @extend %icon; @extend %icon-fire; }
-// }
-
-// ---------------------------------------------------------------------------
-// Meta
-
-.meta {
-  @include adjust-font-size-to($banner-size);
-  @include span-columns($half-small omega);
-  @include at-breakpoint($break) { @include span-columns($right omega); }
-  position: relative;
-  text-align: right;
-
-  span, a {
-    @extend %icon;
-    @extend %icon-settings;
-    @extend %banner-item;
-    @extend %ellipsis;
-    display: block;
-  }
-
-  [href*="edit"] { @extend %icon-settings; }
-  [href*="password"] { @extend %icon-key; }
-  button {
-    @extend %reset-button;
-    @extend %icon;
-    @extend %icon-exit;
-    @extend %banner-item;
-    @include link(light);
-    width: 100%;
-  }
-}
-
-$useraction-size          : $banner-size;
-$useraction-border-size   : 2px;
-$useraction-border-color  : $back;
-$useraction-background    : $base01;
-
-.useractions {
-  @include css-arrow(top, rhythm(.5), $useraction-background);
-  @include box-shadow($useraction-border-color 0 0 $xxxsmallpx);
-  @include stretch-x;
-  top: 100%;
-  margin: - $useraction-border-size rhythm(- $banner-rhythm, $useraction-size) 0;
-  border: $useraction-border-size solid $useraction-border-color;
-  background: $useraction-background;
-  text-align: left;
-  z-index: 900;
-  display: none;
-
-  a, button { padding: rhythm(.5, $useraction-size); }
-  .meta:hover & { display: block; }
-}
-
+@import "banner/brand";
+@import "banner/meta";

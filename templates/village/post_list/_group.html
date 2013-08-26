@@ -1,0 +1,22 @@
+{% extends "village/post_list/_base.html" %}
+{% load url from future %}
+
+{% block village-title %}
+  <span aria-hidden="true" class="icon-group"></span>
+  {{ group.name }} Posts
+{% endblock %}
+
+{% block page-actions %}
+{% if not group.is_all %}{{ block.super }}{% endif %}
+{% endblock %}
+
+{% block edit-url %}{% url 'edit_group' group_id=group.id %}{% endblock %}
+
+{% block village-feed-attrs %} data-posts-url="{% url 'api_dispatch_list' resource_name='bulkpost' api_name='v1' %}"{% if group.is_all %} data-post-url="{% url 'create_post' %}"{% else %} data-post-url="{% url 'create_post' group_id=group.id %}"{% endif %}{% endblock %}
+{% block empty-feed %}There are no posts in this group.{% endblock %}
+
+{% block addposts %}{% include "village/post_list/forms/_group.html" %}{% endblock %}
+
+{% block info-bar %}
+  {% include "village/post_list/_group_info.html" %}
+{% endblock %}

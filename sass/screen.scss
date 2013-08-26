@@ -1,45 +1,8 @@
 // ---------------------------------------------------------------------------
 // Imports
 
-@import "base/settings";
-@import "general/root";
-
-// ---------------------------------------------------------------------------
-// Layout
-
-@import "compass/layout";
-@import "layout/helpers";
-@import "layout/boilerplate";
-@import "layout/banner";
-@import "layout/main";
-@import "layout/contentinfo";
-
-// ---------------------------------------------------------------------------
-// Users
-
-@import "modules/users/login";
-@import "modules/users/edit";
-@import "modules/users/password";
-
-// ---------------------------------------------------------------------------
-// Village
-
-@import "modules/village";
-
-// ---------------------------------------------------------------------------
-// Pyo
-
-// @import "modules/feed/profile";
-// @import "modules/feed/combined";
-// @import "modules/feed/post";
-
-// ---------------------------------------------------------------------------
-// Errors
-
-@import "modules/errorpages";
-
-// ---------------------------------------------------------------------------
-// Plugins
-
-@import "plugins/loading";
-@import "plugins/messages";
+@import "base";
+@import "general";
+@import "plugins";
+@import "layout";
+@import "modules";

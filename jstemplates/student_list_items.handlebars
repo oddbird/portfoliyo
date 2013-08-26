@@ -1,0 +1,10 @@
+{{#each objects}}
+<li class="listitem student">
+  <a href="{{village_uri}}{{#unless ../all_students}}?group={{../../group_id}}{{/unless}}" class="ajax-link listitem-select" data-id="{{id}}" data-name="{{name}}">
+    <span class="listitem-name">{{name}}</span>
+    <span class="unread{{#unless unread_count}} zero{{/unless}}">
+      {{#if unread_count}}{{unread_count}}{{else}}0{{/if}}
+    </span>
+  </a>
+</li>
+{{/each}}

@@ -10,7 +10,7 @@ def _call(request):
     return impersonate.ImpersonationMiddleware().process_request(request)
 
 
-def test_start_impersonating():
+def test_start_impersonating(db):
     """Can start impersonating a user with ?impersonate=email@example.com."""
     real_user = factories.UserFactory.create(is_superuser=True)
     user = factories.UserFactory.create(email="email@example.com")
@@ -25,7 +25,7 @@ def test_start_impersonating():
     assert req.real_user == real_user
 
 
-def test_cannot_start_if_not_superuser():
+def test_cannot_start_if_not_superuser(db):
     """Cannot start impersonating a user unless you're a superuser."""
     real_user = factories.UserFactory.create(is_superuser=False)
     factories.UserFactory.create(email="email@example.com")
@@ -39,7 +39,7 @@ def test_cannot_start_if_not_superuser():
     assert req.user == real_user
 
 
-def test_continue_impersonating():
+def test_continue_impersonating(db):
     """Can continue impersonating in same session."""
     real_user = factories.UserFactory.create(is_superuser=True)
     user = factories.UserFactory.create(email="email@example.com")
@@ -54,7 +54,7 @@ def test_continue_impersonating():
     assert req.real_user == real_user
 
 
-def test_cannot_continue_impersonating_if_not_superuser():
+def test_cannot_continue_impersonating_if_not_superuser(db):
     """Cannot impersonate using previous session if not superuser."""
     real_user = factories.UserFactory.create(is_superuser=False)
     user = factories.UserFactory.create(email="email@example.com")
@@ -68,7 +68,7 @@ def test_cannot_continue_impersonating_if_not_superuser():
     assert req.user == real_user
 
 
-def test_stop_impersonating():
+def test_stop_impersonating(db):
     """Can stop impersonating with ?impersonate=stop."""
     real_user = factories.UserFactory.create(is_superuser=True)
     user = factories.UserFactory.create(email="email@example.com")
@@ -82,7 +82,7 @@ def test_stop_impersonating():
     assert req.user == real_user
 
 
-def test_stop_impersonating_again():
+def test_stop_impersonating_again(db):
     """Trying to stop impersonating when you're not doesn't cause an error."""
     real_user = factories.UserFactory.create(is_superuser=True)
     req = mock.Mock()
@@ -95,7 +95,7 @@ def test_stop_impersonating_again():
     assert req.user == real_user
 
 
-def test_bad_email():
+def test_bad_email(db):
     """Returns simple error response if bad email is given."""
     real_user = factories.UserFactory.create(is_superuser=True)
     req = mock.Mock()
@@ -110,7 +110,21 @@ def test_bad_email():
     assert resp.status_code == 400
 
 
-def test_no_error_if_not_superuser():
+def test_user_deleted_in_midst_of_impersonation(db):
+    """If user is deleted while being impersonated, no error."""
+    real_user = factories.UserFactory.create(is_superuser=True)
+    req = mock.Mock()
+    req.user = real_user
+    req.session = {impersonate.SESSION_KEY: 999}
+    req.GET = {}
+
+    resp = _call(req)
+
+    assert resp is None
+    assert req.session == {}
+
+
+def test_no_error_if_not_superuser(db):
     """No error response if not a superuser."""
     real_user = factories.UserFactory.create(is_superuser=False)
     req = mock.Mock()

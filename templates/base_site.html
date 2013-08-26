@@ -1,27 +1,48 @@
 {% extends 'base.html' %}
 
+{% load url from future %}
+
 {% block body %}
-  {% include "messages_ui/_messages.html" %}
+  {% include "_messages.html" %}
 
   <div role="banner">
     <h1 class="brand">
       {% block brand %}
-      <a href="{% url home %}" rel="home" class="wordmark">
-        <b>Portfoliyo</b>
-        Village
-      </a>
+      <a href="{% url 'home' %}" rel="home" class="wordmark">Portfoliyo</a>
       {% endblock brand %}
     </h1>
 
     {% block metanav %}
     {% if user.is_authenticated %}
     <nav class="meta">
-      <a href="{% url edit_profile %}">{% firstof user.profile.name user.email %}</a>
-      <ul class="useractions">
-        <li><a href="{% url edit_profile %}">Edit profile</a></li>
-        <li><a href="{% url password_change %}">Change password</a></li>
-        <li><form action="{% url logout %}" method="POST" class="signout" id="logoutform">{% csrf_token %}<button type="submit">Sign Out</button></form></li>
-      </ul>
+      {% if SNAPENGAGE_ID %}
+      <a href="#" class="helplink" onClick="return SnapABug.startLink();" title="Help">
+        <span aria-hidden="true" data-icon="&#xf059;"></span>
+        <span class="alt-text">Help</span>
+      </a>
+      {% endif %}
+      <form action="{% url 'logout' %}" method="POST" id="logoutform">
+        {% csrf_token %}
+        <button type="submit" class="action-logout" title="Logout">
+          <span aria-hidden="true" data-icon="&#xe016;"></span>
+          <span class="alt-text">Logout</span>
+        </button>
+      </form>
+      <a href="{% url 'edit_profile' %}" class="settingslink" title="Edit profile" data-user-id="{{ user.id }}" data-user-email="{{ user.email }}" data-user-name="{{ user.profile.name }}" data-user-code="{{ user.profile.code }}"{% if not user.profile.school.auto %} data-user-school="{{ user.profile.school }}"{% endif %}>{% firstof user.profile.name user.email %}</a>
+    </nav>
+    {% else %}
+    <nav class="login-nav">
+      {% if SNAPENGAGE_ID %}
+      <a href="#" class="helplink" onClick="return SnapABug.startLink();">
+        <span aria-hidden="true" data-icon="&#xf059;"></span>
+        <span class="alt-text">Help</span>
+      </a>
+      {% endif %}
+      <a href="{% url 'register' %}" class="register-link">Get Started</a>
+      <a href="{% url 'login' %}" class="login-link">
+        <span aria-hidden="true" data-icon="&#xe015;"></span>
+        <span class="alt-text">Login</span>
+      </a>
     </nav>
     {% endif %}
     {% endblock metanav %}
@@ -39,11 +60,14 @@
 
   <footer role="contentinfo">
     <p class="author vcard">
-      copyright &copy; 2012
+      copyright &copy; 2012-2013
       <strong class="fn org">Portfoliyo</strong>
     </p>
+    {% block extrafooter %}{% endblock extrafooter %}
   </footer>
 
-  {% block last %}{% endblock last %}
+  {% block last %}
+    {% include "_ie-warning.html" %}
+  {% endblock last %}
 
 {% endblock body %}

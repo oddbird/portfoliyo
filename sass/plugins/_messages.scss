@@ -1,48 +1,14 @@
 // ---------------------------------------------------------------------------
 // User Messages
 
-@mixin message($c: $blue, $i: info-circle) {
-  @extend %icon-#{$i};
-  @include rgba-background(rgba($c,.9));
-}
+#messages { @extend %announce-container; }
 
 .message {
-  @extend %icon;
-  @include padding-leader(.5);
-  @include trailing-border(1px,.5);
-  position: relative;
-  padding-left: $grid-padding;
-  padding-right: $grid-padding;
-  border-color: $base;
+  @extend %info-announce;
+  &.success { @extend %success-announce; }
+  &.warning { @extend %warning-announce; }
+  &.error { @extend %error-announce; }
+  .js &.js-warning { display: none; }
 
-  &:before { @include adjust-font-size-to($medpx,1); }
-  &.info { @include message($blue, info-circle); }
-  &.success { @include message($green, checkmark); }
-  &.warning { @include message($yellow, warning); }
-  &.error { @include message($red, x); }
-
-  p { display: inline; }
-}
-
-#messages {
-  @include no-style-list;
-  @include box-shadow($base03 0 0 rhythm(.25), $base03 0 0 rhythm(.5));
-  @include rgba-background(rgba($base03,.5));
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  background: rgba($base03,.5);
-  color: $base3;
-  z-index: 999;
-  .close {
-    @extend %icon-replace;
-    @extend %icon-x-alt;
-    position: absolute;
-    right: rhythm(.5);
-    top: rhythm(.5);;
-    width: 1em;
-    #{$link} { color: $back;}
-    #{$focus} { color: $base3; }
-  }
+  &.closed-timeout { @extend %closed-animation; }
 }

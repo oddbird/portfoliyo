@@ -4,12 +4,26 @@ Account-related forms.
 """
 import operator
 import random
+import time
 
 from django.contrib.auth import forms as auth_forms
 
 import floppyforms as forms
 
 from portfoliyo import model
+from .. import forms as pyoforms
+
+
+class SchoolRadioSelect(forms.RadioSelect):
+    """A RadioSelect with a custom display template."""
+    template_name = 'users/school_radio.html'
+
+
+
+class SchoolForm(forms.ModelForm):
+    class Meta:
+        model = model.School
+        fields = ['name', 'postcode']
 
 
 
@@ -17,26 +31,70 @@ class RegistrationForm(forms.Form):
     """
     Form for registering a new user account.
 
-    Validates that the email address is not already in use, and
-    requires the password to be entered twice to catch typos.
+    Validates that the email address is not already in use, and requires the
+    password to be entered twice to catch typos. Also allows user to either
+    pick from an existing list of schools or enter a new one.
 
     """
-    name = forms.CharField(max_length=200)
-    email = forms.EmailField(max_length=255)
+    name = pyoforms.StripCharField(max_length=200)
+    role = pyoforms.StripCharField(max_length=200)
     password = forms.CharField(widget=forms.PasswordInput(render_value=False))
     password_confirm = forms.CharField(
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
-    role = forms.CharField(max_length=200)
+    email = forms.EmailField(max_length=255)
+    country_code = forms.TypedChoiceField(
+        choices=model.Profile._meta.get_field('country_code').choices,
+        widget=forms.RadioSelect(),
+        )
+    school = pyoforms.ModelChoiceField(
+        queryset=model.School.objects.filter(auto=False).order_by('name'),
+        empty_label=u"I'm not affiliated with a school or program",
+        required=False,
+        widget=SchoolRadioSelect,
+        initial=u'',
+        )
+    addschool = forms.BooleanField(
+        initial=False, required=False, widget=forms.HiddenInput)
+
+
+    def __init__(self, *args, **kwargs):
+        """Also instantiate a nested SchoolForm."""
+        super(RegistrationForm, self).__init__(*args, **kwargs)
+        self.addschool_form = SchoolForm(self.data or None, prefix='addschool')
 
 
     def clean(self):
-        """Verify that the password fields match."""
-        password = self.cleaned_data.get("password")
-        confirm = self.cleaned_data.get("password_confirm")
+        """
+        Verify password fields match and school is provided.
+
+        If addschool is True, build a new School based on data in nested
+        SchoolForm.
+
+        If not, and no school was selected, auto-construct one.
+
+        """
+        data = self.cleaned_data
+        password = data.get('password')
+        confirm = data.get('password_confirm')
         if password != confirm:
             raise forms.ValidationError("The passwords didn't match.")
-        return self.cleaned_data
+        if data.get('addschool'):
+            if self.addschool_form.is_valid():
+                data['school'] = self.addschool_form.save(commit=False)
+            else:
+                raise forms.ValidationError(
+                    "Could not add a school.")
+        else:
+            # reinstantiate unbound addschool_form to avoid spurious errors
+            self.addschool_form = SchoolForm(prefix='addschool')
+            if data.get('email') and not data.get('school'):
+                data['school'] = model.School(
+                    name=(u"%f-%s" % (time.time(), data['email']))[:200],
+                    postcode="",
+                    auto=True,
+                    )
+        return data
 
 
     def clean_email(self):
@@ -48,6 +106,39 @@ class RegistrationForm(forms.Form):
                 "Please supply a different email address."
                 )
         return self.cleaned_data['email']
+
+
+    def save(self):
+        """Save and return new user profile."""
+        school = self.cleaned_data['school']
+        if school.id is None:
+            # this could just set country_code and then school.save(), but that
+            # creates a race condition for two users creating same school at
+            # same time, resulting in IntegrityError
+            school, created = model.School.objects.get_or_create(
+                name=school.name,
+                postcode=school.postcode,
+                defaults={
+                    'country_code': self.cleaned_data['country_code'],
+                    'auto': school.auto,
+                    },
+                )
+
+        profile = model.Profile.create_with_user(
+            name=self.cleaned_data['name'],
+            email=self.cleaned_data['email'],
+            password=self.cleaned_data['password'],
+            role=self.cleaned_data['role'],
+            country_code=self.cleaned_data['country_code'],
+            school=school,
+            school_staff=True,
+            email_confirmed=False,
+            is_active=True,
+            email_notifications=True,
+            )
+
+        return profile
+
 
 
 
@@ -62,10 +153,16 @@ class PasswordResetForm(auth_forms.PasswordResetForm):
         """Fetch the affected users here before sending reset emails."""
         email = self.cleaned_data["email"]
         # super's save expects self.users_cache to be set.
-        self.users_cache = model.User.objects.filter(
-            email__iexact=email, is_active=True)
+        self.users_cache = model.User.objects.filter(email__iexact=email)
 
         return super(PasswordResetForm, self).save(*args, **kwargs)
+
+
+class SetPasswordForm(auth_forms.SetPasswordForm):
+    """A set-password form that activates inactive users."""
+    def save(self, *args, **kwargs):
+        self.user.is_active = True
+        return super(SetPasswordForm, self).save(*args, **kwargs)
 
 
 
@@ -125,7 +222,7 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
         if getattr(self.request, "limited", False):
             a, b = random.randint(1,9), random.randint(1, 9)
             # avoid negative answers
-            if b > a:
+            if b > a: # pragma: no cover
                 a, b = b, a
             opname, op = random.choice(OPERATORS.items())
 
@@ -170,29 +267,26 @@ class CaptchaAuthenticationForm(auth_forms.AuthenticationForm):
 
 
 
-class EditProfileForm(forms.Form):
+class EditProfileForm(forms.ModelForm):
     """Form for editing a users profile."""
-    name = forms.CharField(max_length=200)
-    role = forms.CharField(max_length=200)
+    name = pyoforms.StripCharField(max_length=200)
+    role = pyoforms.StripCharField(max_length=200)
 
 
-    def __init__(self, *a, **kw):
-        """Pull profile kwarg out."""
-        self.profile = kw.pop('profile')
-        initial = kw.setdefault('initial', {})
-        initial['name'] = self.profile.name
-        initial['role'] = self.profile.role
-        super(EditProfileForm, self).__init__(*a, **kw)
+    class Meta:
+        fields = ['name', 'role'] + model.Profile.NOTIFICATION_PREFS
+        model = model.Profile
+
+
+    def __init__(self, *args, **kw):
+        super(EditProfileForm, self).__init__(*args, **kw)
+        self.old_role = self.instance.role
 
 
     def save(self):
         """Save edits and return updated profile."""
-        self.profile.name = self.cleaned_data['name']
-        old_role = self.profile.role
-        new_role = self.cleaned_data['role']
-        self.profile.role = new_role
-        self.profile.save()
-        self.profile.relationships_from.filter(description=old_role).update(
-            description=new_role)
+        profile = super(EditProfileForm, self).save()
+        profile.relationships_from.filter(description=self.old_role).update(
+            description='')
 
-        return self.profile
+        return profile

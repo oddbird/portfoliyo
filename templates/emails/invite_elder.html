@@ -1,0 +1,29 @@
+<p>Hello,</p>
+
+<p>
+  {% if inviter.name %}
+    {{ inviter.name }} ({{ inviter.user.email }})
+  {% else %}
+    {{ inviter.user.email }}
+  {% endif %}
+  has invited you to talk with
+  {% if student %}
+    {{ student }}'s family members and teachers
+  {% else %}
+    the student family members and teachers in their {{ group }} group
+  {% endif %}
+  using <a href="https://www.portfoliyo.org">Portfoliyo</a>.
+</p>
+
+<p>
+  <a href="{{ base_url }}{% url accept_email_invite uidb36=uidb36 token=token %}">Click here</a>
+  to accept this invitation.
+</p>
+
+<p>
+  Otherwise, simply ignore this email.
+</p>
+
+<p>Thanks!</p>
+
+<p>- The Portfoliyo Team</p>

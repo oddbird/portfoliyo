@@ -2,62 +2,17 @@
 // Village Pages
 
 %overflow-y {
-  @include stretch-y;
-  overflow-y: scroll;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 %village-page {
-  height: 100%;
-  padding: rhythm(2);
-  overflow-y: scroll;
+  @extend %formdefaults;
+  @extend %overflow-y;
+  @include transition(padding 300ms);
+  padding: rhythm(.5);
   > :last-child { @include trailer(2); }
-  h2 {
-    @include adjust-font-size-to($largepx);
-    @include trailer(1,$largepx);
-    @include serif;
-    font-weight: bold;
-  }
-}
-
-%village-solo-page {
-  @extend %village-page;
-  @include span-columns($center omega, $content-width);
-  @include post($right, $content-width);
-  margin-left: gutter($content-width);
-}
-
-%village-main-page {
-  @extend %village-page;
-  margin-left: gutter($center);
-}
-
-// ---------------------------------------------------------------------------
-// Village Lists
-
-$village-border-color   : $base1;
-
-$village-list-size      : $smallpx;
-$village-ratio          : $base-font-size / $village-list-size;
-$village-bleed          : $grid-padding * $village-ratio;
-
-%village-lists {
-  @include adjust-font-size-to($village-list-size);
-  ul { @include no-style-list; }
-}
-
-%village-activenav {
-  &.active {
-    @include box-shadow(rgba($back,.5) 0 0 $xxxsmallpx inset);
-    background: $base01;
-    color: $base3;
-  }
-}
-
-%village-addlink {
-  #{$link} {
-    @extend %village-activenav;
-    @include rgba-background(rgba($green,.375));
-    @include background(linear-gradient(bottom, rgba($green,.5), rgba($green,.25)));
-    color: $base;
-  }
+  @include breakpoint(70em) { @include pad(1,1,$content-width); }
+  @include breakpoint(90em) { @include pad(1,4,$content-width); }
 }

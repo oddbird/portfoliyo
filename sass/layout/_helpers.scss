@@ -1,21 +1,7 @@
 // ---------------------------------------------------------------------------
 // Bleed
 
-@mixin bleed($padding: $grid-padding, $sides: left right) {
-  @if $sides == 'all' {
-    margin: - $padding;
-    padding: $padding;
-  } @else {
-    @each $side in $sides {
-      margin-#{$side}: - $padding;
-      padding-#{$side}: $padding;
-    }
-  }
-}
-
-%bleed {
-  @include bleed;
-}
+%bleed { @include bleed; }
 
 // ---------------------------------------------------------------------------
 // Notes
@@ -39,29 +25,26 @@ $simple-width: $break-cols - $simple-side;
 $simple-center: $simple-width - $simple-side;
 
 %simple-page {
-  h2 {
-    @include serif;
-    font-weight: bold;
-  }
+  @extend %type;
+  @include padding-leader(2);
+  @include padding-trailer(2);
+  form { @extend %formdefaults; }
   @include at-breakpoint($break) { @include pad($simple-side,$simple-side); }
 }
 
 %simple-inline-form {
   @include at-breakpoint($break) {
     @include inline-form($simple-side, $simple-center, $simple-center);
-    label { @include pull($simple-side, $simple-center); }
+    .type { @include pull($simple-side, $simple-center); }
   }
 }
 
 %simple-form {
   @extend %simple-page;
   @extend %simple-inline-form;
-  p { @include trailer; }
-  b, strong { font-weight: bold; }
-  i, em { font-style: italic; }
 }
 
 .pagehead {
   @include adjust-font-size-to($largepx);
-  @include trailer(1,$largepx);
+  @include trailer;
 }

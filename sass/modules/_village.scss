@@ -1,26 +1,17 @@
 // ---------------------------------------------------------------------------
-// Village Landing
-
-$initial-break  : $break;
-$break          : $break-width $break-cols;
-
-@import "village/landing";
-
-$break          : $initial-break;
-
-// ---------------------------------------------------------------------------
 // Imports
 
 $initial-cols   : $total-columns;
 $total-columns  : $break-cols;
 
 @import "village/layout";
+@import "village/village-header";
 @import "village/pages";
+@import "village/item-lists";
 @import "village/forms";
 @import "village/dashboard";
 @import "village/nav";
 @import "village/feed";
-@import "village/info";
 @import "village/elders";
 
 $total-columns  : $initial-cols;

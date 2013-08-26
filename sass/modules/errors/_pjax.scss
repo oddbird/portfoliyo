@@ -1,0 +1,10 @@
+// ---------------------------------------------------------------------------
+// Pjax Error
+
+.pjax-error {
+  @extend %village-page;
+  p {
+    @extend %error;
+    padding: rhythm(1);
+  }
+}

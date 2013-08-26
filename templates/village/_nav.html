@@ -1,0 +1,12 @@
+{% load url from future %}
+<nav class="village-nav" data-is-staff="{{ request.user.profile.school_staff }}" data-groups-url="{% url 'api_dispatch_list' resource_name='group' api_name='v1' %}" data-add-group-url="{% url 'add_group' %}">
+
+{% comment %}
+Actual nav is inserted here using the following jstemplates:
+  group_list.handlebars
+  group_list_items.handlebars
+  student_list.handlebars
+  student_list_items.handlebars
+{% endcomment %}
+
+</nav>

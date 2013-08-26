@@ -1,0 +1,133 @@
+{% load elders handlebars formats %}
+
+{% if not read_only %}
+<div class="post-add-form {% block addpost-classes %}{% endblock %}">
+
+  {% block post-add-tabs %}
+  <input type="radio" id="message-form-toggle" name="add-post-types" class="radio-value" checked />
+  <input type="radio" id="note-form-toggle" name="add-post-types" class="radio-value" />
+  <input type="radio" id="conversation-form-toggle" name="add-post-types" class="radio-value" />
+
+  <div class="post-type-tabs">
+    <label for="message-form-toggle" class="radio-type" title="Send a Message">Send a Message</label>
+    <label for="note-form-toggle" class="radio-type" title="Post a Note">Post a Note</label>
+    <label for="conversation-form-toggle" class="radio-type" title="Log a Conversation">Log a Conversation</label>
+  </div>
+  {% endblock %}
+
+  <form method="POST" class="message-form post-type" action="{{ posting_url }}{% if group %}?group={{ group.id }}{% endif %}" data-char-limit="{{ post_char_limit }}" id="message-posting-form">
+    {% csrf_token %}
+
+    <a href="http://translate.google.com/" class="translate-link" target="_blank" title="Translate">Translate</a>
+
+    <input type="hidden" name="type" value="message" />
+
+    {% block to-field %}
+    <div class="formfield to-field">
+      <label class="tokens-type" for="to-input">To:</label>
+      <div class="tokens-input">
+        {% if elders|sms_eligible|length > 1 %}
+          <div class="bulk-tokens">
+            <a href="#" class="add-all">add all</a>
+            <a href="#" class="remove-all">remove all</a>
+          </div>
+        {% endif %}
+        <div class="tokens-list">
+          {% for elder in elders|sms_eligible %}
+            <span class="token">
+              <input class="token-toggle" type="checkbox" name="elder" id="message-elder-{{ elder.id }}" value="{{ elder.id }}" data-display-name="{% firstof elder.name elder.role_in_context %}" checked />
+              <span class="token-body">
+                <label class="token-status sms" for="message-elder-{{ elder.id }}">sms</label>
+                <span class="token-text">{{ elder.role_in_context }}</span>
+                <span class="token-context">{{ elder.name }}</span>
+              </span>
+            </span>
+          {% endfor %}
+        </div>
+        <input type="text" id="to-input" name="to" value="" placeholder="Add recipients..." class="token-value" />
+        <ul class="token-suggest"></ul>
+      </div>
+    </div>
+    {% endblock %}
+
+    <div class="formfield post-textfield">
+      <textarea id="message-text" name="text" class="value"></textarea>
+      <span class="charcount">{{ post_char_limit }} characters remaining...</span>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">Send</button>
+    </div>
+
+  </form>
+
+  {% block post-add-types %}
+  <form method="POST" class="note-form post-type" action="{{ posting_url }}{% if group %}?group={{ group.id }}{% endif %}" id="note-posting-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="hidden" name="type" value="note" />
+    <div class="formfield attach-field">
+      <label class="attach-type" for="attach-file">Attach a file</label>
+      <div class="attach-input"></div>
+      <input type="file" id="attach-file" class="attach-value ie-fix-active" name="attachment" />
+    </div>
+    <div class="formfield post-textfield">
+      <textarea id="note-text" name="text" class="value"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">Post</button>
+    </div>
+  </form>
+
+  <form method="POST" class="conversation-form post-type" action="{{ posting_url }}{% if group %}?group={{ group.id }}{% endif %}" id="conversation-posting-form">
+    {% csrf_token %}
+    <div class="formfield convo-type-field">
+      <ul class="radio-options">
+        <li class="option">
+          <input type="radio" id="convo-call" class="radio-value" value="call" name="type" checked />
+          <label for="convo-call" class="radio-type">Call</label>
+        </li>
+        <li class="option">
+          <input type="radio" id="convo-meeting" class="radio-value" value="meeting" name="type" />
+          <label for="convo-meeting" class="radio-type">Meeting</label>
+        </li>
+      </ul>
+    </div>
+    <div class="formfield with-field">
+      <label class="tokens-type" for="with-input">With:</label>
+      <div class="tokens-input">
+        {% if elders|length > 1 %}
+          <div class="bulk-tokens">
+            <a href="#" class="add-all">add all</a>
+            <a href="#" class="remove-all">remove all</a>
+          </div>
+        {% endif %}
+        <div class="tokens-list">
+          {% for elder in elders %}
+            <span class="token">
+              <input class="token-toggle" type="checkbox" name="elder" id="conversation-elder-{{ elder.id }}" value="{{ elder.id }}" data-display-name="{% firstof elder.name elder.role_in_context %}" />
+              <span class="token-body">
+                <label class="token-status" for="conversation-elder-{{ elder.id }}">present</label>
+                <span class="token-text">{{ elder.role_in_context }}</span>
+                <span class="token-context">{{ elder.name }}</span>
+              </span>
+            </span>
+          {% endfor %}
+        </div>
+        <input type="text" id="with-input" name="with" value="" placeholder="Add participants..." class="token-value" />
+        <ul class="token-suggest"></ul>
+      </div>
+    </div>
+
+    <div class="formfield post-textfield">
+      <textarea id="conversation-text" name="text" class="value"></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="action-post">Log</button>
+    </div>
+  </form>
+  {% endblock %}
+
+</div>
+{% endif %}

@@ -1,0 +1,60 @@
+// ---------------------------------------------------------------------------
+// IE Warning
+
+.browser-warning {
+  @include rhythm-padding(2);
+  @include stretch-x;
+  top: 0;
+  display: none;
+  .lt-ie9 & { display: block; }
+  .modal {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba($back,.75);
+    z-index: 10;
+  }
+
+  .wrap {
+    @include leader;
+    @include rhythm-borders(3px,1);
+    @include rem(max-width, columns-width($total-columns));
+    position: relative;
+    margin: 0 auto;
+    background: lighten($base3,3);
+    color: $base;
+    border-color: $orange;
+    z-index: 100;
+  }
+  img {
+    max-width: 100%;
+    vertical-align: top;
+  }
+}
+
+.chrome {
+  @include pad(2,2);
+  @include leader(.5);
+  a { display: block; }
+}
+
+.browser-details {
+  .summary {
+    @include link($non-links: true);
+    @include trailer(1);
+    text-align: center;
+    font-style: italic;
+  }
+  .details-body, & + p { clear: both; }
+  a { display: block; }
+}
+
+.browser-list {
+  @include clearfix;
+  @include trailer(1);
+  text-align: center;
+  li { @include span-columns(2,6); }
+  li + li + li { @include omega; }
+}

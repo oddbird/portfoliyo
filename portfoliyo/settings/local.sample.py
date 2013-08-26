@@ -24,6 +24,8 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 #DEBUG = False
 #TEMPLATE_DEBUG = False
 
+#PORTFOLIYO_BASE_URL = 'https://www.portfoliyo.org'
+
 # This email address will get emailed on 500 server errors.
 #ADMINS = [
 #    ("Some One", "someone@example.com"),
@@ -61,7 +63,10 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 #PORTFOLIYO_SMS_BACKEND = 'portfoliyo.sms.backends.twilio.TwilioSMSBackend'
 #TWILIO_ACCOUNT_SID = 'your account sid here'
 #TWILIO_AUTH_TOKEN = 'your auth token here'
-#PORTFOLIYO_SMS_DEFAULT_FROM = '+15555555555'
+#PORTFOLIYO_NUMBERS = {
+#    'us': '+15555555555',
+#    'ca': '+15555555555',
+#    }
 
 # Configure Pusher as follows:
 #PUSHER_APPID = 'your appid'

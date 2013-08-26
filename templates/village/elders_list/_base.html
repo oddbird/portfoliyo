@@ -1,0 +1,54 @@
+{% load elders %}
+{% load url from future %}
+
+{% with elders|elder_types as elder_types %}
+{% for elder_type in elder_types %}
+
+<nav class="elder-list {% if elder_type.school_staff %}teachers{% else %}family{% endif %}">
+  <header class="elder-header">
+    {% block invite-elder %}
+    {% if request.user.profile.school_staff %}
+    <a href="{% block invite-elder-url %}{% endblock %}" class="additem-elder ajax-link{% if invite_teacher_active and elder_type.school_staff %} active{% endif %}{% if invite_family_active and not elder_type.school_staff %} active{% endif %}" title="Invite {% if elder_type.school_staff %}Teachers{% else %}Family{% endif %}">
+      Invite <span class="alt-text">{% if elder_type.school_staff %}Teachers{% else %}Family{% endif %}</span>
+    </a>
+    {% endif %}
+    {% endblock invite-elder %}
+
+    <h2 class="elder-title">
+      {% if elder_type.school_staff %}Teachers{% else %}Family{% endif %}
+    </h2>
+  </header>
+
+  {% if elder_type.elders %}
+  <ul class="itemlist {% if elder_type.school_staff %}teachers-list{% else %}parents-list{% endif %}">
+    {% for nav_elder in elder_type.elders %}
+    {% if not nav_elder.school_staff %}
+
+    {# Parents ----------------------------------------- #}
+    <li class="elder parent">
+      {% if request.user.profile.school_staff %}
+      <a href="{% block edit-elder-url %}{% endblock %}" class="vcard listitem-select action-edit ajax-link {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="{{ nav_elder|elder_status_description:request.user.profile }} [Edit]">
+        {% include "village/elders_list/_elder_info.html" %}
+      </a>
+      {% else %}
+      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="{{ nav_elder|elder_status_description:request.user.profile }}">
+        {% include "village/elders_list/_elder_info.html" %}
+      </span>
+      {% endif %}
+    </li>
+    {% else %}
+
+    {# Teachers ----------------------------------------- #}
+    <li class="elder teacher">
+      <span class="vcard {{ nav_elder|elder_status:request.user.profile }}{% if nav_elder == elder %} active{% endif %}" title="{{ nav_elder|elder_status_description:request.user.profile }}">
+        {% include "village/elders_list/_elder_info.html" %}
+      </span>
+    </li>
+    {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+</nav>
+
+{% endfor %}
+{% endwith %}

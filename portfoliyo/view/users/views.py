@@ -4,8 +4,9 @@ Account-related views.
 """
 from functools import partial
 
+from django.conf import settings
+from django.contrib import auth
 from django.contrib.auth import views as auth_views, forms as auth_forms
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import redirect
@@ -14,17 +15,19 @@ from django.utils.http import base36_to_int
 from django.views.decorators.http import require_POST
 
 from ratelimit.decorators import ratelimit
-from registration import views as registration_views
 from session_csrf import anonymous_csrf
 
-from portfoliyo import model
+from portfoliyo import model, invites, xact
+from portfoliyo.view import tracking
+from ..decorators import login_required
 from ..home import redirect_home
-from . import forms
+from . import forms, tokens
 
 
 
 @anonymous_csrf
 @ratelimit(field='username', method='POST', rate='5/m')
+@xact.xact # auth_views.login sends user_logged_in signal, updates last_login
 def login(request):
     kwargs = {
         'template_name': 'users/login.html',
@@ -46,6 +49,7 @@ def logout(request):
 
 
 @login_required
+@xact.xact
 def password_change(request):
     response = auth_views.password_change(
         request,
@@ -67,8 +71,8 @@ def password_reset(request):
         request,
         password_reset_form=forms.PasswordResetForm,
         template_name='users/password_reset.html',
-        email_template_name='registration/password_reset_email.txt',
-        subject_template_name='registration/password_reset_subject.txt',
+        email_template_name='emails/password_reset.txt',
+        subject_template_name='emails/password_reset.subject.txt',
         post_reset_redirect=redirect_home(request.user),
         )
 
@@ -85,13 +89,14 @@ def password_reset(request):
 
 
 @anonymous_csrf
+@xact.xact
 def password_reset_confirm(request, uidb36, token):
     response = auth_views.password_reset_confirm(
         request,
         uidb36=uidb36,
         token=token,
         template_name='users/password_reset_confirm.html',
-        set_password_form=auth_forms.SetPasswordForm,
+        set_password_form=forms.SetPasswordForm,
         post_reset_redirect=redirect_home(request.user),
         )
 
@@ -102,34 +107,77 @@ def password_reset_confirm(request, uidb36, token):
 
 
 
-def activate(request, activation_key):
-    response = registration_views.activate(
-        request,
-        activation_key=activation_key,
-        backend='portfoliyo.view.users.register.RegistrationBackend',
-        template_name='users/activate.html',
-        success_url=reverse('login'),
-        )
-
-    if response.status_code == 302:
-        messages.success(request, "Account activated; now you can login.")
-
-    return response
-
-
-
 @anonymous_csrf
 def register(request):
-    return registration_views.register(
+    if request.method == 'POST':
+        form = forms.RegistrationForm(request.POST)
+        if form.is_valid():
+            with xact.xact():
+                profile = form.save()
+                user = profile.user
+                user.backend = settings.AUTHENTICATION_BACKENDS[0]
+                auth.login(request, user)
+                token_generator = tokens.EmailConfirmTokenGenerator()
+                invites.send_invite_email(
+                    profile,
+                    'emails/welcome',
+                    token_generator=token_generator,
+                    )
+                messages.success(
+                    request,
+                    "Welcome to Portfoliyo! "
+                    "Grab your phone and add yourself as a parent "
+                    "to see how it works!"
+                    )
+                tracking.track(
+                    request,
+                    'registered',
+                    email_notifications=(
+                        'yes'
+                        if form.cleaned_data.get('email_notifications')
+                        else 'no'
+                        ),
+                    user_id=user.id,
+                    )
+            return redirect(redirect_home(user))
+    else:
+        form = forms.RegistrationForm()
+
+    return TemplateResponse(
         request,
-        backend='portfoliyo.view.users.register.RegistrationBackend',
-        template_name='users/register.html',
-        success_url=reverse('awaiting_activation'),
+        'users/register.html',
+        {'form': form},
         )
 
 
 
+def confirm_email(request, uidb36, token):
+    """Confirm an email address."""
+    try:
+        uid_int = base36_to_int(uidb36)
+        user = model.User.objects.get(id=uid_int)
+    except (ValueError, model.User.DoesNotExist):
+        user = None
+
+    token_generator = tokens.EmailConfirmTokenGenerator()
+
+    if user is not None and token_generator.check_token(user, token):
+        with xact.xact():
+            user.is_active = True
+            user.save(force_update=True)
+            profile = user.profile
+            profile.email_confirmed = True
+            profile.save(force_update=True)
+            messages.success(request, "Email address %s confirmed!" % user.email)
+            tracking.track(request, 'confirmed email')
+        return redirect(redirect_home(user))
+
+    return TemplateResponse(request, 'users/confirmation_failed.html')
+
+
+
 @anonymous_csrf
+@xact.xact
 def accept_email_invite(request, uidb36, token):
     response = auth_views.password_reset_confirm(
         request,
@@ -137,7 +185,7 @@ def accept_email_invite(request, uidb36, token):
         token=token,
         template_name='users/accept_email_invite.html',
         set_password_form=auth_forms.SetPasswordForm,
-        post_reset_redirect=reverse('edit_profile'),
+        post_reset_redirect=reverse('login'),
         )
 
     if response.status_code == 302:
@@ -149,6 +197,7 @@ def accept_email_invite(request, uidb36, token):
             u"Now log in using your email address and password "
             u"to see messages about your student.",
             )
+        tracking.track(request, 'accepted email invite')
 
     return response
 
@@ -156,12 +205,14 @@ def accept_email_invite(request, uidb36, token):
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
-        form = forms.EditProfileForm(request.POST, profile=request.user.profile)
+        form = forms.EditProfileForm(
+            request.POST, instance=request.user.profile)
         if form.is_valid():
-            form.save()
+            with xact.xact():
+                form.save()
             messages.success(request, u"Profile changes saved!")
             return redirect(redirect_home(request.user))
     else:
-        form = forms.EditProfileForm(profile=request.user.profile)
+        form = forms.EditProfileForm(instance=request.user.profile)
 
     return TemplateResponse(request, 'users/edit_profile.html', {'form': form})
