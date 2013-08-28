@@ -47,6 +47,11 @@
   [value="us"] + .radio-type:before { background-image: image-url('flags/us.png'); }
 }
 
+.terms-confirm {
+  @include trailer;
+  .check-type { @include adjust-font-size-to($smallpx); }
+}
+
 .school-field {
   @include trailer;
   .school-name { @include span-columns(8,$center); }
