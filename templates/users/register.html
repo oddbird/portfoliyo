@@ -1,5 +1,6 @@
 {% extends "base_site.html" %}
 {% load widget_tweaks %}
+{% load url from future %}
 
 {% block title %}Get started | {{ block.super }}{% endblock title %}
 
@@ -38,8 +39,9 @@
     </div>
 
     <div class="fieldset terms-confirm">
-      <input type="checkbox" id="terms-confirm" class="value" />
-      <label for="terms-confirm" class="check-type">I have read and agree to the <a href="#">Portfoliyo Terms of Service</a>.</label>
+      {{ form.terms_confirm.errors }}
+      {{ form.terms_confirm }}
+      <label for="id_terms_confirm" class="check-type">I have read and agree to the <a href="{% url 'terms_of_service' %}" target="_blank">Portfoliyo Terms of Service</a>.</label>
     </div>
 
     <div class="form-actions">

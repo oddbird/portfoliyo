@@ -56,6 +56,7 @@ class RegistrationForm(forms.Form):
         )
     addschool = forms.BooleanField(
         initial=False, required=False, widget=forms.HiddenInput)
+    terms_confirm = forms.BooleanField(required=True)
 
 
     def __init__(self, *args, **kwargs):

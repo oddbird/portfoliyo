@@ -267,6 +267,7 @@ class TestRegister(object):
         form['role'] = 'Test User'
         form['country_code'] = 'us'
         form['school'] = str(school.id)
+        form['terms_confirm'] = True
         res = form.submit(status=302)
 
         assert res['Location'] == utils.location(reverse('add_student'))
@@ -302,6 +303,7 @@ class TestConfirmEmail(object):
         form['role'] = 'New Role'
         form['country_code'] = 'us'
         form['school'] = str(school.id)
+        form['terms_confirm'] = True
         form.submit(status=302)
 
         for line in mail.outbox[0].body.splitlines():

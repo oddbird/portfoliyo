@@ -14,6 +14,7 @@ class TestRegistrationForm(object):
         'password_confirm': 'sekrit',
         'role': 'Some Role',
         'country_code': 'us',
+        'terms_confirm': '1',
         }
 
 
@@ -27,6 +28,16 @@ class TestRegistrationForm(object):
         assert profile.school_staff
         assert profile.user.is_active
         assert profile.country_code == 'us'
+
+
+    def test_must_accept_terms(self, db):
+        """Registration requires accepting terms of service."""
+        data = self.base_data.copy()
+        del data['terms_confirm']
+        form = forms.RegistrationForm(data)
+
+        assert not form.is_valid()
+        assert form.errors == {'terms_confirm': [u"This field is required."]}
 
 
     def test_source_phone(self, db):
