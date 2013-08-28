@@ -29,7 +29,7 @@ urlpatterns = patterns(
         name='no_students',
         ),
     url(r'^terms/$',
-        login_required(direct_to_template),
+        direct_to_template,
         {'template': 'terms_of_service.html'},
         name='terms_of_service',
         ),
