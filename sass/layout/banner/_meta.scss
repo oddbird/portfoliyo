@@ -77,7 +77,7 @@
 
   .settingslink {
     @extend %icon-cog;
-    @extend %ellipsis;
+    @include tooltip(bottom left);
     float: right;
     padding: {
       left: 1em;

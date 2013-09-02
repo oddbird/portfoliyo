@@ -28,7 +28,13 @@
           <span class="alt-text">Logout</span>
         </button>
       </form>
-      <a href="{% url 'edit_profile' %}" class="settingslink" title="Edit profile" data-user-id="{{ user.id }}" data-user-email="{{ user.email }}" data-user-name="{{ user.profile.name }}" data-user-code="{{ user.profile.code }}"{% if not user.profile.school.auto %} data-user-school="{{ user.profile.school }}"{% endif %}>{% firstof user.profile.name user.email %}</a>
+      <a href="{% url 'edit_profile' %}" class="settingslink" data-user-id="{{ user.id }}" data-user-email="{{ user.email }}" data-user-name="{{ user.profile.name }}" data-user-code="{{ user.profile.code }}"{% if not user.profile.school.auto %} data-user-school="{{ user.profile.school }}"{% endif %}>
+        {% firstof user.profile.name user.email %}
+        <span class="trial">
+          <span class="trial-text">(free trial)</span>
+          <span class="tooltip">@@@ days reminaing</span>
+        </span>
+      </a>
     </nav>
     {% else %}
     <nav class="login-nav">
