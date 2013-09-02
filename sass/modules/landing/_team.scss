@@ -2,7 +2,7 @@
 // Team
 
 .team {
-  @include padding-leader(2);
+  padding: rhythm(2) rhythm(1) 0;
 }
 
 .dev {
@@ -41,10 +41,7 @@
 
   @include at-breakpoint($break) {
     @include prefix(3);
-    @include span-columns(10);
-    &:nth-child(2), &:last-child { @include omega; }
-    &:nth-child(3), &:nth-child(4) { clear: both; }
-    &:nth-child(3) { @include pre(5); }
+    @include isolate-grid(10);
     &:before { width: columns(3,10); }
   }
 }

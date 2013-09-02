@@ -2324,8 +2324,7 @@ button {
 }
 
 .team {
-  padding-top: 46px;
-  padding-top: 2.55556rem;
+  padding: 2.55556rem 1.27778rem 0;
 }
 
 .dev {
@@ -2384,16 +2383,15 @@ button {
     width: 49.36709%;
     float: left;
     margin-right: 1.26582%;
+    margin-right: -100%;
   }
-  .dev:nth-child(2), .dev:last-child {
-    float: right;
-    margin-right: 0;
+  .dev:nth-child(2n + 1) {
+    margin-left: 0%;
+    clear: left;
   }
-  .dev:nth-child(3), .dev:nth-child(4) {
-    clear: both;
-  }
-  .dev:nth-child(3) {
-    margin-left: 25.31646%;
+  .dev:nth-child(2n + 2) {
+    margin-left: 50.63291%;
+    clear: none;
   }
   .dev:before {
     width: 28.20513%;
