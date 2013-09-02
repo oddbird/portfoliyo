@@ -2,10 +2,6 @@
 
 <div class="formfield {{ field.html_name }}-field{% if field|optional %} optional{% endif %}{% if field.errors %} errors{% endif %}">
 
-  {% if not errorslast %}
-    {{ field.errors }}
-  {% endif %}
-
   {% if field|is_checkbox %}
     {% include "forms/field/_input.html" %}
     {% include "forms/field/_label.html" %}
@@ -21,8 +17,6 @@
     </div>
   {% endif %}
 
-  {% if errorslast %}
-    {{ field.errors }}
-  {% endif %}
+  {{ field.errors }}
 
 </div>

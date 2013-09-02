@@ -174,6 +174,48 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   font-style: normal;
 }
 
+/* Use the following CSS code if you want to have a class per icon */
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
+  font-family: 'pyo';
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+}
+
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+  margin-right: .2em;
+}
+
+.group-posts .translate-link, .bulk-tokens a, .action-showgroups, #messages .close, .village-posts .translate-link, .token-status, .post-meta [for*="toggle"] {
+  display: inline-block;
+  position: relative;
+  width: 1em;
+  text-indent: -9999px;
+  text-align: left;
+}
+.group-posts .translate-link:focus, .bulk-tokens a:focus, .action-showgroups:focus, #messages .close:focus, .village-posts .translate-link:focus, .token-status:focus, .post-meta [for*="toggle"]:focus {
+  outline: 0;
+}
+.group-posts .translate-link:focus:before, .bulk-tokens a:focus:before, .action-showgroups:focus:before, #messages .close:focus:before, .village-posts .translate-link:focus:before, .token-status:focus:before, .post-meta [for*="toggle"]:focus:before {
+  outline: 1px dotted;
+}
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-indent: 0;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+/* Use the following CSS code if you want to use data attributes for inserting your icons */
+[data-icon]:before {
+  content: attr(data-icon);
+}
+
 .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before {
   content: "\e000";
 }
@@ -306,46 +348,184 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e027";
 }
 
-/* Use the following CSS code if you want to have a class per icon */
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
-  font-family: 'pyo';
-  font-style: normal;
-  font-weight: normal;
-  speak: none;
+[data-icon="radio-unchecked"]:before {
+  content: "\e000";
 }
 
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
-  margin-right: .2em;
+[data-icon="radio-checked"]:before {
+  content: "\e001";
 }
 
-.group-posts .translate-link, .bulk-tokens a, .action-showgroups, #messages .close, .village-posts .translate-link, .token-status, .post-meta [for*="toggle"] {
-  display: inline-block;
-  position: relative;
-  width: 1em;
-  text-indent: -9999px;
-  text-align: left;
-}
-.group-posts .translate-link:focus, .bulk-tokens a:focus, .action-showgroups:focus, #messages .close:focus, .village-posts .translate-link:focus, .token-status:focus, .post-meta [for*="toggle"]:focus {
-  outline: 0;
-}
-.group-posts .translate-link:focus:before, .bulk-tokens a:focus:before, .action-showgroups:focus:before, #messages .close:focus:before, .village-posts .translate-link:focus:before, .token-status:focus:before, .post-meta [for*="toggle"]:focus:before {
-  outline: 1px dotted;
-}
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  text-indent: 0;
-  margin: 0;
-  padding: 0;
-  text-align: center;
+[data-icon="checkbox-unchecked"]:before {
+  content: "\e002";
 }
 
-/* Use the following CSS code if you want to use data attributes for inserting your icons */
-[data-icon]:before {
-  content: attr(data-icon);
+[data-icon="checkbox-checked"]:before {
+  content: "\e003";
+}
+
+[data-icon="checkbox-partial"]:before {
+  content: "\e004";
+}
+
+[data-icon="checkmark"]:before {
+  content: "\e005";
+}
+
+[data-icon="close"]:before {
+  content: "\e006";
+}
+
+[data-icon="plus"]:before {
+  content: "\e007";
+}
+
+[data-icon="cancel-circle"]:before {
+  content: "\e008";
+}
+
+[data-icon="arrow-up"]:before {
+  content: "\e00a";
+}
+
+[data-icon="arrow-right"]:before {
+  content: "\e00b";
+}
+
+[data-icon="arrow-down"]:before {
+  content: "\e00c";
+}
+
+[data-icon="arrow-left"]:before {
+  content: "\e00d";
+}
+
+[data-icon="info"]:before {
+  content: "\e00e";
+}
+
+[data-icon="warning"]:before {
+  content: "\e00f";
+}
+
+[data-icon="cog"]:before {
+  content: "\e010";
+}
+
+[data-icon="pencil"]:before {
+  content: "\f071";
+}
+
+[data-icon="remove"]:before {
+  content: "\e011";
+}
+
+[data-icon="lock"]:before {
+  content: "\e013";
+}
+
+[data-icon="key"]:before {
+  content: "\e014";
+}
+
+[data-icon="enter"]:before {
+  content: "\e015";
+}
+
+[data-icon="exit"]:before {
+  content: "\e016";
+}
+
+[data-icon="download"]:before {
+  content: "\e009";
+}
+
+[data-icon="link"]:before {
+  content: "\e017";
+}
+
+[data-icon="bubble"]:before {
+  content: "\e01a";
+}
+
+[data-icon="user"]:before {
+  content: "\f111";
+}
+
+[data-icon="home"]:before {
+  content: "\e020";
+}
+
+[data-icon="question-sign"]:before {
+  content: "\f059";
+}
+
+[data-icon="loop"]:before {
+  content: "\e01f";
+}
+
+[data-icon="undo"]:before {
+  content: "\f0e2";
+}
+
+[data-icon="reorder"]:before {
+  content: "\e012";
+}
+
+[data-icon="undo-2"]:before {
+  content: "\e01e";
+}
+
+[data-icon="users-list"]:before {
+  content: "\e021";
+}
+
+[data-icon="users-plus"]:before {
+  content: "\e01d";
+}
+
+[data-icon="users"]:before {
+  content: "\e01b";
+}
+
+[data-icon="user-plus"]:before {
+  content: "\e01c";
+}
+
+[data-icon="bubble-dots"]:before {
+  content: "\e022";
+}
+
+[data-icon="bubble-forward"]:before {
+  content: "\e018";
+}
+
+[data-icon="bubble-reply"]:before {
+  content: "\e019";
+}
+
+[data-icon="attachment"]:before {
+  content: "\e023";
+}
+
+[data-icon="phone"]:before {
+  content: "\e024";
+}
+
+[data-icon="bubbles"]:before {
+  content: "\e025";
+}
+
+[data-icon="envelope"]:before {
+  content: "\e026";
+}
+
+[data-icon="pushpin"]:before {
+  content: "\f08d";
+}
+
+[data-icon="globe"]:before {
+  content: "\e027";
 }
 
 html {
@@ -442,6 +622,11 @@ a:focus, a:hover, a:active {
 .content-template ol, .login ol, .register ol, .edit-profile ol, .reset-password ol, .change-password ol, .set-password ol, [class^="errorpage-"] ol, .activationfailed ol, .awaiting-activation ol, .no-students ol, .terms-of-service ol, .activity ol {
   list-style: decimal;
   padding-left: 1.5em;
+}
+.content-template ul.errorlist, .login ul.errorlist, .register ul.errorlist, .edit-profile ul.errorlist, .reset-password ul.errorlist, .change-password ul.errorlist, .set-password ul.errorlist, [class^="errorpage-"] ul.errorlist, .activationfailed ul.errorlist, .awaiting-activation ul.errorlist, .no-students ul.errorlist, .terms-of-service ul.errorlist, .activity ul.errorlist, .content-template ol.errorlist, .login ol.errorlist, .register ol.errorlist, .edit-profile ol.errorlist, .reset-password ol.errorlist, .change-password ol.errorlist, .set-password ol.errorlist, [class^="errorpage-"] ol.errorlist, .activationfailed ol.errorlist, .awaiting-activation ol.errorlist, .no-students ol.errorlist, .terms-of-service ol.errorlist, .activity ol.errorlist {
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 .content-template em, .login em, .register em, .edit-profile em, .reset-password em, .change-password em, .set-password em, [class^="errorpage-"] em, .activationfailed em, .awaiting-activation em, .no-students em, .terms-of-service em, .activity em {
   font-style: italic;
@@ -614,10 +799,17 @@ optgroup {
 }
 
 .errorlist {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
   margin: 0;
   padding: 0;
   border: 0;
   list-style: none;
+  clear: both;
+  margin: 0;
+  padding: 0;
   color: #dc322f;
 }
 .errorlist li {
@@ -1331,6 +1523,51 @@ button {
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
   font-weight: bold;
+}
+
+.tooltip {
+  font-size: 12px;
+  font-size: 0.66667rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  position: absolute;
+  padding: 0.31944rem 0.63889rem;
+  color: #fdf6e3;
+  background: #4c4c4c;
+  border: 1px solid #fdf6e3;
+  white-space: nowrap;
+  display: none;
+}
+[data-tooltip].tooltip:after {
+  content: attr(data-tooltip);
+}
+
+.top-link .tooltip {
+  bottom: 100%;
+  margin-bottom: 0.31944rem;
+}
+
+.top-link .tooltip {
+  right: 0;
+}
+.top-link .tooltip:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  top: 100%;
+  border-top-color: #4c4c4c;
+  border-width: 0.31944rem;
+  right: 0.31944rem;
+}
+
+.top-link {
+  position: relative;
+}
+.no-touch .top-link:hover .tooltip {
+  display: block;
 }
 
 .initial-password {
@@ -4502,4 +4739,57 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 .elder .vcard.active:before, .elder .vcard.active .fn, .elder .vcard.active .value {
   color: #eee8d5;
+}
+
+.terms-of-service h2 {
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+.terms-of-service h3 {
+  text-transform: uppercase;
+}
+
+.top-link {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 5px;
+  padding: 0.26389rem;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
+  background: -moz-linear-gradient(top, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
+  background: -o-linear-gradient(top, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
+  background: linear-gradient(to bottom, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
+  background-color: #b02825;
+  border-color: #5b2f33;
+  color: #fdf6e3;
+  -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
+  display: inline-block;
+  margin: 0;
+  padding-left: 1em;
+  padding-right: 1em;
+  text-align: center;
+  display: block;
+  position: fixed;
+  bottom: 0.63889rem;
+  right: 0.63889rem;
+  opacity: .25;
+}
+.top-link:link, .top-link:visited, .top-link:focus, .top-link:hover, .top-link:active {
+  color: #fdf6e3;
+}
+.top-link:active {
+  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+}
+.top-link:focus, .top-link:hover, .top-link:active {
+  opacity: 1;
 }

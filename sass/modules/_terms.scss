@@ -3,4 +3,24 @@
 
 .terms-of-service {
   @extend %simple-page;
+  h2 {
+    @include trailer(.5);
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  h3 {
+    text-transform: uppercase;
+  }
+}
+
+.top-link {
+  @include button(color(dark $red));
+  @include tooltip(top left);
+  display: block;
+  position: fixed;
+  bottom: rhythm(.5);
+  right: rhythm(.5);
+  opacity: .25;
+
+  #{$focus} { opacity: 1; }
 }

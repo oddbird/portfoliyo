@@ -1,0 +1,96 @@
+// Tooltips
+// ========
+
+$tooltip-background: color(darker);
+$tooltip-color: contrast($tooltip-background);
+$tooltip-arrow-size: rhythm(.25);
+
+%tooltip-base {
+  @include adjust-font-size-to($xsmallpx);
+  position: absolute;
+  padding: rhythm(.25) rhythm(.5);
+  color: $tooltip-color;
+  background: $tooltip-background;
+  border: 1px solid $tooltip-color;
+  white-space: nowrap;
+
+  &[data-tooltip] { @include after(attr(data-tooltip)); }
+
+  display: none;
+}
+
+// Positions
+// ---------
+
+%tooltip-top {
+  bottom: 100%;
+  margin-bottom: $tooltip-arrow-size;
+}
+
+%tooltip-top-left {
+  @extend %tooltip-top;
+  @include arrow(bottom (- $tooltip-arrow-size) $tooltip-background $tooltip-arrow-size, $positioning: null);
+  right: 0;
+}
+
+%tooltip-top-right {
+  @extend %tooltip-top;
+  @include arrow(bottom $tooltip-arrow-size $tooltip-background $tooltip-arrow-size, $positioning: null);
+  left: 0;
+}
+
+%tooltip-bottom {
+  top: 100%;
+  margin-top: $tooltip-arrow-size;
+}
+
+%tooltip-bottom-left {
+  @extend %tooltip-bottom;
+  @include arrow(top (- $tooltip-arrow-size) $tooltip-background $tooltip-arrow-size, $positioning: null);
+  right: 0;
+}
+
+%tooltip-bottom-right {
+  @extend %tooltip-bottom;
+  @include arrow(top $tooltip-arrow-size $tooltip-background $tooltip-arrow-size, $positioning: null);
+  left: 0;
+}
+
+// Defaults
+// --------
+
+.tooltip {
+  @extend %tooltip-base;
+}
+
+// Triggers
+// --------
+
+%has-tooltip {
+  position: relative;
+  .no-touch &:hover .tooltip { display: block; }
+}
+
+// Mixin
+// -----
+
+$default-tooltip-x          : right           !default;
+$default-tooltip-y          : top             !default;
+$default-tooltip-selector   : '.tooltip'      !default;
+
+@mixin tooltip(
+  $pos: $default-tooltip-x $default-tooltip-y,
+  $selector: $default-tooltip-selector
+) {
+  $default-x: $default-tooltip-x;
+  $default-y: $default-tooltip-y;
+
+  $opposite-x: opposite-position($default-x);
+  $opposite-y: opposite-position($default-y);
+
+  $x: if(index($pos, $opposite-x), $opposite-x, $default-x);
+  $y: if(index($pos, $opposite-y), $opposite-y, $default-y);
+
+  @extend %has-tooltip;
+  #{$selector} { @extend %tooltip-#{$y}-#{$x}; }
+}

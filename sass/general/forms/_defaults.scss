@@ -34,7 +34,11 @@ $input-rhythm: .25;
 }
 
 .errorlist {
+  @include adjust-font-size-to($smallpx);
   @include no-style-list;
+  clear: both;
+  margin: 0;
+  padding: 0;
   color: $red;
 }
 

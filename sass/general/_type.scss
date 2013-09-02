@@ -26,6 +26,10 @@
     padding-left: 1.5em;
   }
 
+  ul, ol {
+    &.errorlist { @include reset-box-model; }
+  }
+
   em { font-style: italic; }
   strong { font-weight: 500; }
 }
