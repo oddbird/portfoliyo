@@ -175,14 +175,14 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .upgrade-title:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .upgrade-title:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
@@ -260,7 +260,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00e";
 }
 
-.message.warning:before, .post-add-form.group-posts .no-to-field:before, .feedstatus.error:before, .post .timeout:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+.message.warning:before, .upgrade-title:before, .post-add-form.group-posts .no-to-field:before, .feedstatus.error:before, .post .timeout:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
   content: "\e00f";
 }
 
@@ -1990,7 +1990,9 @@ button {
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  padding: 0 1.27778rem;
+}
+.admin:first-line {
+  text-transform: uppercase;
 }
 
 .main-register-link {
@@ -2007,6 +2009,10 @@ button {
   width: 100%;
   padding-left: 1em;
   padding-right: 1em;
+}
+.main-register-link strong {
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 @media (min-width: 43.875em) and (max-width: 56.25em) {
@@ -2818,6 +2824,49 @@ button {
 
 .add-school.fieldset {
   display: none;
+}
+
+.upgrade-notice {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+  margin-left: -1.27778rem;
+  padding-left: 1.27778rem;
+  margin-right: -1.27778rem;
+  padding-right: 1.27778rem;
+  border-width: 1px;
+  border-width: 0.05556rem;
+  border-style: solid;
+  padding: 22px;
+  padding: 1.22222rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  border-color: #b58900;
+  background: #eee8d5;
+}
+
+.upgrade-title {
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+  font-weight: bold;
+}
+
+.upgrade-body {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+}
+.upgrade-body p {
+  margin-bottom: 12px;
+  margin-bottom: 0.63889rem;
+}
+.upgrade-body p:last-child {
+  margin-bottom: 0px;
+  margin-bottom: 0rem;
+}
+.upgrade-body strong {
+  font-weight: bold;
 }
 
 .fieldset.notifications {

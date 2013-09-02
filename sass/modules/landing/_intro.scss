@@ -38,7 +38,9 @@
 
 .admin {
   @include adjust-font-size-to($smallpx);
-  padding: 0 rhythm(1);
+  &:first-line {
+    text-transform: uppercase;
+  }
 }
 
 .main-register-link {
@@ -49,6 +51,10 @@
   width: 100%;
   padding-left: 1em;
   padding-right: 1em;
+  strong {
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 }
 
 @include at-breakpoint(append($break, 50rem)) {
