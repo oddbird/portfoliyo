@@ -15,7 +15,6 @@ from django.utils.http import base36_to_int
 from django.views.decorators.http import require_POST
 
 from ratelimit.decorators import ratelimit
-from session_csrf import anonymous_csrf
 
 from portfoliyo import model, invites, xact
 from portfoliyo.view import tracking
@@ -25,7 +24,6 @@ from . import forms, tokens
 
 
 
-@anonymous_csrf
 @ratelimit(field='username', method='POST', rate='5/m')
 @xact.xact # auth_views.login sends user_logged_in signal, updates last_login
 def login(request):
@@ -65,7 +63,6 @@ def password_change(request):
 
 
 
-@anonymous_csrf
 def password_reset(request):
     response = auth_views.password_reset(
         request,
@@ -88,7 +85,6 @@ def password_reset(request):
 
 
 
-@anonymous_csrf
 @xact.xact
 def password_reset_confirm(request, uidb36, token):
     response = auth_views.password_reset_confirm(
@@ -107,7 +103,6 @@ def password_reset_confirm(request, uidb36, token):
 
 
 
-@anonymous_csrf
 def register(request):
     if request.method == 'POST':
         form = forms.RegistrationForm(request.POST)
@@ -176,7 +171,6 @@ def confirm_email(request, uidb36, token):
 
 
 
-@anonymous_csrf
 @xact.xact
 def accept_email_invite(request, uidb36, token):
     response = auth_views.password_reset_confirm(
