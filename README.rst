@@ -22,8 +22,8 @@ Once this configuration is done, you should be able to run ``./manage.py
 syncdb --migrate``, then ``./manage.py runserver`` and access the site
 in your browser at ``http://localhost:8000``.
 
-You can run the tests with ``py.test``, or the ``Selenium`` tests with
-``py.test portfoliyo/tests/selenium``.
+You can run the tests with ``py.test`` (or ``grunt pytest``), or the
+``Selenium`` tests with ``py.test portfoliyo/tests/selenium``.
 
 .. _virtualenv: http://www.virtualenv.org
 .. _Selenium: http://seleniumhq.org
@@ -32,10 +32,32 @@ To install the necessary Ruby gems for Compass/Sass development (only
 necessary if you plan to modify Sass files and re-generate CSS), install
 Bundler (``gem install bundler``) and then run ``bundle install``.
 
-If you make changes to the client-side Handlebars templates in
-``jstemplates/``, run ``bin/grunt`` to recompile the templates.
-Alternatively, run ``bin/grunt watch`` (takes over a terminal) to watch for
-changes to the templates and recompile automatically.
+Local development on this project requires `Node.js`_ >= 0.8.0 for JS linting
+and handlebars template compilation. To install the necessary Node
+dependencies, first ``npm install -g grunt-cli`` (once per system), then ``npm
+install`` (whenever ``package.json`` changes).
+
+You can lint the project's JS with ``grunt jshint``.
+
+You can compile Handlebars templates in the ``jstemplates/`` directory to the
+compiled-templates file (``static/js/jstemplates.js``) with ``grunt
+handlebars``.
+
+You can compile Sass to CSS with ``grunt compass``. This requires first
+installing Bundler (``gem install bundler``) and then running ``bundle
+install`` to get the necessary Ruby gems installed.
+
+Just running ``grunt`` will perform all of the above tasks.
+
+``grunt dev`` will watch for changes to local files and automatically perform
+an appropriate selection of the above tasks whenever changes are detected
+to relevant files.
+
+Refer to the Gruntfile.js source and `Grunt`_ documentation for more info.
+
+.. _Node.js: http://nodejs.org
+.. _JSHint: http://www.jshint.com
+.. _Grunt: http://gruntjs.com/
 
 Deployment
 ----------

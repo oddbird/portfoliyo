@@ -2,8 +2,8 @@ this["PYO"] = this["PYO"] || {};
 this["PYO"]["templates"] = this["PYO"]["templates"] || {};
 
 this["PYO"]["templates"]["ajax_error_msg"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
@@ -20,8 +20,8 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   });
 
 this["PYO"]["templates"]["autocomplete_input"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
@@ -141,8 +141,8 @@ function program12(depth0,data) {
   });
 
 this["PYO"]["templates"]["autocomplete_suggestion"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
@@ -283,8 +283,8 @@ function program17(depth0,data) {
   });
 
 this["PYO"]["templates"]["group_list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; partials = partials || Handlebars.partials; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); partials = this.merge(partials, Handlebars.partials); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
@@ -322,8 +322,8 @@ function program2(depth0,data) {
   });
 
 this["PYO"]["templates"]["group_list_items"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
@@ -414,8 +414,8 @@ function program8(depth0,data) {
   });
 
 this["PYO"]["templates"]["note_attachment_input"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
@@ -428,8 +428,8 @@ helpers = helpers || Handlebars.helpers; data = data || {};
   });
 
 this["PYO"]["templates"]["post_timeout_msg"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, self=this;
 
 function program1(depth0,data) {
@@ -452,8 +452,8 @@ function program3(depth0,data) {
   });
 
 this["PYO"]["templates"]["posts"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, self=this, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing;
 
 function program1(depth0,data) {
@@ -660,7 +660,7 @@ function program31(depth0,data) {
   var buffer = "", stack1, stack2, options;
   buffer += "Sending text";
   options = {hash:{},inverse:self.noop,fn:self.program(32, program32, data),data:data};
-  stack2 = ((stack1 = helpers.plural),stack1 ? stack1.call(depth0, depth0.sms_recipients, options) : helperMissing.call(depth0, "plural", depth0.sms_recipients, options));
+  stack2 = ((stack1 = helpers.plural || depth0.plural),stack1 ? stack1.call(depth0, depth0.sms_recipients, options) : helperMissing.call(depth0, "plural", depth0.sms_recipients, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   stack2 = helpers['if'].call(depth0, depth0.sms_recipients, {hash:{},inverse:self.noop,fn:self.program(34, program34, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
@@ -678,7 +678,7 @@ function program34(depth0,data) {
   var buffer = "", stack1, options;
   buffer += " to ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.join),stack1 ? stack1.call(depth0, depth0.sms_recipients, ", ", options) : helperMissing.call(depth0, "join", depth0.sms_recipients, ", ", options)));
+  buffer += escapeExpression(((stack1 = helpers.join || depth0.join),stack1 ? stack1.call(depth0, depth0.sms_recipients, ", ", options) : helperMissing.call(depth0, "join", depth0.sms_recipients, ", ", options)));
   return buffer;
   }
 
@@ -705,7 +705,7 @@ function program39(depth0,data) {
   var buffer = "", stack1, stack2, options;
   buffer += "Text";
   options = {hash:{},inverse:self.noop,fn:self.program(32, program32, data),data:data};
-  stack2 = ((stack1 = helpers.plural),stack1 ? stack1.call(depth0, depth0.sms_recipients, options) : helperMissing.call(depth0, "plural", depth0.sms_recipients, options));
+  stack2 = ((stack1 = helpers.plural || depth0.plural),stack1 ? stack1.call(depth0, depth0.sms_recipients, options) : helperMissing.call(depth0, "plural", depth0.sms_recipients, options));
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += " sent";
   stack2 = helpers['if'].call(depth0, depth0.sms_recipients, {hash:{},inverse:self.noop,fn:self.program(34, program34, data),data:data});
@@ -742,7 +742,7 @@ function program44(depth0,data) {
   buffer += escapeExpression(stack1)
     + "\" title=\"more information\">show/hide</label>\n            <p class=\"recipients\">With ";
   options = {hash:{},data:data};
-  buffer += escapeExpression(((stack1 = helpers.join),stack1 ? stack1.call(depth0, depth0.present, ", ", options) : helperMissing.call(depth0, "join", depth0.present, ", ", options)))
+  buffer += escapeExpression(((stack1 = helpers.join || depth0.join),stack1 ? stack1.call(depth0, depth0.present, ", ", options) : helperMissing.call(depth0, "join", depth0.present, ", ", options)))
     + ".</p>\n          ";
   return buffer;
   }
@@ -751,7 +751,7 @@ function program46(depth0,data) {
   
   var buffer = "", stack1;
   buffer += "\n    <div class=\"attachments\">\n      <ul>\n        ";
-  stack1 = helpers.each.call(depth0, depth0.attachments, {hash:{},inverse:self.noop,fn:self.programWithDepth(program47, data, depth0),data:data});
+  stack1 = helpers.each.call(depth0, depth0.attachments, {hash:{},inverse:self.noop,fn:self.programWithDepth(47, program47, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n      </ul>\n    </div>\n    ";
   return buffer;
@@ -812,8 +812,8 @@ function program54(depth0,data) {
   });
 
 this["PYO"]["templates"]["student_list"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; partials = partials || Handlebars.partials; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); partials = this.merge(partials, Handlebars.partials); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data) {
@@ -887,8 +887,8 @@ function program2(depth0,data) {
   });
 
 this["PYO"]["templates"]["student_list_items"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
-  this.compilerInfo = [2,'>= 1.0.0-rc.3'];
-helpers = helpers || Handlebars.helpers; data = data || {};
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
 
 function program1(depth0,data,depth1) {
@@ -898,7 +898,7 @@ function program1(depth0,data,depth1) {
   if (stack1 = helpers.village_uri) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.village_uri; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1);
-  stack1 = helpers.unless.call(depth0, depth1.all_students, {hash:{},inverse:self.noop,fn:self.programWithDepth(program2, data, depth1),data:data});
+  stack1 = helpers.unless.call(depth0, depth1.all_students, {hash:{},inverse:self.noop,fn:self.programWithDepth(2, program2, data, depth1),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" class=\"ajax-link listitem-select\" data-id=\"";
   if (stack1 = helpers.id) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
@@ -949,7 +949,7 @@ function program8(depth0,data) {
   return "0";
   }
 
-  stack1 = helpers.each.call(depth0, depth0.objects, {hash:{},inverse:self.noop,fn:self.programWithDepth(program1, data, depth0),data:data});
+  stack1 = helpers.each.call(depth0, depth0.objects, {hash:{},inverse:self.noop,fn:self.programWithDepth(1, program1, data, depth0),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\n";
   return buffer;
