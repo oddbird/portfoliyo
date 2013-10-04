@@ -11,7 +11,7 @@
 
   <div class="fieldset relation-fieldset">
     <p class="type summary">
-      Select existing teachers and groups to associate with this student.
+      Highlight existing teachers & groups to associate with {% if student %}{{ student }}{% else %}this student{% endif %}.
     </p>
     {% include "forms/_field.html" with field=form.groups %}
     {% include "forms/_field.html" with field=form.elders label="Teachers" %}
