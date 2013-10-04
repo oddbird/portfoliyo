@@ -7,5 +7,6 @@
     "grunt-contrib-handlebars": "~0.5.8",
     "grunt-contrib-jshint": "~0.1.1",
     "grunt-cli": "~0.1.6"
-  }
+  },
+  "dependencies": {}
 }
