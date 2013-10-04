@@ -11,3 +11,9 @@ MIXPANEL_ID = None
 PUSHER_APPID = None
 PUSHER_KEY = None
 PUSHER_SECRET = None
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    }
+}

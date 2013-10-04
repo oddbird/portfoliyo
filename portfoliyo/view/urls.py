@@ -13,8 +13,6 @@ from . import sms as sms_views
 
 admin.autodiscover()
 
-import session_csrf
-session_csrf.monkeypatch()
 
 
 urlpatterns = patterns(

@@ -107,7 +107,6 @@ TEMPLATE_CONTEXT_PROCESSORS = [
     'django.core.context_processors.static',
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
-    'session_csrf.context_processor',
     'portfoliyo.view.context_processors.services',
     'portfoliyo.view.tracking.context_processor',
 ]
@@ -118,10 +117,10 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
     'portfoliyo.caching.NeverCacheAjaxGetMiddleware',
     'djangosecure.middleware.SecurityMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'session_csrf.CsrfMiddleware',
     'portfoliyo.impersonate.ImpersonationMiddleware',
 ]
 
@@ -170,7 +169,7 @@ MIDDLEWARE_CLASSES.insert(
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
 

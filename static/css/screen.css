@@ -2324,8 +2324,7 @@ button {
 }
 
 .team {
-  padding-top: 46px;
-  padding-top: 2.55556rem;
+  padding: 2.55556rem 1.27778rem 0;
 }
 
 .dev {
@@ -2384,20 +2383,23 @@ button {
     width: 49.36709%;
     float: left;
     margin-right: 1.26582%;
+    margin-right: -100%;
   }
-  .dev:nth-child(2), .dev:last-child {
-    float: right;
-    margin-right: 0;
+  .dev:nth-child(2n + 1) {
+    margin-left: 0%;
+    clear: left;
   }
-  .dev:nth-child(3), .dev:nth-child(4) {
-    clear: both;
-  }
-  .dev:nth-child(3) {
-    margin-left: 25.31646%;
+  .dev:nth-child(2n + 2) {
+    margin-left: 50.63291%;
+    clear: none;
   }
   .dev:before {
     width: 28.20513%;
   }
+}
+
+#emmanuelle:before {
+  background-image: url('../images/landing/emmanuelle.png?1380914817');
 }
 
 #peter:before {
@@ -2405,11 +2407,11 @@ button {
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1351725897');
+  background-image: url('../images/landing/carl.png?1380914817');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1351725897');
+  background-image: url('../images/landing/eric.png?1380914817');
 }
 
 #jonny:before {
@@ -3093,12 +3095,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .relation-fieldset .summary {
-  margin-top: -6px;
-  margin-top: -0.31944rem;
-  text-align: right;
-}
-.relation-fieldset.details {
-  overflow: hidden;
+  padding-top: 6px;
+  padding-top: 0.31944rem;
+  margin-bottom: 6px;
+  margin-bottom: 0.31944rem;
 }
 
 .select-groups [class*="label-color-"]:after {
