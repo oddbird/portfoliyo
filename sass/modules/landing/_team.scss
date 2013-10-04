@@ -46,5 +46,5 @@
   }
 }
 
-$names: peter carl eric jonny;
+$names: emmanuelle peter carl eric jonny;
 @each $name in $names { ##{$name}:before { background-image: image-url('landing/#{$name}.png'); } }

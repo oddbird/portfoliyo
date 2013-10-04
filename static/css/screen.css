@@ -2398,6 +2398,10 @@ button {
   }
 }
 
+#emmanuelle:before {
+  background-image: url('../images/landing/emmanuelle.png?1380913111');
+}
+
 #peter:before {
   background-image: url('../images/landing/peter.png?1351725897');
 }
