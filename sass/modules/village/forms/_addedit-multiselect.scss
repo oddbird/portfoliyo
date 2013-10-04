@@ -23,10 +23,9 @@
 
 .relation-fieldset {
   .summary {
-    @include leader(-.25);
-    text-align: right;
+    @include padding-leader(.25);
+    @include trailer(.25);
   }
-  &.details { @include clearfix; }
 }
 
 $label-colors: $yellow $orange $magenta $violet $cyan $green

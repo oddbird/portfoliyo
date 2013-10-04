@@ -15,9 +15,9 @@
 
   {% include "forms/_field.html" with field=form.name|attr:"placeholder: e.g. 1st Period Math" label="Group Name" %}
 
-  <div class="fieldset relation-fieldset details {% block groupdetailsopen %}{% endblock groupdetailsopen %}">
-    <p class="fieldset-help summary">
-      Optionally add existing students and teachers to the group. »
+  <div class="fieldset relation-fieldset">
+    <p class="summary type">
+      Highlight existing students & teachers to add them to {% if group %}{{ group }}{% else %}this group{% endif %}.
     </p>
     <div class="details-body">
       {% include "forms/_field.html" with field=form.students %}
