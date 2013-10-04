@@ -60,9 +60,9 @@
 
   <!-- Modernizr -->
   {% compress js %}
-  <script src="{{ STATIC_URL }}js/plugins/modernizr.custom.02470.js"></script>
-  <script src="{{ STATIC_URL }}js/plugins/modernizr.selectors.js"></script>
-  <script src="{{ STATIC_URL }}js/plugins/elem-details.js"></script>
+  <script src="{{ STATIC_URL }}js/vendor/modernizr.custom.02470.js"></script>
+  <script src="{{ STATIC_URL }}js/vendor/modernizr.selectors.js"></script>
+  <script src="{{ STATIC_URL }}js/vendor/elem-details.js"></script>
   {% endcompress %}
 
   <!-- Page-Specific Head -->
@@ -101,34 +101,34 @@ typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var
 
 <!-- JavaScript -->
 {% block js %}
-<script src="https://d3dy5gmtp8yhk7.cloudfront.net/1.12/pusher.min.js"></script>
-<script src="{{ STATIC_URL }}js/libs/jquery-2.0.0.min.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/jquery.history.min.js"></script>
+<script src="http://js.pusher.com/2.1/pusher.min.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery-2.0.3.min.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.history.min.js"></script>
 {% compress js %}
-<script src="{{ STATIC_URL }}js/libs/handlebars.runtime.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/jquery.placeholder.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/jquery.defuscator.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/viewport.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/jquery.ba-dotimeout.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/jquery.ba-resize.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/jquery.custom-autocomplete.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/flash_detect.js"></script>
-<script src="{{ STATIC_URL }}js/plugins/jquery.form.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/handlebars.runtime.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.placeholder.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.defuscate.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/viewport.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.ba-dotimeout.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.ba-resize.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.custom-autocomplete.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/flash_detect.js"></script>
+<script src="{{ STATIC_URL }}js/vendor/jquery.form.js"></script>
 <script src="{{ STATIC_URL }}messages_ui/jquery.messages-ui.js"></script>
 <script src="{{ STATIC_URL }}messages_ui/message.js"></script>
 <script src="{{ STATIC_URL }}ajax_loading_overlay/jquery.ajax-loading-overlay.js"></script>
 <script src="{{ STATIC_URL }}html5accordion/jquery.html5accordion.js"></script>
-<script src="{{ STATIC_URL }}js/jstemplates.js"></script>
-<script src="{{ STATIC_URL }}js/handlebars_setup.js"></script>
-<script src="{{ STATIC_URL }}js/ajax_setup.js"></script>
-<script src="{{ STATIC_URL }}js/ajax_csrf.js"></script>
-<script src="{{ STATIC_URL }}js/base.js"></script>
-<script src="{{ STATIC_URL }}js/pusher.js"></script>
-<script src="{{ STATIC_URL }}js/chat.js"></script>
-<script src="{{ STATIC_URL }}js/nav.js"></script>
-<script src="{{ STATIC_URL }}js/user.js"></script>
+<script src="{{ STATIC_URL }}js/app/jstemplates.js"></script>
+<script src="{{ STATIC_URL }}js/app/handlebars_setup.js"></script>
+<script src="{{ STATIC_URL }}js/app/ajax_setup.js"></script>
+<script src="{{ STATIC_URL }}js/app/ajax_csrf.js"></script>
+<script src="{{ STATIC_URL }}js/app/base.js"></script>
+<script src="{{ STATIC_URL }}js/app/pusher.js"></script>
+<script src="{{ STATIC_URL }}js/app/chat.js"></script>
+<script src="{{ STATIC_URL }}js/app/nav.js"></script>
+<script src="{{ STATIC_URL }}js/app/user.js"></script>
 <script src="{{ STATIC_URL }}js/init.js"></script>
-<script src="{{ STATIC_URL }}js/mixpanel.js"></script>
+<script src="{{ STATIC_URL }}js/app/mixpanel.js"></script>
 {% endcompress %}
 {% endblock js %}
 

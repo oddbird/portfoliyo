@@ -31,7 +31,7 @@ compiler = pybars.Compiler()
 
 def _compile(template_name):
     template_path = os.path.join(
-        JSTEMPLATES_PATH, '%s.handlebars' % template_name)
+        JSTEMPLATES_PATH, '%s.hbs' % template_name)
     with open(template_path) as fh:
         return compiler.compile(fh.read().decode('utf-8'))
 
