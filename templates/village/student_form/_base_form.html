@@ -10,8 +10,8 @@
   {% block add-family %}{% endblock add-family %}
 
   <div class="fieldset relation-fieldset">
-    <p class="fieldset-help">
-      Select existing teachers and groups to associate with this student.
+    <p class="type summary">
+      Highlight existing teachers & groups to associate with {% if student %}{{ student }}{% else %}this student{% endif %}.
     </p>
     {% include "forms/_field.html" with field=form.groups %}
     {% include "forms/_field.html" with field=form.elders label="Teachers" %}
