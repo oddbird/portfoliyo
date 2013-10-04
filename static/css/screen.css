@@ -1196,7 +1196,7 @@ button {
   border-color: rgba(147, 161, 161, 0.25);
 }
 
-.school-field .radio-options .value:checked + .type, .students-field .check-options .value:checked + .type, .elders-field .check-options .value:checked + .type, .groups-field .check-options .value:checked + .type, .select-students .disabled + .type, .select-elders .disabled + .type {
+.school-field .radio-options .value:checked + .type, .students-field .check-options .value:checked + .type, .elders-field .check-options .value:checked + .type, .groups-field .check-options .value:checked + .type {
   background: rgba(38, 139, 210, 0.125);
 }
 
@@ -3171,6 +3171,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: #e8f2a6;
 }
 
+.select-students .disabled + .type, .select-students .disabled + .type:focus, .select-students .disabled + .type:hover, .select-students .disabled + .type:active, .select-elders .disabled + .type, .select-elders .disabled + .type:focus, .select-elders .disabled + .type:hover, .select-elders .disabled + .type:active {
+  background: rgba(38, 139, 210, 0.125);
+}
 .select-students .group-selected-1:before, .select-elders .group-selected-1:before {
   text-shadow: #073642 0 1px 0;
   color: #b58900;

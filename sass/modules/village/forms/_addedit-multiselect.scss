@@ -64,7 +64,9 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 }
 
 .select-students, .select-elders {
-  .disabled + .type { @extend %options-checked; }
+  .disabled + .type {
+    &, #{$focus} { @include options-checked; }
+  }
 
   $i: 1;
   @each $color in $label-colors {

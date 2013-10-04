@@ -65,8 +65,12 @@
   }
 }
 
-%options-checked {
+@mixin options-checked {
   background: rgba($blue,.125);
+}
+
+%options-checked {
+  @include options-checked;
 }
 
 %options-disabled {
