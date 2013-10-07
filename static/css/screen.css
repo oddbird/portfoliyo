@@ -308,7 +308,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01b";
 }
 
-.icon-invite:before, .icon-add-student:before, .additems [class*="additem-"]:before, .additem-elder:before {
+.icon-invite:before, .icon-add-student:before, .additems [class*="additem-"]:before {
   content: "\e01c";
 }
 
@@ -1527,7 +1527,7 @@ button {
   line-height: 23px;
   line-height: 1.27778rem;
   position: absolute;
-  padding: 0.31944rem 0.63889rem;
+  padding: 0.15972rem 0.63889rem;
   color: #fdf6e3;
   background: #4c4c4c;
   border: 1px solid #fdf6e3;
@@ -1540,15 +1540,15 @@ button {
   content: attr(data-tooltip);
 }
 
-.top-link .tooltip {
+.additem-elder .tooltip, .top-link .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
 
-.top-link .tooltip {
+.additem-elder .tooltip, .top-link .tooltip {
   right: 0;
 }
-.top-link .tooltip:before {
+.additem-elder .tooltip:before, .top-link .tooltip:before {
   content: " ";
   position: absolute;
   height: 0;
@@ -1580,10 +1580,10 @@ button {
   margin-top: -0.31944rem;
 }
 
-.help-tip, .action-showgroups, .top-link {
+.help-tip, .action-showgroups, .additem-elder, .top-link {
   position: relative;
 }
-.help-tip:hover .tooltip, .action-showgroups:hover .tooltip, .top-link:hover .tooltip {
+.help-tip:hover .tooltip, .action-showgroups:hover .tooltip, .additem-elder:hover .tooltip, .top-link:hover .tooltip {
   display: block;
   z-index: 900;
 }

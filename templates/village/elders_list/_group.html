@@ -7,3 +7,5 @@
 {% block invite-elder %}{% if elder_type.school_staff and not group.is_all %}{{ block.super }}{% endif %}{% endblock %}
 
 {% block invite-elder-url %}{% url 'invite_teacher' group_id=group.id %}{% endblock %}
+
+{% block page-type %}group{% endblock page-type %}
