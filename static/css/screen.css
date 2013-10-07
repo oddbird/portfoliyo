@@ -300,10 +300,6 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e01e";
 }
 
-.action-showgroups:before {
-  content: "\e021";
-}
-
 .icon-add-group:before, .additems [class*="additem-"][class*="-group"]:before {
   content: "\e01d";
 }
@@ -1531,9 +1527,9 @@ button {
   line-height: 23px;
   line-height: 1.27778rem;
   position: absolute;
-  padding: 0.15972rem 0.63889rem;
+  padding: 0.31944rem 0.63889rem;
   color: #fdf6e3;
-  background: #657b83;
+  background: #4c4c4c;
   border: 1px solid #fdf6e3;
   white-space: nowrap;
   z-index: 100;
@@ -1544,15 +1540,15 @@ button {
   content: attr(data-tooltip);
 }
 
-.action-showgroups .tooltip, .top-link .tooltip {
+.top-link .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
 
-.action-showgroups .tooltip, .top-link .tooltip {
+.top-link .tooltip {
   right: 0;
 }
-.action-showgroups .tooltip:before, .top-link .tooltip:before {
+.top-link .tooltip:before {
   content: " ";
   position: absolute;
   height: 0;
@@ -1560,9 +1556,28 @@ button {
   border: solid transparent;
   pointer-events: none;
   top: 100%;
-  border-top-color: #657b83;
+  border-top-color: #4c4c4c;
   border-width: 0.31944rem;
   right: 0.31944rem;
+}
+
+.action-showgroups .tooltip {
+  left: 100%;
+  top: 0;
+  margin-left: 0.31944rem;
+}
+.action-showgroups .tooltip:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  right: 100%;
+  border-right-color: #4c4c4c;
+  border-width: 0.31944rem;
+  top: 50%;
+  margin-top: -0.31944rem;
 }
 
 .help-tip, .action-showgroups, .top-link {

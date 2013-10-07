@@ -836,7 +836,7 @@ function program2(depth0,data) {
   return buffer;
   }
 
-  buffer += "<div class=\"navtitle\">\n  <a href=\"#\" class=\"action-showgroups\" title=\"Show all groups\">\n    <span class=\"tooltip\">Show all groups</span>\n  </a>\n  <h2 class=\"group-name\">\n    <a href=\"";
+  buffer += "<div class=\"navtitle\">\n  <a href=\"#\" class=\"action-showgroups\" title=\"Show all groups\">\n    <span data-icon=\"users-list\"> </span>\n    <span class=\"tooltip\">Show all groups</span>\n  </a>\n  <h2 class=\"group-name\">\n    <a href=\"";
   if (stack1 = helpers.group_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.group_url; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
   buffer += escapeExpression(stack1)
