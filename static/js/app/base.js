@@ -185,17 +185,28 @@ var PYO = (function (PYO, $) {
             var el = $(this);
             var label = el.siblings('.type');
             var title;
+            var addTooltip = function (title) {
+                var existingTooltip = label.find('.tooltip');
+                var tooltip = $('<span class="tooltip"></span>');
+                if (existingTooltip.length) {
+                    existingTooltip.html(title);
+                } else {
+                    tooltip.html(title);
+                    label.prepend(tooltip);
+                }
+                label.data('title', title);
+            };
             if (el.closest('form').hasClass('village-add-form')) {
-                title = 'You are adding a student to the "' + $.trim(label.text()) + '" group.';
-                label.attr('title', title).data('title', title);
+                title = 'You are adding a student to the "' + label.data('name') + '" group.';
+                addTooltip(title);
             } else if (el.closest('form').is('#invite-teacher-form')) {
                 if (el.closest('.check-options').hasClass('select-groups')) {
-                    title = 'You are inviting a teacher to join all the student villages in the "' + $.trim(label.text()) + '" group.';
-                    label.attr('title', title).data('title', title);
+                    title = 'You are inviting a teacher to join all the student villages in the "' + label.data('name') + '" group.';
+                    addTooltip(title);
                 }
                 if (el.closest('.check-options').hasClass('select-students')) {
-                    title = "You are inviting a teacher to join " + $.trim(label.text()) + "'s village.";
-                    label.attr('title', title).data('title', title);
+                    title = "You are inviting a teacher to join " + label.data('name') + "'s village.";
+                    addTooltip(title);
                 }
             }
         });
@@ -209,7 +220,15 @@ var PYO = (function (PYO, $) {
             var el = $(this);
             var label = el.siblings('label.type');
             var title = 'You cannot remove the teacher who invited this student.';
-            label.attr('title', title).data('title', title);
+            var tooltip = $('<span class="tooltip"></span>');
+            var existingTooltip = label.find('.tooltip');
+            if (existingTooltip.length) {
+                existingTooltip.html(title);
+            } else {
+                tooltip.html(title);
+                label.prepend(tooltip);
+            }
+            label.data('title', title);
         });
     };
 
@@ -226,7 +245,7 @@ var PYO = (function (PYO, $) {
                     var id = selectedIds[i];
                     var group = groupInputs.filter('[value=' + id + ']');
                     var groupLabel = group.siblings('.type');
-                    var groupName = $.trim(groupLabel.text());
+                    var groupName = groupLabel.data('name');
                     var thisCount = groupLabel.data('color-count');
                     var relInputs = inputs.filter(function () {
                         var groups = $(this).data('group-ids');
@@ -234,9 +253,20 @@ var PYO = (function (PYO, $) {
                     });
                     relInputs.each(function () {
                         var el = $(this);
+                        var tooltip, title, label, existingTooltip;
                         if (!el.data('colored')) {
                             el.data('colored', true).attr('disabled', 'disabled').addClass('disabled');
-                            el.siblings('.type').addClass('group-selected-' + thisCount).attr('title', 'selected as part of "' + groupName + '" group');
+                            title = 'selected as part of "' + groupName + '" group';
+                            label = el.siblings('.type');
+                            existingTooltip = label.find('.tooltip');
+                            if (existingTooltip.length) {
+                                existingTooltip.html(title);
+                            } else {
+                                tooltip = $('<span class="tooltip"></span>');
+                                tooltip.html(title);
+                                label.prepend(tooltip);
+                            }
+                            label.addClass('group-selected-' + thisCount);
                         }
                     });
                 };
@@ -245,14 +275,22 @@ var PYO = (function (PYO, $) {
                     var el = $(this).removeData('colored');
                     var label = el.siblings('.type');
                     var classes = label.attr('class').split(' ');
+                    var existingTooltip = label.find('.tooltip');
+                    var tooltip;
                     for (var i = 0; i < classes.length; i++) {
                         if (classes[i].indexOf('group-selected-') !== -1) { label.removeClass(classes[i]); }
                     }
                     if (el.hasClass('locked')) {
-                        label.attr('title', label.data('title'));
+                        if (existingTooltip.length) {
+                            existingTooltip.html(label.data('title'));
+                        } else {
+                            tooltip = $('<span class="tooltip"></span>');
+                            tooltip.html(label.data('title'));
+                            label.prepend(tooltip);
+                        }
                     } else {
                         el.removeAttr('disabled').removeClass('disabled');
-                        label.removeAttr('title');
+                        label.find('.tooltip').remove();
                     }
                 });
 

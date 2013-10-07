@@ -1540,7 +1540,7 @@ button {
   content: attr(data-tooltip);
 }
 
-.additem-elder .tooltip, .top-link .tooltip {
+.additem-elder .tooltip, .top-link .tooltip, .action-showgroups .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
@@ -1562,9 +1562,7 @@ button {
 }
 
 .action-showgroups .tooltip {
-  left: 100%;
-  top: 0;
-  margin-left: 0.31944rem;
+  left: 0;
 }
 .action-showgroups .tooltip:before {
   content: " ";
@@ -1573,17 +1571,21 @@ button {
   width: 0;
   border: solid transparent;
   pointer-events: none;
-  right: 100%;
-  border-right-color: #4c4c4c;
+  top: 100%;
+  border-top-color: #4c4c4c;
   border-width: 0.31944rem;
-  top: 50%;
-  margin-top: -0.31944rem;
+  left: 0.31944rem;
 }
 
-.help-tip, .action-showgroups, .additem-elder, .top-link {
+.select-groups .disabled + .type .tooltip, .select-students .disabled + .type .tooltip, .select-elders .disabled + .type .tooltip {
+  top: 100%;
+  margin-top: 0.31944rem;
+}
+
+.help-tip, .select-groups .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .action-showgroups, .additem-elder, .top-link {
   position: relative;
 }
-.help-tip:hover .tooltip, .action-showgroups:hover .tooltip, .additem-elder:hover .tooltip, .top-link:hover .tooltip {
+.help-tip:hover .tooltip, .select-groups .disabled + .type:hover .tooltip, .select-students .disabled + .type:hover .tooltip, .select-elders .disabled + .type:hover .tooltip, .action-showgroups:hover .tooltip, .additem-elder:hover .tooltip, .top-link:hover .tooltip {
   display: block;
   z-index: 900;
 }

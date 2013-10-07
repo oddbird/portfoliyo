@@ -54,7 +54,7 @@ $village-nav-action-color : $base03;
 .action-showgroups {
   @extend %grouptitle-button;
   @include button-color($base3);
-  @include tooltip(right);
+  @include tooltip(top right);
   left: $box-padding;
 }
 
