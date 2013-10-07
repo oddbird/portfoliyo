@@ -1,18 +1,20 @@
 // Tooltips
 // ========
 
-$tooltip-background: color(darker);
-$tooltip-color: contrast($tooltip-background);
+$tooltip-background: $base;
+$tooltip-color: contrast($base);
 $tooltip-arrow-size: rhythm(.25);
 
 %tooltip-base {
   @include adjust-font-size-to($xsmallpx);
   position: absolute;
-  padding: rhythm(.25) rhythm(.5);
+  padding: rhythm(.125) rhythm(.5);
   color: $tooltip-color;
   background: $tooltip-background;
   border: 1px solid $tooltip-color;
   white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
 
   &[data-tooltip] { @include after(attr(data-tooltip)); }
 
@@ -56,6 +58,20 @@ $tooltip-arrow-size: rhythm(.25);
   left: 0;
 }
 
+%tooltip-right {
+  left: 100%;
+  top: 0;
+  margin-left: $tooltip-arrow-size;
+  @include arrow(left center $tooltip-background $tooltip-arrow-size, $positioning: null);
+}
+
+%tooltip-left {
+  right: 100%;
+  top: 0;
+  margin-right: $tooltip-arrow-size;
+  @include arrow(right center $tooltip-background $tooltip-arrow-size, $positioning: null);
+}
+
 // Defaults
 // --------
 
@@ -63,13 +79,22 @@ $tooltip-arrow-size: rhythm(.25);
   @extend %tooltip-base;
 }
 
+@mixin active-tooltip {
+  display: block;
+  z-index: 900;
+}
+
 // Triggers
 // --------
 
 %has-tooltip {
   position: relative;
-  .no-touch &:hover .tooltip { display: block; }
+  &:hover .tooltip {
+    @include active-tooltip;
+  }
 }
+
+.help-tip { @extend %has-tooltip; }
 
 // Mixin
 // -----
@@ -82,15 +107,28 @@ $default-tooltip-selector   : '.tooltip'      !default;
   $pos: $default-tooltip-x $default-tooltip-y,
   $selector: $default-tooltip-selector
 ) {
-  $default-x: $default-tooltip-x;
-  $default-y: $default-tooltip-y;
+  $x: null;
+  $y: null;
+  $s: '%tooltip';
 
-  $opposite-x: opposite-position($default-x);
-  $opposite-y: opposite-position($default-y);
+  @if index($pos, left) {
+    $x: left;
+  } @else if index($pos, right) {
+    $x: right;
+  }
 
-  $x: if(index($pos, $opposite-x), $opposite-x, $default-x);
-  $y: if(index($pos, $opposite-y), $opposite-y, $default-y);
+  @if index($pos, top) {
+    $y: top;
+  } @else if index($pos, bottom) {
+    $y: bottom;
+  }
+
+  @if $y { $s: $s + '-#{$y}'; }
+  @if $x { $s: $s + '-#{$x}'; }
 
   @extend %has-tooltip;
-  #{$selector} { @extend %tooltip-#{$y}-#{$x}; }
+  #{$selector} {
+    @extend #{$s};
+    @content;
+  }
 }

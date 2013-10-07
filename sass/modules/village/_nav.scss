@@ -55,6 +55,7 @@ $village-nav-action-color : $base03;
   @extend %grouptitle-button;
   @extend %icon-users-list;
   @include button-color($base3);
+  @include tooltip(top left);
   left: $box-padding;
 }
 

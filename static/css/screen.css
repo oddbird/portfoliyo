@@ -1531,26 +1531,28 @@ button {
   line-height: 23px;
   line-height: 1.27778rem;
   position: absolute;
-  padding: 0.31944rem 0.63889rem;
+  padding: 0.15972rem 0.63889rem;
   color: #fdf6e3;
-  background: #4c4c4c;
+  background: #657b83;
   border: 1px solid #fdf6e3;
   white-space: nowrap;
+  z-index: 100;
+  pointer-events: none;
   display: none;
 }
 [data-tooltip].tooltip:after {
   content: attr(data-tooltip);
 }
 
-.top-link .tooltip {
+.action-showgroups .tooltip, .top-link .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
 
-.top-link .tooltip {
+.action-showgroups .tooltip, .top-link .tooltip {
   right: 0;
 }
-.top-link .tooltip:before {
+.action-showgroups .tooltip:before, .top-link .tooltip:before {
   content: " ";
   position: absolute;
   height: 0;
@@ -1558,16 +1560,17 @@ button {
   border: solid transparent;
   pointer-events: none;
   top: 100%;
-  border-top-color: #4c4c4c;
+  border-top-color: #657b83;
   border-width: 0.31944rem;
   right: 0.31944rem;
 }
 
-.top-link {
+.help-tip, .action-showgroups, .top-link {
   position: relative;
 }
-.no-touch .top-link:hover .tooltip {
+.help-tip:hover .tooltip, .action-showgroups:hover .tooltip, .top-link:hover .tooltip {
   display: block;
+  z-index: 900;
 }
 
 .initial-password {
@@ -2339,7 +2342,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1377553427') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2399,23 +2402,23 @@ button {
 }
 
 #emmanuelle:before {
-  background-image: url('../images/landing/emmanuelle.png?1380914817');
+  background-image: url('../images/landing/emmanuelle.png?1381157677');
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351725897');
+  background-image: url('../images/landing/peter.png?1377553427');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1380914817');
+  background-image: url('../images/landing/carl.png?1381157677');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1380914817');
+  background-image: url('../images/landing/eric.png?1381157677');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351725897');
+  background-image: url('../images/landing/jonny.png?1377553427');
 }
 
 @-moz-keyframes announce-in {
@@ -2780,10 +2783,10 @@ button {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1359567924');
+  background-image: url('../images/flags/ca.png?1377553427');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1359567924');
+  background-image: url('../images/flags/us.png?1377553427');
 }
 
 .terms-confirm {
@@ -3351,7 +3354,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: 0;
   padding-top: 53.61552%;
   width: 30.15873%;
-  background: url('../images/phone.png?1353558228') no-repeat center;
+  background: url('../images/phone.png?1377553427') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
