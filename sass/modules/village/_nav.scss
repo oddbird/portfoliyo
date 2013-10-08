@@ -26,9 +26,10 @@ $village-nav-action-color : $base03;
 // Group Titles
 
 %grouptitle-button {
-  @extend %button-icon;
+  @extend %button;
   position: absolute;
   top: $box-padding;
+  padding: 0 rhythm(.25);
 }
 
 %navname {
@@ -54,7 +55,7 @@ $village-nav-action-color : $base03;
 .action-showgroups {
   @extend %grouptitle-button;
   @include button-color($base3);
-  @include tooltip(top right);
+  @include tooltip(right) { top: rhythm(-.125); }
   left: $box-padding;
 }
 

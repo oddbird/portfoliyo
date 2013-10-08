@@ -175,31 +175,31 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 }
 
 /* Use the following CSS code if you want to have a class per icon */
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before, [data-icon]:before {
   font-family: 'pyo';
   font-style: normal;
   font-weight: normal;
   speak: none;
 }
 
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before, [class^="icon-"]:before, .formselect:before, .ui-multiselect-checkboxes [type="checkbox"] + [class*="type"]:before, .email_notifications-field [type="checkbox"] + [class*="type"]:before, .fieldset.notifications [type="checkbox"] + [class*="type"]:before, .school_staff-field [type="checkbox"] + [class*="type"]:before, .ui-multiselect-checkboxes [type="radio"] + [class*="type"]:before, .email_notifications-field [type="radio"] + [class*="type"]:before, .fieldset.notifications [type="radio"] + [class*="type"]:before, .school_staff-field [type="radio"] + [class*="type"]:before, .remove-item .action-remove:before, .school-field .radio-options .disabled.value + .type:before, .students-field .check-options .disabled.value + .type:before, .elders-field .check-options .disabled.value + .type:before, .groups-field .check-options .disabled.value + .type:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .ui-multiselect-all:before, .ui-multiselect-none:before, .brand .wordmark:before, .meta a:before, .message:before, .announce:before, .changepassword-link:before, .page-actions [class*="action-"]:before, .parent-signup .tab-options .radio-type:before, .download-pdf:before, .post-add-form.group-posts .no-to-field:before, .post-type-tabs .radio-type:before, .message-form .action-post:before, .note-form .action-post:before, .conversation-form .action-post:before, .to-field .tokens-type:before, .attach-type:before, .convo-type-field .radio-type:before, .group .listitem-select:link:before, .group .listitem-select:visited:before, .additems [class*="additem-"]:before, .feedstatus:before, .post .timeout:before, .post-header:before, .attachments a:before, .additem-elder:before, .elder .vcard.declined:before, .elder .vcard.inactive:before {
   margin-right: .2em;
 }
 
-.group-posts .translate-link, .bulk-tokens a, .action-showgroups, #messages .close, .village-posts .translate-link, .token-status, .post-meta [for*="toggle"] {
+.group-posts .translate-link, .bulk-tokens a, #messages .close, .village-posts .translate-link, .token-status, .post-meta [for*="toggle"] {
   display: inline-block;
   position: relative;
   width: 1em;
   text-indent: -9999px;
   text-align: left;
 }
-.group-posts .translate-link:focus, .bulk-tokens a:focus, .action-showgroups:focus, #messages .close:focus, .village-posts .translate-link:focus, .token-status:focus, .post-meta [for*="toggle"]:focus {
+.group-posts .translate-link:focus, .bulk-tokens a:focus, #messages .close:focus, .village-posts .translate-link:focus, .token-status:focus, .post-meta [for*="toggle"]:focus {
   outline: 0;
 }
-.group-posts .translate-link:focus:before, .bulk-tokens a:focus:before, .action-showgroups:focus:before, #messages .close:focus:before, .village-posts .translate-link:focus:before, .token-status:focus:before, .post-meta [for*="toggle"]:focus:before {
+.group-posts .translate-link:focus:before, .bulk-tokens a:focus:before, #messages .close:focus:before, .village-posts .translate-link:focus:before, .token-status:focus:before, .post-meta [for*="toggle"]:focus:before {
   outline: 1px dotted;
 }
-.group-posts .translate-link:before, .bulk-tokens a:before, .action-showgroups:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before {
+.group-posts .translate-link:before, .bulk-tokens a:before, #messages .close:before, .village-posts .translate-link:before, .token-status:before, .post-meta [for*="toggle"]:before {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -678,64 +678,53 @@ optgroup {
   border: 0;
 }
 
-.group-posts .translate-link, .bulk-tokens a, .action-showgroups, .login form [class~="form-actions"] button:not([class~="secondary"]), .register form [class~="form-actions"] button:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:not([class~="secondary"]), .change-password form [class~="form-actions"] button:not([class~="secondary"]), .set-password form [class~="form-actions"] button:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:not([class~="secondary"]), .no-students form [class~="form-actions"] button:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:not([class~="secondary"]), .post-add-form .form-actions button:not([class~="secondary"]), .linkaction, .country_code-field .radio-value + .radio-type, .convo-type-field .radio-value + .radio-type, .parent-signup .tab-options .radio-type, .ui-multiselect-all, .ui-multiselect-none, .main-register-link, .page-actions [class*="action-"], .download-pdf, .to-field .tokens-type, .attach-type, .posting .group-post-link, .additems [class*="additem-"], .additem-elder {
+.group-posts .translate-link, .bulk-tokens a, .login form [class~="form-actions"] button:not([class~="secondary"]), .register form [class~="form-actions"] button:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:not([class~="secondary"]), .change-password form [class~="form-actions"] button:not([class~="secondary"]), .set-password form [class~="form-actions"] button:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:not([class~="secondary"]), .no-students form [class~="form-actions"] button:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:not([class~="secondary"]), .post-add-form .form-actions button:not([class~="secondary"]), .linkaction, .country_code-field .radio-value + .radio-type, .convo-type-field .radio-value + .radio-type, .parent-signup .tab-options .radio-type, .ui-multiselect-all, .ui-multiselect-none, .main-register-link, .page-actions [class*="action-"], .download-pdf, .to-field .tokens-type, .attach-type, .posting .group-post-link, .action-showgroups, .additems [class*="additem-"], .additem-elder {
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
   border-radius: 0.25em;
-  border-width: 1px;
-  border-width: 0.05556rem;
-  border-style: solid;
-  padding: 5px;
-  padding: 0.26389rem;
   text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
   background: -webkit-linear-gradient(top, rgba(157, 173, 51, 0.25), rgba(133, 153, 0, 0), rgba(106, 122, 0, 0.25));
   background: -moz-linear-gradient(top, rgba(157, 173, 51, 0.25), rgba(133, 153, 0, 0), rgba(106, 122, 0, 0.25));
   background: -o-linear-gradient(top, rgba(157, 173, 51, 0.25), rgba(133, 153, 0, 0), rgba(106, 122, 0, 0.25));
   background: linear-gradient(to bottom, rgba(157, 173, 51, 0.25), rgba(133, 153, 0, 0), rgba(106, 122, 0, 0.25));
+  -webkit-box-shadow: #466721 0 0 0 1px inset;
+  -moz-box-shadow: #466721 0 0 0 1px inset;
+  box-shadow: #466721 0 0 0 1px inset;
   background-color: #859900;
-  border-color: #466721;
   color: #fdf6e3;
-  -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
-  -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
-  box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
   display: inline-block;
   margin: 0;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: 0.31944rem 1em;
   text-align: center;
 }
-.group-posts .translate-link:link, .bulk-tokens a:link, .action-showgroups:link, .login form [class~="form-actions"] button:link:not([class~="secondary"]), .register form [class~="form-actions"] button:link:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:link:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:link:not([class~="secondary"]), .change-password form [class~="form-actions"] button:link:not([class~="secondary"]), .set-password form [class~="form-actions"] button:link:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:link:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:link:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:link:not([class~="secondary"]), .no-students form [class~="form-actions"] button:link:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:link:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:link:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:link:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:link:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:link:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:link:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:link:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:link:not([class~="secondary"]), .post-add-form .form-actions button:link:not([class~="secondary"]), .linkaction:link, .country_code-field .radio-value + .radio-type:link, .convo-type-field .radio-value + .radio-type:link, .parent-signup .tab-options .radio-type:link, .ui-multiselect-all:link, .ui-multiselect-none:link, .main-register-link:link, .page-actions [class*="action-"]:link, .download-pdf:link, .to-field .tokens-type:link, .attach-type:link, .posting .group-post-link:link, .additems [class*="additem-"]:link, .additem-elder:link, .group-posts .translate-link:visited, .bulk-tokens a:visited, .action-showgroups:visited, .login form [class~="form-actions"] button:visited:not([class~="secondary"]), .register form [class~="form-actions"] button:visited:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:visited:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:visited:not([class~="secondary"]), .change-password form [class~="form-actions"] button:visited:not([class~="secondary"]), .set-password form [class~="form-actions"] button:visited:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:visited:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:visited:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:visited:not([class~="secondary"]), .no-students form [class~="form-actions"] button:visited:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:visited:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:visited:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:visited:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:visited:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:visited:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:visited:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:visited:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:visited:not([class~="secondary"]), .post-add-form .form-actions button:visited:not([class~="secondary"]), .linkaction:visited, .country_code-field .radio-value + .radio-type:visited, .convo-type-field .radio-value + .radio-type:visited, .parent-signup .tab-options .radio-type:visited, .ui-multiselect-all:visited, .ui-multiselect-none:visited, .main-register-link:visited, .page-actions [class*="action-"]:visited, .download-pdf:visited, .to-field .tokens-type:visited, .attach-type:visited, .posting .group-post-link:visited, .additems [class*="additem-"]:visited, .additem-elder:visited, .group-posts .translate-link:focus, .bulk-tokens a:focus, .action-showgroups:focus, .login form [class~="form-actions"] button:focus:not([class~="secondary"]), .register form [class~="form-actions"] button:focus:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:focus:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:focus:not([class~="secondary"]), .change-password form [class~="form-actions"] button:focus:not([class~="secondary"]), .set-password form [class~="form-actions"] button:focus:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:focus:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:focus:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:focus:not([class~="secondary"]), .no-students form [class~="form-actions"] button:focus:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:focus:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:focus:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:focus:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:focus:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:focus:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:focus:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:focus:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:focus:not([class~="secondary"]), .post-add-form .form-actions button:focus:not([class~="secondary"]), .linkaction:focus, .country_code-field .radio-value + .radio-type:focus, .convo-type-field .radio-value + .radio-type:focus, .parent-signup .tab-options .radio-type:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .main-register-link:focus, .page-actions [class*="action-"]:focus, .download-pdf:focus, .to-field .tokens-type:focus, .attach-type:focus, .posting .group-post-link:focus, .additems [class*="additem-"]:focus, .additem-elder:focus, .group-posts .translate-link:hover, .bulk-tokens a:hover, .action-showgroups:hover, .login form [class~="form-actions"] button:hover:not([class~="secondary"]), .register form [class~="form-actions"] button:hover:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:hover:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:hover:not([class~="secondary"]), .change-password form [class~="form-actions"] button:hover:not([class~="secondary"]), .set-password form [class~="form-actions"] button:hover:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:hover:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:hover:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:hover:not([class~="secondary"]), .no-students form [class~="form-actions"] button:hover:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:hover:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:hover:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:hover:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:hover:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:hover:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:hover:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:hover:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:hover:not([class~="secondary"]), .post-add-form .form-actions button:hover:not([class~="secondary"]), .linkaction:hover, .country_code-field .radio-value + .radio-type:hover, .convo-type-field .radio-value + .radio-type:hover, .parent-signup .tab-options .radio-type:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .main-register-link:hover, .page-actions [class*="action-"]:hover, .download-pdf:hover, .to-field .tokens-type:hover, .attach-type:hover, .posting .group-post-link:hover, .additems [class*="additem-"]:hover, .additem-elder:hover, .group-posts .translate-link:active, .bulk-tokens a:active, .action-showgroups:active, .login form [class~="form-actions"] button:active:not([class~="secondary"]), .register form [class~="form-actions"] button:active:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:active:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:active:not([class~="secondary"]), .change-password form [class~="form-actions"] button:active:not([class~="secondary"]), .set-password form [class~="form-actions"] button:active:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:active:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:active:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:active:not([class~="secondary"]), .no-students form [class~="form-actions"] button:active:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:active:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:active:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:active:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:active:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .post-add-form .form-actions button:active:not([class~="secondary"]), .linkaction:active, .country_code-field .radio-value + .radio-type:active, .convo-type-field .radio-value + .radio-type:active, .parent-signup .tab-options .radio-type:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, .page-actions [class*="action-"]:active, .download-pdf:active, .to-field .tokens-type:active, .attach-type:active, .posting .group-post-link:active, .additems [class*="additem-"]:active, .additem-elder:active {
+.group-posts .translate-link:link, .bulk-tokens a:link, .login form [class~="form-actions"] button:link:not([class~="secondary"]), .register form [class~="form-actions"] button:link:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:link:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:link:not([class~="secondary"]), .change-password form [class~="form-actions"] button:link:not([class~="secondary"]), .set-password form [class~="form-actions"] button:link:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:link:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:link:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:link:not([class~="secondary"]), .no-students form [class~="form-actions"] button:link:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:link:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:link:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:link:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:link:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:link:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:link:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:link:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:link:not([class~="secondary"]), .post-add-form .form-actions button:link:not([class~="secondary"]), .linkaction:link, .country_code-field .radio-value + .radio-type:link, .convo-type-field .radio-value + .radio-type:link, .parent-signup .tab-options .radio-type:link, .ui-multiselect-all:link, .ui-multiselect-none:link, .main-register-link:link, .page-actions [class*="action-"]:link, .download-pdf:link, .to-field .tokens-type:link, .attach-type:link, .posting .group-post-link:link, .action-showgroups:link, .additems [class*="additem-"]:link, .additem-elder:link, .group-posts .translate-link:visited, .bulk-tokens a:visited, .login form [class~="form-actions"] button:visited:not([class~="secondary"]), .register form [class~="form-actions"] button:visited:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:visited:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:visited:not([class~="secondary"]), .change-password form [class~="form-actions"] button:visited:not([class~="secondary"]), .set-password form [class~="form-actions"] button:visited:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:visited:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:visited:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:visited:not([class~="secondary"]), .no-students form [class~="form-actions"] button:visited:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:visited:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:visited:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:visited:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:visited:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:visited:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:visited:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:visited:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:visited:not([class~="secondary"]), .post-add-form .form-actions button:visited:not([class~="secondary"]), .linkaction:visited, .country_code-field .radio-value + .radio-type:visited, .convo-type-field .radio-value + .radio-type:visited, .parent-signup .tab-options .radio-type:visited, .ui-multiselect-all:visited, .ui-multiselect-none:visited, .main-register-link:visited, .page-actions [class*="action-"]:visited, .download-pdf:visited, .to-field .tokens-type:visited, .attach-type:visited, .posting .group-post-link:visited, .action-showgroups:visited, .additems [class*="additem-"]:visited, .additem-elder:visited, .group-posts .translate-link:focus, .bulk-tokens a:focus, .login form [class~="form-actions"] button:focus:not([class~="secondary"]), .register form [class~="form-actions"] button:focus:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:focus:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:focus:not([class~="secondary"]), .change-password form [class~="form-actions"] button:focus:not([class~="secondary"]), .set-password form [class~="form-actions"] button:focus:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:focus:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:focus:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:focus:not([class~="secondary"]), .no-students form [class~="form-actions"] button:focus:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:focus:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:focus:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:focus:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:focus:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:focus:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:focus:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:focus:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:focus:not([class~="secondary"]), .post-add-form .form-actions button:focus:not([class~="secondary"]), .linkaction:focus, .country_code-field .radio-value + .radio-type:focus, .convo-type-field .radio-value + .radio-type:focus, .parent-signup .tab-options .radio-type:focus, .ui-multiselect-all:focus, .ui-multiselect-none:focus, .main-register-link:focus, .page-actions [class*="action-"]:focus, .download-pdf:focus, .to-field .tokens-type:focus, .attach-type:focus, .posting .group-post-link:focus, .action-showgroups:focus, .additems [class*="additem-"]:focus, .additem-elder:focus, .group-posts .translate-link:hover, .bulk-tokens a:hover, .login form [class~="form-actions"] button:hover:not([class~="secondary"]), .register form [class~="form-actions"] button:hover:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:hover:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:hover:not([class~="secondary"]), .change-password form [class~="form-actions"] button:hover:not([class~="secondary"]), .set-password form [class~="form-actions"] button:hover:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:hover:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:hover:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:hover:not([class~="secondary"]), .no-students form [class~="form-actions"] button:hover:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:hover:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:hover:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:hover:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:hover:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:hover:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:hover:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:hover:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:hover:not([class~="secondary"]), .post-add-form .form-actions button:hover:not([class~="secondary"]), .linkaction:hover, .country_code-field .radio-value + .radio-type:hover, .convo-type-field .radio-value + .radio-type:hover, .parent-signup .tab-options .radio-type:hover, .ui-multiselect-all:hover, .ui-multiselect-none:hover, .main-register-link:hover, .page-actions [class*="action-"]:hover, .download-pdf:hover, .to-field .tokens-type:hover, .attach-type:hover, .posting .group-post-link:hover, .action-showgroups:hover, .additems [class*="additem-"]:hover, .additem-elder:hover, .group-posts .translate-link:active, .bulk-tokens a:active, .login form [class~="form-actions"] button:active:not([class~="secondary"]), .register form [class~="form-actions"] button:active:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:active:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:active:not([class~="secondary"]), .change-password form [class~="form-actions"] button:active:not([class~="secondary"]), .set-password form [class~="form-actions"] button:active:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:active:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:active:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:active:not([class~="secondary"]), .no-students form [class~="form-actions"] button:active:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:active:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:active:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:active:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:active:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .post-add-form .form-actions button:active:not([class~="secondary"]), .linkaction:active, .country_code-field .radio-value + .radio-type:active, .convo-type-field .radio-value + .radio-type:active, .parent-signup .tab-options .radio-type:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, .page-actions [class*="action-"]:active, .download-pdf:active, .to-field .tokens-type:active, .attach-type:active, .posting .group-post-link:active, .action-showgroups:active, .additems [class*="additem-"]:active, .additem-elder:active {
   color: #fdf6e3;
 }
-.group-posts .translate-link:active, .bulk-tokens a:active, .action-showgroups:active, .login form [class~="form-actions"] button:active:not([class~="secondary"]), .register form [class~="form-actions"] button:active:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:active:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:active:not([class~="secondary"]), .change-password form [class~="form-actions"] button:active:not([class~="secondary"]), .set-password form [class~="form-actions"] button:active:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:active:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:active:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:active:not([class~="secondary"]), .no-students form [class~="form-actions"] button:active:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:active:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:active:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:active:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:active:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .post-add-form .form-actions button:active:not([class~="secondary"]), .linkaction:active, .country_code-field .radio-value + .radio-type:active, .convo-type-field .radio-value + .radio-type:active, .parent-signup .tab-options .radio-type:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, .page-actions [class*="action-"]:active, .download-pdf:active, .to-field .tokens-type:active, .attach-type:active, .posting .group-post-link:active, .additems [class*="additem-"]:active, .additem-elder:active {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+.group-posts .translate-link:active, .bulk-tokens a:active, .login form [class~="form-actions"] button:active:not([class~="secondary"]), .register form [class~="form-actions"] button:active:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button:active:not([class~="secondary"]), .reset-password form [class~="form-actions"] button:active:not([class~="secondary"]), .change-password form [class~="form-actions"] button:active:not([class~="secondary"]), .set-password form [class~="form-actions"] button:active:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button:active:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button:active:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button:active:not([class~="secondary"]), .no-students form [class~="form-actions"] button:active:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button:active:not([class~="secondary"]), .pjax-error [class~="form-actions"] button:active:not([class~="secondary"]), .group-add-form [class~="form-actions"] button:active:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .parent-signup [class~="form-actions"] button:active:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button:active:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button:active:not([class~="secondary"]), .post-add-form .form-actions button:active:not([class~="secondary"]), .linkaction:active, .country_code-field .radio-value + .radio-type:active, .convo-type-field .radio-value + .radio-type:active, .parent-signup .tab-options .radio-type:active, .ui-multiselect-all:active, .ui-multiselect-none:active, .main-register-link:active, .page-actions [class*="action-"]:active, .download-pdf:active, .to-field .tokens-type:active, .attach-type:active, .posting .group-post-link:active, .action-showgroups:active, .additems [class*="additem-"]:active, .additem-elder:active {
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
 }
-.group-posts [disabled].translate-link, .bulk-tokens a[disabled], [disabled].action-showgroups, .login form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:not([class~="secondary"]), [disabled].linkaction, .country_code-field .radio-value + [disabled].radio-type, .convo-type-field .radio-value + [disabled].radio-type, .parent-signup .tab-options [disabled].radio-type, [disabled].ui-multiselect-all, [disabled].ui-multiselect-none, [disabled].main-register-link, .page-actions [disabled][class*="action-"], [disabled].download-pdf, .to-field [disabled].tokens-type, [disabled].attach-type, .posting [disabled].group-post-link, .additems [disabled][class*="additem-"], [disabled].additem-elder {
+.group-posts [disabled].translate-link, .bulk-tokens a[disabled], .login form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:not([class~="secondary"]), [disabled].linkaction, .country_code-field .radio-value + [disabled].radio-type, .convo-type-field .radio-value + [disabled].radio-type, .parent-signup .tab-options [disabled].radio-type, [disabled].ui-multiselect-all, [disabled].ui-multiselect-none, [disabled].main-register-link, .page-actions [disabled][class*="action-"], [disabled].download-pdf, .to-field [disabled].tokens-type, [disabled].attach-type, .posting [disabled].group-post-link, [disabled].action-showgroups, .additems [disabled][class*="additem-"], [disabled].additem-elder {
   text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
   background: -webkit-linear-gradient(top, rgba(227, 91, 88, 0.25), rgba(220, 50, 47, 0), rgba(176, 40, 37, 0.25));
   background: -moz-linear-gradient(top, rgba(227, 91, 88, 0.25), rgba(220, 50, 47, 0), rgba(176, 40, 37, 0.25));
   background: -o-linear-gradient(top, rgba(227, 91, 88, 0.25), rgba(220, 50, 47, 0), rgba(176, 40, 37, 0.25));
   background: linear-gradient(to bottom, rgba(227, 91, 88, 0.25), rgba(220, 50, 47, 0), rgba(176, 40, 37, 0.25));
+  -webkit-box-shadow: #713438 0 0 0 1px inset;
+  -moz-box-shadow: #713438 0 0 0 1px inset;
+  box-shadow: #713438 0 0 0 1px inset;
   background-color: #dc322f;
-  border-color: #713438;
   color: #fdf6e3;
   cursor: text;
 }
-.group-posts [disabled].translate-link:link, .bulk-tokens a[disabled]:link, [disabled].action-showgroups:link, .login form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:link:not([class~="secondary"]), [disabled].linkaction:link, .country_code-field .radio-value + [disabled].radio-type:link, .convo-type-field .radio-value + [disabled].radio-type:link, .parent-signup .tab-options [disabled].radio-type:link, [disabled].ui-multiselect-all:link, [disabled].ui-multiselect-none:link, [disabled].main-register-link:link, .page-actions [disabled][class*="action-"]:link, [disabled].download-pdf:link, .to-field [disabled].tokens-type:link, [disabled].attach-type:link, .posting [disabled].group-post-link:link, .additems [disabled][class*="additem-"]:link, [disabled].additem-elder:link, .group-posts [disabled].translate-link:visited, .bulk-tokens a[disabled]:visited, [disabled].action-showgroups:visited, .login form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:visited:not([class~="secondary"]), [disabled].linkaction:visited, .country_code-field .radio-value + [disabled].radio-type:visited, .convo-type-field .radio-value + [disabled].radio-type:visited, .parent-signup .tab-options [disabled].radio-type:visited, [disabled].ui-multiselect-all:visited, [disabled].ui-multiselect-none:visited, [disabled].main-register-link:visited, .page-actions [disabled][class*="action-"]:visited, [disabled].download-pdf:visited, .to-field [disabled].tokens-type:visited, [disabled].attach-type:visited, .posting [disabled].group-post-link:visited, .additems [disabled][class*="additem-"]:visited, [disabled].additem-elder:visited, .group-posts [disabled].translate-link:focus, .bulk-tokens a[disabled]:focus, [disabled].action-showgroups:focus, .login form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:focus:not([class~="secondary"]), [disabled].linkaction:focus, .country_code-field .radio-value + [disabled].radio-type:focus, .convo-type-field .radio-value + [disabled].radio-type:focus, .parent-signup .tab-options [disabled].radio-type:focus, [disabled].ui-multiselect-all:focus, [disabled].ui-multiselect-none:focus, [disabled].main-register-link:focus, .page-actions [disabled][class*="action-"]:focus, [disabled].download-pdf:focus, .to-field [disabled].tokens-type:focus, [disabled].attach-type:focus, .posting [disabled].group-post-link:focus, .additems [disabled][class*="additem-"]:focus, [disabled].additem-elder:focus, .group-posts [disabled].translate-link:hover, .bulk-tokens a[disabled]:hover, [disabled].action-showgroups:hover, .login form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:hover:not([class~="secondary"]), [disabled].linkaction:hover, .country_code-field .radio-value + [disabled].radio-type:hover, .convo-type-field .radio-value + [disabled].radio-type:hover, .parent-signup .tab-options [disabled].radio-type:hover, [disabled].ui-multiselect-all:hover, [disabled].ui-multiselect-none:hover, [disabled].main-register-link:hover, .page-actions [disabled][class*="action-"]:hover, [disabled].download-pdf:hover, .to-field [disabled].tokens-type:hover, [disabled].attach-type:hover, .posting [disabled].group-post-link:hover, .additems [disabled][class*="additem-"]:hover, [disabled].additem-elder:hover, .group-posts [disabled].translate-link:active, .bulk-tokens a[disabled]:active, [disabled].action-showgroups:active, .login form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:active:not([class~="secondary"]), [disabled].linkaction:active, .country_code-field .radio-value + [disabled].radio-type:active, .convo-type-field .radio-value + [disabled].radio-type:active, .parent-signup .tab-options [disabled].radio-type:active, [disabled].ui-multiselect-all:active, [disabled].ui-multiselect-none:active, [disabled].main-register-link:active, .page-actions [disabled][class*="action-"]:active, [disabled].download-pdf:active, .to-field [disabled].tokens-type:active, [disabled].attach-type:active, .posting [disabled].group-post-link:active, .additems [disabled][class*="additem-"]:active, [disabled].additem-elder:active {
+.group-posts [disabled].translate-link:link, .bulk-tokens a[disabled]:link, .login form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:link:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:link:not([class~="secondary"]), [disabled].linkaction:link, .country_code-field .radio-value + [disabled].radio-type:link, .convo-type-field .radio-value + [disabled].radio-type:link, .parent-signup .tab-options [disabled].radio-type:link, [disabled].ui-multiselect-all:link, [disabled].ui-multiselect-none:link, [disabled].main-register-link:link, .page-actions [disabled][class*="action-"]:link, [disabled].download-pdf:link, .to-field [disabled].tokens-type:link, [disabled].attach-type:link, .posting [disabled].group-post-link:link, [disabled].action-showgroups:link, .additems [disabled][class*="additem-"]:link, [disabled].additem-elder:link, .group-posts [disabled].translate-link:visited, .bulk-tokens a[disabled]:visited, .login form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:visited:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:visited:not([class~="secondary"]), [disabled].linkaction:visited, .country_code-field .radio-value + [disabled].radio-type:visited, .convo-type-field .radio-value + [disabled].radio-type:visited, .parent-signup .tab-options [disabled].radio-type:visited, [disabled].ui-multiselect-all:visited, [disabled].ui-multiselect-none:visited, [disabled].main-register-link:visited, .page-actions [disabled][class*="action-"]:visited, [disabled].download-pdf:visited, .to-field [disabled].tokens-type:visited, [disabled].attach-type:visited, .posting [disabled].group-post-link:visited, [disabled].action-showgroups:visited, .additems [disabled][class*="additem-"]:visited, [disabled].additem-elder:visited, .group-posts [disabled].translate-link:focus, .bulk-tokens a[disabled]:focus, .login form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:focus:not([class~="secondary"]), [disabled].linkaction:focus, .country_code-field .radio-value + [disabled].radio-type:focus, .convo-type-field .radio-value + [disabled].radio-type:focus, .parent-signup .tab-options [disabled].radio-type:focus, [disabled].ui-multiselect-all:focus, [disabled].ui-multiselect-none:focus, [disabled].main-register-link:focus, .page-actions [disabled][class*="action-"]:focus, [disabled].download-pdf:focus, .to-field [disabled].tokens-type:focus, [disabled].attach-type:focus, .posting [disabled].group-post-link:focus, [disabled].action-showgroups:focus, .additems [disabled][class*="additem-"]:focus, [disabled].additem-elder:focus, .group-posts [disabled].translate-link:hover, .bulk-tokens a[disabled]:hover, .login form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:hover:not([class~="secondary"]), [disabled].linkaction:hover, .country_code-field .radio-value + [disabled].radio-type:hover, .convo-type-field .radio-value + [disabled].radio-type:hover, .parent-signup .tab-options [disabled].radio-type:hover, [disabled].ui-multiselect-all:hover, [disabled].ui-multiselect-none:hover, [disabled].main-register-link:hover, .page-actions [disabled][class*="action-"]:hover, [disabled].download-pdf:hover, .to-field [disabled].tokens-type:hover, [disabled].attach-type:hover, .posting [disabled].group-post-link:hover, [disabled].action-showgroups:hover, .additems [disabled][class*="additem-"]:hover, [disabled].additem-elder:hover, .group-posts [disabled].translate-link:active, .bulk-tokens a[disabled]:active, .login form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:active:not([class~="secondary"]), [disabled].linkaction:active, .country_code-field .radio-value + [disabled].radio-type:active, .convo-type-field .radio-value + [disabled].radio-type:active, .parent-signup .tab-options [disabled].radio-type:active, [disabled].ui-multiselect-all:active, [disabled].ui-multiselect-none:active, [disabled].main-register-link:active, .page-actions [disabled][class*="action-"]:active, [disabled].download-pdf:active, .to-field [disabled].tokens-type:active, [disabled].attach-type:active, .posting [disabled].group-post-link:active, [disabled].action-showgroups:active, .additems [disabled][class*="additem-"]:active, [disabled].additem-elder:active {
   color: #fdf6e3;
 }
-.group-posts [disabled].translate-link, .bulk-tokens a[disabled], [disabled].action-showgroups, .login form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:not([class~="secondary"]), [disabled].linkaction, .country_code-field .radio-value + [disabled].radio-type, .convo-type-field .radio-value + [disabled].radio-type, .parent-signup .tab-options [disabled].radio-type, [disabled].ui-multiselect-all, [disabled].ui-multiselect-none, [disabled].main-register-link, .page-actions [disabled][class*="action-"], [disabled].download-pdf, .to-field [disabled].tokens-type, [disabled].attach-type, .posting [disabled].group-post-link, .additems [disabled][class*="additem-"], [disabled].additem-elder, .group-posts [disabled].translate-link:focus, .bulk-tokens a[disabled]:focus, [disabled].action-showgroups:focus, .login form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:focus:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:focus:not([class~="secondary"]), [disabled].linkaction:focus, .country_code-field .radio-value + [disabled].radio-type:focus, .convo-type-field .radio-value + [disabled].radio-type:focus, .parent-signup .tab-options [disabled].radio-type:focus, [disabled].ui-multiselect-all:focus, [disabled].ui-multiselect-none:focus, [disabled].main-register-link:focus, .page-actions [disabled][class*="action-"]:focus, [disabled].download-pdf:focus, .to-field [disabled].tokens-type:focus, [disabled].attach-type:focus, .posting [disabled].group-post-link:focus, .additems [disabled][class*="additem-"]:focus, [disabled].additem-elder:focus, .group-posts [disabled].translate-link:hover, .bulk-tokens a[disabled]:hover, [disabled].action-showgroups:hover, .login form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:hover:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:hover:not([class~="secondary"]), [disabled].linkaction:hover, .country_code-field .radio-value + [disabled].radio-type:hover, .convo-type-field .radio-value + [disabled].radio-type:hover, .parent-signup .tab-options [disabled].radio-type:hover, [disabled].ui-multiselect-all:hover, [disabled].ui-multiselect-none:hover, [disabled].main-register-link:hover, .page-actions [disabled][class*="action-"]:hover, [disabled].download-pdf:hover, .to-field [disabled].tokens-type:hover, [disabled].attach-type:hover, .posting [disabled].group-post-link:hover, .additems [disabled][class*="additem-"]:hover, [disabled].additem-elder:hover, .group-posts [disabled].translate-link:active, .bulk-tokens a[disabled]:active, [disabled].action-showgroups:active, .login form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .register form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .edit-profile form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .reset-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .change-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .set-password form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), [class^="errorpage-"] form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .activationfailed form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .awaiting-activation form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .no-students form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .terms-of-service form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .pjax-error [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .group-add-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .group-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .parent-signup [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .village-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .elder-invite-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .elder-edit-form [class~="form-actions"] button[disabled]:active:not([class~="secondary"]), .post-add-form .form-actions button[disabled]:active:not([class~="secondary"]), [disabled].linkaction:active, .country_code-field .radio-value + [disabled].radio-type:active, .convo-type-field .radio-value + [disabled].radio-type:active, .parent-signup .tab-options [disabled].radio-type:active, [disabled].ui-multiselect-all:active, [disabled].ui-multiselect-none:active, [disabled].main-register-link:active, .page-actions [disabled][class*="action-"]:active, [disabled].download-pdf:active, .to-field [disabled].tokens-type:active, [disabled].attach-type:active, .posting [disabled].group-post-link:active, .additems [disabled][class*="additem-"]:active, [disabled].additem-elder:active {
-  -webkit-box-shadow: none;
-  -moz-box-shadow: none;
-  box-shadow: none;
-}
 
-.group-posts .translate-link, .bulk-tokens a, .action-showgroups {
+.group-posts .translate-link, .bulk-tokens a {
   padding: 0;
   width: 1.59722rem;
-  line-height: 21px;
 }
 
 .active.listitem-select:link, .elder .active.vcard:link, .active.listitem-select:visited, .elder .active.vcard:visited, .active.listitem-select:focus, .elder .active.vcard:focus, .active.listitem-select:hover, .elder .active.vcard:hover, .active.listitem-select:active, .elder .active.vcard:active {
@@ -758,6 +747,9 @@ optgroup {
   -moz-box-shadow: none;
   box-shadow: none;
   text-shadow: none;
+}
+.meta .action-logout:focus {
+  outline: 0;
 }
 
 ::-webkit-input-placeholder {
@@ -1010,6 +1002,9 @@ button {
   color: inherit;
   text-align: left;
 }
+button:focus {
+  outline: 0;
+}
 
 .remove-item {
   padding-top: 6px;
@@ -1202,8 +1197,10 @@ button {
   background: -moz-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: -o-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: linear-gradient(to bottom, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  -webkit-box-shadow: #829692 0 0 0 1px inset;
+  -moz-box-shadow: #829692 0 0 0 1px inset;
+  box-shadow: #829692 0 0 0 1px inset;
   background-color: #fdf6e3;
-  border-color: #829692;
   color: #657b83;
   border-radius: 0;
 }
@@ -1390,8 +1387,10 @@ button {
   background: -moz-linear-gradient(top, rgba(227, 91, 88, 0.25), rgba(220, 50, 47, 0), rgba(176, 40, 37, 0.25));
   background: -o-linear-gradient(top, rgba(227, 91, 88, 0.25), rgba(220, 50, 47, 0), rgba(176, 40, 37, 0.25));
   background: linear-gradient(to bottom, rgba(227, 91, 88, 0.25), rgba(220, 50, 47, 0), rgba(176, 40, 37, 0.25));
+  -webkit-box-shadow: #713438 0 0 0 1px inset;
+  -moz-box-shadow: #713438 0 0 0 1px inset;
+  box-shadow: #713438 0 0 0 1px inset;
   background-color: #dc322f;
-  border-color: #713438;
   color: #fdf6e3;
 }
 .ui-multiselect-none:link, .ui-multiselect-none:visited, .ui-multiselect-none:focus, .ui-multiselect-none:hover, .ui-multiselect-none:active {
@@ -1522,8 +1521,8 @@ button {
 }
 
 .tooltip {
-  font-size: 12px;
-  font-size: 0.66667rem;
+  font-size: 14px;
+  font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
   position: absolute;
@@ -1532,6 +1531,8 @@ button {
   background: #4c4c4c;
   border: 1px solid #fdf6e3;
   white-space: nowrap;
+  font-weight: normal;
+  text-shadow: 0 1px 0 black;
   z-index: 100;
   pointer-events: none;
   display: none;
@@ -1540,7 +1541,7 @@ button {
   content: attr(data-tooltip);
 }
 
-.additem-elder .tooltip, .top-link .tooltip, .action-showgroups .tooltip {
+.additem-elder .tooltip, .top-link .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
@@ -1561,8 +1562,15 @@ button {
   right: 0.31944rem;
 }
 
+.select-groups .disabled + .type .tooltip, .select-students .disabled + .type .tooltip, .select-elders .disabled + .type .tooltip {
+  top: 100%;
+  margin-top: 0.31944rem;
+}
+
 .action-showgroups .tooltip {
-  left: 0;
+  left: 100%;
+  top: 0;
+  margin-left: 0.31944rem;
 }
 .action-showgroups .tooltip:before {
   content: " ";
@@ -1571,15 +1579,11 @@ button {
   width: 0;
   border: solid transparent;
   pointer-events: none;
-  top: 100%;
-  border-top-color: #4c4c4c;
+  right: 100%;
+  border-right-color: #4c4c4c;
   border-width: 0.31944rem;
-  left: 0.31944rem;
-}
-
-.select-groups .disabled + .type .tooltip, .select-students .disabled + .type .tooltip, .select-elders .disabled + .type .tooltip {
-  top: 100%;
-  margin-top: 0.31944rem;
+  top: 50%;
+  margin-top: -0.31944rem;
 }
 
 .help-tip, .select-groups .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .action-showgroups, .additem-elder, .top-link {
@@ -2359,7 +2363,7 @@ button {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1377553427') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2419,23 +2423,23 @@ button {
 }
 
 #emmanuelle:before {
-  background-image: url('../images/landing/emmanuelle.png?1381157677');
+  background-image: url('../images/landing/emmanuelle.png?1380914817');
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1377553427');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1381157677');
+  background-image: url('../images/landing/carl.png?1380914817');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1381157677');
+  background-image: url('../images/landing/eric.png?1380914817');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1377553427');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 @-moz-keyframes announce-in {
@@ -2800,10 +2804,10 @@ button {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1377553427');
+  background-image: url('../images/flags/ca.png?1359567924');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1377553427');
+  background-image: url('../images/flags/us.png?1359567924');
 }
 
 .terms-confirm {
@@ -2978,8 +2982,10 @@ button {
   background: -moz-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: -o-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: linear-gradient(to bottom, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  -webkit-box-shadow: #829692 0 0 0 1px inset;
+  -moz-box-shadow: #829692 0 0 0 1px inset;
+  box-shadow: #829692 0 0 0 1px inset;
   background-color: #fdf6e3;
-  border-color: #829692;
   color: #657b83;
 }
 .page-actions [class*="action-"]:link, .page-actions [class*="action-"]:visited, .page-actions [class*="action-"]:focus, .page-actions [class*="action-"]:hover, .page-actions [class*="action-"]:active {
@@ -3371,7 +3377,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: 0;
   padding-top: 53.61552%;
   width: 30.15873%;
-  background: url('../images/phone.png?1377553427') no-repeat center;
+  background: url('../images/phone.png?1353558228') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -3458,8 +3464,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: -o-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: linear-gradient(to bottom, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  -webkit-box-shadow: #769087 0 0 0 1px inset;
+  -moz-box-shadow: #769087 0 0 0 1px inset;
+  box-shadow: #769087 0 0 0 1px inset;
   background-color: #e6eacc;
-  border-color: #769087;
   color: #657b83;
 }
 .download-pdf:link, .download-pdf:visited, .download-pdf:focus, .download-pdf:hover, .download-pdf:active {
@@ -3552,8 +3560,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
   background: -o-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
   background: linear-gradient(to bottom, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
+  -webkit-box-shadow: #829798 0 0 0 1px inset;
+  -moz-box-shadow: #829798 0 0 0 1px inset;
+  box-shadow: #829798 0 0 0 1px inset;
   background-color: #fdf9ee;
-  border-color: #829798;
   color: #657b83;
   position: relative;
   float: right;
@@ -3567,8 +3577,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
   background: -o-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
   background: linear-gradient(to bottom, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
+  -webkit-box-shadow: #829798 0 0 0 1px inset;
+  -moz-box-shadow: #829798 0 0 0 1px inset;
+  box-shadow: #829798 0 0 0 1px inset;
   background-color: #fdf9ee;
-  border-color: #829798;
   color: #657b83;
   margin-left: 1.27778rem;
   margin-right: 17.02128%;
@@ -3772,8 +3784,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: -o-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: linear-gradient(to bottom, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  -webkit-box-shadow: #769087 0 0 0 1px inset;
+  -moz-box-shadow: #769087 0 0 0 1px inset;
+  box-shadow: #769087 0 0 0 1px inset;
   background-color: #e6eacc;
-  border-color: #769087;
   color: #657b83;
 }
 .bulk-tokens .add-all:link, .bulk-tokens .add-all:visited, .bulk-tokens .add-all:focus, .bulk-tokens .add-all:hover, .bulk-tokens .add-all:active {
@@ -3785,8 +3799,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(249, 222, 221, 0.25), rgba(248, 214, 213, 0), rgba(198, 171, 170, 0.25));
   background: -o-linear-gradient(top, rgba(249, 222, 221, 0.25), rgba(248, 214, 213, 0), rgba(198, 171, 170, 0.25));
   background: linear-gradient(to bottom, rgba(249, 222, 221, 0.25), rgba(248, 214, 213, 0), rgba(198, 171, 170, 0.25));
+  -webkit-box-shadow: #7f868b 0 0 0 1px inset;
+  -moz-box-shadow: #7f868b 0 0 0 1px inset;
+  box-shadow: #7f868b 0 0 0 1px inset;
   background-color: #f8d6d5;
-  border-color: #7f868b;
   color: #657b83;
 }
 .bulk-tokens .remove-all:link, .bulk-tokens .remove-all:visited, .bulk-tokens .remove-all:focus, .bulk-tokens .remove-all:hover, .bulk-tokens .remove-all:active {
@@ -3923,23 +3939,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
   background: -o-linear-gradient(top, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
   background: linear-gradient(to bottom, rgba(253, 250, 241, 0.25), rgba(253, 249, 238, 0), rgba(202, 199, 190, 0.25));
+  -webkit-box-shadow: #829798 0 0 0 1px inset;
+  -moz-box-shadow: #829798 0 0 0 1px inset;
+  box-shadow: #829798 0 0 0 1px inset;
   background-color: #fdf9ee;
-  border-color: #829798;
   color: #657b83;
   font-size: 14px;
   font-size: 0.77778rem;
   line-height: 23px;
   line-height: 1.27778rem;
-  border-top-width: 1px;
-  border-top-width: 0.05556rem;
-  border-top-style: solid;
-  padding-top: 5px;
-  padding-top: 0.26389rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 5px;
-  padding-bottom: 0.26389rem;
+  padding-top: 6px;
+  padding-top: 0.31944rem;
+  padding-bottom: 6px;
+  padding-bottom: 0.31944rem;
   -moz-border-radius-topright: 0;
   -webkit-border-top-right-radius: 0;
   border-top-right-radius: 0;
@@ -4126,8 +4138,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: -o-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: linear-gradient(to bottom, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  -webkit-box-shadow: #829692 0 0 0 1px inset;
+  -moz-box-shadow: #829692 0 0 0 1px inset;
+  box-shadow: #829692 0 0 0 1px inset;
   background-color: #fdf6e3;
-  border-color: #829692;
   color: #657b83;
   margin-left: 50%;
   border-right: 0;
@@ -4141,8 +4155,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(219, 235, 247, 0.25), rgba(211, 231, 246, 0), rgba(168, 184, 196, 0.25));
   background: -o-linear-gradient(top, rgba(219, 235, 247, 0.25), rgba(211, 231, 246, 0), rgba(168, 184, 196, 0.25));
   background: linear-gradient(to bottom, rgba(219, 235, 247, 0.25), rgba(211, 231, 246, 0), rgba(168, 184, 196, 0.25));
+  -webkit-box-shadow: #6d8e9c 0 0 0 1px inset;
+  -moz-box-shadow: #6d8e9c 0 0 0 1px inset;
+  box-shadow: #6d8e9c 0 0 0 1px inset;
   background-color: #d3e7f6;
-  border-color: #6d8e9c;
   color: #657b83;
 }
 .posting .group-post-link:focus:link, .posting .group-post-link:focus:visited, .posting .group-post-link:focus:focus, .posting .group-post-link:focus:hover, .posting .group-post-link:focus:active, .posting .group-post-link:hover:link, .posting .group-post-link:hover:visited, .posting .group-post-link:hover:focus, .posting .group-post-link:hover:hover, .posting .group-post-link:hover:active, .posting .group-post-link:active:link, .posting .group-post-link:active:visited, .posting .group-post-link:active:focus, .posting .group-post-link:active:hover, .posting .group-post-link:active:active {
@@ -4186,6 +4202,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .action-showgroups {
   position: absolute;
   top: 0.31944rem;
+  padding: 0 0.31944rem;
 }
 
 .group-name a, .groups-title {
@@ -4219,13 +4236,18 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: -o-linear-gradient(top, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
   background: linear-gradient(to bottom, rgba(253, 247, 232, 0.25), rgba(253, 246, 227, 0), rgba(202, 196, 181, 0.25));
+  -webkit-box-shadow: #829692 0 0 0 1px inset;
+  -moz-box-shadow: #829692 0 0 0 1px inset;
+  box-shadow: #829692 0 0 0 1px inset;
   background-color: #fdf6e3;
-  border-color: #829692;
   color: #657b83;
   left: 0.31944rem;
 }
 .action-showgroups:link, .action-showgroups:visited, .action-showgroups:focus, .action-showgroups:hover, .action-showgroups:active {
   color: #657b83;
+}
+.action-showgroups .tooltip {
+  top: -0.15972rem;
 }
 
 .village-nav {
@@ -4308,8 +4330,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: -o-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: linear-gradient(to bottom, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  -webkit-box-shadow: #769087 0 0 0 1px inset;
+  -moz-box-shadow: #769087 0 0 0 1px inset;
+  box-shadow: #769087 0 0 0 1px inset;
   background-color: #e6eacc;
-  border-color: #769087;
   color: #657b83;
   margin: 0.31944rem 0;
   display: block;
@@ -4328,8 +4352,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(219, 235, 247, 0.25), rgba(211, 231, 246, 0), rgba(168, 184, 196, 0.25));
   background: -o-linear-gradient(top, rgba(219, 235, 247, 0.25), rgba(211, 231, 246, 0), rgba(168, 184, 196, 0.25));
   background: linear-gradient(to bottom, rgba(219, 235, 247, 0.25), rgba(211, 231, 246, 0), rgba(168, 184, 196, 0.25));
+  -webkit-box-shadow: #6d8e9c 0 0 0 1px inset;
+  -moz-box-shadow: #6d8e9c 0 0 0 1px inset;
+  box-shadow: #6d8e9c 0 0 0 1px inset;
   background-color: #d3e7f6;
-  border-color: #6d8e9c;
   color: #657b83;
 }
 .additems [class*="additem-"][class*="-group"]:link, .additems [class*="additem-"][class*="-group"]:visited, .additems [class*="additem-"][class*="-group"]:focus, .additems [class*="additem-"][class*="-group"]:hover, .additems [class*="additem-"][class*="-group"]:active {
@@ -4341,8 +4367,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: -moz-linear-gradient(top, rgba(131, 149, 155, 0.25), rgba(101, 123, 131, 0), rgba(80, 98, 104, 0.25));
   background: -o-linear-gradient(top, rgba(131, 149, 155, 0.25), rgba(101, 123, 131, 0), rgba(80, 98, 104, 0.25));
   background: linear-gradient(to bottom, rgba(131, 149, 155, 0.25), rgba(101, 123, 131, 0), rgba(80, 98, 104, 0.25));
+  -webkit-box-shadow: #365862 0 0 0 1px inset;
+  -moz-box-shadow: #365862 0 0 0 1px inset;
+  box-shadow: #365862 0 0 0 1px inset;
   background-color: #657b83;
-  border-color: #365862;
   color: #fdf6e3;
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
@@ -4686,23 +4714,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 }
 
 .additem-elder {
-  border-top-width: 1px;
-  border-top-width: 0.05556rem;
-  border-top-style: solid;
-  padding-top: 2px;
-  padding-top: 0.10417rem;
-  border-bottom-width: 1px;
-  border-bottom-width: 0.05556rem;
-  border-bottom-style: solid;
-  padding-bottom: 2px;
-  padding-bottom: 0.10417rem;
+  padding-top: 3px;
+  padding-top: 0.15972rem;
+  padding-bottom: 3px;
+  padding-bottom: 0.15972rem;
   text-shadow: rgba(253, 246, 227, 0.5) 0 -1px 0;
   background: -webkit-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: -moz-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: -o-linear-gradient(top, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
   background: linear-gradient(to bottom, rgba(235, 238, 214, 0.25), rgba(230, 234, 204, 0), rgba(184, 187, 163, 0.25));
+  -webkit-box-shadow: #769087 0 0 0 1px inset;
+  -moz-box-shadow: #769087 0 0 0 1px inset;
+  box-shadow: #769087 0 0 0 1px inset;
   background-color: #e6eacc;
-  border-color: #769087;
   color: #657b83;
   float: right;
   margin-left: 0.31944rem;
@@ -4778,26 +4802,19 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   -webkit-border-radius: 0.25em;
   -moz-border-radius: 0.25em;
   border-radius: 0.25em;
-  border-width: 1px;
-  border-width: 0.05556rem;
-  border-style: solid;
-  padding: 5px;
-  padding: 0.26389rem;
   text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
   background: -webkit-linear-gradient(top, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
   background: -moz-linear-gradient(top, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
   background: -o-linear-gradient(top, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
   background: linear-gradient(to bottom, rgba(191, 83, 80, 0.25), rgba(176, 40, 37, 0), rgba(140, 32, 29, 0.25));
+  -webkit-box-shadow: #5b2f33 0 0 0 1px inset;
+  -moz-box-shadow: #5b2f33 0 0 0 1px inset;
+  box-shadow: #5b2f33 0 0 0 1px inset;
   background-color: #b02825;
-  border-color: #5b2f33;
   color: #fdf6e3;
-  -webkit-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
-  -moz-box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
-  box-shadow: rgba(255, 255, 255, 0.5) 0 1px 1px inset;
   display: inline-block;
   margin: 0;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: 0.31944rem 1em;
   text-align: center;
   display: block;
   position: fixed;
@@ -4809,9 +4826,9 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   color: #fdf6e3;
 }
 .top-link:active {
-  -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
-  box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
 }
 .top-link:focus, .top-link:hover, .top-link:active {
   opacity: 1;

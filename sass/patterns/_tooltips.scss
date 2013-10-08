@@ -6,13 +6,15 @@ $tooltip-color: contrast($tooltip-background);
 $tooltip-arrow-size: rhythm(.25);
 
 %tooltip-base {
-  @include adjust-font-size-to($xsmallpx);
+  @include adjust-font-size-to($smallpx);
   position: absolute;
   padding: rhythm(.125) rhythm(.5);
   color: $tooltip-color;
   background: $tooltip-background;
   border: 1px solid $tooltip-color;
   white-space: nowrap;
+  font-weight: normal;
+  text-shadow: 0 1px 0 black;
   z-index: 100;
   pointer-events: none;
 
