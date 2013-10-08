@@ -125,6 +125,10 @@ $default-tooltip-selector   : '.tooltip'      !default;
     $y: bottom;
   }
 
+  @if $y and not $x {
+    $x: $default-tooltip-x;
+  }
+
   @if $y { $s: $s + '-#{$y}'; }
   @if $x { $s: $s + '-#{$x}'; }
 

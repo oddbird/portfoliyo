@@ -1567,6 +1567,22 @@ button:focus {
   margin-top: 0.31944rem;
 }
 
+.select-groups .disabled + .type .tooltip, .select-students .disabled + .type .tooltip, .select-elders .disabled + .type .tooltip {
+  left: 0;
+}
+.select-groups .disabled + .type .tooltip:before, .select-students .disabled + .type .tooltip:before, .select-elders .disabled + .type .tooltip:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  bottom: 100%;
+  border-bottom-color: #4c4c4c;
+  border-width: 0.31944rem;
+  left: 0.31944rem;
+}
+
 .action-showgroups .tooltip {
   left: 100%;
   top: 0;
