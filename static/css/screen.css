@@ -1541,7 +1541,7 @@ button:focus {
   content: attr(data-tooltip);
 }
 
-.additem-elder .tooltip, .top-link .tooltip {
+.additem-elder .tooltip, .top-link .tooltip, .select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
@@ -1560,6 +1560,22 @@ button:focus {
   border-top-color: #4c4c4c;
   border-width: 0.31944rem;
   right: 0.31944rem;
+}
+
+.select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
+  left: 0;
+}
+.select-students :last-child .disabled + .type .tooltip:before, .select-elders :last-child .disabled + .type .tooltip:before {
+  content: " ";
+  position: absolute;
+  height: 0;
+  width: 0;
+  border: solid transparent;
+  pointer-events: none;
+  top: 100%;
+  border-top-color: #4c4c4c;
+  border-width: 0.31944rem;
+  left: 0.31944rem;
 }
 
 .select-groups .disabled + .type .tooltip, .select-students .disabled + .type .tooltip, .select-elders .disabled + .type .tooltip {
@@ -1602,7 +1618,7 @@ button:focus {
   margin-top: -0.31944rem;
 }
 
-.help-tip, .select-groups .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .action-showgroups, .additem-elder, .top-link {
+.help-tip, .select-groups .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .select-students :last-child .disabled + .type, .select-elders :last-child .disabled + .type, .action-showgroups, .additem-elder, .top-link {
   position: relative;
 }
 .help-tip:hover .tooltip, .select-groups .disabled + .type:hover .tooltip, .select-students .disabled + .type:hover .tooltip, .select-elders .disabled + .type:hover .tooltip, .action-showgroups:hover .tooltip, .additem-elder:hover .tooltip, .top-link:hover .tooltip {
@@ -3213,8 +3229,15 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   background: #e8f2a6;
 }
 
+.select-students .disabled + .type .tooltip, .select-elders .disabled + .type .tooltip {
+  margin-top: 0;
+}
 .select-students .disabled + .type, .select-students .disabled + .type:focus, .select-students .disabled + .type:hover, .select-students .disabled + .type:active, .select-elders .disabled + .type, .select-elders .disabled + .type:focus, .select-elders .disabled + .type:hover, .select-elders .disabled + .type:active {
   background: rgba(38, 139, 210, 0.125);
+}
+.select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
+  top: auto;
+  margin-bottom: 0;
 }
 .select-students .group-selected-1:before, .select-elders .group-selected-1:before {
   text-shadow: #073642 0 1px 0;

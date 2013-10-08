@@ -68,8 +68,14 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 
 .select-students, .select-elders {
   .disabled + .type {
-    @include tooltip(bottom);
+    @include tooltip(bottom) { margin-top: 0; }
     &, #{$focus} { @include options-checked; }
+  }
+  :last-child .disabled + .type {
+    @include tooltip(top) {
+      top: auto;
+      margin-bottom: 0;
+    }
   }
 
   $i: 1;
