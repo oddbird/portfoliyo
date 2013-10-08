@@ -1,4 +1,6 @@
 """Tests for user/account views."""
+from urlparse import urlparse
+
 from django.contrib.auth import models as auth_models
 from django.core import mail
 from django.core.urlresolvers import reverse
@@ -308,7 +310,7 @@ class TestConfirmEmail(object):
 
         for line in mail.outbox[0].body.splitlines():
             if '://' in line:
-                return line.strip()
+                return urlparse(line.strip()).path
 
         assert False, "Email-confirm link not found in activation email."
 
@@ -347,7 +349,7 @@ class TestAcceptEmailInvite(object):
 
         for line in mail.outbox[0].body.splitlines():
             if '://' in line:
-                return line.strip()
+                return urlparse(line.strip()).path
 
         assert False, "No invite URL found in invite-elder email."
 
