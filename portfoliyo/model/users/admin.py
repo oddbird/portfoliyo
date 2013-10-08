@@ -12,12 +12,14 @@ class RelationshipsFromInline(admin.TabularInline):
     model = models.Relationship
     fk_name = 'to_profile'
     extra = 0
+    raw_id_fields = ['from_profile', 'groups']
 
 
 class RelationshipsToInline(admin.TabularInline):
     model = models.Relationship
     fk_name = 'from_profile'
     extra = 0
+    raw_id_fields = ['to_profile', 'groups']
 
 
 class ProfileAdmin(admin.ModelAdmin):
@@ -33,7 +35,7 @@ class ProfileAdmin(admin.ModelAdmin):
         ]
     list_filter=['school', 'school_staff', 'declined']
     search_fields = ['user__email', 'phone']
-    raw_id_fields = ['user']
+    raw_id_fields = ['school', 'user', 'invited_by']
 
 
     def email(self, profile):
