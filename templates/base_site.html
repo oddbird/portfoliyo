@@ -17,14 +17,14 @@
     <nav class="meta">
       {% if SNAPENGAGE_ID %}
       <a href="#" class="helplink" onClick="return SnapABug.startLink();" title="Help">
-        <span aria-hidden="true" data-icon="&#xf059;"></span>
+        <span aria-hidden="true" data-icon="question-sign"></span>
         <span class="alt-text">Help</span>
       </a>
       {% endif %}
       <form action="{% url 'logout' %}" method="POST" id="logoutform">
         {% csrf_token %}
         <button type="submit" class="action-logout" title="Logout">
-          <span aria-hidden="true" data-icon="&#xe016;"></span>
+          <span aria-hidden="true" data-icon="exit"></span>
           <span class="alt-text">Logout</span>
         </button>
       </form>
@@ -34,13 +34,13 @@
     <nav class="login-nav">
       {% if SNAPENGAGE_ID %}
       <a href="#" class="helplink" onClick="return SnapABug.startLink();">
-        <span aria-hidden="true" data-icon="&#xf059;"></span>
+        <span aria-hidden="true" data-icon="question-sign"></span>
         <span class="alt-text">Help</span>
       </a>
       {% endif %}
       <a href="{% url 'register' %}" class="register-link">Get Started</a>
       <a href="{% url 'login' %}" class="login-link">
-        <span aria-hidden="true" data-icon="&#xe015;"></span>
+        <span aria-hidden="true" data-icon="enter"></span>
         <span class="alt-text">Login</span>
       </a>
     </nav>

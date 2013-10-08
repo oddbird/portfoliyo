@@ -9,7 +9,6 @@
 // Settings
 
 $button-rhythm: .25;
-$button-border: 1px;
 $button-radius: .25em;
 
 // ---------------------------------------------------------------------------
@@ -28,15 +27,12 @@ $button-radius: .25em;
   $color: $green
 ) {
   @include border-radius($button-radius);
-  @include rhythm-borders($button-border,$button-rhythm);
   @include button-color($color);
-  @include box-shadow(color(white,.5) 0 1px 1px inset);
   display: inline-block;
   margin: 0;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: rhythm($button-rhythm) 1em;
   text-align: center;
-  &:active { @include inset; }
+  &:active { @include box-shadow(color(darkest,.5) 0 0 3px 1px inset); }
 }
 
 // Change button background and border colors.
@@ -56,8 +52,8 @@ $button-radius: .25em;
   @include background(
     linear-gradient(top, rgba($light,.25), rgba($color,0), rgba($dark,.25))
   );
+  @include box-shadow(mix($color,$back) 0 0 0 1px inset);
   background-color: $color;
-  border-color: mix($color,$back);
   color: $contrast;
 
   #{$link}, #{$focus} { color: $contrast; }
@@ -81,7 +77,7 @@ $button-radius: .25em;
   }
 
   @if $fontsize { @include adjust-font-size-to($fontsize); }
-  @if $rhythm { @include h-borders(1px,$rhythm); }
+  @if $rhythm { @include rhythm-padding($rhythm); }
 }
 
 $inset-color: color($back,.5);
@@ -103,6 +99,7 @@ $inset-size: rhythm(.125);
   background: none;
   color: inherit;
   text-align: left;
+  &:focus { outline: 0; }
 }
 
 // ---------------------------------------------------------------------------
@@ -116,7 +113,6 @@ $inset-size: rhythm(.125);
   &[disabled] {
     @include button-color(color($red));
     cursor: text;
-    &, #{$focus} { @include box-shadow(none); }
   }
 }
 
@@ -125,7 +121,6 @@ $inset-size: rhythm(.125);
   @extend %icon-replace;
   padding: 0;
   width: rhythm(1.25);
-  line-height: $base-line-height - ($button-border*2);
 }
 
 %inset { @include inset; }

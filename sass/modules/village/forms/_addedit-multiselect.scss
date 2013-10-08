@@ -43,6 +43,9 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
                desaturate(lighten-color($green, 50%), 25%);
 
 .select-groups {
+  .disabled + .type {
+    @include tooltip(bottom);
+  }
   [class*="label-color-"] {
     &:after {
       @include border-radius(3px);
@@ -65,7 +68,14 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 
 .select-students, .select-elders {
   .disabled + .type {
+    @include tooltip(bottom) { margin-top: 0; }
     &, #{$focus} { @include options-checked; }
+  }
+  :last-child .disabled + .type {
+    @include tooltip(top) {
+      top: auto;
+      margin-bottom: 0;
+    }
   }
 
   $i: 1;

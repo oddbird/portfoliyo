@@ -30,9 +30,9 @@
 .additem-elder {
   @extend %button;
   @extend %icon;
-  @extend %icon-user-plus;
   @include button-size;
   @include button-color(color($green lightest));
+  @include tooltip(top left);
   float: right;
   margin-left: $box-padding;
   &.active {

@@ -8,8 +8,10 @@
   <header class="elder-header">
     {% block invite-elder %}
     {% if request.user.profile.school_staff %}
-    <a href="{% block invite-elder-url %}{% endblock %}" class="additem-elder ajax-link{% if invite_teacher_active and elder_type.school_staff %} active{% endif %}{% if invite_family_active and not elder_type.school_staff %} active{% endif %}" title="Invite {% if elder_type.school_staff %}Teachers{% else %}Family{% endif %}">
-      Invite <span class="alt-text">{% if elder_type.school_staff %}Teachers{% else %}Family{% endif %}</span>
+    <a href="{% block invite-elder-url %}{% endblock %}" class="additem-elder ajax-link{% if invite_teacher_active and elder_type.school_staff %} active{% endif %}{% if invite_family_active and not elder_type.school_staff %} active{% endif %}">
+      <span data-icon="user-plus"> </span>
+      <span class="tooltip">Invite {% if elder_type.school_staff %}Teachers{% else %}Family{% endif %} to participate in this {% block page-type %}village{% endblock page-type %}</span>
+      Invite
     </a>
     {% endif %}
     {% endblock invite-elder %}
