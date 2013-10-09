@@ -46,7 +46,7 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
   .disabled + .type {
     @include tooltip(bottom) { margin-top: 0; }
   }
-  :last-child .disabled + .type {
+  :last-child:not(:first-child) .disabled + .type {
     @include tooltip(top) {
       top: auto;
       margin-bottom: 0;
@@ -77,7 +77,7 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
     @include tooltip(bottom) { margin-top: 0; }
     &, #{$focus} { @include options-checked; }
   }
-  :last-child .disabled + .type {
+  :last-child:not(:first-child) .disabled + .type {
     @include tooltip(top) {
       top: auto;
       margin-bottom: 0;

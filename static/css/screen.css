@@ -1541,7 +1541,7 @@ button:focus {
   content: attr(data-tooltip);
 }
 
-.additem-elder .tooltip, .top-link .tooltip, .select-groups :last-child .disabled + .type .tooltip, .select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
+.additem-elder .tooltip, .top-link .tooltip, .select-groups :last-child:not(:first-child) .disabled + .type .tooltip, .select-students :last-child:not(:first-child) .disabled + .type .tooltip, .select-elders :last-child:not(:first-child) .disabled + .type .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
@@ -1562,10 +1562,10 @@ button:focus {
   right: 0.31944rem;
 }
 
-.select-groups :last-child .disabled + .type .tooltip, .select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
+.select-groups :last-child:not(:first-child) .disabled + .type .tooltip, .select-students :last-child:not(:first-child) .disabled + .type .tooltip, .select-elders :last-child:not(:first-child) .disabled + .type .tooltip {
   left: 0;
 }
-.select-groups :last-child .disabled + .type .tooltip:before, .select-students :last-child .disabled + .type .tooltip:before, .select-elders :last-child .disabled + .type .tooltip:before {
+.select-groups :last-child:not(:first-child) .disabled + .type .tooltip:before, .select-students :last-child:not(:first-child) .disabled + .type .tooltip:before, .select-elders :last-child:not(:first-child) .disabled + .type .tooltip:before {
   content: " ";
   position: absolute;
   height: 0;
@@ -1618,7 +1618,7 @@ button:focus {
   margin-top: -0.31944rem;
 }
 
-.help-tip, .select-groups .disabled + .type, .select-groups :last-child .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .select-students :last-child .disabled + .type, .select-elders :last-child .disabled + .type, .action-showgroups, .additem-elder, .top-link {
+.help-tip, .select-groups .disabled + .type, .select-groups :last-child:not(:first-child) .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .select-students :last-child:not(:first-child) .disabled + .type, .select-elders :last-child:not(:first-child) .disabled + .type, .action-showgroups, .additem-elder, .top-link {
   position: relative;
 }
 .help-tip:hover .tooltip, .select-groups .disabled + .type:hover .tooltip, .select-students .disabled + .type:hover .tooltip, .select-elders .disabled + .type:hover .tooltip, .action-showgroups:hover .tooltip, .additem-elder:hover .tooltip, .top-link:hover .tooltip {
@@ -3162,7 +3162,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .select-groups .disabled + .type .tooltip {
   margin-top: 0;
 }
-.select-groups :last-child .disabled + .type .tooltip {
+.select-groups :last-child:not(:first-child) .disabled + .type .tooltip {
   top: auto;
   margin-bottom: 0;
 }
@@ -3242,7 +3242,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .select-students .disabled + .type, .select-students .disabled + .type:focus, .select-students .disabled + .type:hover, .select-students .disabled + .type:active, .select-elders .disabled + .type, .select-elders .disabled + .type:focus, .select-elders .disabled + .type:hover, .select-elders .disabled + .type:active {
   background: rgba(38, 139, 210, 0.125);
 }
-.select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
+.select-students :last-child:not(:first-child) .disabled + .type .tooltip, .select-elders :last-child:not(:first-child) .disabled + .type .tooltip {
   top: auto;
   margin-bottom: 0;
 }
