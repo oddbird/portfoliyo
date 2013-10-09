@@ -44,7 +44,13 @@ $label-colors: $yellow $orange $magenta $violet $cyan $green
 
 .select-groups {
   .disabled + .type {
-    @include tooltip(bottom);
+    @include tooltip(bottom) { margin-top: 0; }
+  }
+  :last-child .disabled + .type {
+    @include tooltip(top) {
+      top: auto;
+      margin-bottom: 0;
+    }
   }
   [class*="label-color-"] {
     &:after {

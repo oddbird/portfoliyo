@@ -1541,7 +1541,7 @@ button:focus {
   content: attr(data-tooltip);
 }
 
-.additem-elder .tooltip, .top-link .tooltip, .select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
+.additem-elder .tooltip, .top-link .tooltip, .select-groups :last-child .disabled + .type .tooltip, .select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
   bottom: 100%;
   margin-bottom: 0.31944rem;
 }
@@ -1562,10 +1562,10 @@ button:focus {
   right: 0.31944rem;
 }
 
-.select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
+.select-groups :last-child .disabled + .type .tooltip, .select-students :last-child .disabled + .type .tooltip, .select-elders :last-child .disabled + .type .tooltip {
   left: 0;
 }
-.select-students :last-child .disabled + .type .tooltip:before, .select-elders :last-child .disabled + .type .tooltip:before {
+.select-groups :last-child .disabled + .type .tooltip:before, .select-students :last-child .disabled + .type .tooltip:before, .select-elders :last-child .disabled + .type .tooltip:before {
   content: " ";
   position: absolute;
   height: 0;
@@ -1618,7 +1618,7 @@ button:focus {
   margin-top: -0.31944rem;
 }
 
-.help-tip, .select-groups .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .select-students :last-child .disabled + .type, .select-elders :last-child .disabled + .type, .action-showgroups, .additem-elder, .top-link {
+.help-tip, .select-groups .disabled + .type, .select-groups :last-child .disabled + .type, .select-students .disabled + .type, .select-elders .disabled + .type, .select-students :last-child .disabled + .type, .select-elders :last-child .disabled + .type, .action-showgroups, .additem-elder, .top-link {
   position: relative;
 }
 .help-tip:hover .tooltip, .select-groups .disabled + .type:hover .tooltip, .select-students .disabled + .type:hover .tooltip, .select-elders .disabled + .type:hover .tooltip, .action-showgroups:hover .tooltip, .additem-elder:hover .tooltip, .top-link:hover .tooltip {
@@ -2395,7 +2395,7 @@ button:focus {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1377553427') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2455,23 +2455,23 @@ button:focus {
 }
 
 #emmanuelle:before {
-  background-image: url('../images/landing/emmanuelle.png?1380914817');
+  background-image: url('../images/landing/emmanuelle.png?1381157677');
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351725897');
+  background-image: url('../images/landing/peter.png?1377553427');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1380914817');
+  background-image: url('../images/landing/carl.png?1381157677');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1380914817');
+  background-image: url('../images/landing/eric.png?1381157677');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351725897');
+  background-image: url('../images/landing/jonny.png?1377553427');
 }
 
 @-moz-keyframes announce-in {
@@ -2836,10 +2836,10 @@ button:focus {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1359567924');
+  background-image: url('../images/flags/ca.png?1377553427');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1359567924');
+  background-image: url('../images/flags/us.png?1377553427');
 }
 
 .terms-confirm {
@@ -3159,6 +3159,13 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   margin-bottom: 0.31944rem;
 }
 
+.select-groups .disabled + .type .tooltip {
+  margin-top: 0;
+}
+.select-groups :last-child .disabled + .type .tooltip {
+  top: auto;
+  margin-bottom: 0;
+}
 .select-groups [class*="label-color-"]:after {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -3416,7 +3423,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: 0;
   padding-top: 53.61552%;
   width: 30.15873%;
-  background: url('../images/phone.png?1353558228') no-repeat center;
+  background: url('../images/phone.png?1377553427') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
