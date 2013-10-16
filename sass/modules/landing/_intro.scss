@@ -8,7 +8,7 @@
 
 .intro {
   @include clearfix;
-  @include trailer(.5);
+  @include trailer;
   text-align: center;
 }
 
@@ -17,7 +17,6 @@
   @include fluid-ratio;
   position: relative;
   overflow: hidden;
-  > * { border: 1px solid $base2; }
 }
 
 .intro-copy {

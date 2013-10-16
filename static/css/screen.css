@@ -1986,8 +1986,8 @@ button:focus {
 
 .intro {
   overflow: hidden;
-  margin-bottom: 12px;
-  margin-bottom: 0.63889rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
   text-align: center;
 }
 
@@ -2009,9 +2009,6 @@ button:focus {
   top: 0;
   margin: 0;
   padding: 0;
-}
-.main-image > * {
-  border: 1px solid #eee8d5;
 }
 
 .intro-copy {
@@ -2395,7 +2392,7 @@ button:focus {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1377553427') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2455,23 +2452,23 @@ button:focus {
 }
 
 #emmanuelle:before {
-  background-image: url('../images/landing/emmanuelle.png?1381157677');
+  background-image: url('../images/landing/emmanuelle.png?1380914817');
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1377553427');
+  background-image: url('../images/landing/peter.png?1351725897');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1381157677');
+  background-image: url('../images/landing/carl.png?1380914817');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1381157677');
+  background-image: url('../images/landing/eric.png?1380914817');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1377553427');
+  background-image: url('../images/landing/jonny.png?1351725897');
 }
 
 @-moz-keyframes announce-in {
@@ -2836,10 +2833,10 @@ button:focus {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1377553427');
+  background-image: url('../images/flags/ca.png?1359567924');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1377553427');
+  background-image: url('../images/flags/us.png?1359567924');
 }
 
 .terms-confirm {
@@ -3423,7 +3420,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: 0;
   padding-top: 53.61552%;
   width: 30.15873%;
-  background: url('../images/phone.png?1377553427') no-repeat center;
+  background: url('../images/phone.png?1353558228') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
