@@ -1,5 +1,3 @@
-from optparse import make_option
-
 from django.core.management import BaseCommand, CommandError
 
 from portfoliyo.model.users.bulk import import_from_csv
@@ -8,13 +6,10 @@ from portfoliyo.model import Profile
 
 
 class Command(BaseCommand):
-    option_list = BaseCommand.option_list + (
-        make_option(
-            '-w', '--welcome', action='store_true', dest='welcome',
-            help='Also send welcome/password-reset emails to users in CSV.'),
+    help = (
+        "Import users from a 3-column (name, phone, groups) CSV file. "
+        "Separate group names in the third column with ::."
         )
-
-    help = "Import users from a 4-column (first, last, phone, groups) CSV file."
     args = "teacher@example.com filename.csv"
 
 
