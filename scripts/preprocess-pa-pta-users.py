@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Script to transform 6-col CSV provided by PA PTA to 3-col for import_users.
 
@@ -19,3 +20,50 @@ Reports any unprocessable users to stderr.
 Send output CSV to stdout.
 
 """
+import csv
+import os
+import sys
+
+
+
+def clean(val):
+    """Remove asterisks and trim whitespace."""
+    val = val.replace('*', '')
+    val = val.strip()
+    return val
+
+
+
+def main(fn):
+    from portfoliyo.formats import normalize_phone
+    with open(fn, 'rb') as fh:
+        reader = csv.reader(fh)
+        # maps (name, phone) to full person data
+        people = {}
+        for row in reader:
+            first, last, region, phone, email, role = map(clean, row[:6])
+            name = '%s %s' % (first, last)
+            validated_phone = normalize_phone(phone)
+            if validated_phone is None:
+                sys.stderr.write(
+                    "Excluding %r; invalid phone %r.\n" % (name, phone))
+                continue
+            groups = {"Region %s" % region, role}
+            uid = (name, validated_phone)
+            if uid in people:
+                people[uid]['groups'].update(groups)
+            else:
+                people[uid] = {
+                    'name': name, 'phone': validated_phone, 'groups': groups}
+
+    writer = csv.DictWriter(sys.stdout, ['name', 'phone', 'groups'])
+    for row in people.values():
+        row['groups'] = '::'.join(row['groups'])
+        writer.writerow(row)
+
+
+if __name__ == '__main__':
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    os.environ.setdefault(
+        'DJANGO_SETTINGS_MODULE', 'portfoliyo.settings.default')
+    main(sys.argv[1])
