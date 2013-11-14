@@ -11,7 +11,8 @@ from portfoliyo.tests import factories as f
 
 
 @pytest.mark.parametrize('verbosity', [True, False])
-def test_calls_import_from_csv(monkeypatch, verbosity):
+@pytest.mark.parametrize('sourcephone', [None, '+13216540987'])
+def test_calls_import_from_csv(monkeypatch, verbosity, sourcephone):
     mock_import = mock.Mock()
     monkeypatch.setattr(import_users, 'import_from_csv', mock_import)
 
@@ -27,15 +28,13 @@ def test_calls_import_from_csv(monkeypatch, verbosity):
     mock_get.return_value = f.ProfileFactory.build(
         user__email='teacher@example.com')
 
-    call_command(
-        'import_users',
-        'teacher@example.com',
-        'somefile.csv',
-        stdout=mock_stdout,
-        verbosity='1' if verbosity else '0',
-        )
+    args = ['import_users', 'teacher@example.com', 'somefile.csv']
+    if sourcephone:
+        args.append(sourcephone)
+    call_command(*args, stdout=mock_stdout, verbosity='1' if verbosity else '0')
 
-    mock_import.assert_called_once_with(mock_get.return_value, 'somefile.csv')
+    expected_args = [mock_get.return_value, 'somefile.csv', sourcephone]
+    mock_import.assert_called_once_with(*expected_args)
     mock_stdout.seek(0)
     output = mock_stdout.read()
     if verbosity:

@@ -1,10 +1,12 @@
 import csv
 import urllib
 
+from django.conf import settings
+
 from portfoliyo.model import Profile
 
 
-def import_from_csv(teacher, fn):
+def import_from_csv(teacher, fn, source_phone=None):
     """
     Import users from a CSV file and associate with given teacher.
 
@@ -14,6 +16,8 @@ def import_from_csv(teacher, fn):
 
     If a user with a matching name already exists within this teacher's
     account, that user will not be modified.
+
+    Optionally sets source-phone for all created users to given number.
 
     Return a tuple of two lists, (created_profiles, found_profiles).
 

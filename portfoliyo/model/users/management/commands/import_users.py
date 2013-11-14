@@ -10,16 +10,19 @@ class Command(BaseCommand):
         "Import users from a 3-column (name, phone, groups) CSV file. "
         "Separate group names in the third column with ::."
         )
-    args = "teacher@example.com filename.csv"
+    args = "teacher@example.com filename.csv [source-phone]"
 
 
     def handle(self, *args, **options):
         verbosity = int(options.get('verbosity', 1))
-        try:
+        if len(args) == 2:
             teacher_email, fn = args
-        except ValueError:
+            source_phone = None
+        elif len(args) == 3:
+            teacher_email, fn, source_phone = args
+        else:
             raise CommandError(
-                "import_users accepts two args: teacher-email and CSV file.")
+                "import_users accepts two or three arguments.")
         try:
             teacher = Profile.objects.get(user__email=teacher_email)
         except Profile.DoesNotExist:
@@ -27,7 +30,7 @@ class Command(BaseCommand):
                 "Teacher with email %r not found." % teacher_email)
         if verbosity:
             self.stdout.write("\nLoading %s for %r:\n" % (fn, teacher_email))
-        created, found = import_from_csv(teacher, fn)
+        created, found = import_from_csv(teacher, fn, source_phone)
         if verbosity:
             for p in created:
                 self.stdout.write("  Created %s.\n" % p.name)
