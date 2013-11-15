@@ -38,6 +38,7 @@ def main(fn):
     from portfoliyo.formats import normalize_phone
     with open(fn, 'rb') as fh:
         reader = csv.reader(fh)
+        names_by_phone = {}
         # maps (name, phone) to full person data
         people = {}
         for row in reader:
@@ -46,8 +47,13 @@ def main(fn):
             validated_phone = normalize_phone(phone)
             if validated_phone is None:
                 sys.stderr.write(
-                    "Excluding %r; invalid phone %r.\n" % (name, phone))
+                    "%s, %s\n" % (name, phone))
                 continue
+            if phone in names_by_phone and names_by_phone[phone] != name:
+                sys.stderr.write(
+                    'Name mismatch: %s vs %s\n' % (name, names_by_phone[phone]))
+                continue
+            names_by_phone[phone] = name
             groups = {"Region %s" % region, role}
             uid = (name, validated_phone)
             if uid in people:
