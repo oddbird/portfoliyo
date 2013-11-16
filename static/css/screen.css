@@ -2571,11 +2571,17 @@ article.get-started-copy h3 {
   font-weight: bold;
 }
 article.get-started-copy p.call-action {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin: 0 0 20px 0;
+}
+article.get-started-copy p.call-action strong {
   font-size: 23px;
   font-size: 1.27778rem;
   line-height: 35px;
   line-height: 1.91667rem;
-  margin: 0 0 20px 0;
 }
 article.get-started-copy ul.dates {
   font-size: 23px;

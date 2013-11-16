@@ -63,8 +63,9 @@ article.get-started-copy {
   	font-weight: bold;
   }
   p.call-action { 
-  	@include adjust-font-size-to($medpx);
+  	@include adjust-font-size-to($smallpx);
   	margin: 0 0 20px 0; 
+    strong { @include adjust-font-size-to($medpx); }
   }
   ul.dates {  
     @include adjust-font-size-to($medpx);
@@ -75,6 +76,7 @@ article.get-started-copy {
     }
   }
 }
+
 
 
 
