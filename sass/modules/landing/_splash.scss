@@ -1,0 +1,129 @@
+// ---------------------------------------------------------------------------
+// Landing Intro
+section.splash {
+  @include clearfix;
+  margin-bottom: 0;
+  h2.tagline strong {  
+    display: inline;
+  }
+}
+
+section.get-started {
+  @include clearfix;
+  @include rhythm-padding;
+  padding-top: 0;
+  h3.tagline {
+  	margin: 0;
+  	font-weight: normal;
+  }
+}
+
+h2.splash {
+  font-weight: bold;
+  color: $base02;
+  border-bottom: 1px solid $base2;
+  @include adjust-font-size-to($largepx);
+  @include rhythm-padding;
+}
+
+ul.study-facts {  
+  @include adjust-font-size-to($medpx);
+  margin: 0 0 20px 0;
+  strong { 
+  	font-weight: bold;
+  	color: $base02;
+  }
+}
+
+blockquote.call-statement {
+  @include adjust-font-size-to($largepx);
+  @include rhythm-padding;
+  @include rhythm-margins(1);
+  border-bottom: 1px solid $base2;
+  border-top: 1px solid $base2;
+  color: $blue;
+  font-weight: bold;
+  @include serif;
+  @include span-columns(8);
+  span {
+    @include adjust-font-size-to($medpx);
+    @include rhythm-padding;
+    color: $base00;
+    display: block;
+    font-weight: normal;
+  }
+}
+
+article.get-started-copy {
+  @include rhythm-padding;
+  padding-top: 0;
+  h3 { 
+  	@include adjust-font-size-to($largepx);
+  	color: $green;
+  	font-weight: bold;
+  }
+  p.call-action { 
+  	@include adjust-font-size-to($smallpx);
+  	margin: 0 0 20px 0; 
+    strong { @include adjust-font-size-to($medpx); }
+  }
+  ul.dates {  
+    @include adjust-font-size-to($medpx);
+    margin: 0 0 20px 0;
+    strong {
+      font-weight: bold;
+      color: $base02;
+    }
+  }
+}
+
+
+
+
+@include at-breakpoint(append($break, 50rem)) {
+  h2.splash {
+    @include adjust-font-size-to($xlargepx);
+  }
+  article.get-started-copy {
+    @include span-columns(18);
+    @include pre(1);
+    @include post(1);
+  }
+  h3 {
+  	margin: 0 0 20px 0;
+  }
+  blockquote.call-statement {
+  	@include span-columns(18);
+  	@include pre(1);
+  	@include post(1);
+  	@include adjust-font-size-to($xlargepx);
+  }
+}
+
+@include at-breakpoint(50rem $break-cols) {
+  .intro-copy {
+  	@include span-columns(10 omega);
+  }
+  h2.splash {
+    @include adjust-font-size-to($xxlargepx);
+  	padding-top: 0;
+	margin-top: 0;
+  }
+  blockquote.call-statement {
+    text-align: center;
+  	@include span-columns(16);
+  	@include pre(2);
+  	@include post(2);
+  	@include adjust-font-size-to($xlargepx);
+  }
+  article.get-started-copy {
+    @include span-columns(7);
+    @include pre(2);
+    @include post(1);
+  }
+  article.get-started-copy:last-child {
+    @include span-columns(7);
+    @include pre(1);
+    @include post(2);
+  }
+}

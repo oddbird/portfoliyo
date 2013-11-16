@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .alt-text {
   position: absolute;
   top: -9999px;
@@ -2392,7 +2393,7 @@ button:focus {
   border: 1px solid #eee8d5;
 }
 .dev:before {
-  background: url('../images/landing/harsh.png?1351725897') no-repeat scroll center top;
+  background: url('../images/landing/harsh.png?1384470603') no-repeat scroll center top;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
@@ -2452,25 +2453,225 @@ button:focus {
 }
 
 #emmanuelle:before {
-  background-image: url('../images/landing/emmanuelle.png?1380914817');
+  background-image: url('../images/landing/emmanuelle.png?1384470603');
 }
 
 #peter:before {
-  background-image: url('../images/landing/peter.png?1351725897');
+  background-image: url('../images/landing/peter.png?1384470603');
 }
 
 #carl:before {
-  background-image: url('../images/landing/carl.png?1380914817');
+  background-image: url('../images/landing/carl.png?1384470603');
 }
 
 #eric:before {
-  background-image: url('../images/landing/eric.png?1380914817');
+  background-image: url('../images/landing/eric.png?1384470603');
 }
 
 #jonny:before {
-  background-image: url('../images/landing/jonny.png?1351725897');
+  background-image: url('../images/landing/jonny.png?1384470603');
 }
 
+section.splash {
+  overflow: hidden;
+  margin-bottom: 0;
+}
+section.splash h2.tagline strong {
+  display: inline;
+}
+
+section.get-started {
+  overflow: hidden;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  padding-bottom: 23px;
+  padding-bottom: 1.27778rem;
+  padding-top: 0;
+}
+section.get-started h3.tagline {
+  margin: 0;
+  font-weight: normal;
+}
+
+h2.splash {
+  font-weight: bold;
+  color: #073642;
+  border-bottom: 1px solid #eee8d5;
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  padding-bottom: 23px;
+  padding-bottom: 1.27778rem;
+}
+
+ul.study-facts {
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+  margin: 0 0 20px 0;
+}
+ul.study-facts strong {
+  font-weight: bold;
+  color: #073642;
+}
+
+blockquote.call-statement {
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  padding-bottom: 23px;
+  padding-bottom: 1.27778rem;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  border-bottom: 1px solid #eee8d5;
+  border-top: 1px solid #eee8d5;
+  color: #268bd2;
+  font-weight: bold;
+  font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
+  width: 100%;
+  float: left;
+  margin-right: 3.22581%;
+}
+blockquote.call-statement span {
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  padding-bottom: 23px;
+  padding-bottom: 1.27778rem;
+  color: #657b83;
+  display: block;
+  font-weight: normal;
+}
+
+article.get-started-copy {
+  padding-top: 23px;
+  padding-top: 1.27778rem;
+  padding-bottom: 23px;
+  padding-bottom: 1.27778rem;
+  padding-top: 0;
+}
+article.get-started-copy h3 {
+  font-size: 35px;
+  font-size: 1.94444rem;
+  line-height: 46px;
+  line-height: 2.55556rem;
+  color: #859900;
+  font-weight: bold;
+}
+article.get-started-copy p.call-action {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  margin: 0 0 20px 0;
+}
+article.get-started-copy p.call-action strong {
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+}
+article.get-started-copy ul.dates {
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+  margin: 0 0 20px 0;
+}
+article.get-started-copy ul.dates strong {
+  font-weight: bold;
+  color: #073642;
+}
+
+@media (min-width: 43.875em) and (max-width: 56.25em) {
+  h2.splash {
+    font-size: 44px;
+    font-size: 2.44444rem;
+    line-height: 58px;
+    line-height: 3.19444rem;
+  }
+
+  article.get-started-copy {
+    width: 89.87342%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-left: 5.06329%;
+    margin-right: 5.06329%;
+  }
+
+  h3 {
+    margin: 0 0 20px 0;
+  }
+
+  blockquote.call-statement {
+    width: 89.87342%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-left: 5.06329%;
+    margin-right: 5.06329%;
+    font-size: 44px;
+    font-size: 2.44444rem;
+    line-height: 58px;
+    line-height: 3.19444rem;
+  }
+}
+@media (min-width: 56.25em) {
+  .intro-copy {
+    width: 49.36709%;
+    float: right;
+    margin-right: 0;
+  }
+
+  h2.splash {
+    font-size: 107px;
+    font-size: 5.94444rem;
+    line-height: 115px;
+    line-height: 6.38889rem;
+    padding-top: 0;
+    margin-top: 0;
+  }
+
+  blockquote.call-statement {
+    text-align: center;
+    width: 79.74684%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-left: 10.12658%;
+    margin-right: 10.12658%;
+    font-size: 44px;
+    font-size: 2.44444rem;
+    line-height: 58px;
+    line-height: 3.19444rem;
+  }
+
+  article.get-started-copy {
+    width: 34.17722%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-left: 10.12658%;
+    margin-right: 5.06329%;
+  }
+
+  article.get-started-copy:last-child {
+    width: 34.17722%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-left: 5.06329%;
+    margin-right: 10.12658%;
+  }
+}
 @-moz-keyframes announce-in {
   0% {
     opacity: 0;
@@ -2833,10 +3034,10 @@ button:focus {
   margin-right: .4em;
 }
 .country_code-field [value="ca"] + .radio-type:before {
-  background-image: url('../images/flags/ca.png?1359567924');
+  background-image: url('../images/flags/ca.png?1384470603');
 }
 .country_code-field [value="us"] + .radio-type:before {
-  background-image: url('../images/flags/us.png?1359567924');
+  background-image: url('../images/flags/us.png?1384470603');
 }
 
 .terms-confirm {
@@ -3420,7 +3621,7 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   height: 0;
   padding-top: 53.61552%;
   width: 30.15873%;
-  background: url('../images/phone.png?1353558228') no-repeat center;
+  background: url('../images/phone.png?1384470603') no-repeat center;
   -webkit-background-size: contain;
   -moz-background-size: contain;
   -o-background-size: contain;
