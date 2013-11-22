@@ -78,7 +78,10 @@ def receive_sms(source, to, body):
         elif signup.state == model.TextSignup.STATE.name:
             return handle_name_update(signup, body)
 
-    students = profile.students
+    students = [
+        r.student for r in model.Relationship.objects.filter(
+            from_profile=profile, pyo_phone=to).select_related('to_profile')
+        ]
 
     if not students:
         track_sms('no students', source, body)

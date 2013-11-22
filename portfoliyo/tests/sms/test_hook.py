@@ -116,20 +116,24 @@ def test_unknown_profile(db):
 
 
 def test_multiple_students(db):
-    """If multiple associated students, post goes in both villages."""
+    """If multiple associated students, check for matching pyo_phone."""
     phone = '+13216430987'
+    pyo_phone_1 = '+12222222222'
+    pyo_phone_2 = '+13333333333'
     profile = factories.ProfileFactory.create(phone=phone)
-    rel1 = factories.RelationshipFactory.create(from_profile=profile)
-    rel2 = factories.RelationshipFactory.create(from_profile=profile)
+    rel1 = factories.RelationshipFactory.create(
+        from_profile=profile, pyo_phone=pyo_phone_1)
+    factories.RelationshipFactory.create(
+        from_profile=profile, pyo_phone=pyo_phone_2)
     # prevent this from being a "no teachers" situation
     factories.RelationshipFactory.create(
         from_profile__school_staff=True, to_profile=rel1.student)
 
     with mock.patch('portfoliyo.sms.hook.model.Post.create') as mock_create:
-        reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'foo')
+        reply = hook.receive_sms(phone, pyo_phone_1, 'foo')
 
-    mock_create.assert_any_call(profile, rel1.student, 'foo', from_sms=True)
-    mock_create.assert_any_call(profile, rel2.student, 'foo', from_sms=True)
+    mock_create.assert_called_once_with(
+        profile, rel1.student, 'foo', from_sms=True)
     assert reply is None
 
 
