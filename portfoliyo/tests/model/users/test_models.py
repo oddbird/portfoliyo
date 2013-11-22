@@ -324,7 +324,7 @@ class TestProfile(object):
         """Creating user sets source phone based on country code."""
         school = factories.SchoolFactory()
         ca_phone = '+13216543987'
-        with override_settings(PORTFOLIYO_NUMBERS={'ca': ca_phone}):
+        with override_settings(PORTFOLIYO_NUMBERS={'ca': [ca_phone]}):
             p = model.Profile.create_with_user(school, country_code='ca')
 
         assert p.source_phone == ca_phone

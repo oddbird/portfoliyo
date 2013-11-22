@@ -173,7 +173,7 @@ class Profile(models.Model):
 
         kwargs.setdefault(
             'source_phone', settings.PORTFOLIYO_NUMBERS.get(
-                kwargs['country_code'], settings.DEFAULT_NUMBER)
+                kwargs['country_code'], [settings.DEFAULT_NUMBER])[0]
             )
 
         for pref in cls.NOTIFICATION_PREFS:
@@ -256,6 +256,8 @@ class TextSignup(models.Model):
         Profile, blank=True, null=True, related_name='family_signups')
     teacher = models.ForeignKey(Profile, related_name='signed_up')
     group = models.ForeignKey('Group', blank=True, null=True)
+    pyo_phone = models.CharField(
+        max_length=20, default=settings.DEFAULT_NUMBER)
 
 
 
@@ -518,6 +520,10 @@ class Relationship(models.Model):
     # what groups would cause this relationship to exist?
     groups = models.ManyToManyField(
         Group, blank=True, related_name='relationships')
+    # If this is a parent-student relationship, what phone number should be
+    # used to communicate with this parent about this student?
+    pyo_phone = models.CharField(
+        max_length=20, default=settings.DEFAULT_NUMBER)
 
 
     objects = RelationshipManager()

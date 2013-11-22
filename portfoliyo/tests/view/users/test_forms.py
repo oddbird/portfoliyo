@@ -45,7 +45,7 @@ class TestRegistrationForm(object):
         data = self.base_data.copy()
         data['country_code'] = 'ca'
         ca_phone = '+13216543987'
-        with override_settings(PORTFOLIYO_NUMBERS={'ca': ca_phone}):
+        with override_settings(PORTFOLIYO_NUMBERS={'ca': [ca_phone]}):
             form = forms.RegistrationForm(data)
             assert form.is_valid()
             profile = form.save()
