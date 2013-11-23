@@ -30,17 +30,6 @@ def test_create_post(db):
 
 
 
-def test_easter_egg():
-    phone = '+3216430987'
-    reply = hook.receive_sms(phone, settings.DEFAULT_NUMBER, 'xjgdlw')
-
-    assert reply == (
-        "Woah! You actually tried it out? A cookie for you! "
-        "Email sneaky@portfoliyo.org and we'll send you a cookie."
-        )
-
-
-
 def test_activate_user(db):
     """Receiving SMS from inactive user activates and gives them more info."""
     phone = '+13216430987'

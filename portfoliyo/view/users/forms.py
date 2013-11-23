@@ -43,6 +43,7 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     email = forms.EmailField(max_length=255)
+    phone = pyoforms.StripCharField(max_length=20)
     country_code = forms.TypedChoiceField(
         choices=model.Profile._meta.get_field('country_code').choices,
         widget=forms.RadioSelect(),
