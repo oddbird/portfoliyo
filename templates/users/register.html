@@ -6,18 +6,17 @@
 
 {% block maincontent %}
 <article class="register">
-  <h2 class="pagehead">For Teachers: <b>Let's get started!<b></h2>
-  <h3 class="pagehead">For Parents: <a href="/signup">Click Here</a> to sign your school up.</h3>
+  <h2 class="pagehead">Let's get started!</h2>
 
   <form method="POST" class="register-form" id="register-form">
     {% csrf_token %}
 
     {{ form.non_field_errors }}
 
-    <div class="profile-type-buttons">
-      <span class="teacher-tab active">I'm a Teacher</span>
-      <span class="parent-tab">I'm a Parent</span>
-    </div>
+    <ul class="profile-type-buttons">
+      <li class="teacher-tab active">I'm a Teacher</li>
+      <li class="parent-tab">I'm a Parent</li>
+    </ul>
 
     <div class="fieldset bio">
       {% include "forms/_field.html" with field=form.name label="Students call me..." %}
@@ -34,7 +33,6 @@
     {% include "forms/_field.html" with field=form.country_code label="Country" %}
 
 
-    <input type="checkbox" id="school-network-toggle">
     <div class="school-network">
       {% include "forms/_field.html" with field=form.school label="School or program" helptext="Don't see yours listed? <a href='#add-school' class='add-school-link'>Add a new one</a>." %}
 
@@ -52,7 +50,6 @@
     </div>
 
     <div class="form-actions">
-      <p class="toggle-info"><label for="school-network-toggle">Optionally join a school/program network</label> or</p>
       <button type="submit" class="go-network">Continue</button>
     </div>
   </form>
