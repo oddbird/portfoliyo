@@ -4,6 +4,8 @@ import os
 import urlparse
 env = lambda key, returntype=str: returntype(os.environ.get(key, ''))
 
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
+
 DATABASES = dict(default={})
 def parse_database_url(database, environment_variable='DATABASE_URL'):
     url = urlparse.urlparse(env(environment_variable))
