@@ -1,11 +1,60 @@
 {% extends "base_site.html" %}
 
-{% block title %}Login | {{ block.super }}{% endblock %}
+{% block title %}<!-- Login --> Pricing | {{ block.super }}{% endblock %}
 
 {% block maincontent %}
 
 <article class="login">
-  <h2 class="pagehead">Login to Portfoliyo</h2>
+  <!-- <h2 class="pagehead">Login to Portfoliyo</h2> -->
+  
+  <!--start donate -->
+  <h2 class="pagehead">Portfoliyo Pricing</h2>
+
+  <aside class="pricing-callout">
+	<table class="pricing">
+	  	<thead>
+	  		<tr>
+	  			<th>Number of Texts</th>
+	  			<th>Cost</th>
+	  		</tr>
+	  	</thead>
+	  	<tbody>
+	  		<tr>
+	  			<td>5,000</td>
+	  			<td>$200</td>
+	  		</tr>
+	  		<tr>
+	  			<td>10,000</td>
+	  			<td>$350</td>
+	  		</tr>
+	  		<tr>
+	  			<td>20,000</td>
+	  			<td>$600</td>
+	  		</tr>
+	  		<tr>
+	  			<td>50,000</td>
+	  			<td>$1,250</td>
+	  		</tr>
+	  		<tr>
+	  			<td>100,000*</td>
+	  			<td>$2,000</td>
+	  		</tr>
+	  	</tbody>
+	</table>
+
+  	<p><small>* In the event that your school surpases 100,000 text messages, the school should contact Portfoliyo in order to negotiate a bulk purchase rate.</small></p>
+  </aside>
+
+  <p>Portfoliyo helps teachers and parents be less isolated and fill the need for communication in a way that fits into your existing daily structure. It’s an easy to use technology that lets both teachers and parents share important information. That way, students genuinely get the support they need to succeed in school.</p>
+  
+  <p>To continue providing excellent service to teachers and to parents, Portfoliyo needs to become a paid service supported by parents, members of the community, or schools. We are currently in the process of obtaining an E-Rate number which will allow schools and districts to subsidize the expense.</p>
+
+  <p>Our pricing structure, seen below, reflects the fact that we want to keep costs low and affordable. We understand that even with these efforts, not all schools will be able to afford Portfoliyo. That’s why we encourage disadvantaged schools to contact us directly.</p>
+
+  <p>If you are a parent or a teacher who is interested in having or keeping Portfoliyo at your school, please consider making a payment now to ensure no interruption to your service and to lend your support to the Portfoliyo project. Partial payments are accepted and will be credited toward your school.</p>
+
+  <!-- end donate -->
+
 
   {% include "users/_login_form.html" %}
 </article>

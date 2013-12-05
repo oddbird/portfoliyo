@@ -3141,6 +3141,17 @@ ul.profile-type-buttons li.active:active {
   margin-bottom: 0.63889rem;
 }
 
+aside.pricing-callout {
+  float: left;
+  width: 48.3871%;
+  float: left;
+  margin-right: 3.22581%;
+}
+
+table.pricing {
+  width: 100%;
+}
+
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
   max-width: 1422px;
   max-width: 79rem;

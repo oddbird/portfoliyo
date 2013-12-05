@@ -1,0 +1,18 @@
+aside.pricing-callout {
+	float: left;
+	@include span-columns(4);
+}
+
+table.pricing {
+	width: 100%;
+}
+
+
+
+@include at-breakpoint(append($break, 50rem)) {
+  
+}
+
+@include at-breakpoint(50rem $break-cols) {
+  
+}
