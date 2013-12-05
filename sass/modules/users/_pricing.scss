@@ -38,7 +38,9 @@ table.pricing {
 	}
 }
 
-
+p.teacher-parent-choice {
+	margin-bottom: 10px;
+}
 
 @include at-breakpoint(append($break, 50rem)) {
 	aside.pricing-callout {
@@ -54,4 +56,5 @@ table.pricing {
 		@include span-columns(10);
 	  	@include post(1);
 	}
+
 }

@@ -3201,6 +3201,10 @@ table.pricing tbody td span {
   color: #93a1a1;
 }
 
+p.teacher-parent-choice {
+  margin-bottom: 10px;
+}
+
 @media (min-width: 43.875em) and (max-width: 56.25em) {
   aside.pricing-callout {
     float: none;
