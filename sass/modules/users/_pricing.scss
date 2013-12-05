@@ -1,10 +1,38 @@
+h2.pricing-pagehead, h2.pricing-form-pagehead {
+	@include adjust-font-size-to($xlargepx);
+	font-weight: bold;
+	@include rhythm-margins(1);
+}
+h2.pricing-form-pagehead {
+	color: $blue;
+}
+
 aside.pricing-callout {
 	float: left;
 	@include span-columns(4);
+	small {
+		@include adjust-font-size-to($smallpx);
+		line-height: 1em;
+	}
 }
 
 table.pricing {
 	width: 100%;
+	@include rhythm-margins(1);
+	margin-top: 0;
+	thead th {
+		color: $blue;
+		height: 40px;
+		line-height: 40px;
+		border-bottom: 1px solid $blue;
+		@include adjust-font-size-to($medpx);
+	}
+	tbody td {
+		height: 40px;
+		line-height: 40px;
+		border-bottom: 1px solid $base2;
+		@include adjust-font-size-to($medpx);
+	}
 }
 
 

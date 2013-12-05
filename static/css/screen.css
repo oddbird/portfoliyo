@@ -3141,15 +3141,62 @@ ul.profile-type-buttons li.active:active {
   margin-bottom: 0.63889rem;
 }
 
+h2.pricing-pagehead, h2.pricing-form-pagehead {
+  font-size: 44px;
+  font-size: 2.44444rem;
+  line-height: 58px;
+  line-height: 3.19444rem;
+  font-weight: bold;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+
+h2.pricing-form-pagehead {
+  color: #268bd2;
+}
+
 aside.pricing-callout {
   float: left;
   width: 48.3871%;
   float: left;
   margin-right: 3.22581%;
 }
+aside.pricing-callout small {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  line-height: 1em;
+}
 
 table.pricing {
   width: 100%;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  margin-top: 0;
+}
+table.pricing thead th {
+  color: #268bd2;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #268bd2;
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+}
+table.pricing tbody td {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #eee8d5;
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
 }
 
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
