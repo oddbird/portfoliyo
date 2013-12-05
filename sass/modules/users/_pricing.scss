@@ -1,18 +1,17 @@
 h2.pricing-pagehead, h2.pricing-form-pagehead {
 	@include adjust-font-size-to($xlargepx);
 	font-weight: bold;
-	@include rhythm-margins(1);
-}
-h2.pricing-form-pagehead {
 	color: $blue;
+	@include rhythm-margins(1);
 }
 
 aside.pricing-callout {
 	float: left;
-	@include span-columns(4);
+	@include span-columns(8);
 	small {
 		@include adjust-font-size-to($smallpx);
 		line-height: 1em;
+		color: $base1;
 	}
 }
 
@@ -21,26 +20,38 @@ table.pricing {
 	@include rhythm-margins(1);
 	margin-top: 0;
 	thead th {
-		color: $blue;
+		color: $green;
 		height: 40px;
 		line-height: 40px;
-		border-bottom: 1px solid $blue;
+		border-bottom: 1px solid $green;
 		@include adjust-font-size-to($medpx);
 	}
 	tbody td {
 		height: 40px;
 		line-height: 40px;
 		border-bottom: 1px solid $base2;
+		color: $base02;
 		@include adjust-font-size-to($medpx);
+		span {
+			color: $base1;
+		}
 	}
 }
 
 
 
 @include at-breakpoint(append($break, 50rem)) {
-  
+	aside.pricing-callout {
+		float: none;
+		@include span-columns(10);
+	  	@include post(1);
+	}
 }
 
 @include at-breakpoint(50rem $break-cols) {
-  
+  	aside.pricing-callout {
+		float: none;
+		@include span-columns(10);
+	  	@include post(1);
+	}
 }

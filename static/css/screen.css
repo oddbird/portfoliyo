@@ -3147,19 +3147,16 @@ h2.pricing-pagehead, h2.pricing-form-pagehead {
   line-height: 58px;
   line-height: 3.19444rem;
   font-weight: bold;
+  color: #268bd2;
   margin-top: 23px;
   margin-top: 1.27778rem;
   margin-bottom: 23px;
   margin-bottom: 1.27778rem;
 }
 
-h2.pricing-form-pagehead {
-  color: #268bd2;
-}
-
 aside.pricing-callout {
   float: left;
-  width: 48.3871%;
+  width: 100%;
   float: left;
   margin-right: 3.22581%;
 }
@@ -3169,6 +3166,7 @@ aside.pricing-callout small {
   line-height: 23px;
   line-height: 1.27778rem;
   line-height: 1em;
+  color: #93a1a1;
 }
 
 table.pricing {
@@ -3180,10 +3178,10 @@ table.pricing {
   margin-top: 0;
 }
 table.pricing thead th {
-  color: #268bd2;
+  color: #859900;
   height: 40px;
   line-height: 40px;
-  border-bottom: 1px solid #268bd2;
+  border-bottom: 1px solid #859900;
   font-size: 23px;
   font-size: 1.27778rem;
   line-height: 35px;
@@ -3193,12 +3191,34 @@ table.pricing tbody td {
   height: 40px;
   line-height: 40px;
   border-bottom: 1px solid #eee8d5;
+  color: #073642;
   font-size: 23px;
   font-size: 1.27778rem;
   line-height: 35px;
   line-height: 1.91667rem;
 }
+table.pricing tbody td span {
+  color: #93a1a1;
+}
 
+@media (min-width: 43.875em) and (max-width: 56.25em) {
+  aside.pricing-callout {
+    float: none;
+    width: 49.36709%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-right: 5.06329%;
+  }
+}
+@media (min-width: 56.25em) {
+  aside.pricing-callout {
+    float: none;
+    width: 49.36709%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-right: 5.06329%;
+  }
+}
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
   max-width: 1422px;
   max-width: 79rem;
