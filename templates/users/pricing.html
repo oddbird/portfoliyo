@@ -1,0 +1,164 @@
+{% extends "base_site.html" %}
+
+{% block title %}Pricing | {{ block.super }}{% endblock %}
+
+{% block maincontent %}
+
+<article class="login">
+  <!-- <h2 class="pagehead">Login to Portfoliyo</h2> -->
+
+  <!--start donate -->
+  <h2 class="pricing-pagehead">Portfoliyo Pricing</h2>
+
+  <aside class="pricing-callout">
+    <table class="pricing">
+        <thead>
+            <tr>
+                <th>Number of Texts</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>5,000</td>
+                <td>$200</td>
+            </tr>
+            <tr>
+                <td>10,000</td>
+                <td>$350</td>
+            </tr>
+            <tr>
+                <td>20,000</td>
+                <td>$600</td>
+            </tr>
+            <tr>
+                <td>50,000</td>
+                <td>$1,250</td>
+            </tr>
+            <tr>
+                <td>100,000<span>*</span></td>
+                <td>$2,000</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p><small>* In the event that your school surpases 100,000 text messages, the school should contact Portfoliyo in order to negotiate a bulk purchase rate.</small></p>
+  </aside>
+
+  <p>To continue providing excellent service to teachers and to parents, Portfoliyo needs to become a paid service supported by parents, members of the community, or schools. We are currently in the process of obtaining an E-Rate number which will allow schools and districts to subsidize the expense.</p>
+
+  <p>Our pricing structure, seen below, reflects the fact that we want to keep costs low and affordable. We understand that even with these efforts, not all schools will be able to afford Portfoliyo. That’s why we encourage disadvantaged schools to contact us directly.</p>
+
+  <h2 class="pricing-form-pagehead">Buy Portfoliyo for your school</h2>
+  <form method="POST" class="register-form" id="register-form">
+    <div style="display:none"><input type="hidden" name="csrfmiddlewaretoken" value="8v73Gfs6ps2ZNp1Fuj7JvW1sz74qq1j9"></div>
+    <p class="teacher-parent-choice">Select one:</p>
+    <ul class="profile-type-buttons">
+        <li class="teacher-tab active">I'm a Teacher</li>
+        <li class="parent-tab">I'm a Parent</li>
+    </ul>
+
+    <div class="fieldset bio">
+
+        <div class="formfield name-field">
+            <label for="id_name" class="type" title="Students call me... (required)">Students call me...</label>
+            <input type="text" name="name" required="" id="id_name" class=" value" maxlength="200">
+        </div>
+
+        <div class="formfield email-field">
+            <label for="id_email" class="type" title="email">Email</label>
+            <input type="text" name="email" required="" id="id_email" placeholder="" class=" value" maxlength="200">
+        </div>
+
+        <div class="formfield cell-field">
+            <label for="id_cell" class="type" title="Cell phone">Cell phone</label>
+            <input type="text" name="cell" required="" id="id_cell" placeholder="" class=" value" maxlength="200">
+        </div>
+
+        <div class="formfield schoolphone-field">
+            <label for="id_schoolphone" class="type" title="School phone">School phone</label>
+            <input type="text" name="schoolphone" required="" id="id_schoolphone" placeholder="" class=" value" maxlength="200">
+        </div>
+
+    </div>
+
+    <div class="school-network">
+
+        <div class="formfield school-field optional">
+            <label for="id_school" class="type" title="School or program (optional)">School or program</span></label>
+
+            <nav class="options-header">
+                <ul>
+                    <li class="school-name">School/Program Name</li>
+                    <li class="school-zip">Postal Code</li>
+                </ul>
+            </nav>
+
+            <ul class="radio-options">
+                <li class="option">
+                    <input type="radio" class="value" id="id_school_1" value="" name="school" checked="">
+                    <label for="id_school_1" class="type">I'm not affiliated with a school or program</label>
+                </li>
+            </ul>
+
+            <div class="formfield-help">
+                Don't see yours listed? <a href="#add-school" class="add-school-link">Add a new one</a>.
+            </div>
+        </div>
+
+        <div class="fieldset add-school">
+            <input type="hidden" name="addschool" value="False" id="id_addschool" disabled="disabled">
+
+            <div class="formfield addschool-name-field">
+                <label for="id_addschool-name" class="type" title="School or program name (required)">School or program name</label>
+                <input id="id_addschool-name" class=" value" type="text" name="addschool-name" maxlength="200" disabled="disabled">
+            </div>
+
+            <div class="formfield addschool-postcode-field">
+                <label for="id_addschool-postcode" class="type" title="Postal code (required)">Postal code</label>
+                <input id="id_addschool-postcode" class=" value" type="text" name="addschool-postcode" maxlength="20" disabled="disabled">
+
+                <div class="formfield-help">
+                    Don't want to add a school or program? <a href="#school-field" class="select-school-link">Return to the full list</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="formfield country_code-field">
+
+        <div class="formfield state-field">
+            <label for="id_state-province" class="type" title="State/Province">State/Province</label>
+            <input type="text" name="state-province" required="" id="id_state-province" class=" value" maxlength="200">
+        </div>
+
+        <label for="id_country_code" class="type" title="Country (required)">Country</label>
+
+        <ul class="radio-options">
+            <li class="option">
+                <input type="radio" class="radio-value" id="id_country_code_1" value="us" name="country_code" required="">
+                <label class="radio-type" for="id_country_code_1">
+                    United States
+                </label>
+            </li>
+
+            <li class="option">
+                <input type="radio" class="radio-value" id="id_country_code_2" value="ca" name="country_code" required="">
+                <label class="radio-type" for="id_country_code_2">
+                    Canada
+                </label>
+            </li>
+        </ul>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="go-network">Continue</button>
+    </div>
+  </form>
+  <!-- end donate -->
+
+
+  <!-- {% include "users/_login_form.html" %} -->
+</article>
+
+{% endblock maincontent %}
