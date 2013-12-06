@@ -48,6 +48,7 @@ var PYO = (function (PYO, $) {
 
         // user.js
         PYO.initializeRegisterForm('#register-form');
+        PYO.initializeRegisterForm('#payment-form');
     });
 
     return PYO;
