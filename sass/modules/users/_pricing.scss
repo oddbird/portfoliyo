@@ -42,6 +42,16 @@ p.teacher-parent-choice {
 	margin-bottom: 10px;
 }
 
+
+form#payment-form {
+	button {
+		@include button($color: $base1);
+	}
+	button:hover {
+		@include button($color: $blue);
+	}
+}
+
 @include at-breakpoint(append($break, 50rem)) {
 	aside.pricing-callout {
 		float: none;
@@ -53,6 +63,7 @@ p.teacher-parent-choice {
 @include at-breakpoint(50rem $break-cols) {
   	aside.pricing-callout {
 		float: none;
+		min-height: 400px;
 		@include span-columns(10);
 	  	@include post(1);
 	}

@@ -3205,6 +3205,61 @@ p.teacher-parent-choice {
   margin-bottom: 10px;
 }
 
+form#payment-form button {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: -moz-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: -o-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: linear-gradient(to bottom, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  -webkit-box-shadow: #4d6b71 0 0 0 1px inset;
+  -moz-box-shadow: #4d6b71 0 0 0 1px inset;
+  box-shadow: #4d6b71 0 0 0 1px inset;
+  background-color: #93a1a1;
+  color: #fdf6e3;
+  display: inline-block;
+  margin: 0;
+  padding: 0.31944rem 1em;
+  text-align: center;
+}
+form#payment-form button:link, form#payment-form button:visited, form#payment-form button:focus, form#payment-form button:hover, form#payment-form button:active {
+  color: #fdf6e3;
+}
+form#payment-form button:active {
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+}
+form#payment-form button:hover {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: -moz-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: -o-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: linear-gradient(to bottom, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  -webkit-box-shadow: #16608a 0 0 0 1px inset;
+  -moz-box-shadow: #16608a 0 0 0 1px inset;
+  box-shadow: #16608a 0 0 0 1px inset;
+  background-color: #268bd2;
+  color: #fdf6e3;
+  display: inline-block;
+  margin: 0;
+  padding: 0.31944rem 1em;
+  text-align: center;
+}
+form#payment-form button:hover:link, form#payment-form button:hover:visited, form#payment-form button:hover:focus, form#payment-form button:hover:hover, form#payment-form button:hover:active {
+  color: #fdf6e3;
+}
+form#payment-form button:hover:active {
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+}
+
 @media (min-width: 43.875em) and (max-width: 56.25em) {
   aside.pricing-callout {
     float: none;
@@ -3217,6 +3272,7 @@ p.teacher-parent-choice {
 @media (min-width: 56.25em) {
   aside.pricing-callout {
     float: none;
+    min-height: 400px;
     width: 49.36709%;
     float: left;
     margin-right: 1.26582%;
