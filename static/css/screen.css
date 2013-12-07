@@ -1845,6 +1845,10 @@ button:focus {
   }
 }
 
+.pricing-link {
+  margin-right: 10px;
+}
+
 .helplink {
   float: right;
 }
