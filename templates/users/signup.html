@@ -1,0 +1,19 @@
+{% extends "base_site.html" %}
+{% load widget_tweaks %}
+{% load url from future %}
+
+{% block title %}Sign up | {{ block.super }}{% endblock title %}
+
+{% block maincontent %}
+<article class="register">
+  <h2 class="pagehead">Sign up your school!</h2>
+  <h3 class="pagehead">For more info on how to get your school involved, contact 
+		<a href="mailto:peter@portfoliyo.org">peter@portfoliyo.org</a> or call 212-625-1833 
+		(U.S.) or 416-992-9972 (Canada)</h3>
+
+</article>
+{% endblock maincontent %}
+
+{% block extrajs %}
+{% include "_crazyegg.html" %}
+{% endblock %}

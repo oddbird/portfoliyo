@@ -11,7 +11,7 @@
   left: -9999px;
 }
 
-.register [id*="school-network"], .parent-signup [id*="sms-signup"], .parent-signup [id*="form-signup"], .post-add-form [id*="message-form"], .post-add-form [id*="note-form"], .post-add-form [id*="conversation-form"], .post [id*="recipients"] {
+.parent-signup [id*="sms-signup"], .parent-signup [id*="form-signup"], .post-add-form [id*="message-form"], .post-add-form [id*="note-form"], .post-add-form [id*="conversation-form"], .post [id*="recipients"] {
   position: absolute;
   left: -9999px;
   opacity: 0;
@@ -253,7 +253,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   content: "\e00b";
 }
 
-.formselect:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .post .register [id*="school-network"]:checked ~ [for*="school-network"]:before, .register .post [id*="school-network"]:checked ~ [for*="school-network"]:before, .post .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post [for*="sms-signup"]:before, .post .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post [for*="form-signup"]:before, .post .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs .post [for*="message-form"]:before, .post .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs .post [for*="note-form"]:before, .post .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs .post [for*="conversation-form"]:before, .post [id*="recipients"]:checked ~ [for*="recipients"]:before {
+.formselect:before, .ui-multiselect [class*="ui-icon-triangle"]:before, .post .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post [for*="sms-signup"]:before, .post .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post [for*="form-signup"]:before, .post .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs .post [for*="message-form"]:before, .post .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs .post [for*="note-form"]:before, .post .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs .post [for*="conversation-form"]:before, .post [id*="recipients"]:checked ~ [for*="recipients"]:before {
   content: "\e00c";
 }
 
@@ -594,7 +594,7 @@ a:focus, a:hover, a:active {
   color: #eeb2c1;
 }
 
-.meta .settingslink, .post-type-tabs .radio-type, .additems [class*="additem-"], .post .register [class*="school-network"], .register .post [class*="school-network"], .post .parent-signup [class*="sms-signup"], .parent-signup .post [class*="sms-signup"], .post .parent-signup [class*="form-signup"], .parent-signup .post [class*="form-signup"], .post .post-add-form [class*="message-form"], .post-add-form .post [class*="message-form"], .post .post-add-form [class*="note-form"], .post-add-form .post [class*="note-form"], .post .post-add-form [class*="conversation-form"], .post-add-form .post [class*="conversation-form"], .post [class*="recipients"], .byline, .elder-title {
+.meta .settingslink, .post-type-tabs .radio-type, .additems [class*="additem-"], .post .parent-signup [class*="sms-signup"], .parent-signup .post [class*="sms-signup"], .post .parent-signup [class*="form-signup"], .parent-signup .post [class*="form-signup"], .post .post-add-form [class*="message-form"], .post-add-form .post [class*="message-form"], .post .post-add-form [class*="note-form"], .post-add-form .post [class*="note-form"], .post .post-add-form [class*="conversation-form"], .post-add-form .post [class*="conversation-form"], .post [class*="recipients"], .byline, .elder-title {
   white-space: nowrap;
   overflow: hidden;
   -ms-text-overflow: ellipsis;
@@ -1209,7 +1209,7 @@ button:focus {
   color: #657b83;
 }
 
-.country_code-field .radio-value:checked + .radio-type, .convo-type-field .radio-value:checked + .radio-type, .parent-signup .tab-options .radio-type .radio-value:checked + .radio-type, .parent-signup .register [id*="school-network"]:checked ~ [for*="school-network"], .register .parent-signup [id*="school-network"]:checked ~ [for*="school-network"], .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs .parent-signup [for*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs .parent-signup [for*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs .parent-signup [for*="conversation-form"], .parent-signup .post [id*="recipients"]:checked ~ [for*="recipients"], .post .parent-signup [id*="recipients"]:checked ~ [for*="recipients"] {
+.country_code-field .radio-value:checked + .radio-type, .convo-type-field .radio-value:checked + .radio-type, .parent-signup .tab-options .radio-type .radio-value:checked + .radio-type, .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs .parent-signup [for*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs .parent-signup [for*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs .parent-signup [for*="conversation-form"], .parent-signup .post [id*="recipients"]:checked ~ [for*="recipients"], .post .parent-signup [id*="recipients"]:checked ~ [for*="recipients"] {
   -webkit-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   -moz-box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
   box-shadow: rgba(7, 54, 66, 0.5) 0 0 0.15972rem inset;
@@ -1843,6 +1843,10 @@ button:focus {
     top: auto;
     left: auto;
   }
+}
+
+.pricing-link {
+  margin-right: 10px;
 }
 
 .helplink {
@@ -2524,22 +2528,9 @@ blockquote.call-statement {
   font-size: 1.94444rem;
   line-height: 46px;
   line-height: 2.55556rem;
-  padding-top: 23px;
-  padding-top: 1.27778rem;
-  padding-bottom: 23px;
-  padding-bottom: 1.27778rem;
-  margin-top: 23px;
-  margin-top: 1.27778rem;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-  border-bottom: 1px solid #eee8d5;
-  border-top: 1px solid #eee8d5;
   color: #268bd2;
   font-weight: bold;
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  width: 100%;
-  float: left;
-  margin-right: 3.22581%;
 }
 blockquote.call-statement span {
   font-size: 23px;
@@ -2604,11 +2595,11 @@ article.get-started-copy ul.dates strong {
   }
 
   article.get-started-copy {
-    width: 89.87342%;
+    width: 94.93671%;
     float: left;
     margin-right: 1.26582%;
     margin-left: 5.06329%;
-    margin-right: 5.06329%;
+    margin-right: 0%;
   }
 
   h3 {
@@ -2616,11 +2607,11 @@ article.get-started-copy ul.dates strong {
   }
 
   blockquote.call-statement {
-    width: 89.87342%;
+    width: 100%;
     float: left;
     margin-right: 1.26582%;
-    margin-left: 5.06329%;
-    margin-right: 5.06329%;
+    margin-left: 0%;
+    margin-right: 0%;
     font-size: 44px;
     font-size: 2.44444rem;
     line-height: 58px;
@@ -2645,11 +2636,11 @@ article.get-started-copy ul.dates strong {
 
   blockquote.call-statement {
     text-align: center;
-    width: 79.74684%;
+    width: 100%;
     float: left;
     margin-right: 1.26582%;
-    margin-left: 10.12658%;
-    margin-right: 10.12658%;
+    margin-left: 0%;
+    margin-right: 0%;
     font-size: 44px;
     font-size: 2.44444rem;
     line-height: 58px;
@@ -2657,11 +2648,12 @@ article.get-started-copy ul.dates strong {
   }
 
   article.get-started-copy {
-    width: 34.17722%;
+    width: 44.3038%;
     float: left;
     margin-right: 1.26582%;
-    margin-left: 10.12658%;
-    margin-right: 5.06329%;
+    margin-left: 5.06329%;
+    margin-right: 0%;
+    margin-top: 20px;
   }
 
   article.get-started-copy:last-child {
@@ -2669,7 +2661,7 @@ article.get-started-copy ul.dates strong {
     float: left;
     margin-right: 1.26582%;
     margin-left: 5.06329%;
-    margin-right: 10.12658%;
+    margin-right: 5.06329%;
   }
 }
 @-moz-keyframes announce-in {
@@ -2967,29 +2959,76 @@ article.get-started-copy ul.dates strong {
   padding: 1.27778rem;
 }
 
-.register [class*="school-network"], .register .parent-signup [class*="sms-signup"], .parent-signup .register [class*="sms-signup"], .register .parent-signup [class*="form-signup"], .parent-signup .register [class*="form-signup"], .register .post-add-form [class*="message-form"], .post-add-form .register [class*="message-form"], .register .post-add-form [class*="note-form"], .post-add-form .register [class*="note-form"], .register .post-add-form [class*="conversation-form"], .post-add-form .register [class*="conversation-form"], .register .post [class*="recipients"], .post .register [class*="recipients"] {
-  display: none;
+ul.profile-type-buttons {
+  overflow: hidden;
+  padding-left: 0;
 }
-.register [id*="school-network"]:checked ~ [class*="school-network"], .register .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .register [id*="sms-signup"]:checked ~ [class*="sms-signup"], .register .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .register [id*="form-signup"]:checked ~ [class*="form-signup"], .register .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .register [id*="message-form"]:checked ~ [class*="message-form"], .register .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .register [id*="note-form"]:checked ~ [class*="note-form"], .register .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .register [id*="conversation-form"]:checked ~ [class*="conversation-form"], .register .post-add-form.group-posts .message-form, .post-add-form.group-posts .register .message-form, .register .post [id*="recipients"]:checked ~ [class*="recipients"], .post .register [id*="recipients"]:checked ~ [class*="recipients"] {
+ul.profile-type-buttons li {
+  float: left;
   display: block;
-}
-.register [id*="toggle"]:checked ~ .form-actions .toggle-info {
-  display: none;
-}
-.register [for*="toggle"] {
-  font-size: 14px;
-  font-size: 0.77778rem;
-  line-height: 23px;
-  line-height: 1.27778rem;
-  color: #268bd2;
-}
-.register [for*="toggle"]:link, .register [for*="toggle"]:visited {
-  color: #268bd2;
-  text-decoration: none;
-}
-.register [for*="toggle"]:focus, .register [for*="toggle"]:hover, .register [for*="toggle"]:active {
-  color: #d33682;
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: -moz-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: -o-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: linear-gradient(to bottom, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  -webkit-box-shadow: #4d6b71 0 0 0 1px inset;
+  -moz-box-shadow: #4d6b71 0 0 0 1px inset;
+  box-shadow: #4d6b71 0 0 0 1px inset;
+  background-color: #93a1a1;
+  color: #fdf6e3;
+  display: inline-block;
+  margin: 0;
+  padding: 0.31944rem 1em;
+  text-align: center;
   cursor: pointer;
+  padding: 10px 15px;
+  margin-right: 15px;
+  color: #606e6e;
+  text-shadow: none;
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+}
+ul.profile-type-buttons li:link, ul.profile-type-buttons li:visited, ul.profile-type-buttons li:focus, ul.profile-type-buttons li:hover, ul.profile-type-buttons li:active {
+  color: #fdf6e3;
+}
+ul.profile-type-buttons li:active {
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+}
+ul.profile-type-buttons li.active {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: -moz-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: -o-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: linear-gradient(to bottom, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  -webkit-box-shadow: #16608a 0 0 0 1px inset;
+  -moz-box-shadow: #16608a 0 0 0 1px inset;
+  box-shadow: #16608a 0 0 0 1px inset;
+  background-color: #268bd2;
+  color: #fdf6e3;
+  display: inline-block;
+  margin: 0;
+  padding: 0.31944rem 1em;
+  text-align: center;
+  padding: 10px 15px;
+  margin-right: 15px;
+}
+ul.profile-type-buttons li.active:link, ul.profile-type-buttons li.active:visited, ul.profile-type-buttons li.active:focus, ul.profile-type-buttons li.active:hover, ul.profile-type-buttons li.active:active {
+  color: #fdf6e3;
+}
+ul.profile-type-buttons li.active:active {
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
 }
 
 .email_notifications-field {
@@ -3094,6 +3133,144 @@ article.get-started-copy ul.dates strong {
   margin-bottom: 0.63889rem;
 }
 
+h2.pricing-pagehead, h2.pricing-form-pagehead {
+  font-size: 44px;
+  font-size: 2.44444rem;
+  line-height: 58px;
+  line-height: 3.19444rem;
+  font-weight: bold;
+  color: #268bd2;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+}
+
+aside.pricing-callout {
+  float: left;
+  width: 100%;
+  float: left;
+  margin-right: 3.22581%;
+}
+aside.pricing-callout small {
+  font-size: 14px;
+  font-size: 0.77778rem;
+  line-height: 23px;
+  line-height: 1.27778rem;
+  line-height: 1em;
+  color: #93a1a1;
+}
+
+table.pricing {
+  width: 100%;
+  margin-top: 23px;
+  margin-top: 1.27778rem;
+  margin-bottom: 23px;
+  margin-bottom: 1.27778rem;
+  margin-top: 0;
+}
+table.pricing thead th {
+  color: #859900;
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #859900;
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+}
+table.pricing tbody td {
+  height: 40px;
+  line-height: 40px;
+  border-bottom: 1px solid #eee8d5;
+  color: #073642;
+  font-size: 23px;
+  font-size: 1.27778rem;
+  line-height: 35px;
+  line-height: 1.91667rem;
+}
+table.pricing tbody td span {
+  color: #93a1a1;
+}
+
+p.teacher-parent-choice {
+  margin-bottom: 10px;
+}
+
+form#payment-form button {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: -moz-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: -o-linear-gradient(top, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  background: linear-gradient(to bottom, rgba(168, 179, 179, 0.25), rgba(147, 161, 161, 0), rgba(117, 128, 128, 0.25));
+  -webkit-box-shadow: #4d6b71 0 0 0 1px inset;
+  -moz-box-shadow: #4d6b71 0 0 0 1px inset;
+  box-shadow: #4d6b71 0 0 0 1px inset;
+  background-color: #93a1a1;
+  color: #fdf6e3;
+  display: inline-block;
+  margin: 0;
+  padding: 0.31944rem 1em;
+  text-align: center;
+}
+form#payment-form button:link, form#payment-form button:visited, form#payment-form button:focus, form#payment-form button:hover, form#payment-form button:active {
+  color: #fdf6e3;
+}
+form#payment-form button:active {
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+}
+form#payment-form button:hover {
+  -webkit-border-radius: 0.25em;
+  -moz-border-radius: 0.25em;
+  border-radius: 0.25em;
+  text-shadow: rgba(7, 54, 66, 0.5) 0 -1px 0;
+  background: -webkit-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: -moz-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: -o-linear-gradient(top, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  background: linear-gradient(to bottom, rgba(81, 162, 219, 0.25), rgba(38, 139, 210, 0), rgba(30, 111, 168, 0.25));
+  -webkit-box-shadow: #16608a 0 0 0 1px inset;
+  -moz-box-shadow: #16608a 0 0 0 1px inset;
+  box-shadow: #16608a 0 0 0 1px inset;
+  background-color: #268bd2;
+  color: #fdf6e3;
+  display: inline-block;
+  margin: 0;
+  padding: 0.31944rem 1em;
+  text-align: center;
+}
+form#payment-form button:hover:link, form#payment-form button:hover:visited, form#payment-form button:hover:focus, form#payment-form button:hover:hover, form#payment-form button:hover:active {
+  color: #fdf6e3;
+}
+form#payment-form button:hover:active {
+  -webkit-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  -moz-box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+  box-shadow: rgba(25, 25, 25, 0.5) 0 0 3px 1px inset;
+}
+
+@media (min-width: 43.875em) and (max-width: 56.25em) {
+  aside.pricing-callout {
+    float: none;
+    width: 49.36709%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-right: 5.06329%;
+  }
+}
+@media (min-width: 56.25em) {
+  aside.pricing-callout {
+    float: none;
+    min-height: 400px;
+    width: 49.36709%;
+    float: left;
+    margin-right: 1.26582%;
+    margin-right: 5.06329%;
+  }
+}
 .village-app [role="banner"], .village-app .container, .village-app [role="contentinfo"] {
   max-width: 1422px;
   max-width: 79rem;
@@ -3517,10 +3694,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   color: #e8f2a6;
 }
 
-.parent-signup .register [class*="school-network"], .register .parent-signup [class*="school-network"], .parent-signup [class*="sms-signup"], .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="message-form"], .post-add-form .parent-signup [class*="message-form"], .parent-signup .post-add-form [class*="note-form"], .post-add-form .parent-signup [class*="note-form"], .parent-signup .post-add-form [class*="conversation-form"], .post-add-form .parent-signup [class*="conversation-form"], .parent-signup .post [class*="recipients"], .post .parent-signup [class*="recipients"] {
+.parent-signup [class*="sms-signup"], .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="message-form"], .post-add-form .parent-signup [class*="message-form"], .parent-signup .post-add-form [class*="note-form"], .post-add-form .parent-signup [class*="note-form"], .parent-signup .post-add-form [class*="conversation-form"], .post-add-form .parent-signup [class*="conversation-form"], .parent-signup .post [class*="recipients"], .post .parent-signup [class*="recipients"] {
   display: none;
 }
-.parent-signup .register [id*="school-network"]:checked ~ [class*="school-network"], .register .parent-signup [id*="school-network"]:checked ~ [class*="school-network"], .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .parent-signup [id*="message-form"]:checked ~ [class*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .parent-signup [id*="note-form"]:checked ~ [class*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .parent-signup [id*="conversation-form"]:checked ~ [class*="conversation-form"], .parent-signup .post-add-form.group-posts .message-form, .post-add-form.group-posts .parent-signup .message-form, .parent-signup .post [id*="recipients"]:checked ~ [class*="recipients"], .post .parent-signup [id*="recipients"]:checked ~ [class*="recipients"] {
+.parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .parent-signup [id*="message-form"]:checked ~ [class*="message-form"], .parent-signup .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .parent-signup [id*="note-form"]:checked ~ [class*="note-form"], .parent-signup .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .parent-signup [id*="conversation-form"]:checked ~ [class*="conversation-form"], .parent-signup .post-add-form.group-posts .message-form, .post-add-form.group-posts .parent-signup .message-form, .parent-signup .post [id*="recipients"]:checked ~ [class*="recipients"], .post .parent-signup [id*="recipients"]:checked ~ [class*="recipients"] {
   display: block;
 }
 .parent-signup .tab-options {
@@ -3751,28 +3928,28 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
 .post-add-form.group-posts {
   background: #bcd0d4;
 }
-.post-add-form .register [class*="school-network"], .register .post-add-form [class*="school-network"], .post-add-form .parent-signup [class*="sms-signup"], .parent-signup .post-add-form [class*="sms-signup"], .post-add-form .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="form-signup"], .post-add-form [class*="message-form"], .post-add-form [class*="note-form"], .post-add-form [class*="conversation-form"], .post-add-form .post [class*="recipients"], .post .post-add-form [class*="recipients"] {
+.post-add-form .parent-signup [class*="sms-signup"], .parent-signup .post-add-form [class*="sms-signup"], .post-add-form .parent-signup [class*="form-signup"], .parent-signup .post-add-form [class*="form-signup"], .post-add-form [class*="message-form"], .post-add-form [class*="note-form"], .post-add-form [class*="conversation-form"], .post-add-form .post [class*="recipients"], .post .post-add-form [class*="recipients"] {
   visibility: hidden;
   float: left;
   width: 100%;
   margin-right: -100%;
 }
-.post-add-form .register [id*="school-network"]:checked ~ [class*="school-network"], .register .post-add-form [id*="school-network"]:checked ~ [class*="school-network"], .post-add-form .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .post-add-form [id*="sms-signup"]:checked ~ [class*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="form-signup"]:checked ~ [class*="form-signup"], .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form.group-posts .message-form, .post-add-form .post [id*="recipients"]:checked ~ [class*="recipients"], .post .post-add-form [id*="recipients"]:checked ~ [class*="recipients"] {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .post-add-form [id*="sms-signup"]:checked ~ [class*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post-add-form [id*="form-signup"]:checked ~ [class*="form-signup"], .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form.group-posts .message-form, .post-add-form .post [id*="recipients"]:checked ~ [class*="recipients"], .post .post-add-form [id*="recipients"]:checked ~ [class*="recipients"] {
   position: relative;
   visibility: visible;
   z-index: 10;
 }
-.post-add-form .register [id*="school-network"]:checked ~ [for*="school-network"], .register .post-add-form [id*="school-network"]:checked ~ [for*="school-network"], .post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="form-signup"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"], .post-add-form .post [id*="recipients"]:checked ~ [for*="recipients"], .post .post-add-form [id*="recipients"]:checked ~ [for*="recipients"] {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="sms-signup"], .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="sms-signup"], .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="form-signup"], .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="form-signup"], .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message-form"], .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note-form"], .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation-form"], .post-add-form .post [id*="recipients"]:checked ~ [for*="recipients"], .post .post-add-form [id*="recipients"]:checked ~ [for*="recipients"] {
   background: none;
   border-bottom-color: transparent;
 }
-.post-add-form .register [id*="school-network"]:checked ~ [for*="message"][for*="school-network"]:before, .register .post-add-form [id*="school-network"]:checked ~ [for*="message"][for*="school-network"]:before, .post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="message"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="message"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="message"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="message"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="message"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="message"][for*="recipients"]:before {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="message"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="message"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="message"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="message"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="message"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="message"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="message"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="message"][for*="recipients"]:before {
   color: #6a7a00;
 }
-.post-add-form .register [id*="school-network"]:checked ~ [for*="note"][for*="school-network"]:before, .register .post-add-form [id*="school-network"]:checked ~ [for*="note"][for*="school-network"]:before, .post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="note"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="note"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="note"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="note"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="note"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="note"][for*="recipients"]:before {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="note"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="note"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="note"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="note"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="note"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="note"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="note"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="note"][for*="recipients"]:before {
   color: #a23c11;
 }
-.post-add-form .register [id*="school-network"]:checked ~ [for*="conversation"][for*="school-network"]:before, .register .post-add-form [id*="school-network"]:checked ~ [for*="conversation"][for*="school-network"]:before, .post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="conversation"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="conversation"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="conversation"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="conversation"][for*="recipients"]:before {
+.post-add-form .parent-signup [id*="sms-signup"]:checked ~ .tab-options [for*="conversation"][for*="sms-signup"]:before, .parent-signup [id*="sms-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="sms-signup"]:before, .post-add-form .parent-signup [id*="form-signup"]:checked ~ .tab-options [for*="conversation"][for*="form-signup"]:before, .parent-signup [id*="form-signup"]:checked ~ .tab-options .post-add-form [for*="conversation"][for*="form-signup"]:before, .post-add-form [id*="message-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="message-form"]:before, .post-add-form [id*="note-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="note-form"]:before, .post-add-form [id*="conversation-form"]:checked ~ .post-type-tabs [for*="conversation"][for*="conversation-form"]:before, .post-add-form .post [id*="recipients"]:checked ~ [for*="conversation"][for*="recipients"]:before, .post .post-add-form [id*="recipients"]:checked ~ [for*="conversation"][for*="recipients"]:before {
   color: #a82b68;
 }
 .post-add-form .form-actions {
@@ -4769,10 +4946,10 @@ input:focus ~ .formfield-help .sms-preview, .changed .formfield-help .sms-previe
   display: table;
   clear: both;
 }
-.post .register [class*="school-network"], .register .post [class*="school-network"], .post .parent-signup [class*="sms-signup"], .parent-signup .post [class*="sms-signup"], .post .parent-signup [class*="form-signup"], .parent-signup .post [class*="form-signup"], .post .post-add-form [class*="message-form"], .post-add-form .post [class*="message-form"], .post .post-add-form [class*="note-form"], .post-add-form .post [class*="note-form"], .post .post-add-form [class*="conversation-form"], .post-add-form .post [class*="conversation-form"], .post [class*="recipients"] {
+.post .parent-signup [class*="sms-signup"], .parent-signup .post [class*="sms-signup"], .post .parent-signup [class*="form-signup"], .parent-signup .post [class*="form-signup"], .post .post-add-form [class*="message-form"], .post-add-form .post [class*="message-form"], .post .post-add-form [class*="note-form"], .post-add-form .post [class*="note-form"], .post .post-add-form [class*="conversation-form"], .post-add-form .post [class*="conversation-form"], .post [class*="recipients"] {
   max-width: 75%;
 }
-.post .register [id*="school-network"]:checked ~ [class*="school-network"], .register .post [id*="school-network"]:checked ~ [class*="school-network"], .post .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .post [id*="sms-signup"]:checked ~ [class*="sms-signup"], .post .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post [id*="form-signup"]:checked ~ [class*="form-signup"], .post .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .post [id*="message-form"]:checked ~ [class*="message-form"], .post .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .post [id*="note-form"]:checked ~ [class*="note-form"], .post .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .post [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post .post-add-form.group-posts .message-form, .post-add-form.group-posts .post .message-form, .post [id*="recipients"]:checked ~ [class*="recipients"] {
+.post .parent-signup [id*="sms-signup"]:checked ~ [class*="sms-signup"], .parent-signup .post [id*="sms-signup"]:checked ~ [class*="sms-signup"], .post .parent-signup [id*="form-signup"]:checked ~ [class*="form-signup"], .parent-signup .post [id*="form-signup"]:checked ~ [class*="form-signup"], .post .post-add-form [id*="message-form"]:checked ~ [class*="message-form"], .post-add-form .post [id*="message-form"]:checked ~ [class*="message-form"], .post .post-add-form [id*="note-form"]:checked ~ [class*="note-form"], .post-add-form .post [id*="note-form"]:checked ~ [class*="note-form"], .post .post-add-form [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post-add-form .post [id*="conversation-form"]:checked ~ [class*="conversation-form"], .post .post-add-form.group-posts .message-form, .post-add-form.group-posts .post .message-form, .post [id*="recipients"]:checked ~ [class*="recipients"] {
   max-width: 100%;
   white-space: normal;
   color: #657b83;

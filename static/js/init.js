@@ -47,7 +47,8 @@ var PYO = (function (PYO, $) {
         PYO.initializePusher();
 
         // user.js
-        PYO.addSchool('#register-form');
+        PYO.initializeRegisterForm('#register-form');
+        PYO.initializeRegisterForm('#payment-form');
     });
 
     return PYO;

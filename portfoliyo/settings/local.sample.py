@@ -86,3 +86,8 @@ Copy settings/local.sample.py to settings/local.py and modify as needed.
 #        "KEY_PREFIX": "", # add a global key prefix here if necessary
 #    }
 #}
+
+# Configure Stripe to use sandbox mode for payment information
+# Get the private key from https://manage.stripe.com/account/apikeys
+#STRIPE_PUBLIC_KEY = 'pk_bCxgEPXFH64zxtlKy8X4VvBtTrqIZ'
+#STRIPE_PRIVATE_KEY = '###################'

@@ -12,7 +12,7 @@ from django.contrib.auth.models import User
 from .users import utils
 from .users.models import (
     School, Profile, TextSignup, Relationship, Group, AllStudentsGroup,
-    elder_in_context, contextualized_elders)
+    elder_in_context, contextualized_elders, Donation)
 from .village.models import (
     BulkPost, Post, post_char_limit, sms_eligible, is_sms_eligible)
 from .village import unread

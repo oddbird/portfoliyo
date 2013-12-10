@@ -1,17 +1,38 @@
 .register {
   @extend %simple-form;
 
-  %hide-tab-content { display: none; }
-  %show-tab-content { display: block; }
-  @include tabs(school-network);
+  // %hide-tab-content { display: none; }
+  // %show-tab-content { display: block; }
+  // @include tabs(school-network);
 
-  [id*="toggle"]:checked ~ .form-actions .toggle-info {
-    display: none;
-  }
-  [for*="toggle"] {
-    @include adjust-font-size-to($smallpx);
-    @include link;
-    color: $alt;
+  // [id*="toggle"]:checked ~ .form-actions .toggle-info {
+  //   display: none;
+  // }
+  // [for*="toggle"] {
+  //   @include adjust-font-size-to($smallpx);
+  //   @include link;
+  //   color: $alt;
+  // }
+}
+
+ul.profile-type-buttons {
+  @include clearfix;
+  padding-left: 0;
+  li {
+    float: left;
+    display: block;
+    @include button($color: $base1);
+    cursor: pointer;
+    padding: 10px 15px;
+    margin-right: 15px;
+    color: darken($base1, 20%);
+    text-shadow: none;   
+    @include adjust-font-size-to($medpx);
+    &.active {
+      @include button($color: $blue);
+      padding: 10px 15px;
+      margin-right: 15px;
+    }
   }
 }
 

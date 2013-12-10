@@ -3,6 +3,7 @@ Account-related views.
 
 """
 from functools import partial
+import json
 
 from django.conf import settings
 from django.contrib import auth
@@ -15,6 +16,7 @@ from django.utils.http import base36_to_int
 from django.views.decorators.http import require_POST
 
 from ratelimit.decorators import ratelimit
+import stripe
 
 from portfoliyo import model, invites, xact
 from portfoliyo.view import tracking
@@ -22,6 +24,9 @@ from ..decorators import login_required
 from ..home import redirect_home
 from . import forms, tokens
 
+
+STRIPE_PUBLIC_KEY = getattr(settings, 'STRIPE_PUBLIC_KEY', '')
+STRIPE_PRIVATE_KEY = getattr(settings, 'STRIPE_PRIVATE_KEY', '')
 
 
 @ratelimit(field='username', method='POST', rate='5/m')
@@ -210,3 +215,59 @@ def edit_profile(request):
         form = forms.EditProfileForm(instance=request.user.profile)
 
     return TemplateResponse(request, 'users/edit_profile.html', {'form': form})
+
+
+def donate(request):
+    if request.method == 'POST':
+        form = forms.DonateForm(request.POST)
+        if form.is_valid():
+            with xact.xact():
+                stripe.api_key = STRIPE_PRIVATE_KEY
+                token = request.POST['stripeToken']
+                try:
+                    charge = stripe.Charge.create(
+                        amount=int(form.cleaned_data['amount'])*100, # amount needs to be in cents
+                        currency="usd",
+                        card=token,
+                        description=form.cleaned_data['email']
+                    )
+
+                    school = form.cleaned_data['school']
+                    if school.id is None:
+                        # this could just set country_code and then school.save(), but that
+                        # creates a race condition for two users creating same school at
+                        # same time, resulting in IntegrityError
+                        school, created = model.School.objects.get_or_create(
+                            name=school.name,
+                            postcode=school.postcode,
+                            defaults={
+                                'country_code': form.cleaned_data['country_code'],
+                                'auto': school.auto,
+                                },
+                            )
+
+                    donation = model.Donation(
+                        name=form.cleaned_data['name'],
+                        email=form.cleaned_data['email'],
+                        phone=form.cleaned_data['phone'],
+                        country_code=form.cleaned_data['country_code'],
+                        school=school,
+                        amount = int(form.cleaned_data['amount'])*100,
+                        charge_data = json.dumps(charge),
+                        # We could add a currency field if donating in CAD is necessary
+                    )
+                    donation.save()
+
+                except stripe.AuthenticationError:
+                    # The stripe key was incorrect
+                    messages.failure(request, u"Sorry, there was an issue with the payment.")
+                except stripe.CardError, e:
+                    # The card has been declined
+                    messages.failure(request, u"Sorry, there was an issue with the payment.")
+
+            messages.success(request, u"Payment accepted!")
+            return redirect(redirect_home(request.user))
+    else:
+        # If the user is authenticated, we could pre-populate this form with name, email, and school info
+        form = forms.DonateForm()
+    return TemplateResponse(request, 'users/pricing.html', {'form': form, 'stripe_key': STRIPE_PUBLIC_KEY})
