@@ -2528,22 +2528,9 @@ blockquote.call-statement {
   font-size: 1.94444rem;
   line-height: 46px;
   line-height: 2.55556rem;
-  padding-top: 23px;
-  padding-top: 1.27778rem;
-  padding-bottom: 23px;
-  padding-bottom: 1.27778rem;
-  margin-top: 23px;
-  margin-top: 1.27778rem;
-  margin-bottom: 23px;
-  margin-bottom: 1.27778rem;
-  border-bottom: 1px solid #eee8d5;
-  border-top: 1px solid #eee8d5;
   color: #268bd2;
   font-weight: bold;
   font-family: "SquareSerif", "Helvetica Neue", Arial, Helvetica, sans-serif;
-  width: 100%;
-  float: left;
-  margin-right: 3.22581%;
 }
 blockquote.call-statement span {
   font-size: 23px;
@@ -2608,11 +2595,11 @@ article.get-started-copy ul.dates strong {
   }
 
   article.get-started-copy {
-    width: 89.87342%;
+    width: 94.93671%;
     float: left;
     margin-right: 1.26582%;
     margin-left: 5.06329%;
-    margin-right: 5.06329%;
+    margin-right: 0%;
   }
 
   h3 {
@@ -2620,11 +2607,11 @@ article.get-started-copy ul.dates strong {
   }
 
   blockquote.call-statement {
-    width: 89.87342%;
+    width: 100%;
     float: left;
     margin-right: 1.26582%;
-    margin-left: 5.06329%;
-    margin-right: 5.06329%;
+    margin-left: 0%;
+    margin-right: 0%;
     font-size: 44px;
     font-size: 2.44444rem;
     line-height: 58px;
@@ -2649,11 +2636,11 @@ article.get-started-copy ul.dates strong {
 
   blockquote.call-statement {
     text-align: center;
-    width: 79.74684%;
+    width: 100%;
     float: left;
     margin-right: 1.26582%;
-    margin-left: 10.12658%;
-    margin-right: 10.12658%;
+    margin-left: 0%;
+    margin-right: 0%;
     font-size: 44px;
     font-size: 2.44444rem;
     line-height: 58px;
@@ -2661,11 +2648,12 @@ article.get-started-copy ul.dates strong {
   }
 
   article.get-started-copy {
-    width: 34.17722%;
+    width: 44.3038%;
     float: left;
     margin-right: 1.26582%;
-    margin-left: 10.12658%;
-    margin-right: 5.06329%;
+    margin-left: 5.06329%;
+    margin-right: 0%;
+    margin-top: 20px;
   }
 
   article.get-started-copy:last-child {
@@ -2673,7 +2661,7 @@ article.get-started-copy ul.dates strong {
     float: left;
     margin-right: 1.26582%;
     margin-left: 5.06329%;
-    margin-right: 10.12658%;
+    margin-right: 5.06329%;
   }
 }
 @-moz-keyframes announce-in {
