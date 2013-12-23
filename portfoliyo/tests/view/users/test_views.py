@@ -264,6 +264,7 @@ class TestRegister(object):
         form = client.get(self.url).forms['register-form']
         form['name'] = 'Some Body'
         form['email'] = 'some@example.com'
+        form['phone'] = '321-654-9876'
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'Test User'
@@ -300,6 +301,7 @@ class TestConfirmEmail(object):
         form = client.get(reverse('register')).forms['register-form']
         form['name'] = 'New Body'
         form['email'] = 'new@example.com'
+        form['phone'] = '321-654-9876'
         form['password'] = 'sekrit123'
         form['password_confirm'] = 'sekrit123'
         form['role'] = 'New Role'
