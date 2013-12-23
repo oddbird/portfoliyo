@@ -40,4 +40,5 @@ urlpatterns = patterns(
         direct_to_template,
         {'template': 'users/registration_closed.html'},
         name='registration_disallowed'),
-    )
+    url(r'^donate/$', views.donate, name='donate'),
+)

@@ -43,6 +43,7 @@ class RegistrationForm(forms.Form):
         label="confirm password",
         widget=forms.PasswordInput(render_value=False))
     email = forms.EmailField(max_length=255)
+    phone = pyoforms.StripCharField(max_length=20)
     country_code = forms.TypedChoiceField(
         choices=model.Profile._meta.get_field('country_code').choices,
         widget=forms.RadioSelect(),
@@ -291,3 +292,61 @@ class EditProfileForm(forms.ModelForm):
             description='')
 
         return profile
+
+
+class DonateForm(forms.Form):
+    """Form for accepting a donation."""
+
+    name = pyoforms.StripCharField(max_length=200)
+    email = forms.EmailField(max_length=255)
+    phone = pyoforms.StripCharField(max_length=20)
+    country_code = forms.TypedChoiceField(
+        choices=model.Profile._meta.get_field('country_code').choices,
+        widget=forms.RadioSelect(),
+        )
+    school = pyoforms.ModelChoiceField(
+        queryset=model.School.objects.filter(auto=False).order_by('name'),
+        empty_label=u"I'm not affiliated with a school or program",
+        required=False,
+        widget=SchoolRadioSelect,
+        initial=u'',
+        )
+    addschool = forms.BooleanField(
+        initial=False, required=False, widget=forms.HiddenInput)
+
+    amount = pyoforms.StripCharField(max_length=20)
+
+
+    def __init__(self, *args, **kwargs):
+        """Also instantiate a nested SchoolForm."""
+        super(DonateForm, self).__init__(*args, **kwargs)
+        self.addschool_form = SchoolForm(self.data or None, prefix='addschool')
+
+
+    def clean(self):
+        """
+        Verify password fields match and school is provided.
+
+        If addschool is True, build a new School based on data in nested
+        SchoolForm.
+
+        If not, and no school was selected, auto-construct one.
+
+        """
+        data = self.cleaned_data
+        if data.get('addschool'):
+            if self.addschool_form.is_valid():
+                data['school'] = self.addschool_form.save(commit=False)
+            else:
+                raise forms.ValidationError(
+                    "Could not add a school.")
+        else:
+            # reinstantiate unbound addschool_form to avoid spurious errors
+            self.addschool_form = SchoolForm(prefix='addschool')
+            if data.get('email') and not data.get('school'):
+                data['school'] = model.School(
+                    name=(u"%f-%s" % (time.time(), data['email']))[:200],
+                    postcode="",
+                    auto=True,
+                    )
+        return data

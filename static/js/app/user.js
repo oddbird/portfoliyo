@@ -2,14 +2,42 @@ var PYO = (function (PYO, $) {
 
     'use strict';
 
-    PYO.addSchool = function (container) {
+    PYO.initializeRegisterForm = function (container) {
         if ($(container).length) {
             var form = $(container);
+
+            // Toggle profile type functionality
+            var toggleParentLink = form.find('.parent-tab');
+            var toggleTeacherLink = form.find('.teacher-tab');
+            var nameFieldLabel = form.find('.name-field label');
+            var roleField = form.find('.role-field');
+
+            toggleParentLink.click(function (e) {
+                e.preventDefault();
+                toggleParentLink.addClass('active');
+                toggleTeacherLink.removeClass('active');
+                nameFieldLabel.html('My name is...');
+                roleField.fadeOut('fast');
+            });
+
+            toggleTeacherLink.click(function (e) {
+                e.preventDefault();
+                toggleTeacherLink.addClass('active');
+                toggleParentLink.removeClass('active');
+                nameFieldLabel.html('Students call me...');
+                roleField.fadeIn('fast');
+            });
+
+            // Add School functionality
             var addSchoolLink = form.find('.add-school-link');
             var selectSchoolLink = form.find('.select-school-link');
             var selectSchool = form.find('.school-field');
             var addSchool = form.find('.add-school');
             var hiddenInput = addSchool.find('#id_addschool');
+            var schoolNetworkToggle = form.find('#school-network-toggle');
+
+            // Initialize school open
+            schoolNetworkToggle.click();
 
             addSchoolLink.click(function (e) {
                 e.preventDefault();

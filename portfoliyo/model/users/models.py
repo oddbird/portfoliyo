@@ -698,3 +698,19 @@ def generate_code(seed, length):
     if len(full) < length:
         full = full * ((length / len(full)) + 1)
     return full[:length]
+
+
+class Donation(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField(max_length=255)
+    phone = models.CharField(max_length=20)
+    school = models.ForeignKey(School)
+    country_code = models.CharField(
+        max_length=10,
+        choices=settings.PORTFOLIYO_COUNTRIES,
+        default=settings.DEFAULT_COUNTRY_CODE,
+    )
+    amount = models.IntegerField()
+    charge_data = models.TextField()
+    # We could add a currency field if donating in CAD is necessary
+    created_at = models.DateTimeField(auto_now_add=True)

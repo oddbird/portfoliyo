@@ -1,6 +1,6 @@
 pytz==2012d
 
-Django==1.4.2
+Django==1.4.10
 
 psycopg2==2.4.5
 django-postgrespool==0.2.4
@@ -63,3 +63,5 @@ PyMeta==0.5.0
 
 django-storages==1.1.6a1
 boto==2.5.2
+
+stripe==1.11.0

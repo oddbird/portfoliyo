@@ -4,6 +4,8 @@ import os
 import urlparse
 env = lambda key, returntype=str: returntype(os.environ.get(key, ''))
 
+ALLOWED_HOSTS = env('ALLOWED_HOSTS').split(',')
+
 DATABASES = dict(default={})
 def parse_database_url(database, environment_variable='DATABASE_URL'):
     url = urlparse.urlparse(env(environment_variable))
@@ -177,3 +179,6 @@ PORTFOLIYO_BASE_URL = env('PORTFOLIYO_BASE_URL')
 NOTIFICATION_EMAILS = env('PORTFOLIYO_NOTIFICATION_EMAILS', bool)
 NOTIFICATION_EXPIRY_SECONDS = env('PORTFOLIYO_NOTIFICATION_EXPIRY_SECONDS', int)
 DEBUG_URLS = env('PORTFOLIYO_DEBUG_URLS', bool)
+
+STRIPE_PUBLIC_KEY = 'pk_JUTkGItjFgc2pg4ArykSVE1c0rJps'
+STRIPE_PRIVATE_KEY = env('STRIPE_PRIVATE_KEY')
