@@ -10,6 +10,7 @@ class TestRegistrationForm(object):
     base_data = {
         'name': 'Some Body',
         'email': 'some@example.com',
+        'phone': '321-654-9876',
         'password': 'sekrit',
         'password_confirm': 'sekrit',
         'role': 'Some Role',
