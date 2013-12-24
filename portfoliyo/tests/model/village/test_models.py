@@ -122,7 +122,7 @@ class TestPostCreate(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
-            from_profile__source_phone='+13336660000',
+            pyo_phone='+13336660000',
             from_profile__user__is_active=True,
             from_profile__name="Jim Smith",
             description="Father",
@@ -187,7 +187,7 @@ class TestPostCreate(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
-            from_profile__source_phone='+13336660000',
+            pyo_phone='+13336660000',
             from_profile__user__is_active=True,
             from_profile__name="Jim Smith",
             description="Father",
@@ -224,7 +224,7 @@ class TestPostCreate(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
-            from_profile__source_phone="+1333666000",
+            pyo_phone="+1333666000",
             from_profile__user__is_active=True,
             )
         signup = factories.TextSignupFactory.create(
@@ -536,7 +536,7 @@ class TestBulkPost(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
-            from_profile__source_phone="+13336660000",
+            pyo_phone="+13336660000",
             from_profile__user__is_active=True,
             from_profile__role="Father",
             from_profile__name="Jim Smith",
@@ -571,7 +571,7 @@ class TestBulkPost(object):
         rel2 = factories.RelationshipFactory.create(
             to_profile=rel1.to_profile,
             from_profile__phone="+13216540987",
-            from_profile__source_phone="+13336660000",
+            pyo_phone="+13336660000",
             from_profile__user__is_active=True,
             from_profile__role="Father",
             from_profile__name="Jim Smith",

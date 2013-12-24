@@ -178,7 +178,8 @@ class BulkPost(BasePost):
     @property
     def elders_in_context(self):
         """Queryset of elders in context."""
-        return user_models.contextualized_elders(self.safe_group.all_elders)
+        return user_models.contextualized_elders(
+            self.safe_group.elder_relationships)
 
 
     @classmethod

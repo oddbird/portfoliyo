@@ -242,7 +242,7 @@ class Profile(models.Model):
     def send_sms(self, body):
         """Send an SMS to this user, or do nothing if they have no phone."""
         if self.phone:
-            tasks.send_sms.delay(self.phone, self.source_phone, body)
+            tasks.send_sms.delay(self.phone, self.pyo_phone, body)
 
 
 

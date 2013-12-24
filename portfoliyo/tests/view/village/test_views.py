@@ -1051,7 +1051,7 @@ class TestCreatePost(object):
         other_rel = factories.RelationshipFactory.create(
             to_profile=rel.student,
             from_profile__phone='+13216540987',
-            from_profile__source_phone='+13336660000',
+            pyo_phone='+13336660000',
             from_profile__name='Recipient',
             from_profile__user__is_active=True,
             )
@@ -1105,7 +1105,7 @@ class TestCreatePost(object):
         factories.RelationshipFactory.create(
             to_profile=rel.student,
             from_profile__phone='+13216540987',
-            from_profile__source_phone='+13336660000',
+            pyo_phone='+13336660000',
             from_profile__name='Recipient',
             from_profile__user__is_active=True,
             )
@@ -1132,7 +1132,7 @@ class TestCreatePost(object):
         factories.RelationshipFactory.create(
             to_profile=rel.student,
             from_profile__phone='+13216540987',
-            from_profile__source_phone='+13336660000',
+            pyo_phone='+13336660000',
             from_profile__name='Recipient',
             from_profile__user__is_active=True,
             )

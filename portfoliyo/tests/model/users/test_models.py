@@ -317,6 +317,21 @@ class TestProfile(object):
         mock_send_sms.assert_called_once_with(phone, source_phone, 'foo')
 
 
+    def test_send_sms_uses_pyo_phone(self):
+        """Send_sms method uses pyo_phone if set (by ContextualizedElders)."""
+        phone = '+13216540987'
+        source_phone = '+13336660000'
+        pyo_phone = '+16663330000'
+        p = factories.ProfileFactory.build(
+            phone=phone, source_phone=source_phone)
+        p.pyo_phone = pyo_phone
+
+        with mock.patch('portfoliyo.tasks.send_sms.delay') as mock_send_sms:
+            p.send_sms('foo')
+
+        mock_send_sms.assert_called_once_with(phone, pyo_phone, 'foo')
+
+
     def test_send_sms_no_phone(self):
         """Send_sms method does nothing if user has no phone."""
         p = factories.ProfileFactory.build(phone=None)
