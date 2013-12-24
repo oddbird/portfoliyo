@@ -113,9 +113,10 @@ class Profile(models.Model):
 
 
     def __init__(self, *a, **kw):
-        """Set role_in_context to be role by default, unless later annotated."""
+        """Set role_in_context and pyo_phone defaults."""
         super(Profile, self).__init__(*a, **kw)
         self.role_in_context = self.role
+        self.pyo_phone = self.source_phone
 
 
     def save(self, *a, **kw):
@@ -594,6 +595,7 @@ signals.post_delete.connect(relationship_deleted, sender=Relationship)
 def elder_in_context(rel):
     """Return elder in given relationship, annotated with role_in_context."""
     rel.elder.role_in_context = rel.description_or_role
+    rel.elder.pyo_phone = rel.pyo_phone
     return rel.elder
 
 
@@ -603,7 +605,9 @@ def contextualized_elders(queryset):
 
     A contextualized elder has an added ``role_in_context`` attribute, which is
     the relationship description if in context of a relationship, or simply the
-    elder's profile role otherwise.
+    elder's profile role otherwise; and a ``pyo_phone`` attribute, which is the
+    ``pyo_phone`` of the relationship if in context of a relationship, or the
+    elder's ``source_phone`` otherwise.
 
     """
     if queryset.model is Relationship:
@@ -678,6 +682,7 @@ class EldersForRelationships(QuerySetWrapper):
     def __iter__(self):
         for rel in self.queryset:
             rel.elder.role_in_context = rel.description_or_role
+            rel.elder.pyo_phone = rel.pyo_phone
             yield rel.elder
 
 

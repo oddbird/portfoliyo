@@ -135,6 +135,13 @@ class TestProfile(object):
         assert profile.name_or_role == u"Role"
 
 
+    def test_pyo_phone_default(self):
+        """pyo_phone attr defaults to source_phone."""
+        profile = factories.ProfileFactory.build(source_phone='+13216549876')
+
+        assert profile.pyo_phone == '+13216549876'
+
+
     def test_site_staff_are_school_staff(self, db):
         """Any user with is_staff is also school_staff."""
         user = factories.UserFactory.create(is_staff=True)
@@ -807,15 +814,17 @@ class TestAllStudentsGroup(object):
 
 class TestContextualizedElders(object):
     def test_relationships(self, db):
-        """Given relationships, yields elders with role_in_context."""
+        """Given relationships, yields elders with role_in_context/pyo_phone."""
         rel1 = factories.RelationshipFactory.create(
-            from_profile__role='foo')
+            from_profile__role='foo', pyo_phone='+15555555555')
         rel2 = factories.RelationshipFactory.create(
-            description='bar')
+            description='bar', pyo_phone='+16666666666')
         qs = model.contextualized_elders(model.Relationship.objects.all())
 
         assert set(qs) == {rel1.elder, rel2.elder}
         assert set([e.role_in_context for e in qs]) == {'foo', 'bar'}
+        assert set([e.pyo_phone for e in qs]) == {
+            '+15555555555', '+16666666666'}
 
 
     def test_profiles(self, db):
